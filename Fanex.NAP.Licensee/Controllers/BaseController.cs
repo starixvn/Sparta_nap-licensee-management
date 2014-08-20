@@ -61,5 +61,6 @@ namespace Fanex.NAP.Licensee.Controllers
             get;
             set;
         }
+
     }
 }

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Fanex.Data.Configuration;
+using Fanex.NAP.Licenseee.App_Start;
 
 namespace Fanex.NAP.Licensee
 {
@@ -14,11 +16,22 @@ namespace Fanex.NAP.Licensee
     {
         protected void Application_Start()
         {
+            DbSettingProviderManager.Current.Start();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+        protected void Session_End(object sender, EventArgs e)
+        {
+            AuthConfig.SignOut();
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+            AuthConfig.RegisterAuth(Context);
         }
     }
 }

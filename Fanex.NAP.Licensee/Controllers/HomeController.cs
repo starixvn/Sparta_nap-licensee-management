@@ -8,7 +8,7 @@ using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    [NapAuth]
+   [NapSuperAuth]
     public class HomeController : BaseController
     {
         //
