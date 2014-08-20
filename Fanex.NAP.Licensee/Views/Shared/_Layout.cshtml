@@ -1,0 +1,31 @@
+﻿@using Fanex.NAP.Core.Configuration
+<!DOCTYPE html>
+<!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
+<!--[if (IE 8)]><html lang="en" class="ie8 oldie"><![endif]-->
+<!--[if (IE 9)]><html lang="en" class="ie9"><![endif]-->
+<!--[if (gt IE 9)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~/")';
+    </script>
+</head>
+<body>
+    <header>
+            <a class="logo" href="~/?ref=logo">&nbsp;</a>
+            @Html.Action("_Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
+        </header>
+    <section id="headline">
+        @RenderSection("Headline", false)
+    </section>
+    <section id="body">
+        @RenderBody()
+    </section>
+    @RenderSection("Foot", false)
+    @if (NapSettings.Settings.EnableReCheckIn)
+    {
+        <script src="~/scripts/Core/ReCheckIn.js" type="text/javascript"> </script>
+    }
+</body>
+</html>

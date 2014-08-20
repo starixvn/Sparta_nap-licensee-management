@@ -1,0 +1,68 @@
+﻿@using Fanex.NAP.Core.Model
+@{
+    List<MenuItem> menuItemList = ViewBag.MenuItemList != null ? ViewBag.MenuItemList as List<MenuItem> : new List<MenuItem>();
+    List<MenuItem> lvl0MenuItemList = menuItemList.Where(m => m.Parent == null).OrderBy(m => m.DisplayOrder).ToList();
+}
+<nav class="hidden-phone">
+    <ul class="menu">
+        @for (int i = 0; i < lvl0MenuItemList.Count; i++)
+        {
+            MenuItem menuItem = lvl0MenuItemList[i];
+            List<MenuItem> lvl1MenuItemList = menuItemList.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
+                .OrderBy(x => x.DisplayOrder).ToList();
+            string className = "normal";
+
+            if (i == 0)
+            {
+                className = " first";
+            }
+
+            if (i == lvl0MenuItemList.Count - 1 && i > 0)
+            {
+                className = className.Length > 0 ? " last" : "last";
+            }
+
+            if (lvl1MenuItemList.Count == 0)
+            {
+                <li class="@className"><a href="@Url.Content("~" + menuItem.Url)">@menuItem.Name</a></li>
+            }
+            else
+            {
+                className += className.Length > 0 ? " has-kids" : "has-kids";
+
+                <li class="@className">
+                    <a>@menuItem.Name</a>
+                    <ul>
+                        @foreach (MenuItem subMenuItem in lvl1MenuItemList)
+                        {
+                            <li><a href="@Url.Content("~" + subMenuItem.Url)">@subMenuItem.Name</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    </ul>
+</nav>
+
+<select class="mini-menu visible-phone">
+    @for (int i = 0; i < lvl0MenuItemList.Count; i++)
+    {
+        MenuItem menuItem = lvl0MenuItemList[i];
+        List<MenuItem> lvl1MenuItemList = menuItemList.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
+            .OrderBy(x => x.DisplayOrder).ToList();
+
+        if (lvl1MenuItemList.Count > 0)
+        {
+            <optgroup label="@menuItem.Name">
+                @foreach (MenuItem subMenuItem in lvl1MenuItemList)
+                {
+                    <option value="@Url.Content("~" + subMenuItem.Url)">@subMenuItem.Name</option>
+                }
+            </optgroup>
+        }
+        else
+        {
+            <option value="@Url.Content("~" + menuItem.Url)">@menuItem.Name</option>
+        }
+    }
+</select>

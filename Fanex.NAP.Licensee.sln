@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee", "Fanex.NAP.Licensee\Fanex.NAP.Licensee.csproj", "{0970FB24-9D16-4C86-A170-C2A2156C97EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Model", "Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj", "{F07AB61E-FC65-4292-A968-F124C5A28F30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Service", "Fanex.NAP.Licensee.Service\Fanex.NAP.Licensee.Service.csproj", "{090A12AF-90C2-4072-9B95-CC5E33C5D444}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0970FB24-9D16-4C86-A170-C2A2156C97EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0970FB24-9D16-4C86-A170-C2A2156C97EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0970FB24-9D16-4C86-A170-C2A2156C97EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0970FB24-9D16-4C86-A170-C2A2156C97EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07AB61E-FC65-4292-A968-F124C5A28F30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07AB61E-FC65-4292-A968-F124C5A28F30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07AB61E-FC65-4292-A968-F124C5A28F30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07AB61E-FC65-4292-A968-F124C5A28F30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{090A12AF-90C2-4072-9B95-CC5E33C5D444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{090A12AF-90C2-4072-9B95-CC5E33C5D444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{090A12AF-90C2-4072-9B95-CC5E33C5D444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{090A12AF-90C2-4072-9B95-CC5E33C5D444}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
