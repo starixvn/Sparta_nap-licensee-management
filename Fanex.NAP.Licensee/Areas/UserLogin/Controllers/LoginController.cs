@@ -12,12 +12,16 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using Common;
+    using Fanex.NAP.Licensee.Controllers;
+    using Fanex.NAP.Licensee.Service;
+    using Fanex.NAP.Licensee.Service.Utilities;
     using Logging;
     using NAP.Core.Configuration;
     using NAP.Core.Criteria.User;
@@ -29,11 +33,6 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using NAP.Core.Web;
     using NAP.Core.Web.Auth;
     using NAP.Core.Web.Session;
-    using Fanex.NAP.Licensee.Controllers;
-    using Fanex.NAP.Licensee.App_Start;
-    using Fanex.NAP.Licensee.Service;
-    using Fanex.NAP.Licensee.Service.Utilities;
-    using System.Configuration;
 
     /// <summary>
     /// Login controller.

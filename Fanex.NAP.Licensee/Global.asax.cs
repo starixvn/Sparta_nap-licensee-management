@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Fanex.Data.Configuration;
 using Fanex.NAP.Licenseee.App_Start;
+using System.Web.Optimization;
 
 namespace Fanex.NAP.Licensee
 {
@@ -23,6 +24,7 @@ namespace Fanex.NAP.Licensee
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
         protected void Session_End(object sender, EventArgs e)
         {

@@ -65,11 +65,16 @@ D:\TeamProject\GIT_LAB\Nap-Licensee\Fanex.NAP.Licensee\bin\System.Web.Optimizati
 D:\TeamProject\GIT_LAB\Nap-Licensee\Fanex.NAP.Licensee\bin\ru-ru\BundleTransformer.Core.resources.dll
 D:\TeamProject\GIT_LAB\Nap-Licensee\Fanex.NAP.Licensee\bin\ru-ru\BundleTransformer.Less.resources.dll
 D:\TeamProject\GIT_LAB\Nap-Licensee\Fanex.NAP.Licensee\bin\ru-ru\JavaScriptEngineSwitcher.Core.resources.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ClearScript.V8\ClearScriptV8-32.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ClearScript.V8\ClearScriptV8-64.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ClearScript.V8\v8-ia32.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ClearScript.V8\v8-x64.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Fanex.NAP.Licensee.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Fanex.NAP.Licensee.pdb
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Antlr3.Runtime.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\BundleTransformer.Core.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\BundleTransformer.Less.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ClearScript.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Couchbase.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Enyim.Caching.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Fanex.Caching.dll
@@ -83,6 +88,8 @@ D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Fanex.NAP.
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Fanex.NAP.Licensee.Service.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\IBCFile.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\JavaScriptEngineSwitcher.Core.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\JavaScriptEngineSwitcher.Msie.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\JavaScriptEngineSwitcher.V8.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Less.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.Practices.EnterpriseLibrary.Caching.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
@@ -92,6 +99,7 @@ D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.Practices.Unity.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.Practices.Unity.Interception.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Microsoft.Web.Infrastructure.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\MsieJavaScriptEngine.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\MvcPager.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\Newtonsoft.Json.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\SPSRemoting.dll
@@ -129,6 +137,8 @@ D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\System.Web
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ru-ru\BundleTransformer.Core.resources.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ru-ru\BundleTransformer.Less.resources.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ru-ru\JavaScriptEngineSwitcher.Core.resources.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ru-ru\JavaScriptEngineSwitcher.V8.resources.dll
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\bin\ru-ru\MsieJavaScriptEngine.resources.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\obj\Debug\Fanex.NAP.Licensee.csprojResolveAssemblyReference.cache
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\obj\Debug\Fanex.NAP.Licensee.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee\obj\Debug\Fanex.NAP.Licensee.pdb
