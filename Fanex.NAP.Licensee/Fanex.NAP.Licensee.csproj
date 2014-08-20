@@ -243,7 +243,9 @@
     <Content Include="Scripts\Page\edit.js" />
     <Content Include="Scripts\Page\addnew.js" />
     <Content Include="Scripts\Page\default.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -372,6 +374,10 @@
     <None Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\BetSetting\Default.cshtml" />
+    <Content Include="Views\BetSetting\AddNew.cshtml" />
+    <Content Include="Views\BetSetting\Edit.cshtml" />
+    <Content Include="Views\BetSetting\Logs.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
