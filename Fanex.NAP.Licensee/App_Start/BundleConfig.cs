@@ -26,6 +26,14 @@ namespace Fanex.NAP.Licensee
 
             bundles.Add(css);
 
+            var cssFanexGrid = new Bundle("~/bundles/FanexGridCss")
+             .IncludeDirectory("~/Content/Fanex.Grid", "*.css");
+            cssFanexGrid.Builder = nullBuilder;
+            cssFanexGrid.Transforms.Add(cssTransformer);
+            cssFanexGrid.Orderer = nullOrderer;
+            
+            bundles.Add(cssFanexGrid);
+
             var coreJs = new Bundle("~/bundles/coreJs")
                 .Include("~/Scripts/jquery-1.9.0.js", "~/Scripts/bootstrap.js", "~/Scipts/Core/site.js",
                 "~/Scipts/Page/addnew.js"
@@ -34,12 +42,21 @@ namespace Fanex.NAP.Licensee
                  "~/Scipts/Page/viewlog.js"
                 );
 
-            css.Builder = nullBuilder;
+            coreJs.Builder = nullBuilder;
             coreJs.Transforms.Add(jsTransformer);
             coreJs.Orderer = nullOrderer;
 
             bundles.Add(coreJs);
 
+
+            var fanexGridJs = new Bundle("~/bundles/FanexGridJs")
+            .IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
+
+            fanexGridJs.Builder = nullBuilder;
+            fanexGridJs.Transforms.Add(jsTransformer);
+            fanexGridJs.Orderer = nullOrderer;
+
+            bundles.Add(fanexGridJs);
             // If you'd like to test the optimization locally,
             // you can use this line to force it.
             BundleTable.EnableOptimizations = true;

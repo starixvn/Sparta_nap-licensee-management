@@ -51,3 +51,4 @@ D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Model\bin\Debu
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Model\bin\Debug\UMControllerLibrary.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Model\obj\Debug\Fanex.NAP.Licensee.Model.dll
 D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Model\obj\Debug\Fanex.NAP.Licensee.Model.pdb
+D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Model\obj\Debug\Fanex.NAP.Licensee.Model.csprojResolveAssemblyReference.cache
