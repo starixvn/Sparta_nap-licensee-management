@@ -8,24 +8,35 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
-@Styles.Render("~/bundles/coreCss")
+    @Styles.Render("~/bundles/coreCss")
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~/")';
     </script>
 </head>
 <body>
-    <header>
-            <a class="logo" href="~/?ref=logo">&nbsp;</a>
+    <div class="container page">
+        <header class="row header">
+            <a class="logo" href="/Home">
+                Licensee
+                <span> Management</span>
+            </a>
             @Html.Action("_Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
+            <div class="user-info">
+                <span class="info-bar">Howdy, <span class="account-name">sa</span><span class="caret"></span></span>
+                <ul class="user-dropdown">
+                    <li><a href="#">Sign Out</a></li>
+                </ul>
+            </div>
         </header>
-    <section id="headline">
+        <section id="headline" class="row title-bar">
         @RenderSection("Headline", false)
-    </section>
-    <section id="body">
-        @RenderBody()
-    </section>
+        </section>
+        <section id="body" class="row body">          
+            @RenderBody()
+        </section>
+    </div>
     @RenderSection("Foot", false)
-  @Scripts.Render("~/bundles/coreJs")
+    @Scripts.Render("~/bundles/coreJs")
     @if (NapSettings.Settings.EnableReCheckIn)
     {
         <script src="~/Areas/UserLogin/scripts/ReCheckIn.js" type="text/javascript"> </script>

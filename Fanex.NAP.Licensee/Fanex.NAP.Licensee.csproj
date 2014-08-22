@@ -254,6 +254,8 @@
     <None Include="ClearScript.V8\v8-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\Core\img\sprites.png" />
+    <Content Include="Content\Core\img\user.png" />
     <Content Include="Content\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Content\Fanex.Grid\Fanex.Pagination.css" />
     <Content Include="Content\Fanex.Grid\images\1350530947_page_excel.png" />
@@ -433,6 +435,8 @@
     <None Include="Content\bootstrap\utilities.less" />
     <None Include="Content\bootstrap\variables.less" />
     <None Include="Content\bootstrap\wells.less" />
+    <None Include="Content\Core\variables.less" />
+    <None Include="Content\Core\common.less" />
     <None Include="Content\Core\site.less" />
     <None Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Content\fonts\glyphicons-halflings-regular.ttf" />
