@@ -511,7 +511,7 @@ footer {
 }
 
 /* Button */
-input[type="submit"], .primary-button,
+input[type="submit"], .btn-primary,
 .btn-red, .btn-green, .btn-back {
     .border-radius(2px);
     color: #fff;
@@ -532,7 +532,7 @@ input[type="submit"], .primary-button,
     }
 }
 
-input[type="submit"], .primary-button {
+input[type="submit"], .btn-primary {
     text-shadow: 0 1px rgba(0, 0, 0, 0.5);
     border: 1px solid #3C5B9B;
     .bg-linear-gradient(#5A7DC1, #486CB8);
@@ -595,11 +595,11 @@ input[type="submit"], .primary-button {
     border: 1px solid @filter_border;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
     margin: 0 0 15px;
-    padding: 10px;
+    padding: 10px 10px 0;
     display: inline-block;
 
     .form-group {
-        margin-right: 10px;
+        margin: 0 10px 10px 0;
         float: left;
 
         label {
@@ -654,6 +654,10 @@ input[type="submit"], .primary-button {
             margin-left: 17px;
         }
     }
+
+    &.form-add-setting {
+        width: 685px; 
+    }
 }
 
 .button-list {
@@ -661,12 +665,101 @@ input[type="submit"], .primary-button {
 }
 
 /* Icon */
-
-.list-icon {
+.icon {
     background: url(img/sprites.png) no-repeat scroll -96px -26px rgba(0, 0, 0, 0);
     cursor: pointer;
     float: left;
+}
+
+.list-icon {
+    .icon;
     height: 13px;
     margin: 1px 7px 0 0;
     width: 12px;
+}
+
+.icon-collapse {
+    .icon;
+    background-position: -101px -52px;
+    height: 15px;
+    width: 15px;
+    margin: 2px 5px 0 0;
+}
+
+.icon-expand {
+    .icon-collapse;
+    background-position: -77px -53px;
+}
+
+/* Grid */
+.content-grid {
+    float: left;
+    min-width: 99%;
+}
+
+/* table */
+
+.table {
+    background-color: @grid-bg;
+
+    &.table-setting {
+        width: 100%;
+        margin-top: 10px;
+
+        .col20 {
+            width: 20%;
+        }
+
+        .col30 {
+            width: 30%;
+        }
+
+        .col40 {
+            width: 40%;
+        }
+    }
+
+    &.table-bordered > thead > tr > th, &.table-bordered > thead > tr > td {
+        border-bottom-width: 1px;
+    }
+
+    .txt-max {
+        border: 1px solid @border-color;
+        height: 25px;
+        padding: 5px;
+        width: 100%;
+    }
+
+    thead {
+        th {
+            background-color: @grid-header-bg;
+            color: @grid-header-text;
+            border-color: @grid-header-border;
+            text-align: center;
+        }
+    }
+
+    thead > tr > th, tbody > tr > th, tfoot > tr > th, 
+    thead > tr > td, tbody > tr > td, tfoot > tr > td {
+        min-height: 25px;
+        padding: 5px;
+    }
+}
+
+/* Group */
+.group {
+    margin-bottom: 5px;
+    width: 685px;
+}
+
+.title-group {
+    background-color: #EDECEA;
+    border: 1px solid @border-color;
+    color: #3c5ea5;
+    line-height: 20px;
+    padding: 4px 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    .border-radius(2px);
 }

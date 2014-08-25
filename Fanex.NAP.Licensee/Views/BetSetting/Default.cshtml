@@ -1,6 +1,10 @@
-﻿@{
+﻿@using System.Web.Optimization;
+@{
     ViewBag.Title = "Default";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section HeadCss {
+    @Styles.Render("~/bundles/FanexGridCss")
 }
 @section Headline {
     <ul class="breadcrumb title">
@@ -8,8 +12,8 @@
         <li class="current">Default Bet Seting</li>
     </ul>
     <div class="pull-left">
-        <button class="btn-green">+ Add Bet Setting</button>
-        <button class="btn-green"><i class="list-icon"></i>View Log</button>
+        <a class="btn-green" href="addnew">+ Add Bet Setting</a>
+        <a class="btn-green" href="logs"><i class="list-icon"></i>View Log</a>
     </div>
 }
 <form role="form" class="form-inline col-sm-12 filter-form" >
