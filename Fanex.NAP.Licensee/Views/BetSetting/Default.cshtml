@@ -2,10 +2,55 @@
     ViewBag.Title = "Default";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section Headline {
     <ul class="breadcrumb title">
         <li>Bet Setting</li>
         <li class="current">Default Bet Seting</li>
     </ul>
+    <div class="pull-left">
+        <button class="btn-green">+ Add Bet Setting</button>
+        <button class="btn-green"><i class="list-icon"></i>View Log</button>
+    </div>
 }
+<form role="form" class="form-inline col-sm-12 filter-form" >
+    <div class="form-group">
+        <label for="licensee">
+            Licensee</label>
+        <select id="licensee" class="width-160">
+            <option value="">All Licensees</option>
+            <option value="3">12Bet</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="currency">
+            Currency</label>
+        <select id="currency" class="width-160">
+            <option value="">All currencies</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="product" class= lbl-product">
+            Product</label>
+        <div class="list-product">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1">
+                Sportsbook
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="option2">
+                Number Game
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option3">
+                Virtual Sports
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="option3">
+                Keno
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Generate" class="btn-generate">
+    </div>
+</form>

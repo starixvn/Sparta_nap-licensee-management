@@ -17,8 +17,7 @@ body {
     min-width: 480px;
 }
 
-.container {
-    width: 100% !important;
+.container-fluid {
 
     &.page {
         padding: 0;
@@ -361,7 +360,7 @@ a {
 
 .title-bar {
     margin: 0;
-    padding: 10px 15px 0;
+    padding: 10px 15px;
     border-top: solid 1px @white;
     font-size: @font-size + 5;
 
@@ -432,205 +431,6 @@ footer {
     }
 }
 
-/********************************************************/
-/*                      Override CSS                    */
-/********************************************************/
-
-.chzn-container-single .chzn-single {
-    .border-radius(3px);
-    color: @text - #111;
-    height: auto;
-    padding: 0 0 2px 8px;
-
-    div b {
-        background: url(img/chosen-sprite.png) no-repeat 0 1px;
-    }
-}
-
-.chzn-container-active {
-    .chzn-single {
-        border: 1px solid @border-color;
-    }
-
-    .chzn-single-with-drop {
-        .border-radius(3px 3px 0 0);
-    }
-}
-
-.ui-dialog {
-    background: @popup-bg;
-    color: @white;
-    .border-radius(0);
-    .box-shadow(0 3px 9px rgba(0, 0, 0, 0.5));
-
-    .ui-dialog-titlebar {
-        background: #466ab6;
-        border: 0;
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
-        height: 35px;
-        line-height: 35px;
-        margin: -5px -5px 5px;
-        padding: 0 20px;
-        color: @white;
-
-        .ui-dialog-title {
-            margin-top: 0;
-        }
-    }
-
-    .ui-dialog-content {
-        background-color: @white;
-        .border-radius(0);
-        color: @text;
-    }
-
-    .ui-dialog-titlebar-close {
-        border: 0;
-        top: 19px;
-        right: 10px;
-        padding: 0;
-
-        .ui-icon-closethick {
-            background-image: url(../img/smoothness/ui-icons_ffffff_256x240.png);
-
-            &:hover {
-                background-image: url(../img/smoothness/ui-icons_222222_256x240.png);
-                background-color: #466ab6;
-            }
-        }
-    }
-
-    .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
-    .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-        background: none;
-    }
-
-    .grid {
-        th {
-            padding: 6px 4px;
-        }
-    }
-}
-
-.tipsy {
-    font-size: .85em;
-}
-
-/********************************************************/
-/*                      PAGING                          */
-/********************************************************/
-
-.jpages {
-    margin: 0;
-    float: left;
-    border: 1px solid #bbb;
-    font-size: 0;
-    background-color: #fefefe;
-    .box-shadow(1px 1px 0 #fff);
-    .border-radius(2px);
-    
-
-    a {
-        display: inline-block;
-        background-color: #fff;
-        padding: 2px 8px;
-        font-size: @font-size - 2;
-        color: #292929;
-        text-shadow: 0 1px 0 #bbb;
-        cursor: pointer;
-        float: left;
-        border-right: 1px solid #bbb;
-        background-color: #fefefe;
-
-        &:hover {
-            background-color: #ddd;
-            text-decoration: none;
-        }
-
-        &:first-child {
-            background: url("img/first.png") no-repeat 0 4px;
-            font-size: 0;
-            margin-left: 7px;
-            padding: 9px 4px;
-            width: 15px;
-
-            &:hover {
-                background-position: 0 -18px;
-            }
-        }
-
-        &:last-child {
-            background: url("img/last.png") no-repeat 0 4px;
-            font-size: 0;
-            margin-left: 7px;
-            padding: 9px 4px;
-            width: 15px;
-
-            &:hover {
-                background-position:0 -17px;
-            }
-        }
-
-        &:nth-last-child(2) {
-            background: url("img/next.png") no-repeat scroll 0 2px;
-            font-size: 0;
-            margin-left: 7px;
-            padding: 9px 6px;
-            width: 10px;
-
-            &:hover {
-                background-position:0 -23px;
-            }
-        }
-    }
-
-    a:first-child+a {
-        background: url("img/prev.png") no-repeat 0 2px;
-        font-size: 0;
-        margin-left: 7px;
-        padding: 9px 4px;
-        width: 15px;        
-    }
-
-    a:first-child+a:hover {
-        background-position:0 -23px;
-    }
-
-    a[disabled] {
-        opacity: .35;
-        filter: alpha(Opacity=35);
-
-        &:hover {
-            background-color: #fff;
-            cursor: default;
-        }
-    }
-
-    a.jp-current, a.jp-current:hover {
-        background-color: #355391;
-        color: #fff;
-        cursor: default;
-    }
-}
-
-.items-per-page-wrp {
-    float: left;
-    margin-top: 0;
-    color: #000;
-    font-size: @font-size - 1;
-
-    .items-per-page {
-        margin: 0 10px 0 5px;
-        padding: 2px 3px;
-        background-color: #fff;
-        border: 1px solid #969696;
-        .box-shadow(1px 1px 0 @white);
-        .border-radius(2px);
-        font-size: @font-size - 2;
-        color: #292929;
-        height: 20px;
-    }
-}
 
 /********************************************************/
 /*                      Combo Picker                    */
@@ -710,151 +510,9 @@ footer {
     }
 }
 
-/* Customize create/edit form */
-.common-form {
-    background-color: #EDECEA;
-    border: 1px solid #CECCCD;
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-
-    &.assign-site {
-        background-color: #fff;
-        padding: 20px 0;
-    }
-    .form-group {
-        &.required {
-            .lbl-field label{
-                font-weight: bold;
-            }
-        }
-        .icon-edit, .icon-refresh {
-            padding-left: 0;
-            position: relative;
-            top: 9px;
-        }
-
-        .msg-box {
-            padding: 10px 30px;
-            line-height: 1.6em;
-            color: @msg-text;
-            .border-radius;
-            .box-shadow(1px 1px 3px rgba(0, 0, 0, 0.6));
-        }
-
-        .err {
-            background-color: @msg-err-bg;
-            border: solid 1px @msg-err-border;
-        }
-        .warn {
-            background-color: @msg-warn-bg;
-            border: solid 1px @msg-warn-border;
-        }
-        .info {
-            background-color: @msg-info-bg;
-            border: solid 1px @msg-info-border;
-        }
-
-        .validation-summary-valid.success, .validation-summary-errors {
-            ul {
-                .msg-box;
-                margin: 0 0 10px;
-                list-style-type: circle;
-                .transition;
-            }
-        }
-
-        .validation-summary-valid.success {
-            ul {
-                .info;
-
-                .msec {
-                    vertical-align: baseline;
-                }
-            }
-        }
-
-        .validation-summary-errors {
-            ul {
-                .err;
-            }
-        }
-        select {
-            border: 1px solid #C4C4C4;
-            font-family: Tahoma;
-            padding: 4px 5px 5px;
-        }
-    }
-
-    label {
-        font-weight: normal;
-        line-height: 25px;
-        float: right;
-    }
-
-    .lbl-field {
-        text-align: right;
-    }
-
-    .form-control {
-        .border-radius(2px);
-        height: 30px;
-        padding: 4px 5px;
-        font-size: @font-size;
-    }
-
-     select.form-control {
-        position: relative;
-     }
-
-    .chk-field, .rdo-field {
-        label {
-            float: none;
-        }
-        .chkActive {
-            position: relative;
-            top: -6px;
-        }
-    }
-
-    input[type=text].input-validation-error,
-    input[type=password].input-validation-error,
-    select.input-validation-error {
-        border: solid 1px @msg-err-border !important;
-        background-color: @msg-err-bg + #444 !important;
-    }
-}
-.form {
-    padding: 20px 40px;
-    border: 1px solid #C4C4C4;
-    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
-    float: left;
-    .grid.no-scale label {
-        font-weight: normal;
-    }
-}
-.info-form {
-    width: 400px;
-    padding: 0 10px;
-
-    .form-group {
-        margin-bottom: 9px;
-    }
-    .line {
-        border-bottom: 1px dotted @border-color;
-        padding-bottom: 10px;
-    }
-}
-.ui-datepicker-week-end {
-    color: #C84519;
-}
-
-.ui-widget {
-    font-family : Tahoma,Arial,Helvetica,sans-serif;	
-    font-size: 1em;
-}
 /* Button */
 input[type="submit"], .primary-button,
-.cancel-button, .add-button, .back-button {
+.btn-red, .btn-green, .btn-back {
     .border-radius(2px);
     color: #fff;
     font-weight: bold;
@@ -866,6 +524,7 @@ input[type="submit"], .primary-button,
     display: inline-block;
     float: left;
     cursor: pointer;
+    line-height: 15px;
 
     &:hover {
         color: #FFF;
@@ -886,7 +545,7 @@ input[type="submit"], .primary-button {
 }
 
 
-.cancel-button {
+.btn-red {
     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
     border: 1px solid #893A2E;
     .box-shadow(0 1px 1px rgba(255, 255, 255, 0.25) inset);
@@ -898,7 +557,7 @@ input[type="submit"], .primary-button {
     }
 }
 
-.add-button {
+.btn-green {
     padding: 4px 10px;
     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
     border: 1px solid #729446;
@@ -914,7 +573,7 @@ input[type="submit"], .primary-button {
 
 }
 
-.back-button {
+.btn-back {
     background: #F3F3F3;
     border: 1px solid #C5C5C5;
     color: #4F82C6;
@@ -944,14 +603,55 @@ input[type="submit"], .primary-button {
         float: left;
 
         label {
-            margin-right: 5px;
+            margin: 0 5px 2px 0;
             font-weight: normal;
+            vertical-align: middle;
+
+            &.lbl {
+                width: 50px;
+                text-align: right;
+            }
+        }
+
+        * {
+            vertical-align: middle;
         }
 
         input[type="text"], select {
             border: 1px solid @border-color;
             height: 25px;
             padding: 2px;
+        }
+
+        .width-160 {
+            width: 160px;
+        }
+
+        .lbl-product, .list-product {
+            display: inline-block;
+        }
+
+        .lbl-product {
+            margin-right: 10px;
+        }
+
+        .hasDatepicker {
+            background: url(img/icon-calendar.png) #fff 135px center no-repeat;
+            border: 1px solid #cecccd;
+            padding: 0 26px 2px 7px;
+            height: 25px;
+        }
+    }
+
+    .row-form {
+        margin: 5px 0 7px;
+        padding: 0 20px;
+        float: left;
+    }
+
+    &.filter-logs {
+        .btn-generate {
+            margin-left: 17px;
         }
     }
 }
@@ -960,67 +660,13 @@ input[type="submit"], .primary-button {
     margin-top: 10px;
 }
 
-/* Message popup */
-.msgbox.confirm {
-    background-color: #fff;
-    border-color: @border-color;
-    min-width: 300px;
-    padding: 15px;
+/* Icon */
 
-    .msgbox-content {
-        text-align: center;
-    }
-}
-
-.msgbox .msgbox-btn-wrap {
-    border-color: @border-color;
-    text-align: center;
-
-    .msgbox-btn {
-        &.ok {
-            .primary-button;
-            padding: 4px 10px;
-            float: none;
-        }
-
-        &.cancel {
-            .cancel-button;
-            padding: 4px 10px;
-            margin-right: 0;
-            float: none;
-        }
-    }
-}
-
-
-.msgbox.err {
-    min-width: 300px;
-
-    .msgbox-content {
-        text-align: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .common-form {
-        label {
-            float: left;
-        }
-    }
-    .common-form {
-        &.mailing-list {
-            min-height: 1050px;
-        }
-
-        .lbl-field {
-            margin-bottom: 7px;
-        }
-    }
-}
-@media (min-width: 768px) and (max-width: 1270px){
-    .common-form {
-        &.mailing-list {
-            min-height: 830px;
-        }
-    }
+.list-icon {
+    background: url(img/sprites.png) no-repeat scroll -96px -26px rgba(0, 0, 0, 0);
+    cursor: pointer;
+    float: left;
+    height: 13px;
+    margin: 1px 7px 0 0;
+    width: 12px;
 }
