@@ -242,18 +242,18 @@
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome2.png" />
     <Content Include="Areas\UserLogin\themes\login.css" />
-    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
+    <Content Include="ClearScript.V8\ClearScriptV8-32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
+    </Content>
+    <Content Include="ClearScript.V8\ClearScriptV8-64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-ia32.dll">
+    </Content>
+    <Content Include="ClearScript.V8\v8-ia32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-x64.dll">
+    </Content>
+    <Content Include="ClearScript.V8\v8-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Core\img\favicon.ico" />
     <Content Include="Content\Core\img\icon-calendar.png" />
@@ -371,9 +371,6 @@
     <Content Include="Content\Core\variables.less" />
     <Content Include="Content\Core\common.less" />
     <Content Include="Content\Core\site.less" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -447,6 +444,9 @@
     <Content Include="Content\bootstrap\utilities.less" />
     <Content Include="Content\bootstrap\variables.less" />
     <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Views\Error\AccessDenied.cshtml" />

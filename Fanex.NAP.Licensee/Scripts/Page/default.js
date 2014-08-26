@@ -47,11 +47,11 @@ var defaultSetting = (function () { // jshint ignore:line
         for (var index = 0; index < numberRows; index++) {
             var currentColumms = [];
 
-            if (currentMerRowNumber == 0) {
+            if (currentMerRowNumber === 0) {
                 currentMerRowNumber = Math.round(Math.random() * 5) + 2;
                 //if(currentColumms + index < 0)
                 currentColumms.push({ Name: "Licensee", Value: "Alice :)", MergeRowNumber: currentMerRowNumber });
-                if (evenClass == 'freegrid-even') {
+                if (evenClass === 'freegrid-even') {
                     evenClass = '';
                 }
                 else {
@@ -66,8 +66,8 @@ var defaultSetting = (function () { // jshint ignore:line
                     { Name: "Agent", Value: "Alice :)moa^)" },
                     { Name: "BetOrGameType", Value: "Bond Girl A ha" },
                     { Name: "MaxBet", Value: (Math.random() * 1000).toFixed(3) },
-                    { Name: "MaxPerMatch", Value: (index % 2 == 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
-                    { Name: "MaxPerBall", Value: (index % 2 == 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
+                    { Name: "MaxPerMatch", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
+                    { Name: "MaxPerBall", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
                     { Name: "Action", Value: generateActionLink("12bet", 13, 13454) }
 
                 ]),
