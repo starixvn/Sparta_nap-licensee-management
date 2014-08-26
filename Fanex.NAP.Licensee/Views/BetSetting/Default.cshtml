@@ -58,3 +58,16 @@
         <input type="submit" value="Generate" class="btn-generate">
     </div>
 </form>
+<div id="report-content">
+<div id="gridId" class="freegrid  content-grid">
+</div>
+</div>
+@section FooterJs
+{
+@Scripts.Render("~/bundles/FanexGridJs")
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        defaultSetting.setup();
+    });
+</script>
+}

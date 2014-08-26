@@ -19,7 +19,8 @@ namespace Fanex.NAP.Licensee
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")
-            .Include("~/Content/bootstrap/bootstrap.less", "~/Content/Core/site.less");
+            .Include("~/Content/bootstrap/bootstrap.less")
+            .Include("~/Content/Core/site.less");
             css.Builder = nullBuilder;
             css.Transforms.Add(cssTransformer);
             css.Orderer = nullOrderer;
@@ -36,10 +37,10 @@ namespace Fanex.NAP.Licensee
 
             var coreJs = new Bundle("~/bundles/coreJs")
                 .Include("~/Scripts/jquery-1.9.0.js", "~/Scripts/bootstrap.js", "~/Scipts/Core/site.js",
-                "~/Scipts/Page/addnew.js"
-                , "~/Scipts/Page/default.js",
-                "~/Scipts/Page/edit.js",
-                 "~/Scipts/Page/viewlog.js"
+                "~/Scripts/Page/addnew.js"
+                , "~/Scripts/Page/default.js",
+                "~/Scripts/Page/edit.js",
+                 "~/Scripts/Page/viewlog.js"
                 );
 
             coreJs.Builder = nullBuilder;
