@@ -254,12 +254,6 @@
     <None Include="ClearScript.V8\v8-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap\css\bootstrap.css" />
-    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\bootstrap\js\bootstrap.js" />
-    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\Core\img\favicon.ico" />
     <Content Include="Content\Core\img\icon-calendar.png" />
     <Content Include="Content\Core\img\sprites.png" />
@@ -383,13 +377,7 @@
     <None Include="Content\bootstrap\close.less" />
     <None Include="Content\bootstrap\code.less" />
     <None Include="Content\bootstrap\component-animations.less" />
-    <None Include="Content\bootstrap\css\bootstrap-theme.css.map" />
-    <None Include="Content\bootstrap\css\bootstrap.css.map" />
     <None Include="Content\bootstrap\dropdowns.less" />
-    <None Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <None Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Content\bootstrap\forms.less" />
     <None Include="Content\bootstrap\glyphicons.less" />
     <None Include="Content\bootstrap\grid.less" />

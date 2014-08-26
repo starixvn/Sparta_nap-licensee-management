@@ -19,7 +19,7 @@ namespace Fanex.NAP.Licensee
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")
-            .Include("~/Content/bootstrap/css/bootstrap.css", "~/Content/core/site.less");
+            .Include("~/Content/bootstrap/bootstrap.less", "~/Content/core/site.less");
             css.Builder = nullBuilder;
             css.Transforms.Add(cssTransformer);
             css.Orderer = nullOrderer;
