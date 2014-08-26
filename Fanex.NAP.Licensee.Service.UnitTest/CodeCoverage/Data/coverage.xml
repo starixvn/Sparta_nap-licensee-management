@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Summary numSequencePoints="148" visitedSequencePoints="54" numBranchPoints="60" visitedBranchPoints="12" sequenceCoverage="36.49" branchCoverage="20" maxCyclomaticComplexity="4" minCyclomaticComplexity="1" />
+  <Modules>
+    <Module skippedDueTo="Filter" hash="54-D4-51-C6-FF-08-C9-23-DD-60-29-FB-72-FC-DE-35-B4-41-DA-06">
+      <FullName>C:\Windows\assembly\GAC_64\mscorlib\2.0.0.0__b77a5c561934e089\mscorlib.dll</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F9-04-A8-31-CD-FB-23-72-95-63-5D-14-9A-A0-66-8E-7F-44-93-7A">
+      <FullName>C:\Windows\assembly\GAC_64\mscorlib\2.0.0.0__b77a5c561934e089\sorttbls.nlp</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="6E-30-2E-50-36-FB-60-2C-8E-50-C0-83-54-8B-CC-EA-A8-91-B6-CC">
+      <FullName>C:\Windows\assembly\GAC_64\mscorlib\2.0.0.0__b77a5c561934e089\sortkey.nlp</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="F9-CA-B6-79-63-CB-31-8A-0D-DC-C3-D0-43-F8-28-C3-F0-95-F9-E7">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\nunit-console.exe</FullName>
+      <ModuleName>nunit-console</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="2A-C4-E5-DE-F3-EE-AD-84-E1-65-84-CC-15-90-76-96-E7-01-44-4E">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit-console-runner.dll</FullName>
+      <ModuleName>nunit-console-runner</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="33-E1-CA-24-52-5A-B7-C7-C4-AF-91-2C-A9-4A-C0-37-67-0D-5B-FE">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.dll</FullName>
+      <ModuleName>nunit.core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="74-74-F6-87-59-E1-5F-4F-5F-5E-6E-82-50-E8-E2-46-D4-86-15-76">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.util.dll</FullName>
+      <ModuleName>nunit.util</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="D3-A4-4D-85-55-F7-CE-EF-A5-90-AA-EF-58-E0-9F-B6-CC-27-99-53">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.interfaces.dll</FullName>
+      <ModuleName>nunit.core.interfaces</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="2A-60-8B-4A-3C-70-B8-FF-64-48-FF-7D-A0-B6-1D-FA-D6-1F-A5-A8">
+      <FullName>C:\Windows\assembly\GAC_MSIL\System.Configuration\2.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</FullName>
+      <ModuleName>System.Configuration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D3-99-70-9D-4C-FD-70-CC-82-00-AA-75-7A-54-8C-25-AC-54-B1-BF">
+      <FullName>C:\Windows\assembly\GAC_MSIL\System\2.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="7F-E0-85-AE-7B-D0-80-35-F9-68-74-9E-B2-8A-62-18-81-FC-2A-0F">
+      <FullName>C:\Windows\assembly\GAC_MSIL\System.Xml\2.0.0.0__b77a5c561934e089\System.Xml.dll</FullName>
+      <ModuleName>System.Xml</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="92-44-10-37-4C-84-2D-65-E3-A0-6A-B9-9F-01-42-6A-27-41-4A-8C">
+      <FullName>C:\Windows\assembly\GAC_MSIL\System.Runtime.Remoting\2.0.0.0__b77a5c561934e089\System.Runtime.Remoting.dll</FullName>
+      <ModuleName>System.Runtime.Remoting</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="30-4D-DF-CA-FA-87-89-48-F5-43-E7-06-A5-AC-42-A1-FC-B6-62-6E">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_64\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="87-52-C5-B2-2F-D3-F5-4F-58-BF-89-4A-88-59-6D-CE-F4-7F-6A-3B">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\nunit-agent.exe</FullName>
+      <ModuleName>nunit-agent</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="33-E1-CA-24-52-5A-B7-C7-C4-AF-91-2C-A9-4A-C0-37-67-0D-5B-FE">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.dll</FullName>
+      <ModuleName>nunit.core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="74-74-F6-87-59-E1-5F-4F-5F-5E-6E-82-50-E8-E2-46-D4-86-15-76">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.util.dll</FullName>
+      <ModuleName>nunit.util</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="D3-A4-4D-85-55-F7-CE-EF-A5-90-AA-EF-58-E0-9F-B6-CC-27-99-53">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.interfaces.dll</FullName>
+      <ModuleName>nunit.core.interfaces</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="02-F0-25-E3-FB-94-05-50-52-2D-56-93-FF-B4-9B-8C-50-E0-A1-41">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="84-64-E1-D2-0A-E2-91-23-AD-BD-B9-7A-3C-89-7B-66-65-58-46-1C">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Remoting\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Remoting.dll</FullName>
+      <ModuleName>System.Runtime.Remoting</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="80-32-3B-47-08-F0-74-C4-64-F6-98-9B-54-B3-69-B5-B9-29-D3-E9">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</FullName>
+      <ModuleName>System.Configuration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="4B-C6-12-DA-61-6B-39-09-CD-DF-A1-00-79-12-63-F9-8E-72-76-27">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</FullName>
+      <ModuleName>System.Xml</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="59-42-E6-F8-DD-8B-B7-45-80-77-BD-4E-59-0E-95-5F-C2-7C-53-D8">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_64\System.Web\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Web.dll</FullName>
+      <ModuleName>System.Web</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B9-A9-D4-A0-3F-B8-0B-A8-44-42-0C-78-5E-85-BD-56-34-63-30-7D">
+      <FullName>C:\Windows\assembly\GAC_64\System.Web\2.0.0.0__b03f5f7f11d50a3a\System.Web.dll</FullName>
+      <ModuleName>System.Web</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="33-E1-CA-24-52-5A-B7-C7-C4-AF-91-2C-A9-4A-C0-37-67-0D-5B-FE">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.dll</FullName>
+      <ModuleName>nunit.core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="02-F0-25-E3-FB-94-05-50-52-2D-56-93-FF-B4-9B-8C-50-E0-A1-41">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="B6-96-0F-77-90-5D-5D-2F-9A-F2-9F-C4-E5-75-AD-9C-ED-57-F3-17">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\pnunit.framework.dll</FullName>
+      <ModuleName>pnunit.framework</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="BF-1D-D7-35-9F-DE-AD-6C-C5-85-0E-59-71-C4-80-76-13-06-73-54">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\pnunit-agent.exe</FullName>
+      <ModuleName>pnunit-agent</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="D3-A4-4D-85-55-F7-CE-EF-A5-90-AA-EF-58-E0-9F-B6-CC-27-99-53">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit.core.interfaces.dll</FullName>
+      <ModuleName>nunit.core.interfaces</ModuleName>
+      <Classes />
+    </Module>
+    <Module hash="AD-F5-CD-15-EA-CE-C5-72-83-EB-4B-FB-D1-55-27-57-21-B6-4B-66">
+      <Summary numSequencePoints="33" visitedSequencePoints="33" numBranchPoints="5" visitedBranchPoints="5" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service.UnitTest\bin\Debug\Fanex.NAP.Licensee.Service.UnitTest.dll</FullName>
+      <ModuleName>Fanex.NAP.Licensee.Service.UnitTest</ModuleName>
+      <Files>
+        <File uid="1" fullPath="D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service.UnitTest\CastTest.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" />
+          <FullName>&lt;Module&gt;</FullName>
+          <Methods />
+        </Class>
+        <Class>
+          <Summary numSequencePoints="33" visitedSequencePoints="33" numBranchPoints="5" visitedBranchPoints="5" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+          <FullName>Fanex.NAP.Licensee.Service.UnitTest.CastTest</FullName>
+          <Methods>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="6" visitedSequencePoints="6" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663297</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::AsDecimal_ValueIsNull_ReturnDefaultValue()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="1" ordinal="0" offset="0" sl="13" sc="9" el="13" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="2" ordinal="1" offset="1" sl="15" sc="13" el="15" ec="33" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="3" ordinal="2" offset="3" sl="16" sc="13" el="16" ec="38" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="4" ordinal="3" offset="10" sl="19" sc="13" el="19" ec="72" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="5" ordinal="4" offset="19" sl="22" sc="13" el="22" ec="51" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="6" ordinal="5" offset="27" sl="23" sc="9" el="23" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="1" ordinal="0" offset="0" sl="13" sc="9" el="13" ec="10" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="7" visitedSequencePoints="7" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663298</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::AsDecimal_ValidValue_ReturnValue()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="7" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="8" ordinal="1" offset="1" sl="29" sc="13" el="29" ec="31" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="9" ordinal="2" offset="13" sl="30" sc="13" el="30" ec="38" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="10" ordinal="3" offset="20" sl="31" sc="13" el="31" ec="52" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="11" ordinal="4" offset="31" sl="34" sc="13" el="34" ec="75" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="12" ordinal="5" offset="45" sl="37" sc="13" el="37" ec="44" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="13" ordinal="6" offset="53" sl="38" sc="9" el="38" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="7" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="7" visitedSequencePoints="7" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663299</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::AsDecimal_InvalidFormatValue_ReturnDefaultValue()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="14" ordinal="0" offset="0" sl="42" sc="9" el="42" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="15" ordinal="1" offset="1" sl="44" sc="13" el="44" ec="31" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="16" ordinal="2" offset="7" sl="45" sc="13" el="45" ec="38" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="17" ordinal="3" offset="14" sl="46" sc="13" el="46" ec="52" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="18" ordinal="4" offset="25" sl="49" sc="13" el="49" ec="75" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="19" ordinal="5" offset="34" sl="52" sc="13" el="52" ec="51" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="20" ordinal="6" offset="42" sl="53" sc="9" el="53" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="14" ordinal="0" offset="0" sl="42" sc="9" el="42" ec="10" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="7" visitedSequencePoints="7" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663300</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::AsDecimal_InvalidCastValue_ReturnDefaultValue()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="21" ordinal="0" offset="0" sl="57" sc="9" el="57" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="22" ordinal="1" offset="1" sl="59" sc="13" el="59" ec="45" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="23" ordinal="2" offset="7" sl="60" sc="13" el="60" ec="38" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="24" ordinal="3" offset="14" sl="61" sc="13" el="61" ec="52" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="25" ordinal="4" offset="25" sl="64" sc="13" el="64" ec="75" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="26" ordinal="5" offset="34" sl="67" sc="13" el="67" ec="51" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="27" ordinal="6" offset="42" sl="68" sc="9" el="68" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="21" ordinal="0" offset="0" sl="57" sc="9" el="57" ec="10" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="6" visitedSequencePoints="6" numBranchPoints="1" visitedBranchPoints="1" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663301</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::AsDecimal_ValidValueAndProviderIsNull_ReturnFormatNumberWithCurrentCulture()</Name>
+              <FileRef uid="1" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="28" ordinal="0" offset="0" sl="72" sc="9" el="72" ec="10" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="29" ordinal="1" offset="1" sl="74" sc="13" el="74" ec="31" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="30" ordinal="2" offset="13" sl="75" sc="13" el="75" ec="38" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="31" ordinal="3" offset="20" sl="78" sc="13" el="78" ec="72" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="32" ordinal="4" offset="34" sl="81" sc="13" el="81" ec="44" bec="0" bev="0" fileid="1" />
+                <SequencePoint vc="1" uspid="33" ordinal="5" offset="42" sl="82" sc="9" el="82" ec="10" bec="0" bev="0" fileid="1" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="1" uspid="28" ordinal="0" offset="0" sl="72" sc="9" el="72" ec="10" bec="0" bev="0" fileid="1" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="true" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663302</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.UnitTest.CastTest::.ctor()</Name>
+              <SequencePoints />
+              <BranchPoints />
+              <MethodPoint vc="1" uspid="34" ordinal="0" offset="0" />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="42-83-FE-A6-9F-01-8E-2C-E8-41-E9-25-3E-1E-0D-99-81-76-6B-C9">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service.UnitTest\bin\Debug\nunit.framework.dll</FullName>
+      <ModuleName>nunit.framework</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="MissingPdb" hash="2A-C4-E5-DE-F3-EE-AD-84-E1-65-84-CC-15-90-76-96-E7-01-44-4E">
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\packages\NUnit.Runners.2.6.3\tools\lib\nunit-console-runner.dll</FullName>
+      <ModuleName>nunit-console-runner</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="84-64-E1-D2-0A-E2-91-23-AD-BD-B9-7A-3C-89-7B-66-65-58-46-1C">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Remoting\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Remoting.dll</FullName>
+      <ModuleName>System.Runtime.Remoting</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="80-32-3B-47-08-F0-74-C4-64-F6-98-9B-54-B3-69-B5-B9-29-D3-E9">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</FullName>
+      <ModuleName>System.Configuration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="4B-C6-12-DA-61-6B-39-09-CD-DF-A1-00-79-12-63-F9-8E-72-76-27">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</FullName>
+      <ModuleName>System.Xml</ModuleName>
+      <Classes />
+    </Module>
+    <Module hash="1C-CA-59-B5-52-6B-AE-E5-21-64-75-67-5E-CF-A7-E7-32-B1-D5-ED">
+      <Summary numSequencePoints="115" visitedSequencePoints="21" numBranchPoints="55" visitedBranchPoints="7" sequenceCoverage="18.26" branchCoverage="12.73" maxCyclomaticComplexity="4" minCyclomaticComplexity="1" />
+      <FullName>D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service.UnitTest\bin\Debug\Fanex.NAP.Licensee.Service.dll</FullName>
+      <ModuleName>Fanex.NAP.Licensee.Service</ModuleName>
+      <Files>
+        <File uid="3" fullPath="D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service\Utilities\AppSession.cs" />
+        <File uid="4" fullPath="D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service\Utilities\SessionManager.cs" />
+        <File uid="5" fullPath="D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service\Utilities\PermissionService.cs" />
+        <File uid="6" fullPath="D:\TeamProject\GIT_LAB\nap-licensee-management\Fanex.NAP.Licensee.Service\Utilities\Cast.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" />
+          <FullName>&lt;Module&gt;</FullName>
+          <Methods />
+        </Class>
+        <Class>
+          <Summary numSequencePoints="47" visitedSequencePoints="0" numBranchPoints="14" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+          <FullName>Fanex.NAP.Licensee.Service.AppSession</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663297</MetadataToken>
+              <Name>Fanex.NAP.Core.Model.User Fanex.NAP.Licensee.Service.AppSession::get_CurrentUser()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="35" ordinal="0" offset="0" sl="37" sc="17" el="37" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="36" ordinal="1" offset="1" sl="37" sc="19" el="37" ec="72" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="37" ordinal="2" offset="14" sl="37" sc="73" el="37" ec="74" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="35" ordinal="0" offset="0" sl="37" sc="17" el="37" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663298</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_CurrentUser(Fanex.NAP.Core.Model.User)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="38" ordinal="0" offset="0" sl="39" sc="17" el="39" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="39" ordinal="1" offset="1" sl="39" sc="19" el="39" ec="66" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="40" ordinal="2" offset="13" sl="39" sc="67" el="39" ec="68" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="38" ordinal="0" offset="0" sl="39" sc="17" el="39" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663299</MetadataToken>
+              <Name>System.Collections.Generic.IList`1&lt;Fanex.NAP.Core.Model.MenuItem&gt; Fanex.NAP.Licensee.Service.AppSession::get_CurrentUserMenu()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="41" ordinal="0" offset="0" sl="48" sc="17" el="48" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="42" ordinal="1" offset="1" sl="48" sc="19" el="48" ec="82" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="43" ordinal="2" offset="14" sl="48" sc="83" el="48" ec="84" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="41" ordinal="0" offset="0" sl="48" sc="17" el="48" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663300</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_CurrentUserMenu(System.Collections.Generic.IList`1&lt;Fanex.NAP.Core.Model.MenuItem&gt;)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="44" ordinal="0" offset="0" sl="50" sc="17" el="50" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="45" ordinal="1" offset="1" sl="50" sc="19" el="50" ec="65" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="46" ordinal="2" offset="13" sl="50" sc="66" el="50" ec="67" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="44" ordinal="0" offset="0" sl="50" sc="17" el="50" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663301</MetadataToken>
+              <Name>System.Collections.Generic.Dictionary`2&lt;System.String,System.Int32&gt; Fanex.NAP.Licensee.Service.AppSession::get_RoleAccess()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="47" ordinal="0" offset="0" sl="56" sc="13" el="56" ec="14" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="48" ordinal="1" offset="1" sl="58" sc="17" el="58" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="49" ordinal="2" offset="2" sl="59" sc="21" el="59" ec="98" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="50" ordinal="3" offset="15" sl="61" sc="17" el="61" ec="44" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="51" ordinal="4" offset="16" sl="62" sc="17" el="62" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="52" ordinal="5" offset="17" sl="63" sc="21" el="63" ec="68" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="53" ordinal="6" offset="30" sl="64" sc="21" el="64" ec="27" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="54" ordinal="7" offset="33" sl="66" sc="13" el="66" ec="14" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="47" ordinal="0" offset="0" sl="56" sc="13" el="56" ec="14" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663302</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_RoleAccess(System.Collections.Generic.Dictionary`2&lt;System.String,System.Int32&gt;)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="55" ordinal="0" offset="0" sl="69" sc="13" el="69" ec="14" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="56" ordinal="1" offset="1" sl="70" sc="17" el="70" ec="69" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="57" ordinal="2" offset="13" sl="71" sc="13" el="71" ec="14" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="55" ordinal="0" offset="0" sl="69" sc="13" el="69" ec="14" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663303</MetadataToken>
+              <Name>Fanex.NAP.Core.Model.MenuItem Fanex.NAP.Licensee.Service.AppSession::get_CurrentWorkingOnMenu()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="58" ordinal="0" offset="0" sl="80" sc="17" el="80" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="59" ordinal="1" offset="1" sl="80" sc="19" el="80" ec="80" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="60" ordinal="2" offset="14" sl="80" sc="81" el="80" ec="82" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="58" ordinal="0" offset="0" sl="80" sc="17" el="80" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663304</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_CurrentWorkingOnMenu(Fanex.NAP.Core.Model.MenuItem)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="61" ordinal="0" offset="0" sl="82" sc="17" el="82" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="62" ordinal="1" offset="1" sl="82" sc="19" el="82" ec="70" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="63" ordinal="2" offset="13" sl="82" sc="71" el="82" ec="72" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="61" ordinal="0" offset="0" sl="82" sc="17" el="82" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663305</MetadataToken>
+              <Name>System.String Fanex.NAP.Licensee.Service.AppSession::get_CurrentActionName()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="64" ordinal="0" offset="0" sl="92" sc="17" el="92" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="65" ordinal="1" offset="1" sl="92" sc="19" el="92" ec="75" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="66" ordinal="2" offset="14" sl="92" sc="76" el="92" ec="77" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="64" ordinal="0" offset="0" sl="92" sc="17" el="92" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663306</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_CurrentActionName(System.String)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="67" ordinal="0" offset="0" sl="94" sc="17" el="94" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="68" ordinal="1" offset="1" sl="94" sc="19" el="94" ec="67" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="69" ordinal="2" offset="13" sl="94" sc="68" el="94" ec="69" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="67" ordinal="0" offset="0" sl="94" sc="17" el="94" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663307</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.AppSession::get_IsAccountingLogin()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="70" ordinal="0" offset="0" sl="99" sc="17" el="99" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="71" ordinal="1" offset="1" sl="99" sc="19" el="99" ec="73" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="72" ordinal="2" offset="14" sl="99" sc="74" el="99" ec="75" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="70" ordinal="0" offset="0" sl="99" sc="17" el="99" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663308</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_IsAccountingLogin(System.Boolean)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="73" ordinal="0" offset="0" sl="101" sc="17" el="101" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="74" ordinal="1" offset="1" sl="101" sc="19" el="101" ec="67" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="75" ordinal="2" offset="13" sl="101" sc="68" el="101" ec="69" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="73" ordinal="0" offset="0" sl="101" sc="17" el="101" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="true" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663309</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.AppSession::get_ViewIPVN()</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="76" ordinal="0" offset="0" sl="106" sc="17" el="106" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="77" ordinal="1" offset="1" sl="106" sc="19" el="106" ec="64" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="78" ordinal="2" offset="14" sl="106" sc="65" el="106" ec="66" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="76" ordinal="0" offset="0" sl="106" sc="17" el="106" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="true">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663310</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.AppSession::set_ViewIPVN(System.Boolean)</Name>
+              <FileRef uid="3" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="79" ordinal="0" offset="0" sl="108" sc="17" el="108" ec="18" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="80" ordinal="1" offset="1" sl="108" sc="19" el="108" ec="58" bec="0" bev="0" fileid="3" />
+                <SequencePoint vc="0" uspid="81" ordinal="2" offset="13" sl="108" sc="59" el="108" ec="60" bec="0" bev="0" fileid="3" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="79" ordinal="0" offset="0" sl="108" sc="17" el="108" ec="18" bec="0" bev="0" fileid="3" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="17" visitedSequencePoints="0" numBranchPoints="4" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+          <FullName>Fanex.NAP.Licensee.Service.SessionManager</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663311</MetadataToken>
+              <Name>T Fanex.NAP.Licensee.Service.SessionManager::Get(System.String)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="82" ordinal="0" offset="0" sl="30" sc="9" el="30" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="83" ordinal="1" offset="1" sl="32" sc="13" el="32" ec="14" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="84" ordinal="2" offset="2" sl="33" sc="17" el="33" ec="72" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="85" ordinal="3" offset="24" sl="34" sc="17" el="34" ec="30" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="86" ordinal="4" offset="28" sl="36" sc="13" el="36" ec="30" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="87" ordinal="5" offset="29" sl="37" sc="13" el="37" ec="14" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="88" ordinal="6" offset="30" sl="38" sc="17" el="38" ec="35" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="89" ordinal="7" offset="43" sl="40" sc="9" el="40" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="82" ordinal="0" offset="0" sl="30" sc="9" el="30" ec="10" bec="0" bev="0" fileid="4" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663312</MetadataToken>
+              <Name>System.Object Fanex.NAP.Licensee.Service.SessionManager::Get(System.String)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="90" ordinal="0" offset="0" sl="48" sc="9" el="48" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="91" ordinal="1" offset="1" sl="49" sc="13" el="49" ec="44" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="92" ordinal="2" offset="10" sl="50" sc="9" el="50" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="90" ordinal="0" offset="0" sl="48" sc="9" el="48" ec="10" bec="0" bev="0" fileid="4" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663313</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.SessionManager::Set(System.String,T)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="93" ordinal="0" offset="0" sl="53" sc="9" el="53" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="94" ordinal="1" offset="1" sl="54" sc="13" el="54" ec="61" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="95" ordinal="2" offset="24" sl="55" sc="9" el="55" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="93" ordinal="0" offset="0" sl="53" sc="9" el="53" ec="10" bec="0" bev="0" fileid="4" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663314</MetadataToken>
+              <Name>System.Void Fanex.NAP.Licensee.Service.SessionManager::Set(System.String,System.Object)</Name>
+              <FileRef uid="4" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="96" ordinal="0" offset="0" sl="58" sc="9" el="58" ec="10" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="97" ordinal="1" offset="1" sl="59" sc="13" el="59" ec="44" bec="0" bev="0" fileid="4" />
+                <SequencePoint vc="0" uspid="98" ordinal="2" offset="9" sl="60" sc="9" el="60" ec="10" bec="0" bev="0" fileid="4" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="96" ordinal="0" offset="0" sl="58" sc="9" el="58" ec="10" bec="0" bev="0" fileid="4" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="15" visitedSequencePoints="0" numBranchPoints="25" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="4" minCyclomaticComplexity="1" />
+          <FullName>Fanex.NAP.Licensee.Service.Utilities.PermissionService</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="4" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="7" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="4" minCyclomaticComplexity="4" />
+              <MetadataToken>100663315</MetadataToken>
+              <Name>System.Collections.Generic.Dictionary`2&lt;System.String,System.Int32&gt; Fanex.NAP.Licensee.Service.Utilities.PermissionService::GetRoleAccess(System.Collections.Generic.IEnumerable`1&lt;Fanex.NAP.Core.Model.ValueObject.FunctionPolicy&gt;)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="99" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="100" ordinal="1" offset="1" sl="28" sc="13" el="29" ec="138" bec="6" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="101" ordinal="2" offset="108" sl="30" sc="9" el="30" ec="10" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="0" uspid="102" ordinal="0" offset="7" path="0" offsetchain="" offsetend="9" />
+                <BranchPoint vc="0" uspid="103" ordinal="1" offset="7" path="1" offsetchain="" offsetend="28" />
+                <BranchPoint vc="0" uspid="104" ordinal="2" offset="43" path="0" offsetchain="" offsetend="45" />
+                <BranchPoint vc="0" uspid="105" ordinal="3" offset="43" path="1" offsetchain="" offsetend="64" />
+                <BranchPoint vc="0" uspid="106" ordinal="4" offset="74" path="0" offsetchain="" offsetend="76" />
+                <BranchPoint vc="0" uspid="107" ordinal="5" offset="74" path="1" offsetchain="" offsetend="95" />
+              </BranchPoints>
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="99" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="3" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="5" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="3" minCyclomaticComplexity="3" />
+              <MetadataToken>100663316</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.Utilities.PermissionService::HasHostPermission(System.String)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="108" ordinal="0" offset="0" sl="33" sc="9" el="33" ec="10" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="109" ordinal="1" offset="1" sl="34" sc="13" el="36" ec="85" bec="3" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="110" ordinal="2" offset="41" sl="37" sc="9" el="37" ec="10" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="0" uspid="111" ordinal="0" offset="6" path="0" offsetchain="" offsetend="8" />
+                <BranchPoint vc="0" uspid="112" ordinal="1" offset="6" path="1" offsetchain="" offsetend="37" />
+                <BranchPoint vc="0" uspid="113" ordinal="2" offset="19" path="0" offsetchain="" offsetend="21" />
+                <BranchPoint vc="0" uspid="114" ordinal="3" offset="19" path="1" offsetchain="" offsetend="37" />
+              </BranchPoints>
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="108" ordinal="0" offset="0" sl="33" sc="9" el="33" ec="10" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="3" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="5" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="3" minCyclomaticComplexity="3" />
+              <MetadataToken>100663317</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.Utilities.PermissionService::HasPermission(System.String)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="115" ordinal="0" offset="0" sl="40" sc="9" el="40" ec="10" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="116" ordinal="1" offset="1" sl="41" sc="13" el="43" ec="85" bec="3" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="117" ordinal="2" offset="44" sl="44" sc="9" el="44" ec="10" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="0" uspid="118" ordinal="0" offset="6" path="0" offsetchain="" offsetend="8" />
+                <BranchPoint vc="0" uspid="119" ordinal="1" offset="6" path="1" offsetchain="" offsetend="40" />
+                <BranchPoint vc="0" uspid="120" ordinal="2" offset="19" path="0" offsetchain="" offsetend="21" />
+                <BranchPoint vc="0" uspid="121" ordinal="3" offset="19" path="1" offsetchain="" offsetend="40" />
+              </BranchPoints>
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="115" ordinal="0" offset="0" sl="40" sc="9" el="40" ec="10" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="3" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="5" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="3" minCyclomaticComplexity="3" />
+              <MetadataToken>100663318</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.Utilities.PermissionService::HasReadPermission(System.String)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="122" ordinal="0" offset="0" sl="52" sc="9" el="52" ec="10" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="123" ordinal="1" offset="1" sl="53" sc="13" el="55" ec="85" bec="3" bev="0" fileid="5" />
+                <SequencePoint vc="0" uspid="124" ordinal="2" offset="41" sl="56" sc="9" el="56" ec="10" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="0" uspid="125" ordinal="0" offset="6" path="0" offsetchain="" offsetend="8" />
+                <BranchPoint vc="0" uspid="126" ordinal="1" offset="6" path="1" offsetchain="" offsetend="37" />
+                <BranchPoint vc="0" uspid="127" ordinal="2" offset="19" path="0" offsetchain="" offsetend="21" />
+                <BranchPoint vc="0" uspid="128" ordinal="3" offset="19" path="1" offsetchain="" offsetend="37" />
+              </BranchPoints>
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="122" ordinal="0" offset="0" sl="52" sc="9" el="52" ec="10" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663319</MetadataToken>
+              <Name>System.Boolean Fanex.NAP.Licensee.Service.Utilities.PermissionService::&lt;GetRoleAccess&gt;b__0(Fanex.NAP.Core.Model.ValueObject.FunctionPolicy)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="129" ordinal="0" offset="0" sl="28" sc="61" el="28" ec="111" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="129" ordinal="0" offset="0" sl="28" sc="61" el="28" ec="111" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663320</MetadataToken>
+              <Name>System.String Fanex.NAP.Licensee.Service.Utilities.PermissionService::&lt;GetRoleAccess&gt;b__1(Fanex.NAP.Core.Model.ValueObject.FunctionPolicy)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="130" ordinal="0" offset="0" sl="29" sc="68" el="29" ec="95" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="130" ordinal="0" offset="0" sl="29" sc="68" el="29" ec="95" bec="0" bev="0" fileid="5" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="1" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663321</MetadataToken>
+              <Name>System.Int32 Fanex.NAP.Licensee.Service.Utilities.PermissionService::&lt;GetRoleAccess&gt;b__2(Fanex.NAP.Core.Model.ValueObject.FunctionPolicy)</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="131" ordinal="0" offset="0" sl="29" sc="115" el="29" ec="136" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="131" ordinal="0" offset="0" sl="29" sc="115" el="29" ec="136" bec="0" bev="0" fileid="5" />
+            </Method>
+          </Methods>
+        </Class>
+        <Class>
+          <Summary numSequencePoints="36" visitedSequencePoints="21" numBranchPoints="12" visitedBranchPoints="7" sequenceCoverage="58.33" branchCoverage="58.33" maxCyclomaticComplexity="4" minCyclomaticComplexity="1" />
+          <FullName>Fanex.NAP.Licensee.Service.Utilities.Cast</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663322</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimal(System.Object)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="132" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="133" ordinal="1" offset="1" sl="28" sc="13" el="28" ec="68" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="134" ordinal="2" offset="21" sl="29" sc="9" el="29" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="132" ordinal="0" offset="0" sl="27" sc="9" el="27" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663323</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimal(System.Object,System.Decimal)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="135" ordinal="0" offset="0" sl="38" sc="9" el="38" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="136" ordinal="1" offset="1" sl="39" sc="13" el="39" ec="79" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="137" ordinal="2" offset="16" sl="40" sc="9" el="40" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="135" ordinal="0" offset="0" sl="38" sc="9" el="38" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663324</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimal(System.Object,System.IFormatProvider)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="138" ordinal="0" offset="0" sl="49" sc="9" el="49" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="139" ordinal="1" offset="1" sl="50" sc="13" el="50" ec="50" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="140" ordinal="2" offset="17" sl="51" sc="9" el="51" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="138" ordinal="0" offset="0" sl="49" sc="9" el="49" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="4" sequenceCoverage="100" branchCoverage="100" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="21" visitedSequencePoints="21" numBranchPoints="7" visitedBranchPoints="7" sequenceCoverage="100" branchCoverage="100" maxCyclomaticComplexity="4" minCyclomaticComplexity="4" />
+              <MetadataToken>100663325</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimal(System.Object,System.Decimal,System.IFormatProvider)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="5" uspid="141" ordinal="0" offset="0" sl="61" sc="9" el="61" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="5" uspid="142" ordinal="1" offset="1" sl="62" sc="13" el="62" ec="63" bec="4" bev="4" fileid="6" />
+                <SequencePoint vc="1" uspid="143" ordinal="2" offset="22" sl="63" sc="13" el="63" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="144" ordinal="3" offset="23" sl="64" sc="17" el="64" ec="37" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="4" uspid="145" ordinal="4" offset="27" sl="69" sc="13" el="69" ec="34" bec="2" bev="2" fileid="6" />
+                <SequencePoint vc="1" uspid="146" ordinal="5" offset="38" sl="70" sc="13" el="70" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="147" ordinal="6" offset="39" sl="71" sc="17" el="71" ec="55" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="148" ordinal="7" offset="46" sl="72" sc="13" el="72" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="4" uspid="149" ordinal="8" offset="47" sl="75" sc="13" el="75" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="4" uspid="150" ordinal="9" offset="48" sl="76" sc="17" el="76" ec="61" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="2" uspid="151" ordinal="10" offset="56" sl="77" sc="13" el="77" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="152" ordinal="11" offset="59" sl="78" sc="13" el="78" ec="41" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="153" ordinal="12" offset="60" sl="79" sc="13" el="79" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="154" ordinal="13" offset="61" sl="80" sc="17" el="80" ec="39" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="155" ordinal="14" offset="63" sl="81" sc="13" el="81" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="156" ordinal="15" offset="66" sl="82" sc="13" el="82" ec="36" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="157" ordinal="16" offset="67" sl="83" sc="13" el="83" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="158" ordinal="17" offset="68" sl="84" sc="17" el="84" ec="39" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="1" uspid="159" ordinal="18" offset="70" sl="85" sc="13" el="85" ec="14" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="4" uspid="160" ordinal="19" offset="74" sl="87" sc="13" el="87" ec="27" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="5" uspid="161" ordinal="20" offset="78" sl="88" sc="9" el="88" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints>
+                <BranchPoint vc="4" uspid="162" ordinal="0" offset="2" path="0" offsetchain="" offsetend="4" />
+                <BranchPoint vc="1" uspid="163" ordinal="1" offset="2" path="1" offsetchain="" offsetend="17" />
+                <BranchPoint vc="1" uspid="164" ordinal="2" offset="20" path="0" offsetchain="" offsetend="22" />
+                <BranchPoint vc="4" uspid="165" ordinal="3" offset="20" path="1" offsetchain="" offsetend="27" />
+                <BranchPoint vc="1" uspid="166" ordinal="4" offset="36" path="0" offsetchain="" offsetend="38" />
+                <BranchPoint vc="3" uspid="167" ordinal="5" offset="36" path="1" offsetchain="" offsetend="47" />
+              </BranchPoints>
+              <MethodPoint xsi:type="SequencePoint" vc="5" uspid="141" ordinal="0" offset="0" sl="61" sc="9" el="61" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663326</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimalInvariant(System.Object)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="168" ordinal="0" offset="0" sl="96" sc="9" el="96" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="169" ordinal="1" offset="1" sl="97" sc="13" el="97" ec="70" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="170" ordinal="2" offset="21" sl="98" sc="9" el="98" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="168" ordinal="0" offset="0" sl="96" sc="9" el="96" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+            <Method visited="false" cyclomaticComplexity="1" sequenceCoverage="0" branchCoverage="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="0" numBranchPoints="1" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="1" minCyclomaticComplexity="1" />
+              <MetadataToken>100663327</MetadataToken>
+              <Name>System.Decimal Fanex.NAP.Licensee.Service.Utilities.Cast::AsDecimalInvariant(System.Object,System.Decimal)</Name>
+              <FileRef uid="6" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="171" ordinal="0" offset="0" sl="107" sc="9" el="107" ec="10" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="172" ordinal="1" offset="1" sl="108" sc="13" el="108" ec="81" bec="0" bev="0" fileid="6" />
+                <SequencePoint vc="0" uspid="173" ordinal="2" offset="16" sl="109" sc="9" el="109" ec="10" bec="0" bev="0" fileid="6" />
+              </SequencePoints>
+              <BranchPoints />
+              <MethodPoint xsi:type="SequencePoint" vc="0" uspid="171" ordinal="0" offset="0" sl="107" sc="9" el="107" ec="10" bec="0" bev="0" fileid="6" />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+  </Modules>
+</CoverageSession>
