@@ -668,7 +668,7 @@ input[type="submit"], .btn-primary {
 .icon {
     background: url(img/sprites.png) no-repeat scroll -96px -26px rgba(0, 0, 0, 0);
     cursor: pointer;
-    float: left;
+    display: inline-block;
 }
 
 .list-icon {
@@ -676,6 +676,7 @@ input[type="submit"], .btn-primary {
     height: 13px;
     margin: 1px 7px 0 0;
     width: 12px;
+	float: left;
 }
 
 .icon-collapse {
@@ -684,6 +685,7 @@ input[type="submit"], .btn-primary {
     height: 15px;
     width: 15px;
     margin: 2px 5px 0 0;
+	float: left;
 }
 
 .icon-expand {
@@ -691,10 +693,41 @@ input[type="submit"], .btn-primary {
     background-position: -77px -53px;
 }
 
+.icon-edit {
+    .icon;
+	background-position: -35px -1px;
+    height: 15px;
+    width: 15px;
+	margin: 0 10px auto auto;
+
+	&:hover {
+		background-position: -55px -1px;
+	}
+}
+
+.icon-delete {
+    .icon;
+	background-position: -35px -26px;
+    height: 15px;
+    width: 15px;
+	margin: auto;
+
+	&:hover {
+		background-position: -55px -26px;
+	}
+}
+
 /* Grid */
-.content-grid {
+.freegrid {
     float: left;
-    min-width: 99%;
+
+	.list-action {
+		margin: auto;
+	}
+.freegrid .freegrid-even td {
+
+}
+
 }
 
 /* table */

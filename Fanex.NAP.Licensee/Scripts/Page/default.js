@@ -13,12 +13,12 @@ var defaultSetting = (function () { // jshint ignore:line
 
             { HeaderText: "Licensee", Width: 120, Name: "Licensee", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Currency", Width: 120, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Agent", Width: 120, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Bet Type / Game Type", Width: 120, Name: "BetOrGameType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Max Bet", Width: 120, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
-            { HeaderText: "Max Per Match", Width: 120, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
-            { HeaderText: "Max Per Ball", Width: 120, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
-            { HeaderText: "Action", Width: 120, Name: "Action", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Agent", Width: 150, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Bet Type / Game Type", Width: 200, Name: "BetOrGameType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Bet", Width: 150, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: "Max Per Match", Width: 150, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: "Max Per Ball", Width: 150, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: "Action", Width: 135, Name: "Action", HeaderAlign: "center", CellAlign: "center" },
         ],
         bodyRows: [],
         gridExpandHeight: 150,
@@ -31,7 +31,7 @@ var defaultSetting = (function () { // jshint ignore:line
 
     };
     var generateActionLink = function (licensee, currencyId, agentId) {
-        return "<a href='home/index'>Edit</a><a href='home/index'>Del</a>";
+        return "<a href='home/index' class='icon-edit'></a><a href='home/index' class='icon-delete'></a>";
     };
     var renderGridData = function () {
         gridOptions.bodyRows = getGridData();
@@ -50,7 +50,7 @@ var defaultSetting = (function () { // jshint ignore:line
             if (currentMerRowNumber === 0) {
                 currentMerRowNumber = Math.round(Math.random() * 5) + 2;
                 //if(currentColumms + index < 0)
-                currentColumms.push({ Name: "Licensee", Value: "Alice :)", MergeRowNumber: currentMerRowNumber });
+                currentColumms.push({ Name: "Licensee", Value: "12bet", MergeRowNumber: currentMerRowNumber });
                 if (evenClass === 'freegrid-even') {
                     evenClass = '';
                 }
@@ -61,9 +61,9 @@ var defaultSetting = (function () { // jshint ignore:line
             rows.push(
             {
                 Columns: currentColumms.concat([
-                // {Name: "Licensee", Value: "Alice :)"},
+                // {Name: "Licensee", Value: "12bet"},
                     {Name: "Currency", Value: "US$" },
-                    { Name: "Agent", Value: "Alice :)moa^)" },
+                    { Name: "Agent", Value: "12BetUS$01" },
                     { Name: "BetOrGameType", Value: "Bond Girl A ha" },
                     { Name: "MaxBet", Value: (Math.random() * 1000).toFixed(3) },
                     { Name: "MaxPerMatch", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
