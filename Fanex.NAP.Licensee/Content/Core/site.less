@@ -698,7 +698,6 @@ input[type="submit"], .btn-primary {
 	background-position: -35px -1px;
     height: 15px;
     width: 15px;
-	margin: 0 10px auto auto;
 
 	&:hover {
 		background-position: -55px -1px;
@@ -710,7 +709,6 @@ input[type="submit"], .btn-primary {
 	background-position: -35px -26px;
     height: 15px;
     width: 15px;
-	margin: auto;
 
 	&:hover {
 		background-position: -55px -26px;
@@ -725,8 +723,24 @@ input[type="submit"], .btn-primary {
 		margin: auto;
 	}
 	
+	.icon-edit {
+		margin: 4px 10px 0 auto;
+	}
+
+	.icon-delete {
+		margin: 4px 0 0 auto;
+	}
+
 	.freegrid-even td {
-		background-color: #fff;
+		background-color: #f2f1f0;
+	}
+
+	.mousehoverbeyond td {
+		background: #FCFBCA !important;
+	}
+
+	tr.highlight-row:hover td {
+		background-color: #FCFBCA;
 	}
 
 }

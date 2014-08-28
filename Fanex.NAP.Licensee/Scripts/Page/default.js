@@ -18,10 +18,11 @@ var defaultSetting = (function () { // jshint ignore:line
             { HeaderText: "Max Bet", Width: 150, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Match", Width: 150, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Ball", Width: 150, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
-            { HeaderText: "Action", Width: 135, Name: "Action", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Action", Width: 132, Name: "Action", HeaderAlign: "center", CellAlign: "center" },
         ],
         bodyRows: [],
         gridExpandHeight: 150,
+        bodyRowHeight: 30,
         showDistinctRow: false
     };
     var currentGrid;
