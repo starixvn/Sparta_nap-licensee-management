@@ -1,5 +1,6 @@
 ﻿@import "variables.less";
 @import "common.less";
+@import "custom.less";
 
 /********************************************************/
 /*                       Global                         */
@@ -603,14 +604,23 @@ input[type="submit"], .btn-primary {
         float: left;
 
         label {
-            margin: 0 5px 2px 0;
+            margin: 1px 5px 2px 0;
             font-weight: normal;
             vertical-align: middle;
+			float: left;
 
             &.lbl {
                 width: 50px;
                 text-align: right;
             }
+
+			&.radio-inline, &.checkbox-inline {
+				margin: 1px 10px 2px 0;
+			}
+
+			&.lbl-product {
+				margin-right: 15px;
+			}
         }
 
         * {
@@ -641,6 +651,11 @@ input[type="submit"], .btn-primary {
             padding: 0 26px 2px 7px;
             height: 25px;
         }
+
+		.list-currency {
+			float: left;
+			width: 212px;
+		}
     }
 
     .row-form {
@@ -715,35 +730,6 @@ input[type="submit"], .btn-primary {
 	}
 }
 
-/* Grid */
-.freegrid {
-    float: left;
-
-	.list-action {
-		margin: auto;
-	}
-	
-	.icon-edit {
-		margin: 4px 10px 0 auto;
-	}
-
-	.icon-delete {
-		margin: 4px 0 0 auto;
-	}
-
-	.freegrid-even td {
-		background-color: #f2f1f0;
-	}
-
-	.mousehoverbeyond td {
-		background: #FCFBCA !important;
-	}
-
-	tr.highlight-row:hover td {
-		background-color: #FCFBCA;
-	}
-
-}
 
 /* table */
 

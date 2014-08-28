@@ -313,6 +313,7 @@
     <Content Include="Content\jquery-ui\base\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-icons_cbd4e6_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\jquery-ui\base\menu.css" />
     <Content Include="Content\jquery-ui\base\progressbar.css" />
@@ -484,6 +485,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Core\custom.less" />
     <None Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Views\Error\AccessDenied.cshtml" />

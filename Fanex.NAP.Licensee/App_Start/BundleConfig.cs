@@ -21,8 +21,8 @@ namespace Fanex.NAP.Licensee
             var css = new Bundle("~/bundles/coreCss")
             .Include("~/Content/jquery-ui/base/all.css")
             .Include("~/Content/bootstrap/bootstrap.less")
-            .Include("~/Content/Core/site.less")
-           .Include("~/Content/Plugin/multi-select-control.css");
+           .Include("~/Content/Plugin/multi-select-control.css")
+           .Include("~/Content/Core/site.less");
             css.Builder = nullBuilder;
             css.Transforms.Add(cssTransformer);
             css.Orderer = nullOrderer;
