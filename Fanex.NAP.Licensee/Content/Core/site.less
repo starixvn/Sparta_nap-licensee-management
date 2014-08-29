@@ -432,85 +432,6 @@ footer {
     }
 }
 
-
-/********************************************************/
-/*                      Combo Picker                    */
-/********************************************************/
-
-#combo-pickr {
-    color: #9F9F9F;
-    top: 100px;
-    left: 0px;
-    padding: 0;
-    position: fixed;
-    text-shadow: 1px 1px 1px #FFF;
-    width: 270px;
-    z-index: 9999;	
-
-    .combo-main {
-        background: url(img/combo-pickr/mainbg.png);
-        border: 1px solid #dedede;
-        border-width: 1px 1px 1px 0;
-        .border-radius(0 14px 14px 0);
-    }
-}
-
-#combo-pickr-close {
-    background: url(img/combo-pickr/closebutton.png) no-repeat;
-    display: block;
-    height: 40px;
-    position: absolute;
-    right: -43px;
-    top: 17px;
-    width: 45px;
-}
-
-#combo-pickr-close.combo-open {
-    background: url(img/combo-pickr/openbutton.png) no-repeat;
-}
-
-#combo-pickr-inner {
-    padding: 16px;
-    max-height: 650px;
-    //overflow-y: scroll;
-
-    h3.combo-title {
-        float: left;
-        font-size: @font-size + 2;
-        padding: 2px 0 5px;
-        margin-bottom: 5px;
-        color: #676761;
-        font-weight: normal;
-        letter-spacing: -1px;
-        line-height: 1em;
-        border-bottom: 1px solid transparent;
-
-        &:hover {
-            border-bottom: 1px solid #676761;
-        }
-    }
-
-    .combo-setting {
-        display: block;
-        float: left;
-        height: 29px;
-        margin: 0 4px 4px 0;
-        position: relative;
-        text-indent: -9999px;
-        width: 29px;
-
-        .combo-overlay {
-            background: url(img/combo-pickr/link-overlay.png) no-repeat scroll 0 0 transparent;
-            display: block;
-            height: 30px;
-            left: 0;
-            position: absolute;
-            top: 0;
-            width: 30px;
-        }
-    }
-}
-
 /* Button */
 input[type="submit"], .btn-primary,
 .btn-red, .btn-green, .btn-back {
@@ -528,7 +449,7 @@ input[type="submit"], .btn-primary,
     line-height: 15px;
 
     &:hover {
-        color: #FFF;
+        color: @white;
         text-decoration: none;
     }
 }
@@ -568,7 +489,7 @@ input[type="submit"], .btn-primary {
     &:active, &:hover {
         .bg-linear-gradient(#8DAF60, #ABD172);
         .box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.1));
-        color: #fff;
+        color: @white;
         text-decoration: none;
     }
 
@@ -646,7 +567,7 @@ input[type="submit"], .btn-primary {
         }
 
         .hasDatepicker {
-            background: url(img/icon-calendar.png) #fff 135px center no-repeat;
+            background: url(img/icon-calendar.png) @white 135px center no-repeat;
             border: 1px solid #cecccd;
             padding: 0 26px 2px 7px;
             height: 25px;
@@ -679,9 +600,11 @@ input[type="submit"], .btn-primary {
     margin-top: 10px;
 }
 
-/* Icon */
+/********************************************************/
+/*					    Icon                            */
+/********************************************************/
 .icon {
-    background: url(img/sprites.png) no-repeat scroll -96px -26px rgba(0, 0, 0, 0);
+    background: url(img/sprites.png) no-repeat scroll -96px -26px;
     cursor: pointer;
     display: inline-block;
 }
@@ -731,8 +654,9 @@ input[type="submit"], .btn-primary {
 }
 
 
-/* table */
-
+/********************************************************/
+/*					    Table                           */
+/********************************************************/
 .table {
     background-color: @grid-bg;
 
@@ -780,16 +704,18 @@ input[type="submit"], .btn-primary {
     }
 }
 
-/* Group */
+/********************************************************/
+/*					    Group                           */
+/********************************************************/
 .group {
     margin-bottom: 5px;
     width: 685px;
 }
 
 .title-group {
-    background-color: #EDECEA;
-    border: 1px solid @border-color;
-    color: #3c5ea5;
+    background-color: @group-bg;
+    border: 1px solid @group-border;
+    color: @group-color;
     line-height: 20px;
     padding: 4px 10px;
     margin-bottom: 5px;
