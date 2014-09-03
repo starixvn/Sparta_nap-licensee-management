@@ -89,6 +89,7 @@ var defaultSetting = (function () { // jshint ignore:line
         initEvent();
         site.renderCurrencyList();
         site.renderLicenseeList();
+        renderGridData();
     };
 
     return me;

@@ -39,7 +39,7 @@ var site = (function () {
     };
 
     me.renderLicenseeList = function () {
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
             var items = "";
             for (var i = 1; i < data.length; i++) {
                 items += "<option value=\""+data[i].Name+"\">"+data[i].Name+"</option>";

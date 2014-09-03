@@ -18,6 +18,6 @@ using Fanex.NAP.Licensee.Model.DTO;
     /// </summary>
     public interface IBetSettingService
     {
-        public IList<DefaultBetSetting> GetDefaultBetSettings(DefaultBetSettingCriteria criteria);
+         IList<DefaultBetSetting> GetDefaultBetSettings(DefaultBetSettingCriteria criteria);
     }
 }
