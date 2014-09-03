@@ -1,3 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+    <Function Name="Site.Nap.Licensee">
+        <Setting Key="NAP_SpecialCustSetting_CurrencyList" SpName="NAP_SpecialCustSetting_CurrencyList" DbName="DBTXN.CustDB.bodbLicenseeNet">
+            <Mapping DataField="exchangeid" ObjectProperty="Id" />
+            <Mapping DataField="currency" ObjectProperty="Name" />
+        </Setting>
+        <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBTXN.CustDB.bodbLicenseeNet">
+            <Mapping DataField="SiteID" ObjectProperty="Id" />
+            <Mapping DataField="SiteName" ObjectProperty="Name" />
+        </Setting>
+    </Function>
 </Functions>

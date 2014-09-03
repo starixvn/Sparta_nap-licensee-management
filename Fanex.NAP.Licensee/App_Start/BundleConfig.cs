@@ -4,9 +4,9 @@ using BundleTransformer.Core.Orderers;
 using BundleTransformer.Core.Resolvers;
 using BundleTransformer.Core.Transformers;
 
-namespace Fanex.NAP.Licensee
+namespace Fanex.NAP.Licensee.AppStart
 {
-    public class BundleConfig
+    public static class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -41,7 +41,7 @@ namespace Fanex.NAP.Licensee
                 .Include("~/Scripts/jquery-1.9.0.js",
                 "~/Scripts/jquery-ui-1.11.1.js",
                  "~/Scripts/Plugin/multi-select-control.js", 
-                "~/Scripts/bootstrap.js", "~/Scipts/Core/site.js",
+                "~/Scripts/bootstrap.js", "~/Scripts/Core/site.js",
                 "~/Scripts/Page/addnew.js"
                 , "~/Scripts/Page/default.js",
                 "~/Scripts/Page/edit.js",

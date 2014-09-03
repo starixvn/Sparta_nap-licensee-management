@@ -113,6 +113,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\CurrencyItem.cs" />
+    <Compile Include="DTO\DefaultBetSetting.cs" />
+    <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +126,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

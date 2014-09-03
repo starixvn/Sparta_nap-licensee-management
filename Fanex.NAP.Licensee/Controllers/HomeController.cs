@@ -20,7 +20,7 @@ namespace Fanex.NAP.Licensee.Controllers
         }
 
         [ChildActionOnly]
-        public PartialViewResult _Menu()
+        public PartialViewResult Menu()
         {
             ViewBag.MenuItemList = CurrentSession.MenuItemList;
             return PartialView("~/Views/Shared/_Menu.cshtml");

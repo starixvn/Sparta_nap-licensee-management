@@ -17,6 +17,6 @@ namespace Fanex.NAP.Licensee.Model.Criteria
     /// </summary>
     public class DefaultBetSettingCriteria : CriteriaBase
     {
-
+       
     }
 }

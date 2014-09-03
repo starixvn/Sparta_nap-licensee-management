@@ -8,13 +8,7 @@
 //   <change who="Kaden.Trinh" date="2013.09.17">Check StyleCop</change>
 // </history>
 
-using Fanex.NAP.Core.Web.Session;
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.Core.Criteria.User;
-using Fanex.NAP.Core.Web.Auth;
-using System.Web.Security;
-using System.Web;
-namespace Fanex.NAP.Licenseee.App_Start
+namespace Fanex.NAP.Licensee.AppStart
 {
     using System.Web;
     using System.Web.Security;

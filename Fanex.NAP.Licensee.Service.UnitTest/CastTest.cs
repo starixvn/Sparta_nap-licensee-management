@@ -16,7 +16,7 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             decimal defaultValue = 0;
 
             // Act
-            decimal result = Cast.AsDecimal(value, defaultValue, null);
+            decimal result = CastHelper.AsDecimal(value, defaultValue, null);
 
             // Assert
             Assert.AreEqual(defaultValue, result);
@@ -31,7 +31,7 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             var culture = new CultureInfo("en-US");
 
             // Act
-            decimal result = Cast.AsDecimal(value, defaultValue, culture);
+            decimal result = CastHelper.AsDecimal(value, defaultValue, culture);
 
             // Assert
             Assert.AreEqual(value, result);
@@ -46,7 +46,7 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             var culture = new CultureInfo("en-US");
 
             // Act
-            decimal result = Cast.AsDecimal(value, defaultValue, culture);
+            decimal result = CastHelper.AsDecimal(value, defaultValue, culture);
 
             // Assert
             Assert.AreEqual(defaultValue, result);
@@ -61,7 +61,7 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             var culture = new CultureInfo("en-US");
 
             // Act
-            decimal result = Cast.AsDecimal(value, defaultValue, culture);
+            decimal result = CastHelper.AsDecimal(value, defaultValue, culture);
 
             // Assert
             Assert.AreEqual(defaultValue, result);
@@ -75,7 +75,7 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             decimal defaultValue = 0;
 
             // Act
-            decimal result = Cast.AsDecimal(value, defaultValue, null);
+            decimal result = CastHelper.AsDecimal(value, defaultValue, null);
 
             // Assert
             Assert.AreEqual(value, result);

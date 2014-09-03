@@ -1,13 +1,23 @@
-﻿using System.Web.Mvc;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
-using Fanex.NAP.Licensee.Model.Criteria;
-using Fanex.NAP.Licensee.Model.DataDomain;
-
-namespace Fanex.NAP.Licensee.Controllers
+﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    public class BetSettingController : Controller
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Licensee.Attributes;
+    using Fanex.NAP.Licensee.Model.Criteria;
+    using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Service;
+
+    public class BetSettingController : BaseController
     {
+        private readonly ICommonService _commonService;
+
+        public BetSettingController()
+            : base()
+        {
+            this._commonService = new CommonService();
+        }
+
         //
         // GET: /BetSetting/
 
@@ -82,5 +92,25 @@ namespace Fanex.NAP.Licensee.Controllers
         }
 
         #endregion Logs
+
+        #region CommonFunction
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GetCurrencyList()
+        {
+            return Json(_commonService.GetCurrencyList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GetLicenseeList()
+        {
+            return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion CommonFunction
     }
 }

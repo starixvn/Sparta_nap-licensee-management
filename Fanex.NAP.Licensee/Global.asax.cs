@@ -6,7 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Fanex.Data.Configuration;
-using Fanex.NAP.Licenseee.App_Start;
+using Fanex.NAP.Licensee.AppStart;
 using System.Web.Optimization;
 
 namespace Fanex.NAP.Licensee

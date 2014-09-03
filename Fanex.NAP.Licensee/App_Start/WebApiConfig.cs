@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace Fanex.NAP.Licensee
+namespace Fanex.NAP.Licensee.AppStart
 {
     public static class WebApiConfig
     {

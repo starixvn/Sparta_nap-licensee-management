@@ -16,7 +16,7 @@ namespace Fanex.NAP.Licensee.Service.Utilities
     /// <summary>
     /// Casting utilities.
     /// </summary>
-    public static partial class Cast
+    public static class CastHelper
     {
         /// <summary>
         /// Convert input value object to decimal.

@@ -106,9 +106,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonService.cs" />
+    <Compile Include="ICommonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AppSession.cs" />
-    <Compile Include="Utilities\Cast.cs" />
+    <Compile Include="Utilities\CastHelper.cs" />
     <Compile Include="Utilities\PermissionService.cs" />
     <Compile Include="Utilities\SessionManager.cs" />
   </ItemGroup>

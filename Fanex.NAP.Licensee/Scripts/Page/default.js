@@ -1,6 +1,6 @@
 ﻿/* File Created: August 20, 2014 */
 /*exported defaultSetting */
-/* global MultiSelectControl */
+/* global MultiSelectControl,site */
 
 var defaultSetting = (function () { // jshint ignore:line
 
@@ -24,38 +24,14 @@ var defaultSetting = (function () { // jshint ignore:line
         bodyRows: [],
         gridExpandHeight: 150,
         bodyRowHeight: 30,
-        showDistinctRow: false
+        showDistinctRow: false,
+        autoResizeColumn: true
     };
     var currentGrid;
     /*end-private variable*/
     /*private method*/
     var initEvent = function () {
-        var currencyTest = [];
-        for (var i = 1; i < 15; i++) {
-            var cur = {
-                Id: i,
-                Name: i + "USD",
-                ParentId: 0
-                
 
-            };
-            currencyTest.push(cur);
-        }
-
-        var currencyControllSetting = {
-            ContainerId: "currency-control",
-            IdProperty: "Id",
-            NameProperty: "Name",
-            ParentIdProperty: "ParentId",
-            DefaultData: currencyTest,
-            SelectedAllText: "All currencies",
-            NoItemText: "None",
-            SelectedText: "{0} selected",
-            FilterEmptyText: "Please select currency!",
-            IsFilterAllLevel: true
-
-        };
-        MultiSelectControl.renderControl(currencyControllSetting);
     };
     var generateActionLink = function (licensee, currencyId, agentId) {
         return "<a href='home/index' class='icon-edit'></a><a href='home/index' class='icon-delete'></a>";
@@ -111,6 +87,8 @@ var defaultSetting = (function () { // jshint ignore:line
 
     me.setup = function () {
         initEvent();
+        site.renderCurrencyList();
+        site.renderLicenseeList();
         renderGridData();
     };
 
