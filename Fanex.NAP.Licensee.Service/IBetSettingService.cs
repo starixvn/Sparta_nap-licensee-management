@@ -10,11 +10,14 @@ namespace Fanex.NAP.Licensee.Service
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.Criteria;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class IBetSettingService
+    public interface IBetSettingService
     {
+        public IList<DefaultBetSetting> GetDefaultBetSettings(DefaultBetSettingCriteria criteria);
     }
 }

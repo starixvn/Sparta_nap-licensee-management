@@ -24,5 +24,16 @@ namespace Fanex.NAP.Licensee.Model.Criteria
         public bool ShowVirtualSport { get; set; }
 
         public bool ShowKeno { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_SpecialCustSetting_List";
+        }
+
+        public override bool IsValid()
+        {
+            return !string.IsNullOrEmpty(Licensee) && !string.IsNullOrEmpty(Currency)
+                && (ShowSportBook || ShowNumberGame || ShowVirtualSport || ShowKeno);
+        }
     }
 }

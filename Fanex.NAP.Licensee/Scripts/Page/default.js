@@ -15,7 +15,7 @@ var defaultSetting = (function () { // jshint ignore:line
             { HeaderText: "Licensee", Width: 120, Name: "Licensee", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Currency", Width: 120, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Agent", Width: 150, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Sport Type / Game Type", Width: 200, Name: "SportOrGameType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Sport Type / Game Type", Width: 200, Name: "SportGameType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Bet", Width: 150, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Match", Width: 150, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Ball", Width: 150, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
@@ -67,7 +67,7 @@ var defaultSetting = (function () { // jshint ignore:line
                 // {Name: "Licensee", Value: "12bet"},
                     {Name: "Currency", Value: "US$" },
                     { Name: "Agent", Value: "12BetUS$01" },
-                    { Name: "SportOrGameType", Value: "Bond Girl A ha" },
+                    { Name: "SportGameType", Value: "Bond Girl A ha" },
                     { Name: "MaxBet", Value: (Math.random() * 1000).toFixed(3) },
                     { Name: "MaxPerMatch", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
                     { Name: "MaxPerBall", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
@@ -89,7 +89,6 @@ var defaultSetting = (function () { // jshint ignore:line
         initEvent();
         site.renderCurrencyList();
         site.renderLicenseeList();
-        renderGridData();
     };
 
     return me;

@@ -9,5 +9,7 @@
             <Mapping DataField="SiteID" ObjectProperty="Id" />
             <Mapping DataField="SiteName" ObjectProperty="Name" />
         </Setting>
+        <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
+        </Setting>
     </Function>
 </Functions>

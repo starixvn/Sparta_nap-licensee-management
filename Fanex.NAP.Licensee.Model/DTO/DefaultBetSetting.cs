@@ -6,16 +6,25 @@
 
 namespace Fanex.NAP.Licensee.Model.DTO
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class DefaultBetSetting
     {
+        public string Licensee { get; set; }
 
+        public int? CurrencyID { get; set; }
+
+        public int? AgentID { get; set; }
+
+        public string SportName { get; set; }
+
+        public string SportGameType { get; set; }
+
+        public decimal? MaxBet { get; set; }
+
+        public decimal? MaxPerMatch { get; set; }
+
+        public decimal? MaxPerBall { get; set; }
     }
 }
