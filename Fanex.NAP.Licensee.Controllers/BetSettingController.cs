@@ -3,7 +3,7 @@
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Licensee.Attributes;
+    using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Service;
@@ -32,6 +32,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Host)]
+        [AjaxRequest]
         public ActionResult Default(DefaultBetSettingCriteria criteria)
         {
             return View();

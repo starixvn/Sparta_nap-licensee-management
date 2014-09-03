@@ -3,7 +3,7 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Fanex.NAP.Licensee.Attributes
+namespace Fanex.NAP.Licensee.Controllers.Attributes
 {
     using System;
     using System.Reflection;

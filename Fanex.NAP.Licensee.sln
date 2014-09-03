@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 		CodeAnalysis\FxCopDictionary.xml = CodeAnalysis\FxCopDictionary.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers", "Fanex.NAP.Licensee.Controllers\Fanex.NAP.Licensee.Controllers.csproj", "{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{CE83009A-73E2-4119-BC0F-FF8A6F7A7AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE83009A-73E2-4119-BC0F-FF8A6F7A7AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE83009A-73E2-4119-BC0F-FF8A6F7A7AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
