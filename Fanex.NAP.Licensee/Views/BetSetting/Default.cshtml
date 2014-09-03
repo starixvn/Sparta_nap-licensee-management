@@ -12,61 +12,63 @@
         <li class="current">Default Bet Seting</li>
     </ul>
     <div class="pull-left">
-        <a class="btn-green" href="addnew">+ Add Bet Setting</a>
-        <a class="btn-green" href="logs"><i class="list-icon"></i>View Log</a>
+        <a class="btn-green" href="addnew">+ Add Bet Setting</a> <a class="btn-green" href="logs">
+            <i class="list-icon"></i>View Log</a>
     </div>
 }
-<form role="form" class="form-inline col-sm-12 filter-form" >
-    <div class="form-group">
-        <label for="licensee">
-            Licensee</label>
-        <select id="licensee" class="width-160">
-         
-        </select>
+<form role="form" class="form-inline col-sm-12 filter-form bet-setting">
+<div class="message error">
+    <i class="icon-error"></i>Please select at least one currency and one product! <i
+        class="icon-close"></i>
+</div>
+<div class="form-group">
+    <label for="licensee">
+        Licensee</label>
+    <select id="licensee" class="width-160">
+    </select>
+</div>
+<div class="form-group">
+    <label for="currency">
+        Currency</label>
+    <div id="currency-control" class="list-currency">
     </div>
-    <div class="form-group">
-        <label for="currency">
-            Currency</label>
-        <div id="currency-control" class="list-currency">
-        </div>
+</div>
+<div class="form-group">
+    <label for="product" class="lbl-product">
+        Product</label>
+    <div class="list-product">
+        <label class="checkbox-inline">
+            <input type="checkbox" id="showSB" value="option1">
+            Sportsbook
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="showNG" value="option2">
+            Number Game
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="showVS" value="option3">
+            Virtual Sports
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="showKN" value="option3">
+            Keno
+        </label>
     </div>
-    <div class="form-group">
-        <label for="product" class= "lbl-product">
-            Product</label>
-        <div class="list-product">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="showSB" value="option1">
-                Sportsbook
-            </label>
-            <label class="checkbox-inline">
-                <input type="checkbox" id="showNG" value="option2">
-                Number Game
-            </label>
-            <label class="checkbox-inline">
-                <input type="checkbox" id="showVS" value="option3">
-                Virtual Sports
-            </label>
-            <label class="checkbox-inline">
-                <input type="checkbox" id="showKN" value="option3">
-                Keno
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
-
-        <input type="button" id="generate" value="Generate" class="btn-primary">
-    </div>
+</div>
+<div class="form-group">
+    <input type="button" id="generate" value="Generate" class="btn-primary">
+</div>
 </form>
 <div id="report-content">
-<div id="gridId" class="freegrid  content-grid">
-</div>
+    <div id="gridId" class="freegrid  content-grid">
+    </div>
 </div>
 @section FooterJs
 {
-@Scripts.Render("~/bundles/FanexGridJs")
-<script type="text/javascript" language="javascript">
-    $(document).ready(function () {
-        defaultSetting.setup();
-    });
-</script>
+    @Scripts.Render("~/bundles/FanexGridJs")
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            defaultSetting.setup();
+        });
+    </script>
 }
