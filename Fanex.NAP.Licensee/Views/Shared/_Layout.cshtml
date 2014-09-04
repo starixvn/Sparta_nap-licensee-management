@@ -14,7 +14,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @RenderSection("HeadCss", false)
     @Styles.Render("~/bundles/coreCss")  
-    @Scripts.Render("~/bundles/head")  
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~/")';
     </script>
@@ -22,7 +21,7 @@
 <body>
     <div class="container-fluid page">
         <header class="row header">
-            <a class="logo" href="/Home">
+            <a class="logo" href="@Url.Action("Index","Home")">
                 Licensee
                 <span> Management</span>
             </a>

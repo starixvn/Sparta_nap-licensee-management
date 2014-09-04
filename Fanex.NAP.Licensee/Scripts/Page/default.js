@@ -25,9 +25,9 @@ var defaultSetting = (function () { // jshint ignore:line
         showDistinctRow: false,
         autoResizeColumn: true
     };
-    var actionLinkTpl = "<a href=" + window.rootUrl + "'BetSetting/Edit?licensee={lic}&currency={cur}&agentid={agt}' class='icon-edit'></a>" 
+    var actionLinkTpl = "<a target='_blank' href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currency={cur}&agentid={agt} class='icon-edit'></a>"
     +
-    "<a href=" + window.rootUrl + "'BetSetting/Delete?licensee={lic}&currency={cur}&agentid={agt}' class='icon-delete'></a>";
+    "<a target='_blank' href=" + window.rootUrl + "BetSetting/Delete?licensee={lic}&currency={cur}&agentid={agt} class='icon-delete'></a>";
 
     var currentGrid;
     var currentSelectedCurrency;
@@ -92,6 +92,7 @@ var defaultSetting = (function () { // jshint ignore:line
         }
     };
     var generateActionLink = function (licensee, currencyId, agentId) {
+        return actionLinkTpl.replace(/{lic}/g, licensee).replace(/{cur}/g,currencyId).replace(/{agt}/g,agentId);
     };
     var renderGridData = function () {
         var criteria = {
@@ -187,15 +188,17 @@ var defaultSetting = (function () { // jshint ignore:line
                 index,
                 data);
                 var agentName = data[index]["AgentName"];
-                currentColumms.push({ Name: "Agent", Value: agentName === undefined || agentName === null ? "All" : agentName, MergeRowNumber: agentMerRowNumber });
+                currentColumms.push({ Name: "Agent",
+                    Value: agentName === undefined || agentName === null ? "All" : agentName,
+                  MergeRowNumber: agentMerRowNumber });
 
             }
             rows.push(
             {
                 Columns: currentColumms.concat([
-                    { Name: "SportGameType", Value: data[index]["SportGameType"]},
+                    { Name: "SportGameType", Value: data[index]["SportGameType"] },
                     { Name: "MaxBet", Value: data[index]["MaxBet"] },
-                    { Name: "MaxPerMatch", Value:data[index]["MaxPerMatch"] },
+                    { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] },
                     { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] },
                     { Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]) }
 
