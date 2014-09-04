@@ -15,7 +15,11 @@ namespace Fanex.NAP.Licensee.Model.DTO
 
         public int? CurrencyID { get; set; }
 
+        public string Currency { get; set; }
+
         public int? AgentID { get; set; }
+
+        public string AgentName { get; set; }
 
         public string SportName { get; set; }
 

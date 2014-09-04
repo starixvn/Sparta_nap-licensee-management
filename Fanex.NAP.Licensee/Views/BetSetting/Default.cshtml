@@ -17,7 +17,7 @@
     </div>
 }
 <form role="form" class="form-inline col-sm-12 filter-form bet-setting">
-<div class="message error">
+<div id="errMsgBox" class="message error hidden">
     <i class="icon-error"></i>
     <div class="txt-content">Please select at least one currency and one product!</div> <i
         class="icon-close"></i>
@@ -39,25 +39,25 @@
         Product</label>
     <div class="list-product">
         <label class="checkbox-inline">
-            <input type="checkbox" id="showSB" value="option1">
+            <input type="checkbox" id="showSB" />
             Sportsbook
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" id="showNG" value="option2">
+            <input type="checkbox" id="showNG" />
             Number Game
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" id="showVS" value="option3">
+            <input type="checkbox" id="showVS" />
             Virtual Sports
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" id="showKN" value="option3">
+            <input type="checkbox" id="showKN" />
             Keno
         </label>
     </div>
 </div>
 <div class="form-group">
-    <input type="button" id="generate" value="Generate" class="btn-primary">
+    <input type="button" id="generate" value="Generate" class="btn-primary" />
 </div>
 </form>
 <div id="report-content">
@@ -68,7 +68,7 @@
 @section FooterJs
 {
     @Scripts.Render("~/bundles/FanexGridJs")
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             defaultSetting.setup();
         });

@@ -11,11 +11,12 @@
     public class BetSettingController : BaseController
     {
         private readonly ICommonService _commonService;
-
+        private readonly IBetSettingService _betSettingService;
         public BetSettingController()
             : base()
         {
             this._commonService = new CommonService();
+            this._betSettingService = new BetSettingService();
         }
 
         //
@@ -35,7 +36,11 @@
         [AjaxRequest]
         public ActionResult Default(DefaultBetSettingCriteria criteria)
         {
-            return View();
+            if (criteria.IsValid())
+            {
+                return Json(_betSettingService.GetDefaultBetSettings(criteria));
+            }
+            return Json(string.Empty);
         }
 
         #endregion Load default bet setting

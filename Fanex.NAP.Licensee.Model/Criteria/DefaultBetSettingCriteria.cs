@@ -7,10 +7,12 @@
 namespace Fanex.NAP.Licensee.Model.Criteria
 {
     using Fanex.Data.Repository;
+    using System;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [Serializable]
     public class DefaultBetSettingCriteria : CriteriaBase
     {
         public string Licensee { get; set; }
