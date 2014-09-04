@@ -452,6 +452,14 @@ input[type="submit"], .btn-primary {
        .bg-linear-gradient(#486CB8, #6891E8);
        .box-shadow(0 0 4px 1px rgba(0, 0, 0, 0.1));
     }
+
+	&.disabled, &.disabled:hover {
+		background: #5A7DC1;
+		opacity: 0.7;
+		text-shadow: none;
+		cursor: default;
+		.box-shadow(none);
+	}
 }
 
 
@@ -480,7 +488,6 @@ input[type="submit"], .btn-primary {
         color: @white;
         text-decoration: none;
     }
-
 }
 
 .btn-back {
@@ -649,6 +656,25 @@ input[type="submit"], .btn-primary {
 	}
 }
 
+.blockui {
+	background-color: #000;
+	opacity: 0.3;
+	position: relative;
+	z-index: 25;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.icon-loading {
+	background: url(img/loading.gif) no-repeat;
+	height: 32px;
+	width: 32px;
+	position: absolute;
+	top: 45%;
+	left: 45%;
+}
 
 /********************************************************/
 /*					    Table                           */

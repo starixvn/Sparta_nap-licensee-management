@@ -254,6 +254,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Core\img\favicon.ico" />
     <Content Include="Content\Core\img\icon-calendar.png" />
+    <Content Include="Content\Core\img\loading.gif" />
     <Content Include="Content\Core\img\sprites.png" />
     <Content Include="Content\Core\img\user.png" />
     <Content Include="Content\Fanex.Grid\Fanex.Grid.css" />
