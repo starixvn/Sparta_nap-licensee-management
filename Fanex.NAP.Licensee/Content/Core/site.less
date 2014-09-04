@@ -318,18 +318,6 @@ a {
             }
         }
     }
-    .ie8 {
-        .header {
-            nav {
-                .menu {
-                    > li {
-                        border-right: 1px solid #6988c9;
-                        box-shadow: 1px 0 0px #224eab, -1px 0 0px #6988c9 inset;
-                    }
-                }
-            }
-        }
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -498,7 +486,7 @@ input[type="submit"], .btn-primary {
     border: 1px solid @filter_border;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
     margin: 0 0 15px;
-    padding: 10px 10px 0;
+    padding: 10px 15px 0;
     display: inline-block;
 
     .form-group {
@@ -512,7 +500,7 @@ input[type="submit"], .btn-primary {
 			float: left;
 
             &.lbl {
-                width: 55px;
+                width: 50px;
                 text-align: right;
             }
 
@@ -533,7 +521,6 @@ input[type="submit"], .btn-primary {
             border: 1px solid @border-color;
             height: 25px;
             padding: 2px;
-			float: left;
         }
 
         .width-160 {
@@ -574,7 +561,7 @@ input[type="submit"], .btn-primary {
     }
 
     &.form-add-setting {
-        width: 715px; 
+        width: 665px; 
     }
 
 	&.bet-setting {
@@ -582,36 +569,6 @@ input[type="submit"], .btn-primary {
 
 		.message.error {
 			left: 500px;
-		}
-	}
-}
-
-.ie8 .filter-form {
-    input[type=submit] {
-        min-width: 0 !important;
-    }
-
-	.form-group {
-		display: table;
-		margin-bottom: 10px;
-
-		.lbl {
-			display: table-cell;
-			float: none;
-			padding: 1px 5px 2px 0px;
-		}
-
-		.lbl-product {
-			padding-right: 15px;
-		}
-
-		input[type="text"], select {
-			display: table-cell;
-		}
-
-		.checkbox-inline {
-			max-width: none;
-			display: table-cell;
 		}
 	}
 }
@@ -748,7 +705,7 @@ input[type="submit"], .btn-primary {
 /********************************************************/
 .group {
     margin-bottom: 5px;
-    width: 715px;
+    width: 665px;
 }
 
 .title-group {
