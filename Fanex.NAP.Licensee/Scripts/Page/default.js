@@ -25,6 +25,10 @@ var defaultSetting = (function () { // jshint ignore:line
         showDistinctRow: false,
         autoResizeColumn: true
     };
+    var actionLinkTpl = "<a href=" + window.rootUrl + "'BetSetting/Edit?licensee={lic}&currency={cur}&agentid={agt}' class='icon-edit'></a>" 
+    +
+    "<a href=" + window.rootUrl + "'BetSetting/Delete?licensee={lic}&currency={cur}&agentid={agt}' class='icon-delete'></a>";
+
     var currentGrid;
     var currentSelectedCurrency;
     var currentSelectedLicensee;
@@ -88,7 +92,6 @@ var defaultSetting = (function () { // jshint ignore:line
         }
     };
     var generateActionLink = function (licensee, currencyId, agentId) {
-        return "<a href='home/index' class='icon-edit'></a><a href='home/index' class='icon-delete'></a>";
     };
     var renderGridData = function () {
         var criteria = {
@@ -108,6 +111,7 @@ var defaultSetting = (function () { // jshint ignore:line
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (data) {
+                console.log(data);
                 gridOptions.bodyRows = converDataToFanexGridFormat(data);
                 currentGrid = $("#gridId").fanexGrid(gridOptions);
                 invokeLoadingMsg(false);
@@ -118,7 +122,7 @@ var defaultSetting = (function () { // jshint ignore:line
             }
         });
     };
-    var countItemInArray = function (countValue,startIndex, arrayData) {
+    var countItemInArray = function (countValue, startIndex, arrayData) {
         var counter = 0;
         if (countValue === undefined || countValue === null
         || countValue.length === 0 || arrayData === undefined
@@ -150,9 +154,10 @@ var defaultSetting = (function () { // jshint ignore:line
         var evenClass = '';
         var licenseeMerRowNumber = 0;
         var currencyMerRowNumber = 0;
+        var agentMerRowNumber = 0;
         for (var index = 0; index < numberRows; index++) {
             var currentColumms = [];
-            if (licenseeMerRowNumber == 0) {
+            if (licenseeMerRowNumber === 0) {
                 licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"]}], index, data);
 
                 currentColumms.push({ Name: "Licensee", Value: data[index]["Licensee"], MergeRowNumber: licenseeMerRowNumber });
@@ -164,24 +169,35 @@ var defaultSetting = (function () { // jshint ignore:line
                 }
             }
 
-            if (currencyMerRowNumber == 0) {
+            if (currencyMerRowNumber === 0) {
                 currencyMerRowNumber = countItemInArray(
-                [{ "Key": "Licensee", "Value": data[index]["Licensee"] }
-                , { "Key": "CurrencyID", "Value": data[index]["CurrencyID"]}],index, data);
+                [{ "Key": "Licensee", "Value": data[index]["Licensee"] }, { "Key": "CurrencyID", "Value": data[index]["CurrencyID"]}], index, data);
 
                 currentColumms.push({ Name: "Currency", Value: data[index]["Currency"], MergeRowNumber: currencyMerRowNumber });
 
             }
 
+            if (agentMerRowNumber === 0) {
+
+                agentMerRowNumber = countItemInArray(
+                [{ "Key": "Licensee", "Value": data[index]["Licensee"] },
+                { "Key": "CurrencyID", "Value": data[index]["CurrencyID"] },
+                { "Key": "AgentID", "Value": data[index]["AgentID"] }
+                ],
+                index,
+                data);
+                var agentName = data[index]["AgentName"];
+                currentColumms.push({ Name: "Agent", Value: agentName === undefined || agentName === null ? "All" : agentName, MergeRowNumber: agentMerRowNumber });
+
+            }
             rows.push(
             {
                 Columns: currentColumms.concat([
-                    { Name: "Agent", Value: "12BetUS$01" },
-                    { Name: "SportGameType", Value: "Bond Girl A ha" },
-                    { Name: "MaxBet", Value: (Math.random() * 1000).toFixed(3) },
-                    { Name: "MaxPerMatch", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
-                    { Name: "MaxPerBall", Value: (index % 2 === 0 ? (Math.random() * 500).toFixed(3) : (Math.random() * 500 * -1).toFixed(3)) },
-                    { Name: "Action", Value: generateActionLink("12bet", 13, 13454) }
+                    { Name: "SportGameType", Value: data[index]["SportGameType"]},
+                    { Name: "MaxBet", Value: data[index]["MaxBet"] },
+                    { Name: "MaxPerMatch", Value:data[index]["MaxPerMatch"] },
+                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] },
+                    { Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]) }
 
                 ]),
                 CssClass: evenClass
@@ -193,6 +209,9 @@ var defaultSetting = (function () { // jshint ignore:line
             }
             if (currencyMerRowNumber > 0) {
                 currencyMerRowNumber--;
+            }
+            if (agentMerRowNumber > 0) {
+                agentMerRowNumber--;
             }
         }
         return rows;
