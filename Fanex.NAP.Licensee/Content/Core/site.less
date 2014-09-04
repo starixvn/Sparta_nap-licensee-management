@@ -282,18 +282,6 @@ a {
     }
 }
 
-.ie8 {
-    .header .user-info {
-        top: 5px;
-        
-        .greeting h2 {
-            border: 1px solid #344E85;
-        }
-    }
-}
-.ie8 .header .user-info .greeting h2 {
-    border: 1px solid #344E85;
-}
 @media screen and (max-width: 700px) {
     .header {
         .logo {
@@ -385,6 +373,10 @@ a {
             color: #0136ac;
         }
 
+		li {
+			float: left;
+		}
+
         li + li:before {
             color: #767676;
             padding: 0 2px;
@@ -395,12 +387,6 @@ a {
         display: block;
         float: left;
         margin: 1px 10px 10px;
-    }
-}
-
-.ie8 .filter-form {
-    input[type=submit] {
-        min-width: 0 !important;
     }
 }
 
@@ -526,7 +512,7 @@ input[type="submit"], .btn-primary {
 			float: left;
 
             &.lbl {
-                width: 50px;
+                width: 55px;
                 text-align: right;
             }
 
@@ -547,6 +533,7 @@ input[type="submit"], .btn-primary {
             border: 1px solid @border-color;
             height: 25px;
             padding: 2px;
+			float: left;
         }
 
         .width-160 {
@@ -587,7 +574,7 @@ input[type="submit"], .btn-primary {
     }
 
     &.form-add-setting {
-        width: 685px; 
+        width: 715px; 
     }
 
 	&.bet-setting {
@@ -595,6 +582,36 @@ input[type="submit"], .btn-primary {
 
 		.message.error {
 			left: 500px;
+		}
+	}
+}
+
+.ie8 .filter-form {
+    input[type=submit] {
+        min-width: 0 !important;
+    }
+
+	.form-group {
+		display: table;
+		margin-bottom: 10px;
+
+		.lbl {
+			display: table-cell;
+			float: none;
+			padding: 1px 5px 2px 0px;
+		}
+
+		.lbl-product {
+			padding-right: 15px;
+		}
+
+		input[type="text"], select {
+			display: table-cell;
+		}
+
+		.checkbox-inline {
+			max-width: none;
+			display: table-cell;
 		}
 	}
 }
@@ -731,7 +748,7 @@ input[type="submit"], .btn-primary {
 /********************************************************/
 .group {
     margin-bottom: 5px;
-    width: 685px;
+    width: 715px;
 }
 
 .title-group {
@@ -755,7 +772,7 @@ input[type="submit"], .btn-primary {
 	position: absolute;
 	line-height: 15px;
 	z-index: 20;
-	top: -40px;
+	top: -37px;
 	left: 40%;
 	.box-shadow(1px 1px 0 #ccc);
 	.border-radius(3px);

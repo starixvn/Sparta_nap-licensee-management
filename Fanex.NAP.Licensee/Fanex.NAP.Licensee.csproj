@@ -339,6 +339,8 @@
     <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-TW.js" />
     <Content Include="Scripts\Fanex.Grid\moment.min.js" />
     <Content Include="Scripts\Fanex.Grid\numeral.min.js" />
+    <Content Include="Scripts\head.js" />
+    <Content Include="Scripts\head.min.js" />
     <Content Include="Scripts\jquery-1.9.0-vsdoc.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
@@ -350,6 +352,8 @@
     <Content Include="Scripts\Page\addnew.js" />
     <Content Include="Scripts\Page\default.js" />
     <Content Include="Scripts\Plugin\multi-select-control.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

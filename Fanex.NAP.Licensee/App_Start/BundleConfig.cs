@@ -37,6 +37,16 @@ namespace Fanex.NAP.Licensee.AppStart
             
             bundles.Add(cssFanexGrid);
 
+            var headJs = new Bundle("~/bundles/head")
+                .Include("~/Scripts/head.js",
+                "~/Scripts/respond.js");
+
+            headJs.Builder = nullBuilder;
+            headJs.Transforms.Add(jsTransformer);
+            headJs.Orderer = nullOrderer;
+
+            bundles.Add(headJs);
+
             var coreJs = new Bundle("~/bundles/coreJs")
                 .Include("~/Scripts/jquery-1.9.0.js",
                 "~/Scripts/jquery-ui-1.11.1.js",

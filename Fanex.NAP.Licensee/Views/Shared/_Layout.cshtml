@@ -13,7 +13,8 @@
     <link href="img/favicon.ico" rel="shortcut icon">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @RenderSection("HeadCss", false)
-    @Styles.Render("~/bundles/coreCss")    
+    @Styles.Render("~/bundles/coreCss")  
+    @Scripts.Render("~/bundles/head")  
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~/")';
     </script>
