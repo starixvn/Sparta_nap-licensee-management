@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="K:\WEB209\Olympus\Nap.Licensee" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+  <publishProfile publishUrl="D:\Nap-Lic" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="Content/Fanex.Grid/images/refresh_icon.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Areas/UserLogin/Views/Web.config" publishTime="08/20/2014 15:39:29" />
     <file relUrl="Content/Fanex.Grid/images/go-hover-icon.png" publishTime="08/25/2014 17:58:32" />
@@ -151,7 +151,7 @@
     <file relUrl="Content/jquery-ui/base/selectable.css" publishTime="08/28/2014 11:03:31" />
     <file relUrl="Content/bootstrap/code.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="08/20/2014 12:42:42" />
-    <file relUrl="Scripts/Page/default.js" publishTime="09/08/2014 16:12:55" />
+    <file relUrl="Scripts/Page/default.js" publishTime="09/08/2014 16:42:18" />
     <file relUrl="Scripts/Fanex.Grid/Language/Fanex.Gird.Lang.th-TH.js" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/Fanex.Grid/images/report_check.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/jquery-ui/base/selectmenu.css" publishTime="08/28/2014 11:03:31" />
@@ -294,7 +294,7 @@
     <file relUrl="Content/jquery-ui/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="08/28/2014 11:03:31" />
     <file relUrl="Content/bootstrap/mixins/forms.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/Fanex.Grid/images/icn_edit.png" publishTime="08/25/2014 17:58:32" />
-    <file relUrl="Scripts/Core/site.js" publishTime="09/08/2014 16:01:25" />
+    <file relUrl="Scripts/Core/site.js" publishTime="09/08/2014 16:20:58" />
     <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="08/20/2014 12:42:43" />
     <file relUrl="Scripts/Fanex.Grid/Language/Fanex.Gird.Lang.zh-CN.js" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/jquery-ui/base/menu.css" publishTime="08/28/2014 11:03:31" />

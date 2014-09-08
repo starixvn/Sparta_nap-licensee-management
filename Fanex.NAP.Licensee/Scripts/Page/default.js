@@ -207,6 +207,7 @@ var defaultSetting = (function () { // jshint ignore:line
         var licenseeMerRowNumber = 0;
         var currencyMerRowNumber = 0;
         var agentMerRowNumber = 0;
+        var actionMerRowNumber = 0;
         for (var index = 0; index < numberRows; index++) {
             var currentColumms = [];
             if (licenseeMerRowNumber === 0) {
@@ -241,17 +242,25 @@ var defaultSetting = (function () { // jshint ignore:line
                     Value: agentName === undefined || agentName === null ? "All" : agentName,
                     MergeRowNumber: agentMerRowNumber
                 });
+
+
             }
-            rows.push(
-            {
-                Columns: currentColumms.concat([
+           currentColumms= currentColumms.concat([
                     { Name: "SportGameType", Value: data[index]["SportGameType"] },
                     { Name: "MaxBet", Value: data[index]["MaxBet"] },
                     { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] },
-                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] },
-                    { Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]) }
+                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] }
+                ]);
 
-                ]),
+            if (actionMerRowNumber === 0) {
+                actionMerRowNumber = agentMerRowNumber;
+                currentColumms.push({ Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]),
+                    MergeRowNumber: actionMerRowNumber
+                });
+            }
+            rows.push(
+            {
+                Columns: currentColumms,
                 CssClass: evenClass
             }
              );
@@ -264,6 +273,9 @@ var defaultSetting = (function () { // jshint ignore:line
             }
             if (agentMerRowNumber > 0) {
                 agentMerRowNumber--;
+            }
+            if (actionMerRowNumber > 0) {
+                actionMerRowNumber--;
             }
         }
         return rows;
