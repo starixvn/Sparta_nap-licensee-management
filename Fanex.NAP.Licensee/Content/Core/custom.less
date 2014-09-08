@@ -75,7 +75,7 @@
 }
 
 /********************************************************/
-/*         Custom jQuery Dialog and Datepicker          */
+/*                Custom jQuery Datepicker              */
 /********************************************************/
 .ui-datepicker {
 	font-family: @calendar-font;
@@ -159,5 +159,54 @@
 
 	.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
 		border-top-left-radius: 0;
+	}
+}
+
+/********************************************************/
+/*                   Custom jQuery Dialog               */
+/********************************************************/
+.ui-dialog {
+    background: @popup-bg;
+    color: #fff;
+    .border-radius(0);
+    .box-shadow(0 3px 9px rgba(0, 0, 0, 0.5));
+
+    .ui-dialog-titlebar {
+        background: #466ab6;
+        border: 0;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
+        height: 35px;
+        line-height: 35px;
+        margin: -5px -5px 5px;
+        padding: 0 20px;
+        color: @white;
+
+        .ui-dialog-title {
+            margin-top: 0;
+        }
+    }
+
+    .ui-dialog-content {
+        background-color: @white;
+        .border-radius(0);
+        color: @text;
+    }
+
+    .ui-dialog-titlebar-close {
+        border: 0;
+        top: 19px;
+        right: 10px;
+        padding: 0;
+		background: url(img/btn-close.png) -2px -50px no-repeat;
+    }
+
+	.btn-primary, .btn-back {
+		font-size: @font-size;
+	}
+
+	.confirm-message {
+		background: url(img/icon-question.png) left top no-repeat;
+		padding: 12px 0 0 50px;
+		margin: 14px 15px
 	}
 }

@@ -258,15 +258,24 @@ var defaultSetting = (function () { // jshint ignore:line
 
         $("#confirm-box").dialog({
             resizable: false,
-            height: 140,
+            height: 160,
+            width: 420,
             modal: true,
             buttons: {
-                "Delete  item": function () {
-                    $(this).dialog("close");
-                    deleting();
+                "OK": {                    
+                    text: 'OK',
+                    'class': 'btn-primary btn-ok',
+                    click: function () {
+                        $(this).dialog("close");
+                        deleting();
+                    }
                 },
-                Cancel: function () {
-                    $(this).dialog("close");
+                Cancel: {
+                    text: 'Cancel',
+                    'class': 'btn-red',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
                 }
             }
         });
