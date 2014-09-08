@@ -25,13 +25,14 @@ var defaultSetting = (function () { // jshint ignore:line
         showDistinctRow: false,
         autoResizeColumn: true
     };
-    var actionLinkTpl = "<a target='_blank' href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>"
+    var hashTmp = "#lic={lic}&cur={cur}&sb={sb}&ng={ng}&vs={vs}&kn={kn}";
+    var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>"
     +
-    "<a target='_blank' href='javascript:defaultSetting.Delete(\"{lic}\",{cur},\"{agt}\")' class='icon-delete'></a>";
+    "<a href='#' onclick='javascript:defaultSetting.Delete(\"{lic}\",{cur},\"{agt}\");return false;' class='icon-delete'></a>";
 
     var currencyListControl;
     var currentGrid;
-    var currentSelectedCurrency;
+    var currentSelectedCurrency = "";
     var currentSelectedLicensee;
     var showSB = false;
     var showNG = false;
@@ -39,6 +40,48 @@ var defaultSetting = (function () { // jshint ignore:line
     var showKN = false;
     /*end-private variable*/
     /*private method*/
+    var initDefaultValue = function () {
+        var hash = window.location.href.replace(/^.*?(#|$)/, '');
+        if (hash !== undefined && hash !== null) {
+            var params = hash.split('&');
+            if (params.length > 0) {
+                for (var i = 0; i < params.length; i++) {
+                    var tokens = params[i].split('=');
+                    if (tokens.length === 2) {
+                        switch (tokens[0].toLowerCase()) {
+                            case "lic":
+                                currentSelectedLicensee = tokens[1];
+                                break;
+                            case "cur":
+                                currentSelectedCurrency = tokens[1];
+                                break;
+                            case "sb":
+                                showSB = "true" === tokens[1];
+                                break;
+                            case "ng":
+                                showNG = "true" === tokens[1];
+
+                                break;
+                            case "vs":
+                                showVS = "true" === tokens[1];
+
+                                break;
+                            case "kn":
+                                showKN = "true" === tokens[1];
+
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    };
+    var updateFilterControl = function () {
+        $("#showSB").prop("checked", showSB);
+        $("#showNG").prop("checked", showNG);
+        $("#showVS").prop("checked", showVS);
+        $("#showKN").prop("checked", showKN);
+    };
     var initEvent = function () {
         $("#generate").click(function (event) {
             event.preventDefault();
@@ -47,7 +90,6 @@ var defaultSetting = (function () { // jshint ignore:line
     };
     /* page function*/
     var invokeGenerateButton = function () {
-        invokeErrMsg(false);
         currentSelectedCurrency = currencyListControl.getParentFilterId();
         currentSelectedLicensee = $("#licensee").val();
         showSB = $("#showSB").is(":checked");
@@ -59,8 +101,10 @@ var defaultSetting = (function () { // jshint ignore:line
             invokeErrMsg(true);
             return;
         }
-
-        invokeLoadingMsg(true);
+        /* update hash */
+        var hash = hashTmp.replace(/{lic}/g, currentSelectedLicensee).replace(/{cur}/g, currentSelectedCurrency)
+        .replace(/{sb}/g, showSB).replace(/{ng}/g, showNG).replace(/{vs}/g, showVS).replace(/{kn}/g, showKN);
+        window.location.hash = hash;
         renderGridData();
     };
     var isValidInput = function () {
@@ -84,8 +128,10 @@ var defaultSetting = (function () { // jshint ignore:line
     };
     var invokeLoadingMsg = function (visible) {
         if (visible) {
-            $("#loadingMsgBox").removeClass("hidden");
-            setGenerateButtonStatus(true);
+            if ($("#loadingMsgBox").is(":hidden")) {
+                $("#loadingMsgBox").removeClass("hidden");
+                setGenerateButtonStatus(true);
+            }
         }
         else {
             $("#loadingMsgBox").addClass("hidden");
@@ -95,6 +141,7 @@ var defaultSetting = (function () { // jshint ignore:line
     var generateActionLink = function (licensee, currencyId, agentId) {
         return actionLinkTpl.replace(/{lic}/g, licensee).replace(/{cur}/g, currencyId).replace(/{agt}/g, agentId);
     };
+    /* load data*/
     var renderGridData = function () {
         var criteria = {
             Licensee: currentSelectedLicensee,
@@ -112,8 +159,10 @@ var defaultSetting = (function () { // jshint ignore:line
             datatype: "json",
             contentType: "application/json; charset=utf-8",
             cache: false,
+            beforeSend: function () {
+                invokeLoadingMsg(true);
+            },
             success: function (data) {
-                console.log(data);
                 gridOptions.bodyRows = converDataToFanexGridFormat(data);
                 currentGrid = $("#gridId").fanexGrid(gridOptions);
                 invokeLoadingMsg(false);
@@ -218,11 +267,11 @@ var defaultSetting = (function () { // jshint ignore:line
         }
         return rows;
     };
+    /*end-load data*/
     /*end-page function*/
 
     /*end-private method*/
     me.Delete = function (licensee, currencyId, agentId) {
-
         var deleting = function () {
             var criteria = {
                 Licensee: licensee,
@@ -279,13 +328,23 @@ var defaultSetting = (function () { // jshint ignore:line
                 }
             }
         });
-
-
     };
     me.setup = function () {
+        invokeLoadingMsg(true);
         initEvent();
-        currencyListControl = site.renderCurrencyList();
-        site.renderLicenseeList();
+        initDefaultValue();
+        currencyListControl = site.renderCurrencyList(currentSelectedCurrency);
+        site.renderLicenseeList(currentSelectedLicensee);
+        updateFilterControl();
+        /*first loading*/
+        var loadingChecking = null;
+        loadingChecking = setInterval(function () {
+            if ($("#licensee option").length > 0 && $("#currency-control div").length > 0) {
+                clearInterval(loadingChecking);
+                invokeLoadingMsg(false);
+                invokeGenerateButton();
+            }
+        }, 500);
     };
 
     return me;
