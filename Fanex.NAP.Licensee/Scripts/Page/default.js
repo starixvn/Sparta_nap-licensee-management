@@ -90,6 +90,7 @@ var defaultSetting = (function () { // jshint ignore:line
     };
     /* page function*/
     var invokeGenerateButton = function () {
+        invokeErrMsg(false);
         currentSelectedCurrency = currencyListControl.getParentFilterId();
         currentSelectedLicensee = $("#licensee").val();
         showSB = $("#showSB").is(":checked");
@@ -305,13 +306,14 @@ var defaultSetting = (function () { // jshint ignore:line
             });
         };
 
+        $("#confirm-box").removeClass("hidden");
         $("#confirm-box").dialog({
             resizable: false,
             height: 160,
             width: 420,
             modal: true,
             buttons: {
-                "OK": {                    
+                "OK": {
                     text: 'OK',
                     'class': 'btn-primary btn-ok',
                     click: function () {
