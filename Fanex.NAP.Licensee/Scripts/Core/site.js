@@ -10,7 +10,7 @@ var site = (function () {
 
         $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
             var currencies = [];
-            for (var i = 1; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var cur = {
                     Id: data[i].Id,
                     Name: data[i].Name,
@@ -42,7 +42,7 @@ var site = (function () {
     me.renderLicenseeList = function (currentSelectedLicensee) {
         $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
             var items = "";
-            for (var i = 1; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var selected = data[i].Name.toLowerCase() === currentSelectedLicensee ? "selected = \"selected\"" : "";
                 items += "<option " + selected + " value=\"" + data[i].Name + "\">" + data[i].Name + "</option>";
             }
