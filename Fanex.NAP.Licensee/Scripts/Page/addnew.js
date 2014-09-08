@@ -1,6 +1,5 @@
 ﻿/* File Created: August 20, 2014 */
 /* exported  addNew */
-/* global MultiSelectControl */
 var addNew = (function () {
     "use strict";
 

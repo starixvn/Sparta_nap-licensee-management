@@ -1,8 +1,9 @@
 ﻿"use strict";
 /*exported MultiSelectControl*/
 
+var MultiSelectControl = function () {
+    var $this = this;
 
-var MultiSelectControl = (function ($) {
     var setting =
     {
         ContainerId: "multi-select-control",
@@ -16,6 +17,7 @@ var MultiSelectControl = (function ($) {
         DefaultData: null,
         IsSearch: true,
         IsDefaultShow: false,
+        IsCloseControlWhenBlur: false,
         SelectedAllText: "",
         NoItemText: "No item found!",
         SelectedText: "{0}",
@@ -40,6 +42,13 @@ var MultiSelectControl = (function ($) {
                 closeFilter();
             } else {
                 openFilter();
+            }
+        });
+
+        // on blur control
+        $("#" + setting.ContainerId).on("mouseleave", function () {
+            if (setting.IsCloseControlWhenBlur) {
+                closeFilter();
             }
         });
 
@@ -167,7 +176,7 @@ var MultiSelectControl = (function ($) {
         // filter parent
         var parentNameList = $("#" + setting.ContainerId + " " + ".parent-name");
         for (var j = 0; j < parentNameList.length; j++) {
-            var parentIdTag = $(parentNameList[j]).attr("for");
+            var parentIdTag = $(parentNameList[j]).attr("data-for");
             var parentIdVal = $("#" + setting.ContainerId + " #" + parentIdTag).attr("data-parent-id");
             var numOfCheckChild = $("#" + setting.ContainerId + " " + ".parent-" + parentIdVal).length;
             var parentName = $(parentNameList[j]).html().toLowerCase();
@@ -180,7 +189,7 @@ var MultiSelectControl = (function ($) {
         // filter child
         var childNameList = $("#" + setting.ContainerId + " " + ".child-name");
         for (var i = 0; i < childNameList.length; i++) {
-            var childInputTag = $(childNameList[i]).attr("for");
+            var childInputTag = $(childNameList[i]).attr("data-for");
             var childId = parseInt($("#" + setting.ContainerId + " " + "#" + childInputTag).attr("data-child-id"), 10);
             var childName = $(childNameList[i]).html().toLowerCase();
 
@@ -208,9 +217,7 @@ var MultiSelectControl = (function ($) {
         setFilterHeaderText();
     };
 
-    var me = {};
-
-    me.renderControl = function (option) {
+    $this.renderControl = function (option) {
         /// <summary>
         /// Render Control.
         /// </summary>
@@ -255,8 +262,7 @@ var MultiSelectControl = (function ($) {
                 controlHtml += '<tr id="parent-row-' + parent[setting.IdProperty] + '" class="parent-row"><td style="width: 30px;">';
                 controlHtml += '<input type="checkbox" data-parent-id="' + parent[setting.IdProperty] + '" data-parent-name="' + parent[setting.NameProperty]
                             + '" id="parent-' + parent[setting.IdProperty] + '" class="parent" status="show" ' + check + '/>';
-                controlHtml += '</td><td colspan="2"><label class="parent-name" for="parent-' + parent[setting.IdProperty]
-                            + '">' + parent[setting.NameProperty] + '</label></td></tr>';
+                controlHtml += '</td><td colspan="2"><label class="parent-name" data-for="parent-' + parent[setting.IdProperty] + '">' + parent[setting.NameProperty] + '</label></td></tr>';
 
                 for (var j = 0; j < setting.DefaultData.length; j++) {
                     if (setting.DefaultData[j][setting.ParentIdProperty] === parent[setting.IdProperty]) {
@@ -272,8 +278,7 @@ var MultiSelectControl = (function ($) {
                                     + parent[setting.NameProperty] + '" data-child-name="' + child[setting.NameProperty] + '" data-parent-id="'
                                     + parent[setting.IdProperty] + '" id="child-' + child[setting.IdProperty] + '" class="parent-'
                                     + parent[setting.IdProperty] + ' child" status="show" ' + check + '/>';
-                        controlHtml += '</td><td><label class="child-name" for="child-' + child[setting.IdProperty] + '">'
-                                    + child[setting.NameProperty] + '</label></td></tr>';
+                        controlHtml += '</td><td><label class="child-name" data-for="child-' + child[setting.IdProperty] + '">' + child[setting.NameProperty] + '</label></td></tr>';
                     }
                 }
             }
@@ -288,7 +293,7 @@ var MultiSelectControl = (function ($) {
         }
     };
 
-    me.getParentFilterId = function () {
+    $this.getParentFilterId = function () {
         /// <summary>
         /// Get parent filter ID.
         /// </summary>
@@ -302,7 +307,7 @@ var MultiSelectControl = (function ($) {
         return parentIdList;
     };
 
-    me.getParentFilterName = function () {
+    $this.getParentFilterName = function () {
         /// <summary>
         /// Get parent filter Name.
         /// </summary>
@@ -316,7 +321,7 @@ var MultiSelectControl = (function ($) {
         return parentNameList;
     };
 
-    me.getChildFilterId = function () {
+    $this.getChildFilterId = function () {
         /// <summary>
         /// Get child filter ID.
         /// </summary>
@@ -330,7 +335,7 @@ var MultiSelectControl = (function ($) {
         return SeletedChildIdList;
     };
 
-    me.getChildFilterName = function () {
+    $this.getChildFilterName = function () {
         /// <summary>
         /// Get child filter Name.
         /// </summary>
@@ -343,6 +348,4 @@ var MultiSelectControl = (function ($) {
         }
         return childNameList;
     };
-
-    return me;
-})(jQuery);
+};

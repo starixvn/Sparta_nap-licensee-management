@@ -12,6 +12,7 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
+
         public BetSettingController()
             : base()
         {
@@ -38,7 +39,7 @@
         {
             if (criteria.IsValid())
             {
-                return Json(_betSettingService.GetDefaultBetSettings(criteria));
+                return Json(_betSettingService.GetAll(criteria));
             }
             return Json(string.Empty);
         }
@@ -67,7 +68,7 @@
 
         [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
-        public ActionResult Edit(int siteId, int currencyId, int agentId)
+        public ActionResult Edit(string licensee, int currencyId, int? agentId)
         {
             return View();
         }
@@ -80,6 +81,30 @@
         }
 
         #endregion Editting
+
+        #region Delete
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(DeletingDefaultBetSettingCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return Json(new { IsOk = false, Msg = "Input data is invalid" });
+            }
+            criteria.UserID = CurrentSession.UserId;
+            criteria.IP = Request.UserHostAddress;
+            
+            if (_betSettingService.Delete(criteria))
+            {
+                return Json(new { IsOk = true, Msg = "Successful" });
+            }
+
+            return Json(new { IsOk = false, Msg = "Processing failed!" });
+        }
+
+        #endregion Delete
 
         #region Logs
 

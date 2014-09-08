@@ -6,23 +6,33 @@
 
 namespace Fanex.NAP.Licensee.Service
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using Fanex.Data;
+    using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DTO;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class BetSettingService:IBetSettingService
+    public class BetSettingService : IBetSettingService
     {
-        public IList<DefaultBetSetting> GetDefaultBetSettings(Model.Criteria.DefaultBetSettingCriteria criteria)
+        private const int SuccessCode = 0;
+
+        public IList<DefaultBetSetting> GetAll(Model.Criteria.DefaultBetSettingCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 return db.Query<DefaultBetSetting>(criteria.GetSpParams()).ToList();
+            }
+        }
+
+        public bool Delete(DeletingDefaultBetSettingCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteReader(criteria.GetSpParams());
+                return db.GetParameterValue("@errcode").Equals(SuccessCode);
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿/* File Created: August 20, 2014 */
 /*exported defaultSetting */
-/* global MultiSelectControl,site */
+/* global site */
 
 var defaultSetting = (function () { // jshint ignore:line
     "use strict";
@@ -25,10 +25,11 @@ var defaultSetting = (function () { // jshint ignore:line
         showDistinctRow: false,
         autoResizeColumn: true
     };
-    var actionLinkTpl = "<a target='_blank' href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currency={cur}&agentid={agt} class='icon-edit'></a>"
+    var actionLinkTpl = "<a target='_blank' href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>"
     +
-    "<a target='_blank' href=" + window.rootUrl + "BetSetting/Delete?licensee={lic}&currency={cur}&agentid={agt} class='icon-delete'></a>";
+    "<a target='_blank' href='javascript:defaultSetting.Delete(\"{lic}\",{cur},\"{agt}\")' class='icon-delete'></a>";
 
+    var currencyListControl;
     var currentGrid;
     var currentSelectedCurrency;
     var currentSelectedLicensee;
@@ -47,7 +48,7 @@ var defaultSetting = (function () { // jshint ignore:line
     /* page function*/
     var invokeGenerateButton = function () {
         invokeErrMsg(false);
-        currentSelectedCurrency = MultiSelectControl.getParentFilterId();
+        currentSelectedCurrency = currencyListControl.getParentFilterId();
         currentSelectedLicensee = $("#licensee").val();
         showSB = $("#showSB").is(":checked");
         showNG = $("#showNG").is(":checked");
@@ -92,7 +93,7 @@ var defaultSetting = (function () { // jshint ignore:line
         }
     };
     var generateActionLink = function (licensee, currencyId, agentId) {
-        return actionLinkTpl.replace(/{lic}/g, licensee).replace(/{cur}/g,currencyId).replace(/{agt}/g,agentId);
+        return actionLinkTpl.replace(/{lic}/g, licensee).replace(/{cur}/g, currencyId).replace(/{agt}/g, agentId);
     };
     var renderGridData = function () {
         var criteria = {
@@ -175,11 +176,9 @@ var defaultSetting = (function () { // jshint ignore:line
                 [{ "Key": "Licensee", "Value": data[index]["Licensee"] }, { "Key": "CurrencyID", "Value": data[index]["CurrencyID"]}], index, data);
 
                 currentColumms.push({ Name: "Currency", Value: data[index]["Currency"], MergeRowNumber: currencyMerRowNumber });
-
             }
 
             if (agentMerRowNumber === 0) {
-
                 agentMerRowNumber = countItemInArray(
                 [{ "Key": "Licensee", "Value": data[index]["Licensee"] },
                 { "Key": "CurrencyID", "Value": data[index]["CurrencyID"] },
@@ -190,8 +189,8 @@ var defaultSetting = (function () { // jshint ignore:line
                 var agentName = data[index]["AgentName"];
                 currentColumms.push({ Name: "Agent",
                     Value: agentName === undefined || agentName === null ? "All" : agentName,
-                  MergeRowNumber: agentMerRowNumber });
-
+                    MergeRowNumber: agentMerRowNumber
+                });
             }
             rows.push(
             {
@@ -222,10 +221,61 @@ var defaultSetting = (function () { // jshint ignore:line
     /*end-page function*/
 
     /*end-private method*/
+    me.Delete = function (licensee, currencyId, agentId) {
 
+        var deleting = function () {
+            var criteria = {
+                Licensee: licensee,
+                CurrencyID: currencyId,
+                AgentID: agentId !== undefined && agentId !== null ? agentId : null
+            };
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetSetting/Delete",
+                data: JSON.stringify(criteria),
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                beforeSend: function () {
+                    invokeLoadingMsg(true);
+                },
+                success: function (data) {
+                    alert(data.Msg);
+
+                    if (data.IsOk === true) {
+                        renderGridData();
+                    }
+                    else {
+                        invokeLoadingMsg(false);
+                    }
+                },
+                error: function () {
+                    invokeLoadingMsg(false);
+                    alert("Error requesting page");
+                }
+            });
+        };
+
+        $("#confirm-box").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                "Delete  item": function () {
+                    $(this).dialog("close");
+                    deleting();
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+
+    };
     me.setup = function () {
         initEvent();
-        site.renderCurrencyList();
+        currencyListControl = site.renderCurrencyList();
         site.renderLicenseeList();
     };
 

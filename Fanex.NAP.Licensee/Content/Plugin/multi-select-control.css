@@ -13,11 +13,11 @@
     box-shadow: 0 0 2px 2px #3b5998;
 }
 .multi-select-control .control-header {
-	padding-left: 5px;
-	padding-top: 7px;
-	margin-bottom: 5px;
-	font-weight: bold;
-	
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 3px;	
+    z-index: 1000;
 }
 .multi-select-control .icon {
     background-image: url('../jquery-ui/base/images/ui-icons_2e83ff_256x240.png');
@@ -53,6 +53,9 @@
 }
 .multi-select-control .control-filter .checkbox-tree {
 	overflow: auto;	
+}
+.multi-select-control .control-filter .checkbox-tree table tr td input {
+	cursor: pointer;	
 }
 .multi-select-control .control-filter .filter-header {
 	font-size: 12px;
