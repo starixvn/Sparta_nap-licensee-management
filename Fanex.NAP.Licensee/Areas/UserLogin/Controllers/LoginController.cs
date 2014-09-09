@@ -114,6 +114,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string username, string password)
         {
+            Response.BufferOutput = true;
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
                 var user = _userService.GetByUsername(username.Trim()) as User;

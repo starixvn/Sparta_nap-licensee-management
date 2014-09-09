@@ -23,7 +23,7 @@ var defaultSetting = (function () { // jshint ignore:line
         gridExpandHeight: 150,
         bodyRowHeight: 30,
         showDistinctRow: false,
-        autoResizeColumn: true
+        autoResizeColumn: true,showHighlightRow:false
     };
     var hashTmp = "#lic={lic}&cur={cur}&sb={sb}&ng={ng}&vs={vs}&kn={kn}";
     var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>"
@@ -209,17 +209,13 @@ var defaultSetting = (function () { // jshint ignore:line
         var agentMerRowNumber = 0;
         var actionMerRowNumber = 0;
         for (var index = 0; index < numberRows; index++) {
+            
             var currentColumms = [];
             if (licenseeMerRowNumber === 0) {
                 licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"]}], index, data);
 
                 currentColumms.push({ Name: "Licensee", Value: data[index]["Licensee"], MergeRowNumber: licenseeMerRowNumber });
-                if (evenClass === 'freegrid-even') {
-                    evenClass = '';
-                }
-                else {
-                    evenClass = 'freegrid-even';
-                }
+          
             }
 
             if (currencyMerRowNumber === 0) {
