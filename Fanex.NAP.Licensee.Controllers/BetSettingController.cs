@@ -36,7 +36,7 @@
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Host)]
         [AjaxRequest]
-        public ActionResult Default(DefaultBetSettingCriteria criteria)
+        public ActionResult Default(GetAllDefaultBetSettingCriteria criteria)
         {
             if (criteria.IsValid())
             {
@@ -71,7 +71,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult Edit(string licensee, int currencyId, int? agentId)
         {
-            return View( _betSettingService.Single(licensee,currencyId,agentId));
+            return View(_betSettingService.SingleExisted(new GetSingleDefaultBetSettingCriteria(licensee, currencyId, agentId)));
         }
 
         [HttpPost]

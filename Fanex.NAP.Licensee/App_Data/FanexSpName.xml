@@ -13,5 +13,8 @@
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_Del" SpName="NAP_SpecialCustSetting_Del" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
+        <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+        </Setting>
+        
     </Function>
 </Functions>

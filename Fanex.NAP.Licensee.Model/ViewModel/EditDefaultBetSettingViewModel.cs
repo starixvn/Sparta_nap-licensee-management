@@ -17,6 +17,14 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
     [Serializable]
     public class EditDefaultBetSettingViewModel
     {
+        public EditDefaultBetSettingViewModel()
+        {
+            this.Sportbook = new List<BetSettingBySport>();
+            this.NumberGame = new List<BetSettingBySport>();
+            this.VirtualSport = new List<BetSettingBySport>();
+            this.Keno = new List<BetSettingBySport>();
+        }
+
         public string Licensee { get; set; }
 
         public CurrencyItem Currency { get; set; }

@@ -13,7 +13,7 @@ namespace Fanex.NAP.Licensee.Model.Criteria
     /// TODO: Update summary.
     /// </summary>
     [Serializable]
-    public class DefaultBetSettingCriteria : CriteriaBase
+    public class GetAllDefaultBetSettingCriteria : CriteriaBase
     {
         public string Licensee { get; set; }
 

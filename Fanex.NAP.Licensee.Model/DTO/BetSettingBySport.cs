@@ -18,9 +18,9 @@ namespace Fanex.NAP.Licensee.Model.DTO
     public class BetSettingBySport
     {
        public SportOrGameItem SportOrGame { get; set; }
-       public decimal MaxBet { get; set; }
-       public decimal MaxPerMatch { get; set; }
-       public decimal MaxPerBall { get; set; }
+       public decimal? MaxBet { get; set; }
+       public decimal? MaxPerMatch { get; set; }
+       public decimal? MaxPerBall { get; set; }
        public int BetType { get; set; }
     }
 }

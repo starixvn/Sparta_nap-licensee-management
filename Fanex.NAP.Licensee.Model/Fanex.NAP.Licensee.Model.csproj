@@ -107,8 +107,12 @@
   <ItemGroup>
     <Compile Include="Criteria\DeletingDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\EditingBetSettingCriteria.cs" />
+    <Compile Include="Criteria\GetSingleDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\GetSingleDefaultBetSettingTemplate.cs" />
+    <Compile Include="Criteria\InsertDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\UpdateExistedDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\ViewLogCriteria.cs" />
-    <Compile Include="Criteria\DefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\GetAllDefaultBetSettingCriteria.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

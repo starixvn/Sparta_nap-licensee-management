@@ -9,201 +9,220 @@
         <li class="current">Edit Default Bet Setting</li>
     </ul>
 }
-<form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-setting">
-<div class="form-group">
-    <label for="licensee">
-        Site</label>
-    <select id="licensee" disabled="disabled" class="width-160">
-        <option value="@Model.Licensee">@Model.Licensee</option>
-    </select>
-</div>
-<div class="form-group">
-    <label for="currency">
-        Currency</label>
-    <select id="currency" disabled="disabled" class="width-160">
-        <option value="@Model.Currency.Id">@Model.Currency.Name</option>
-    </select>
-</div>
-<div class="form-group">
-    <label for="agent">
-        Agent</label>
-    <select id="agent" disabled="disabled" class="width-160">
-        <option value="@Model.AgentId">@Model.AgentName</option>
-    </select>
-</div>
-</form>
-<div class="col-sm-12">
-    <div class="row group">
-        <div class="col-sm-12 title-group">
-            <i class="icon-collapse"></i>Sportbook</div>
-        <div class="col-sm-12 content">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="copy-sb">
-                Copy all Bet Setting from 1st row (Excluding Number Game)
-            </label>
-            <table class="table table-bordered table-setting">
-                <thead>
-                    <tr>
-                        <th class="col20">
-                            Sport Type
-                        </th>
-                        <th class="col40">
-                            Max Bet
-                        </th>
-                        <th class="col40">
-                            Max Per Match
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var sb in Model.Sportbook)
-                {
-                    <tr>
-                        <td>
-                            @sb.SportOrGame.Name
-                        </td>
-                        <td>
-                            <input type="text" value="@sb.MaxBet" class="width-240 txt-max" />
-                        </td>
-                        <td>
-                            <input type="text" value="@sb.MaxPerMatch" class="width-240 txt-max" />
-                        </td>
-                    </tr>
-                }
-                    
-                </tbody>
-            </table>
-        </div>
+@if (Model.IsValid)
+{
+    <form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-setting">
+    <div class="form-group">
+        <label for="licensee">
+            Site</label>
+        <select id="licensee" disabled="disabled" class="width-160">
+            <option value="@Model.Licensee">@Model.Licensee</option>
+        </select>
     </div>
-    <div class="row group">
-        <div class="col-sm-12 title-group">
-            <i class="icon-collapse"></i>Number Game</div>
-        <div class="col-sm-12 content">
-            
-            <table class="table table-bordered table-setting">
-                <thead>
-                    <tr>
-                        <th class="col20">
-                        </th>
-                        <th class="col20">
-                            Max Bet
-                        </th>
-                        <th class="col30">
-                            Max Per Match
-                        </th>
-                        <th class="col30">
-                            Max Per Ball
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var ng in Model.NumberGame)
-                {
-                    <tr>
-                        <td>
-                            @ng.SportOrGame.Name
-                        </td>
-                        <td>
-                            <input type="text" value="@ng.MaxBet" class="width-120 txt-max" />
-                        </td>
-                        <td>
-                            <input type="text" value="@ng.MaxPerMatch" class="width-170 txt-max" />
-                        </td>
-                        <td>
-                            <input type="text" value="@ng.MaxPerBall" class="width-170 txt-max" />
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
+    <div class="form-group">
+        <label for="currency">
+            Currency</label>
+        <select id="currency" disabled="disabled" class="width-160">
+            <option value="@Model.Currency.Id">@Model.Currency.Name</option>
+        </select>
     </div>
-    <div class="row group">
-        <div class="col-sm-12 title-group">
-            <i class="icon-collapse"></i>Virtual Sports</div>
-        <div class="col-sm-12 content">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="copy-vs" value="option1">
-                Copy all Bet Setting from 1st row
-            </label>
-            <table class="table table-bordered table-setting">
-                <thead>
-                    <tr>
-                        <th class="col20">
-                            Sport Type
-                        </th>
-                        <th class="col40">
-                            Max Bet
-                        </th>
-                        <th class="col40">
-                            Max Per Match
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var vs in Model.VirtualSport)
-                {
-                    <tr>
-                        <td>
-                          @vs.SportOrGame.Name
-                        </td>
-                        <td>
-                            <input type="text" value="@vs.MaxBet" class="width-240 txt-max" />
-                        </td>
-                        <td>
-                            <input type="text" value="@vs.MaxPerMatch" class="width-240 txt-max" />
-                        </td>
-                    </tr>
-                }  
-                </tbody>
-            </table>
-        </div>
+    <div class="form-group">
+        <label for="agent">
+            Agent</label>
+        <select id="agent" disabled="disabled" class="width-160">
+            <option value="@Model.AgentId">@Model.AgentName</option>
+        </select>
     </div>
-    <div class="row group">
-        <div class="col-sm-12 title-group">
-            <i class="icon-collapse"></i>Keno</div>
-        <div class="col-sm-12 content">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="copy-kn" value="option1">
-                Copy all Bet Setting from 1st row
-            </label>
-            <table class="table table-bordered table-setting">
-                <thead>
-                    <tr>
-                        <th class="col20">
-                            Game Type
-                        </th>
-                        <th class="col40">
-                            Max Bet
-                        </th>
-                        <th class="col40">
-                            Max Per Match
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var kn in Model.Keno)
-                {
-                    <tr>
-                        <td>
-                           @kn.SportOrGame.Name
-                        </td>
-                        <td>
-                            <input type="text" value="@kn.MaxBet" class="width-240 txt-max" />
-                        </td>
-                        <td>
-                            <input type="text" value="@kn.MaxPerMatch" class="width-240 txt-max" />
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
+    </form>
+    <div class="col-sm-12">
+        @if (Model.Sportbook.Count > 0)
+        {
+            <div class="row group">
+                <div class="col-sm-12 title-group">
+                    <i class="icon-collapse"></i>Sportbook</div>
+                <div class="col-sm-12 content">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="copy-sb">
+                        Copy all Bet Setting from 1st row (Excluding Number Game)
+                    </label>
+                    <table class="table table-bordered table-setting">
+                        <thead>
+                            <tr>
+                                <th class="col20">
+                                    Sport Type
+                                </th>
+                                <th class="col40">
+                                    Max Bet
+                                </th>
+                                <th class="col40">
+                                    Max Per Match
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sb in Model.Sportbook)
+                            {
+                                <tr>
+                                    <td>
+                                        @sb.SportOrGame.Name
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(sb.MaxBet.HasValue?sb.MaxBet.Value.ToString():string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        @if (Model.NumberGame.Count > 0)
+        {
+            <div class="row group">
+                <div class="col-sm-12 title-group">
+                    <i class="icon-collapse"></i>Number Game</div>
+                <div class="col-sm-12 content">
+                    <table class="table table-bordered table-setting">
+                        <thead>
+                            <tr>
+                                <th class="col20">
+                                </th>
+                                <th class="col20">
+                                    Max Bet
+                                </th>
+                                <th class="col30">
+                                    Max Per Match
+                                </th>
+                                <th class="col30">
+                                    Max Per Ball
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ng in Model.NumberGame)
+                            {
+                                <tr>
+                                    <td>
+                                        @ng.SportOrGame.Name
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(ng.MaxBet.HasValue?ng.MaxBet.Value.ToString():string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(ng.MaxPerMatch.HasValue?ng.MaxPerMatch.Value.ToString():string.Empty)" class="width-170 txt-max" />
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        @if (Model.VirtualSport.Count > 0)
+        {
+            <div class="row group">
+                <div class="col-sm-12 title-group">
+                    <i class="icon-collapse"></i>Virtual Sports</div>
+                <div class="col-sm-12 content">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="copy-vs" value="option1">
+                        Copy all Bet Setting from 1st row
+                    </label>
+                    <table class="table table-bordered table-setting">
+                        <thead>
+                            <tr>
+                                <th class="col20">
+                                    Sport Type
+                                </th>
+                                <th class="col40">
+                                    Max Bet
+                                </th>
+                                <th class="col40">
+                                    Max Per Match
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vs in Model.VirtualSport)
+                            {
+                                <tr>
+                                    <td>
+                                        @vs.SportOrGame.Name
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(vs.MaxBet.HasValue?vs.MaxBet.Value.ToString():string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(vs.MaxPerMatch.HasValue ? vs.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        @if (Model.Keno.Count > 0)
+        {
+            <div class="row group">
+                <div class="col-sm-12 title-group">
+                    <i class="icon-collapse"></i>Keno</div>
+                <div class="col-sm-12 content">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="copy-kn" value="option1">
+                        Copy all Bet Setting from 1st row
+                    </label>
+                    <table class="table table-bordered table-setting">
+                        <thead>
+                            <tr>
+                                <th class="col20">
+                                    Game Type
+                                </th>
+                                <th class="col40">
+                                    Max Bet
+                                </th>
+                                <th class="col40">
+                                    Max Per Match
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var kn in Model.Keno)
+                            {
+                                <tr>
+                                    <td>
+                                        @kn.SportOrGame.Name
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(kn.MaxBet.HasValue?kn.MaxBet.Value.ToString():string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@(kn.MaxPerMatch.HasValue ? kn.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
     </div>
-</div>
-<div class="col-sm-12">
-    <button class="btn-primary">
-        Submit</button>
-    <button class="btn-back">
-        Return</button>
-</div>
+    <div class="col-sm-12">
+        <button class="btn-primary">
+            Submit</button>
+        <button onclick="javascript:history.go(-1);return false;" class="btn-back">
+            Return</button>
+    </div>
+}
+else
+{
+    <div>
+        No information is available
+    </div>
+}
