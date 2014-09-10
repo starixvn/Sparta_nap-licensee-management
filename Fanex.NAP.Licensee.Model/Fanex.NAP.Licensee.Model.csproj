@@ -117,6 +117,8 @@
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
+    <Compile Include="DTO\BetSettingBySport.cs" />
+    <Compile Include="DTO\SportOrGameItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +128,7 @@
       <LastGenOutput>NapLicenseeFunctionKeys.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <Compile Include="ViewModel\EditDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

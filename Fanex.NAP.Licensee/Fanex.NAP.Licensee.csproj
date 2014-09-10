@@ -215,7 +215,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Data\FanexSpName.xml" />
+    <Content Include="App_Data\FanexSpName.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\NAPFrameworkSpNames.xml" />
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Error.css" />

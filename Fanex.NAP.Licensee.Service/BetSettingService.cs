@@ -35,5 +35,58 @@ namespace Fanex.NAP.Licensee.Service
                 return db.GetParameterValue("@errcode").Equals(SuccessCode);
             }
         }
+
+        public Model.ViewModel.EditDefaultBetSettingViewModel Single(string licensee, int currencyId, int? agentId)
+        {
+            return GenTestData(licensee, currencyId, agentId);
+        }
+
+        private static Model.ViewModel.EditDefaultBetSettingViewModel GenTestData(string licensee, int currencyId, int? agentId)
+        {
+            var item = new Model.ViewModel.EditDefaultBetSettingViewModel
+            {
+                Licensee = licensee,
+                Currency = new CurrencyItem
+                {
+                    Id = currencyId,
+                    Name = "$UUST"
+                },
+                AgentId = agentId,
+                AgentName="All",
+                Sportbook = new List<BetSettingBySport>(),
+                VirtualSport = new List<BetSettingBySport>(),
+                Keno = new List<BetSettingBySport>(),
+                NumberGame = new List<BetSettingBySport>()
+            };
+            item.Sportbook.Add(new BetSettingBySport
+            {
+                SportOrGame = new SportOrGameItem { Id = 1, Name = "Soccer" },
+                MaxBet = 500,
+                MaxPerBall = 10,
+                MaxPerMatch = 15
+            });
+            item.VirtualSport.Add(new BetSettingBySport
+            {
+                SportOrGame = new SportOrGameItem { Id = 2, Name = "Virtual Soccer" },
+                MaxBet = 500,
+                MaxPerBall = 10,
+                MaxPerMatch = 15
+            });
+            item.Keno.Add(new BetSettingBySport
+            {
+                SportOrGame = new SportOrGameItem { Id = 3, Name = "Australia" },
+                MaxBet = 500,
+                MaxPerBall = 10,
+                MaxPerMatch = 15
+            });
+            item.NumberGame.Add(new BetSettingBySport
+            {
+                SportOrGame = new SportOrGameItem { Id = 4, Name = "NumberGame" },
+                MaxBet = 500,
+                MaxPerBall = 10,
+                MaxPerMatch = 15
+            });
+            return item;
+        }
     }
 }

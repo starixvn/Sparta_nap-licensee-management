@@ -6,6 +6,7 @@
     using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Service;
 
     public class BetSettingController : BaseController
@@ -70,12 +71,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult Edit(string licensee, int currencyId, int? agentId)
         {
-            return View();
+            return View( _betSettingService.Single(licensee,currencyId,agentId));
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(EditingBetSettingCriteria criteria)
+        public ActionResult Edit(EditDefaultBetSettingViewModel criteria)
         {
             return View();
         }
@@ -95,7 +96,7 @@
             }
             criteria.UserID = CurrentSession.UserId;
             criteria.IP = Request.UserHostAddress;
-            
+
             if (_betSettingService.Delete(criteria))
             {
                 return Json(new { IsOk = true, Msg = "Successful" });
