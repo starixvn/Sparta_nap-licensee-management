@@ -18,14 +18,8 @@ namespace Fanex.NAP.Licensee.Service
     {
         IList<DefaultBetSetting> GetAll(GetAllDefaultBetSettingCriteria criteria);
 
-        bool Delete(DeletingDefaultBetSettingCriteria criteria);
-
-        EditDefaultBetSettingViewModel SingleExisted(GetSingleDefaultBetSettingCriteria criteria);
-
-        bool Update(UpdateExistedDefaultBetSettingCriteria criteria);
-
-        EditDefaultBetSettingViewModel SingleTemplate(GetSingleDefaultBetSettingTemplate criteria);
-
-        bool Insert(InsertDefaultBetSetting criteria);
+        SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria);
+      
+        bool InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria);
     }
 }

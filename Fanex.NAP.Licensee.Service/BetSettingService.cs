@@ -33,18 +33,9 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
-        public bool Delete(DeletingDefaultBetSettingCriteria criteria)
+        public SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteReader(criteria.GetSpParams());
-                return db.GetParameterValue("@errcode").Equals(SuccessCode);
-            }
-        }
-
-        public Model.ViewModel.EditDefaultBetSettingViewModel SingleExisted(GetSingleDefaultBetSettingCriteria criteria)
-        {
-            var result = new EditDefaultBetSettingViewModel();
+            var result = new SingleDefaultBetSettingViewModel();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -82,7 +73,7 @@ namespace Fanex.NAP.Licensee.Service
             return result;
         }
 
-        private void BindBetSettingBySport(EditDefaultBetSettingViewModel result, System.Data.IDataReader reader)
+        private void BindBetSettingBySport(SingleDefaultBetSettingViewModel result, System.Data.IDataReader reader)
         {
             var group = reader["Group"].ToString();
             switch (group)
@@ -121,19 +112,9 @@ namespace Fanex.NAP.Licensee.Service
             };
         }
 
-        public bool Update(UpdateExistedDefaultBetSettingCriteria criteria)
+        public bool InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Model.ViewModel.EditDefaultBetSettingViewModel SingleTemplate(GetSingleDefaultBetSettingTemplate criteria)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Insert(InsertDefaultBetSetting criteria)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -58,7 +58,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult AddNew(EditingBetSettingCriteria criteria)
+        public ActionResult AddNew(InsertOrUpdateDefaultBetSetting criteria)
         {
             return View();
         }
@@ -71,41 +71,18 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult Edit(string licensee, int currencyId, int? agentId)
         {
-            return View(_betSettingService.SingleExisted(new GetSingleDefaultBetSettingCriteria(licensee, currencyId, agentId)));
+            return View(_betSettingService.Single(new GetSingleDefaultBetSettingCriteria(licensee, currencyId, agentId)));
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(EditDefaultBetSettingViewModel viewModel)
+        public ActionResult Edit(SingleDefaultBetSettingViewModel viewModel)
         {
             return View();
         }
 
         #endregion Editting
 
-        #region Delete
-
-        [HttpPost]
-        [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Delete(DeletingDefaultBetSettingCriteria criteria)
-        {
-            if (!criteria.IsValid())
-            {
-                return Json(new { IsOk = false, Msg = "Input data is invalid" });
-            }
-            criteria.UserID = CurrentSession.UserId;
-            criteria.IP = Request.UserHostAddress;
-
-            if (_betSettingService.Delete(criteria))
-            {
-                return Json(new { IsOk = true, Msg = "Successful" });
-            }
-
-            return Json(new { IsOk = false, Msg = "Processing failed!" });
-        }
-
-        #endregion Delete
 
         #region Logs
 

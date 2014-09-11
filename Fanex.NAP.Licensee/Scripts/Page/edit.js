@@ -5,9 +5,9 @@ var editingSetting = (function () {
     "use strict";
     var me = {};
     /*private variable*/
-
+    var dataErrMsg = "Input data is invalid";
     /*private method*/
-   
+
     var createNewViewModel = function () {
         var viewModel =
             {
@@ -29,7 +29,7 @@ var editingSetting = (function () {
             collapseorExpand($(this));
         });
         $("#copy-sb,#copy-vs,#copy-kn").click(function () {
-            
+
             var isCheck = $(this).is(":checked");
             var table = $($(this).attr("data-key"));
             if (isCheck) {
@@ -42,12 +42,7 @@ var editingSetting = (function () {
     };
 
     /*UI function*/
-    var clearWarning = function () {
-       
-            $("input.txt-max").removeClass("warning");
-            site.invokeErrMsg(false);
-        
-    };
+
     var collapseorExpand = function (root) {
         if (root.length <= 0)
         { return; }
@@ -68,22 +63,21 @@ var editingSetting = (function () {
         var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
         var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
         if (!site.isNumber(maxBet)) {
-            site.invokeErrMsg(true);
             firstRow.find("input[data-key=\"MaxBet\"]").addClass("warning");
-           
+            alert(dataErrMsg);
             return;
         }
 
         if (!site.isNumber(maxPerMatch)) {
-          
-            site.invokeErrMsg(true);
+
+            alert(dataErrMsg);
             firstRow.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
             return;
         }
         /*update*/
         table.find("input[data-key=\"MaxBet\"]").val(maxBet);
         table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
-        
+
     };
     var enableOrDisable = function (table, enable) {
         if (enable) {

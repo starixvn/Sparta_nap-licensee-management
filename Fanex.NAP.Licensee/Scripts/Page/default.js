@@ -24,12 +24,10 @@ var defaultSetting = (function () { // jshint ignore:line
         gridExpandHeight: 150,
         bodyRowHeight: 30,
         showDistinctRow: false,
-        autoResizeColumn: true,showHighlightRow:false
+        autoResizeColumn: true, showHighlightRow: false
     };
     var hashTmp = "#lic={lic}&cur={cur}&sb={sb}&ng={ng}&vs={vs}&kn={kn}";
-    var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>"
-    +
-    "<a href='#' onclick='javascript:defaultSetting.Delete(\"{lic}\",{cur},\"{agt}\");return false;' class='icon-delete'></a>";
+    var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
 
     var currencyListControl;
     var currentGrid;
@@ -120,7 +118,7 @@ var defaultSetting = (function () { // jshint ignore:line
             $("#generate").removeAttr("disabled");
         }
     };
-   
+
     var invokeLoadingMsg = function (visible) {
         if (visible) {
             if ($("#loadingMsgBox").is(":hidden")) {
@@ -203,13 +201,13 @@ var defaultSetting = (function () { // jshint ignore:line
         var agentMerRowNumber = 0;
         var actionMerRowNumber = 0;
         for (var index = 0; index < numberRows; index++) {
-            
+
             var currentColumms = [];
             if (licenseeMerRowNumber === 0) {
                 licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"]}], index, data);
 
                 currentColumms.push({ Name: "Licensee", Value: data[index]["Licensee"], MergeRowNumber: licenseeMerRowNumber });
-          
+
             }
 
             if (currencyMerRowNumber === 0) {
@@ -235,7 +233,7 @@ var defaultSetting = (function () { // jshint ignore:line
 
 
             }
-           currentColumms= currentColumms.concat([
+            currentColumms = currentColumms.concat([
                     { Name: "SportGameType", Value: data[index]["SportGameType"] },
                     { Name: "MaxBet", Value: data[index]["MaxBet"] },
                     { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] },
@@ -274,65 +272,6 @@ var defaultSetting = (function () { // jshint ignore:line
     /*end-page function*/
 
     /*end-private method*/
-    me.Delete = function (licensee, currencyId, agentId) {
-        var deleting = function () {
-            var criteria = {
-                Licensee: licensee,
-                CurrencyID: currencyId,
-                AgentID: agentId !== undefined && agentId !== null ? agentId : null
-            };
-            $.ajax({
-                type: "POST",
-                url: window.rootUrl + "BetSetting/Delete",
-                data: JSON.stringify(criteria),
-                datatype: "json",
-                contentType: "application/json; charset=utf-8",
-                cache: false,
-                beforeSend: function () {
-                    invokeLoadingMsg(true);
-                },
-                success: function (data) {
-                    alert(data.Msg);
-
-                    if (data.IsOk === true) {
-                        renderGridData();
-                    }
-                    else {
-                        invokeLoadingMsg(false);
-                    }
-                },
-                error: function () {
-                    invokeLoadingMsg(false);
-                    alert("Error requesting page");
-                }
-            });
-        };
-
-        $("#confirm-box").removeClass("hidden");
-        $("#confirm-box").dialog({
-            resizable: false,
-            height: 160,
-            width: 420,
-            modal: true,
-            buttons: {
-                "OK": {
-                    text: 'OK',
-                    'class': 'btn-primary btn-ok',
-                    click: function () {
-                        $(this).dialog("close");
-                        deleting();
-                    }
-                },
-                Cancel: {
-                    text: 'Cancel',
-                    'class': 'btn-red',
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                }
-            }
-        });
-    };
     me.setup = function () {
         invokeLoadingMsg(true);
         initEvent();
