@@ -1,4 +1,5 @@
-﻿/* File Created: December 4, 2013 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: December 4, 2013 */
 /*global fanexGridLanguage*/
 if (fanexGridLanguage) {
     fanexGridLanguage['ko-KR'] = {

@@ -1,4 +1,5 @@
-﻿"use strict";
+﻿/// <reference path="/@JSense.js" />
+"use strict";
 /*exported MultiSelectControl*/
 
 var MultiSelectControl = function () {

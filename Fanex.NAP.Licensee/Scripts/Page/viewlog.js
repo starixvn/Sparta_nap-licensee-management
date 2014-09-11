@@ -1,4 +1,5 @@
-﻿/* File Created: August 20, 2014 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: August 20, 2014 */
 /* exported  viewLog */
 var viewLog = (function () {
     "use strict";

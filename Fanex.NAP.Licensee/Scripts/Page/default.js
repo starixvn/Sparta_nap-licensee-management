@@ -1,4 +1,5 @@
-﻿/* File Created: August 20, 2014 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: August 20, 2014 */
 /*exported defaultSetting */
 /* global site */
 
@@ -90,7 +91,7 @@ var defaultSetting = (function () { // jshint ignore:line
     };
     /* page function*/
     var invokeGenerateButton = function () {
-        invokeErrMsg(false);
+        site.invokeErrMsg(false);
         currentSelectedCurrency = currencyListControl.getParentFilterId();
         currentSelectedLicensee = $("#licensee").val();
         showSB = $("#showSB").is(":checked");
@@ -99,7 +100,7 @@ var defaultSetting = (function () { // jshint ignore:line
         showKN = $("#showKN").is(":checked");
 
         if (!isValidInput()) {
-            invokeErrMsg(true);
+            site.invokeErrMsg(true);
             return;
         }
         /* update hash */
@@ -119,14 +120,7 @@ var defaultSetting = (function () { // jshint ignore:line
             $("#generate").removeAttr("disabled");
         }
     };
-    var invokeErrMsg = function (visible) {
-        if (visible) {
-            $("#errMsgBox").removeClass("hidden");
-        }
-        else {
-            $("#errMsgBox").addClass("hidden");
-        }
-    };
+   
     var invokeLoadingMsg = function (visible) {
         if (visible) {
             if ($("#loadingMsgBox").is(":hidden")) {

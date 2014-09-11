@@ -76,7 +76,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(EditDefaultBetSettingViewModel criteria)
+        public ActionResult Edit(EditDefaultBetSettingViewModel viewModel)
         {
             return View();
         }

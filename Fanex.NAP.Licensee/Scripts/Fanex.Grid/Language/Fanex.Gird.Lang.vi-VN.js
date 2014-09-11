@@ -1,4 +1,5 @@
-﻿/* File Created: December 4, 2013 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: December 4, 2013 */
 if (fanexGridLanguage) {
     fanexGridLanguage['vi-VN'] = {
         noData: 'There is no data',

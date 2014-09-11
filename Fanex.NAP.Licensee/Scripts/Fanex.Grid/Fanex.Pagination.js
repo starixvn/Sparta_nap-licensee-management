@@ -1,3 +1,4 @@
+/// <reference path="/@JSense.js" />
 /*global fanexGridCurrentLanguage*/
 (function ($) {
     $.fn.fanexPagination = function (maxentries, opts) {

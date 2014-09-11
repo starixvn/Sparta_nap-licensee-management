@@ -1,4 +1,5 @@
-﻿/* File Created: August 20, 2014 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: August 20, 2014 */
 /*exported site */
 /* global MultiSelectControl */
 var site = (function () {
@@ -38,7 +39,17 @@ var site = (function () {
         });
         return currencyControl;
     };
-
+    me.isNumber = function (text) {
+        return !isNaN(parseFloat(text)) && isFinite(text);
+    };
+    me.invokeErrMsg = function (visible) {
+        if (visible) {
+            $("#errMsgBox").removeClass("hidden");
+        }
+        else {
+            $("#errMsgBox").addClass("hidden");
+        }
+    };
     me.renderLicenseeList = function (currentSelectedLicensee) {
         $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
             var items = "";

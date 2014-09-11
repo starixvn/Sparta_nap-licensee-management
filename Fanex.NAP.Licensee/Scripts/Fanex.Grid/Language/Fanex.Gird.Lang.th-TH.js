@@ -1,4 +1,5 @@
-﻿/* File Created: December 4, 2013 */
+﻿/// <reference path="/@JSense.js" />
+/* File Created: December 4, 2013 */
 if (fanexGridLanguage) {
     fanexGridLanguage['th-TH'] = {
         noData: 'There is no data',

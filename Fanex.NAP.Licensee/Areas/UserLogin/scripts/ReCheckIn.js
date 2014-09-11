@@ -1,3 +1,4 @@
+/// <reference path="/@JSense.js" />
 /*exported ReCheckin*/
 "use strict";
 

@@ -1,4 +1,5 @@
-﻿// --------------------------------------------------------------------------
+﻿/// <reference path="/@JSense.js" />
+// --------------------------------------------------------------------------
 // <copyright file="Fanex.Grid.js" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // Revision:

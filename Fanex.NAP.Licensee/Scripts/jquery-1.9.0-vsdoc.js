@@ -1,3 +1,4 @@
+/// <reference path="/@JSense.js" />
 /*
 * This file has been generated to support Visual Studio IntelliSense.
 * You should not use this file at runtime inside the browser--it is only
