@@ -704,6 +704,15 @@ input[type="submit"], .btn-primary {
         .col40 {
             width: 40%;
         }
+
+		.warning {
+			background-color: @message-error-bg;
+		}
+
+		input[type='text'] {
+			text-align: right;
+		}
+
     }
 
     &.table-bordered > thead > tr > th, &.table-bordered > thead > tr > td {
@@ -810,9 +819,9 @@ input[type="submit"], .btn-primary {
 	.border-radius(3px);
 
 	&.error {
-		border-color: #aa0000;
-		color: #db2b2b;
-		background-color: #f9cece;
+		border-color: @message-error-border;
+		color: @message-error-color;
+		background-color: @message-error-bg;
 
 		.icon-error {
 			.icon;
