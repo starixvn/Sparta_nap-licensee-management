@@ -40,8 +40,11 @@ var site = (function () {
         return currencyControl;
     };
     me.isNumber = function (text) {
-        return !isNaN(parseFloat(text)) && isFinite(text);
+        var RE = /^-{0,1}\d*\.{0,1}\d+$/;
+        var isnum = (RE.test(text));
+        return isnum && parseFloat(text) > 0;
     };
+
     me.invokeErrMsg = function (visible) {
         if (visible) {
             $("#errMsgBox").removeClass("hidden");

@@ -75,7 +75,7 @@ namespace Fanex.NAP.Licensee.Service
 
         private void BindBetSettingBySport(SingleDefaultBetSettingViewModel result, System.Data.IDataReader reader)
         {
-            var group = reader["Group"].ToString();
+            var group = reader["Group"].ToString().Trim();
             switch (group)
             {
                 case SB:

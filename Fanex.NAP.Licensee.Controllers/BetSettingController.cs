@@ -53,7 +53,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult AddNew()
         {
-            return View();
+            return View(new SingleDefaultBetSettingViewModel());
         }
 
         [HttpPost]

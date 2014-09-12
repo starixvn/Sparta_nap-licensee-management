@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var decFormat = "N2";
 }
 @model Fanex.NAP.Licensee.Model.ViewModel.SingleDefaultBetSettingViewModel
 @section Headline {
@@ -13,7 +12,6 @@
 @if (Model.IsValid)
 {
     <form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-setting">
-
     <div class="form-group">
         <label for="licensee">
             Site</label>
@@ -33,14 +31,14 @@
             Agent</label>
         <select id="agent" disabled="disabled" class="width-160">
             <option value="@Model.AgentId">
-            @if (Model.AgentId != null)
-            {
-            @Model.AgentName
-            }
-            else
-            {
-                @("All")
-            }
+                @if (Model.AgentId != null)
+                {
+                    @Model.AgentName
+                }
+                else
+                {
+                    @("All")
+                }
             </option>
         </select>
     </div>
@@ -78,10 +76,10 @@
                                         @sb.SportOrGame.Name
                                     </td>
                                     <td>
-                                        <input data-key="MaxBet" type="text" value="@(sb.MaxBet.HasValue ? sb.MaxBet.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxBet" type="text" value="@(sb.MaxBet.HasValue ? sb.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                     <td>
-                                        <input data-key="MaxPerMatch" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxPerMatch" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                 </tr>
                             }
@@ -120,13 +118,13 @@
                                         @ng.SportOrGame.Name
                                     </td>
                                     <td>
-                                        <input data-key="MaxBet" type="text" value="@(ng.MaxBet.HasValue ? ng.MaxBet.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxBet" type="text" value="@(ng.MaxBet.HasValue ? ng.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                     <td>
-                                        <input data-key="MaxPerMatch" type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString(decFormat) : string.Empty)" class="width-170 txt-max" />
+                                        <input data-key="MaxPerMatch" type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString() : string.Empty)" class="width-170 txt-max" />
                                     </td>
                                     <td>
-                                        <input data-key="MaxPerBall" type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxPerBall" type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                 </tr>
                             }
@@ -140,7 +138,7 @@
             <div class="row group">
                 <div class="col-sm-12 title-group" id="vs-area">
                     <i class="icon-collapse" data-key="area-icon"></i>Virtual Sports</div>
-                <div class="col-sm-12 content" data-key=="area-content">
+                <div class="col-sm-12 content" data-key="area-content">
                     <label class="checkbox-inline">
                         <input type="checkbox" id="copy-vs" data-key="#vs-table">
                         Copy all Bet Setting from 1st row
@@ -167,10 +165,10 @@
                                         @vs.SportOrGame.Name
                                     </td>
                                     <td>
-                                        <input data-key="MaxBet" type="text" value="@(vs.MaxBet.HasValue ? vs.MaxBet.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxBet" type="text" value="@(vs.MaxBet.HasValue ? vs.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                     <td>
-                                        <input data-key="MaxPerMatch" type="text" value="@(vs.MaxPerMatch.HasValue ? vs.MaxPerMatch.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxPerMatch" type="text" value="@(vs.MaxPerMatch.HasValue ? vs.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                 </tr>
                             }
@@ -211,10 +209,10 @@
                                         @kn.SportOrGame.Name
                                     </td>
                                     <td>
-                                        <input data-key="MaxBet" type="text" value="@(kn.MaxBet.HasValue ? kn.MaxBet.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxBet" type="text" value="@(kn.MaxBet.HasValue ? kn.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                     <td>
-                                        <input data-key="MaxPerMatch" type="text" value="@(kn.MaxPerMatch.HasValue ? kn.MaxPerMatch.Value.ToString(decFormat) : string.Empty)" class="width-240 txt-max" />
+                                        <input data-key="MaxPerMatch" type="text" value="@(kn.MaxPerMatch.HasValue ? kn.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                                     </td>
                                 </tr>
                             }
@@ -239,10 +237,9 @@ else
 }
 @section FooterJs
 {
-<script type="text/javascript">
-    $(document).ready(function () {
-        editingSetting.setup();
-    });
-</script>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            editingSetting.setup();
+        });
+    </script>
 }
