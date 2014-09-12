@@ -118,6 +118,7 @@
     <Compile Include="DTO\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\BetSettingBySport.cs" />
+    <Compile Include="DTO\ResultInfo.cs" />
     <Compile Include="DTO\SportOrGameItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

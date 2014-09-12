@@ -20,6 +20,6 @@ namespace Fanex.NAP.Licensee.Service
 
         SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria);
       
-        bool InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria);
+        ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria);
     }
 }

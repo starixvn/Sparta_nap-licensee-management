@@ -112,9 +112,16 @@ namespace Fanex.NAP.Licensee.Service
             };
         }
 
-        public bool InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
+        public ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
         {
-            throw new NotImplementedException();
+            var result = new ResultInfo();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteReader(criteria.GetSpParams());
+                result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
+                result.Message = db.GetParameterValue("@ErrMsg").ToString();
+            }
+            return result;
         }
     }
 }

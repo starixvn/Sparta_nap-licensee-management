@@ -5,7 +5,18 @@
 var site = (function () {
     "use strict";
     var me = {};
+    me.renderSingleAgentList = function (licensee, currency) {
+    };
+    me.renderSingleCurrencyList = function () {
+        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+            var items = "";
+            for (var i = 0; i < data.length; i++) {
+                items += "<option value=\"" + data[i].Name + "\">" + data[i].Name + "</option>";
+            }
 
+            $("#currency").html(items);
+        });
+    };
     me.renderCurrencyList = function (selectedParentIdList) {
         var currencyControl = new MultiSelectControl();
 

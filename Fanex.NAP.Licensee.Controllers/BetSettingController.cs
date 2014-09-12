@@ -6,6 +6,7 @@
     using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Service;
 
@@ -58,9 +59,10 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult AddNew(InsertOrUpdateDefaultBetSetting criteria)
+        [AjaxRequest]
+        public ActionResult AddNew(SingleDefaultBetSettingViewModel viewModel)
         {
-            return View();
+            return Json(ModifyDefaultBetSetting(viewModel));
         }
 
         #endregion Add New
@@ -76,13 +78,13 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
+        [AjaxRequest]
         public ActionResult Edit(SingleDefaultBetSettingViewModel viewModel)
         {
-            return View();
+            return Json(ModifyDefaultBetSetting(viewModel));
         }
 
         #endregion Editting
-
 
         #region Logs
 
@@ -118,6 +120,12 @@
         public ActionResult GetLicenseeList()
         {
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
+        }
+
+        private ResultInfo ModifyDefaultBetSetting(SingleDefaultBetSettingViewModel viewModel)
+        {
+            var result = new ResultInfo();
+            return result;
         }
 
         #endregion CommonFunction
