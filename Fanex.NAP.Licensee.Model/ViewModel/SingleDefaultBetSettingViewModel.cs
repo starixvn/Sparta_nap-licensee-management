@@ -46,8 +46,8 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
         {
             get
             {
-                return !string.IsNullOrEmpty(Licensee) && Currency.Id > 0 && Sportbook.Any(i => !i.IsValid)
-                    && NumberGame.Any(i => !i.IsValid) && VirtualSport.Any(i => !i.IsValid) && Keno.Any(i => !i.IsValid);
+                return !string.IsNullOrEmpty(Licensee) && Currency.Id > 0 && !Sportbook.Any(i => !i.IsValid)
+                    && !NumberGame.Any(i => !i.IsValid) && !VirtualSport.Any(i => !i.IsValid) && !Keno.Any(i => !i.IsValid);
             }
         }
 
