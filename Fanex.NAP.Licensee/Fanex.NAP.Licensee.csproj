@@ -501,6 +501,8 @@
     <Content Include="Views\BetSetting\AddNew.cshtml" />
     <Content Include="Views\BetSetting\Edit.cshtml" />
     <Content Include="Views\BetSetting\Logs.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\BetSetting\_DefaultBetSettingList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

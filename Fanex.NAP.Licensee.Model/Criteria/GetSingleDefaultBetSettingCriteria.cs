@@ -20,6 +20,8 @@ namespace Fanex.NAP.Licensee.Model.Criteria
             this.AgentID = agentId;
         }
 
+        public bool HasSetting { get; set; }
+
         public string Licensee { get; set; }
 
         public int CurrencyID { get; set; }

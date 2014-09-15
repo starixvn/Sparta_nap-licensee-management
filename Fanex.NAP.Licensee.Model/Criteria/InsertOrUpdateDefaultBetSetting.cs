@@ -8,7 +8,7 @@ namespace Fanex.NAP.Licensee.Model.Criteria
 
         public int CurrencyID { get; set; }
 
-        public int AgentID { get; set; }
+        public int? AgentID { get; set; }
 
         public string Settings { get; set; }
 

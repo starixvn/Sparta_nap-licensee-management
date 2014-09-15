@@ -10,6 +10,7 @@
     using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Service;
 
+    [CustomHandleError]
     public class BetSettingController : BaseController
     {
         private readonly ICommonService _commonService;
@@ -71,9 +72,10 @@
 
         [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
-        public ActionResult Edit(string licensee, int currencyId, int? agentId)
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult Edit(string licensee, int? currencyId, int? agentId)
         {
-            return View(_betSettingService.Single(new GetSingleDefaultBetSettingCriteria(licensee, currencyId, agentId)));
+            return View(_betSettingService.Single(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId)));
         }
 
         [HttpPost]
@@ -124,7 +126,19 @@
 
         private ResultInfo ModifyDefaultBetSetting(SingleDefaultBetSettingViewModel viewModel)
         {
-            var result = new ResultInfo();
+            var result = new ResultInfo
+            {
+                IsOk=false,
+                Message="input data is invalid"
+            };
+
+            if (viewModel.IsValid)
+            {
+                viewModel.UserId = CurrentSession.UserId;
+                viewModel.IP = Request.UserHostAddress;
+               result= _betSettingService.InsertOrUpdate(viewModel.ToCriteria);
+            }
+           
             return result;
         }
 

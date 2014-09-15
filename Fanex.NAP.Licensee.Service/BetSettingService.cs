@@ -8,6 +8,7 @@ namespace Fanex.NAP.Licensee.Service
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.Criteria;
@@ -42,17 +43,27 @@ namespace Fanex.NAP.Licensee.Service
                 {
                     if (reader.Read())
                     {
-                        result.Licensee = reader["Licensee"].ToString();
-                        if (reader["AgentID"] != DBNull.Value)
+                        if (ColumnExisted(reader, "Licensee"))
+                        {
+                            result.Licensee = reader["Licensee"].ToString();
+                        }
+                        if (ColumnExisted(reader, "AgentID") && reader["AgentID"] != DBNull.Value)
                         {
                             result.AgentId = int.Parse(reader["AgentID"].ToString());
                         }
-                        result.AgentName = reader["AgentName"].ToString();
-                        result.Currency = new CurrencyItem
+                        if (ColumnExisted(reader, "AgentName"))
                         {
-                            Id = int.Parse(reader["CurrencyID"].ToString()),
-                            Name = reader["Currency"].ToString()
-                        };
+                            result.AgentName = reader["AgentName"].ToString();
+                        }
+                        if (ColumnExisted(reader, "CurrencyID") && ColumnExisted(reader, "Currency"))
+                        {
+                            result.Currency = new CurrencyItem
+                            {
+                                Id = int.Parse(reader["CurrencyID"].ToString()),
+                                Name = reader["Currency"].ToString()
+                            };
+                        }
+
                         BindBetSettingBySport(result, reader);
                         while (reader.Read())
                         {
@@ -68,6 +79,8 @@ namespace Fanex.NAP.Licensee.Service
                         }
                     }
                 }
+
+                result.HasSetting = Convert.ToBoolean(db.GetParameterValue("@HasSetting"));
             }
 
             return result;
@@ -103,7 +116,7 @@ namespace Fanex.NAP.Licensee.Service
                 SportOrGame = new SportOrGameItem
                 {
                     Id = int.Parse(reader["SportType"].ToString()),
-                    Name = reader["SportName"].ToString()
+                    Name = ColumnExisted(reader, "SportName") ? reader["SportName"].ToString() : string.Empty
                 },
                 BetType = int.Parse(reader["Bettype"].ToString()),
                 MaxBet = reader["MaxBet"] != DBNull.Value ? decimal.Parse(reader["MaxBet"].ToString()) : new Nullable<decimal>(),
@@ -122,6 +135,19 @@ namespace Fanex.NAP.Licensee.Service
                 result.Message = db.GetParameterValue("@ErrMsg").ToString();
             }
             return result;
+        }
+
+        private bool ColumnExisted(IDataReader reader, string columnName)
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                if (reader.GetName(i) == columnName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

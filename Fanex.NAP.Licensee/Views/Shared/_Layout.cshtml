@@ -10,7 +10,6 @@
 <head>
     <meta charset="utf-8">
     <title>Licensee Management</title>
-    <link href="img/favicon.ico" rel="shortcut icon">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @RenderSection("HeadCss", false)
     @Styles.Render("~/bundles/coreCss")  
@@ -38,6 +37,8 @@
         </section>
         <section id="body" class="row body">          
             @RenderBody()
+            <div id="loadingMsgBox" class="icon-loading hidden"></div>
+
         </section>
     </div>
     @RenderSection("Foot", false)

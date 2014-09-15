@@ -131,8 +131,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AjaxRequestAttribute.cs" />
+    <Compile Include="Attributes\CustomHandleErrorAttribute .cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
+    <Compile Include="UtilityController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
