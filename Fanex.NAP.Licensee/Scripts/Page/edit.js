@@ -5,8 +5,7 @@
 var editingSetting = (function () {
     "use strict";
     var me = {};
-    /*private variable*/
-    var dataErrMsg = "Input data is invalid";
+
     /*private method*/
     /*private UI method*/
     var setGenerateButtonStatus = function (disable) {
@@ -29,37 +28,6 @@ var editingSetting = (function () {
             setGenerateButtonStatus(false);
         }
     };
-    var copySetting = function (table, checkbox) {
-        var firstRow = table.find("tbody tr:eq(0)");
-        /*reset*/
-        var error = 0;
-        firstRow.find("input[data-key=\"MaxBet\"]").removeClass("warning");
-        firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
-        /*copy*/
-        error = site.verifyBetSetting(firstRow);
-
-        if (error > 0) {
-            checkbox.prop("checked", false);
-            alert(dataErrMsg);
-        }
-        else {
-            /*update*/
-            var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
-            var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
-
-            table.find("input[data-key=\"MaxBet\"]").val(maxBet);
-            table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
-
-            enableOrDisable(table, false);
-        }
-    };
-    var enableOrDisable = function (table, enable) {
-        if (enable) {
-            $(table).find("input").removeAttr("disabled");
-        } else {
-            $(table).find("input").attr("disabled", "disabled");
-        }
-    };
 
     /*end-private UI method*/
 
@@ -68,16 +36,19 @@ var editingSetting = (function () {
         $('table.table tbody input[type="text"].txt-max').number(true, 2);
     };
     var initEvent = function () {
+        $(".btn-back").on("click", function () {
+            site.backToList();
+        });
         $("#sb-area,#ng-area,#vs-area,#kn-area").click(function () {
-            collapseorExpand($(this));
+            site.collapseorExpand($(this));
         });
         $("#copy-sb,#copy-vs,#copy-kn").click(function () {
             var isCheck = $(this).is(":checked");
             var table = $($(this).attr("data-key"));
             if (isCheck) {
-                copySetting(table, $(this));
+                site.copySetting(table, $(this));
             } else {
-                enableOrDisable(table, true);
+                site.enableOrDisable(table, true);
             }
         });
         $("#btn-submit").click(function (event) {
@@ -85,7 +56,6 @@ var editingSetting = (function () {
             var isValid = site.verifyInputData() === 0;
             if (isValid) {
                 var criteria = site.createNewViewModel();
-                console.log(criteria);
                 $.ajax({
                     type: "POST",
                     url: window.rootUrl + "BetSetting/Edit",
@@ -99,7 +69,7 @@ var editingSetting = (function () {
                     success: function (data) {
                         invokeLoadingMsg(false);
                         if (data.IsOk) {
-                            alert("Successful");
+                            alert(site.requestSuccess);
                         }
                         else {
                             alert(data.Message);
@@ -107,31 +77,13 @@ var editingSetting = (function () {
                     },
                     error: function () {
                         invokeLoadingMsg(false);
-                        alert("Error requesting page");
+                        alert(site.requestErrMsg);
                     }
                 });
             } else {
-                alert(dataErrMsg);
+                alert(site.dataErrMsg);
             }
         });
-    };
-
-    /*UI function*/
-
-    var collapseorExpand = function (root) {
-        if (root.length <= 0)
-        { return; }
-        var icon = root.find("i[data-key=\"area-icon\"]");
-        var content = root.next("div[data-key=\"area-content\"]");
-        var isExpanded = icon.hasClass("icon-collapse");
-        if (isExpanded) {
-            icon.addClass("icon-expand").removeClass("icon-collapse");
-            content.slideUp();
-        }
-        else {
-            icon.addClass("icon-collapse").removeClass("icon-expand");
-            content.slideDown();
-        }
     };
 
     /*public method*/

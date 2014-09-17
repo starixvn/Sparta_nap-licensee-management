@@ -2,7 +2,6 @@
     ViewBag.Title = "AddNew";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Fanex.NAP.Licensee.Model.ViewModel.SingleDefaultBetSettingViewModel
 @section Headline {
     <ul class="breadcrumb title">
         <li>Bet Setting</li>
@@ -12,7 +11,7 @@
         <a class="btn-back" href="default">← Back To List</a>
     </div>
 }
-<form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-setting">
+<form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-new-setting">
 <div class="form-group">
     <label for="licensee">
         Site</label>
@@ -32,23 +31,18 @@
     </select>
 </div>
 <div class="form-group">
-    <input type="button" id="loadtemplate" value="Load template" class="btn-primary" />
+    <input type="button" id="btn-loadtemplate" value="Load template" class="btn-primary" />
 </div>
 </form>
-@if (Model.IsValid)
-{
-    <div class="col-sm-12">
-       @{
-    Html.RenderPartial("~/Views/BetSetting/_DefaultBetSettingList.cshtml", Model);
-     }
-    </div>
-    <div class="col-sm-12">
-        <button class="btn-primary">
-            Submit</button>
-        <button onclick="javascript:history.go(-1);return false;" class="btn-back">
-            Back to List</button>
-    </div>
-}
+<div class="col-sm-12" id="template-content">
+</div>
+<div class="col-sm-12 hidden" id="footer-control">
+    <button class="btn-primary" id="btn-submit">
+        Submit</button>
+    <button class="btn-back">
+        Back to List</button>
+</div>
+<div id="confirm-box" class="confirm-message hidden" title="Confirmation">Existing data, do you want to edit this default bet setting?</div>
 
 @section FooterJs
 {

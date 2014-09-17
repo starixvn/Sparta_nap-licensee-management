@@ -6,13 +6,21 @@
 
 namespace Fanex.NAP.Licensee.Model.Criteria
 {
+    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [Serializable]
     public class GetSingleDefaultBetSettingCriteria : CriteriaBase
     {
+        public GetSingleDefaultBetSettingCriteria()
+        {
+            this.Licensee = string.Empty;
+            this.CurrencyID = 0;
+        }
+
         public GetSingleDefaultBetSettingCriteria(string licensee, int currencyId, int? agentId)
         {
             this.Licensee = licensee;
@@ -21,6 +29,10 @@ namespace Fanex.NAP.Licensee.Model.Criteria
         }
 
         public bool HasSetting { get; set; }
+
+        public string AgentName { get; set; }
+
+        public string CurrencyName { get; set; }
 
         public string Licensee { get; set; }
 

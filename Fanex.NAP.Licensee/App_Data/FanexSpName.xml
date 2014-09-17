@@ -15,6 +15,9 @@
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
-        
+        <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBTXN.CustDB.bodbLicenseeNet">
+            <Mapping DataField="AgentID" ObjectProperty="Id" />
+            <Mapping DataField="AgentName" ObjectProperty="Name" />
+        </Setting>
     </Function>
 </Functions>

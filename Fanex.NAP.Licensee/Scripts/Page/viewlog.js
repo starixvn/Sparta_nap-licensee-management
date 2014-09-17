@@ -5,6 +5,9 @@ var viewLog = (function () {
     "use strict";
     var me = {};
     var initEvent = function () {
+        $(".btn-back").on("click", function () {
+            site.backToList();
+        });
         $("#to-date,#from-date").datepicker();
     };
     me.setup = function () {

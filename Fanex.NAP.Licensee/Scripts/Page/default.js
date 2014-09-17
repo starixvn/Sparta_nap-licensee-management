@@ -162,7 +162,7 @@ var defaultSetting = (function () { // jshint ignore:line
             },
             error: function () {
                 invokeLoadingMsg(false);
-                alert("Error requesting page");
+                alert(site.requestErrMsg);
             }
         });
     };
@@ -201,13 +201,11 @@ var defaultSetting = (function () { // jshint ignore:line
         var agentMerRowNumber = 0;
         var actionMerRowNumber = 0;
         for (var index = 0; index < numberRows; index++) {
-
             var currentColumms = [];
             if (licenseeMerRowNumber === 0) {
                 licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"]}], index, data);
 
                 currentColumms.push({ Name: "Licensee", Value: data[index]["Licensee"], MergeRowNumber: licenseeMerRowNumber });
-
             }
 
             if (currencyMerRowNumber === 0) {
@@ -230,8 +228,6 @@ var defaultSetting = (function () { // jshint ignore:line
                     Value: agentName === undefined || agentName === null ? "All" : agentName,
                     MergeRowNumber: agentMerRowNumber
                 });
-
-
             }
             currentColumms = currentColumms.concat([
                     { Name: "SportGameType", Value: data[index]["SportGameType"] },

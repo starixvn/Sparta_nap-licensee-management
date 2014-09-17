@@ -8,6 +8,9 @@
         <li>Bet Setting</li>
         <li class="current">Edit Default Bet Setting</li>
     </ul>
+    <div class="pull-left">
+        <a class="btn-back" href="default">← Back To List</a>
+    </div>
 }
 @if (Model.HasSetting && Model.IsValid)
 {
@@ -30,28 +33,21 @@
         <label for="agent">
             Agent</label>
         <select id="agent" disabled="disabled" class="width-160">
-            <option value="@Model.AgentId">
-                @if (Model.AgentId != null)
-                {
-                    @Model.AgentName
-                }
-                else
-                {
-                    @("All")
-                }
+            <option value="@(Model.Agent.Id.HasValue ? Model.Agent.Id.Value.ToString() : string.Empty)">
+                @Model.Agent.Name
             </option>
         </select>
     </div>
     </form>
     <div class="col-sm-12">
-     @{
+        @{
     Html.RenderPartial("~/Views/BetSetting/_DefaultBetSettingList.cshtml", Model);
-     }
+        }
     </div>
     <div class="col-sm-12">
         <button class="btn-primary" id="btn-submit">
             Submit</button>
-        <button onclick="javascript:history.go(-1);return false;" class="btn-back">
+        <button  class="btn-back">
             Back to List</button>
     </div>
 }

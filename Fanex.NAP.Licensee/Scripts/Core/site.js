@@ -5,16 +5,34 @@
 var site = (function () {
     "use strict";
     var me = {};
-    //    me.renderSingleAgentList = function (licensee, currency) {
-    //    };
-    me.renderSingleCurrencyList = function () {
+    me.dataErrMsg = "Input data is invalid.";
+    me.requestErrMsg = "Error requesting page.";
+    me.requestSuccess = "Successful";
+    /* filter componenet*/
+    me.renderSingleAgentList = function (licensee, currency, callback) {
+        $.getJSON(window.rootUrl + "BetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
+            var items = "";
+            for (var i = 0; i < data.length; i++) {
+                items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
+            }
+
+            $("#agent").html(items);
+            if (callback !== undefined && callback !== null) {
+                callback();
+            }
+        });
+    };
+    me.renderSingleCurrencyList = function (callback) {
         $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
-                items += "<option value=\"" + data[i].Name + "\">" + data[i].Name + "</option>";
+                items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
             }
 
             $("#currency").html(items);
+            if (callback !== undefined && callback !== null) {
+                callback(arguments[0], arguments[1]);
+            }
         });
     };
     me.renderCurrencyList = function (selectedParentIdList) {
@@ -50,21 +68,8 @@ var site = (function () {
         });
         return currencyControl;
     };
-    me.isNumber = function (text) {
-        var RE = /^-{0,1}\d*\.{0,1}\d+$/;
-        var isnum = (RE.test(text));
-        return isnum && parseFloat(text) > 0;
-    };
 
-    me.invokeErrMsg = function (visible) {
-        if (visible) {
-            $("#errMsgBox").removeClass("hidden");
-        }
-        else {
-            $("#errMsgBox").addClass("hidden");
-        }
-    };
-    me.renderLicenseeList = function (currentSelectedLicensee) {
+    me.renderLicenseeList = function (currentSelectedLicensee, callback) {
         $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
@@ -73,8 +78,14 @@ var site = (function () {
             }
 
             $("#licensee").html(items);
+            if (callback !== undefined && callback !== null) {
+                callback();
+            }
         });
     };
+    /* end-filter componenet*/
+
+    /*Functions: verifing template*/
     me.verifyBetSetting = function ($row) {
         var error = 0;
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
@@ -193,6 +204,58 @@ var site = (function () {
         }
         return result;
     };
+    /*End-Functions: verifing template*/
+
+    /*UI function*/
+    me.copySetting = function (table, checkbox) {
+        var firstRow = table.find("tbody tr:eq(0)");
+        /*reset*/
+        var error = 0;
+        firstRow.find("input[data-key=\"MaxBet\"]").removeClass("warning");
+        firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
+        /*copy*/
+        error = site.verifyBetSetting(firstRow);
+
+        if (error > 0) {
+            checkbox.prop("checked", false);
+            alert(site.dataErrMsg);
+        }
+        else {
+            /*update*/
+            var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
+            var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
+
+            table.find("input[data-key=\"MaxBet\"]").val(maxBet);
+            table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
+
+            site.enableOrDisable(table, false);
+        }
+    };
+    me.enableOrDisable = function (table, enable) {
+        if (enable) {
+            $(table).find("input").removeAttr("disabled");
+        } else {
+            $(table).find("input").attr("disabled", "disabled");
+        }
+    };
+
+    me.collapseorExpand = function (root) {
+        if (root.length <= 0)
+        { return; }
+        var icon = root.find("i[data-key=\"area-icon\"]");
+        var content = root.next("div[data-key=\"area-content\"]");
+        var isExpanded = icon.hasClass("icon-collapse");
+        if (isExpanded) {
+            icon.addClass("icon-expand").removeClass("icon-collapse");
+            content.slideUp();
+        }
+        else {
+            icon.addClass("icon-collapse").removeClass("icon-expand");
+            content.slideDown();
+        }
+    };
+    /*End-UI function*/
+
     me.createNewViewModel = function () {
         var viewModel =
             {
@@ -201,7 +264,11 @@ var site = (function () {
                     Id: $("#currency").val(),
                     Name: $("#currency").text()
                 },
-                AgentId: $("agent").val() === undefined ? null : $("agent").val(),
+                Agent:
+                {
+                    Id: $("#agent").val() === '' ? null : $("#agent").val(),
+                    Name: $("#agent").text()
+                },
                 Sportbook: site.getInputValue("sb"),
                 NumberGame: site.getInputValue("ng"),
                 VirtualSport: site.getInputValue("vs"),
@@ -209,6 +276,25 @@ var site = (function () {
             };
 
         return viewModel;
+    };
+    me.isNumber = function (text) {
+        var RE = /^-{0,1}\d*\.{0,1}\d+$/;
+        var isnum = (RE.test(text));
+        return isnum && parseFloat(text) > 0;
+    };
+
+    me.invokeErrMsg = function (visible) {
+        if (visible) {
+            $("#errMsgBox").removeClass("hidden");
+        }
+        else {
+            $("#errMsgBox").addClass("hidden");
+        }
+    };
+    me.backToList = function () {
+        location.href = window.rootUrl + "BetSetting/Default";
+
+        return false;
     };
     return me;
 })();

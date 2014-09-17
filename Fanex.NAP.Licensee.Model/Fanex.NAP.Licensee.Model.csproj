@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\GetAgentListCriteria.cs" />
     <Compile Include="Criteria\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\ViewLogCriteria.cs" />
@@ -114,6 +115,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />

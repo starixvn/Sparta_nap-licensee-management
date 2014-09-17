@@ -55,7 +55,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult AddNew()
         {
-            return View(new SingleDefaultBetSettingViewModel());
+            return View();
         }
 
         [HttpPost]
@@ -64,6 +64,19 @@
         public ActionResult AddNew(SingleDefaultBetSettingViewModel viewModel)
         {
             return Json(ModifyDefaultBetSetting(viewModel));
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Host)]
+        [AjaxRequest]
+        public ActionResult LoadTeamplate(GetSingleDefaultBetSettingCriteria criteria)
+        {
+            var viewModel=new SingleDefaultBetSettingViewModel();
+            if (criteria.IsValid())
+            {
+                viewModel = _betSettingService.Single(criteria);
+            }
+            return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
         }
 
         #endregion Add New
@@ -124,21 +137,29 @@
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GetAgents(GetAgentListCriteria criteria)
+        {
+            return Json(_betSettingService.GetAgents(criteria), JsonRequestBehavior.AllowGet);
+        }
+
         private ResultInfo ModifyDefaultBetSetting(SingleDefaultBetSettingViewModel viewModel)
         {
             var result = new ResultInfo
             {
-                IsOk=false,
-                Message="input data is invalid"
+                IsOk = false,
+                Message = "input data is invalid"
             };
 
             if (viewModel.IsValid)
             {
                 viewModel.UserId = CurrentSession.UserId;
                 viewModel.IP = Request.UserHostAddress;
-               result= _betSettingService.InsertOrUpdate(viewModel.ToCriteria);
+                result = _betSettingService.InsertOrUpdate(viewModel.ToCriteria);
             }
-           
+
             return result;
         }
 

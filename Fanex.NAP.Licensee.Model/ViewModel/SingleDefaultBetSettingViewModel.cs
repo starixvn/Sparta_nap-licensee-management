@@ -41,9 +41,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
 
         public CurrencyItem Currency { get; set; }
 
-        public int? AgentId { get; set; }
-
-        public string AgentName { get; set; }
+        public AgentItem Agent { get; set; }
 
         public IList<BetSettingBySport> Sportbook { get; set; }
 
@@ -70,7 +68,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
                 {
                     Licensee = Licensee,
                     CurrencyID = Currency.Id,
-                    AgentID = AgentId,
+                    AgentID = Agent.Id,
                     UserID = UserId,
                     IP = IP,
                     Settings = this.ToXmlSetting

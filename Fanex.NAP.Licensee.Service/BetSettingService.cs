@@ -25,6 +25,7 @@ namespace Fanex.NAP.Licensee.Service
         private const string VS = "VS";
         private const string NG = "NG";
         private const string KN = "KN";
+        private const string NoneAgent = "All";
 
         public IList<DefaultBetSetting> GetAll(Model.Criteria.GetAllDefaultBetSettingCriteria criteria)
         {
@@ -41,34 +42,9 @@ namespace Fanex.NAP.Licensee.Service
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        if (ColumnExisted(reader, "Licensee"))
-                        {
-                            result.Licensee = reader["Licensee"].ToString();
-                        }
-                        if (ColumnExisted(reader, "AgentID") && reader["AgentID"] != DBNull.Value)
-                        {
-                            result.AgentId = int.Parse(reader["AgentID"].ToString());
-                        }
-                        if (ColumnExisted(reader, "AgentName"))
-                        {
-                            result.AgentName = reader["AgentName"].ToString();
-                        }
-                        if (ColumnExisted(reader, "CurrencyID") && ColumnExisted(reader, "Currency"))
-                        {
-                            result.Currency = new CurrencyItem
-                            {
-                                Id = int.Parse(reader["CurrencyID"].ToString()),
-                                Name = reader["Currency"].ToString()
-                            };
-                        }
-
                         BindBetSettingBySport(result, reader);
-                        while (reader.Read())
-                        {
-                            BindBetSettingBySport(result, reader);
-                        }
                     }
 
                     if (reader.NextResult())
@@ -79,6 +55,18 @@ namespace Fanex.NAP.Licensee.Service
                         }
                     }
                 }
+
+                result.Licensee = criteria.Licensee;
+                result.Agent = new AgentItem
+                {
+                    Id = criteria.AgentID,
+                    Name = criteria.AgentID.HasValue ? db.GetParameterValue("@AgentName").ToString() : NoneAgent
+                };
+                result.Currency = new CurrencyItem
+                {
+                    Id = criteria.CurrencyID,
+                    Name = db.GetParameterValue("@CurrencyName").ToString()
+                };
 
                 result.HasSetting = Convert.ToBoolean(db.GetParameterValue("@HasSetting"));
             }
@@ -148,6 +136,19 @@ namespace Fanex.NAP.Licensee.Service
             }
 
             return false;
+        }
+
+        public IList<AgentItem> GetAgents(GetAgentListCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var results = db.Query<AgentItem>(criteria.GetSpParams()).ToList();
+                results.Insert(0, new AgentItem
+                {
+                    Name = NoneAgent
+                });
+                return results;
+            }
         }
     }
 }
