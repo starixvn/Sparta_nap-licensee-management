@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Fanex.NAP.Core.Configuration;
-using Fanex.NAP.Core.Web.Session;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Web.Context;
-using Fanex.NAP.Core.Service.Impl;
-
-namespace Fanex.NAP.Licensee.Controllers
+﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Configuration;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web.Context;
+    using Fanex.NAP.Core.Web.Session;
+
+    /// <summary>
+    /// Base controller.
+    /// </summary>
     public class BaseController : Controller
     {
         private readonly string _environment = NapSettings.Settings.Environment;
@@ -43,7 +42,6 @@ namespace Fanex.NAP.Licensee.Controllers
             get { return _environment; }
         }
 
-
         public IServiceContext ServiceContext
         {
             get;
@@ -61,6 +59,5 @@ namespace Fanex.NAP.Licensee.Controllers
             get;
             set;
         }
-
     }
 }

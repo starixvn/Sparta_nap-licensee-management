@@ -10,6 +10,9 @@
     using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Service;
 
+    /// <summary>
+    /// Bet setting controller.
+    /// </summary>
     [CustomHandleError]
     public class BetSettingController : BaseController
     {
@@ -22,9 +25,6 @@
             this._commonService = new CommonService();
             this._betSettingService = new BetSettingService();
         }
-
-        //
-        // GET: /BetSetting/
 
         #region Load default bet setting
 
@@ -44,6 +44,7 @@
             {
                 return Json(_betSettingService.GetAll(criteria));
             }
+
             return Json(string.Empty);
         }
 
@@ -71,11 +72,12 @@
         [AjaxRequest]
         public ActionResult LoadTeamplate(GetSingleDefaultBetSettingCriteria criteria)
         {
-            var viewModel=new SingleDefaultBetSettingViewModel();
+            var viewModel = new SingleDefaultBetSettingViewModel();
             if (criteria.IsValid())
             {
                 viewModel = _betSettingService.Single(criteria);
             }
+
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
         }
 
@@ -137,6 +139,11 @@
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get agent list.
+        /// </summary>
+        /// <param name="criteria">The criterion.</param>
+        /// <returns>The agent list.</returns>
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditDefaultBetSetting, Policy = Constant.Policy.Read)]
@@ -145,6 +152,11 @@
             return Json(_betSettingService.GetAgents(criteria), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Insert Or Update default bet setting.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns>True if successful.</returns>
         private ResultInfo ModifyDefaultBetSetting(SingleDefaultBetSettingViewModel viewModel)
         {
             var result = new ResultInfo

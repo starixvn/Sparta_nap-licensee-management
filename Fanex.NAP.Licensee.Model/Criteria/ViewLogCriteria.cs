@@ -6,10 +6,6 @@
 
 namespace Fanex.NAP.Licensee.Model.Criteria
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.Data.Repository;
 
     /// <summary>
@@ -17,6 +13,5 @@ namespace Fanex.NAP.Licensee.Model.Criteria
     /// </summary>
     public class ViewLogCriteria : CriteriaBase
     {
-
     }
 }

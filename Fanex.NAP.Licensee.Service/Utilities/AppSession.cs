@@ -25,9 +25,11 @@ namespace Fanex.NAP.Licensee.Service
         private const string CurrentLogInUserKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentLogInUser";
         private const string CurrentUserMenuKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentUserMenu";
         private const string CurrentUserRoleAccessKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentUserRoleAccess";
-        public const string CurrentWorkingOnMenuKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentWorkingOnMenu";
+
         private const string IsAccountingLoginKey = "Fanex.NAP.Licensee.Contants.AppSession.IsAccountingLogin";
         private const string ViewIpVnKey = "ViewIPVN";
+        private const string CurrentWorkingOnMenuKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentWorkingOnMenu";
+
         /// <summary>
         ///     Gets or sets current login user.
         /// </summary>

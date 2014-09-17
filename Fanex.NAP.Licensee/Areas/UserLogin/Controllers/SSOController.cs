@@ -17,6 +17,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
+    using Fanex.Logging;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
@@ -28,7 +29,6 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using Fanex.NAP.Licensee.Controllers;
     using Fanex.NAP.Licensee.Service;
     using Fanex.NAP.Licensee.Service.Utilities;
-    using Fanex.Logging;
 
     /// <summary>
     /// SSO Controller.

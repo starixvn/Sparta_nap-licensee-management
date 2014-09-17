@@ -1,7 +1,10 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.Licensee.Model.Criteria
+﻿namespace Fanex.NAP.Licensee.Model.Criteria
 {
+    using Fanex.NAP.Framework.Data;
+
+    /// <summary>
+    /// Insert or update  - criterion.
+    /// </summary>
     public class InsertOrUpdateDefaultBetSetting : CriteriaBase
     {
         public string Licensee { get; set; }

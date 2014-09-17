@@ -35,6 +35,11 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
+        /// <summary>
+        /// Get Default bet setting.
+        /// </summary>
+        /// <param name="criteria">The criterion.</param>
+        /// <returns>The Bet setting view model.</returns>
         public SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria)
         {
             var result = new SingleDefaultBetSettingViewModel();
@@ -74,6 +79,60 @@ namespace Fanex.NAP.Licensee.Service
             return result;
         }
 
+        /// <summary>
+        /// Insert Or Update default bet setting.
+        /// </summary>
+        /// <param name="criteria">The criterion.</param>
+        /// <returns>True if successful.</returns>
+        public ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
+        {
+            var result = new ResultInfo();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteReader(criteria.GetSpParams());
+                result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
+                result.Message = db.GetParameterValue("@ErrMsg").ToString();
+            }
+
+            return result;
+        }
+
+        public IList<AgentItem> GetAgents(GetAgentListCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var results = db.Query<AgentItem>(criteria.GetSpParams()).ToList();
+                results.Insert(0, new AgentItem { Name = NoneAgent });
+                return results;
+            }
+        }
+
+        /// <summary>
+        /// Read setting from data reader.
+        /// </summary>
+        /// <param name="reader">The reader context.</param>
+        /// <returns>The bet setting by sport.</returns>
+        private BetSettingBySport ReadBetSettingBySport(System.Data.IDataReader reader)
+        {
+            return new BetSettingBySport
+            {
+                SportOrGame = new SportOrGameItem
+                {
+                    Id = int.Parse(reader["SportType"].ToString()),
+                    Name = ColumnExisted(reader, "SportName") ? reader["SportName"].ToString() : string.Empty
+                },
+                BetType = int.Parse(reader["Bettype"].ToString()),
+                MaxBet = reader["MaxBet"] != DBNull.Value ? decimal.Parse(reader["MaxBet"].ToString()) : new decimal?(),
+                MaxPerMatch = reader["MaxPerMatch"] != DBNull.Value ? decimal.Parse(reader["MaxPerMatch"].ToString()) : new decimal?(),
+                MaxPerBall = reader["MaxPerBall"] != DBNull.Value ? decimal.Parse(reader["MaxPerBall"].ToString()) : new decimal?(),
+            };
+        }
+
+        /// <summary>
+        /// Bind setting into view model.
+        /// </summary>
+        /// <param name="result">The view model.</param>
+        /// <param name="reader">The data reader.</param>
         private void BindBetSettingBySport(SingleDefaultBetSettingViewModel result, System.Data.IDataReader reader)
         {
             var group = reader["Group"].ToString().Trim();
@@ -97,34 +156,12 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
-        private BetSettingBySport ReadBetSettingBySport(System.Data.IDataReader reader)
-        {
-            return new BetSettingBySport
-            {
-                SportOrGame = new SportOrGameItem
-                {
-                    Id = int.Parse(reader["SportType"].ToString()),
-                    Name = ColumnExisted(reader, "SportName") ? reader["SportName"].ToString() : string.Empty
-                },
-                BetType = int.Parse(reader["Bettype"].ToString()),
-                MaxBet = reader["MaxBet"] != DBNull.Value ? decimal.Parse(reader["MaxBet"].ToString()) : new Nullable<decimal>(),
-                MaxPerMatch = reader["MaxPerMatch"] != DBNull.Value ? decimal.Parse(reader["MaxPerMatch"].ToString()) : new Nullable<decimal>(),
-                MaxPerBall = reader["MaxPerBall"] != DBNull.Value ? decimal.Parse(reader["MaxPerBall"].ToString()) : new Nullable<decimal>(),
-            };
-        }
-
-        public ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
-        {
-            var result = new ResultInfo();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteReader(criteria.GetSpParams());
-                result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
-                result.Message = db.GetParameterValue("@ErrMsg").ToString();
-            }
-            return result;
-        }
-
+        /// <summary>
+        /// Check column existed in data reader.
+        /// </summary>
+        /// <param name="reader">The data reader.</param>
+        /// <param name="columnName">The column name.</param>
+        /// <returns>True if column existed.</returns>
         private bool ColumnExisted(IDataReader reader, string columnName)
         {
             for (int i = 0; i < reader.FieldCount; i++)
@@ -136,19 +173,6 @@ namespace Fanex.NAP.Licensee.Service
             }
 
             return false;
-        }
-
-        public IList<AgentItem> GetAgents(GetAgentListCriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var results = db.Query<AgentItem>(criteria.GetSpParams()).ToList();
-                results.Insert(0, new AgentItem
-                {
-                    Name = NoneAgent
-                });
-                return results;
-            }
         }
     }
 }

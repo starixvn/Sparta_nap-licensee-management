@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="EditDefaultBetSetting.cs" company="">
+// <copyright file="SingleDefaultBetSettingViewModel.cs" company="Nexcel">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -84,24 +84,28 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
                 result.Append("<settings>");
                 foreach (var sb in Sportbook)
                 {
-                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSettingPattern, sb.MaxBet, sb.MaxPerMatch) : "";
+                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSettingPattern, sb.MaxBet, sb.MaxPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));
                 }
+
                 foreach (var vs in VirtualSport)
                 {
-                    var settingAttributes = vs.MaxBet != null ? string.Format(_xmlSettingPattern, vs.MaxBet, vs.MaxPerMatch) : "";
+                    var settingAttributes = vs.MaxBet != null ? string.Format(_xmlSettingPattern, vs.MaxBet, vs.MaxPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, vs.SportOrGame.Id, vs.BetType, settingAttributes));
                 }
+
                 foreach (var ng in NumberGame)
                 {
-                    var settingAttributes = ng.MaxBet != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) : "";
+                    var settingAttributes = ng.MaxBet != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, ng.SportOrGame.Id, ng.BetType, settingAttributes));
                 }
+
                 foreach (var kn in Keno)
                 {
-                    var settingAttributes = kn.MaxBet != null ? string.Format(_xmlSettingPattern, kn.MaxBet, kn.MaxPerMatch) : "";
+                    var settingAttributes = kn.MaxBet != null ? string.Format(_xmlSettingPattern, kn.MaxBet, kn.MaxPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, kn.SportOrGame.Id, kn.BetType, settingAttributes));
                 }
+
                 result.Append("</settings>");
                 return result.ToString();
             }

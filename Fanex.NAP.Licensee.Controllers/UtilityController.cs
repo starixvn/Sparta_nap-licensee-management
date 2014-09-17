@@ -1,21 +1,17 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CommonController.cs" company="">
+// <copyright file="UtilityController.cs" company="Nexcel">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Web.Mvc;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class UtilityController:BaseController
+    public class UtilityController : BaseController
     {
         public ActionResult Error(string err)
         {

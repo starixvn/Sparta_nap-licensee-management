@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="GetSingleDefaultBetSetting.cs" company="">
+// <copyright file="GetSingleDefaultBetSettingCriteria.cs" company="">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

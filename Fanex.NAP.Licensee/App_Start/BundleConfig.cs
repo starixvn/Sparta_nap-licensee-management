@@ -1,21 +1,32 @@
-﻿using System.Web.Optimization;
-using BundleTransformer.Core.Builders;
-using BundleTransformer.Core.Orderers;
-using BundleTransformer.Core.Resolvers;
-using BundleTransformer.Core.Transformers;
-
-namespace Fanex.NAP.Licensee.AppStart
+﻿namespace Fanex.NAP.Licensee.AppStart
 {
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Optimization;
+    using BundleTransformer.Core.Builders;
+    using BundleTransformer.Core.Orderers;
+    using BundleTransformer.Core.Resolvers;
+    using BundleTransformer.Core.Transformers;
+
+    /// <summary>
+    /// Bundle configuration.
+    /// </summary>
     public static class BundleConfig
     {
+        /// <summary>
+        /// Register JS , CSS in a bundle.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        [SuppressMessage(
+                     "StyleCop.CSharp.Nexcel.NexcelCustomRules",
+                     "SP2101:MethodMustNotContainMoreLinesThan",
+                     Justification = "Reviewed. Suppression is OK here.")]
         public static void RegisterBundles(BundleCollection bundles)
         {
             var cssTransformer = new StyleTransformer();
-            var jsTransformer = new ScriptTransformer();
+            var scriptTransformer = new ScriptTransformer();
             var nullBuilder = new NullBuilder();
             var nullOrderer = new NullOrderer();
-            // Replace a default bundle resolver in order to the debugging HTTP-handler
-            // can use transformations of the corresponding bundle
+
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")
@@ -38,19 +49,20 @@ namespace Fanex.NAP.Licensee.AppStart
             bundles.Add(cssFanexGrid);
 
             var coreJs = new Bundle("~/bundles/coreJs")
-                .Include("~/Scripts/jquery-1.9.0.js",
+                .Include(
+                "~/Scripts/jquery-1.9.0.js",
                 "~/Scripts/jquery-ui-1.11.1.js",
                 "~/Scripts/jquery.number.js",
                  "~/Scripts/Plugin/multi-select-control.js",
-                "~/Scripts/bootstrap.js", "~/Scripts/Core/site.js",
-                "~/Scripts/Page/addnew.js"
-                , "~/Scripts/Page/default.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/Core/site.js",
+                "~/Scripts/Page/addnew.js",
+                 "~/Scripts/Page/default.js",
                 "~/Scripts/Page/edit.js",
-                 "~/Scripts/Page/viewlog.js"
-                );
+                 "~/Scripts/Page/viewlog.js");
 
             coreJs.Builder = nullBuilder;
-            coreJs.Transforms.Add(jsTransformer);
+            coreJs.Transforms.Add(scriptTransformer);
             coreJs.Orderer = nullOrderer;
 
             bundles.Add(coreJs);
@@ -59,12 +71,12 @@ namespace Fanex.NAP.Licensee.AppStart
             .IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
 
             fanexGridJs.Builder = nullBuilder;
-            fanexGridJs.Transforms.Add(jsTransformer);
+            fanexGridJs.Transforms.Add(scriptTransformer);
             fanexGridJs.Orderer = nullOrderer;
 
             bundles.Add(fanexGridJs);
-            // If you'd like to test the optimization locally,
-            // you can use this line to force it.
+            /*If you'd like to test the optimization locally,
+            you can use this line to force it.*/
             BundleTable.EnableOptimizations = true;
         }
     }
