@@ -174,7 +174,7 @@ var site = (function () {
         /*number game*/
         if ($("#ng-area").length > 0) {
             /*reset*/
-            var ngtable = $("ng-table");
+            var ngtable = $("#ng-table");
             ngtable.find("tbody input[data-key=\"MaxPerBall\"]").removeClass("warning");
             var ngrows = ngtable.find("tbody tr");
             var numOfNgRows = ngrows.length;
@@ -298,3 +298,31 @@ var site = (function () {
     };
     return me;
 })();
+/*override alert function*/
+window.oldAlert = window.alert;
+window.alert = function (message, fallback) {
+    "use strict";
+    if (fallback) {
+        window.oldAlert(message);
+        return;
+    }
+    $(document.createElement('div'))
+        .attr({ title: 'Alert', 'class': 'alert' })
+        .html(message)
+        .dialog({
+            buttons: {
+                "OK": {
+                    text: 'OK',
+                    'class': 'btn-primary btn-ok',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            },
+            close: function () { $(this).remove(); },
+            draggable: true,
+            modal: true,
+            resizable: false,
+            width: 'auto'
+        });
+};

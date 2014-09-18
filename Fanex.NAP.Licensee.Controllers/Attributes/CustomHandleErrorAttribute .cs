@@ -6,6 +6,7 @@
 
 namespace Fanex.NAP.Licensee.Controllers.Attributes
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
@@ -13,16 +14,17 @@ namespace Fanex.NAP.Licensee.Controllers.Attributes
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CustomHandleErrorAttribute : HandleErrorAttribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class CustomHandleErrorAttribute : HandleErrorAttribute
     {
         /// <summary>
         /// Handle exceptions.
         /// </summary>
         /// <param name="filterContext">The exception context.</param>
-           [SuppressMessage(
-                     "StyleCop.CSharp.Nexcel.NexcelCustomRules",
-                     "SP2101:MethodMustNotContainMoreLinesThan",
-                     Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage(
+                  "StyleCop.CSharp.Nexcel.NexcelCustomRules",
+                  "SP2101:MethodMustNotContainMoreLinesThan",
+                  Justification = "Reviewed. Suppression is OK here.")]
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.ExceptionHandled || !filterContext.HttpContext.IsCustomErrorEnabled)

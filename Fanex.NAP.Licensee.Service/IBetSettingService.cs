@@ -18,7 +18,7 @@ namespace Fanex.NAP.Licensee.Service
     {
         IList<DefaultBetSetting> GetAll(GetAllDefaultBetSettingCriteria criteria);
 
-        SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria);
+        SingleDefaultBetSettingViewModel SingleSetting(GetSingleDefaultBetSettingCriteria criteria);
       
         ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria);
 

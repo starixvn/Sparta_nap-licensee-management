@@ -40,7 +40,7 @@ namespace Fanex.NAP.Licensee.Service
         /// </summary>
         /// <param name="criteria">The criterion.</param>
         /// <returns>The Bet setting view model.</returns>
-        public SingleDefaultBetSettingViewModel Single(GetSingleDefaultBetSettingCriteria criteria)
+        public SingleDefaultBetSettingViewModel SingleSetting(GetSingleDefaultBetSettingCriteria criteria)
         {
             var result = new SingleDefaultBetSettingViewModel();
             using (var db = new ObjectDb(criteria.GetSettingKey()))

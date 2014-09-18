@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -75,7 +76,7 @@
             var viewModel = new SingleDefaultBetSettingViewModel();
             if (criteria.IsValid())
             {
-                viewModel = _betSettingService.Single(criteria);
+                viewModel = _betSettingService.SingleSetting(criteria);
             }
 
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
@@ -90,7 +91,7 @@
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Edit(string licensee, int? currencyId, int? agentId)
         {
-            return View(_betSettingService.Single(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId)));
+            return View(_betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId)));
         }
 
         [HttpPost]
@@ -123,6 +124,7 @@
 
         #region CommonFunction
 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
@@ -131,6 +133,7 @@
             return Json(_commonService.GetCurrencyList, JsonRequestBehavior.AllowGet);
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]

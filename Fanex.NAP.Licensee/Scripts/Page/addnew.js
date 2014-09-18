@@ -5,6 +5,7 @@
 var addNew = (function () {
     "use strict";
     var noneTemplate = "No found any templates";
+    var notAllBlankFiled = "Please enter at least one sport setting";
     var me = {};
     var initUI = function () {
         invokeLoadingMsg(true);
@@ -75,20 +76,22 @@ var addNew = (function () {
                 },
                 success: function (data) {
                     var template = $.parseHTML(data);
+                    if (template.length > 1) {
+                        var hasSetting = template[0].value;
 
-                    var hasSetting = template[0].value;
-
-                    if (hasSetting !== undefined && hasSetting.toLowerCase() === "true") {
-                        goToEditingPage(criteria);
-                    } else {
-                        $("#template-content").html(data);
-                        if (template.length > 1) {
-                            setFooterControlStatus(true);
+                        if (hasSetting !== undefined && hasSetting.toLowerCase() === "true") {
+                            goToEditingPage(criteria);
                         } else {
-                            alert(noneTemplate);
+                            $("#template-content").html(data);
+
+                            setFooterControlStatus(true);
+                            /*format number*/
+                            $('table.table tbody input[type="text"].txt-max').number(true, 2);
                         }
                     }
-
+                    else {
+                        alert(noneTemplate);
+                    }
                     invokeLoadingMsg(false);
                 }
             });
@@ -96,8 +99,44 @@ var addNew = (function () {
 
         /*insert*/
         $("#btn-submit").click(function () {
-        
-         });
+            event.preventDefault();
+            var isValid = site.verifyInputData() === 0;
+            if (isValid) {
+                if (hasInputValues()) {
+                    var criteria = site.createNewViewModel();
+
+                    $.ajax({
+                        type: "POST",
+                        url: window.rootUrl + "BetSetting/AddNew",
+                        data: JSON.stringify(criteria),
+                        datatype: "json",
+                        contentType: "application/json; charset=utf-8",
+                        cache: false,
+                        beforeSend: function () {
+                            invokeLoadingMsg(true);
+                        },
+                        success: function (data) {
+                            invokeLoadingMsg(false);
+                            if (data.IsOk) {
+                                alert(site.requestSuccess);
+                            }
+                            else {
+                                alert(data.Message);
+                            }
+                        },
+                        error: function () {
+                            invokeLoadingMsg(false);
+                            alert(site.requestErrMsg);
+                        }
+                    });
+                }
+                else {
+                    alert(notAllBlankFiled);
+                }
+            } else {
+                alert(site.dataErrMsg);
+            }
+        });
     };
     var goToEditingPage = function (criteria) {
         $("#confirm-box").removeClass("hidden");
@@ -125,6 +164,16 @@ var addNew = (function () {
                 }
             }
         });
+    };
+    var hasInputValues = function () {
+        var items = $('table.table tbody input[type="text"].txt-max');
+        var count = 0;
+        for (var i = 0; i < items.length; i++) {
+            if ($(items[i]).val()) {
+                count++;
+            }
+        }
+        return count > 0;
     };
     /*private UI function*/
     var setGenerateButtonStatus = function (disable) {
