@@ -19,5 +19,7 @@
             <Mapping DataField="AgentID" ObjectProperty="Id" />
             <Mapping DataField="AgentName" ObjectProperty="Name" />
         </Setting>
+        <Setting Key="NAP_SpecialCustSetting_LogSel" SpName="NAP_SpecialCustSetting_LogSel" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
+        </Setting>
     </Function>
 </Functions>

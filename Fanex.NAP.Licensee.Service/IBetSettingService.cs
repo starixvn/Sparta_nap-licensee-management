@@ -23,5 +23,7 @@ namespace Fanex.NAP.Licensee.Service
         ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria);
 
         IList<AgentItem> GetAgents(GetAgentListCriteria criteria);
+
+        IList<SettingLogItem> GetLogs(GetSettingLogCriteria criteria);
     }
 }

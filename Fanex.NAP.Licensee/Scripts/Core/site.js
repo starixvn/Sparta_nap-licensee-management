@@ -176,6 +176,8 @@ var site = (function () {
             /*reset*/
             var ngtable = $("#ng-table");
             ngtable.find("tbody input[data-key=\"MaxPerBall\"]").removeClass("warning");
+            ngtable.find("tbody input[data-key=\"MaxBet\"]").removeClass("warning");
+            ngtable.find("tbody input[data-key=\"MaxPerMatch\"]").removeClass("warning");
             var ngrows = ngtable.find("tbody tr");
             var numOfNgRows = ngrows.length;
             for (var k = 0; k < numOfNgRows; k++) {

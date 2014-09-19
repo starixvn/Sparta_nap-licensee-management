@@ -107,6 +107,14 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
+        public IList<SettingLogItem> GetLogs(GetSettingLogCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                return db.Query<SettingLogItem>(criteria.GetSpParams()).ToList();
+            }
+        }
+
         /// <summary>
         /// Read setting from data reader.
         /// </summary>

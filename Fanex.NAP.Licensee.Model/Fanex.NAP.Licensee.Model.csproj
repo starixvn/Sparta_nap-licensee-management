@@ -89,6 +89,9 @@
     <Reference Include="MvcPager">
       <HintPath>..\packages\MvcPager.1.5.0.28157\lib\net40\MvcPager.dll</HintPath>
     </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
@@ -106,9 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Criteria\GetAgentListCriteria.cs" />
+    <Compile Include="Criteria\GetSettingLogCriteria.cs" />
     <Compile Include="Criteria\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\InsertOrUpdateDefaultBetSetting.cs" />
-    <Compile Include="Criteria\ViewLogCriteria.cs" />
     <Compile Include="Criteria\GetAllDefaultBetSettingCriteria.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
@@ -121,7 +124,9 @@
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\BetSettingBySport.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
+    <Compile Include="DTO\SettingLogItem.cs" />
     <Compile Include="DTO\SportOrGameItem.cs" />
+    <Compile Include="DTO\XmlLog\LogTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +136,7 @@
       <LastGenOutput>NapLicenseeFunctionKeys.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <Compile Include="SettingItemHelper.cs" />
     <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup />

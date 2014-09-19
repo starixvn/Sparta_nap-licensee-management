@@ -123,6 +123,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="SPSRemoting">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
     </Reference>
@@ -500,9 +503,10 @@
     <Content Include="Views\BetSetting\Default.cshtml" />
     <Content Include="Views\BetSetting\AddNew.cshtml" />
     <Content Include="Views\BetSetting\Edit.cshtml" />
-    <Content Include="Views\BetSetting\Logs.cshtml" />
+    <None Include="Views\BetSetting\Logs.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BetSetting\_DefaultBetSettingList.cshtml" />
+    <Content Include="Views\BetSetting\_LogItems.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

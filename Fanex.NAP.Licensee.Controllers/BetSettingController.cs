@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
@@ -114,10 +115,17 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ViewLogs, Policy = Constant.Policy.Host)]
-        public ActionResult Logs(ViewLogCriteria criteria)
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ViewLogs, Policy = Constant.Policy.Read)]
+        public ActionResult Logs(GetSettingLogCriteria criteria)
         {
-            return View();
+            IList<SettingLogItem> viewModel = new List<SettingLogItem>();
+            if (criteria.IsValid())
+            {
+                viewModel = _betSettingService.GetLogs(criteria);
+            }
+
+            return View("~/Views/BetSetting/_LogItems.cshtml", viewModel);
         }
 
         #endregion Logs

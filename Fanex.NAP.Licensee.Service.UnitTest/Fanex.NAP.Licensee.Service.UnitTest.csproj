@@ -46,13 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CastTest.cs" />
+    <Compile Include="CommonServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj">
+      <Project>{F07AB61E-FC65-4292-A968-F124C5A28F30}</Project>
+      <Name>Fanex.NAP.Licensee.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.Licensee.Service\Fanex.NAP.Licensee.Service.csproj">
       <Project>{090A12AF-90C2-4072-9B95-CC5E33C5D444}</Project>
       <Name>Fanex.NAP.Licensee.Service</Name>
@@ -60,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stubs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
