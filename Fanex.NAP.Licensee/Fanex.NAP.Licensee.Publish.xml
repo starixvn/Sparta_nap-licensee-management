@@ -12,7 +12,6 @@
     <file relUrl="Areas/UserLogin/scripts/ReCheckIn.js" publishTime="09/11/2014 13:09:50" />
     <file relUrl="Areas/UserLogin/themes/img/bkg-pat.png" publishTime="08/20/2014 15:41:21" />
     <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="08/20/2014 12:42:42" />
-    <file relUrl="Content/jquery-ui/base/base.css" publishTime="08/28/2014 11:03:31" />
     <file relUrl="bin/Less.pdb" publishTime="08/20/2014 14:19:36" />
     <file relUrl="Content/bootstrap/mixins/buttons.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="08/20/2014 13:37:05" />
@@ -27,7 +26,7 @@
     <file relUrl="Content/bootstrap/fonts/glyphicons-halflings-regular.eot" publishTime="08/26/2014 11:25:47" />
     <file relUrl="@JSense.js" publishTime="09/11/2014 13:09:51" />
     <file relUrl="Content/bootstrap/forms.less" publishTime="08/26/2014 15:25:13" />
-    <file relUrl="Content/Core/site.less" publishTime="09/18/2014 09:33:00" />
+    <file relUrl="Content/Core/site.less" publishTime="09/22/2014 14:05:27" />
     <file relUrl="Content/bootstrap/mixins/nav-divider.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Views/Shared/_Menu.cshtml" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/fonts/glyphicons-halflings-regular.ttf" publishTime="08/26/2014 15:25:12" />
@@ -46,8 +45,9 @@
     <file relUrl="Areas/UserLogin/themes/img/auth-bg.png" publishTime="08/20/2014 15:41:21" />
     <file relUrl="Areas/UserLogin/Views/Common/Style/Error.css" publishTime="08/20/2014 15:57:51" />
     <file relUrl="bin/Fanex.MailDeliver.MailClient.dll" publishTime="08/20/2014 13:37:05" />
-    <file relUrl="App_Data/FanexSpName.xml" publishTime="09/17/2014 11:17:30" />
+    <file relUrl="App_Data/FanexSpName.xml" publishTime="09/19/2014 11:01:14" />
     <file relUrl="Scripts/Fanex.Grid/Language/Fanex.Gird.Lang.vi-VN.js" publishTime="09/11/2014 13:09:50" />
+    <file relUrl="Views/BetSetting/_LogItems.cshtml" publishTime="09/22/2014 11:31:07" />
     <file relUrl="bin/System.Web.Mvc.xml" publishTime="08/20/2014 12:42:43" />
     <file relUrl="bin/System.Web.Http.dll" publishTime="08/20/2014 12:42:43" />
     <file relUrl="Content/bootstrap/mixins/alerts.less" publishTime="08/26/2014 15:25:13" />
@@ -61,10 +61,10 @@
     <file relUrl="Content/bootstrap/print.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/System.Web.Optimization.dll" publishTime="08/20/2014 14:20:05" />
     <file relUrl="Content/bootstrap/tooltip.less" publishTime="08/26/2014 15:25:12" />
-    <file relUrl="Web.AppSettings.config" publishTime="08/25/2014 17:58:32" />
+    <file relUrl="Web.AppSettings.config" publishTime="09/23/2014 13:43:13" />
     <file relUrl="Content/bootstrap/modals.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/Core/common.less" publishTime="08/26/2014 13:30:33" />
-    <file relUrl="Web.config" publishTime="09/15/2014 12:17:12" />
+    <file relUrl="Web.config" publishTime="09/23/2014 13:51:21" />
     <file relUrl="bin/System.Net.Http.dll" publishTime="08/20/2014 12:42:43" />
     <file relUrl="Content/jquery-ui/base/tooltip.css" publishTime="08/28/2014 11:03:31" />
     <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="08/20/2014 12:42:43" />
@@ -74,7 +74,7 @@
     <file relUrl="bin/Couchbase.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Scripts/jquery.number.js" publishTime="09/15/2014 16:57:13" />
     <file relUrl="bin/MsieJavaScriptEngine.dll" publishTime="08/20/2014 17:08:52" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Model.pdb" publishTime="09/18/2014 14:17:43" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Model.pdb" publishTime="09/22/2014 13:04:11" />
     <file relUrl="Views/BetSetting/Default.cshtml" publishTime="09/17/2014 13:58:26" />
     <file relUrl="bin/ClearScript.V8/ClearScriptV8-64.dll" publishTime="08/20/2014 17:09:30" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="08/20/2014 12:42:42" />
@@ -83,7 +83,7 @@
     <file relUrl="Areas/UserLogin/themes/img/logo.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/bootstrap/scaffolding.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/jquery-ui/base/core.css" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Service.dll" publishTime="09/18/2014 14:52:54" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Service.dll" publishTime="09/22/2014 13:04:11" />
     <file relUrl="Scripts/Fanex.Grid/Language/Fanex.Gird.Lang.ko-KR.js" publishTime="09/11/2014 13:09:50" />
     <file relUrl="Content/bootstrap/breadcrumbs.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/Fanex.Grid/images/check-box.png" publishTime="08/25/2014 17:58:32" />
@@ -132,9 +132,9 @@
     <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Scripts/Fanex.Grid/numeral.min.js" publishTime="08/25/2014 17:58:32" />
     <file relUrl="bin/Antlr3.Runtime.pdb" publishTime="08/20/2014 14:20:05" />
+    <file relUrl="Views/BetSetting/__DeleteLogItems.cshtml" publishTime="09/22/2014 11:32:07" />
     <file relUrl="Content/Fanex.Grid/Fanex.Grid.css" publishTime="08/25/2014 17:58:32" />
-    <file relUrl="Content/jquery-ui/base/all.css" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Model.dll" publishTime="09/18/2014 14:17:44" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Model.dll" publishTime="09/22/2014 13:04:11" />
     <file relUrl="Areas/UserLogin/Views/SSO/SSOIndex.cshtml" publishTime="08/20/2014 15:57:51" />
     <file relUrl="Content/Fanex.Grid/images/collapse-small.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/bootstrap/dropdowns.less" publishTime="08/26/2014 15:25:13" />
@@ -159,11 +159,11 @@
     <file relUrl="Content/jquery-ui/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="08/28/2014 11:03:31" />
     <file relUrl="bin/System.Web.Razor.dll" publishTime="08/20/2014 12:42:42" />
     <file relUrl="Content/jquery-ui/base/draggable.css" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="packages.config" publishTime="08/28/2014 11:05:11" />
+    <file relUrl="packages.config" publishTime="09/19/2014 13:27:21" />
     <file relUrl="bin/System.Net.Http.WebRequest.xml" publishTime="08/20/2014 12:42:43" />
     <file relUrl="bin/System.Web.WebPages.dll" publishTime="08/20/2014 12:42:42" />
     <file relUrl="Content/jquery-ui/base/images/ui-icons_888888_256x240.png" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="09/18/2014 11:09:49" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="09/19/2014 14:26:56" />
     <file relUrl="Scripts/Plugin/multi-select-control.js" publishTime="09/11/2014 13:09:51" />
     <file relUrl="Views/BetSetting/Edit.cshtml" publishTime="09/17/2014 15:07:53" />
     <file relUrl="Content/bootstrap/fonts/glyphicons-halflings-regular.woff" publishTime="08/26/2014 11:25:47" />
@@ -184,7 +184,7 @@
     <file relUrl="Content/jquery-ui/base/dialog.css" publishTime="08/28/2014 11:03:31" />
     <file relUrl="Content/bootstrap/mixins/center-block.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/WebGrease.dll" publishTime="08/20/2014 14:20:05" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Controllers.pdb" publishTime="09/18/2014 14:53:19" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Controllers.pdb" publishTime="09/22/2014 13:04:11" />
     <file relUrl="Content/Core/img/sprites.png" publishTime="09/17/2014 10:32:43" />
     <file relUrl="bin/System.Web.Http.xml" publishTime="08/20/2014 12:42:44" />
     <file relUrl="Content/bootstrap/close.less" publishTime="08/26/2014 15:25:13" />
@@ -200,7 +200,7 @@
     <file relUrl="Content/bootstrap/popovers.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/bootstrap/mixins/panels.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/Fanex.Grid/images/sorting_asc.gif" publishTime="08/25/2014 17:58:32" />
-    <file relUrl="Scripts/Page/viewlog.js" publishTime="09/17/2014 15:43:19" />
+    <file relUrl="Scripts/Page/viewlog.js" publishTime="09/23/2014 13:04:06" />
     <file relUrl="Views/Home/Index.cshtml" publishTime="08/26/2014 10:48:25" />
     <file relUrl="bin/ru-ru/MsieJavaScriptEngine.resources.dll" publishTime="08/20/2014 17:08:52" />
     <file relUrl="Areas/UserLogin/Views/UserSite/Site.cshtml" publishTime="08/20/2014 15:58:42" />
@@ -209,7 +209,7 @@
     <file relUrl="Content/bootstrap/mixins/table-row.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/bootstrap/progress-bars.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/jquery-ui/base/images/ui-icons_cd0a0a_256x240.png" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="bin/Fanex.NAP.Licensee.pdb" publishTime="09/18/2014 14:53:19" />
+    <file relUrl="bin/Fanex.NAP.Licensee.pdb" publishTime="09/23/2014 13:46:35" />
     <file relUrl="bin/System.Web.Helpers.xml" publishTime="08/20/2014 12:42:42" />
     <file relUrl="Content/Fanex.Grid/images/email.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Scripts/jquery-1.9.0-vsdoc.js" publishTime="09/11/2014 13:09:50" />
@@ -217,12 +217,14 @@
     <file relUrl="Areas/UserLogin/themes/login.css" publishTime="08/20/2014 15:41:21" />
     <file relUrl="Areas/UserLogin/themes/img/ie.png" publishTime="08/20/2014 15:41:21" />
     <file relUrl="Content/Core/img/btn-close.png" publishTime="09/08/2014 16:01:25" />
+    <file relUrl="Views/BetSetting/__UpdateLogItems.cshtml" publishTime="09/22/2014 12:50:07" />
     <file relUrl="Content/jquery-ui/base/spinner.css" publishTime="08/28/2014 11:03:31" />
     <file relUrl="Content/bootstrap/normalize.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/Fanex.Grid/images/white-top-bottom.gif" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/Fanex.Grid/images/sort-icon.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="bin/Enyim.Caching.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Content/jquery-ui/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="08/28/2014 11:03:31" />
+    <file relUrl="bin/RemotingRef.dll" publishTime="09/19/2014 13:27:20" />
     <file relUrl="Content/bootstrap/media.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Logging.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Content/bootstrap/fonts/glyphicons-halflings-regular.svg" publishTime="08/26/2014 11:25:47" />
@@ -239,7 +241,7 @@
     <file relUrl="Content/fonts/glyphicons-halflings-regular.eot" publishTime="08/26/2014 15:25:12" />
     <file relUrl="Content/Fanex.Grid/images/sorting_bg.gif" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/bootstrap/mixins/gradients.less" publishTime="08/26/2014 15:25:13" />
-    <file relUrl="Views/BetSetting/Logs.cshtml" publishTime="09/18/2014 10:17:03" />
+    <file relUrl="Views/BetSetting/Logs.cshtml" publishTime="09/23/2014 13:03:39" />
     <file relUrl="Content/jquery-ui/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="08/28/2014 11:03:31" />
     <file relUrl="Content/bootstrap/mixins/nav-vertical-align.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/ClearScript.dll" publishTime="08/20/2014 17:09:30" />
@@ -258,10 +260,10 @@
     <file relUrl="Areas/UserLogin/themes/img/pattern6.png" publishTime="08/20/2014 15:41:21" />
     <file relUrl="Content/Plugin/multi-select-control.css" publishTime="09/08/2014 12:45:50" />
     <file relUrl="Content/jquery-ui/base/theme.css" publishTime="08/28/2014 11:03:31" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Controllers.dll" publishTime="09/18/2014 14:53:19" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Controllers.dll" publishTime="09/22/2014 13:04:12" />
     <file relUrl="Content/bootstrap/panels.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/JavaScriptEngineSwitcher.V8.dll" publishTime="08/20/2014 17:09:30" />
-    <file relUrl="bin/Fanex.NAP.Licensee.Service.pdb" publishTime="09/18/2014 14:52:54" />
+    <file relUrl="bin/Fanex.NAP.Licensee.Service.pdb" publishTime="09/22/2014 13:04:11" />
     <file relUrl="Content/bootstrap/navbar.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Content/bootstrap/mixins/hide-text.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="Areas/UserLogin/Views/Login/Index.cshtml" publishTime="08/20/2014 15:57:51" />
@@ -283,7 +285,7 @@
     <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Scripts/jquery-1.9.0.min.js" publishTime="08/26/2014 10:47:54" />
     <file relUrl="Global.asax" publishTime="08/20/2014 12:42:41" />
-    <file relUrl="bin/Fanex.NAP.Licensee.dll" publishTime="09/18/2014 14:53:19" />
+    <file relUrl="bin/Fanex.NAP.Licensee.dll" publishTime="09/23/2014 13:46:35" />
     <file relUrl="bin/IBCFile.dll" publishTime="08/20/2014 13:37:05" />
     <file relUrl="Content/Core/img/favicon.ico" publishTime="08/26/2014 10:48:25" />
     <file relUrl="Content/jquery-ui/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="08/28/2014 11:03:31" />
@@ -303,10 +305,11 @@
     <file relUrl="Content/bootstrap/mixins/size.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/BundleTransformer.Less.dll" publishTime="08/20/2014 14:20:05" />
     <file relUrl="Content/bootstrap/wells.less" publishTime="08/26/2014 15:25:12" />
+    <file relUrl="Views/BetSetting/__InsertLogItems.cshtml" publishTime="09/22/2014 11:32:03" />
     <file relUrl="Content/jquery-ui/base/images/ui-icons_cbd4e6_256x240.png" publishTime="08/29/2014 16:02:35" />
     <file relUrl="Scripts/Fanex.Grid/moment.min.js" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/bootstrap/glyphicons.less" publishTime="08/26/2014 15:25:13" />
-    <file relUrl="Web.ConnectionString.config" publishTime="09/03/2014 12:59:14" />
+    <file relUrl="Web.ConnectionString.config" publishTime="09/19/2014 11:31:07" />
     <file relUrl="Content/Fanex.Grid/images/bgtitle.png" publishTime="08/25/2014 17:58:32" />
     <file relUrl="Content/bootstrap/responsive-embed.less" publishTime="08/26/2014 15:25:13" />
     <file relUrl="bin/UMControllerLibrary.dll" publishTime="08/20/2014 13:37:05" />

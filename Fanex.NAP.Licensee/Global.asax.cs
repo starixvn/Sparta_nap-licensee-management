@@ -11,7 +11,7 @@
     /// <summary>
     /// MVC application.
     /// </summary>
-       public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {

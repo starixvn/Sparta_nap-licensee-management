@@ -8,10 +8,12 @@ namespace Fanex.NAP.Licensee.Model.DTO
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.NAP.Licensee.Model.DataDomain;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [Serializable]
     public class SettingLogItem
     {
         private string _data;
@@ -24,17 +26,19 @@ namespace Fanex.NAP.Licensee.Model.DTO
 
         public string ActionName { get; set; }
 
+        public LogActionType ActionId { get; set; }
+
         public string AgentName { get; set; }
 
         public string Data
         {
-            private get { return _data; }
+            get { return _data; }
             set { _data = value; }
         }
 
         public string OldData
         {
-            private get { return _oldData; }
+            get { return _oldData; }
             set { _oldData = value; }
         }
 
@@ -44,7 +48,7 @@ namespace Fanex.NAP.Licensee.Model.DTO
         /// <value>The template.</value>
         public string Items
         {
-            private get { return _items; }
+            get { return _items; }
             set { _items = value; }
         }
 
@@ -52,7 +56,7 @@ namespace Fanex.NAP.Licensee.Model.DTO
         {
             get
             {
-                return SettingItemHelper.Map(this.Data, this.Items);
+                return SettingItemHelper.Map(this._data, this._items);
             }
         }
 
@@ -60,7 +64,7 @@ namespace Fanex.NAP.Licensee.Model.DTO
         {
             get
             {
-                return SettingItemHelper.Map(this.OldData, this.Items);
+                return SettingItemHelper.Map(this._oldData, this._items);
             }
         }
     }

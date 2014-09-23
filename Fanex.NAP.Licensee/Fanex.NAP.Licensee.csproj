@@ -300,9 +300,9 @@
     <Content Include="Content\Fanex.Grid\images\white-top-bottom.gif" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\jquery-ui\base\accordion.css" />
-    <Content Include="Content\jquery-ui\base\all.css" />
+    <None Include="Content\jquery-ui\base\all.css.nk" />
     <Content Include="Content\jquery-ui\base\autocomplete.css" />
-    <Content Include="Content\jquery-ui\base\base.css" />
+    <None Include="Content\jquery-ui\base\base.css.bk" />
     <Content Include="Content\jquery-ui\base\button.css" />
     <Content Include="Content\jquery-ui\base\core.css" />
     <Content Include="Content\jquery-ui\base\datepicker.css" />
@@ -503,10 +503,13 @@
     <Content Include="Views\BetSetting\Default.cshtml" />
     <Content Include="Views\BetSetting\AddNew.cshtml" />
     <Content Include="Views\BetSetting\Edit.cshtml" />
-    <None Include="Views\BetSetting\Logs.cshtml" />
+    <Content Include="Views\BetSetting\__UpdateLogItems.cshtml" />
+    <Content Include="Views\BetSetting\Logs.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BetSetting\_DefaultBetSettingList.cshtml" />
     <Content Include="Views\BetSetting\_LogItems.cshtml" />
+    <Content Include="Views\BetSetting\__DeleteLogItems.cshtml" />
+    <Content Include="Views\BetSetting\__InsertLogItems.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

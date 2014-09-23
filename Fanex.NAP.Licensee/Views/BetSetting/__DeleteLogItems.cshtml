@@ -1,0 +1,47 @@
+﻿@model Fanex.NAP.Licensee.Model.DTO.SettingLogItem
+<table class="table table-bordered child-setting">
+    <thead>
+        <tr>
+            <th>
+                Sport/Game
+            </th>
+            <th>
+                Max Bet
+            </th>
+            <th>
+                Max Per Match
+            </th>
+            <th>
+                Max Per Ball
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var setting in Model.OldSettings)
+        {
+            <tr>
+                <td>
+                    @setting.SportOrGame.Name
+                </td>
+                <td class="width-20 text-right">
+                    @if (setting.MaxBet.HasValue)
+                    {
+                        @setting.MaxBet.Value
+                    }
+                </td>
+                <td class="width-20 text-right">
+                    @if (setting.MaxPerMatch.HasValue)
+                    {
+                        @setting.MaxPerMatch.Value
+                    }
+                </td>
+                <td class="width-20 text-right">
+                    @if (setting.MaxPerBall.HasValue)
+                    {
+                        @setting.MaxPerBall.Value
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

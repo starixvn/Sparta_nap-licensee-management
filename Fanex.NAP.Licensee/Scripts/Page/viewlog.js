@@ -35,13 +35,29 @@ var viewLog = (function () {
         $("#table-toggle").click(function () {
             if ($(this).hasClass("icon-collapse-all")) {
                 $(this).addClass("icon-expand-all").removeClass("icon-collapse-all");
+                $(".child-setting").show();
             } else {
                 $(this).addClass("icon-collapse-all").removeClass("icon-expand-all");
+                $(".child-setting").hide();
             }
-            $(".child-setting").toggle();
         });
 
-        $("#generate").click(function () {
+        $("body").on("click", ".table-title", function (event) {
+            event.preventDefault();
+
+            $(this).next().toggle();
+        });
+        $("#licensee,#currency").change(function () {
+            invokeLoadingMsg(true);
+            var licensee = $("#licensee option:selected").text();
+            var currency = $("#currency").val();
+            site.renderSingleAgentList(licensee, currency,
+                 function () {
+                     invokeLoadingMsg(false);
+                 });
+        });
+             $("#generate").click(function (event) {
+                 event.preventDefault();
             var container = $("#table-content tbody");
             container.html("");
             var criteria = {
@@ -67,6 +83,7 @@ var viewLog = (function () {
                 success: function (data) {
                     if (data.length > 1) {
                         container.html(data);
+                        $("body .child-setting").toggle();
                     }
                     else {
                         alert(nodata);
@@ -88,7 +105,7 @@ var viewLog = (function () {
             $("#licensee").html(items);
             site.renderSingleCurrencyList(function () {
                 if ($("#licensee option").length > 0 && $("#licensee option").length > 0) {
-                    var licensee = $("#licensee").val();
+                    var licensee = $("#licensee option:selected").text();
                     var currency = $("#currency").val();
                     site.renderSingleAgentList(licensee, currency,
                  function () {

@@ -29,6 +29,12 @@ namespace Fanex.NAP.Licensee.Model
         private const string MIXPARLAYSPORTNAME = "Mix Sports Parlay";
         private const string ORTHERSPORTNAME = "Other Sports";
 
+        /// <summary>
+        /// Convert xml content to .NET object.
+        /// </summary>
+        /// <param name="xmlData">The xml content.</param>
+        /// <param name="xmlTemplate">The xml template.</param>
+        /// <returns>The Bet setting by sport.</returns>
         public static IList<BetSettingBySport> Map(string xmlData, string xmlTemplate)
         {
             IList<BetSettingBySport> result = new List<BetSettingBySport>();
@@ -53,6 +59,12 @@ namespace Fanex.NAP.Licensee.Model
             return result;
         }
 
+        /// <summary>
+        /// Get Sport or Game item.
+        /// </summary>
+        /// <param name="row">The XML row.</param>
+        /// <param name="template">The Log Template.</param>
+        /// <returns>The Sport Or Game item.</returns>
         private static SportOrGameItem GetSportOrGame(XElement row, LogTemplate template)
         {
             var result = new SportOrGameItem();
@@ -78,6 +90,11 @@ namespace Fanex.NAP.Licensee.Model
             return result;
         }
 
+        /// <summary>
+        /// Get log template.
+        /// </summary>
+        /// <param name="xmlTemplate">The template content.</param>
+        /// <returns>The Log Template.</returns>
         private static LogTemplate GetTemplate(string xmlTemplate)
         {
             var result = new LogTemplate();
@@ -113,9 +130,16 @@ namespace Fanex.NAP.Licensee.Model
                         break;
                 }
             }
+
             return result;
         }
 
+        /// <summary>
+        /// Get string value.
+        /// </summary>
+        /// <param name="row">The XML row.</param>
+        /// <param name="attributeName">The attribute name.</param>
+        /// <returns>The string value.</returns>
         private static string GetStringXMlAttribute(XElement row, string attributeName)
         {
             try
@@ -125,15 +149,28 @@ namespace Fanex.NAP.Licensee.Model
             catch (ArgumentNullException)
             {
             }
+
             return string.Empty;
         }
 
+        /// <summary>
+        /// Get integer value.
+        /// </summary>
+        /// <param name="row">The Xml row.</param>
+        /// <param name="attributeName">The attribute name.</param>
+        /// <returns>The integer value.</returns>
         private static int GetIntXMlAttribute(XElement row, string attributeName)
         {
             var value = GetStringXMlAttribute(row, attributeName);
             return string.IsNullOrEmpty(value) ? 0 : int.Parse(value);
         }
 
+        /// <summary>
+        /// Get decimal value.
+        /// </summary>
+        /// <param name="row">The Xml row.</param>
+        /// <param name="attributeName">The attribute name.</param>
+        /// <returns>The decimal value.</returns>
         private static decimal? GetDecXMlAttribute(XElement row, string attributeName)
         {
             var value = GetStringXMlAttribute(row, attributeName);
@@ -141,7 +178,7 @@ namespace Fanex.NAP.Licensee.Model
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    return Decimal.Parse(value);
+                    return decimal.Parse(value);
                 }
             }
             catch (ArgumentNullException)

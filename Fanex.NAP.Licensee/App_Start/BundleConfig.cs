@@ -2,8 +2,6 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Optimization;
-    using BundleTransformer.Core.Builders;
-    using BundleTransformer.Core.Orderers;
     using BundleTransformer.Core.Resolvers;
     using BundleTransformer.Core.Transformers;
 
@@ -23,28 +21,26 @@
         public static void RegisterBundles(BundleCollection bundles)
         {
             var cssTransformer = new StyleTransformer();
-            var scriptTransformer = new ScriptTransformer();
-            var nullBuilder = new NullBuilder();
-            var nullOrderer = new NullOrderer();
+            cssTransformer.CombineFilesBeforeMinification = true;
 
+            var scriptTransformer = new ScriptTransformer();
+            scriptTransformer.CombineFilesBeforeMinification = true;
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")
-            .Include("~/Content/jquery-ui/base/all.css")
+            .IncludeDirectory("~/Content/jquery-ui/base/", "*.css")
             .Include("~/Content/bootstrap/bootstrap.less")
            .Include("~/Content/Plugin/multi-select-control.css")
            .Include("~/Content/Core/site.less");
-            css.Builder = nullBuilder;
+
             css.Transforms.Add(cssTransformer);
-            css.Orderer = nullOrderer;
 
             bundles.Add(css);
 
             var cssFanexGrid = new Bundle("~/bundles/FanexGridCss")
              .IncludeDirectory("~/Content/Fanex.Grid", "*.css");
-            cssFanexGrid.Builder = nullBuilder;
+
             cssFanexGrid.Transforms.Add(cssTransformer);
-            cssFanexGrid.Orderer = nullOrderer;
 
             bundles.Add(cssFanexGrid);
 
@@ -61,18 +57,14 @@
                 "~/Scripts/Page/edit.js",
                  "~/Scripts/Page/viewlog.js");
 
-            coreJs.Builder = nullBuilder;
             coreJs.Transforms.Add(scriptTransformer);
-            coreJs.Orderer = nullOrderer;
 
             bundles.Add(coreJs);
 
             var fanexGridJs = new Bundle("~/bundles/FanexGridJs")
             .IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
 
-            fanexGridJs.Builder = nullBuilder;
             fanexGridJs.Transforms.Add(scriptTransformer);
-            fanexGridJs.Orderer = nullOrderer;
 
             bundles.Add(fanexGridJs);
             /*If you'd like to test the optimization locally,
