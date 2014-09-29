@@ -43,6 +43,7 @@ var addNew = (function () {
 
             site.collapseorExpand($(this));
         });
+        site.registerCopySettingEvent();
         $("body").on("click", "#copy-sb,#copy-vs,#copy-kn", function () {
             var isCheck = $(this).is(":checked");
             var table = $($(this).attr("data-key"));

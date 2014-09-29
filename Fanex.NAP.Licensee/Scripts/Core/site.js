@@ -113,7 +113,7 @@ var site = (function () {
         }
         return error;
     };
-    var verifyNumberBetSetting = function ($row) {
+    var verifyNumberGameBetSetting = function ($row) {
         var error = site.verifyBetSetting($row);
         var maxperBall = $row.find("input[data-key=\"MaxPerBall\"]").val();
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
@@ -181,7 +181,7 @@ var site = (function () {
             var ngrows = ngtable.find("tbody tr");
             var numOfNgRows = ngrows.length;
             for (var k = 0; k < numOfNgRows; k++) {
-                error += verifyNumberBetSetting($(ngrows[k]));
+                error += verifyNumberGameBetSetting($(ngrows[k]));
             }
         }
 
@@ -209,6 +209,25 @@ var site = (function () {
     /*End-Functions: verifing template*/
 
     /*UI function*/
+    me.registerCopySettingEvent = function () {
+        $("body").on("blur", "table tbody tr.first", function () {
+            var code = $(this).attr("data-code");
+            var isCheck = $("#copy-" + code).is(":checked");
+            if (isCheck) {
+                var error = site.verifyBetSetting($(this));
+                if (error === 0) {
+                    var table = $("#" + code + "-table");
+                    var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
+                    var maxPerMatch = $(this).find("input[data-key=\"MaxPerMatch\"]").val();
+
+                    table.find("tr[class!='first'] input[data-key=\"MaxBet\"]").val(maxBet);
+                    table.find("tr[class!='first'] input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
+                    $(this).find("input[data-key=\"MaxBet\"]").removeClass("warning");
+                    $(this).find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
+                }
+            }
+        });
+    };
     me.copySetting = function (table, checkbox) {
         var firstRow = table.find("tbody tr:eq(0)");
         /*reset*/
@@ -235,9 +254,9 @@ var site = (function () {
     };
     me.enableOrDisable = function (table, enable) {
         if (enable) {
-            $(table).find("input").removeAttr("disabled");
+            $(table).find("tr[class!='first'] input").removeAttr("disabled");
         } else {
-            $(table).find("input").attr("disabled", "disabled");
+            $(table).find("tr[class!='first'] input").attr("disabled", "disabled");
         }
     };
 

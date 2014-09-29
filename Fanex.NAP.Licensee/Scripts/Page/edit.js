@@ -51,6 +51,8 @@ var editingSetting = (function () {
                 site.enableOrDisable(table, true);
             }
         });
+        site.registerCopySettingEvent();
+
         $("#btn-submit").click(function (event) {
             event.preventDefault();
             var isValid = site.verifyInputData() === 0;

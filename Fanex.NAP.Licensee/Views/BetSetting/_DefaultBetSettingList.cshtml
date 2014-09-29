@@ -2,6 +2,7 @@
 <input type="hidden" id="has-setting" value="@Model.HasSetting.ToString()" />
 @if (Model.Sportbook.Count > 0)
 {
+    var sbCount = 0;
     <div class="row group">
         <div class="col-sm-12 title-group" id="sb-area">
             <i class="icon-collapse" data-key="area-icon"></i>Sportbook</div>
@@ -25,9 +26,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                   
                     @foreach (var sb in Model.Sportbook)
                     {
-                        <tr data-sport="@sb.SportOrGame.Id" data-bettype="@sb.BetType">
+                        <tr class="@(sbCount == 0 ? "first" : string.Empty)" data-code="@(sbCount == 0 ? "sb" : string.Empty)" data-sport="@sb.SportOrGame.Id" data-bettype="@sb.BetType">
                             <td>
                                 @sb.SportOrGame.Name
                             </td>
@@ -38,6 +40,7 @@
                                 <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                             </td>
                         </tr>
+                        sbCount++;
                     }
                 </tbody>
             </table>
@@ -67,9 +70,10 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach (var ng in Model.NumberGame)
                     {
-                        <tr data-sport="@ng.SportOrGame.Id" data-bettype="@ng.BetType">
+                        <tr  data-sport="@ng.SportOrGame.Id" data-bettype="@ng.BetType">
                             <td>
                                 @ng.SportOrGame.Name
                             </td>
@@ -83,6 +87,7 @@
                                 <input data-key="MaxPerBall" maxlength="12" type="text" value="@(ng.MaxPerMatch.HasValue ? ng.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                             </td>
                         </tr>
+                        
                     }
                 </tbody>
             </table>
@@ -91,6 +96,7 @@
 }
 @if (Model.VirtualSport.Count > 0)
 {
+    var vsCount = 0;
     <div class="row group">
         <div class="col-sm-12 title-group" id="vs-area">
             <i class="icon-collapse" data-key="area-icon"></i>Virtual Sports</div>
@@ -116,7 +122,7 @@
                 <tbody>
                     @foreach (var vs in Model.VirtualSport)
                     {
-                        <tr data-sport="@vs.SportOrGame.Id" data-bettype="@vs.BetType">
+                        <tr  class="@(vsCount == 0 ? "first" : string.Empty)" data-code="@(vsCount == 0 ? "vs" : string.Empty)" data-sport="@vs.SportOrGame.Id" data-bettype="@vs.BetType">
                             <td>
                                 @vs.SportOrGame.Name
                             </td>
@@ -127,6 +133,7 @@
                                 <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(vs.MaxPerMatch.HasValue ? vs.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                             </td>
                         </tr>
+                        vsCount++;
                     }
                 </tbody>
             </table>
@@ -135,6 +142,8 @@
 }
 @if (Model.Keno.Count > 0)
 {
+    var knCount = 0;
+
     <div class="row group">
         <div class="col-sm-12 title-group" id="kn-area">
             <i class="icon-collapse" data-key="area-icon"></i>Keno</div>
@@ -160,7 +169,7 @@
                 <tbody>
                     @foreach (var kn in Model.Keno)
                     {
-                        <tr data-sport="@kn.SportOrGame.Id" data-bettype="@kn.BetType">
+                        <tr class="@(knCount == 0 ? "first" : string.Empty)" data-code="@(knCount == 0 ? "kn" : string.Empty)" data-sport="@kn.SportOrGame.Id" data-bettype="@kn.BetType">
                             <td>
                                 @kn.SportOrGame.Name
                             </td>

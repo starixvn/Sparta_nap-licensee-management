@@ -4,7 +4,6 @@
 /* global site */
 var viewLog = (function () {
     "use strict";
-    var nodata = "Not found any records!";
     var me = {};
     /*private function*/
     var setGenerateButtonStatus = function (disable) {
@@ -56,8 +55,8 @@ var viewLog = (function () {
                      invokeLoadingMsg(false);
                  });
         });
-             $("#generate").click(function (event) {
-                 event.preventDefault();
+        $("#generate").click(function (event) {
+            event.preventDefault();
             var container = $("#table-content tbody");
             container.html("");
             var criteria = {
@@ -85,9 +84,7 @@ var viewLog = (function () {
                         container.html(data);
                         $("body .child-setting").toggle();
                     }
-                    else {
-                        alert(nodata);
-                    }
+
                     invokeLoadingMsg(false);
                 }
             });
