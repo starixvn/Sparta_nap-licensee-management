@@ -27,6 +27,17 @@ namespace Fanex.NAP.Licensee.Service
         private const string KN = "KN";
         private const string NoneAgent = "All";
 
+        private ObjectDb _objectDb;
+
+        public BetSettingService()
+        {
+        }
+
+        public BetSettingService(ObjectDb objectDb)
+        {
+            _objectDb = objectDb;
+        }
+
         public IList<DefaultBetSetting> GetAll(Model.Criteria.GetAllDefaultBetSettingCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -43,9 +54,9 @@ namespace Fanex.NAP.Licensee.Service
         public SingleDefaultBetSettingViewModel SingleSetting(GetSingleDefaultBetSettingCriteria criteria)
         {
             var result = new SingleDefaultBetSettingViewModel();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (_objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = _objectDb.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
@@ -65,15 +76,15 @@ namespace Fanex.NAP.Licensee.Service
                 result.Agent = new AgentItem
                 {
                     Id = criteria.AgentID,
-                    Name = criteria.AgentID.HasValue ? db.GetParameterValue("@AgentName").ToString() : NoneAgent
+                    Name = criteria.AgentID.HasValue ? _objectDb.GetParameterValue("@AgentName").ToString() : NoneAgent
                 };
                 result.Currency = new CurrencyItem
                 {
                     Id = criteria.CurrencyID,
-                    Name = db.GetParameterValue("@CurrencyName").ToString()
+                    Name = _objectDb.GetParameterValue("@CurrencyName").ToString()
                 };
 
-                result.HasSetting = Convert.ToBoolean(db.GetParameterValue("@HasSetting"));
+                result.HasSetting = Convert.ToBoolean(_objectDb.GetParameterValue("@HasSetting"));
             }
 
             return result;

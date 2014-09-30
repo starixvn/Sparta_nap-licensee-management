@@ -28,6 +28,12 @@
             this._betSettingService = new BetSettingService();
         }
 
+        public BetSettingController(ICommonService commonService, IBetSettingService betSettingService)            
+        {
+            this._commonService = commonService;
+            this._betSettingService = betSettingService;
+        }
+
         #region Load default bet setting
 
         [HttpGet]

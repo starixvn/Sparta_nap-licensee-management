@@ -12,19 +12,24 @@
     /// </summary>
     public class BaseController : Controller
     {
-        private readonly string _environment = NapSettings.Settings.Environment;
-        private readonly int _siteId = NapSettings.Settings.SiteId;
-        private readonly bool _isSiteLogin = NapSettings.Settings.EnableDirectLogin;
+        private readonly string _environment = NapSettings.Settings == null ? string.Empty : NapSettings.Settings.Environment;
+        private readonly int _siteId = NapSettings.Settings == null ? 0 : NapSettings.Settings.SiteId;
+        private readonly bool _isSiteLogin = NapSettings.Settings == null ? false : NapSettings.Settings.EnableDirectLogin;
 
         public BaseController()
         {
             CurrentContext = new CurrentContext();
-            ViewBag.Session = CurrentSession = new CurrentSession();
-            ServiceContext = new ServiceContext
+
+            if (NapSettings.Settings != null)
             {
-                UserId = CurrentSession.UserId,
-                Ip = CurrentContext.IP
-            };
+                CurrentSession = new CurrentSession();
+                ViewBag.Session = CurrentSession;
+                ServiceContext = new ServiceContext
+                {
+                    UserId = CurrentSession.UserId,
+                    Ip = CurrentContext.IP
+                };
+            }
         }
 
         public int SiteId
