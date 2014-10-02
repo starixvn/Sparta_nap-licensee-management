@@ -87,7 +87,7 @@ var addNew = (function () {
 
                             setFooterControlStatus(true);
                             /*format number*/
-                            $('table.table tbody input[type="text"].txt-max').number(true, 2);
+                            $('table.table tbody input[type="text"].txt-max').number(true, 0);
                         }
                     }
                     else {
@@ -99,7 +99,7 @@ var addNew = (function () {
         });
 
         /*insert*/
-        $("#btn-submit").click(function () {
+        $("#btn-submit").click(function (event) {
             event.preventDefault();
             var isValid = site.verifyInputData() === 0;
             if (isValid) {

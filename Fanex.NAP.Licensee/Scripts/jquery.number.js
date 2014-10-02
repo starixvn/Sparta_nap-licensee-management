@@ -1,3 +1,4 @@
+/// <reference path="/@JSense.js" />
 /**
 * jQuery number plug-in 2.1.3
 * Copyright 2012, Digital Fusion
@@ -186,9 +187,9 @@
 
                         if (chara == '') chara = String.fromCharCode(code);
                         //	    				}
-
+                        ;
                         // Stop executing if the user didn't type a number key, a decimal character, or backspace.
-                        if (code !== 8 && chara != dec_point && !chara.match(/[0-9]/)) {
+                        if (code !== 8 && (chara != dec_point || (code !== 46 && dec_point === chara)) && !chara.match(/[0-9]/)) {
                             // We need the original keycode now...
                             var key = (e.keyCode ? e.keyCode : e.which);
                             if ( // Allow control keys to go through... (delete, etc)
@@ -206,10 +207,9 @@
                             e.preventDefault();
                             return false;
                         }
-
                         // The whole lot has been selected, or if the field is empty...
                         if (start == 0 && end == this.value.length || $this.val() == 0) {
-                            if (code === 8) {
+                            if (code === 8 || code === 46) {
                                 // Blank out the field, but only if the data object has already been instanciated.
                                 start = end = 1;
                                 this.value = '';
@@ -255,14 +255,24 @@
                         // If the user is just typing the decimal place,
                         // we simply ignore it.
                         else if (chara == dec_point) {
-                            data.init = Math.max(0, data.init);
+                            //changed by Alex.Nguyen
+                            //Support delete value by "delete key " (code=46)
+                            if (decimals > 0) {
+                                data.init = Math.max(0, data.init);
+                            } else {
+                                if (this.value !== '') {
+                                    var tempValue = this.value.substring(0,this.value.length-1)
+                                    this.value = tempValue;
+                                }
+                            }
                             e.preventDefault();
                         }
 
                         // If hitting the delete key, and the cursor is behind a decimal place,
                         // we simply move the cursor to the other side of the decimal place.
-                        else if (decimals > 0 && code == 8 && start == this.value.length - decimals) {
+                        else if (decimals > 0 && (code == 8 || code === 46) && start == this.value.length - decimals) {
                             e.preventDefault();
+
                             data.c--;
 
                             // Set the selection position.
@@ -272,7 +282,7 @@
                         // If hitting the delete key, and the cursor is to the right of the decimal
                         // (but not directly to the right) we replace the character preceeding the
                         // caret with a 0.
-                        else if (decimals > 0 && code == 8 && start > this.value.length - decimals) {
+                        else if (decimals > 0 && (code == 8 || code === 46) && start > this.value.length - decimals) {
                             if (this.value === '') return;
 
                             // If the character preceeding is not already a 0,
@@ -292,7 +302,7 @@
                         // If the delete key was pressed, and the character immediately
                         // before the caret is a thousands_separator character, simply
                         // step over it.
-                        else if (code == 8 && this.value.slice(start - 1, start) == thousands_sep) {
+                        else if ((code == 8 || code === 46) && this.value.slice(start - 1, start) == thousands_sep) {
                             e.preventDefault();
                             data.c--;
 
@@ -349,7 +359,9 @@
 	    					setPos;
 
                         // Stop executing if the user didn't type a number key, a decimal, or a comma.
-                        if (this.value === '' || (code < 48 || code > 57) && (code < 96 || code > 105) && code !== 8) return;
+                        if (this.value === '' || (code < 46 || code > 57) && (code < 96 || code > 105) && code !== 8 && code !== 46) {
+                            return;
+                        }
 
                         // Re-format the textarea.
                         $this.val($this.val());
@@ -564,7 +576,7 @@
     * @return string : The formatted number as a string.
     */
     $.number = function (number, decimals, dec_point, thousands_sep) {
-        /* Hack by alex.nguyen@nexcel.vn 
+        /* Hack by alex.nguyen@nexcel.vn
         *  - Allow set "empty" value !
         */
         var orginalNumber = number;

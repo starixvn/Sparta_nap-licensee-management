@@ -33,7 +33,7 @@ var editingSetting = (function () {
 
     var initUI = function () {
         /*format number*/
-        $('table.table tbody input[type="text"].txt-max').number(true, 2);
+        $('table.table tbody input[type="text"].txt-max').number(true, 0);
     };
     var initEvent = function () {
         $(".btn-back").on("click", function () {
