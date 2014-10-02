@@ -18,13 +18,13 @@ namespace Fanex.NAP.Licensee.Service.UnitTest
             _commonService = new CommonService();
         }
 
-        [Test]
-        public void GetLicenseeList_Always_NotNull()
-        {
-            //Act
-            var licenseeList = _commonService.GetLicenseeList;
-            //Assert
-            Assert.IsNotNull(licenseeList);
-        }
+        //[Test]
+        //public void GetLicenseeList_Always_NotNull()
+        //{
+        //    //Act
+        //    var licenseeList = _commonService.GetLicenseeList;
+        //    //Assert
+        //    Assert.IsNotNull(licenseeList);
+        //}
     }
 }

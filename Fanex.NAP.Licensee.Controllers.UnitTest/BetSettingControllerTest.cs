@@ -31,7 +31,7 @@
         /// Test Default Action.
         /// </summary>
         [Test]
-        public void Default_SampleData_NotNull()
+        public void Default_CheckSampleData_NotNull()
         {
             var criteria = new GetAllDefaultBetSettingCriteria()
             {
