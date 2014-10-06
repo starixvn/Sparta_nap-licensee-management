@@ -22,6 +22,10 @@
             <tr>
                 <td>
                     @setting.SportOrGame.Name
+                    @if (setting.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                    {
+                        @Html.Raw("&nbsp;-&nbsp;")@setting.BetTypeName
+                    }
                 </td>
                 <td class="width-20 text-right">
                     @if (setting.MaxBet.HasValue)

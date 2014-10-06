@@ -38,22 +38,32 @@
     </thead>
     <tbody>
         @{
-            var numOfItems = Model.Settings.Count > Model.OldSettings.Count ? Model.Settings.Count : Model.OldSettings.Count;
+
+            var updatedSportList=Model.OldSettings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})
+                .Union(Model.Settings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})).OrderBy(i=>i.SportId);
         }
-        @for (var i = 0; i < numOfItems; i++)
+        @foreach (var item in updatedSportList)
         {
-            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport oldValue = Model.OldSettings.Count > i ? Model.OldSettings[i] : null;
-            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport newValue = Model.Settings.Count > i ? Model.Settings[i] : null;
+            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport oldValue = Model.OldSettings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
+            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport newValue = Model.Settings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
 
             <tr>
                 <td>
                     @if (oldValue != null)
                     {
-                        @oldValue.SportOrGame.Name;
+                        @oldValue.SportOrGame.Name
                     }
                     else if (newValue != null)
                     {
                         @newValue.SportOrGame.Name
+                    }
+                    @if (oldValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                    {
+                        @Html.Raw("&nbsp;-&nbsp;")@oldValue.BetTypeName
+                    }
+                    else if (newValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                    {
+                        @Html.Raw("&nbsp;-&nbsp;")@newValue.BetTypeName
                     }
                 </td>
                 <td class="width-10 text-right">

@@ -24,6 +24,8 @@ namespace Fanex.NAP.Licensee.Model.DTO
 
         public int BetType { get; set; }
 
+        public string BetTypeName { get; set; }
+
         public bool IsValid
         {
             get
