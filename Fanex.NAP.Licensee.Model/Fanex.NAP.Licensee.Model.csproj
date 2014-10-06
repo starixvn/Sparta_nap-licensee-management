@@ -113,13 +113,13 @@
     <Compile Include="Criteria\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\GetAllDefaultBetSettingCriteria.cs" />
-    <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting.cs" />
