@@ -21,5 +21,7 @@
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_LogSel" SpName="NAP_SpecialCustSetting_LogSel" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
         </Setting>
+        <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+        </Setting>
     </Function>
 </Functions>

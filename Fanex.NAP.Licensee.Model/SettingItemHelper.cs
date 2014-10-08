@@ -45,16 +45,14 @@ namespace Fanex.NAP.Licensee.Model
                 var settings = xmlDoc.Descendants("st");
                 foreach (var setting in settings)
                 {
-                    var item = new BetSettingBySport
+                    result.Add(new BetSettingBySport
                     {
                         BetType = GetIntXMlAttribute(setting, template.BetType),
                         MaxBet = GetDecXMlAttribute(setting, template.MaxBet),
                         MaxPerBall = GetDecXMlAttribute(setting, template.MaxPerBall),
                         MaxPerMatch = GetDecXMlAttribute(setting, template.MaxPerMatch),
                         SportOrGame = GetSportOrGame(setting, template)
-                    };
-                    item.BetTypeName = RemotingRef.RefData.GetBetTypeName(item.BetType.ToString(), ENGLISHLANGCODE);
-                    result.Add(item);
+                    });
                 }
             }
 

@@ -8,6 +8,7 @@ namespace Fanex.NAP.Licensee.Service
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Caching;
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.DTO;
 
@@ -16,6 +17,10 @@ namespace Fanex.NAP.Licensee.Service
     /// </summary>
     public class CommonService : ICommonService
     {
+        private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";
+
+        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+
         /// <summary>
         /// Gets licensee list.
         /// </summary>
@@ -43,6 +48,37 @@ namespace Fanex.NAP.Licensee.Service
                 {
                     return db.Query<CurrencyItem>().ToList();
                 }
+            }
+        }
+
+        public IDictionary<int, string> GetKenoGameType
+        {
+            get
+            {
+                IDictionary<int, string> result = null;
+                if (_cache.Contains(KENOGAMETYPECACHEKEY))
+                {
+                    result = _cache.Get<IDictionary<int, string>>(KENOGAMETYPECACHEKEY);
+                }
+
+                if (result == null)
+                {
+                    using (var db = new ObjectDb("NAP_SpecialCustSettingGameType_Sel"))
+                    {
+                        result = new Dictionary<int, string>();
+                        using (var reader = db.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result.Add(int.Parse(reader["GameTypeID"].ToString()), reader["GameTypeName"].ToString());
+                            }
+                        }
+
+                        _cache.Set<IDictionary<int, string>>(KENOGAMETYPECACHEKEY, result);
+                    }
+                }
+
+                return result;
             }
         }
     }

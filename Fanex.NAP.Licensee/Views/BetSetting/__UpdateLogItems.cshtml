@@ -41,6 +41,7 @@
 
             var updatedSportList=Model.OldSettings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})
                 .Union(Model.Settings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})).OrderBy(i=>i.SportId);
+            var kenoGameType =(IDictionary<int,string>)ViewData[StaticSiteValue.KENOGAMETYPE];
         }
         @foreach (var item in updatedSportList)
         {
@@ -57,13 +58,13 @@
                     {
                         @newValue.SportOrGame.Name
                     }
-                    @if (oldValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                    @if (oldValue != null && oldValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
                     {
-                        @Html.Raw("&nbsp;-&nbsp;")@oldValue.BetTypeName
+                        @Html.Raw("&nbsp;-&nbsp;")@kenoGameType[oldValue.BetType]
                     }
-                    else if (newValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                    else if (newValue!=null && newValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
                     {
-                        @Html.Raw("&nbsp;-&nbsp;")@newValue.BetTypeName
+                        @Html.Raw("&nbsp;-&nbsp;")@kenoGameType[newValue.BetType]
                     }
                 </td>
                 <td class="width-10 text-right">

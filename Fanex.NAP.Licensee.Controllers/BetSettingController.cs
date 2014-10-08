@@ -28,7 +28,7 @@
             this._betSettingService = new BetSettingService();
         }
 
-        public BetSettingController(ICommonService commonService, IBetSettingService betSettingService)            
+        public BetSettingController(ICommonService commonService, IBetSettingService betSettingService)
         {
             this._commonService = commonService;
             this._betSettingService = betSettingService;
@@ -131,6 +131,7 @@
                 viewModel = _betSettingService.GetLogs(criteria);
             }
 
+            ViewData[StaticSiteValue.KENOGAMETYPE] = _commonService.GetKenoGameType;
             return View("~/Views/BetSetting/_LogItems.cshtml", viewModel);
         }
 

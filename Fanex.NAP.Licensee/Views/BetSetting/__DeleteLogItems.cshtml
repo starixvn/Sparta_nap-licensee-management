@@ -17,6 +17,9 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            var kenoGameType = (IDictionary<int, string>)ViewData[StaticSiteValue.KENOGAMETYPE];
+        }
         @foreach (var setting in Model.OldSettings)
         {
             <tr>
@@ -24,7 +27,7 @@
                     @setting.SportOrGame.Name
                     @if (setting.SportOrGame.Id == StaticSiteValue.KENOSPORT)
                     {
-                        @Html.Raw("&nbsp;-&nbsp;")@setting.BetTypeName
+                        @Html.Raw("&nbsp;-&nbsp;")@kenoGameType[setting.BetType]
                     }
                 </td>
                 <td class="width-20 text-right">

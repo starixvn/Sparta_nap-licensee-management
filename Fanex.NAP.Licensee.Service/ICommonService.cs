@@ -17,5 +17,7 @@ namespace Fanex.NAP.Licensee.Service
         IList<LicenseeItem> GetLicenseeList { get; }
 
         IList<CurrencyItem> GetCurrencyList { get; }
+
+        IDictionary<int, string> GetKenoGameType { get; }
     }
 }
