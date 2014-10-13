@@ -1,0 +1,79 @@
+﻿<#@ import namespace="System" #>
+<#
+    var sites = new SiteInfo[]{        
+        new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.LOCAL
+        },
+        new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.UAT
+        },
+        new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.PRO
+        },
+        new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.SANDBOX
+        }
+    };
+#>
+<#+
+	enum SiteEnvironment
+    {
+        LOCAL,
+        UAT,
+        PRO,
+        SANDBOX
+    }
+
+	class SiteInfo
+    {
+        //Web config value.
+        public SiteEnvironment SiteEnvironment { get; set; }
+
+         public string LoggingServer
+        {
+            get
+            {
+                switch (SiteEnvironment)
+                {
+                    case SiteEnvironment.LOCAL:
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"OWAS-Local\" />";
+                    case SiteEnvironment.UAT:
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.40.40.73\\private$\\entlib\" defaultCategory=\"Licensee-UAT\" />";
+                    case SiteEnvironment.PRO:
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://10.40.40.127/msmq/Private$/entlib\" defaultCategory=\"Licensee-Live\" />";
+                    case SiteEnvironment.SANDBOX:
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"OWAS-Local\" />";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+		public string LoggingMachine
+        {
+            get
+            {
+                switch (SiteEnvironment)
+                {
+                    case SiteEnvironment.LOCAL:
+                        return "Licensee-Local";
+                    case SiteEnvironment.UAT:
+                        return "Licensee-UAT";
+                    case SiteEnvironment.PRO:
+                        return "Licensee-Live";
+                    case SiteEnvironment.SANDBOX:
+                        return "Licensee-SandBox";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+
+		
+    }
+#>

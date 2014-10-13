@@ -369,6 +369,18 @@
     <Content Include="Scripts\Page\addnew.js" />
     <Content Include="Scripts\Page\default.js" />
     <Content Include="Scripts\Plugin\multi-select-control.js" />
+    <Content Include="SiteConfig\Web.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.config.txt" />
+    <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
+    <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -379,6 +391,32 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <None Include="Deployment.ignore" />
+    <None Include="SiteConfig\SiteConfiguration.ttinclude" />
+    <None Include="SiteConfig\Web.config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Web.config1.txt</LastGenOutput>
+    </None>
+    <None Include="SiteConfig\Web.ConnectionString.config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Web.ConnectionString.config1.txt</LastGenOutput>
+    </None>
+    <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config" />
+    <Content Include="SiteConfig\Web.ConnectionString.PRO.config" />
+    <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config" />
+    <Content Include="SiteConfig\Web.ConnectionString.UAT.config" />
+    <Content Include="SiteConfig\Web.LOCAL.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.PRO.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.SANDBOX.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.UAT.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -519,6 +557,9 @@
     <Content Include="Views\BetSetting\_LogItems.cshtml" />
     <Content Include="Views\BetSetting\__DeleteLogItems.cshtml" />
     <Content Include="Views\BetSetting\__InsertLogItems.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

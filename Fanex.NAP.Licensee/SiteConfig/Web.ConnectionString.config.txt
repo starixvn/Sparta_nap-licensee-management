@@ -1,0 +1,7 @@
+﻿
+// Generated helper templates
+// Generated items
+// Fanex.Helios\SiteConfig\Web.ConnectionString.SANDBOX.config
+// Fanex.Helios\SiteConfig\Web.ConnectionString.PRO.config
+// Fanex.Helios\SiteConfig\Web.ConnectionString.UAT.config
+// Fanex.Helios\SiteConfig\Web.ConnectionString.LOCAL.config

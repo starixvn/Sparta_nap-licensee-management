@@ -1,0 +1,8 @@
+﻿
+
+// Generated helper templates
+// Generated items
+// Fanex.NAP.Licensee\SiteConfig\Web.SANDBOX.config
+// Fanex.NAP.Licensee\SiteConfig\Web.PRO.config
+// Fanex.NAP.Licensee\SiteConfig\Web.UAT.config
+// Fanex.NAP.Licensee\SiteConfig\Web.LOCAL.config
