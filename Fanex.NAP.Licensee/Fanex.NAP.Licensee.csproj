@@ -380,7 +380,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
-    <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -401,10 +400,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Web.ConnectionString.config1.txt</LastGenOutput>
     </None>
-    <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config" />
-    <Content Include="SiteConfig\Web.ConnectionString.PRO.config" />
-    <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config" />
-    <Content Include="SiteConfig\Web.ConnectionString.UAT.config" />
+    <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.UAT.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
     <Content Include="SiteConfig\Web.LOCAL.config">
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
