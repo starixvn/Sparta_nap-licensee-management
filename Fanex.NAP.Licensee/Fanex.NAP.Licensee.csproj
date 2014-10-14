@@ -255,13 +255,17 @@
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome2.png" />
     <Content Include="Areas\UserLogin\themes\login.css" />
-    <None Include="ClearScript.V8\ClearScriptV8-32.dll" />
-    <None Include="ClearScript.V8\ClearScriptV8-64.dll" />
+    <Content Include="ClearScript.V8\ClearScriptV8-32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ClearScript.V8\ClearScriptV8-64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ClearScript.V8\v8-ia32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ClearScript.V8\v8-x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Core\img\btn-close.png" />
