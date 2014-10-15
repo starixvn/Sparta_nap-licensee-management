@@ -73,10 +73,11 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// <param name="userId">User id value.</param>
         /// <param name="onuserId">On user id value.</param>
         /// <param name="time">Time value.</param>
+        /// <param name="redirectUrl">The url redirection.</param>
         /// <returns>Redirect page.</returns>
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Index(string userId, string onuserId, string time)
+        public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));
             onuserId = Cryptography.CfsDeCrypt(onuserId.Replace(" ", "+"));
@@ -117,7 +118,9 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 
                     CreateAuthInfo(user);
 
-                    return Redirect(FormsAuthentication.DefaultUrl);
+                    string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
+
+                    return Redirect(forwardLink);
                 }
             }
 
