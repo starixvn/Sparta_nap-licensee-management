@@ -42,7 +42,7 @@ var editingSetting = (function () {
         $("#sb-area,#ng-area,#vs-area,#kn-area").click(function () {
             site.collapseorExpand($(this));
         });
-        $("#copy-sb,#copy-vs,#copy-kn").click(function () {
+        $("body").on("click", "#copy-sb,#copy-vs,#copy-kn", function () {
             var isCheck = $(this).is(":checked");
             var table = $($(this).attr("data-key"));
             if (isCheck) {

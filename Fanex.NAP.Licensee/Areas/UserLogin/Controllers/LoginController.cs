@@ -85,10 +85,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// </summary>
         /// <returns>Return result.</returns>
         [HttpGet]
-        [SuppressMessage("Microsoft.Maintainability", "CA1506: Avoid excessive class coupling",
-              Justification = "Reviewed. Suppression is OK here.")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502: Avoid excessive complexity",
-             Justification = "Reviewed. Suppression is OK here.")]
+       
         public ActionResult Index()
         {
             if (!NapSettings.Settings.IsNapHub && !IsSiteLogin)
@@ -116,6 +113,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             "StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
+    
         public ActionResult Index(string username, string password)
         {
             Response.BufferOutput = true;
