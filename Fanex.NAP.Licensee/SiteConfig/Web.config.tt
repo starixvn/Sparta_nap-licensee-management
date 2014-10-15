@@ -88,7 +88,7 @@
 	#>
     <system.web>
 
-        <compilation debug="true" targetFramework="4.0" />
+        <compilation debug="false" targetFramework="4.0" />
         <customErrors mode="RemoteOnly">
             <error statusCode="403" redirect="~/Utility/Error?err=403" />
             <error statusCode="404" redirect="~/Utility/Error?err=404" />
