@@ -7,6 +7,7 @@
 namespace Fanex.NAP.Licensee.Model.DTO
 {
     using System;
+    using Fanex.NAP.Licensee.Model.DataDomain;
 
     /// <summary>
     /// TODO: Update summary.
@@ -14,7 +15,13 @@ namespace Fanex.NAP.Licensee.Model.DTO
     [Serializable]
     public class BetSettingBySport
     {
-        public SportOrGameItem SportOrGame { get; set; }
+        private SportOrGameItem _sportOrGame;
+
+        public SportOrGameItem SportOrGame
+        {
+            get { return _sportOrGame; }
+            set { _sportOrGame = value; }
+        }
 
         public decimal? MaxBet { get; set; }
 
@@ -44,10 +51,16 @@ namespace Fanex.NAP.Licensee.Model.DTO
         {
             get
             {
-                return
-                    (!MaxBet.HasValue && !MaxPerMatch.HasValue && !MaxPerBall.HasValue) ||
-                   (MaxBet.HasValue && MaxBet.Value > 0 && MaxPerMatch.HasValue && MaxPerMatch.Value > 0
-                            && ((MaxPerBall.HasValue && MaxPerBall.Value > 0) || !MaxPerBall.HasValue));
+                if (this.SportOrGame != null && this.SportOrGame.Id == StaticSiteValue.NUMBERGAMESPORT)
+                {
+                    return (!MaxBet.HasValue && !MaxPerBall.HasValue && !MaxPerMatch.HasValue) ||
+                       (MaxBet.HasValue && MaxBet.Value > 0 && MaxPerBall.HasValue && MaxPerBall.Value > 0);
+                }
+                else
+                {
+                    return (!MaxBet.HasValue && !MaxPerMatch.HasValue) ||
+                     (MaxBet.HasValue && MaxBet.Value > 0 && MaxPerMatch.HasValue && MaxPerMatch.Value > 0);
+                }
             }
         }
     }

@@ -96,7 +96,7 @@ var site = (function () {
             error++;
         }
 
-        if (!site.isNumber(maxPerMatch) && maxBet.length > 0) {
+        if (!site.isNumber(maxPerMatch) && maxPerMatch.length > 0) {
             $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
             error++;
         }
@@ -114,10 +114,20 @@ var site = (function () {
         return error;
     };
     var verifyNumberGameBetSetting = function ($row) {
-        var error = site.verifyBetSetting($row);
+        var error = 0;
         var maxperBall = $row.find("input[data-key=\"MaxPerBall\"]").val();
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
         var maxPerMatch = $row.find("input[data-key=\"MaxPerMatch\"]").val();
+
+        if (!site.isNumber(maxBet) && maxBet.length > 0) {
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            error++;
+        }
+
+        if (!site.isNumber(maxPerMatch) && maxPerMatch.length > 0) {
+            $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            error++;
+        }
 
         if (!site.isNumber(maxperBall) && maxperBall.length > 0) {
             $row.find("input[data-key=\"MaxPerBall\"]").addClass("warning");
@@ -134,16 +144,12 @@ var site = (function () {
                 error++;
             }
         }
-        if (maxPerMatch.length !== maxperBall.length) {
-            if (maxPerMatch.length === 0) {
-                $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
-                error++;
-            }
-            if (maxperBall.length === 0) {
-                $row.find("input[data-key=\"MaxPerBall\"]").addClass("warning");
-                error++;
-            }
+
+        if (!site.isNumber(maxBet) && !site.isNumber(maxperBall) && site.isNumber(maxPerMatch)) {
+            $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            error++;
         }
+
         return error;
     };
     me.verifyInputData = function () {

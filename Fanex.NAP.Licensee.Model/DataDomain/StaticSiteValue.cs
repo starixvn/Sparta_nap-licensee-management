@@ -18,5 +18,8 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
         public const string KENOGAMETYPE = "KENOGAMETYPE";
+
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", Justification = "Reviewed.")]
+        public const int NUMBERGAMESPORT = 161;
     }
 }

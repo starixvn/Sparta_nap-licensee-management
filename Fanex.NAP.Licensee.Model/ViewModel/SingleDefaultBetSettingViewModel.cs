@@ -22,6 +22,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
         private readonly string _xmlParameterPattern = "<setting sporttype=\"{0}\" bettype=\"{1}\" {2} ></setting>";
         private readonly string _xmlSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\"";
         private readonly string _xmlNumberGameSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxperball=\"{2}\"";
+        private readonly string _xmlNoneMaxperMatchNumberGameSettingPattern = "maxbet=\"{0}\" maxperball=\"{1}\"";
 
         public SingleDefaultBetSettingViewModel()
         {
@@ -96,7 +97,10 @@ namespace Fanex.NAP.Licensee.Model.ViewModel
 
                 foreach (var ng in NumberGame)
                 {
-                    var settingAttributes = ng.MaxBet != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) : string.Empty;
+                    var settingAttributes = ng.MaxBet != null ?
+                        ng.MaxPerMatch != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) :
+                        string.Format(_xmlNoneMaxperMatchNumberGameSettingPattern, ng.MaxBet, ng.MaxPerBall)
+                        : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, ng.SportOrGame.Id, ng.BetType, settingAttributes));
                 }
 

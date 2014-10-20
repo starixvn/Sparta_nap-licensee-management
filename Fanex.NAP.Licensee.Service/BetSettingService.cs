@@ -14,7 +14,6 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Service.Core;
-    using NSubstitute;
 
     /// <summary>
     /// TODO: Update summary.
@@ -104,7 +103,8 @@ namespace Fanex.NAP.Licensee.Service
             {
                 db.ExecuteReader(criteria.GetSpParams());
                 result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
-                result.Message = db.GetParameterValue("@ErrMsg").ToString();
+                var msg = db.GetParameterValue("@ErrMsg");
+                result.Message = msg != null ? msg.ToString() : string.Empty;
             }
 
             return result;
