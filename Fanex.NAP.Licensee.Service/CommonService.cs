@@ -29,7 +29,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             get
             {
-                using (var db = new ObjectDb("NAP_SpecialCustSetting_LicenseeList"))
+                using (var db = new ObjectDb("Acc_Dep_LicenseeSelAll"))
                 {
                     return db.Query<LicenseeItem>().ToList();
                 }
