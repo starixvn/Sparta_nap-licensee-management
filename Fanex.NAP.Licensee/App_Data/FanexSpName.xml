@@ -5,9 +5,9 @@
             <Mapping DataField="exchangeid" ObjectProperty="Id" />
             <Mapping DataField="currency" ObjectProperty="Name" />
         </Setting>
-        <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBTXN.CustDB.bodbLicenseeNet">
-            <Mapping DataField="SiteID" ObjectProperty="Id" />
-            <Mapping DataField="SiteName" ObjectProperty="Name" />
+        <Setting Key="Acc_Dep_LicenseeSelAll" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBTXN.bodb02.bodbLicenseeNet">
+            <Mapping DataField="LicenseeID" ObjectProperty="Id" />
+            <Mapping DataField="LicenseeName" ObjectProperty="Name" />
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
@@ -15,7 +15,7 @@
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
-        <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBTXN.CustDB.bodbLicenseeNet">
+        <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
             <Mapping DataField="AgentID" ObjectProperty="Id" />
             <Mapping DataField="AgentName" ObjectProperty="Name" />
         </Setting>
