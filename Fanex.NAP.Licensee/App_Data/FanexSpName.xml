@@ -5,9 +5,9 @@
             <Mapping DataField="exchangeid" ObjectProperty="Id" />
             <Mapping DataField="currency" ObjectProperty="Name" />
         </Setting>
-        <Setting Key="Acc_Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbLicenseeNet">
-            <Mapping DataField="LicenseeID" ObjectProperty="Id" />
-            <Mapping DataField="LicenseeName" ObjectProperty="Name" />
+        <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
+            <Mapping DataField="SiteName" ObjectProperty="Id" />
+            <Mapping DataField="SiteID" ObjectProperty="Name" />
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
