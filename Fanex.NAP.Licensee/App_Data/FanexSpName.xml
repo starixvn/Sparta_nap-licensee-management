@@ -6,8 +6,8 @@
             <Mapping DataField="currency" ObjectProperty="Name" />
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
-            <Mapping DataField="SiteName" ObjectProperty="Id" />
-            <Mapping DataField="SiteID" ObjectProperty="Name" />
+            <Mapping DataField="SiteID" ObjectProperty="Id" />
+            <Mapping DataField="SiteName" ObjectProperty="Name" />
         </Setting>
         <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
         </Setting>
