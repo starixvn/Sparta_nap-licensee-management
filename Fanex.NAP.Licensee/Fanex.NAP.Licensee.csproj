@@ -384,7 +384,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <None Include="Deployment.ignore" />
+    <Content Include="Deployment.ignore" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <None Include="SiteConfig\Web.AppSettings.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
