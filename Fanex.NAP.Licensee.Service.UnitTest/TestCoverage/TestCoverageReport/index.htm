@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Summary - Coverage Report</title>
+<link rel="stylesheet" type="text/css" href="report.css" />
+</head><body><div class="container">
+<h1>Summary</h1>
+<table class="overview">
+<colgroup>
+<col width="135" />
+<col />
+</colgroup>
+<tbody>
+<tr><th>Generated on:</th><td>10/30/2014 - 11:10:53 AM</td></tr>
+<tr><th>Parser:</th><td>OpenCoverParser</td></tr>
+<tr><th>Assemblies:</th><td>3</td></tr>
+<tr><th>Classes:</th><td>26</td></tr>
+<tr><th>Files:</th><td>24</td></tr>
+<tr><th>Coverage:</th><td>32.7%</td></tr>
+<tr><th>Covered lines:</th><td>160</td></tr>
+<tr><th>Uncovered lines:</th><td>329</td></tr>
+<tr><th>Coverable lines:</th><td>489</td></tr>
+<tr><th>Total lines:</th><td>1483</td></tr>
+</tbody>
+</table>
+<h1>Assemblies</h1>
+<script type="text/javascript">
+/* <![CDATA[ */
+document.write('<div id="showcustomizebox" class="customizebox"><input href="#" id="showcustomizeboxbutton" value="Enable filtering" title="This may take some time since the report contains many classes." type="submit" /></div><div id="customizebox" class="customizebox hidden"><div><a href="#" data-bind="click: collapseAll">Collapse all</a> | <a href="#" data-bind="click: expandAll">Expand all</a></div><div class="center"><span data-bind="text: groupingDescription"></span><br />Grouping: <div id="namespaceslider"></div></div> <div class="right">Filter: <input type="text" data-bind="value: filter, valueUpdate: \'afterkeydown\'" /></div></div>');
+/* ]]> */
+</script>
+<script type="text/html" id="assembly-template">
+<tr data-bind="visible: visible, css: { namespace: parent != null }"><th><a href="#" data-bind="text: name, click: toggleCollapse, attr: { class: collapsed() ? 'collapsed' : 'expanded' }" title="Collapse/Expand"> </a></th><th class="right" data-bind="text: coveredLines"></th><th class="right" data-bind="text: uncoveredLines"></th><th class="right" data-bind="text: coverableLines"></th><th class="right" data-bind="text: isNaN(coverage()) ? '' : coverage() + '%', attr: { title: isNaN(coverage()) ? '' : coverageType }"></th><th><table class="coverage"><tr><td class="green" data-bind="style: { width: Math.round(coverage()) + 'px' }, visible: !isNaN(coverage()) && Math.round(coverage()) > 0">&nbsp;</td><td class="red"data-bind="style: { width: (100 - Math.round(coverage())) + 'px' }, visible: !isNaN(coverage()) && 100 - Math.round(coverage()) > 0">&nbsp;</td><td class="gray" style="width: 100px;" data-bind="visible: isNaN(coverage())">&nbsp;</td></tr></table></th></tr>
+<!-- ko template: { name: function(element) { return element.isNamespace ? 'assembly-template' : 'class-template'; } , foreach: subelements } -->
+<!-- /ko -->
+</script>
+<script type="text/html" id="class-template">
+<tr data-bind="visible: visible, css: { namespace: parent().parent != null }"><td><a data-bind="text: name, attr: { href: reportPath }, visible: reportPath !== ''"></a><span data-bind="text: name, visible: reportPath === ''"></span></td><td class="right" data-bind="text: coveredLines"></td><td class="right" data-bind="text: uncoveredLines"></td><td class="right" data-bind="text: coverableLines"></td><td class="right" data-bind="text: isNaN(coverage()) ? '' : coverage() + '%', attr: { title: isNaN(coverage()) ? '' : coverageType }"></td><td><table class="coverage"><tr><td class="green" data-bind="style: { width: Math.round(coverage()) + 'px' }, visible: !isNaN(coverage()) && Math.round(coverage()) > 0">&nbsp;</td><td class="red"data-bind="style: { width: (100 - Math.round(coverage())) + 'px' }, visible: !isNaN(coverage()) && 100 - Math.round(coverage()) > 0">&nbsp;</td><td class="gray" style="width: 100px;" data-bind="visible: isNaN(coverage())">&nbsp;</td></tr></table></td></tr>
+</script>
+<table id="summaryTable" class="overview">
+<colgroup>
+<col />
+<col width="90" />
+<col width="105" />
+<col width="100" />
+<col width="60" />
+<col width="112" />
+</colgroup>
+<thead><tr><th><a href="#" data-bind="attr: { class: sortby() === 'name' ? 'sortactive' + '_' + sortorder() : 'sortinactive_asc' }, click: function(data, event) { changeSorting(data, event, 'name') }">Name</a></th><th class="right"><a href="#" data-bind="attr: { class: sortby() === 'covered' ? 'sortactive' + '_' + sortorder() : 'sortinactive_asc' }, click: function(data, event) { changeSorting(data, event, 'covered') }">Covered</a></th><th class="right"><a href="#" data-bind="attr: { class: sortby() === 'uncovered' ? 'sortactive' + '_' + sortorder() : 'sortinactive_asc' }, click: function(data, event) { changeSorting(data, event, 'uncovered') }">Uncovered</a></th><th class="right"><a href="#" data-bind="attr: { class: sortby() === 'coverable' ? 'sortactive' + '_' + sortorder() : 'sortinactive_asc' }, click: function(data, event) { changeSorting(data, event, 'coverable') }">Coverable</a></th><th class="center" colspan="2"><a href="#" data-bind="attr: { class: sortby() === 'coverage' ? 'sortactive' + '_' + sortorder() : 'sortinactive_asc' }, click: function(data, event) { changeSorting(data, event, 'coverage') }">Coverage</a></th></tr></thead>
+<tbody data-bind="template: { name: 'assembly-template', foreach: assemblies }">
+<tr><th>Fanex.NAP.Licensee.Model</th><th class="right">62</th><th class="right">208</th><th class="right">270</th><th title="LineCoverage" class="right">22.9%</th><th><table class="coverage"><tr><td class="green" style="width: 23px;">&nbsp;</td><td class="red" style="width: 77px;">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_GetAgentListCriteria.htm">Fanex.NAP.Licensee.Model.Criteria.GetAgentListCriteria</a></td><td class="right">5</td><td class="right">3</td><td class="right">8</td><td title="LineCoverage" class="right">62.5%</td><td><table class="coverage"><tr><td class="green" style="width: 62px;">&nbsp;</td><td class="red" style="width: 38px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_GetAllDefaultBetSettingCriteria.htm">Fanex.NAP.Licensee.Model.Criteria.GetAllDefaultBetSettingCriteria</a></td><td class="right">0</td><td class="right">12</td><td class="right">12</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_GetSettingLogCriteria.htm">Fanex.NAP.Licensee.Model.Criteria.GetSettingLogCriteria</a></td><td class="right">0</td><td class="right">11</td><td class="right">11</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_GetSingleDefaultBetSettingCriteria.htm">Fanex.NAP.Licensee.Model.Criteria.GetSingleDefaultBetSettingCriteria</a></td><td class="right">14</td><td class="right">9</td><td class="right">23</td><td title="LineCoverage" class="right">60.8%</td><td><table class="coverage"><tr><td class="green" style="width: 61px;">&nbsp;</td><td class="red" style="width: 39px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_InsertOrUpdateDefaultBetSetting.htm">Fanex.NAP.Licensee.Model.Criteria.InsertOrUpdateDefaultBetSetting</a></td><td class="right">11</td><td class="right">3</td><td class="right">14</td><td title="LineCoverage" class="right">78.5%</td><td><table class="coverage"><tr><td class="green" style="width: 78px;">&nbsp;</td><td class="red" style="width: 22px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_NapLicenseeFunctionKeys.htm">Fanex.NAP.Licensee.Model.DataDomain.NapLicenseeFunctionKeys</a></td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td title="MethodCoverage" class="right"></td><td><table class="coverage"><tr><td class="gray" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_StaticSiteValue.htm">Fanex.NAP.Licensee.Model.DataDomain.StaticSiteValue</a></td><td class="right">0</td><td class="right">0</td><td class="right">0</td><td title="MethodCoverage" class="right"></td><td><table class="coverage"><tr><td class="gray" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_AgentItem.htm">Fanex.NAP.Licensee.Model.DTO.AgentItem</a></td><td class="right">2</td><td class="right">0</td><td class="right">2</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_BetSettingBySport.htm">Fanex.NAP.Licensee.Model.DTO.BetSettingBySport</a></td><td class="right">5</td><td class="right">14</td><td class="right">19</td><td title="LineCoverage" class="right">26.3%</td><td><table class="coverage"><tr><td class="green" style="width: 26px;">&nbsp;</td><td class="red" style="width: 74px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_CurrencyItem.htm">Fanex.NAP.Licensee.Model.DTO.CurrencyItem</a></td><td class="right">2</td><td class="right">0</td><td class="right">2</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_DefaultBetSetting.htm">Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting</a></td><td class="right">0</td><td class="right">10</td><td class="right">10</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_LicenseeItem.htm">Fanex.NAP.Licensee.Model.DTO.LicenseeItem</a></td><td class="right">0</td><td class="right">2</td><td class="right">2</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_ResultInfo.htm">Fanex.NAP.Licensee.Model.DTO.ResultInfo</a></td><td class="right">2</td><td class="right">0</td><td class="right">2</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_SettingLogItem.htm">Fanex.NAP.Licensee.Model.DTO.SettingLogItem</a></td><td class="right">0</td><td class="right">17</td><td class="right">17</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_SportOrGameItem.htm">Fanex.NAP.Licensee.Model.DTO.SportOrGameItem</a></td><td class="right">2</td><td class="right">0</td><td class="right">2</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_LogTemplate.htm">Fanex.NAP.Licensee.Model.DTO.XmlLog.LogTemplate</a></td><td class="right">0</td><td class="right">5</td><td class="right">5</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_SettingItemHelper.htm">Fanex.NAP.Licensee.Model.SettingItemHelper</a></td><td class="right">0</td><td class="right">87</td><td class="right">87</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Model_SingleDefaultBetSettingViewModel.htm">Fanex.NAP.Licensee.Model.ViewModel.SingleDefaultBetSettingViewModel</a></td><td class="right">19</td><td class="right">35</td><td class="right">54</td><td title="LineCoverage" class="right">35.1%</td><td><table class="coverage"><tr><td class="green" style="width: 35px;">&nbsp;</td><td class="red" style="width: 65px;">&nbsp;</td></tr></table></td></tr>
+<tr><th>Fanex.NAP.Licensee.Service</th><th class="right">60</th><th class="right">118</th><th class="right">178</th><th title="LineCoverage" class="right">33.7%</th><th><table class="coverage"><tr><td class="green" style="width: 34px;">&nbsp;</td><td class="red" style="width: 66px;">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_AppSession.htm">Fanex.NAP.Licensee.Service.AppSession</a></td><td class="right">0</td><td class="right">23</td><td class="right">23</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_BetSettingService.htm">Fanex.NAP.Licensee.Service.BetSettingService</a></td><td class="right">60</td><td class="right">25</td><td class="right">85</td><td title="LineCoverage" class="right">70.5%</td><td><table class="coverage"><tr><td class="green" style="width: 70px;">&nbsp;</td><td class="red" style="width: 30px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_CommonService.htm">Fanex.NAP.Licensee.Service.CommonService</a></td><td class="right">0</td><td class="right">34</td><td class="right">34</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_ObjectDbGenerator.htm">Fanex.NAP.Licensee.Service.Core.ObjectDbGenerator</a></td><td class="right">0</td><td class="right">6</td><td class="right">6</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_SessionManager.htm">Fanex.NAP.Licensee.Service.SessionManager</a></td><td class="right">0</td><td class="right">17</td><td class="right">17</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service_PermissionService.htm">Fanex.NAP.Licensee.Service.Utilities.PermissionService</a></td><td class="right">0</td><td class="right">13</td><td class="right">13</td><td title="LineCoverage" class="right">0%</td><td><table class="coverage"><tr><td class="red" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><th>Fanex.NAP.Licensee.Service.UnitTest</th><th class="right">38</th><th class="right">3</th><th class="right">41</th><th title="LineCoverage" class="right">92.6%</th><th><table class="coverage"><tr><td class="green" style="width: 93px;">&nbsp;</td><td class="red" style="width: 7px;">&nbsp;</td></tr></table></th></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service.UnitTest_BetSettingServiceTest.htm">Fanex.NAP.Licensee.Service.UnitTest.BetSettingServiceTest</a></td><td class="right">30</td><td class="right">0</td><td class="right">30</td><td title="LineCoverage" class="right">100%</td><td><table class="coverage"><tr><td class="green" style="width: 100px;">&nbsp;</td></tr></table></td></tr>
+<tr><td><a href="Fanex.NAP.Licensee.Service.UnitTest_ObjectDbGeneratorStub.htm">Fanex.NAP.Licensee.Service.UnitTest.Stubs.ObjectDbGeneratorStub</a></td><td class="right">8</td><td class="right">3</td><td class="right">11</td><td title="LineCoverage" class="right">72.7%</td><td><table class="coverage"><tr><td class="green" style="width: 73px;">&nbsp;</td><td class="red" style="width: 27px;">&nbsp;</td></tr></table></td></tr>
+</tbody>
+</table>
+<script type="text/javascript">
+/* <![CDATA[ */
+var assemblies = [
+  {
+    "name" : 'Fanex.NAP.Licensee.Model',
+    "classes" : [
+    { "name" : 'Fanex.NAP.Licensee.Model.Criteria.GetAgentListCriteria', "reportPath" : 'Fanex.NAP.Licensee.Model_GetAgentListCriteria.htm', "coveredLines" : 5, "uncoveredLines" : 3, "coverableLines" : 8, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.Criteria.GetAllDefaultBetSettingCriteria', "reportPath" : 'Fanex.NAP.Licensee.Model_GetAllDefaultBetSettingCriteria.htm', "coveredLines" : 0, "uncoveredLines" : 12, "coverableLines" : 12, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.Criteria.GetSettingLogCriteria', "reportPath" : 'Fanex.NAP.Licensee.Model_GetSettingLogCriteria.htm', "coveredLines" : 0, "uncoveredLines" : 11, "coverableLines" : 11, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.Criteria.GetSingleDefaultBetSettingCriteria', "reportPath" : 'Fanex.NAP.Licensee.Model_GetSingleDefaultBetSettingCriteria.htm', "coveredLines" : 14, "uncoveredLines" : 9, "coverableLines" : 23, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.Criteria.InsertOrUpdateDefaultBetSetting', "reportPath" : 'Fanex.NAP.Licensee.Model_InsertOrUpdateDefaultBetSetting.htm', "coveredLines" : 11, "uncoveredLines" : 3, "coverableLines" : 14, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DataDomain.NapLicenseeFunctionKeys', "reportPath" : 'Fanex.NAP.Licensee.Model_NapLicenseeFunctionKeys.htm', "coveredLines" : 0, "uncoveredLines" : 0, "coverableLines" : 0, "coverageType" : 'MethodCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DataDomain.StaticSiteValue', "reportPath" : 'Fanex.NAP.Licensee.Model_StaticSiteValue.htm', "coveredLines" : 0, "uncoveredLines" : 0, "coverableLines" : 0, "coverageType" : 'MethodCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.AgentItem', "reportPath" : 'Fanex.NAP.Licensee.Model_AgentItem.htm', "coveredLines" : 2, "uncoveredLines" : 0, "coverableLines" : 2, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.BetSettingBySport', "reportPath" : 'Fanex.NAP.Licensee.Model_BetSettingBySport.htm', "coveredLines" : 5, "uncoveredLines" : 14, "coverableLines" : 19, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.CurrencyItem', "reportPath" : 'Fanex.NAP.Licensee.Model_CurrencyItem.htm', "coveredLines" : 2, "uncoveredLines" : 0, "coverableLines" : 2, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting', "reportPath" : 'Fanex.NAP.Licensee.Model_DefaultBetSetting.htm', "coveredLines" : 0, "uncoveredLines" : 10, "coverableLines" : 10, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.LicenseeItem', "reportPath" : 'Fanex.NAP.Licensee.Model_LicenseeItem.htm', "coveredLines" : 0, "uncoveredLines" : 2, "coverableLines" : 2, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.ResultInfo', "reportPath" : 'Fanex.NAP.Licensee.Model_ResultInfo.htm', "coveredLines" : 2, "uncoveredLines" : 0, "coverableLines" : 2, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.SettingLogItem', "reportPath" : 'Fanex.NAP.Licensee.Model_SettingLogItem.htm', "coveredLines" : 0, "uncoveredLines" : 17, "coverableLines" : 17, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.SportOrGameItem', "reportPath" : 'Fanex.NAP.Licensee.Model_SportOrGameItem.htm', "coveredLines" : 2, "uncoveredLines" : 0, "coverableLines" : 2, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.DTO.XmlLog.LogTemplate', "reportPath" : 'Fanex.NAP.Licensee.Model_LogTemplate.htm', "coveredLines" : 0, "uncoveredLines" : 5, "coverableLines" : 5, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.SettingItemHelper', "reportPath" : 'Fanex.NAP.Licensee.Model_SettingItemHelper.htm', "coveredLines" : 0, "uncoveredLines" : 87, "coverableLines" : 87, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Model.ViewModel.SingleDefaultBetSettingViewModel', "reportPath" : 'Fanex.NAP.Licensee.Model_SingleDefaultBetSettingViewModel.htm', "coveredLines" : 19, "uncoveredLines" : 35, "coverableLines" : 54, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+  ]},
+  {
+    "name" : 'Fanex.NAP.Licensee.Service',
+    "classes" : [
+    { "name" : 'Fanex.NAP.Licensee.Service.AppSession', "reportPath" : 'Fanex.NAP.Licensee.Service_AppSession.htm', "coveredLines" : 0, "uncoveredLines" : 23, "coverableLines" : 23, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.BetSettingService', "reportPath" : 'Fanex.NAP.Licensee.Service_BetSettingService.htm', "coveredLines" : 60, "uncoveredLines" : 25, "coverableLines" : 85, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.CommonService', "reportPath" : 'Fanex.NAP.Licensee.Service_CommonService.htm', "coveredLines" : 0, "uncoveredLines" : 34, "coverableLines" : 34, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.Core.ObjectDbGenerator', "reportPath" : 'Fanex.NAP.Licensee.Service_ObjectDbGenerator.htm', "coveredLines" : 0, "uncoveredLines" : 6, "coverableLines" : 6, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.SessionManager', "reportPath" : 'Fanex.NAP.Licensee.Service_SessionManager.htm', "coveredLines" : 0, "uncoveredLines" : 17, "coverableLines" : 17, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.Utilities.PermissionService', "reportPath" : 'Fanex.NAP.Licensee.Service_PermissionService.htm', "coveredLines" : 0, "uncoveredLines" : 13, "coverableLines" : 13, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+  ]},
+  {
+    "name" : 'Fanex.NAP.Licensee.Service.UnitTest',
+    "classes" : [
+    { "name" : 'Fanex.NAP.Licensee.Service.UnitTest.BetSettingServiceTest', "reportPath" : 'Fanex.NAP.Licensee.Service.UnitTest_BetSettingServiceTest.htm', "coveredLines" : 30, "uncoveredLines" : 0, "coverableLines" : 30, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+    { "name" : 'Fanex.NAP.Licensee.Service.UnitTest.Stubs.ObjectDbGeneratorStub', "reportPath" : 'Fanex.NAP.Licensee.Service.UnitTest_ObjectDbGeneratorStub.htm', "coveredLines" : 8, "uncoveredLines" : 3, "coverableLines" : 11, "coverageType" : 'LineCoverage', "methodCoverage" : '-' },
+  ]},
+];
+/* ]]> */
+</script>
+<div class="footer">Generated by: ReportGenerator 1.9.1.0<br />10/30/2014 - 11:10:53 AM<br /><a href="http://www.palmmedia.de">www.palmmedia.de</a></div></div>
+<script type="text/javascript" src="combined.js"></script>
+</body></html>
