@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Service"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC6C1A3A-0C99-40BB-8CD0-9E34C218B50A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Service.UnitTest", "Fanex.NAP.Licensee.Service.UnitTest\Fanex.NAP.Licensee.Service.UnitTest.csproj", "{CE83009A-73E2-4119-BC0F-FF8A6F7A7AB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Service.UnitTests", "Fanex.NAP.Licensee.Service.UnitTest\Fanex.NAP.Licensee.Service.UnitTests.csproj", "{CE83009A-73E2-4119-BC0F-FF8A6F7A7AB2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6CB0135A-AE21-4955-A9D8-A3C448DC09CA}"
 	ProjectSection(SolutionItems) = preProject
@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers", "Fanex.NAP.Licensee.Controllers\Fanex.NAP.Licensee.Controllers.csproj", "{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers.UnitTest", "Fanex.NAP.Licensee.Controllers.UnitTest\Fanex.NAP.Licensee.Controllers.UnitTest.csproj", "{B29EAECE-90E8-43D7-87CA-152AE9C5A28E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers.UnitTests", "Fanex.NAP.Licensee.Controllers.UnitTest\Fanex.NAP.Licensee.Controllers.UnitTests.csproj", "{B29EAECE-90E8-43D7-87CA-152AE9C5A28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

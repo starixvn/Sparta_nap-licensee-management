@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Service.UnitTest
+namespace Fanex.NAP.Licensee.Service.UnitTests
 {
     using System.Collections.Generic;
     using System.Data;
     using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Service.UnitTest.Stubs;
+    using Fanex.NAP.Licensee.Service.UnitTests.Stubs;
     using NSubstitute;
     using NUnit.Framework;
 

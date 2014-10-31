@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Controllers.UnitTest.Attributes
+namespace Fanex.NAP.Licensee.Controllers.UnitTests.Attributes
 {
     using System;
     using System.Web;

@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Service.UnitTest.Stubs
+namespace Fanex.NAP.Licensee.Service.UnitTests.Stubs
 {
     using Fanex.Data;
     using NSubstitute;
