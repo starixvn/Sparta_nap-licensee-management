@@ -9,7 +9,7 @@ namespace Fanex.NAP.Licensee.Service
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class SettingConfiguration : ISettingConfiguration
+    public class SettingConfigurationService : ISettingConfigurationService
     {
     }
 }

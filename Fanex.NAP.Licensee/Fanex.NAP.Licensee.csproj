@@ -434,13 +434,13 @@
     <Content Include="SiteConfig\Web.UAT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
+    <Content Include="Views\SettingConfiguration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
     <Folder Include="ClearScript.V8\" />
     <Folder Include="Content\SettingConfiguration\" />
     <Folder Include="Scripts\SettingConfiguration\" />
-    <Folder Include="Views\SettingConfiguration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

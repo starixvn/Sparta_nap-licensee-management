@@ -11,13 +11,22 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Service;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     [CustomHandleError]
-    public class SettingConfigurationController : Controller
+    public class SettingConfigurationController : BaseController
     {
+        private readonly ISettingConfigurationService _settingConfiguration;
+
+        public SettingConfigurationController()
+            : base()
+        {
+            _settingConfiguration = new SettingConfigurationService();
+        }
+
         [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public ActionResult Index()
