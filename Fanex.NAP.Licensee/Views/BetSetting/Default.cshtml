@@ -71,7 +71,9 @@
 </div>
 @section FooterJs
 {
+
     @Scripts.Render("~/bundles/FanexGridJs")
+    @Scripts.Render("~/bundles/DefaultBetSettingJs")
     <script type="text/javascript">
         $(document).ready(function () {
             defaultSetting.setup();

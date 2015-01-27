@@ -13,6 +13,8 @@ namespace Fanex.NAP.Licensee.Service.UnitTests
     using Fanex.NAP.Licensee.Service.UnitTests.Stubs;
     using NSubstitute;
     using NUnit.Framework;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
 
     /// <summary>
     /// TODO: Update summary.

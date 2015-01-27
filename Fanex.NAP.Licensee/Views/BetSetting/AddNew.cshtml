@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.Web.Optimization;
+
+@{
     ViewBag.Title = "AddNew";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -46,6 +48,8 @@
 
 @section FooterJs
 {
+    @Scripts.Render("~/bundles/DefaultBetSettingJs")
+
     <script type="text/javascript">
         $(document).ready(function () {
             addNew.setup();

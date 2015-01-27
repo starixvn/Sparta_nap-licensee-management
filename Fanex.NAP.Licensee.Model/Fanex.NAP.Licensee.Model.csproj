@@ -108,11 +108,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\GetAgentListCriteria.cs" />
-    <Compile Include="Criteria\GetSettingLogCriteria.cs" />
-    <Compile Include="Criteria\GetSingleDefaultBetSettingCriteria.cs" />
-    <Compile Include="Criteria\InsertOrUpdateDefaultBetSetting.cs" />
-    <Compile Include="Criteria\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\DefaultBetSetting\GetAgentListCriteria.cs" />
+    <Compile Include="Criteria\DefaultBetSetting\GetSettingLogCriteria.cs" />
+    <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
+    <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
@@ -120,15 +120,15 @@
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
     </Compile>
     <Compile Include="DataDomain\StaticSiteValue.cs" />
-    <Compile Include="DTO\AgentItem.cs" />
+    <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
-    <Compile Include="DTO\DefaultBetSetting.cs" />
+    <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
-    <Compile Include="DTO\BetSettingBySport.cs" />
+    <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
-    <Compile Include="DTO\SettingLogItem.cs" />
-    <Compile Include="DTO\SportOrGameItem.cs" />
-    <Compile Include="DTO\XmlLog\LogTemplate.cs" />
+    <Compile Include="DTO\DefaultBetSetting\SettingLogItem.cs" />
+    <Compile Include="DTO\DefaultBetSetting\SportOrGameItem.cs" />
+    <Compile Include="DTO\DefaultBetSetting\XmlLog\LogTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +141,9 @@
     <Compile Include="SettingItemHelper.cs" />
     <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\DefaultBetSetting\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

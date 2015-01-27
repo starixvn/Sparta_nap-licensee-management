@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Model.DTO
+namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
     using System;
     using Fanex.NAP.Licensee.Model.DataDomain;

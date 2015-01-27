@@ -9,7 +9,7 @@ namespace Fanex.NAP.Licensee.Model
     using System;
     using System.Collections.Generic;
     using System.Xml.Linq;
-    using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO.XmlLog;
 
     /// <summary>

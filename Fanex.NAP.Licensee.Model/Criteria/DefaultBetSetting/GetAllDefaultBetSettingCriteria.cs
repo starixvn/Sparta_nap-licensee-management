@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Model.Criteria
+namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
     using System;
     using Fanex.Data.Repository;

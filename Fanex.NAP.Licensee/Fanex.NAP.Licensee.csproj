@@ -353,10 +353,10 @@
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Scripts\jquery.number.js" />
-    <Content Include="Scripts\Page\viewlog.js" />
-    <Content Include="Scripts\Page\edit.js" />
-    <Content Include="Scripts\Page\addnew.js" />
-    <Content Include="Scripts\Page\default.js" />
+    <Content Include="Scripts\Page\DefaultBetSetting\viewlog.js" />
+    <Content Include="Scripts\Page\DefaultBetSetting\edit.js" />
+    <Content Include="Scripts\Page\DefaultBetSetting\addnew.js" />
+    <Content Include="Scripts\Page\DefaultBetSetting\default.js" />
     <Content Include="Scripts\Plugin\multi-select-control.js" />
     <Content Include="SiteConfig\Web.AppSettings.config.txt">
       <AutoGen>True</AutoGen>

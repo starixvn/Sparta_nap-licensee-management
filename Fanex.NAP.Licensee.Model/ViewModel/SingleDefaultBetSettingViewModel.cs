@@ -4,14 +4,15 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Model.ViewModel
+namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.NAP.Licensee.Model.Criteria;
     using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
 
     /// <summary>
     /// TODO: Update summary.
