@@ -8,10 +8,10 @@
     using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
     using Fanex.NAP.Licensee.Service;
-    using Fanex.NAP.Licensee.Model.DTO;
 
     /// <summary>
     /// Bet setting controller.
