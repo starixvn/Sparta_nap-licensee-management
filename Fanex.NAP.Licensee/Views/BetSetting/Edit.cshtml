@@ -1,8 +1,10 @@
-﻿@{
+﻿@using System.Web.Optimization;
+
+@{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Fanex.NAP.Licensee.Model.ViewModel.SingleDefaultBetSettingViewModel
+@model Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting.SingleDefaultBetSettingViewModel
 @section Headline {
     <ul class="breadcrumb title">
         <li>Bet Setting</li>
@@ -59,6 +61,8 @@ else
 }
 @section FooterJs
 {
+    @Scripts.Render("~/bundles/DefaultBetSettingJs")
+
     <script type="text/javascript">
         $(document).ready(function () {
             editingSetting.setup();

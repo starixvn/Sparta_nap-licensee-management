@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.NAP.Licensee.Model.Criteria;
-    using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Service;
     using NSubstitute;
     using NUnit.Framework;

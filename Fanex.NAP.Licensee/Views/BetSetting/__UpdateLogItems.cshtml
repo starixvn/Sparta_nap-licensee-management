@@ -1,4 +1,4 @@
-﻿@model Fanex.NAP.Licensee.Model.DTO.SettingLogItem
+﻿@model Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.SettingLogItem
 <table class="table table-bordered child-setting">
     <thead>
         <tr>
@@ -45,8 +45,8 @@
         }
         @foreach (var item in updatedSportList)
         {
-            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport oldValue = Model.OldSettings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
-            Fanex.NAP.Licensee.Model.DTO.BetSettingBySport newValue = Model.Settings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
+            Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.BetSettingBySport oldValue = Model.OldSettings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
+            Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.BetSettingBySport newValue = Model.Settings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
 
             <tr>
                 <td>

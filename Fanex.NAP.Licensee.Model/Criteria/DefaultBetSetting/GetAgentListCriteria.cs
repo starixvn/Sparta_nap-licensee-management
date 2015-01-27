@@ -4,12 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Model.Criteria
+namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

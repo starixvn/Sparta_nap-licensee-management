@@ -10,11 +10,11 @@ namespace Fanex.NAP.Licensee.Service
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Fanex.NAP.Licensee.Model.Criteria;
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.ViewModel;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
     using Fanex.NAP.Licensee.Service.Core;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>

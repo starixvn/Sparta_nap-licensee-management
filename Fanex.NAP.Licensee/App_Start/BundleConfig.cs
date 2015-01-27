@@ -51,15 +51,21 @@
                 "~/Scripts/jquery.number.js",
                  "~/Scripts/Plugin/multi-select-control.js",
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/Core/site.js",
-                "~/Scripts/Page/addnew.js",
-                 "~/Scripts/Page/default.js",
-                "~/Scripts/Page/edit.js",
-                 "~/Scripts/Page/viewlog.js");
+                "~/Scripts/Core/site.js");
 
             coreJs.Transforms.Add(scriptTransformer);
 
             bundles.Add(coreJs);
+
+            var defaultBetSettingJs = new Bundle("~/bundles/DefaultBetSettingJs")
+                .Include(
+                "~/Scripts/Page/DefaultBetSetting/addnew.js",
+                 "~/Scripts/Page/DefaultBetSetting/default.js",
+                "~/Scripts/Page/DefaultBetSetting/edit.js",
+                 "~/Scripts/Page/DefaultBetSetting/viewlog.js");
+         
+            defaultBetSettingJs.Transforms.Add(scriptTransformer);
+            bundles.Add(defaultBetSettingJs);
 
             var fanexGridJs = new Bundle("~/bundles/FanexGridJs")
             .IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
