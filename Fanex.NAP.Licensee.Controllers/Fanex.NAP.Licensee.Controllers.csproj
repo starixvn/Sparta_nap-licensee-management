@@ -134,6 +134,7 @@
     <Compile Include="Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
+    <Compile Include="SettingConfigurationController.cs" />
     <Compile Include="UtilityController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
