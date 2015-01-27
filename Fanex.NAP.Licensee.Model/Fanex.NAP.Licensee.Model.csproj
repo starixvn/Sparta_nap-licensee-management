@@ -118,6 +118,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
@@ -142,13 +143,12 @@
     <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\DefaultBetSetting\" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Criteria\SettingConfiguration\" />
     <Folder Include="DTO\SettingConfiguration\" />
+    <Folder Include="ViewModel\DefaultBetSetting\" />
     <Folder Include="ViewModel\SettingConfiguration\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

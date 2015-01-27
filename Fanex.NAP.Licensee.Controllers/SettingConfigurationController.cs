@@ -6,24 +6,23 @@
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-using System.Web.Mvc;
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Model.DataDomain;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     [CustomHandleError]
-    public class SettingConfigurationController:Controller
+    public class SettingConfigurationController : Controller
     {
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
         }
-                
     }
 }
