@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "EditComm";
+}
+<div ng-controller="editCommCtrl">
+    <h2>
+        EditComm</h2>
+    <h1>
+        {{message}}</h1>
+    <h1>
+        {{filterData.selectedLicensee}}</h1>
+    <div class="form-group">
+        <input type="button" id="tt" value="UpdateComm" class="btn-primary" ng-click="updateComm()" />
+    </div>
+    <!--Dynamic View-->
+@*    <div ng-view>
+    </div>*@
+</div>

@@ -14,17 +14,22 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Licensee.Service;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Setting Configuration Controller.
     /// </summary>
     [CustomHandleError]
     public class SettingConfigurationController : BaseController
     {
-        private readonly ISettingConfigurationService _settingConfiguration;
+        private readonly ICommonService _commonService;
 
         public SettingConfigurationController()
             : base()
         {
-            _settingConfiguration = new SettingConfigurationService();
+            _commonService = new CommonService();
+        }
+
+        public SettingConfigurationController(ICommonService commonService)
+        {
+            this._commonService = commonService;
         }
 
         [HttpGet]
@@ -32,6 +37,42 @@ namespace Fanex.NAP.Licensee.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult EditPT()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult EditComm()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewComm()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewPT()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeList()
+        {
+            return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
         }
     }
 }

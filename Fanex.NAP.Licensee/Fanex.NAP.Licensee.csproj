@@ -333,6 +333,15 @@
     <Content Include="Content\jquery-ui\base\tooltip.css" />
     <Content Include="Content\Plugin\multi-select-control.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular\angular-route.min.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\editCommController.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\editPTController.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\reviewCommController.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\reviewPTController.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\settingConfiguration.js" />
+    <Content Include="Scripts\app\components\SettingConfiguration\settingConfigurationController.js" />
+    <Content Include="Scripts\app\shared\shareSettingsService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
@@ -435,6 +444,10 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="Views\SettingConfiguration\Index.cshtml" />
+    <Content Include="Views\SettingConfiguration\EditPT.cshtml" />
+    <Content Include="Views\SettingConfiguration\EditComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\ReviewComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\ReviewPT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
