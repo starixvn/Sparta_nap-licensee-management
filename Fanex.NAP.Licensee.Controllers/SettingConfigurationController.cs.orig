@@ -1,0 +1,86 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SettingConfigurationController.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.NAP.Licensee.Controllers
+{
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Service;
+
+    /// <summary>
+    /// Setting Configuration Controller.
+    /// </summary>
+    [CustomHandleError]
+    public class SettingConfigurationController : BaseController
+    {
+<<<<<<< HEAD
+        private readonly ISettingConfigurationService _settingConfiguration;
+=======
+        private readonly ICommonService _commonService;
+>>>>>>> #30050 - Apply angularJs and build app infrastructure
+
+        public SettingConfigurationController()
+            : base()
+        {
+<<<<<<< HEAD
+            _settingConfiguration = new SettingConfigurationService();
+=======
+            _commonService = new CommonService();
+        }
+
+        public SettingConfigurationController(ICommonService commonService)
+        {
+            this._commonService = commonService;
+>>>>>>> #30050 - Apply angularJs and build app infrastructure
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult EditPT()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult EditComm()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewComm()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewPT()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeList()
+        {
+            return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
+        }
+    }
+}
