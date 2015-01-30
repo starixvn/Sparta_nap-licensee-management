@@ -1,27 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-    <Function Name="Site.Nap.Licensee">
-        <Setting Key="NAP_SpecialCustSetting_CurrencyList" SpName="NAP_SpecialCustSetting_CurrencyList" DbName="DBTXN.CustDB.bodbLicenseeNet">
-            <Mapping DataField="exchangeid" ObjectProperty="Id" />
-            <Mapping DataField="currency" ObjectProperty="Name" />
-        </Setting>
-        <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
-            <Mapping DataField="SiteID" ObjectProperty="Id" />
-            <Mapping DataField="SiteName" ObjectProperty="Name" />
-        </Setting>
-        <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
-        </Setting>
-        <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
-        </Setting>
-        <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBTXN.CustDB.bodbLicenseeNet">
-        </Setting>
-        <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
-            <Mapping DataField="AgentID" ObjectProperty="Id" />
-            <Mapping DataField="AgentName" ObjectProperty="Name" />
-        </Setting>
-        <Setting Key="NAP_SpecialCustSetting_LogSel" SpName="NAP_SpecialCustSetting_LogSel" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
-        </Setting>
-        <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
-        </Setting>
-    </Function>
+  <Function Name="Site.Nap.Licensee">
+    <Setting Key="NAP_SpecialCustSetting_CurrencyList" SpName="NAP_SpecialCustSetting_CurrencyList" DbName="DBTXN.CustDB.bodbLicenseeNet">
+      <Mapping DataField="exchangeid" ObjectProperty="Id" />
+      <Mapping DataField="currency" ObjectProperty="Name" />
+    </Setting>
+    <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
+      <Mapping DataField="SiteID" ObjectProperty="Id" />
+      <Mapping DataField="SiteName" ObjectProperty="Name" />
+    </Setting>
+    <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
+    <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
+    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
+    <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
+      <Mapping DataField="AgentID" ObjectProperty="Id" />
+      <Mapping DataField="AgentName" ObjectProperty="Name" />
+    </Setting>
+    <Setting Key="NAP_SpecialCustSetting_LogSel" SpName="NAP_SpecialCustSetting_LogSel" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
+    </Setting>
+    <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
+  </Function>
+  <Function Name="Site.Nap.Licensee.SettingConfiguration">
+    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList " DbName="DBEXT.bodb02.bodbLicenseeNet">
+      <Mapping DataField="custid" ObjectProperty="Id" />
+      <Mapping DataField="username" ObjectProperty="Name" />
+    </Setting>
+    <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
+    </Setting>
+  </Function>
 </Functions>

@@ -1,14 +1,14 @@
-﻿@{
-    ViewBag.Title = "EditPT";
-}
-<div ng-controller="editPTCtrl">
+﻿<div class="form-group">
     <h2>
-        EditPT</h2>
-    <h1>
-        {{message}}</h1>
-    <h1>
-        {{filterData.selectedLicensee}}</h1>
+        Position Taking</h2>
     <div class="form-group">
-        <input type="button" id="tt" value="UpdatePT" class="btn-primary" ng-click="updatePT()" />
+        {{editPTData.ProductName}}
+        <select ng-options="item for item in editPTData.PositionTakings track by item" ng-model="editPTData.SelectedPositionTaking"
+            class="width-160">
+        </select>
+    </div>
+    <div class="form-group">
+        <input ng-click="updateEventHandler()" type="button" value="Next" class="btn-primary" />
+        @*   <input ng-click="previousEventhandler()" type="button" value="Previous" class="btn-primary" />*@
     </div>
 </div>

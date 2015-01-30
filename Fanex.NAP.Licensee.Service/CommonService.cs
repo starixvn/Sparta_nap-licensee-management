@@ -81,5 +81,49 @@ namespace Fanex.NAP.Licensee.Service
                 return result;
             }
         }
+
+        /// <summary>
+        /// Gets super licensee list.
+        /// </summary>
+        /// <param name="siteName">Site name.</param>
+        /// <returns>List of licensee items.</returns>
+        public IList<LicenseeItem> GetSuperLicenseeList(string siteName)
+        {
+            using (var db = new ObjectDb("NAP_LM_LicenseeSuperList"))
+            {
+                return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets product list.
+        /// </summary>
+        /// <value>A dictionary.</value>
+        /// <returns>List of product types.</returns>
+        public IList<ProductTypeItem> GetProductTypeList()
+        {
+            IList<string> betPT = new List<string>() { "Bet setting", "PT" };
+            IList<string> betComm = new List<string>() { "Bet setting", "Comm" };
+            IList<string> pt = new List<string>() { "PT" };
+
+            return new List<ProductTypeItem>()
+            {
+                new ProductTypeItem(1, "Sportsbook", betPT),
+                new ProductTypeItem(161, "Number Game", betPT),
+                new ProductTypeItem(180, "Virtual Sports", betPT),
+                new ProductTypeItem(162, "Live Casino", betPT),
+                new ProductTypeItem(202, "Keno", pt), 
+                new ProductTypeItem(151, "Racing", betComm)
+            };
+        }
+
+        public IList<string> GetPositionTakingList()
+        {
+            List<int> lstInts = Enumerable.Range(0, 1001).Where(n => n % 5 == 0).ToList();
+            IList<string> lstPTs = new List<string>();
+            lstInts.ForEach(n => lstPTs.Add((n / 1000f).ToString("0.###")));
+
+            return lstPTs;
+        }
     }
 }

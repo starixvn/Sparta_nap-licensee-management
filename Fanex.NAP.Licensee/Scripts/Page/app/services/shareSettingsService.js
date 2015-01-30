@@ -1,12 +1,12 @@
 ﻿"use strict";
 
 // Define service module
-var servicesModule = angular.module("services", []);
+var servicesModule = angular.module("settingConfiguration.services");
 
 // Edit Comm controller
 servicesModule.factory("shareSettingsService", function () {
     var settings = {
-        preSettings: {},
+        orgSettings: {},
         curSettings: {}
     };
 
@@ -17,6 +17,14 @@ servicesModule.factory("shareSettingsService", function () {
 
         getCurrentSettings: function () {
             return settings.curSettings;
+        },
+
+        saveOrgSettings: function (orgSettings) {
+            settings.orgSettings = orgSettings;
+        },
+
+        getOrgSettings: function () {
+            return settings.orgSettings;
         }
     };
 });

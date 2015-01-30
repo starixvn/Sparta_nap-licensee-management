@@ -335,13 +335,14 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\editCommController.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\editPTController.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\reviewCommController.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\reviewPTController.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\settingConfiguration.js" />
-    <Content Include="Scripts\app\components\SettingConfiguration\settingConfigurationController.js" />
-    <Content Include="Scripts\app\shared\shareSettingsService.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editCommController.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editPTController.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\reviewCommController.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\reviewPTController.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\settingConfiguration.js" />
+    <Content Include="Scripts\Page\app\controllers\settingConfiguration\settingConfigurationController.js" />
+    <Content Include="Scripts\Page\app\services\filterDataService.js" />
+    <Content Include="Scripts\Page\app\services\shareSettingsService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
@@ -453,7 +454,6 @@
     <Folder Include="Areas\UserLogin\Models\" />
     <Folder Include="ClearScript.V8\" />
     <Folder Include="Content\SettingConfiguration\" />
-    <Folder Include="Scripts\Page\SettingConfiguration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -611,7 +611,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54840</DevelopmentServerPort>
+          <DevelopmentServerPort>54744</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

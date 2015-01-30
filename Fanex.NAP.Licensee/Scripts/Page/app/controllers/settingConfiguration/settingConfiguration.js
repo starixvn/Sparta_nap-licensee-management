@@ -1,19 +1,20 @@
 ﻿"use strict";
 
 // Module
-var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "services"]);
+var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "settingConfiguration.services"]);
 
 // Constant
-settingConfigurationApp.constant("licenseeListUrl", "GetLicenseeList")
-
+settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
+settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
+settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/EditPT', {
-        templateUrl: 'EditPT',
-        controller: 'editPTCtrl'
+        templateUrl: "EditPT",
+        controller: "editPTCtrl"
     });
     $routeProvider.when('/ReviewPT', {
-        templateUrl: 'ReviewPT',
+        templateUrl: "ReviewPT",
         controller: 'reviewPTCtrl'
     });
 
@@ -26,9 +27,9 @@ settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'reviewCommCtrl'
     });
 
-    $routeProvider.otherwise({
-        redirectTo: 'EditPT'
-    });
+    //    $routeProvider.otherwise({
+    //        redirectTo: '/'
+    //    });
 } ]);
 
 // Fix IsAjaxRequest
