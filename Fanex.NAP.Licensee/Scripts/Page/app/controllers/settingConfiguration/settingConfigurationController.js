@@ -1,4 +1,6 @@
-﻿"use strict";
+﻿/* global ContextFunc */
+
+"use strict";
 
 // Main controller
 var settingConfigurationApp = angular.module("settingConfiguration");
@@ -49,24 +51,25 @@ settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope,
     };
 
     $scope.selectEventHandler = function () {
-        if ($scope.filterData.selectedFunction === "Bet setting") {
+        if ($scope.filterData.selectedFunction === ContextFunc.BetSetting) {
             // TODO: Pass data
             $location.path("/EditComm");
         }
-        else if ($scope.filterData.selectedFunction === "Comm") {
+        else if ($scope.filterData.selectedFunction === ContextFunc.Comm) {
             // TODO: Pass data
             $location.path("/EditComm");
         }
-        else if ($scope.filterData.selectedFunction === "PT") {
+        else if ($scope.filterData.selectedFunction === ContextFunc.PT) {
             // TODO: Pass data
-            shareSettingsService.saveCurrentSettings({
-                custId: $scope.filterData.selectedSuperLicensee.Id,
-                productId: $scope.filterData.selectedProductType.Id
+            shareSettingsService.saveWorkingContext({
+                FuncName: ContextFunc.PT,
+                CustName: $scope.filterData.selectedSuperLicensee.Name,
+                CustId: $scope.filterData.selectedSuperLicensee.Id,
+                ProdId: $scope.filterData.selectedProductType.Id
             });
 
             $location.path("/EditPT");
         }
-
     };
 
 });

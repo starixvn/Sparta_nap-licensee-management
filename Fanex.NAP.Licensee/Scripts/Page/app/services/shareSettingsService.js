@@ -5,26 +5,37 @@ var servicesModule = angular.module("settingConfiguration.services");
 
 // Edit Comm controller
 servicesModule.factory("shareSettingsService", function () {
+    var workingContext = {
+        FuncName: "",
+        CustId: -1,
+        CustName: "",
+        ProdId: -1
+    };
     var settings = {
-        orgSettings: {},
-        curSettings: {}
+        OrgSettings: {},
+        CurSettings: {}
     };
 
     return {
-        saveCurrentSettings: function (curSettings) {
-            settings.curSettings = curSettings;
-        },
-
-        getCurrentSettings: function () {
-            return settings.curSettings;
-        },
-
         saveOrgSettings: function (orgSettings) {
-            settings.orgSettings = orgSettings;
+            settings.OrgSettings = orgSettings;
+        },
+        saveCurSettings: function (curSettings) {
+            settings.CurSettings = curSettings;
+        },
+        getOrgSettings: function () {
+            return settings.OrgSettings;
+
+        },
+        getCurSettings: function () {
+            return settings.CurSettings;
         },
 
-        getOrgSettings: function () {
-            return settings.orgSettings;
+        saveWorkingContext: function (curContext) {
+            workingContext = curContext;
+        },
+        getWorkingContext: function () {
+            return workingContext;
         }
     };
 });

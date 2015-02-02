@@ -29,7 +29,11 @@
       <Mapping DataField="custid" ObjectProperty="Id" />
       <Mapping DataField="username" ObjectProperty="Name" />
     </Setting>
+
     <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
     </Setting>
+    <Setting Key="NAP_LM_LicenseePositionTakingUpd" SpName="NAP_LM_LicenseePositionTakingUpd" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
+
   </Function>
 </Functions>

@@ -20,10 +20,12 @@ namespace Fanex.NAP.Licensee.Service
 
         IDictionary<int, string> GetKenoGameType { get; }
 
+        IList<ProductTypeItem> GetProductTypeList { get; }
+
+        IList<string> GetPositionTakingList { get; }
+
+        IList<string> GetCommList { get; }
+
         IList<LicenseeItem> GetSuperLicenseeList(string siteName);
-
-        IList<ProductTypeItem> GetProductTypeList();
-
-        IList<string> GetPositionTakingList();
     }
 }

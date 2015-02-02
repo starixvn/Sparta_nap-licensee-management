@@ -8,6 +8,7 @@ namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
@@ -16,6 +17,7 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.ViewModel;
+    using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
 
     /// <summary>
@@ -65,17 +67,37 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public JsonResult GetEditPTData(int custId, int productId)
         {
-            float curPT = 0;
-            float.TryParse(_settingConfigurationService.GetPositionTaking(custId, productId), out curPT);
+            float curPT;
+
+            if (!float.TryParse(_settingConfigurationService.GetPositionTaking(custId, productId), out curPT))
+            {
+                curPT = 0;
+            }
 
             EditPTViewModel editPTVm = new EditPTViewModel()
             {
-                ProductName = _commonService.GetProductTypeList().Where(n => n.Id == productId).First().Name,
-                PositionTakings = _commonService.GetPositionTakingList(),
+                ProductName = _commonService.GetProductTypeList.Where(n => n.Id == productId).First().Name,
+                PositionTakings = _commonService.GetPositionTakingList,
                 SelectedPositionTaking = curPT.ToString("0.###")
             };
 
             return Json(editPTVm, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewPT()
+        {
+            return PartialView();
+        }
+
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public JsonResult UpdatePT(UpdatePTViewModel updatePTViewModel)
+        {
+            ResultInfo result = _settingConfigurationService.UpdatePositionTaking(updatePTViewModel.CustId, updatePTViewModel.ProductId, updatePTViewModel.PTValue);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -92,13 +114,7 @@ namespace Fanex.NAP.Licensee.Controllers
             return PartialView();
         }
 
-        [HttpGet]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
-        public PartialViewResult ReviewPT()
-        {
-            return PartialView();
-        }
-
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
@@ -116,12 +132,13 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(lstLicenseeSuper, JsonRequestBehavior.AllowGet);
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public JsonResult GetProductTypeList()
         {
-            IList<ProductTypeItem> dctProductTypes = _commonService.GetProductTypeList();
+            IList<ProductTypeItem> dctProductTypes = _commonService.GetProductTypeList;
             return Json(dctProductTypes, JsonRequestBehavior.AllowGet);
         }
     }

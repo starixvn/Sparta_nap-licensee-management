@@ -1,21 +1,49 @@
-﻿"use strict";
+﻿/* global ContextFunc */
+
+"use strict";
 
 // Get the module
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Review comm controller
 settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
-    //$scope.editPTData = {};
+    $scope.selectedContext = shareSettingsService.getWorkingContext();
+    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.PT) {
+        $location.path('/');
+        return;
+    }
 
-    // Load licensees
+    $scope.reviewPTData = {};
+
     $scope.reviewPTData = {
+        SuperUsername: shareSettingsService.getWorkingContext().CustName,
         OrgPT: shareSettingsService.getOrgSettings().OrgPT,
-        CurPT: shareSettingsService.getCurrentSettings().selectedPositionTaking
+        CurPT: shareSettingsService.getCurSettings().CurPT
     };
 
     $scope.updateEventHandler = function () {
-        shareSettingsService.getCurrentSettings().selectedPositionTaking = $scope.editPTData.SelectedPositionTaking;
+        shareSettingsService.getCurSettings().selectedPositionTaking = $scope.editPTData.SelectedPositionTaking;
         $location.path("/ReviewPT");
+    };
+
+    $scope.updatePT = function () {
+        $http.get(
+            "UpdatePT",
+            {
+                params: {
+                    CustId: shareSettingsService.getWorkingContext().CustId,
+                    ProductId: shareSettingsService.getWorkingContext().ProdId,
+                    PTValue: shareSettingsService.getCurSettings().CurPT
+                }
+            })
+        .success(function (data) {
+            alert(data);
+
+            // TODO: Redirect
+        })
+        .error(function (data) {
+            alert(data);
+        });
     };
 
     $scope.backEditPT = function () {

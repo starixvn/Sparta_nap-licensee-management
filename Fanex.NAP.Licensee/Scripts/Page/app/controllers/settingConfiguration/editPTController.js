@@ -1,20 +1,27 @@
-﻿"use strict";
+﻿/* global ContextFunc */
+
+"use strict";
 
 // Get the module
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
 settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
-    //$scope.editPTData = {};
 
-    // Load licensees
-    //if (JSON.stringify(shareSettingsService.getCurrentSettings()) == '{}') {
+    $scope.selectedContext = shareSettingsService.getWorkingContext();
+    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.PT) {
+        $location.path('/');
+        return;
+    }
+
+    $scope.editPTData = {};
+
     $http.get(
             "GetEditPTData",
             {
                 params: {
-                    custId: shareSettingsService.getCurrentSettings().custId,
-                    productId: shareSettingsService.getCurrentSettings().productId
+                    custId: shareSettingsService.getWorkingContext().CustId,
+                    productId: shareSettingsService.getWorkingContext().ProdId
                 }
             })
         .success(function (data) {
@@ -22,21 +29,14 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
                 OrgPT: data.SelectedPositionTaking
             });
 
-            // Rebind data
-            if (shareSettingsService.getCurrentSettings().selectedPositionTaking !== undefined) {
-                data.SelectedPositionTaking = shareSettingsService.getCurrentSettings().selectedPositionTaking;
-            }
             $scope.editPTData = data;
         });
-    //}
-
 
     $scope.updateEventHandler = function () {
-        shareSettingsService.getCurrentSettings().selectedPositionTaking = $scope.editPTData.SelectedPositionTaking;
+        shareSettingsService.saveCurSettings({
+            CurPT: $scope.editPTData.SelectedPositionTaking
+        });
+
         $location.path("/ReviewPT");
     };
-
-    //    $scope.previousEventhandler = function () {
-    //        $location.path("/");
-    //    };
 });

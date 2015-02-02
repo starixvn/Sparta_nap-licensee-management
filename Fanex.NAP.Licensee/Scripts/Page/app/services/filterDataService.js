@@ -4,14 +4,14 @@
 var servicesModule = angular.module("settingConfiguration.services", []);
 
 // Filter data service
-servicesModule.service('filterDataService', ["$http", "GetLicenseeListUrl", function ($http, GetLicenseeListUrl) {
+servicesModule.service('filterDataService', ["$http", "GetLicenseeListUrl", function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
     this.getLicensees = function () {
         $http.get(GetLicenseeListUrl)
         .success(function (data) {
             return data;
         })
         .error(function (error) {
-            // TODO
+            alert(error);
         });
     };
 
@@ -21,7 +21,7 @@ servicesModule.service('filterDataService', ["$http", "GetLicenseeListUrl", func
             return data;
         })
         .error(function (error) {
-            // TODO
+            alert(error);
         });
     };
 }

@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.ViewModel
+﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿"use strict";
+﻿/* exported ContextFunc */
+"use strict";
 
 // Module
 var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "settingConfiguration.services"]);
@@ -27,12 +28,20 @@ settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'reviewCommCtrl'
     });
 
-    //    $routeProvider.otherwise({
-    //        redirectTo: '/'
-    //    });
+    $routeProvider.otherwise({
+        redirectTo: '/'
+    });
 } ]);
 
 // Fix IsAjaxRequest
 settingConfigurationApp.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-} ]); 
+} ]);
+
+// Constants
+var ContextFunc = {
+    BettSetting: "Bet setting",
+    Comm: "Comm",
+    PT: "PT"
+};
+

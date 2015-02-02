@@ -141,14 +141,16 @@
     </None>
     <None Include="packages.config" />
     <Compile Include="SettingItemHelper.cs" />
-    <Compile Include="ViewModel\EditPTViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\EditCommRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\EditCommViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\EditPTViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
     <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\SettingConfiguration\" />
     <Folder Include="DTO\SettingConfiguration\" />
     <Folder Include="ViewModel\DefaultBetSetting\" />
-    <Folder Include="ViewModel\SettingConfiguration\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
