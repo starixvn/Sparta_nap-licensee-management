@@ -100,8 +100,8 @@ namespace Fanex.NAP.Licensee.Service
                     new ProductTypeItem(1, "Sportsbook", betPT),
                     new ProductTypeItem(161, "Number Game", betPT),
                     new ProductTypeItem(180, "Virtual Sports", betPT),
-                    new ProductTypeItem(162, "Live Casino", betPT),
-                    new ProductTypeItem(202, "Keno", pt), 
+                    new ProductTypeItem(202, "Keno", betPT),
+                    new ProductTypeItem(162, "Live casino", pt), 
                     new ProductTypeItem(151, "Racing", betComm)
                 };
             }

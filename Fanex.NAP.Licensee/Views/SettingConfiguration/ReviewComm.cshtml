@@ -1,10 +1,50 @@
-﻿<div ng-controller="reviewCommCtrl">
-    <h2>
-        ReviewComm</h2>
-    <h2>
-        {{param}}</h2>
-    <div class="form-group">
-        <input type="button" id="tt" value="Back to Edit Comm Setting" class="btn-primary"
-            ng-click="backEditComm()" />
+﻿<div class="filter-form">
+    <div>
+        The values will be updated to supers <strong>{{reviewCommData.SuperUsername}}</strong>
+    </div>
+    <br />
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                    </th>
+                    <th>
+                        Org Comm
+                    </th>
+                    <th>
+                        Cur Comm
+                    </th>
+                    <th>
+                        Updated
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in reviewCommData.OrgComm">
+                    <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+                        {{item.SportTypeName}}
+                    </td>
+                    <td>
+                        {{item.BetTypeName}}
+                    </td>
+                    <td>
+                        {{item.SelectedComm}}
+                    </td>
+                    <td>
+                        {{reviewCommData.CurComm[$index].SelectedComm}}
+                    </td>
+                    <td>
+                        {{reviewCommData.CurComm[$index].IsChecked === true? 'X': ''}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="tt" value="Update" class="btn-primary" ng-click="updateComm()" />
+                        <input type="button" id="tt" value="Back" class="btn-primary" ng-click="backEditComm()" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

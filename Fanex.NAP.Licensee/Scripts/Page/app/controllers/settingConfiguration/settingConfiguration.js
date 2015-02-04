@@ -2,7 +2,7 @@
 "use strict";
 
 // Module
-var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "settingConfiguration.services"]);
+var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "ngAnimate", "settingConfiguration.services"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
@@ -28,6 +28,12 @@ settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'reviewCommCtrl'
     });
 
+    $routeProvider.when('/EditBetSetting/:sportType', {
+        templateUrl: function (params) {
+            return 'EditBetSetting/?sportType=' + params.sportType;
+        }
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/'
     });
@@ -40,7 +46,7 @@ settingConfigurationApp.config(['$httpProvider', function ($httpProvider) {
 
 // Constants
 var ContextFunc = {
-    BettSetting: "Bet setting",
+    BetSetting: "Bet setting",
     Comm: "Comm",
     PT: "PT"
 };

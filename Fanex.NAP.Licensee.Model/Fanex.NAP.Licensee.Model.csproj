@@ -131,6 +131,10 @@
     <Compile Include="DTO\DefaultBetSetting\SettingLogItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\SportOrGameItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\XmlLog\LogTemplate.cs" />
+    <Compile Include="DTO\SettingConfiguration\BetSettingItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BetSettingKenoItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,15 +145,19 @@
     </None>
     <None Include="packages.config" />
     <Compile Include="SettingItemHelper.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BetSettingRowBaseViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\EditBSKenoRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\EditBSKenoViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\EditCommRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\EditCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\EditPTViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
     <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\SettingConfiguration\" />
-    <Folder Include="DTO\SettingConfiguration\" />
     <Folder Include="ViewModel\DefaultBetSetting\" />
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,9 @@
+﻿@model IList<Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration.UpdateCommResultViewModel>
+<h2>
+    Update Commission Result</h2>
+@foreach (var item in Model)
+{
+    <div>
+        @item.SportTypeName / @item.BetTypeName : @(item.IsOk == true ? "Successful" : "Failed")
+    </div>
+}

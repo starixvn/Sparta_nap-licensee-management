@@ -10,6 +10,33 @@
     /// </summary>
     public class EditCommRowViewModel
     {
+        public EditCommRowViewModel()
+        {
+        }
+
+        public EditCommRowViewModel(
+                int sportTypeId,
+                string sportTypeName,
+                int betTypeId,
+                string betTypeName,
+                bool isChecked,
+                string selectedComm,
+                IList<string> lstComms)
+        {
+            SportTypeId = sportTypeId;
+            SportTypeName = sportTypeName;
+
+            BetTypeId = betTypeId;
+            BetTypeName = betTypeName;
+            IsChecked = isChecked;
+
+            SelectedComm = selectedComm;
+            Comms = lstComms;
+
+            IsDisabled = false;
+            RowSpan = -1;
+        }
+
         public int SportTypeId { get; set; }
 
         public string SportTypeName { get; set; }
@@ -23,5 +50,9 @@
         public string SelectedComm { get; set; }
 
         public IList<string> Comms { get; set; }
+
+        public bool IsDisabled { get; set; }
+
+        public int RowSpan { get; set; }
     }
 }

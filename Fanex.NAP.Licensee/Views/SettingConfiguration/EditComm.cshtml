@@ -1,5 +1,9 @@
-﻿<div class="col-md-4 filter-form">
-    <table class="table table-bordered">
+﻿<div class="col-md-5 filter-form">
+    <label class="checkbox-inline">
+        <input ng-change="copyAll()" ng-model="isCopyAll" type="checkbox" id="copy-vs" data-key="#vs-table">
+        Copy all Commission Setting from 1st row
+    </label>
+    <table class="table table-bordered table-setting">
         <thead>
             <tr>
                 <th colspan="3">
@@ -10,86 +14,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td rowspan="3">
-                    Racing
+            <tr ng-repeat="item in lstEditCommRows">
+                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+                    {{item.SportTypeName}}
                 </td>
                 <td>
-                    UK/Irish Tote
+                    {{item.BetTypeName}}
                 </td>
                 <td>
-                    <input type="checkbox" />
-                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <input type="checkbox" ng-model="item.IsChecked" ng-disabled="item.IsDisabled" />
+                    @*   <button ng-if="$index == 0" ng-click="copyComm()" class="glyphicon glyphicon-chevron-down">
+                    </button>*@
                 </td>
                 <td>
-                    <select>
+                    <select ng-if="$index == 0" ng-options="comm for comm in item.Comms track by comm"
+                        ng-model="item.SelectedComm" ng-change="copyComm()" ng-disabled="!item.IsChecked">
+                    </select>
+                    <select ng-if="$index != 0" ng-options="comm for comm in item.Comms track by comm"
+                        ng-model="item.SelectedComm" ng-disabled="!item.IsChecked">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Sa Tote
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-                <td>
-                    <select>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Aust Tote
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-                <td>
-                    <select>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td rowspan="2">
-                    Greyhounds
-                </td>
-                <td>
-                    UK/Irish Tote
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-                <td>
-                    <select>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Aust Tote
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-                <td>
-                    <select>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Harness
-                </td>
-                <td>
-                    Aust Tote
-                </td>
-                <td>
-                    <input type="checkbox" />
-                </td>
-                <td>
-                    <select>
-                    </select>
+                    <input ng-click="nextReviewComm()" type="button" value="Next" class="btn-primary" />
                 </td>
             </tr>
         </tbody>

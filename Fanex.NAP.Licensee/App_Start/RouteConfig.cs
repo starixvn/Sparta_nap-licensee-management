@@ -18,7 +18,7 @@ namespace Fanex.NAP.Licensee.AppStart
 
             routes.MapRoute(
                 name: "Edit",
-                url: "{controller}/{action}/{cusId}/{productId}"
+                url: "{controller}/{action}/{sportType}/{cusId}/{productId}"
             );
         }
     }

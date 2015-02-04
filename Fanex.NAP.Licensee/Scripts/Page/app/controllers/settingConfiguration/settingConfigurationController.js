@@ -4,7 +4,7 @@
 
 // Main controller
 var settingConfigurationApp = angular.module("settingConfiguration");
-settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope, $http, $location, shareSettingsService,
+settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope, $http, $location, $route, $routeParams, shareSettingsService,
                                     GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl) {
     // Load data for ddls
     $scope.filterData = {
@@ -51,23 +51,39 @@ settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope,
     };
 
     $scope.selectEventHandler = function () {
+        // Save working context
+        shareSettingsService.saveWorkingContext({
+            FuncName: ContextFunc.PT,
+            CustName: $scope.filterData.selectedSuperLicensee.Name,
+            CustId: $scope.filterData.selectedSuperLicensee.Id,
+            ProdId: $scope.filterData.selectedProductType.Id
+        });
+
+        var curPath = $location.path();
+
         if ($scope.filterData.selectedFunction === ContextFunc.BetSetting) {
-            // TODO: Pass data
-            $location.path("/EditComm");
+            shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
+
+            if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
+                $route.reload();
+            }
+            $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
         }
         else if ($scope.filterData.selectedFunction === ContextFunc.Comm) {
-            // TODO: Pass data
+            shareSettingsService.getWorkingContext().FuncName = ContextFunc.Comm;
+
+            if (curPath === "/EditComm") {
+                $route.reload();
+                return;
+            }
             $location.path("/EditComm");
         }
         else if ($scope.filterData.selectedFunction === ContextFunc.PT) {
-            // TODO: Pass data
-            shareSettingsService.saveWorkingContext({
-                FuncName: ContextFunc.PT,
-                CustName: $scope.filterData.selectedSuperLicensee.Name,
-                CustId: $scope.filterData.selectedSuperLicensee.Id,
-                ProdId: $scope.filterData.selectedProductType.Id
-            });
+            shareSettingsService.getWorkingContext().FuncName = ContextFunc.PT;
 
+            if (curPath === "/EditPT") {
+                $route.reload();
+            }
             $location.path("/EditPT");
         }
     };

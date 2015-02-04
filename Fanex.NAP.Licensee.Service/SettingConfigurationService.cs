@@ -6,9 +6,13 @@
 
 namespace Fanex.NAP.Licensee.Service
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
     /// <summary>
     /// TODO: Update summary.
@@ -39,14 +43,84 @@ namespace Fanex.NAP.Licensee.Service
 
             using (var db = new ObjectDb("NAP_LM_LicenseePositionTakingUpd"))
             {
-                db.ExecuteNonQuery(new { CustID = custId, SportType = productId, ptVALUE = positionTakingValue });
+                db.AddInParameter("CustID", DbType.Int32, custId);
+                db.AddInParameter("SportType", DbType.Int32, productId);
+                db.AddInParameter("ptVALUE", DbType.Double, positionTakingValue);
+                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
+                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
 
-                result.IsOk = db.GetParameterValue("ErrCode").Equals(SuccessCode);
-                var msg = db.GetParameterValue("ErrMsg");
-                result.Message = msg != null ? msg.ToString() : string.Empty;
+                db.ExecuteNonQuery();
+
+                var outputValues = db.GetOuputParams();
+                if (outputValues["errcode"] == DBNull.Value)
+                {
+                    result.IsOk = true;
+                    result.Message = string.Empty;
+                }
+                else
+                {
+                    result.IsOk = false;
+                    result.Message = outputValues["errmsg"].ToString();
+                }
             }
 
             return result;
+        }
+
+        public IList<CommItem> GetCommList(int custId)
+        {
+            using (var db = new ObjectDb("NAP_LM_LicenseeCommissionSel"))
+            {
+                return db.Query<CommItem>(new { CustID = custId }).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Update commission.
+        /// </summary>
+        /// <param name="custId">Customer Id.</param>
+        /// <param name="sportTypeId">Sport type Id.</param>
+        /// <param name="betTypeId">Bet type Id.</param>
+        /// <param name="commValue">Commission value.</param>
+        /// <returns>Result info.</returns>
+        public ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue)
+        {
+            var result = new ResultInfo();
+
+            using (var db = new ObjectDb("NAP_LM_LicenseeCommissionUpd"))
+            {
+                db.AddInParameter("CustID", DbType.Int32, custId);
+                db.AddInParameter("Sporttype", DbType.Int32, sportTypeId);
+                db.AddInParameter("Bettype", DbType.Int32, betTypeId);
+                db.AddInParameter("Discount", DbType.Double, commValue);
+
+                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
+                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+
+                db.ExecuteNonQuery();
+
+                var outputValues = db.GetOuputParams();
+                if (outputValues["errcode"] == DBNull.Value)
+                {
+                    result.IsOk = true;
+                    result.Message = string.Empty;
+                }
+                else
+                {
+                    result.IsOk = false;
+                    result.Message = outputValues["errmsg"].ToString();
+                }
+            }
+
+            return result;
+        }
+
+        public IList<T> GetBetSetting<T>(int custId, int productId)
+        {
+            using (var db = new ObjectDb("NAP_LM_LicenseeBetSettingSel"))
+            {
+                return db.Query<T>(new { CustID = custId, Product = productId }).ToList();
+            }
         }
     }
 }

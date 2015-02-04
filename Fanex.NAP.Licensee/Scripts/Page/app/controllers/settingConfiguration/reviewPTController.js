@@ -37,9 +37,15 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
                 }
             })
         .success(function (data) {
-            alert(data);
+            if (data.IsOk === true) {
+                alert("Update PT successfully!");
 
-            // TODO: Redirect
+            }
+            else {
+                alert("<strong>Error:</strong> <br/>" + data.Message);
+            }
+
+            $location.path("/");
         })
         .error(function (data) {
             alert(data);

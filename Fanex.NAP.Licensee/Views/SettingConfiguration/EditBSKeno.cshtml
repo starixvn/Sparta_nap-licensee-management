@@ -1,0 +1,62 @@
+﻿<div ng-controller="editBSKenoCtrl">
+    <h2>
+        EditBSKeno</h2>
+    <div class="col-md-5 filter-form">
+        <label class="checkbox-inline">
+            <input ng-change="copyAll()" ng-model="isCopyAll" type="checkbox" id="copy-vs" data-key="#vs-table">
+            Copy all Commission Setting from 1st row
+        </label>
+        <table class="table table-bordered table-setting">
+            <thead>
+                <tr>
+                    <th>
+                        All sports
+                    </th>
+                    <th>
+                        Min Bet
+                    </th>
+                    <th>
+                        Max Bet
+                    </th>
+                    <th>
+                        Max Per Match
+                    </th>
+                    <th>
+                        Super
+                    </th>
+                    <th>
+                        Downlines
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in lstEditCommRows">
+                    <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+                        {{item.SportTypeName}}
+                    </td>
+                    <td>
+                        {{item.BetTypeName}}
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="item.IsChecked" ng-disabled="item.IsDisabled" />
+                        @*   <button ng-if="$index == 0" ng-click="copyComm()" class="glyphicon glyphicon-chevron-down">
+                    </button>*@
+                    </td>
+                    <td>
+                        <select ng-if="$index == 0" ng-options="comm for comm in item.Comms track by comm"
+                            ng-model="item.SelectedComm" ng-change="copyComm()" ng-disabled="!item.IsChecked">
+                        </select>
+                        <select ng-if="$index != 0" ng-options="comm for comm in item.Comms track by comm"
+                            ng-model="item.SelectedComm" ng-disabled="!item.IsChecked">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input ng-click="nextReviewComm()" type="button" value="Next" class="btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
