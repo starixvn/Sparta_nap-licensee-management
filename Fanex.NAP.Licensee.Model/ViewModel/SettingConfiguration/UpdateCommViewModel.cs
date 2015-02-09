@@ -12,6 +12,6 @@
     {
         public int CustId { get; set; }
 
-        public IList<EditCommRowViewModel> CommRows { get; set; }
+        public IList<CommRowViewModel> CommRows { get; set; }
     }
 }

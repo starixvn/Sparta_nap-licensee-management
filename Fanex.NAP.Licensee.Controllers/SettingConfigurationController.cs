@@ -54,7 +54,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult EditPT()
         {
-            return PartialView();
+            return PartialView("PT/EditPT");
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Fanex.NAP.Licensee.Controllers
                 curPT = 0;
             }
 
-            EditPTViewModel editPTVm = new EditPTViewModel()
+            PTViewModel editPTVm = new PTViewModel()
             {
                 ProductName = _commonService.GetProductTypeList.Where(n => n.Id == productId).First().Name,
                 PositionTakings = _commonService.GetPositionTakingList,
@@ -89,7 +89,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult ReviewPT()
         {
-            return PartialView();
+            return PartialView("PT/reviewPT");
         }
 
         [AjaxRequest]
@@ -105,7 +105,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult EditComm()
         {
-            return PartialView();
+            return PartialView("Comm/editComm");
         }
 
         [AjaxRequest]
@@ -114,7 +114,7 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             IList<CommItem> lstCommItems = _settingConfigurationService.GetCommList(custId);
             IList<string> lstComms = _commonService.GetCommList;
-            EditCommViewModel editCommVm = new EditCommViewModel(lstCommItems, lstComms);
+            CommViewModel editCommVm = new CommViewModel(lstCommItems, lstComms);
 
             return Json(editCommVm.EditCommRows, JsonRequestBehavior.AllowGet);
         }
@@ -123,7 +123,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult ReviewComm()
         {
-            return PartialView();
+            return PartialView("Comm/reviewComm");
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Fanex.NAP.Licensee.Controllers
         public PartialViewResult UpdateComm(UpdateCommViewModel updateCommVM)
         {
             IList<UpdateCommResultViewModel> lstUpdateResults = new List<UpdateCommResultViewModel>();
-            foreach (EditCommRowViewModel item in updateCommVM.CommRows)
+            foreach (CommRowViewModel item in updateCommVM.CommRows)
             {
                 if (item.IsChecked == true)
                 {
@@ -145,7 +145,7 @@ namespace Fanex.NAP.Licensee.Controllers
                 }
             }
 
-            return PartialView("UpdateCommResult", lstUpdateResults);
+            return PartialView("Comm/UpdateCommResult", lstUpdateResults);
         }
 
         /// <summary>
@@ -157,67 +157,248 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult EditBetSetting(int sportType)
         {
+            string rootPath = "BetSetting/";
             switch (sportType)
             {
                 case 1:
-                    return PartialView("EditBSSportbook");
-                case 161:
-                    return PartialView("EditBSNumberGame");
-                case 180:
-
-                    break;
-                case 162:
-
-                    break;
-                case 202:
-                    return PartialView("EditBSKeno");
+                    return PartialView(rootPath + "EditBSSportbook");
                 case 151:
-
-                    break;
+                    return PartialView(rootPath + "EditBSRacing");
+                case 161:
+                    return PartialView(rootPath + "EditBSNumberGame");
+                case 180:
+                    return PartialView(rootPath + "EditBSVirtualSport");
+                case 202:
+                    return PartialView(rootPath + "EditBSKeno");
                 default:
-
-                    break;
+                    return PartialView(rootPath + "UnsupportedFunction");
             }
-
-            return PartialView();
         }
 
         /// <summary>
         /// Get edit setting data.
         /// </summary>
-        /// <param name="sportType">Sport type.</param>
-        /// <param name="custId">Customer Id.</param>
-        /// <param name="productId">Product Id.</param>
+        /// <param name="scfVM">Setting config filter view model.</param>
         /// <returns>String result.</returns>
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
-        public JsonResult GetEditBetSettingData(int sportType, int custId, int productId)
+        public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel scfVM)
         {
+            switch (scfVM.ProdId)
+            {
+                case 1:
+                    IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(scfVM.CustId, scfVM.ProdId);
+                    BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
+                    return Json(sportBookVM, JsonRequestBehavior.AllowGet);
+                case 151:
+                    IList<BSRacingItem> lstRacingItems = _settingConfigurationService.GetBetSetting<BSRacingItem>(scfVM.CustId, scfVM.ProdId);
+                    BSRacingViewModel racingVM = new BSRacingViewModel(lstRacingItems, _commonService.GetRacingGameTypeList);
+                    return Json(racingVM, JsonRequestBehavior.AllowGet);
+                case 161:
+                    IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(scfVM.CustId, scfVM.ProdId);
+                    BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
+                    return Json(numberGameVM, JsonRequestBehavior.AllowGet);
+                case 180:
+                    IList<BSVirtualSportItem> lstVirtualSportItems = _settingConfigurationService.GetBetSetting<BSVirtualSportItem>(scfVM.CustId, scfVM.ProdId);
+                    BSVirtualSportViewModel virtualSportVM = new BSVirtualSportViewModel(lstVirtualSportItems, _commonService.GetVirtualSportGameTypeList);
+                    return Json(virtualSportVM, JsonRequestBehavior.AllowGet);
+                case 202:
+                    IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(scfVM.CustId, scfVM.ProdId);
+                    BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
+                    return Json(kenoVm, JsonRequestBehavior.AllowGet);
+                default:
+                    return Json("Unknown Bet Setting!", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Review bet setting.
+        /// </summary>
+        /// <param name="sportType">Sport type.</param>
+        /// <returns>Partial view.</returns>
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult ReviewBetSetting(int sportType)
+        {
+            string rootPath = "BetSetting/";
             switch (sportType)
             {
                 case 1:
-                    return Json("gfg", JsonRequestBehavior.AllowGet);
-                case 161:
-                    return Json("gfg", JsonRequestBehavior.AllowGet);
-                case 180:
-
-                    break;
-                case 162:
-
-                    break;
-                case 202:
-                    IList<BetSettingKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BetSettingKenoItem>(custId, productId);
-                    EditBSKenoViewModel kenoVm = new EditBSKenoViewModel(lstKenoItems);
-                    return Json(kenoVm.EditBSKenoRows, JsonRequestBehavior.AllowGet);
+                    return PartialView(rootPath + "ReviewBSSportbook");
                 case 151:
-
-                    break;
+                    return PartialView(rootPath + "ReviewBSRacing");
+                case 161:
+                    return PartialView(rootPath + "ReviewBSNumberGame");
+                case 180:
+                    return PartialView(rootPath + "ReviewBSVirtualSport");
+                case 202:
+                    return PartialView(rootPath + "ReviewBSKeno");
                 default:
+                    return PartialView(rootPath + "UnsupportedFunction");
+            }
+        }
 
-                    break;
+        /// <summary>
+        /// Update bet setting sport book.
+        /// </summary>
+        /// <param name="sportbookVM">Bet setting sport book view model.</param>
+        /// <returns>Partial view.</returns>
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
+        {
+            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+
+            foreach (var item in sportbookVM.BSRows)
+            {
+                if (item.IsRowSelected == true)
+                {
+                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
+                        sportbookVM.CustId,
+                        item.SportTypeId,
+                        item.BetTypeId,
+                        item.MinBet,
+                        item.MaxBet,
+                        item.MaxPerMatch,
+                        sportbookVM.IsApplyExistingMemberChecked);
+
+                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
+                }
             }
 
-            return Json("gf", JsonRequestBehavior.AllowGet);
+            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+        }
+
+        /// <summary>
+        /// Review bet setting number game.
+        /// </summary>
+        /// <param name="numberGameVM">Bet setting number game view model.</param>
+        /// <returns>Partial view.</returns>
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
+        {
+            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+
+            foreach (var item in numberGameVM.BSRows)
+            {
+                UpdateBetSettingItem updItem = new UpdateBetSettingItem();
+                updItem.CustId = numberGameVM.CustId;
+                updItem.SportType = numberGameVM.ProdId;
+                updItem.MinBet = item.MinBet;
+                updItem.MaxBet = item.MaxBet;
+                updItem.MaxPerMatch = item.MaxPerMatch;
+                updItem.MaxPerBall = item.MaxPerBall;
+                updItem.ExistedMember = numberGameVM.IsApplyExistingMemberChecked;
+
+                ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+                lstUpdateResults.Add(new UpdateBSResultViewModel("Number Game", result.IsOk, result.Message));
+            }
+
+            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+        }
+
+        /// <summary>
+        /// Update bet setting virtual sport.
+        /// </summary>
+        /// <param name="virtualSportVM">Bet setting virtual sport view model.</param>
+        /// <returns>Partial view.</returns>
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
+        {
+            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+
+            foreach (var item in virtualSportVM.BSRows)
+            {
+                if (item.IsRowSelected == true)
+                {
+                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
+                        virtualSportVM.CustId,
+                        item.SportTypeId,
+                        item.BetTypeId,
+                        item.MinBet,
+                        item.MaxBet,
+                        item.MaxPerMatch,
+                        virtualSportVM.IsEnableChecked,
+                        virtualSportVM.IsDownlineChecked,
+                        virtualSportVM.IsApplyExistingMemberChecked);
+
+                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.SportTypeName, result.IsOk, result.Message));
+                }
+            }
+
+            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+        }
+
+        /// <summary>
+        /// Update bet setting racing.
+        /// </summary>
+        /// <param name="racingVM">Bet setting racing view model.</param>
+        /// <returns>Partial view.</returns>
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
+        {
+            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+
+            foreach (var item in racingVM.BSRows)
+            {
+                if (item.IsRowSelected == true)
+                {
+                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
+                        racingVM.CustId,
+                        item.SportTypeId,
+                        item.BetTypeId,
+                        item.MinBet,
+                        item.MaxBet,
+                        item.MaxPerMatch,
+                        item.IsSuperChecked,
+                        item.IsDownlineChecked,
+                        racingVM.IsApplyExistingMemberChecked);
+
+                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
+                }
+            }
+
+            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+        }
+
+        /// <summary>
+        /// Review bet setting.
+        /// </summary>
+        /// <param name="kenoVM">Bet setting keno view model.</param>
+        /// <returns>Partial view.</returns>
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
+        public PartialViewResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
+        {
+            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+
+            foreach (var item in kenoVM.BSRows)
+            {
+                if (item.IsRowSelected == true)
+                {
+                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
+                        kenoVM.CustId,
+                        item.SportTypeId,
+                        item.BetTypeId,
+                        item.MinBet,
+                        item.MaxBet,
+                        item.MaxPerMatch,
+                        item.IsSuperChecked,
+                        item.IsDownlineChecked,
+                        kenoVM.IsApplyExistingMemberChecked);
+
+                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
+                }
+            }
+
+            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]

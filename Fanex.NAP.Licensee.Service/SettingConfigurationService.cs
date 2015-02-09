@@ -122,5 +122,37 @@ namespace Fanex.NAP.Licensee.Service
                 return db.Query<T>(new { CustID = custId, Product = productId }).ToList();
             }
         }
+
+        /// <summary>
+        /// Update bet setting.
+        /// </summary>
+        /// <param name="updBSItem">Update bet setting item.</param>
+        /// <returns>Result info.</returns>
+        public ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem)
+        {
+            var result = new ResultInfo();
+
+            using (var db = new ObjectDb("NAP_LM_LicenseeBetSettingUpd"))
+            {
+                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
+                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+
+                db.ExecuteNonQuery(updBSItem);
+
+                var outputValues = db.GetOuputParams();
+                if (outputValues["errcode"] == DBNull.Value)
+                {
+                    result.IsOk = true;
+                    result.Message = string.Empty;
+                }
+                else
+                {
+                    result.IsOk = false;
+                    result.Message = outputValues["errmsg"].ToString();
+                }
+            }
+
+            return result;
+        }
     }
 }

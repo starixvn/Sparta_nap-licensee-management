@@ -33,6 +33,11 @@ settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
             return 'EditBetSetting/?sportType=' + params.sportType;
         }
     });
+    $routeProvider.when('/ReviewBetSetting/:sportType', {
+        templateUrl: function (params) {
+            return 'ReviewBetSetting/?sportType=' + params.sportType;
+        }
+    });
 
     $routeProvider.otherwise({
         redirectTo: '/'

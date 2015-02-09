@@ -27,5 +27,7 @@ namespace Fanex.NAP.Licensee.Service
         ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue);
 
         IList<T> GetBetSetting<T>(int custId, int productId);
+
+        ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem);
     }
 }

@@ -1,0 +1,64 @@
+﻿<div ng-controller="editBSVirtualSportCtrl" class="filter-form">
+    <h2>
+        Edit Bet Setting Virtual Sport
+    </h2>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        Apply existing menbers
+    </label>
+    <label class="checkbox-inline">
+        <input ng-change="copyAllFromOne()" ng-model="isCopyAll" type="checkbox">
+        Copy all Commission Setting from 1st row
+    </label>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsEnableChecked" type="checkbox">
+        Enable
+    </label>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsDownlineChecked" type="checkbox">
+        Downline
+    </label>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" ng-model="isAllSportChecked" ng-change="checkAllSports()" />
+                    All sports
+                </th>
+                <th>
+                    Min Bet
+                </th>
+                <th>
+                    Max Bet
+                </th>
+                <th>
+                    Max Per Match
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in editBS.BSRows">
+                <td>
+                    <label style="font-weight: normal; display: inline;">
+                        <input type="checkbox" ng-model="item.IsRowSelected" />
+                        {{item.BetTypeName}}
+                    </label>
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

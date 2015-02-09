@@ -1,0 +1,68 @@
+﻿<div ng-controller="reviewBSKenoCtrl" class="filter-form">
+    <h2>
+        Review Bet Setting Keno</h2>
+    <h5>
+        Apply existing members: {{reviewBS.IsApplyExistingMemberChecked === true ? "Yes"
+        : "No"}}
+    </h5>
+    <div>
+        <table class="table table-bordered table-setting">
+            <thead>
+                <tr>
+                    <th>
+                        All sports
+                    </th>
+                    <th>
+                        Min Bet
+                    </th>
+                    <th>
+                        Max Bet
+                    </th>
+                    <th>
+                        Max Per Match
+                    </th>
+                    <th>
+                        Super
+                    </th>
+                    <th>
+                        Downline
+                    </th>
+                    <th>
+                        Updated
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in reviewBS.BSRows">
+                    <td>
+                        {{item.BetTypeName}}
+                    </td>
+                    <td>
+                        {{item.MinBet}}
+                    </td>
+                    <td>
+                        {{item.MaxBet}}
+                    </td>
+                    <td>
+                        {{item.MaxPerMatch}}
+                    </td>
+                    <td>
+                        {{item.IsSuperChecked === true? 'X': ''}}
+                    </td>
+                    <td>
+                        {{item.IsDownlineChecked === true? 'X': ''}}
+                    </td>
+                    <td>
+                        {{item.IsRowSelected === true? 'X': ''}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="Update" class="btn-primary" ng-click="updateBS()" />
+                        <input type="button" value="Back" class="btn-primary" ng-click="backEditBS()" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

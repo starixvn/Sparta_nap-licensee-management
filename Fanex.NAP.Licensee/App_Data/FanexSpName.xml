@@ -44,6 +44,8 @@
     <!--Bet setting-->
     <Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
     </Setting>
+    <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd " DbName="DBTXN.CustDB.bodbLicenseeNet">
+    </Setting>
 
   </Function>
 </Functions>

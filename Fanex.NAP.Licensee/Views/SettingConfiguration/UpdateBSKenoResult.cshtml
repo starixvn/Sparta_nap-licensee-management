@@ -1,0 +1,9 @@
+﻿@model IList<Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration.UpdateBSResultViewModel>
+<h2>
+    Update Keno Result</h2>
+@foreach (var item in Model)
+{
+    <div>
+        @item.BetTypeName : @(item.IsOk == true ? "Successful" : "Failed")
+    </div>
+}

@@ -1,0 +1,82 @@
+﻿.filter-table {
+    tr {
+		height: 30px;
+		td {
+			padding: 5px !important;
+		}
+	}
+}
+
+select
+{
+    border: 1px solid #cecccd;
+    padding: 3px;
+    width: 200px;
+	&:hover {
+		border: 1px solid #5a7dc1;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+}
+
+#special-licensee-function-selector
+{
+    border: 1px solid #ccc;
+    padding: 1px;
+    width: 200px;
+	background-color: #ffffff;
+	height: 25px;
+	cursor: pointer;
+	#popup-button
+	{		
+		border: 1px solid #cccccc;
+		float: right;
+		height: 21px;
+		display: inline-block;
+	}
+	.view-content
+    {
+    	padding-left: 5px;
+		display: inline-block
+    }
+}
+#special-licensee-function-content
+{
+    z-index: 999;
+    position: absolute;
+    border: 1px solid #cccccc;
+    width: 200px;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.filter {
+	label {
+		font-weight: normal;
+		padding-right:3px;
+		&:hover 
+        {
+        	cursor: pointer;
+        }
+	}
+	label.system 
+    {
+		padding-left: 3px;	
+    }
+}
+.note
+{
+	.note-text	
+    {
+		font-weight: bold;
+		color: #FF0000;
+    }
+	.note-area	
+    {
+		padding-left: 10px;
+    }
+}
+.cursor-disabled
+{
+	cursor:not-allowed !important;
+}

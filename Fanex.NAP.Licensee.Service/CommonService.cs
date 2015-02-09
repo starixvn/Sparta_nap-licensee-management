@@ -11,6 +11,7 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.Caching;
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
     /// <summary>
     /// TODO: Update summary.
@@ -86,7 +87,6 @@ namespace Fanex.NAP.Licensee.Service
         /// Gets product list.
         /// </summary>
         /// <value>A dictionary.</value>
-        /// <returns>List of product types.</returns>
         public IList<ProductTypeItem> GetProductTypeList
         {
             get
@@ -128,6 +128,104 @@ namespace Fanex.NAP.Licensee.Service
                 lstInts.ForEach(n => lstPTs.Add((n / 1000f).ToString("0.###")));
 
                 return lstPTs;
+            }
+        }
+
+        /// <summary>
+        /// Gets sport book game type list.
+        /// </summary>
+        /// <value>A dictionary.</value>
+        public IDictionary<BSKeyPair, string> GetSportbookGameTypeList
+        {
+            get
+            {
+                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
+                dctGameType.Add(new BSKeyPair(1, 1), "Soccer");
+                dctGameType.Add(new BSKeyPair(2, 1), "BasketBall");
+                dctGameType.Add(new BSKeyPair(3, 1), "Football");
+                dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
+                dctGameType.Add(new BSKeyPair(8, 1), "Baseball");
+                dctGameType.Add(new BSKeyPair(10, 1), "Golf");
+                dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
+                dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
+                dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
+
+                return dctGameType;
+            }
+        }
+
+        public IDictionary<BSKeyPair, string> GetNumberGameTypeList
+        {
+            get
+            {
+                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
+                dctGameType.Add(new BSKeyPair(161, 81), "Number Game");
+
+                return dctGameType;
+            }
+        }
+
+        /// <summary>
+        /// Gets virtual sport game type list.
+        /// </summary>
+        /// <value>A dictionary.</value>
+        public IDictionary<BSKeyPair, string> GetVirtualSportGameTypeList
+        {
+            get
+            {
+                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
+                dctGameType.Add(new BSKeyPair(180, 1201), "Virtual Soccer");
+                dctGameType.Add(new BSKeyPair(186, 1220), "Virtual Tennis");
+                dctGameType.Add(new BSKeyPair(181, 1231), "Virtual Horse Racing");
+                dctGameType.Add(new BSKeyPair(182, 1231), "Virtual Greyhounds");
+                dctGameType.Add(new BSKeyPair(183, 1231), "Virtual Speedway");
+                dctGameType.Add(new BSKeyPair(184, 1231), "Virtual Motosports");
+                dctGameType.Add(new BSKeyPair(185, 1231), "Virtual Cycling");
+
+                return dctGameType;
+            }
+        }
+
+        /// <summary>
+        /// Gets keno game type list.
+        /// </summary>
+        /// <value>A dictionary.</value>
+        public IDictionary<BSKeyPair, string> GetKenoGameTypeList
+        {
+            get
+            {
+                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
+                dctGameType.Add(new BSKeyPair(202, 1501), "Australia Acttab");
+                dctGameType.Add(new BSKeyPair(202, 1503), "Slovakia Eklub");
+                dctGameType.Add(new BSKeyPair(202, 1504), "Canada Keno");
+                dctGameType.Add(new BSKeyPair(202, 1505), "West Canada Keno");
+                dctGameType.Add(new BSKeyPair(202, 1507), "Massac");
+                dctGameType.Add(new BSKeyPair(202, 1508), "Ohio");
+                dctGameType.Add(new BSKeyPair(202, 1509), "Malta");
+                dctGameType.Add(new BSKeyPair(202, 1511), "Kentucky");
+                dctGameType.Add(new BSKeyPair(202, 1513), "Michigan");
+
+                return dctGameType;
+            }
+        }
+
+        /// <summary>
+        /// Gets racing game type list.
+        /// </summary>
+        /// <value>A dictionary.</value>
+        public IDictionary<BSKeyPair, string> GetRacingGameTypeList
+        {
+            get
+            {
+                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
+                dctGameType.Add(new BSKeyPair(151, 31), "Racing;UK/Irish Tote");
+                dctGameType.Add(new BSKeyPair(151, 41), "Racing;SA Tote");
+                dctGameType.Add(new BSKeyPair(151, 51), "Racing;Aust Tote");
+                dctGameType.Add(new BSKeyPair(152, 41), "Greyhound;UK/Irish Tote");
+                dctGameType.Add(new BSKeyPair(152, 51), "Greyhound;SA Tote");
+                dctGameType.Add(new BSKeyPair(153, 51), "Hamess;Aust Tote");
+
+                return dctGameType;
             }
         }
 

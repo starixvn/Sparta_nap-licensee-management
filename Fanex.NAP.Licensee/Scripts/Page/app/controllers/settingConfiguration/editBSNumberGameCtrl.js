@@ -6,37 +6,31 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
-settingConfigurationApp.controller("editBSSportbookCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
+settingConfigurationApp.controller("editBSNumberGameCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
-    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.PT) {
+    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.BetSetting) {
         $location.path('/');
         return;
     }
 
-    $scope.editPTData = {};
+    $scope.editBS = {};
 
     $http.get(
-            "GetEditPTData",
+            "GetEditBetSettingData",
             {
                 params: {
                     custId: shareSettingsService.getWorkingContext().CustId,
-                    productId: shareSettingsService.getWorkingContext().ProdId
+                    prodId: shareSettingsService.getWorkingContext().ProdId
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings({
-                OrgPT: data.SelectedPositionTaking
-            });
-
-            $scope.editPTData = data;
+            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
+            $scope.editBS = data;
         });
 
-    $scope.updateEventHandler = function () {
-        shareSettingsService.saveCurSettings({
-            CurPT: $scope.editPTData.SelectedPositionTaking
-        });
-
-        $location.path("/ReviewPT");
+    $scope.nextReviewBS = function () {
+        shareSettingsService.saveCurSettings($scope.editBS);
+        $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
     };
 });

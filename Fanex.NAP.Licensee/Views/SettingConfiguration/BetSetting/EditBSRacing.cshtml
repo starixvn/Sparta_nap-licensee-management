@@ -1,0 +1,70 @@
+﻿<div ng-controller="editBSRacingCtrl" class="filter-form">
+    <h2>
+        Edit Bet Setting Racing</h2>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        Apply existing menbers
+    </label>
+    <label class="checkbox-inline">
+        <input ng-change="copyAllFromOne()" ng-model="isCopyAll" type="checkbox">
+        Copy all Commission Setting from 1st row
+    </label>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    <input type="checkbox" ng-model="isAllSportChecked" ng-change="checkAllSports()" />
+                    All sports
+                </th>
+                <th>
+                    Min Bet
+                </th>
+                <th>
+                    Max Bet
+                </th>
+                <th>
+                    Max Per Match
+                </th>
+                <th>
+                    Super
+                </th>
+                <th>
+                    Downline
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in editBS.BSRows">
+                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+                    {{item.SportTypeName}}
+                </td>
+                <td>
+                    <label style="font-weight: normal; display: inline;">
+                        <input type="checkbox" ng-model="item.IsRowSelected" />
+                        {{item.BetTypeName}}
+                    </label>
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected" />
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || !item.IsSuperChecked" />
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="!item.IsRowSelected  || !item.IsDownlineChecked" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

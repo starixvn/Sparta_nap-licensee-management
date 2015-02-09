@@ -1,0 +1,47 @@
+﻿<div ng-controller="editBSNumberGameCtrl" class="filter-form">
+    <h2>
+        Edit Bet Setting Number Game</h2>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        Apply existing menbers
+    </label>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th>
+                    Min Bet
+                </th>
+                <th>
+                    Max Bet
+                </th>
+                <th>
+                    Max Per Match
+                </th>
+                <th>
+                    Max Per Ball
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in editBS.BSRows">
+                <td>
+                    <input type="text" ng-model="item.MinBet" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxBet" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxPerMatch" />
+                </td>
+                <td>
+                    <input type="text" ng-model="item.MaxPerBall" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

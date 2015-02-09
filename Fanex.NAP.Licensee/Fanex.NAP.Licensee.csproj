@@ -18,6 +18,10 @@
     <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <JSLintSkip>\Scripts\head.min.js|\Scripts\head.js|\Scripts\respond.js|\Scripts\Plugin\multi-select-control.js</JSLintSkip>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -336,17 +340,26 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editBSKenoCtrl.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editBSNumberGameCtrl.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editBSSportbookCtrl.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editCommController.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\editPTController.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\reviewCommController.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\reviewPTController.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\settingConfiguration.js" />
-    <Content Include="Scripts\Page\app\controllers\settingConfiguration\settingConfigurationController.js" />
-    <Content Include="Scripts\Page\app\services\filterDataService.js" />
-    <Content Include="Scripts\Page\app\services\shareSettingsService.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSFuncs.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSRacingCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSRacingCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSSportbookCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\editCommController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\editPTController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\reviewCommController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\reviewPTController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfiguration.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfigurationController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Services\filterDataService.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Services\shareSettingsService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
@@ -450,14 +463,23 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="Views\SettingConfiguration\Index.cshtml" />
-    <Content Include="Views\SettingConfiguration\EditPT.cshtml" />
-    <Content Include="Views\SettingConfiguration\EditComm.cshtml" />
-    <Content Include="Views\SettingConfiguration\ReviewComm.cshtml" />
-    <Content Include="Views\SettingConfiguration\ReviewPT.cshtml" />
-    <Content Include="Views\SettingConfiguration\UpdateCommResult.cshtml" />
-    <Content Include="Views\SettingConfiguration\EditBSSportbook.cshtml" />
-    <Content Include="Views\SettingConfiguration\EditBSNumberGame.cshtml" />
-    <Content Include="Views\SettingConfiguration\EditBSKeno.cshtml" />
+    <Content Include="Views\SettingConfiguration\PT\EditPT.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\EditComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\ReviewComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\PT\ReviewPT.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\UpdateCommResult.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSSportbook.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSNumberGame.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSKeno.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSKeno.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSNumberGame.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSVirtualSport.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSRacing.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSRacing.cshtml" />
+    <Content Include="Views\Error\UnsupportedFunction.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
+    <None Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

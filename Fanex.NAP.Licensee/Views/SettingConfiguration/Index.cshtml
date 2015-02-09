@@ -15,20 +15,20 @@
             <div class="form-group col-md-3">
                 <div class="row">
                     <label class="col-md-5">
-                        Licensee</label>
+                        Licensee
+                    </label>
                     <select ng-options="item.Name for item in filterData.licensees track by item.Name"
-                        ng-model="filterData.selectedLicensee" ng-change="selectedLicenseeChanged()"
-                        id="licensee" class="col-md-3 width-160">
-                    </select>
+                            ng-model="filterData.selectedLicensee" ng-change="selectedLicenseeChanged()"
+                            id="licensee" class="col-md-3 width-160"></select>
                 </div>
             </div>
             <div class="form-group col-md-3">
                 <div class="row">
                     <label class="col-md-5">
-                        Super Username</label>
+                        Super Username
+                    </label>
                     <select ng-options="item.Name for item in filterData.superLicensees track by item.Id"
-                        ng-model="filterData.selectedSuperLicensee" id="super-username" class="col-md-3 width-160">
-                    </select>
+                            ng-model="filterData.selectedSuperLicensee" id="super-username" class="col-md-3 width-160"></select>
                 </div>
             </div>
         </div>
@@ -36,21 +36,21 @@
             <div class="form-group col-md-3">
                 <div class="row">
                     <label class="col-md-5">
-                        Select Product</label>
+                        Select Product
+                    </label>
                     <select ng-options="item.Name for item in filterData.productTypes track by item.Id"
-                        ng-model="filterData.selectedProductType" ng-change="selectedProductTypeChanged()"
-                        id="product-type" class="col-md-3 width-160">
-                    </select>
+                            ng-model="filterData.selectedProductType" ng-change="selectedProductTypeChanged()"
+                            id="product-type" class="col-md-3 width-160"></select>
                 </div>
             </div>
             <div class="form-group col-md-3">
                 <div class="row">
                     <label class="col-md-5">
-                        Select Function</label>
+                        Select Function
+                    </label>
                     <select ng-options="item for item in filterData.selectedProductType.Functions track by item"
-                        ng-model="filterData.selectedFunction" ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
-                        id="product-function" class="col-md-3 width-160">
-                    </select>
+                            ng-model="filterData.selectedFunction" ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
+                            id="product-function" class="col-md-3 width-160"></select>
                 </div>
             </div>
         </div>
@@ -66,18 +66,34 @@
 </div>
 @section FooterJs
 {
-    <script src="@Url.Content("~/Scripts/angular/angular.min.js")" type="text/javascript" ></script>
+    <script src="@Url.Content("~/Scripts/angular/angular.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/angular/angular-route.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/angular/angular-animate.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/settingConfiguration.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/settingConfigurationController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/editPTController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/reviewPTController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/editCommController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/reviewCommController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/editBSSportbookCtrl.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/editBSKenoCtrl.js")" type="text/javascript"></script>
-    @* <script src="@Url.Content("~/Scripts/Page/app/controllers/settingConfiguration/editBSNumberGameCtrl.js")" type="text/javascript"></script>*@
-    <script src="@Url.Content("~/Scripts/Page/app/services/filterDataService.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/Page/app/services/shareSettingsService.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/settingConfiguration.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/settingConfigurationController.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/PT/editPTController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/PT/reviewPTController.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/Comm/editCommController.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/Comm/reviewCommController.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSFuncs.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSSportbookCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSNumberGameCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSVirtualSportCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSRacingCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/editBSKenoCtrl.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSFuncs.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSSportbookCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSNumberGameCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSVirtualSportCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSRacingCtrl.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/controllers/BetSetting/reviewBSKenoCtrl.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/services/filterDataService.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Page/settingConfiguration/services/shareSettingsService.js")" type="text/javascript"></script>
+
 }

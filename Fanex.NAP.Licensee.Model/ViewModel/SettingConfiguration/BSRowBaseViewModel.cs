@@ -6,23 +6,27 @@
     using System.Text;
 
     /// <summary>
-    /// Edit bet setting keno view model.
+    /// Bet setting row base view model.
     /// </summary>
-    public class EditBSKenoRowViewModel : BetSettingRowBaseViewModel
+    public class BSRowBaseViewModel
     {
-        public EditBSKenoRowViewModel()
+        public BSRowBaseViewModel()
         {
         }
 
-        public EditBSKenoRowViewModel(
+        public BSRowBaseViewModel(
+            int sportTypeId,
+            string sportTypeName,
             int betTypeId,
             string betTypeName,
             decimal minBet,
             decimal maxBet,
             decimal maxPerMatch,
-            bool isSuperChecked,
-            bool isDownlinesChecked)
+            bool isRowSelected)
         {
+            SportTypeId = sportTypeId;
+            SportTypeName = sportTypeName;
+
             BetTypeId = betTypeId;
             BetTypeName = betTypeName;
 
@@ -30,20 +34,23 @@
             MaxBet = maxBet;
             MaxPerMatch = maxPerMatch;
 
-            IsSuperChecked = isSuperChecked;
-            IsDownlinesChecked = isDownlinesChecked;
+            IsRowSelected = isRowSelected;
         }
+
+        public int SportTypeId { get; set; }
+
+        public string SportTypeName { get; set; }
 
         public int BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
 
-        public bool IsBetTypeChecked { get; set; }
+        public decimal MinBet { get; set; }
 
-        public bool IsSuperChecked { get; set; }
+        public decimal MaxBet { get; set; }
 
-        public bool IsDownlinesChecked { get; set; }
+        public decimal MaxPerMatch { get; set; }
 
-        public bool IsApplyExistingMemberChecked { get; set; }
+        public bool IsRowSelected { get; set; }
     }
 }

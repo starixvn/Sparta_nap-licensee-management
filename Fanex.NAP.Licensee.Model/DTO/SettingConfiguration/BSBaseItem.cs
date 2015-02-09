@@ -6,20 +6,18 @@
     using System.Text;
 
     /// <summary>
-    /// Bet setting keno item.
+    /// Bet setting base item.
     /// </summary>
-    public class BetSettingKenoItem
+    public class BSBaseItem
     {
-        public int IBCBetTypeID { get; set; }
+        public int SportTypeId { get; set; }
+
+        public int BetTypeId { get; set; }
 
         public decimal MinBet { get; set; }
 
         public decimal MaxBet { get; set; }
 
-        public decimal MaxPerGameType { get; set; }
-
-        public bool IsDisabled { get; set; }
-
-        public bool DisableDowlinesKeno { get; set; }
+        public decimal MaxPerMatch { get; set; }
     }
 }

@@ -1,0 +1,74 @@
+﻿namespace Fanex.NAP.Licensee.Model.DTO.SettingConfiguration
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// Update bet setting item.
+    /// </summary>
+    public class UpdateBetSettingItem
+    {
+        public UpdateBetSettingItem()
+        {
+            // Set default values
+            BetType = 0;
+
+            MaxPerBall = 0;
+
+            Enable = false;
+            EnableDownline = false;
+        }
+
+        public UpdateBetSettingItem(int custId, int sportTypeId, int betTypeId, decimal minBet, decimal maxBet, decimal maxPermatch, bool isApplyExistingMemberChecked)
+            : this()
+        {
+            CustId = custId;
+            SportType = sportTypeId;
+            BetType = betTypeId;
+
+            MinBet = minBet;
+            MaxBet = maxBet;
+            MaxPerMatch = maxPermatch;
+
+            ExistedMember = isApplyExistingMemberChecked;
+        }
+
+        public UpdateBetSettingItem(
+            int custId,
+            int sportTypeId,
+            int betTypeId,
+            decimal minBet,
+            decimal maxBet,
+            decimal maxPermatch,
+            bool isSuperChecked,
+            bool isDownlineChecked,
+            bool isApplyExistingMemberChecked)
+            : this(custId, sportTypeId, betTypeId, minBet, maxBet, maxPermatch, isApplyExistingMemberChecked)
+        {
+            Enable = isSuperChecked;
+            EnableDownline = isDownlineChecked;
+        }
+
+        public int CustId { get; set; }
+
+        public int SportType { get; set; }
+
+        public int BetType { get; set; }
+
+        public decimal MinBet { get; set; }
+
+        public decimal MaxBet { get; set; }
+
+        public decimal MaxPerMatch { get; set; }
+
+        public decimal MaxPerBall { get; set; }
+
+        public bool ExistedMember { get; set; }
+
+        public bool Enable { get; set; }
+
+        public bool EnableDownline { get; set; }
+    }
+}

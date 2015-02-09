@@ -9,6 +9,7 @@ servicesModule.factory("shareSettingsService", function () {
         FuncName: "",
         CustId: -1,
         CustName: "",
+        SportTypeId: -1,
         ProdId: -1
     };
     var settings = {

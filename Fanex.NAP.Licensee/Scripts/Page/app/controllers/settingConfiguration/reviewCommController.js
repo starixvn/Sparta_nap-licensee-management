@@ -14,8 +14,6 @@ settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $l
         return;
     }
 
-    $scope.reviewCommData = {};
-
     $scope.reviewCommData = {
         SuperUsername: shareSettingsService.getWorkingContext().CustName,
         OrgComm: shareSettingsService.getOrgSettings().OrgComm,

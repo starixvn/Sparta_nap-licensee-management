@@ -1,0 +1,48 @@
+﻿<div ng-controller="reviewBSNumberGameCtrl" class="filter-form">
+    <h2>
+        Review Bet Setting Number Game</h2>
+    <h5>
+        Apply existing members: {{reviewBS.IsApplyExistingMemberChecked === true ? "Yes"
+        : "No"}}
+    </h5>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th>
+                    Min Bet
+                </th>
+                <th>
+                    Max Bet
+                </th>
+                <th>
+                    Max Per Match
+                </th>
+                <th>
+                    Max Per Ball
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in reviewBS.BSRows">
+                <td>
+                    {{item.MinBet}}
+                </td>
+                <td>
+                    {{item.MaxBet}}
+                </td>
+                <td>
+                    {{item.MaxPerMatch}}
+                </td>
+                <td>
+                    {{item.MaxPerBall}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="Update" class="btn-primary" ng-click="updateBS()" />
+                    <input type="button" value="Back" class="btn-primary" ng-click="backEditBS()" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
