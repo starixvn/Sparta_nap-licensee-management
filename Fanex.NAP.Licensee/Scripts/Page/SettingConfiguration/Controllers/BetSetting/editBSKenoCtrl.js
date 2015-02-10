@@ -1,4 +1,4 @@
-﻿/* global editBSNavigatorFunc, editBSModelFunc, editBSAllSportFunc, editBSRowCheckableSuperDownlineFunc */
+﻿/* global editBSNavigatorFunc, editBSModelFunc, editBSAllSportFunc, editBSRowCheckableSuperDownlineFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
@@ -15,4 +15,8 @@ settingConfigurationApp.controller("editBSKenoCtrl", function ($scope, $injector
     $injector.invoke(editBSAllSportFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSRowCheckableSuperDownlineFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 });

@@ -31,23 +31,24 @@
             <tr ng-repeat="item in editBS.BSRows">
                 <td>
                     <label style="font-weight: normal; display: inline;">
-                        <input type="checkbox" ng-model="item.IsRowSelected" />
+                        <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="item.IsRowDisabled" />
                         {{item.SportTypeName}}
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected" />
+                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected" />
+                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected" />
+                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn-primary" />
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary"
+                        ng-disabled="!isNextEnabled" />
                 </td>
             </tr>
         </tbody>

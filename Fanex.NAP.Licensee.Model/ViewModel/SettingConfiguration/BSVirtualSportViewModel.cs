@@ -38,11 +38,19 @@
             IsDownlineChecked = !lstItems[0].DisableDownline;
 
             IsApplyExistingMemberChecked = false;
+
+            // Derived props
+            IsEnableDisabled = IsEnableChecked == true ? true : false;
+            IsDownlineDisabled = IsDownlineChecked == true ? true : false;
         }
 
         public bool IsEnableChecked { get; set; }
 
+        public bool IsEnableDisabled { get; set; }
+
         public bool IsDownlineChecked { get; set; }
+
+        public bool IsDownlineDisabled { get; set; }
 
         public IList<BSRowBaseViewModel> BSRows { get; set; }
     }

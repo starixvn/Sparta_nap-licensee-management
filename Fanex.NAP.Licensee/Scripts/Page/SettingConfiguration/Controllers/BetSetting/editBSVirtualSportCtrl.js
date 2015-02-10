@@ -1,4 +1,4 @@
-﻿/* global editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc */
+﻿/* global editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
@@ -15,4 +15,8 @@ settingConfigurationApp.controller("editBSVirtualSportCtrl", function ($scope, $
     $injector.invoke(editBSAllSportFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 });

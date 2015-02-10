@@ -35,6 +35,8 @@
             MaxPerMatch = maxPerMatch;
 
             IsRowSelected = isRowSelected;
+
+            IsRowDisabled = false;
         }
 
         public int SportTypeId { get; set; }
@@ -52,5 +54,7 @@
         public decimal MaxPerMatch { get; set; }
 
         public bool IsRowSelected { get; set; }
+
+        public bool IsRowDisabled { get; set; }
     }
 }

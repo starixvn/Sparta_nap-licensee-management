@@ -1,5 +1,6 @@
 ﻿/* global ContextFunc */
-/* exported editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc */
+/* exported editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc, 
+editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 "use strict";
 
 // Model function
@@ -29,11 +30,6 @@ var editBSNavigatorFunc = function ($scope, $location, shareSettingsService) {
         $location.path('/');
         return;
     }
-
-    $scope.nextReviewBS = function () {
-        shareSettingsService.saveCurSettings($scope.editBS);
-        $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
-    };
 };
 
 // AllSport function
@@ -53,6 +49,21 @@ var editBSAllSportFunc = function ($scope) {
             });
         }
     };
+
+    var syncAllSport = function () {
+        var isAllChecked = true;
+        // A litle hack: Watch when it has data
+        if ($scope.editBS.BSRows !== undefined) {
+            $.each($scope.editBS.BSRows, function (index, element) {
+                if (element.IsRowSelected === false) {
+                    isAllChecked = false;
+                }
+            });
+        }
+        $scope.isAllSportChecked = isAllChecked;
+    };
+
+    $scope.$watch("editBS.BSRows", syncAllSport, true);
 };
 
 // Row is checkable
@@ -63,6 +74,10 @@ var editBSRowCheckableFunc = function ($scope) {
 
     $scope.copyAllFromOne = function () {
         if ($scope.isCopyAll === true) {
+            // Reset AllSport
+            $scope.isAllSportChecked = true;
+            // TODO: Why ng-change not raised?
+            $scope.checkAllSports();
             $.each($scope.editBS.BSRows, function (index, element) {
                 // Disable all checkboxes 1 -> n
                 if (index === 0) {
@@ -70,16 +85,20 @@ var editBSRowCheckableFunc = function ($scope) {
                     $scope.listener = $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
                 }
                 else {
-                    element.IsRowSelected = false;
+                    element.IsRowSelected = true;
+                    element.IsRowDisabled = true;
                 }
             });
         }
         else {
+            // Reset AllSport
+            $scope.isAllSportChecked = false;
             $.each($scope.editBS.BSRows, function (index, element) {
                 if (index === 0) {
                     $scope.listener();
                 }
                 element.IsRowSelected = false;
+                element.IsRowDisabled = false;
             });
         }
     };
@@ -114,5 +133,87 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
                 element.IsDownlinesChecked = firstRowData.IsDownlinesChecked;
             });
         }
+    };
+};
+
+var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {
+    // Private functions
+    var checkDirty = function () {
+        $scope.isNextEnabled = false;
+        // A litle hack: Watch when it has data
+        if ($scope.editBS.BSRows !== undefined) {
+            var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+            var curBSRows = $scope.editBS.BSRows;
+            $.each(curBSRows, function (index, element) {
+                if (element.IsRowSelected === true) {
+
+                    // Check if min, max, maxPerMatch is dirty
+                    if (curBSRows[index].MinBet.toString() !== orgBSRows[index].MinBet.toString()
+                    || curBSRows[index].MaxBet.toString() !== orgBSRows[index].MaxBet.toString()
+                    || curBSRows[index].MaxPerMatch.toString() !== orgBSRows[index].MaxPerMatch.toString()) {
+                        $scope.isNextEnabled = true;
+                        return false;
+                    }
+
+                    // If Super, Downline exists => Check
+                    if (curBSRows[index].IsSuperChecked !== undefined && curBSRows[index].IsDownlineChecked !== undefined) {
+                        if (curBSRows[index].IsSuperChecked !== orgBSRows[index].IsSuperChecked
+                        || curBSRows[index].IsDownlineChecked !== orgBSRows[index].IsDownlineChecked) {
+                            $scope.isNextEnabled = true;
+                            return false;
+                        }
+                    }
+
+                    // If MaxPerBall exists => Check
+                    if (curBSRows[index].MaxPerBall !== undefined) {
+                        if (curBSRows[index].MaxPerBall.toString() !== orgBSRows[index].MaxPerBall.toString()) {
+                            $scope.isNextEnabled = true;
+                            return false;
+                        }
+                    }
+                }
+            });
+        }
+    };
+
+    $scope.isNextEnabled = false;
+
+    $scope.$watch("editBS.BSRows", checkDirty, true);
+};
+
+// Check Next constraints
+var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsService) {
+    $scope.nextReviewBS = function () {
+        // Check constraints on submit
+        var hasError = false;
+        var curBSRows = $scope.editBS.BSRows;
+        $.each(curBSRows, function (index, element) {
+            if (element.IsRowSelected === true) {
+
+                // Check is dirty
+                if (parseFloat(curBSRows[index].MinBet) > parseFloat(curBSRows[index].MaxBet)
+                || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerMatch)) {
+                    alert("Please recheck: min bet <= max bet <= max per match!");
+                    hasError = true;
+                    return false;
+                }
+
+                // If MaxPerBall exists => Check
+                if (curBSRows[index].MaxPerBall !== undefined) {
+                    if (parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].MaxPerBall)) {
+                        alert("Please recheck: min bet <= max bet <= max per match <= max per ball!");
+                        hasError = true;
+                        return false;
+                    }
+                }
+            }
+        });
+
+        if (hasError === true) {
+            return;
+        }
+
+        shareSettingsService.saveCurSettings($scope.editBS);
+        $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
     };
 };

@@ -32,11 +32,19 @@
             IsDownlineChecked = isDownlineChecked;
 
             RowSpan = rowSpan;
+
+            // Derived props
+            IsSuperDisabled = IsSuperChecked == true ? true : false;
+            IsDownlineDisabled = IsDownlineChecked == true ? true : false;
         }
 
         public bool IsSuperChecked { get; set; }
 
+        public bool IsSuperDisabled { get; set; }
+
         public bool IsDownlineChecked { get; set; }
+
+        public bool IsDownlineDisabled { get; set; }
 
         public int RowSpan { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿/* global editBSNavigatorFunc, editBSModelFunc */
+﻿/* global editBSNavigatorFunc, editBSModelFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
@@ -11,4 +11,8 @@ settingConfigurationApp.controller("editBSNumberGameCtrl", function ($scope, $in
     $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSModelFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 });

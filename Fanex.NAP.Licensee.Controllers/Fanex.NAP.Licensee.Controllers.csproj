@@ -135,7 +135,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
     <Compile Include="SettingConfigurationController.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="UtilityController.cs" />
     <Compile Include="HomeController.cs" />
