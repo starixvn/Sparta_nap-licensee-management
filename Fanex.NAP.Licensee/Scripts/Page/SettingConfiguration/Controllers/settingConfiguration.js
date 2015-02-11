@@ -8,6 +8,7 @@ var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute",
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
 settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
 settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
+
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/EditPT', {

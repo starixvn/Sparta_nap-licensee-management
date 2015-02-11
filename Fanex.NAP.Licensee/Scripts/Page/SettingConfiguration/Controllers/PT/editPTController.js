@@ -20,8 +20,8 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
             "GetEditPTData",
             {
                 params: {
-                    custId: shareSettingsService.getWorkingContext().CustId,
-                    productId: shareSettingsService.getWorkingContext().ProdId
+                    CustId: shareSettingsService.getWorkingContext().CustId,
+                    ProdId: shareSettingsService.getWorkingContext().ProdId
                 }
             })
         .success(function (data) {

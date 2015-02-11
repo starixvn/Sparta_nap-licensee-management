@@ -60,24 +60,23 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <summary>
         /// Get Position taking data.
         /// </summary>
-        /// <param name="custId">Customer Id.</param>
-        /// <param name="productId">Product Id.</param>
+        /// <param name="scfVM">Setting configuration view model.</param>
         /// <returns>String return.</returns>
         [HttpGet]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
-        public JsonResult GetEditPTData(int custId, int productId)
+        public JsonResult GetEditPTData(SettingConfigFilterViewModel scfVM)
         {
             float curPT;
 
-            if (!float.TryParse(_settingConfigurationService.GetPositionTaking(custId, productId), out curPT))
+            if (!float.TryParse(_settingConfigurationService.GetPositionTaking(scfVM.CustId, scfVM.ProdId), out curPT))
             {
                 curPT = 0;
             }
 
             PTViewModel editPTVm = new PTViewModel()
             {
-                ProductName = _commonService.GetProductTypeList.Where(n => n.Id == productId).First().Name,
+                ProductName = _commonService.GetProductTypeList.Where(n => n.Id == scfVM.ProdId).First().Name,
                 PositionTakings = _commonService.GetPositionTakingList,
                 SelectedPositionTaking = curPT.ToString("0.###")
             };

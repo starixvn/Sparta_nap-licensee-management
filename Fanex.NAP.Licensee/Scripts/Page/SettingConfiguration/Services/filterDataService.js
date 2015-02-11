@@ -4,7 +4,9 @@
 var servicesModule = angular.module("settingConfiguration.services", []);
 
 // Filter data service
-servicesModule.service('filterDataService', ["$http", "GetLicenseeListUrl", function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
+servicesModule.service('filterDataService', [
+"$http", "GetLicenseeListUrl", "GetProductTypeListUrl",
+function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
     this.getLicensees = function () {
         $http.get(GetLicenseeListUrl)
         .success(function (data) {

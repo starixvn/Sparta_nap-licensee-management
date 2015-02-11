@@ -4,8 +4,9 @@
 
 // Main controller
 var settingConfigurationApp = angular.module("settingConfiguration");
-settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope, $http, $location, $route, $routeParams, shareSettingsService,
-                                    GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl) {
+settingConfigurationApp.controller("settingConfigurationCtrl", [
+'$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService', 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl',
+function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl) {
     // Load data for ddls
     $scope.filterData = {
         // licensees
@@ -88,4 +89,4 @@ settingConfigurationApp.controller("settingConfigurationCtrl", function ($scope,
         }
     };
 
-});
+} ]);
