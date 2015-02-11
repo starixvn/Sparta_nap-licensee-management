@@ -14,8 +14,9 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
         return;
     }
 
-    $scope.lstEditCommRows = {};
+    $scope.EditCommRows = {};
     $scope.isCopyAll = false;
+    $scope.isNextEnabled = false;
 
     $http.get(
             "GetEditCommData",
@@ -25,16 +26,14 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings({
-                OrgComm: JSON.parse(JSON.stringify(data))
-            });
+            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
 
-            $scope.lstEditCommRows = data;
+            $scope.EditCommRows = data;
         });
 
     $scope.copyAll = function () {
         if ($scope.isCopyAll === true) {
-            $.each($scope.lstEditCommRows, function (index, element) {
+            $.each($scope.EditCommRows, function (index, element) {
                 // Disable all checkboxes 1 -> n
                 if (index === 0) {
                     element.IsChecked = true;
@@ -47,7 +46,7 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
             });
         }
         else {
-            $.each($scope.lstEditCommRows, function (index, element) {
+            $.each($scope.EditCommRows, function (index, element) {
                 element.IsChecked = false;
                 element.IsDisabled = false;
             });
@@ -56,16 +55,31 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
 
     $scope.copyComm = function () {
         if ($scope.isCopyAll === true) {
-            $.each($scope.lstEditCommRows, function (index, element) {
-                element.SelectedComm = $scope.lstEditCommRows[0].SelectedComm;
+            $.each($scope.EditCommRows, function (index, element) {
+                element.SelectedComm = $scope.EditCommRows[0].SelectedComm;
             });
         }
     };
 
+    $scope.$watch("EditCommRows", function () {
+        $scope.isNextEnabled = false;
+        var orgCommList = shareSettingsService.getOrgSettings();
+        var curCommList = $scope.EditCommRows;
+
+        // A litle hack: Watch when it has data
+        if (curCommList[0] !== undefined) {
+            $.each(curCommList, function (index, element) {
+                if (element.IsChecked === true) {
+                    if (curCommList[index].SelectedComm.toString() !== orgCommList[index].SelectedComm.toString()) {
+                        $scope.isNextEnabled = true;
+                    }
+                }
+            });
+        }
+    }, true);
+
     $scope.nextReviewComm = function () {
-        shareSettingsService.saveCurSettings({
-            CurComm: $scope.lstEditCommRows
-        });
+        shareSettingsService.saveCurSettings($scope.EditCommRows);
         $location.path("/ReviewComm");
     };
 });

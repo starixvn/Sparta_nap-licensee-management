@@ -35,16 +35,16 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in editBS.BSRows">
-                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}" style="vertical-align: middle">
                     {{item.SportTypeName}}
                 </td>
                 <td>
                     <label style="font-weight: normal; display: inline;">
-                        <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="item.IsRowDisabled"/>
+                        <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="item.IsRowDisabled" />
                         {{item.BetTypeName}}
                     </label>
                 </td>
-               <td>
+                <td>
                     <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
@@ -62,7 +62,8 @@
             </tr>
             <tr>
                 <td>
-                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary" ng-disabled="!isNextEnabled" />
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary"
+                        ng-disabled="!isNextEnabled" />
                 </td>
             </tr>
         </tbody>

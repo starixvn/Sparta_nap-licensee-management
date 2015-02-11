@@ -16,8 +16,8 @@ settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $l
 
     $scope.reviewCommData = {
         SuperUsername: shareSettingsService.getWorkingContext().CustName,
-        OrgComm: shareSettingsService.getOrgSettings().OrgComm,
-        CurComm: shareSettingsService.getCurSettings().CurComm
+        OrgComm: shareSettingsService.getOrgSettings(),
+        CurComm: shareSettingsService.getCurSettings()
     };
 
     $scope.updateComm = function () {
@@ -25,7 +25,7 @@ settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $l
             "UpdateComm",
             {
                 CustId: shareSettingsService.getWorkingContext().CustId,
-                CommRows: shareSettingsService.getCurSettings().CurComm
+                CommRows: shareSettingsService.getCurSettings()
             })
         .success(function (data) {
             alert(data);

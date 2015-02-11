@@ -14,8 +14,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in lstEditCommRows">
-                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}">
+            <tr ng-repeat="item in EditCommRows">
+                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}" style="vertical-align: middle">
                     {{item.SportTypeName}}
                 </td>
                 <td>
@@ -23,8 +23,6 @@
                 </td>
                 <td>
                     <input type="checkbox" ng-model="item.IsChecked" ng-disabled="item.IsDisabled" />
-                    @*   <button ng-if="$index == 0" ng-click="copyComm()" class="glyphicon glyphicon-chevron-down">
-                    </button>*@
                 </td>
                 <td>
                     <select ng-if="$index == 0" ng-options="comm for comm in item.Comms track by comm"
@@ -37,7 +35,8 @@
             </tr>
             <tr>
                 <td>
-                    <input ng-click="nextReviewComm()" type="button" value="Next" class="btn-primary" />
+                    <input ng-click="nextReviewComm()" type="button" value="Next" class="btn btn-primary"
+                        ng-disabled="!isNextEnabled" />
                 </td>
             </tr>
         </tbody>

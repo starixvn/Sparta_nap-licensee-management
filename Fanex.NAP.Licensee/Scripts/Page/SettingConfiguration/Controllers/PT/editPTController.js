@@ -15,6 +15,7 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
     }
 
     $scope.editPTData = {};
+    $scope.isNextEnabled = false;
 
     $http.get(
             "GetEditPTData",
@@ -25,18 +26,26 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings({
-                OrgPT: data.SelectedPositionTaking
-            });
+            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
 
             $scope.editPTData = data;
         });
 
-    $scope.updateEventHandler = function () {
-        shareSettingsService.saveCurSettings({
-            CurPT: $scope.editPTData.SelectedPositionTaking
-        });
+    $scope.nextReviewPT = function () {
+        shareSettingsService.saveCurSettings($scope.editPTData);
 
         $location.path("/ReviewPT");
     };
+
+    $scope.$watch("editPTData.SelectedPositionTaking", function () {
+        $scope.isNextEnabled = false;
+        // A litle hack: Watch when it has data
+        if ($scope.editPTData.SelectedPositionTaking !== undefined) {
+            var orgSelectedPT = shareSettingsService.getOrgSettings().SelectedPositionTaking;
+            var curSelectedPT = $scope.editPTData.SelectedPositionTaking;
+            if (curSelectedPT.toString() !== orgSelectedPT.toString()) {
+                $scope.isNextEnabled = true;
+            }
+        }
+    }, true);
 });

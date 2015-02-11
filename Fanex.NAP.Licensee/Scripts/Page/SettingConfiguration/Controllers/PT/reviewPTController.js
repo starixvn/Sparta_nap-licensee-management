@@ -17,13 +17,8 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
 
     $scope.reviewPTData = {
         SuperUsername: shareSettingsService.getWorkingContext().CustName,
-        OrgPT: shareSettingsService.getOrgSettings().OrgPT,
-        CurPT: shareSettingsService.getCurSettings().CurPT
-    };
-
-    $scope.updateEventHandler = function () {
-        shareSettingsService.getCurSettings().selectedPositionTaking = $scope.editPTData.SelectedPositionTaking;
-        $location.path("/ReviewPT");
+        OrgPT: shareSettingsService.getOrgSettings().SelectedPositionTaking,
+        CurPT: shareSettingsService.getCurSettings().SelectedPositionTaking
     };
 
     $scope.updatePT = function () {
@@ -33,7 +28,7 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
                 params: {
                     CustId: shareSettingsService.getWorkingContext().CustId,
                     ProductId: shareSettingsService.getWorkingContext().ProdId,
-                    PTValue: shareSettingsService.getCurSettings().CurPT
+                    PTValue: shareSettingsService.getCurSettings().SelectedPositionTaking
                 }
             })
         .success(function (data) {
