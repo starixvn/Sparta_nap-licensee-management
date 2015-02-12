@@ -117,7 +117,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             return new ResultInfo
             {
-                IsOk = db.GetParameterValue("@ErrCode") == DBNull.Value,
+                IsOk = Convert.ToInt32(db.GetParameterValue("@ErrCode")) > 0,
                 Message = db.GetParameterValue("@ErrMsg") as string
             };
         }
