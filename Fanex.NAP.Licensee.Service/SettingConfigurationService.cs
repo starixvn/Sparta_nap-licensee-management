@@ -39,32 +39,17 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>Result info.</returns>
         public ResultInfo UpdatePositionTaking(int custId, int productId, float positionTakingValue)
         {
-            var result = new ResultInfo();
-
             using (var db = new ObjectDb("NAP_LM_LicenseePositionTakingUpd"))
             {
                 db.AddInParameter("CustID", DbType.Int32, custId);
                 db.AddInParameter("SportType", DbType.Int32, productId);
                 db.AddInParameter("ptVALUE", DbType.Double, positionTakingValue);
-                db.AddOutParameter("errcode", DbType.Int32, 8);
-                db.AddOutParameter("errmsg", DbType.String, int.MaxValue);
+                AddResultParameters(db);
 
                 db.ExecuteNonQuery();
 
-                var outputValues = db.GetOuputParams();
-                if (outputValues["errcode"] == null)
-                {
-                    result.IsOk = true;
-                    result.Message = string.Empty;
-                }
-                else
-                {
-                    result.IsOk = false;
-                    result.Message = outputValues["errmsg"].ToString();
-                }
+                return GetResults(db);
             }
-
-            return result;
         }
 
         public IList<CommItem> GetCommList(int custId)
@@ -85,8 +70,6 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>Result info.</returns>
         public ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue)
         {
-            var result = new ResultInfo();
-
             using (var db = new ObjectDb("NAP_LM_LicenseeCommissionUpd"))
             {
                 db.AddInParameter("CustID", DbType.Int32, custId);
@@ -94,25 +77,12 @@ namespace Fanex.NAP.Licensee.Service
                 db.AddInParameter("Bettype", DbType.Int32, betTypeId);
                 db.AddInParameter("Discount", DbType.Double, commValue);
 
-                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
-                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+                AddResultParameters(db);
 
                 db.ExecuteNonQuery();
 
-                var outputValues = db.GetOuputParams();
-                if (outputValues["errcode"] == DBNull.Value)
-                {
-                    result.IsOk = true;
-                    result.Message = string.Empty;
-                }
-                else
-                {
-                    result.IsOk = false;
-                    result.Message = outputValues["errmsg"].ToString();
-                }
+                return GetResults(db);
             }
-
-            return result;
         }
 
         public IList<T> GetBetSetting<T>(int custId, int productId)
@@ -130,43 +100,26 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>Result info.</returns>
         public ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem)
         {
-            var result = new ResultInfo();
-
-            using (var db = new ObjectDb("NAP_LM_LicenseeBetSettingUpd"))
+            using (var db = new ObjectDb(updBSItem.GetSettingKey()))
             {
-                db.AddInParameter("CustID", DbType.Int32, updBSItem.CustId);
-                db.AddInParameter("Sporttype", DbType.Int32, updBSItem.SportType);
-                db.AddInParameter("Bettype", DbType.Int32, updBSItem.BetType);
-
-                db.AddInParameter("MinBet", DbType.Double, updBSItem.MinBet);
-                db.AddInParameter("MaxBet", DbType.Double, updBSItem.MaxBet);
-                db.AddInParameter("MaxPerMatch", DbType.Double, updBSItem.MaxPerMatch);
-
-                db.AddInParameter("MaxPerBall", DbType.Double, updBSItem.MaxPerBall);
-
-                db.AddInParameter("ExistedMember", DbType.Boolean, updBSItem.ExistedMember);
-                db.AddInParameter("Enable", DbType.Boolean, updBSItem.Enable);
-                db.AddInParameter("EnableDownline", DbType.Boolean, updBSItem.EnableDownline);
-
-                db.AddOutParameter("errcode", DbType.Int32, 8);
-                db.AddOutParameter("errmsg", DbType.String, int.MaxValue);
-
-                db.ExecuteNonQuery();
-
-                var outputValues = db.GetOuputParams();
-                if (outputValues["@ErrCode"] == null)
-                {
-                    result.IsOk = true;
-                    result.Message = string.Empty;
-                }
-                else
-                {
-                    result.IsOk = false;
-                    result.Message = outputValues["@ErrMsg"].ToString();
-                }
+                db.ExecuteNonQuery(updBSItem.GetSpParams());
+                return GetResults(db);
             }
+        }
 
-            return result;
+        private static void AddResultParameters(ObjectDb db)
+        {
+            db.AddOutParameter("@errcode", System.Data.DbType.Int32, 4);
+            db.AddOutParameter("@errmsg", System.Data.DbType.String, 4000);
+        }
+
+        private static ResultInfo GetResults(ObjectDb db)
+        {
+            return new ResultInfo
+            {
+                IsOk = db.GetParameterValue("@ErrCode") == DBNull.Value,
+                Message = db.GetParameterValue("@ErrMsg") as string
+            };
         }
     }
 }

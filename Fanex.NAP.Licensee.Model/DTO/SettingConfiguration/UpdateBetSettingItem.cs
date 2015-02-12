@@ -1,14 +1,11 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO.SettingConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Update bet setting item.
     /// </summary>
-    public class UpdateBetSettingItem
+    public class UpdateBetSettingItem : CriteriaBase
     {
         public UpdateBetSettingItem()
         {
@@ -70,5 +67,19 @@
         public bool Enable { get; set; }
 
         public bool EnableDownline { get; set; }
+
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_LM_LicenseeBetSettingUpd";
+        }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }
