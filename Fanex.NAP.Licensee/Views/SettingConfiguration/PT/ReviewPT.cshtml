@@ -5,7 +5,7 @@
         The values will be updated to supers <strong>{{reviewPTData.SuperUsername}}</strong>
     </div>
     <div c>
-        Original PT: <strong>{{reviewPTData.OrgPT}}</strong>
+        Original PT: <strong>{{reviewPTData.OrgPT === "-1" ? "None" : reviewPTData.OrgPT}}</strong>
     </div>
     <div>
         Current PT: <strong>{{reviewPTData.CurPT}}</strong>

@@ -46,13 +46,13 @@ namespace Fanex.NAP.Licensee.Service
                 db.AddInParameter("CustID", DbType.Int32, custId);
                 db.AddInParameter("SportType", DbType.Int32, productId);
                 db.AddInParameter("ptVALUE", DbType.Double, positionTakingValue);
-                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
-                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+                db.AddOutParameter("errcode", DbType.Int32, 8);
+                db.AddOutParameter("errmsg", DbType.String, int.MaxValue);
 
                 db.ExecuteNonQuery();
 
                 var outputValues = db.GetOuputParams();
-                if (outputValues["errcode"] == DBNull.Value)
+                if (outputValues["errcode"] == null)
                 {
                     result.IsOk = true;
                     result.Message = string.Empty;
@@ -134,13 +134,29 @@ namespace Fanex.NAP.Licensee.Service
 
             using (var db = new ObjectDb("NAP_LM_LicenseeBetSettingUpd"))
             {
-                db.AddOutParameter("errcode", System.Data.DbType.Int32, 8);
-                db.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+                db.AddInParameter("CustID", DbType.Int32, updBSItem.CustId);
+                db.AddInParameter("Sporttype", DbType.Int32, updBSItem.SportType);
+                db.AddInParameter("Bettype", DbType.Int32, updBSItem.BetType);
 
-                db.ExecuteNonQuery(updBSItem);
+                db.AddInParameter("MinBet", DbType.Double, updBSItem.MinBet);
+                db.AddInParameter("MaxBet", DbType.Double, updBSItem.MaxBet);
+                db.AddInParameter("MaxPerMatch", DbType.Double, updBSItem.MaxPerMatch);
+
+                db.AddInParameter("MaxPerBall", DbType.Double, updBSItem.MaxPerBall);
+
+                db.AddInParameter("ExistedMember", DbType.Boolean, updBSItem.ExistedMember);
+                db.AddInParameter("Enable", DbType.Boolean, updBSItem.Enable);
+                db.AddInParameter("EnableDownline", DbType.Boolean, updBSItem.EnableDownline);
+
+                db.AddOutParameter("errcode", DbType.Int32, 8);
+                db.AddOutParameter("errmsg", DbType.String, int.MaxValue);
+
+                var data = db.ExecuteNonQuery();
+
+                var test = db.GetParameterValue("ErrCode");
 
                 var outputValues = db.GetOuputParams();
-                if (outputValues["errcode"] == DBNull.Value)
+                if (outputValues["@ErrCode"] == null)
                 {
                     result.IsOk = true;
                     result.Message = string.Empty;
@@ -148,7 +164,7 @@ namespace Fanex.NAP.Licensee.Service
                 else
                 {
                     result.IsOk = false;
-                    result.Message = outputValues["errmsg"].ToString();
+                    result.Message = outputValues["@ErrMsg"].ToString();
                 }
             }
 

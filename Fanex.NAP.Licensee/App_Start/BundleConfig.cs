@@ -89,7 +89,7 @@
                 "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSNumberGameCtrl.js",
                 "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSRacingCtrl.js",
                 "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSSportbookCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSSportbookCtrl.js");
+                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSVirtualSportCtrl.js");
 
             settingConfigurationJs.Transforms.Add(scriptTransformer);
             bundles.Add(settingConfigurationJs);

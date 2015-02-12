@@ -65,12 +65,9 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public JsonResult GetEditPTData(SettingConfigFilterViewModel scfVM)
         {
-            float curPT;
+            string value = _settingConfigurationService.GetPositionTaking(scfVM.CustId, scfVM.ProdId);
 
-            if (!float.TryParse(_settingConfigurationService.GetPositionTaking(scfVM.CustId, scfVM.ProdId), out curPT))
-            {
-                curPT = 0;
-            }
+            float curPT = value == string.Empty ? -1 : float.Parse(value);
 
             PTViewModel editPTVm = new PTViewModel()
             {
