@@ -151,9 +151,7 @@ namespace Fanex.NAP.Licensee.Service
                 db.AddOutParameter("errcode", DbType.Int32, 8);
                 db.AddOutParameter("errmsg", DbType.String, int.MaxValue);
 
-                var data = db.ExecuteNonQuery();
-
-                var test = db.GetParameterValue("ErrCode");
+                db.ExecuteNonQuery();
 
                 var outputValues = db.GetOuputParams();
                 if (outputValues["@ErrCode"] == null)

@@ -67,7 +67,7 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             string value = _settingConfigurationService.GetPositionTaking(scfVM.CustId, scfVM.ProdId);
 
-            float curPT = value == string.Empty ? -1 : float.Parse(value);
+            float curPT = string.IsNullOrEmpty(value) ? -1 : float.Parse(value);
 
             PTViewModel editPTVm = new PTViewModel()
             {
