@@ -25,11 +25,8 @@
                     <input type="checkbox" ng-model="item.IsChecked" ng-disabled="item.IsDisabled" />
                 </td>
                 <td>
-                    <select ng-if="$index == 0" ng-options="comm for comm in item.Comms track by comm"
-                        ng-model="item.SelectedComm" ng-change="copyComm()" ng-disabled="!item.IsChecked">
-                    </select>
-                    <select ng-if="$index != 0" ng-options="comm for comm in item.Comms track by comm"
-                        ng-model="item.SelectedComm" ng-disabled="!item.IsChecked">
+                    <select ng-options="comm for comm in item.Comms track by comm" ng-model="item.SelectedComm"
+                        ng-change="copyComm()" ng-disabled="!item.IsChecked || item.IsDisabled">
                     </select>
                 </td>
             </tr>

@@ -49,7 +49,8 @@
                 "~/Scripts/jquery-1.9.0.js",
                 "~/Scripts/jquery-ui-1.11.1.js",
                 "~/Scripts/jquery.number.js",
-                 "~/Scripts/Plugin/multi-select-control.js",
+                "~/Scripts/numeric.js",
+                "~/Scripts/Plugin/multi-select-control.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/Core/site.js");
 
@@ -70,6 +71,7 @@
             // Setting configuration
             var settingConfigurationJs = new Bundle("~/bundles/settingConfigurationJs")
                 .Include(
+                "~/Scripts/Page/SettingConfiguration/Directives/onlyIntegerDirective.js",
                 "~/Scripts/Page/SettingConfiguration/Controllers/settingConfiguration.js",
                 "~/Scripts/Page/SettingConfiguration/Controllers/settingConfigurationController.js",
                 "~/Scripts/Page/SettingConfiguration/Services/filterDataService.js",

@@ -149,6 +149,7 @@ namespace Fanex.NAP.Licensee.Service
                 dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
                 dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
+                dctGameType.Add(new BSKeyPair(154, 20), "HR Fixed Odds");
 
                 return dctGameType;
             }
@@ -196,14 +197,6 @@ namespace Fanex.NAP.Licensee.Service
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
                 dctGameType.Add(new BSKeyPair(202, 1501), "Australia Acttab");
-                dctGameType.Add(new BSKeyPair(202, 1503), "Slovakia Eklub");
-                dctGameType.Add(new BSKeyPair(202, 1504), "Canada Keno");
-                dctGameType.Add(new BSKeyPair(202, 1505), "West Canada Keno");
-                dctGameType.Add(new BSKeyPair(202, 1507), "Massac");
-                dctGameType.Add(new BSKeyPair(202, 1508), "Ohio");
-                dctGameType.Add(new BSKeyPair(202, 1509), "Malta");
-                dctGameType.Add(new BSKeyPair(202, 1511), "Kentucky");
-                dctGameType.Add(new BSKeyPair(202, 1513), "Michigan");
 
                 return dctGameType;
             }

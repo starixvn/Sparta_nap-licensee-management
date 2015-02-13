@@ -17,29 +17,52 @@
 
         public BSVirtualSportViewModel(IList<BSVirtualSportItem> lstItems, IDictionary<BSKeyPair, string> dctGameType)
         {
-            // Bind data
             BSRows = new List<BSRowBaseViewModel>();
-            foreach (BSBaseItem item in lstItems)
+            foreach (var key in dctGameType.Keys)
             {
-                BSRowBaseViewModel sportbookRowVM = new BSRowBaseViewModel(
-                    item.SportTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.BetTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.MinBet,
-                    item.MaxBet,
-                    item.MaxPerMatch,
-                    false);
+                BSRowBaseViewModel sportbookRowVM;
+                BSVirtualSportItem item = lstItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
+                if (item != null)
+                {
+                    sportbookRowVM = new BSRowBaseViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        ((int)item.MinBet).ToString(),
+                        ((int)item.MaxBet).ToString(),
+                        ((int)item.MaxPerMatch).ToString(),
+                        false);
+                }
+                else
+                {
+                    sportbookRowVM = new BSRowBaseViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        string.Empty,
+                        string.Empty,
+                        string.Empty,
+                        false);
+                }
 
                 BSRows.Add(sportbookRowVM);
             }
 
-            IsEnableChecked = !lstItems[0].DisableSuper;
-            IsDownlineChecked = !lstItems[0].DisableDownline;
+            if (lstItems.Count != 0)
+            {
+                IsEnableChecked = !lstItems[0].DisableSuper;
+                IsDownlineChecked = !lstItems[0].DisableDownline;
+            }
+            else
+            {
+                IsEnableChecked = false;
+                IsDownlineChecked = false;
+            }
 
             IsApplyExistingMemberChecked = false;
 
-            // Derived props
             IsEnableDisabled = IsEnableChecked == true ? true : false;
             IsDownlineDisabled = IsDownlineChecked == true ? true : false;
         }

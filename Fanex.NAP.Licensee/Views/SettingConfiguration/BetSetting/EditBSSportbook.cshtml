@@ -36,13 +36,16 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
             </tr>
             <tr>

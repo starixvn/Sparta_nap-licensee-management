@@ -5,15 +5,10 @@
         <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
         Apply existing menbers
     </label>
-    <label class="checkbox-inline">
-        <input ng-change="copyAllFromOne()" ng-model="isCopyAll" type="checkbox">
-        Copy all Commission Setting from 1st row
-    </label>
     <table class="table table-bordered table-setting">
         <thead>
             <tr>
                 <th>
-                    <input type="checkbox" ng-model="isAllSportChecked" ng-change="checkAllSports()" />
                     All sports
                 </th>
                 <th>
@@ -37,24 +32,23 @@
             <tr ng-repeat="item in editBS.BSRows">
                 <td>
                     <label style="font-weight: normal; display: inline;">
-                        <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="item.IsRowDisabled" />
                         {{item.BetTypeName}}
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MinBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxPerMatch" only-integer />
                 </td>
                 <td>
-                    <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || item.IsSuperDisabled || item.IsRowDisabled" />
+                    <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="item.IsSuperDisabled" />
                 </td>
                 <td>
-                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="!item.IsRowSelected  || item.IsDownlineDisabled || item.IsRowDisabled" />
+                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="item.IsDownlineDisabled" />
                 </td>
             </tr>
             <tr>

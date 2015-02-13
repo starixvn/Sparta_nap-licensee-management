@@ -19,15 +19,15 @@
             string sportTypeName,
             int betTypeId,
             string betTypeName,
-            decimal minBet,
-            decimal maxBet,
-            decimal maxPerMatch,
-            decimal maxPerBall)
+            string minBet,
+            string maxBet,
+            string maxPerMatch,
+            string maxPerBall)
             : base(sportTypeId, sportTypeName, betTypeId, betTypeName, minBet, maxBet, maxPerMatch, true)
         {
             MaxPerBall = maxPerBall;
         }
 
-        public decimal MaxPerBall { get; set; }
+        public string MaxPerBall { get; set; }
     }
 }

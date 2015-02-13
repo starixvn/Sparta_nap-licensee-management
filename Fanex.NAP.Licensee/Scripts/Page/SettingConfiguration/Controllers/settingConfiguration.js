@@ -2,7 +2,8 @@
 "use strict";
 
 // Module
-var settingConfigurationApp = angular.module("settingConfiguration", ["ngRoute", "ngAnimate", "settingConfiguration.services"]);
+var settingConfigurationApp = angular.module("settingConfiguration",
+    ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");

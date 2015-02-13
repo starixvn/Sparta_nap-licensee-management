@@ -15,23 +15,43 @@
         {
         }
 
-        public BSRacingViewModel(IList<BSRacingItem> lstBetSettingItems, IDictionary<BSKeyPair, string> dctGameType)
+        public BSRacingViewModel(IList<BSRacingItem> lstItems, IDictionary<BSKeyPair, string> dctGameType)
         {
             // Bind data
             BSRows = new List<BSCheckableRowViewModel>();
-            foreach (BSRacingItem item in lstBetSettingItems)
+
+            foreach (var key in dctGameType.Keys)
             {
-                BSCheckableRowViewModel kenoVm = new BSCheckableRowViewModel(
-                    item.SportTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)].Split(';')[0],
-                    item.BetTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)].Split(';')[1],
-                    item.MinBet,
-                    item.MaxBet,
-                    item.MaxPerMatch,
-                    !item.DisableSuper,
-                    !item.DisableDownline,
-                    false);
+                BSCheckableRowViewModel kenoVm;
+                BSRacingItem item = lstItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
+                if (item != null)
+                {
+                    kenoVm = new BSCheckableRowViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        ((int)item.MinBet).ToString(),
+                        ((int)item.MaxBet).ToString(),
+                        ((int)item.MaxPerMatch).ToString(),
+                        !item.DisableSuper,
+                        !item.DisableDownline,
+                        false);
+                }
+                else
+                {
+                    kenoVm = new BSCheckableRowViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        string.Empty,
+                        string.Empty,
+                        string.Empty,
+                        false,
+                        false,
+                        false);
+                }
 
                 BSRows.Add(kenoVm);
             }

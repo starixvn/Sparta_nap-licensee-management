@@ -11,6 +11,7 @@ namespace Fanex.NAP.Licensee.Controllers
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.Common;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
@@ -249,9 +250,9 @@ namespace Fanex.NAP.Licensee.Controllers
                         sportbookVM.CustId,
                         item.SportTypeId,
                         item.BetTypeId,
-                        item.MinBet,
-                        item.MaxBet,
-                        item.MaxPerMatch,
+                        Converter.ToDecimal(item.MinBet),
+                        Converter.ToDecimal(item.MaxBet),
+                        Converter.ToDecimal(item.MaxPerMatch),
                         sportbookVM.IsApplyExistingMemberChecked);
 
                     ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
@@ -277,10 +278,10 @@ namespace Fanex.NAP.Licensee.Controllers
                 UpdateBetSettingItem updItem = new UpdateBetSettingItem();
                 updItem.CustId = numberGameVM.CustId;
                 updItem.SportType = numberGameVM.ProdId;
-                updItem.MinBet = item.MinBet;
-                updItem.MaxBet = item.MaxBet;
-                updItem.MaxPerMatch = item.MaxPerMatch;
-                updItem.MaxPerBall = item.MaxPerBall;
+                updItem.MinBet = Converter.ToDecimal(item.MinBet);
+                updItem.MaxBet = Converter.ToDecimal(item.MaxBet);
+                updItem.MaxPerMatch = Converter.ToDecimal(item.MaxPerMatch);
+                updItem.MaxPerBall = Converter.ToDecimal(item.MaxPerBall);
                 updItem.ExistedMember = numberGameVM.IsApplyExistingMemberChecked;
 
                 ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
@@ -308,9 +309,9 @@ namespace Fanex.NAP.Licensee.Controllers
                         virtualSportVM.CustId,
                         item.SportTypeId,
                         item.BetTypeId,
-                        item.MinBet,
-                        item.MaxBet,
-                        item.MaxPerMatch,
+                        Converter.ToDecimal(item.MinBet),
+                        Converter.ToDecimal(item.MaxBet),
+                        Converter.ToDecimal(item.MaxPerMatch),
                         virtualSportVM.IsEnableChecked,
                         virtualSportVM.IsDownlineChecked,
                         virtualSportVM.IsApplyExistingMemberChecked);
@@ -341,9 +342,9 @@ namespace Fanex.NAP.Licensee.Controllers
                         racingVM.CustId,
                         item.SportTypeId,
                         item.BetTypeId,
-                        item.MinBet,
-                        item.MaxBet,
-                        item.MaxPerMatch,
+                        Converter.ToDecimal(item.MinBet),
+                        Converter.ToDecimal(item.MaxBet),
+                        Converter.ToDecimal(item.MaxPerMatch),
                         item.IsSuperChecked,
                         item.IsDownlineChecked,
                         racingVM.IsApplyExistingMemberChecked);
@@ -374,9 +375,9 @@ namespace Fanex.NAP.Licensee.Controllers
                         kenoVM.CustId,
                         item.SportTypeId,
                         item.BetTypeId,
-                        item.MinBet,
-                        item.MaxBet,
-                        item.MaxPerMatch,
+                        Converter.ToDecimal(item.MinBet),
+                        Converter.ToDecimal(item.MaxBet),
+                        Converter.ToDecimal(item.MaxPerMatch),
                         item.IsSuperChecked,
                         item.IsDownlineChecked,
                         kenoVM.IsApplyExistingMemberChecked);

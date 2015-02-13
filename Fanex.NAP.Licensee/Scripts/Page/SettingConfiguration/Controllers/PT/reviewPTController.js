@@ -6,7 +6,7 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Review comm controller
-settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
+settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $location, $route, $routeParams, shareSettingsService) {
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.PT) {
         $location.path('/');
@@ -33,14 +33,17 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
             })
         .success(function (data) {
             if (data.IsOk === true) {
-                alert("Update PT successfully!");
-
+                alert("Update PT successfully!", false, function () {
+                    $location.path("/");
+                    $route.reload();
+                });
             }
             else {
-                alert("<strong>Error:</strong> <br/>" + data.Message);
+                alert("<strong>Error:</strong> <br/>" + data.Message, false, function () {
+                    $location.path("/");
+                    $route.reload();
+                });
             }
-
-            $location.path("/");
         })
         .error(function (data) {
             alert(data);

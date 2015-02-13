@@ -8,6 +8,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
     // Get common bet setting data
     $scope.editBS = {};
 
+    //    $.blockUI();
     $http.get(
             "GetEditBetSettingData",
             {
@@ -20,6 +21,9 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
             $scope.editBS = data;
         });
+    //        .finally(function () {
+    //            $.unblockUI({message: '<img src="img/loading.gif" />'});
+    //        });
 };
 
 // Navigator function
@@ -144,35 +148,57 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
+
+            if ($scope.isCopyAll === true) {
+                $scope.isNextEnabled = true;
+                return;
+            }
+
+            var arrValidRows = [];
             $.each(curBSRows, function (index, element) {
                 if (element.IsRowSelected === true) {
+                    var orgRow = {
+                        MinBet: orgBSRows[index].MinBet,
+                        MaxBet: orgBSRows[index].MaxBet,
+                        MaxPerMatch: orgBSRows[index].MaxPerMatch,
+                        MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
+                        IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
+                        IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
+                    };
 
-                    // Check if min, max, maxPerMatch is dirty
-                    if (curBSRows[index].MinBet.toString() !== orgBSRows[index].MinBet.toString()
-                    || curBSRows[index].MaxBet.toString() !== orgBSRows[index].MaxBet.toString()
-                    || curBSRows[index].MaxPerMatch.toString() !== orgBSRows[index].MaxPerMatch.toString()) {
-                        $scope.isNextEnabled = true;
-                        return false;
+                    var curRow = {
+                        MinBet: curBSRows[index].MinBet,
+                        MaxBet: curBSRows[index].MaxBet,
+                        MaxPerMatch: curBSRows[index].MaxPerMatch,
+                        MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
+                        IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
+                        IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
+                    };
+
+                    if (JSON.stringify(curRow) === JSON.stringify(orgRow)) {
+                        arrValidRows.push(false);
                     }
-
-                    // If Super, Downline exists => Check
-                    if (curBSRows[index].IsSuperChecked !== undefined && curBSRows[index].IsDownlineChecked !== undefined) {
-                        if (curBSRows[index].IsSuperChecked !== orgBSRows[index].IsSuperChecked
-                        || curBSRows[index].IsDownlineChecked !== orgBSRows[index].IsDownlineChecked) {
-                            $scope.isNextEnabled = true;
-                            return false;
-                        }
-                    }
-
-                    // If MaxPerBall exists => Check
-                    if (curBSRows[index].MaxPerBall !== undefined) {
-                        if (curBSRows[index].MaxPerBall.toString() !== orgBSRows[index].MaxPerBall.toString()) {
-                            $scope.isNextEnabled = true;
-                            return false;
-                        }
+                    else {
+                        // If CopyAll enable
+                        //if ($scope.isCopyAll === true && index === 0) {
+                        //    arrValidRows.push(true);
+                        //    // Break loop
+                        //    return false;
+                        //}
+                        arrValidRows.push(true);
                     }
                 }
             });
+
+            if (arrValidRows.length !== 0) {
+                var hasError = $(arrValidRows).is(function (index, element) {
+                    if (element === false) {
+                        return true;
+                    }
+                });
+
+                $scope.isNextEnabled = !hasError;
+            }
         }
     };
 
@@ -183,6 +209,15 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
 
 // Check Next constraints
 var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsService) {
+    var getValidNumber = function (strValue) {
+        if (strValue === null || strValue === "") {
+            return "0";
+        }
+        else {
+            return strValue;
+        }
+    };
+
     $scope.nextReviewBS = function () {
         // Check constraints on submit
         var hasError = false;
@@ -191,8 +226,8 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             if (element.IsRowSelected === true) {
 
                 // Check is dirty
-                if (parseFloat(curBSRows[index].MinBet) > parseFloat(curBSRows[index].MaxBet)
-                || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerMatch)) {
+                if (parseFloat(getValidNumber(curBSRows[index].MinBet)) > parseFloat(getValidNumber(curBSRows[index].MaxBet))
+                || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))) {
                     alert("Please recheck: min bet <= max bet <= max per match!");
                     hasError = true;
                     return false;
@@ -200,7 +235,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
 
                 // If MaxPerBall exists => Check
                 if (curBSRows[index].MaxPerBall !== undefined) {
-                    if (parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].MaxPerBall)) {
+                    if (parseFloat(getValidNumber(curBSRows[index].MaxPerMatch)) > parseFloat(getValidNumber(curBSRows[index].MaxPerBall))) {
                         alert("Please recheck: min bet <= max bet <= max per match <= max per ball!");
                         hasError = true;
                         return false;

@@ -39,7 +39,7 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
                     element.IsChecked = true;
                 }
                 else {
-                    element.IsChecked = false;
+                    element.IsChecked = true;
                     element.IsDisabled = true;
                     $scope.copyComm();
                 }

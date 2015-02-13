@@ -327,7 +327,7 @@ var site = (function () {
 })();
 /*override alert function*/
 window.oldAlert = window.alert;
-window.alert = function (message, fallback) {
+window.alert = function (message, fallback, callback) {
     "use strict";
     if (fallback) {
         window.oldAlert(message);
@@ -346,7 +346,12 @@ window.alert = function (message, fallback) {
                     }
                 }
             },
-            close: function () { $(this).remove(); },
+            close: function () {
+                if (callback !== undefined) {
+                    callback();
+                }
+                $(this).remove;
+            },
             draggable: true,
             modal: true,
             resizable: false,

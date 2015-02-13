@@ -19,17 +19,35 @@
         {
             // Bind data
             BSRows = new List<BSNumberGameRowViewModel>();
-            foreach (BSNumberGameItem item in lstItems)
+
+            foreach (var key in dctGameType.Keys)
             {
-                BSNumberGameRowViewModel numberGameRowVM = new BSNumberGameRowViewModel(
-                    item.SportTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.BetTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.MinBet,
-                    item.MaxBet,
-                    item.MaxPerMatch,
-                    item.MaxPerBall);
+                BSNumberGameRowViewModel numberGameRowVM;
+                BSNumberGameItem item = lstItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
+                if (item != null)
+                {
+                    numberGameRowVM = new BSNumberGameRowViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        ((int)item.MinBet).ToString(),
+                        ((int)item.MaxBet).ToString(),
+                        ((int)item.MaxPerMatch).ToString(),
+                        ((int)item.MaxPerBall).ToString());
+                }
+                else
+                {
+                    numberGameRowVM = new BSNumberGameRowViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        string.Empty,
+                        string.Empty,
+                        string.Empty,
+                        string.Empty);
+                }
 
                 BSRows.Add(numberGameRowVM);
             }

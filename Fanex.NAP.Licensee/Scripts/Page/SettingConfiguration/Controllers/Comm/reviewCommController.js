@@ -6,7 +6,7 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Review comm controller
-settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $location, shareSettingsService) {
+settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $location, $route, shareSettingsService) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.Comm) {
@@ -28,9 +28,10 @@ settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $l
                 CommRows: shareSettingsService.getCurSettings()
             })
         .success(function (data) {
-            alert(data);
-
-            $location.path("/");
+            alert(data, false, function () {
+                $location.path("/");
+                $route.reload();
+            });
         })
         .error(function (data) {
             alert(data);

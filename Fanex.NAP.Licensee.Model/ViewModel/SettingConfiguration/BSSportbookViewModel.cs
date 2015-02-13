@@ -19,17 +19,36 @@
         {
             // Bind data
             BSRows = new List<BSRowBaseViewModel>();
-            foreach (BSBaseItem item in lstItems)
+
+            foreach (var key in dctGameType.Keys)
             {
-                BSRowBaseViewModel sportbookRowVM = new BSRowBaseViewModel(
-                    item.SportTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.BetTypeId,
-                    dctGameType[dctGameType.Keys.First(k => k.SportTypeId == item.SportTypeId && k.BetTypeId == item.BetTypeId)],
-                    item.MinBet,
-                    item.MaxBet,
-                    item.MaxPerMatch,
-                    false);
+                BSRowBaseViewModel sportbookRowVM;
+                BSSportbookItem item = lstItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
+                if (item != null)
+                {
+                    sportbookRowVM = new BSRowBaseViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        ((int)item.MinBet).ToString(),
+                        ((int)item.MaxBet).ToString(),
+                        ((int)item.MaxPerMatch).ToString(),
+                        false);
+                }
+                else
+                {
+                    sportbookRowVM = new BSRowBaseViewModel(
+                        key.SportTypeId,
+                        dctGameType[key],
+                        key.BetTypeId,
+                        dctGameType[key],
+                        string.Empty,
+                        string.Empty,
+                        string.Empty,
+                        false);
+                }
+
                 BSRows.Add(sportbookRowVM);
             }
 

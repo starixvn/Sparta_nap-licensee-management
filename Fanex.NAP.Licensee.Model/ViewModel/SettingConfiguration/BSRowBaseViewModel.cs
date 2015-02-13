@@ -19,9 +19,9 @@
             string sportTypeName,
             int betTypeId,
             string betTypeName,
-            decimal minBet,
-            decimal maxBet,
-            decimal maxPerMatch,
+            string minBet,
+            string maxBet,
+            string maxPerMatch,
             bool isRowSelected)
         {
             SportTypeId = sportTypeId;
@@ -47,11 +47,11 @@
 
         public string BetTypeName { get; set; }
 
-        public decimal MinBet { get; set; }
+        public string MinBet { get; set; }
 
-        public decimal MaxBet { get; set; }
+        public string MaxBet { get; set; }
 
-        public decimal MaxPerMatch { get; set; }
+        public string MaxPerMatch { get; set; }
 
         public bool IsRowSelected { get; set; }
 

@@ -10,6 +10,7 @@ namespace Fanex.NAP.Licensee.Service
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
@@ -117,8 +118,8 @@ namespace Fanex.NAP.Licensee.Service
         {
             return new ResultInfo
             {
-                IsOk = Convert.ToInt32(db.GetParameterValue("@ErrCode")) > 0,
-                Message = db.GetParameterValue("@ErrMsg") as string
+                IsOk = Converter.ToInt(db.GetParameterValue("@ErrCode")) == 0,
+                Message = Converter.ToString2(db.GetParameterValue("@ErrMsg"))
             };
         }
     }

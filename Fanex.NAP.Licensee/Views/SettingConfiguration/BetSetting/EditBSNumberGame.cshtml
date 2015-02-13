@@ -25,16 +25,20 @@
         <tbody>
             <tr ng-repeat="item in editBS.BSRows">
                 <td>
-                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
+                        only-integer />
                 </td>
             </tr>
             <tr>
