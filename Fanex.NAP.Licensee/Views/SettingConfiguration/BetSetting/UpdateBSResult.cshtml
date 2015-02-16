@@ -5,5 +5,11 @@
 {
     <div>
         @item.SportOrBetTypeName : @(item.IsOk == true ? "Successful" : "Failed")
+        @if (item.IsOk == false)
+        {
+            <div>
+                Reason: @item.Message
+            </div>
+        }
     </div>
 }

@@ -350,7 +350,7 @@ namespace Fanex.NAP.Licensee.Controllers
                         racingVM.IsApplyExistingMemberChecked);
 
                     ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
+                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName.Replace(";", " / "), result.IsOk, result.Message));
                 }
             }
 
