@@ -140,7 +140,7 @@
     <Compile Include="DTO\SettingConfiguration\BSVirtualSportItem.cs" />
     <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\KeyPair.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
     <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
     <Compile Include="DTO\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
