@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.NAP.Licensee.Model
+namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;

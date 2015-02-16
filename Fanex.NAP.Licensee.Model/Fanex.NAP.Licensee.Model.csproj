@@ -146,14 +146,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="DataDomain\NapLicenseeFunctionKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NapLicenseeFunctionKeys.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <Compile Include="SettingItemHelper.cs" />
+    <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />
@@ -171,11 +170,10 @@
     <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
-    <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
+    <Compile Include="ViewModel\DefaultBetSetting\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\SettingConfiguration\" />
-    <Folder Include="ViewModel\DefaultBetSetting\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
