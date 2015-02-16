@@ -26,8 +26,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             using (var db = new ObjectDb("NAP_LM_LicenseePositionTakingSel"))
             {
-                object obj = db.ExecuteScalar(new { CustID = custId, Product = productId });
-                return obj.ToString();
+                return db.ExecuteScalar(new { CustID = custId, Product = productId }).ToString();
             }
         }
 
