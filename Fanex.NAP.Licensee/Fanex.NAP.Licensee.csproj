@@ -399,7 +399,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.ConnectionString.config.txt" />
     <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
