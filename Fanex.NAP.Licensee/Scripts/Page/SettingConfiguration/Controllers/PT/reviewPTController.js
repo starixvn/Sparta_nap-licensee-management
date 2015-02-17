@@ -22,7 +22,7 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
     };
 
     $scope.updatePT = function () {
-        $http.get(
+        $http.post(
             "UpdatePT",
             {
                 params: {

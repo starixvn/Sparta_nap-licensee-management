@@ -61,18 +61,18 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <summary>
         /// Get Position taking data.
         /// </summary>
-        /// <param name="scfVM">Setting configuration view model.</param>
+        /// <param name="settingConfigVM">Setting configuration view model.</param>
         /// <returns>String return.</returns>
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
-        public JsonResult GetEditPTData(SettingConfigFilterViewModel scfVM)
+        public JsonResult GetEditPTData(SettingConfigFilterViewModel settingConfigVM)
         {
-            string value = _settingConfigurationService.GetPositionTaking(scfVM.CustId, scfVM.ProdId);
+            string value = _settingConfigurationService.GetPositionTaking(settingConfigVM.CustId, settingConfigVM.ProdId);
 
             float curPT = string.IsNullOrEmpty(value) ? -1 : float.Parse(value);
 
             PTViewModel editPTVm = new PTViewModel()
             {
-                ProductName = _commonService.GetProductTypeList.Where(n => n.Id == scfVM.ProdId).First().Name,
+                ProductName = _commonService.GetProductTypeList.Where(n => n.Id == settingConfigVM.ProdId).First().Name,
                 PositionTakings = _commonService.GetPositionTakingList,
                 SelectedPositionTaking = curPT.ToString("0.###")
             };
@@ -86,6 +86,7 @@ namespace Fanex.NAP.Licensee.Controllers
             return PartialView("PT/ReviewPT");
         }
 
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public JsonResult UpdatePT(UpdatePTViewModel updatePTViewModel)
         {
@@ -125,6 +126,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="updateCommVM">Update commission view model.</param>
         /// <returns>String result.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateComm(UpdateCommViewModel updateCommVM)
         {
@@ -174,31 +176,31 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <summary>
         /// Get edit setting data.
         /// </summary>
-        /// <param name="scfVM">Setting config filter view model.</param>
+        /// <param name="settingConfigVM">Setting config filter view model.</param>
         /// <returns>String result.</returns>
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
-        public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel scfVM)
+        public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel settingConfigVM)
         {
-            switch (scfVM.ProdId)
+            switch (settingConfigVM.ProdId)
             {
                 case 1:
-                    IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(scfVM.CustId, scfVM.ProdId);
+                    IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
                     return Json(sportBookVM, JsonRequestBehavior.AllowGet);
                 case 151:
-                    IList<BSRacingItem> lstRacingItems = _settingConfigurationService.GetBetSetting<BSRacingItem>(scfVM.CustId, scfVM.ProdId);
+                    IList<BSRacingItem> lstRacingItems = _settingConfigurationService.GetBetSetting<BSRacingItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSRacingViewModel racingVM = new BSRacingViewModel(lstRacingItems, _commonService.GetRacingGameTypeList);
                     return Json(racingVM, JsonRequestBehavior.AllowGet);
                 case 161:
-                    IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(scfVM.CustId, scfVM.ProdId);
+                    IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
                     return Json(numberGameVM, JsonRequestBehavior.AllowGet);
                 case 180:
-                    IList<BSVirtualSportItem> lstVirtualSportItems = _settingConfigurationService.GetBetSetting<BSVirtualSportItem>(scfVM.CustId, scfVM.ProdId);
+                    IList<BSVirtualSportItem> lstVirtualSportItems = _settingConfigurationService.GetBetSetting<BSVirtualSportItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSVirtualSportViewModel virtualSportVM = new BSVirtualSportViewModel(lstVirtualSportItems, _commonService.GetVirtualSportGameTypeList);
                     return Json(virtualSportVM, JsonRequestBehavior.AllowGet);
                 case 202:
-                    IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(scfVM.CustId, scfVM.ProdId);
+                    IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
                     return Json(kenoVm, JsonRequestBehavior.AllowGet);
                 default:
@@ -237,6 +239,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="sportbookVM">Bet setting sport book view model.</param>
         /// <returns>Partial view.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
         {
@@ -268,6 +271,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="numberGameVM">Bet setting number game view model.</param>
         /// <returns>Partial view.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
         {
@@ -296,6 +300,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="virtualSportVM">Bet setting virtual sport view model.</param>
         /// <returns>Partial view.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
         {
@@ -329,6 +334,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="racingVM">Bet setting racing view model.</param>
         /// <returns>Partial view.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
         {
@@ -362,6 +368,7 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="kenoVM">Bet setting keno view model.</param>
         /// <returns>Partial view.</returns>
+        [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Read)]
         public PartialViewResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
         {
