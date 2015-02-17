@@ -56,7 +56,7 @@
 
             coreJs.Transforms.Add(scriptTransformer);
             bundles.Add(coreJs);
-            // Setting configuration
+
             var settingConfigurationJs = new Bundle("~/bundles/settingConfigurationJs")
                 .IncludeDirectory("~/Scripts/page/SettingConfiguration/", "*.js", true);
 
