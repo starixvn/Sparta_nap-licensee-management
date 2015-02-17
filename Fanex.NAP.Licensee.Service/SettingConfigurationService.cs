@@ -6,12 +6,12 @@
 
 namespace Fanex.NAP.Licensee.Service
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 

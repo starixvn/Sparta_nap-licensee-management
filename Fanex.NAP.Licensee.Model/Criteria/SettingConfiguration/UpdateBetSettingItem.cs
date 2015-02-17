@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.DTO.SettingConfiguration
+﻿namespace Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration
 {
     using Fanex.NAP.Framework.Data;
 

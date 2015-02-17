@@ -6,7 +6,6 @@
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -16,10 +15,10 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
-    using Fanex.NAP.Licensee.Model.ViewModel;
     using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
 

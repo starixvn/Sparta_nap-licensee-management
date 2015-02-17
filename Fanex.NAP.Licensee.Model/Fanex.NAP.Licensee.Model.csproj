@@ -143,7 +143,7 @@
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
     <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\UpdateBetSettingItem.cs" />
+    <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,9 +173,7 @@
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
     <Compile Include="ViewModel\DefaultBetSetting\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Criteria\SettingConfiguration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
