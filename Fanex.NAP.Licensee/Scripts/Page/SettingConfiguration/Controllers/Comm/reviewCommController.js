@@ -9,7 +9,7 @@ var settingConfigurationApp = angular.module("settingConfiguration");
 settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $location, $route, shareSettingsService) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
-    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.Comm) {
+    if ($scope.selectedContext.FuncName !== ContextFunc.Comm) {
         $location.path('/');
         return;
     }

@@ -9,7 +9,7 @@ var settingConfigurationApp = angular.module("settingConfiguration");
 settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
-    if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.PT) {
+    if ($scope.selectedContext.FuncName !== ContextFunc.PT) {
         $location.path('/');
         return;
     }
@@ -26,7 +26,7 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
+            shareSettingsService.saveOrgSettings(angular.copy(data));
 
             $scope.editPTData = data;
         });
@@ -39,11 +39,11 @@ settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $locat
 
     $scope.$watch("editPTData.SelectedPositionTaking", function () {
         $scope.isNextEnabled = false;
-        // A litle hack: Watch when it has data
+        // A little hack: Watch when it has data
         if ($scope.editPTData.SelectedPositionTaking !== undefined) {
             var orgSelectedPT = shareSettingsService.getOrgSettings().SelectedPositionTaking;
             var curSelectedPT = $scope.editPTData.SelectedPositionTaking;
-            if (curSelectedPT.toString() !== orgSelectedPT.toString()) {
+            if (curSelectedPT !== orgSelectedPT) {
                 $scope.isNextEnabled = true;
             }
         }

@@ -26,7 +26,7 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
+            shareSettingsService.saveOrgSettings(angular.copy(data));
 
             $scope.EditCommRows = data;
         });
@@ -70,7 +70,7 @@ settingConfigurationApp.controller("editCommCtrl", function ($scope, $http, $loc
         if (curCommList[0] !== undefined) {
             $.each(curCommList, function (index, element) {
                 if (element.IsChecked === true) {
-                    if (curCommList[index].SelectedComm.toString() !== orgCommList[index].SelectedComm.toString()) {
+                    if (curCommList[index].SelectedComm !== orgCommList[index].SelectedComm) {
                         $scope.isNextEnabled = true;
                     }
                 }

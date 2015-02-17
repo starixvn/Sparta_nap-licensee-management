@@ -55,43 +55,10 @@
                 "~/Scripts/Core/site.js");
 
             coreJs.Transforms.Add(scriptTransformer);
-
             bundles.Add(coreJs);
-
-            // Core angularJs
-            var coreAngularJs = new Bundle("~/bundles/coreAngularJs")
-                .Include(
-                "~/Scripts/angular/angular.min.js",
-                "~/Scripts/angular/angular-route.min.js",
-                "~/Scripts/angular/angular-animate.min.js");
-
-            coreAngularJs.Transforms.Add(scriptTransformer);
-            bundles.Add(coreAngularJs);
-
             // Setting configuration
             var settingConfigurationJs = new Bundle("~/bundles/settingConfigurationJs")
-                .Include(
-                "~/Scripts/Page/SettingConfiguration/Directives/onlyIntegerDirective.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/settingConfiguration.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/settingConfigurationController.js",
-                "~/Scripts/Page/SettingConfiguration/Services/filterDataService.js",
-                "~/Scripts/Page/SettingConfiguration/Services/shareSettingsService.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/PT/editPTController.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/PT/reviewPTController.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/Comm/editCommController.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/Comm/reviewCommController.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSFuncs.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSKenoCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSNumberGameCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSRacingCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSSportbookCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/editBSVirtualSportCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSFuncs.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSKenoCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSNumberGameCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSRacingCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSSportbookCtrl.js",
-                "~/Scripts/Page/SettingConfiguration/Controllers/BetSetting/reviewBSVirtualSportCtrl.js");
+                .IncludeDirectory("~/Scripts/page/SettingConfiguration/", "*.js", true);
 
             settingConfigurationJs.Transforms.Add(scriptTransformer);
             bundles.Add(settingConfigurationJs);

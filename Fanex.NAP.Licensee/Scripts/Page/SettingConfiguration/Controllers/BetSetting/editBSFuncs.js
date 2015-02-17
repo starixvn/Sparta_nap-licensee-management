@@ -8,7 +8,6 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
     // Get common bet setting data
     $scope.editBS = {};
 
-    //    $.blockUI();
     $http.get(
             "GetEditBetSettingData",
             {
@@ -18,19 +17,17 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
+            shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
         });
-    //        .finally(function () {
-    //            $.unblockUI({message: '<img src="img/loading.gif" />'});
-    //        });
+
 };
 
 // Navigator function
 var editBSNavigatorFunc = function ($scope, $location, shareSettingsService) {
     // Redirect if wrong context
     var selectedContext = shareSettingsService.getWorkingContext();
-    if (selectedContext.FuncName === "" || selectedContext.FuncName !== ContextFunc.BetSetting) {
+    if (selectedContext.FuncName !== ContextFunc.BetSetting) {
         $location.path('/');
         return;
     }
@@ -56,7 +53,7 @@ var editBSAllSportFunc = function ($scope) {
 
     var syncAllSport = function () {
         var isAllChecked = true;
-        // A litle hack: Watch when it has data
+        // A little hack: Watch when it has data
         if ($scope.editBS.BSRows !== undefined) {
             $.each($scope.editBS.BSRows, function (index, element) {
                 if (element.IsRowSelected === false) {
@@ -119,7 +116,7 @@ var editBSRowCheckableFunc = function ($scope) {
     };
 };
 
-// Row is checkable with super and downline
+// Row is checkable with super and down line
 var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
     // Inherit editBSRowCheckableFunc
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
@@ -144,7 +141,7 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
     // Private functions
     var checkDirty = function () {
         $scope.isNextEnabled = false;
-        // A litle hack: Watch when it has data
+        // A little hack: Watch when it has data
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
@@ -175,16 +172,10 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
                         IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
                     };
 
-                    if (JSON.stringify(curRow) === JSON.stringify(orgRow)) {
+                    if (angular.equals(curRow,orgRow)) {
                         arrValidRows.push(false);
                     }
                     else {
-                        // If CopyAll enable
-                        //if ($scope.isCopyAll === true && index === 0) {
-                        //    arrValidRows.push(true);
-                        //    // Break loop
-                        //    return false;
-                        //}
                         arrValidRows.push(true);
                     }
                 }
