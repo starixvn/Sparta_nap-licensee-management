@@ -1,4 +1,5 @@
-﻿var directiveModule = angular.module('settingConfiguration.directives', []);
+﻿/* jshint ignore:start */
+var directiveModule = angular.module('settingConfiguration.directives', []);
 
 directiveModule.directive("onlyInteger", function () {
     return {
@@ -12,4 +13,5 @@ directiveModule.directive("onlyInteger", function () {
             );
         }
     };
-});
+    });
+    /* jshint ignore:end */
