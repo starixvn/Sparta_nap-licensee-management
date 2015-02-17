@@ -1,5 +1,4 @@
-﻿/* global ContextFunc */
-/* exported editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc, 
+﻿/* exported editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc, 
 editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 "use strict";
 
@@ -24,7 +23,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
 };
 
 // Navigator function
-var editBSNavigatorFunc = function ($scope, $location, shareSettingsService) {
+    var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
     var selectedContext = shareSettingsService.getWorkingContext();
     if (selectedContext.FuncName !== ContextFunc.BetSetting) {

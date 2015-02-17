@@ -1,12 +1,11 @@
-﻿/* global ContextFunc */
-
+﻿
 "use strict";
 
 // Get the module
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Review comm controller
-settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $location, $route, shareSettingsService) {
+settingConfigurationApp.controller("reviewCommCtrl", function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName !== ContextFunc.Comm) {

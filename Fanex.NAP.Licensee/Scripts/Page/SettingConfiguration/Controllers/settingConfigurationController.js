@@ -1,12 +1,13 @@
-﻿/* global ContextFunc */
-
+﻿
 "use strict";
 
 // Main controller
 var settingConfigurationApp = angular.module("settingConfiguration");
 settingConfigurationApp.controller("settingConfigurationCtrl", [
-'$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService', 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl',
-function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl) {
+'$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
+ 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl','ContextFunc',
+function ($scope, $http, $location, $route, $routeParams,
+ shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl, ContextFunc) {
     // Load data for ddls
     $scope.filterData = {
         // licensees

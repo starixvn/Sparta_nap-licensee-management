@@ -1,12 +1,11 @@
-﻿/* global ContextFunc */
-
+﻿
 "use strict";
 
 // Get the module
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
-settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService) {
+settingConfigurationApp.controller("editPTCtrl", function ($scope, $http, $location, $routeParams, shareSettingsService, ContextFunc) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName !== ContextFunc.PT) {

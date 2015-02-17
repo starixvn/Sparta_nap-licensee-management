@@ -1,5 +1,4 @@
-﻿/* global ContextFunc */
-/* exported reviewBSModelFunc, reviewBSNavigatorFunc */
+﻿/* exported reviewBSModelFunc, reviewBSNavigatorFunc */
 
 "use strict";
 
@@ -17,13 +16,13 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
                 }
             })
         .success(function (data) {
-            shareSettingsService.saveOrgSettings(JSON.parse(JSON.stringify(data)));
+            shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
         });
 };
 
 // Navigator function
-var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService) {
+    var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.BetSetting) {
