@@ -65,18 +65,6 @@
 
         public IList<CommRowViewModel> EditCommRows { get; set; }
 
-        public CommRowViewModel RacingUK { get; set; }
-
-        public CommRowViewModel RacingSA { get; set; }
-
-        public CommRowViewModel RacingAust { get; set; }
-
-        public CommRowViewModel GreyhoundsUK { get; set; }
-
-        public CommRowViewModel GreyhoundsAust { get; set; }
-
-        public CommRowViewModel HarnessAust { get; set; }
-
         /// <summary>
         /// Compute row span.
         /// </summary>

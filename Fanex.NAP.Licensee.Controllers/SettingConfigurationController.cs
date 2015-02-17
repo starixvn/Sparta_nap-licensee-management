@@ -6,6 +6,7 @@
 
 namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -158,15 +159,15 @@ namespace Fanex.NAP.Licensee.Controllers
             string rootPath = "BetSetting/";
             switch (sportType)
             {
-                case 1:
+                case SportType.SportBook:
                     return PartialView(rootPath + "EditBSSportbook");
-                case 151:
+                case SportType.Racing:
                     return PartialView(rootPath + "EditBSRacing");
-                case 161:
+                case SportType.NumberGame:
                     return PartialView(rootPath + "EditBSNumberGame");
-                case 180:
+                case SportType.VirtualSport:
                     return PartialView(rootPath + "EditBSVirtualSport");
-                case 202:
+                case SportType.Keno:
                     return PartialView(rootPath + "EditBSKeno");
                 default:
                     return PartialView(rootPath + "UnsupportedFunction");
@@ -183,23 +184,23 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             switch (settingConfigVM.ProdId)
             {
-                case 1:
+                case SportType.SportBook:
                     IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
                     return Json(sportBookVM, JsonRequestBehavior.AllowGet);
-                case 151:
+                case SportType.Racing:
                     IList<BSRacingItem> lstRacingItems = _settingConfigurationService.GetBetSetting<BSRacingItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSRacingViewModel racingVM = new BSRacingViewModel(lstRacingItems, _commonService.GetRacingGameTypeList);
                     return Json(racingVM, JsonRequestBehavior.AllowGet);
-                case 161:
+                case SportType.NumberGame:
                     IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
                     return Json(numberGameVM, JsonRequestBehavior.AllowGet);
-                case 180:
+                case SportType.VirtualSport:
                     IList<BSVirtualSportItem> lstVirtualSportItems = _settingConfigurationService.GetBetSetting<BSVirtualSportItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSVirtualSportViewModel virtualSportVM = new BSVirtualSportViewModel(lstVirtualSportItems, _commonService.GetVirtualSportGameTypeList);
                     return Json(virtualSportVM, JsonRequestBehavior.AllowGet);
-                case 202:
+                case SportType.Keno:
                     IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
                     return Json(kenoVm, JsonRequestBehavior.AllowGet);
@@ -219,15 +220,15 @@ namespace Fanex.NAP.Licensee.Controllers
             string rootPath = "BetSetting/";
             switch (sportType)
             {
-                case 1:
+                case SportType.SportBook:
                     return PartialView(rootPath + "ReviewBSSportbook");
-                case 151:
+                case SportType.Racing:
                     return PartialView(rootPath + "ReviewBSRacing");
-                case 161:
+                case SportType.NumberGame:
                     return PartialView(rootPath + "ReviewBSNumberGame");
-                case 180:
+                case SportType.VirtualSport:
                     return PartialView(rootPath + "ReviewBSVirtualSport");
-                case 202:
+                case SportType.Keno:
                     return PartialView(rootPath + "ReviewBSKeno");
                 default:
                     return PartialView(rootPath + "UnsupportedFunction");

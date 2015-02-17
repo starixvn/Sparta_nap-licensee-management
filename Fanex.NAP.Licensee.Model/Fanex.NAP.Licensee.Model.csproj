@@ -121,6 +121,7 @@
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
