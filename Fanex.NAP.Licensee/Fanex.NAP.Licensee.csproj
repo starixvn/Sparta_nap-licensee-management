@@ -482,7 +482,7 @@
     <Content Include="Views\Error\UnsupportedFunction.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
-    <None Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
