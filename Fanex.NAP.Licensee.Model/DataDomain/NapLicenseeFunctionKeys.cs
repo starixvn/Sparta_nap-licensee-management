@@ -7,7 +7,7 @@
 // </summary>
 //
 // <history>
-//  <change who="Kaden.Trinh" date="1/27/2015 12:49:40 PM">Created and Implement</change>
+//  <change who="Kaden.Trinh" date="2/26/2015 10:24:47 AM">Created and Implement</change>
 // </history>
 namespace Fanex.NAP.Licensee.Model.DataDomain
 {
