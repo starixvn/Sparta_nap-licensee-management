@@ -5,7 +5,8 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit Comm controller
-settingConfigurationApp.controller("editCommCtrl",['$scope', '$http', '$location', 'shareSettingsService', 'ContextFunc', function ($scope, $http, $location, shareSettingsService, ContextFunc) {
+settingConfigurationApp.controller("editCommCtrl", ['$scope', '$http', '$location', 'shareSettingsService', 'ContextFunc', 
+function ($scope, $http, $location, shareSettingsService, ContextFunc) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName === "" || $scope.selectedContext.FuncName !== ContextFunc.Comm) {
