@@ -6,7 +6,7 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
-settingConfigurationApp.controller("reviewBSRacingCtrl", function ($scope, $injector, $http, $location, $route, shareSettingsService) {
+settingConfigurationApp.controller("reviewBSRacingCtrl",['$scope', '$injector', '$http', '$location', '$route', 'shareSettingsService', function ($scope, $injector, $http, $location, $route, shareSettingsService) {
     // Inherit
     $injector.invoke(reviewBSNavigatorFunc, this, { $scope: $scope });
 
@@ -31,4 +31,4 @@ settingConfigurationApp.controller("reviewBSRacingCtrl", function ($scope, $inje
             alert(data);
         });
     };
-});
+}]);

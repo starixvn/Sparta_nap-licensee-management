@@ -6,7 +6,7 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
-settingConfigurationApp.controller("editBSRacingCtrl", function ($scope, $injector) {
+settingConfigurationApp.controller("editBSRacingCtrl",['$scope','$injector', function ($scope, $injector) {
     // Inherit
     $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 
@@ -19,4 +19,4 @@ settingConfigurationApp.controller("editBSRacingCtrl", function ($scope, $inject
     $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
-});
+}]);

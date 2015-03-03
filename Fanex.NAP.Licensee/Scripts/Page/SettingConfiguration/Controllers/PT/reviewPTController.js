@@ -5,7 +5,7 @@
 var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Review comm controller
-settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $location, $route, $routeParams, shareSettingsService, ContextFunc) {
+settingConfigurationApp.controller("reviewPTCtrl",['$scope', '$http', '$location',' $routeParams', 'shareSettingsService', 'ContextFunc', function ($scope, $http, $location, $route, $routeParams, shareSettingsService, ContextFunc) {
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName !== ContextFunc.PT) {
         $location.path('/');
@@ -52,4 +52,4 @@ settingConfigurationApp.controller("reviewPTCtrl", function ($scope, $http, $loc
     $scope.backEditPT = function () {
         $location.path("/EditPT");
     };
-});
+}]);
