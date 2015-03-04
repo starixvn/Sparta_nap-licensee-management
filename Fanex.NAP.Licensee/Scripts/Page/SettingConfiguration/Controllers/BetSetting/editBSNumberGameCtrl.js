@@ -1,9 +1,6 @@
-﻿/* global editBSNavigatorFunc, editBSModelFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* global settingConfigurationApp, editBSNavigatorFunc, editBSModelFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
-
-// Get the module
-var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
 settingConfigurationApp.controller("editBSNumberGameCtrl",['$scope','$injector', function ($scope, $injector) {

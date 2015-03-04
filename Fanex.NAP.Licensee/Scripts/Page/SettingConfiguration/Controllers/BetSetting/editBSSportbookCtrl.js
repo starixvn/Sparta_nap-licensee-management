@@ -1,14 +1,12 @@
-﻿/* global editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* global settingConfigurationApp, editBSModelFunc, editBSNavigatorFunc,
+editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
-// Get the module
-var settingConfigurationApp = angular.module("settingConfiguration");
-
 // Edit PT controller
-settingConfigurationApp.controller("editBSSportbookCtrl",['$scope','$injector', function ($scope, $injector) {
+settingConfigurationApp.controller("editBSSportbookCtrl", ['$scope', '$injector', function ($scope, $injector) {
     // Inherit
-    $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
+   $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSModelFunc, this, { $scope: $scope });
 
@@ -16,7 +14,7 @@ settingConfigurationApp.controller("editBSSportbookCtrl",['$scope','$injector', 
 
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
 
-    $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
-
-    $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
+   $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
+   
+   $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 }]);

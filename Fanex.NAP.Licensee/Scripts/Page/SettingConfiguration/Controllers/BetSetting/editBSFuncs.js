@@ -20,10 +20,10 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             $scope.editBS = data;
         });
 
-};
-
+    };
+    editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
 // Navigator function
-    var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
+var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
     var selectedContext = shareSettingsService.getWorkingContext();
     if (selectedContext.FuncName !== ContextFunc.BetSetting) {
@@ -31,7 +31,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
         return;
     }
 };
-
+editBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService','ContextFunc'];
 // AllSport function
 var editBSAllSportFunc = function ($scope) {
 
@@ -65,7 +65,7 @@ var editBSAllSportFunc = function ($scope) {
 
     $scope.$watch("editBS.BSRows", syncAllSport, true);
 };
-
+editBSAllSportFunc.$inject = ['$scope'];
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope) {
 
@@ -114,7 +114,7 @@ var editBSRowCheckableFunc = function ($scope) {
         }
     };
 };
-
+editBSRowCheckableFunc.$inject = ['$scope'];
 // Row is checkable with super and down line
 var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
     // Inherit editBSRowCheckableFunc
@@ -135,7 +135,7 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
         }
     };
 };
-
+editBSRowCheckableSuperDownlineFunc.$inject = ['$scope', '$injector'];
 var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {
     // Private functions
     var checkDirty = function () {
@@ -171,7 +171,7 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
                         IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
                     };
 
-                    if (angular.equals(curRow,orgRow)) {
+                    if (angular.equals(curRow, orgRow)) {
                         arrValidRows.push(false);
                     }
                     else {
@@ -196,7 +196,7 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
 
     $scope.$watch("editBS.BSRows", checkDirty, true);
 };
-
+editBSNextEnabilityFunc.$inject = ['$scope', '$location', 'shareSettingsService'];
 // Check Next constraints
 var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsService) {
     var getValidNumber = function (strValue) {
@@ -242,3 +242,4 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
     };
 };
+editBSNextConstraintsFunc.$inject = ['$scope', '$location', 'shareSettingsService'];

@@ -1,8 +1,9 @@
-﻿
+﻿/* global settingConfigurationApp */
+
 "use strict";
 
 // Main controller
-var settingConfigurationApp = angular.module("settingConfiguration");
+
 settingConfigurationApp.controller("settingConfigurationCtrl", [
 '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
  'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl','ContextFunc',

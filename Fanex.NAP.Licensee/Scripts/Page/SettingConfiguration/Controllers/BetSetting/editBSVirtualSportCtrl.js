@@ -1,9 +1,8 @@
-﻿/* global editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* global settingConfigurationApp, editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc,
+editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
-// Get the module
-var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
 settingConfigurationApp.controller("editBSVirtualSportCtrl",['$scope','$injector', function ($scope, $injector) {

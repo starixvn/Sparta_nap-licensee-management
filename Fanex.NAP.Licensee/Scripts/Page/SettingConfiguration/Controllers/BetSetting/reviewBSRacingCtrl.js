@@ -1,9 +1,7 @@
-﻿/* global reviewBSNavigatorFunc, reviewBSModelFunc */
+﻿/* global settingConfigurationApp, reviewBSNavigatorFunc, reviewBSModelFunc */
 
 "use strict";
 
-// Get the module
-var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit PT controller
 settingConfigurationApp.controller("reviewBSRacingCtrl", ['$scope', '$injector', '$http', '$location', '$route', 'shareSettingsService',

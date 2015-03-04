@@ -1,8 +1,8 @@
 ﻿/* exported ContextFunc */
 "use strict";
-
+var settingConfigurationApp = settingConfigurationApp || {};
 // Module
-var settingConfigurationApp = angular.module("settingConfiguration",
+settingConfigurationApp = angular.module("settingConfiguration",
     ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives"]);
 
 // Constant

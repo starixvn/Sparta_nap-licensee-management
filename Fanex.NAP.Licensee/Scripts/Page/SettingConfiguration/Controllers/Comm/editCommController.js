@@ -1,8 +1,5 @@
-﻿
+﻿/* global settingConfigurationApp */
 "use strict";
-
-// Get the module
-var settingConfigurationApp = angular.module("settingConfiguration");
 
 // Edit Comm controller
 settingConfigurationApp.controller("editCommCtrl", ['$scope', '$http', '$location', 'shareSettingsService', 'ContextFunc', 

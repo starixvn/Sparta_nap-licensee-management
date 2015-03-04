@@ -20,7 +20,7 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
             $scope.editBS = data;
         });
 };
-
+    reviewBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 // Navigator function
     var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
@@ -34,4 +34,4 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
         $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
     };
 };
-
+reviewBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService', 'ContextFunc'];
