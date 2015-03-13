@@ -5,6 +5,15 @@
         <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
         Apply existing menbers
     </label>
+     <label class="checkbox-inline">
+        <input ng-model="editBS.IsEnableChecked" ng-disabled="editBS.IsEnableDisabled" type="checkbox">
+        Enable Product
+    </label>
+    <label class="checkbox-inline">
+        <input ng-model="editBS.IsDownlineChecked" ng-disabled="editBS.IsDownlineDisabled"
+            type="checkbox">
+        Enable Downline
+    </label>
     <table class="table table-bordered table-setting">
         <thead>
             <tr>
@@ -20,12 +29,6 @@
                 <th>
                     Max Per Match
                 </th>
-                <th>
-                    Super
-                </th>
-                <th>
-                    Downlines
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -36,19 +39,13 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" only-integer />
+                    <input type="text" ng-model="item.MinBet" bs-validation="MinBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" only-integer />
+                    <input type="text" ng-model="item.MaxBet" bs-validation="MaxBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" only-integer />
-                </td>
-                <td>
-                    <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="item.IsSuperDisabled" />
-                </td>
-                <td>
-                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="item.IsDownlineDisabled" />
+                    <input type="text" ng-model="item.MaxPerMatch" bs-validation="MaxPerMatch" only-integer />
                 </td>
             </tr>
             <tr>

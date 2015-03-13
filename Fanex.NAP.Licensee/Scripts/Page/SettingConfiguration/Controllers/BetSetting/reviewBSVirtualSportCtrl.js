@@ -10,23 +10,6 @@ function ($scope, $injector, $http, $location, $route, shareSettingsService) {
 
     $injector.invoke(reviewBSModelFunc, this, { $scope: $scope });
 
-    $scope.updateBS = function () {
-        $http.post(
-            "UpdateBetSettingVirtualSport",
-            {
-                CustId: shareSettingsService.getWorkingContext().CustId,
-                ProdId: shareSettingsService.getWorkingContext().ProdId,
-                IsApplyExistingMemberChecked: shareSettingsService.getCurSettings().IsApplyExistingMemberChecked,
-                BSRows: shareSettingsService.getCurSettings().BSRows
-            })
-        .success(function (data) {
-            alert(data, false, function () {
-                $location.path("/");
-                $route.reload();
-            });
-        })
-        .error(function (data) {
-            alert(data);
-        });
-    };
+    shareSettingsService.getWorkingContext().Url = "UpdateBetSettingVirtualSport";
+
 }]);

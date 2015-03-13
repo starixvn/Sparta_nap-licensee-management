@@ -3,7 +3,7 @@
 "use strict";
 
 // Review comm controller
-settingConfigurationApp.controller("reviewPTCtrl", ['$scope', '$http', '$location','$route', 'shareSettingsService', 'ContextFunc',
+settingConfigurationApp.controller("reviewPTCtrl", ['$scope', '$http', '$location', '$route', 'shareSettingsService', 'ContextFunc',
 function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     $scope.selectedContext = shareSettingsService.getWorkingContext();
     if ($scope.selectedContext.FuncName !== ContextFunc.PT) {
@@ -20,6 +20,7 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     };
 
     $scope.updatePT = function () {
+        $('.btn-primary').attr('disabled', 'disabled');
         $http.post(
             "UpdatePT",
             {
@@ -31,24 +32,24 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
             })
         .success(function (data) {
             if (data.IsOk === true) {
-                alert("Update PT successfully!", false, function () {
-                    $location.path("/");
-                    $route.reload();
-                });
+                $('#notice').html("Update PT successfully!");
+                $('#notice').removeClass('alert-danger').addClass('alert-success show');
             }
             else {
-                alert("<strong>Error:</strong> <br/>" + data.Message, false, function () {
-                    $location.path("/");
-                    $route.reload();
-                });
+                $('#notice').html(data.Message);
+                $('#notice').removeClass('alert-success').addClass('alert-danger show');
             }
+            $('.btn-primary').removeAttr("disabled");
         })
         .error(function (data) {
-            alert(data);
+            $('#notice').html(show);
+            $('#notice').removeClass('alert-success').addClass('alert-danger show');
+            $('.btn-primary').removeAttr("disabled");
         });
     };
 
     $scope.backEditPT = function () {
+        shareSettingsService.getWorkingContext().IsBack = true;
         $location.path("/EditPT");
     };
-}]);
+} ]);

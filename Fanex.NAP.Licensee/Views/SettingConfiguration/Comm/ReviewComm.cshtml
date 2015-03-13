@@ -18,6 +18,12 @@
                     <th>
                         Updated
                     </th>
+                    <th ng-if="IsUpdating">
+                        Status
+                    </th>
+                    <th ng-if="IsUpdating">
+                        Message
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +42,12 @@
                     </td>
                     <td>
                         {{reviewCommData.CurComm[$index].IsChecked === true? 'X': ''}}
+                    </td>
+                    <td ng-if="IsUpdating">
+                        <span class="glyphicon {{reviewCommData.CurComm[$index].Status}}"></span>
+                    </td>
+                    <td ng-if="IsUpdating">
+                        {{reviewCommData.CurComm[$index].Message}}
                     </td>
                 </tr>
                 <tr>

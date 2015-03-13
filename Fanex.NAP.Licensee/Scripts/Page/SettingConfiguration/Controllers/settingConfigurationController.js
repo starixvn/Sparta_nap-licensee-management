@@ -6,7 +6,7 @@
 
 settingConfigurationApp.controller("settingConfigurationCtrl", [
 '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
- 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl','ContextFunc',
+ 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl', 'ContextFunc',
 function ($scope, $http, $location, $route, $routeParams,
  shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl, ContextFunc) {
     // Load data for ddls
@@ -91,4 +91,60 @@ function ($scope, $http, $location, $route, $routeParams,
         }
     };
 
+    $scope.updateBS = function () {
+        $scope.IsUpdating = true;
+        var BSRows = shareSettingsService.getCurSettings().BSRows;
+        var rowIndex = getRowIndex(BSRows, -1);
+        if (rowIndex !== undefined) {
+            postBetSetting(BSRows, rowIndex);
+        }
+    };
+
+    var getRowIndex = function (BSRows, rowIndex) {
+        for (var index = rowIndex + 1; index < BSRows.length; index++) {
+            if (BSRows[index].IsRowSelected) {
+                return index;
+            }
+        }
+        return undefined;
+    };
+
+    var postBetSetting = function (BSRows, rowIndex) {
+        var bsRow = BSRows[rowIndex],
+            custId = shareSettingsService.getWorkingContext().CustId,
+            prodId = shareSettingsService.getWorkingContext().ProdId,
+            isApplyExistingMember = shareSettingsService.getCurSettings().IsApplyExistingMemberChecked;
+        bsRow.Status = shareSettingsService.getStatus().Loading;
+
+        $('.btn-primary').attr('disabled', 'disabled');
+
+        $http.post(
+            shareSettingsService.getWorkingContext().Url,
+            {
+                CustId: custId,
+                ProdId: prodId,
+                IsApplyExistingMemberChecked: isApplyExistingMember,
+                SportBetSetting: bsRow
+            })
+        .success(function (data) {
+            bsRow.Message = data.Message;
+            rowIndex = getRowIndex(BSRows, rowIndex);
+
+            if (data.IsOk) {
+                bsRow.Status = shareSettingsService.getStatus().Success;
+            }
+            else {
+                bsRow.Status = shareSettingsService.getStatus().Fail;
+            }
+            $('.btn-primary').removeAttr("disabled");
+            if (rowIndex !== undefined) {
+                postBetSetting(BSRows, rowIndex);
+            }
+        })
+        .error(function (data) {
+            bsRow.Status = shareSettingsService.getStatus().Fail;
+            bsRow.Message = data;
+            $('.btn-primary').removeAttr("disabled");
+        });
+    };
 } ]);

@@ -13,5 +13,7 @@
         public int CustId { get; set; }
 
         public IList<CommRowViewModel> CommRows { get; set; }
+
+        public CommRowViewModel SportCommission { get; set; }
     }
 }

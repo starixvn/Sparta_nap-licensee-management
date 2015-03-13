@@ -56,5 +56,7 @@
         }
 
         public IList<BSRowBaseViewModel> BSRows { get; set; }
+
+        public BSRowBaseViewModel SportBetSetting { get; set; }
     }
 }

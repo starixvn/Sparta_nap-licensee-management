@@ -46,15 +46,15 @@
                 </td>
                 <td>
                     <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                         bs-validation="MinBet" only-integer />
                 </td>
                 <td>
                     <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                         bs-validation="MaxBet" only-integer />
                 </td>
                 <td>
                     <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                         bs-validation="MaxPerMatch" only-integer />
                 </td>
                 <td>
                     <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || item.IsSuperDisabled || item.IsRowDisabled" />

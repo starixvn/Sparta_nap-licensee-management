@@ -12,12 +12,12 @@
     </label>
     <label class="checkbox-inline">
         <input ng-model="editBS.IsEnableChecked" ng-disabled="editBS.IsEnableDisabled" type="checkbox">
-        Enable
+        Enable Product
     </label>
     <label class="checkbox-inline">
         <input ng-model="editBS.IsDownlineChecked" ng-disabled="editBS.IsDownlineDisabled"
             type="checkbox">
-        Downline
+        Enable Downline
     </label>
     <table class="table table-bordered table-setting">
         <thead>
@@ -47,15 +47,15 @@
                 </td>
                 <td>
                     <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                        bs-validation="MinBet" only-integer />
                 </td>
                 <td>
                     <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                        bs-validation="MaxBet" only-integer />
                 </td>
                 <td>
                     <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                        bs-validation="MaxPerMatch" only-integer />
                 </td>
             </tr>
             <tr>

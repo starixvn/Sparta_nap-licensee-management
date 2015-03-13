@@ -1,8 +1,9 @@
 ﻿<div ng-controller="editBSSportbookCtrl" class="filter-form">
+<form  name="myForm">
     <h2>
         Edit Bet Setting Sportbook</h2>
     <label class="checkbox-inline">
-        <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        <input ng-change="applyExistingMembers()" ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
         Apply existing menbers
     </label>
     <label class="checkbox-inline">
@@ -36,16 +37,13 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                    <input name="MinBet" type="text" bs-validation="MinBet" ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                    <input name="MaxBet" type="text" bs-validation="MaxBet" ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        only-integer />
+                    <input name="MaxPerMatch" type="text" bs-validation="MaxPerMatch" ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" only-integer />
                 </td>
             </tr>
             <tr>
@@ -56,4 +54,5 @@
             </tr>
         </tbody>
     </table>
+</form>
 </div>

@@ -215,7 +215,7 @@ namespace Fanex.NAP.Licensee.Service
                 dctGameType.Add(new BSKeyPair(151, 41), "Racing;SA Tote");
                 dctGameType.Add(new BSKeyPair(151, 51), "Racing;Aust Tote");
                 dctGameType.Add(new BSKeyPair(152, 41), "Greyhound;UK/Irish Tote");
-                dctGameType.Add(new BSKeyPair(152, 51), "Greyhound;SA Tote");
+                dctGameType.Add(new BSKeyPair(152, 51), "Greyhound;Aust Tote");
                 dctGameType.Add(new BSKeyPair(153, 51), "Hamess;Aust Tote");
 
                 return dctGameType;

@@ -10,24 +10,7 @@ settingConfigurationApp.controller("reviewBSRacingCtrl", ['$scope', '$injector',
     $injector.invoke(reviewBSNavigatorFunc, this, { $scope: $scope });
 
     $injector.invoke(reviewBSModelFunc, this, { $scope: $scope });
+    
+    shareSettingsService.getWorkingContext().Url = "UpdateBetSettingRacing";
 
-    $scope.updateBS = function () {
-        $http.post(
-            "UpdateBetSettingRacing",
-            {
-                CustId: shareSettingsService.getWorkingContext().CustId,
-                ProdId: shareSettingsService.getWorkingContext().ProdId,
-                IsApplyExistingMemberChecked: shareSettingsService.getCurSettings().IsApplyExistingMemberChecked,
-                BSRows: shareSettingsService.getCurSettings().BSRows
-            })
-        .success(function (data) {
-            alert(data, false, function () {
-                $location.path("/");
-                $route.reload();
-            });
-        })
-        .error(function (data) {
-            alert(data);
-        });
-    };
 }]);

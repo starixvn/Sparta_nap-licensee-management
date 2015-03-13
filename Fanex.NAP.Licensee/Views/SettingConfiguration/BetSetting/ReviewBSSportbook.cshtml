@@ -24,6 +24,12 @@
                 <th>
                     Updated
                 </th>
+                <th ng-if="IsUpdating">
+                    Status
+                </th>
+                <th ng-if="IsUpdating">
+                    Message
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +48,12 @@
                 </td>
                 <td>
                     {{item.IsRowSelected === true? 'X': ''}}
+                </td>
+                <td ng-if="IsUpdating">
+                    <span class="glyphicon {{item.Status}}"></span>
+                </td>
+                <td ng-if="IsUpdating">
+                    {{item.Message}}
                 </td>
             </tr>
             <tr>

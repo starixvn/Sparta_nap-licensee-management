@@ -10,11 +10,18 @@ servicesModule.factory("shareSettingsService", function () {
         CustId: -1,
         CustName: "",
         SportTypeId: -1,
-        ProdId: -1
+        ProdId: -1,
+        IsBack: false,
+        Url: ""
     };
     var settings = {
         OrgSettings: {},
         CurSettings: {}
+    };
+    var status = {
+        Loading: 'glyphicon-refresh glyphicon-refresh-animate',
+        Success: 'glyphicon-ok',
+        Fail: 'glyphicon-remove'
     };
 
     return {
@@ -37,6 +44,9 @@ servicesModule.factory("shareSettingsService", function () {
         },
         getWorkingContext: function () {
             return workingContext;
+        },
+        getStatus: function () {
+            return status;
         }
     };
 });

@@ -76,5 +76,7 @@
         public bool IsDownlineDisabled { get; set; }
 
         public IList<BSRowBaseViewModel> BSRows { get; set; }
+
+        public BSRowBaseViewModel SportBetSetting { get; set; }
     }
 }

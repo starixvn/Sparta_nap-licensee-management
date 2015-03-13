@@ -44,6 +44,13 @@
 
             bundles.Add(cssFanexGrid);
 
+            var cssSettingConfiguration = new Bundle("~/bundles/settingConfigurationCss")
+             .IncludeDirectory("~/Content/SettingConfiguration", "*.less");
+
+            cssSettingConfiguration.Transforms.Add(cssTransformer);
+
+            bundles.Add(cssSettingConfiguration);
+
             var coreJs = new Bundle("~/bundles/coreJs")
                 .Include(
                 "~/Scripts/jquery-1.9.0.js",

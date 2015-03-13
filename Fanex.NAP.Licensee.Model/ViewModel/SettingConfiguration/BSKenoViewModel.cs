@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Text;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
@@ -10,7 +11,7 @@
     /// Edit bet setting keno view model.
     /// </summary>
     public class BSKenoViewModel : BSBaseViewModel
-    {
+    { 
         public BSKenoViewModel()
         {
         }
@@ -18,6 +19,43 @@
         public BSKenoViewModel(IList<BSKenoItem> lstItems, IDictionary<BSKeyPair, string> dctGameType)
         {
             // Bind data
+            InitialBSRow(lstItems, dctGameType);
+
+            if (lstItems.Count != 0)
+            {
+                IsEnableChecked = !lstItems[0].DisableSuper;
+                IsDownlineChecked = !lstItems[0].DisableDownline;
+            }
+            else
+            {
+                IsEnableChecked = false;
+                IsDownlineChecked = false;
+            }
+
+            IsEnableDisabled = IsEnableChecked == true ? true : false;
+            IsDownlineDisabled = IsDownlineChecked == true ? true : false;
+            IsApplyExistingMemberChecked = false;
+        }
+
+        public bool IsEnableChecked { get; set; }
+
+        public bool IsEnableDisabled { get; set; }
+
+        public bool IsDownlineChecked { get; set; }
+
+        public bool IsDownlineDisabled { get; set; }
+
+        public BSCheckableRowViewModel SportBetSetting { get; set; }
+
+        public IList<BSCheckableRowViewModel> BSRows { get; set; }
+
+        /// <summary>
+        /// Bet setting.
+        /// </summary>
+        /// <param name="lstItems">List Keno Item.</param>
+        /// <param name="dctGameType">Dictionary Game Type.</param>
+        private void InitialBSRow(IList<BSKenoItem> lstItems, IDictionary<BSKeyPair, string> dctGameType)
+        {
             BSRows = new List<BSCheckableRowViewModel>();
 
             foreach (var key in dctGameType.Keys)
@@ -31,9 +69,9 @@
                         dctGameType[key],
                         key.BetTypeId,
                         dctGameType[key],
-                        ((int)item.MinBet).ToString(),
-                        ((int)item.MaxBet).ToString(),
-                        ((int)item.MaxPerMatch).ToString(),
+                        item.MinBet.ToString(),
+                        item.MaxBet.ToString(),
+                        item.MaxPerMatch.ToString(),
                         !item.DisableSuper,
                         !item.DisableDownline,
                         true);
@@ -55,10 +93,6 @@
 
                 BSRows.Add(kenoVm);
             }
-
-            IsApplyExistingMemberChecked = false;
         }
-
-        public IList<BSCheckableRowViewModel> BSRows { get; set; }
     }
 }

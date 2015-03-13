@@ -3,7 +3,7 @@
 var settingConfigurationApp = settingConfigurationApp || {};
 // Module
 settingConfigurationApp = angular.module("settingConfiguration",
-    ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives"]);
+    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");

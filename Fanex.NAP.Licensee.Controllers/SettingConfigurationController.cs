@@ -128,19 +128,22 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>String result.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateComm(UpdateCommViewModel updateCommVM)
+        public JsonResult UpdateComm(UpdateCommViewModel updateCommVM)
         {
-            IList<UpdateCommResultViewModel> lstUpdateResults = new List<UpdateCommResultViewModel>();
-            foreach (CommRowViewModel item in updateCommVM.CommRows)
-            {
-                if (item.IsChecked == true)
-                {
-                    ResultInfo result = _settingConfigurationService.UpdateComm(updateCommVM.CustId, item.SportTypeId, item.BetTypeId, float.Parse(item.SelectedComm));
-                    lstUpdateResults.Add(new UpdateCommResultViewModel(item.SportTypeName, item.BetTypeName, result.IsOk, result.Message));
-                }
-            }
+            var result = _settingConfigurationService.UpdateComm(
+                updateCommVM.CustId,
+                updateCommVM.SportCommission.SportTypeId,
+                updateCommVM.SportCommission.BetTypeId,
+                float.Parse(updateCommVM.SportCommission.SelectedComm));
 
-            return PartialView("Comm/UpdateCommResult", lstUpdateResults);
+            return new JsonResult 
+            { 
+                Data = new UpdateCommResultViewModel(
+                        updateCommVM.SportCommission.SportTypeName, 
+                        updateCommVM.SportCommission.BetTypeName, 
+                        result.IsOk, 
+                        result.Message) 
+            };
         }
 
         #endregion
@@ -241,29 +244,20 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>Partial view.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
+        public JsonResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
         {
-            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+            var updItem = new UpdateBetSettingItem(
+                sportbookVM.CustId,
+                sportbookVM.SportBetSetting.SportTypeId,
+                sportbookVM.SportBetSetting.BetTypeId,
+                Converter.ToDecimal(sportbookVM.SportBetSetting.MinBet),
+                Converter.ToDecimal(sportbookVM.SportBetSetting.MaxBet),
+                Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPerMatch),
+                sportbookVM.IsApplyExistingMemberChecked);
 
-            foreach (var item in sportbookVM.BSRows)
-            {
-                if (item.IsRowSelected == true)
-                {
-                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
-                        sportbookVM.CustId,
-                        item.SportTypeId,
-                        item.BetTypeId,
-                        Converter.ToDecimal(item.MinBet),
-                        Converter.ToDecimal(item.MaxBet),
-                        Converter.ToDecimal(item.MaxPerMatch),
-                        sportbookVM.IsApplyExistingMemberChecked);
+            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
-                }
-            }
-
-            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+            return new JsonResult { Data = new UpdateBSResultViewModel(sportbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         /// <summary>
@@ -273,26 +267,22 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>Partial view.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
+        public JsonResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
         {
-            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
-
-            foreach (var item in numberGameVM.BSRows)
+            var updItem = new UpdateBetSettingItem
             {
-                UpdateBetSettingItem updItem = new UpdateBetSettingItem();
-                updItem.CustId = numberGameVM.CustId;
-                updItem.SportType = numberGameVM.ProdId;
-                updItem.MinBet = Converter.ToDecimal(item.MinBet);
-                updItem.MaxBet = Converter.ToDecimal(item.MaxBet);
-                updItem.MaxPerMatch = Converter.ToDecimal(item.MaxPerMatch);
-                updItem.MaxPerBall = Converter.ToDecimal(item.MaxPerBall);
-                updItem.ExistedMember = numberGameVM.IsApplyExistingMemberChecked;
+                CustId = numberGameVM.CustId,
+                SportType = numberGameVM.ProdId,
+                MinBet = Converter.ToDecimal(numberGameVM.SportBetSetting.MinBet),
+                MaxBet = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxBet),
+                MaxPerMatch = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxPerMatch),
+                MaxPerBall = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxPerBall),
+                ExistedMember = numberGameVM.IsApplyExistingMemberChecked
+            };
 
-                ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                lstUpdateResults.Add(new UpdateBSResultViewModel("Number Game", result.IsOk, result.Message));
-            }
+            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+            return new JsonResult { Data = new UpdateBSResultViewModel(numberGameVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         /// <summary>
@@ -302,31 +292,22 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>Partial view.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
+        public JsonResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
         {
-            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+            var updItem = new UpdateBetSettingItem(
+                virtualSportVM.CustId,
+                virtualSportVM.SportBetSetting.SportTypeId,
+                virtualSportVM.SportBetSetting.BetTypeId,
+                Converter.ToDecimal(virtualSportVM.SportBetSetting.MinBet),
+                Converter.ToDecimal(virtualSportVM.SportBetSetting.MaxBet),
+                Converter.ToDecimal(virtualSportVM.SportBetSetting.MaxPerMatch),
+                virtualSportVM.IsEnableChecked,
+                virtualSportVM.IsDownlineChecked,
+                virtualSportVM.IsApplyExistingMemberChecked);
 
-            foreach (var item in virtualSportVM.BSRows)
-            {
-                if (item.IsRowSelected == true)
-                {
-                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
-                        virtualSportVM.CustId,
-                        item.SportTypeId,
-                        item.BetTypeId,
-                        Converter.ToDecimal(item.MinBet),
-                        Converter.ToDecimal(item.MaxBet),
-                        Converter.ToDecimal(item.MaxPerMatch),
-                        virtualSportVM.IsEnableChecked,
-                        virtualSportVM.IsDownlineChecked,
-                        virtualSportVM.IsApplyExistingMemberChecked);
+            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.SportTypeName, result.IsOk, result.Message));
-                }
-            }
-
-            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+            return new JsonResult { Data = new UpdateBSResultViewModel(virtualSportVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         /// <summary>
@@ -336,31 +317,22 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>Partial view.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
+        public JsonResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
         {
-            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+            var updItem = new UpdateBetSettingItem(
+                racingVM.CustId,
+                racingVM.SportBetSetting.SportTypeId,
+                racingVM.SportBetSetting.BetTypeId,
+                Converter.ToDecimal(racingVM.SportBetSetting.MinBet),
+                Converter.ToDecimal(racingVM.SportBetSetting.MaxBet),
+                Converter.ToDecimal(racingVM.SportBetSetting.MaxPerMatch),
+                racingVM.SportBetSetting.IsSuperChecked,
+                racingVM.SportBetSetting.IsDownlineChecked,
+                racingVM.IsApplyExistingMemberChecked);
 
-            foreach (var item in racingVM.BSRows)
-            {
-                if (item.IsRowSelected == true)
-                {
-                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
-                        racingVM.CustId,
-                        item.SportTypeId,
-                        item.BetTypeId,
-                        Converter.ToDecimal(item.MinBet),
-                        Converter.ToDecimal(item.MaxBet),
-                        Converter.ToDecimal(item.MaxPerMatch),
-                        item.IsSuperChecked,
-                        item.IsDownlineChecked,
-                        racingVM.IsApplyExistingMemberChecked);
+            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName.Replace(";", " / "), result.IsOk, result.Message));
-                }
-            }
-
-            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+            return new JsonResult { Data = new UpdateBSResultViewModel(racingVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         /// <summary>
@@ -370,31 +342,22 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <returns>Partial view.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public PartialViewResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
+        public JsonResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
         {
-            IList<UpdateBSResultViewModel> lstUpdateResults = new List<UpdateBSResultViewModel>();
+            var updItem = new UpdateBetSettingItem(
+                kenoVM.CustId,
+                kenoVM.SportBetSetting.SportTypeId,
+                kenoVM.SportBetSetting.BetTypeId,
+                Converter.ToDecimal(kenoVM.SportBetSetting.MinBet),
+                Converter.ToDecimal(kenoVM.SportBetSetting.MaxBet),
+                Converter.ToDecimal(kenoVM.SportBetSetting.MaxPerMatch),
+                kenoVM.IsEnableDisabled,
+                kenoVM.IsDownlineDisabled,
+                kenoVM.IsApplyExistingMemberChecked);
 
-            foreach (var item in kenoVM.BSRows)
-            {
-                if (item.IsRowSelected == true)
-                {
-                    UpdateBetSettingItem updItem = new UpdateBetSettingItem(
-                        kenoVM.CustId,
-                        item.SportTypeId,
-                        item.BetTypeId,
-                        Converter.ToDecimal(item.MinBet),
-                        Converter.ToDecimal(item.MaxBet),
-                        Converter.ToDecimal(item.MaxPerMatch),
-                        item.IsSuperChecked,
-                        item.IsDownlineChecked,
-                        kenoVM.IsApplyExistingMemberChecked);
+            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-                    ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-                    lstUpdateResults.Add(new UpdateBSResultViewModel(item.BetTypeName, result.IsOk, result.Message));
-                }
-            }
-
-            return PartialView("BetSetting/UpdateBSResult", lstUpdateResults);
+            return new JsonResult { Data = new UpdateBSResultViewModel(kenoVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         #endregion

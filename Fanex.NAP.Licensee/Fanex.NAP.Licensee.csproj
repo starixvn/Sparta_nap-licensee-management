@@ -351,8 +351,10 @@
     <Content Include="Content\jquery-ui\base\theme.css" />
     <Content Include="Content\jquery-ui\base\tooltip.css" />
     <Content Include="Content\Plugin\multi-select-control.css" />
+    <Content Include="Content\SettingConfiguration\setting-configuration.less" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular\angular-route.min.js" />
+    <Content Include="Scripts\angular\angular-validator.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\numeric.js" />
@@ -375,6 +377,7 @@
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfiguration.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfigurationController.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Directives\onlyIntegerDirective.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Directives\validatorDirective.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Services\filterDataService.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Services\shareSettingsService.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -500,7 +503,6 @@
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
     <Folder Include="ClearScript.V8\" />
-    <Folder Include="Content\SettingConfiguration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

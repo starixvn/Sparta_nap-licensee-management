@@ -63,6 +63,8 @@
 
         public IList<BSCheckableRowViewModel> BSRows { get; set; }
 
+        public BSCheckableRowViewModel SportBetSetting { get; set; }
+
         /// <summary>
         /// Compute row span.
         /// </summary>

@@ -24,8 +24,12 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
             })
         .success(function (data) {
             shareSettingsService.saveOrgSettings(angular.copy(data));
-
-            $scope.EditCommRows = data;
+            if (shareSettingsService.getWorkingContext().IsBack) {
+                $scope.EditCommRows = shareSettingsService.getCurSettings();
+            }
+            else {
+                $scope.EditCommRows = data;
+            }
         });
 
     $scope.copyAll = function () {

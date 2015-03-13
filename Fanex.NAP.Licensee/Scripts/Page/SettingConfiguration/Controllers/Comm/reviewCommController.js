@@ -3,7 +3,7 @@
 "use strict";
 
 // Review comm controller
-settingConfigurationApp.controller("reviewCommCtrl", ['$scope', '$http', '$location','$route', 'shareSettingsService', 'ContextFunc', 
+settingConfigurationApp.controller("reviewCommCtrl", ['$scope', '$http', '$location', '$route', 'shareSettingsService', 'ContextFunc',
 function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
@@ -19,24 +19,57 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     };
 
     $scope.updateComm = function () {
+        $scope.IsUpdating = true;
+        var CommRows = shareSettingsService.getCurSettings();
+        var rowIndex = getRowIndex(CommRows, -1);
+        if (rowIndex !== undefined) {
+            postCommission(CommRows, rowIndex);
+        }
+    };
+
+    $scope.backEditComm = function () {
+        shareSettingsService.getWorkingContext().IsBack = true;
+        $location.path("/EditComm");
+    };
+
+    var getRowIndex = function (CommRows, rowIndex) {
+        for (var index = rowIndex + 1; index < CommRows.length; index++) {
+            if (CommRows[index].IsChecked) {
+                return index;
+            }
+        }
+        return undefined;
+    };
+
+    var postCommission = function (CommRows, rowIndex) {
+        var commRow = CommRows[rowIndex];
+        commRow.Status = shareSettingsService.getStatus().Loading;
+        $('.btn-primary').attr('disabled', 'disabled');
         $http.post(
             "UpdateComm",
             {
                 CustId: shareSettingsService.getWorkingContext().CustId,
-                CommRows: shareSettingsService.getCurSettings()
+                SportCommission: commRow
             })
         .success(function (data) {
-            alert(data, false, function () {
-                $location.path("/");
-                $route.reload();
-            });
+            commRow.Message = data.Message;
+            rowIndex = getRowIndex(CommRows, rowIndex);
+
+            if (data.IsOk) {
+                commRow.Status = shareSettingsService.getStatus().Success;
+            }
+            else {
+                commRow.Status = shareSettingsService.getStatus().Fail;
+            }
+            $('.btn-primary').removeAttr("disabled");
+            if (rowIndex !== undefined) {
+                postCommission(CommRows, rowIndex);
+            }
         })
         .error(function (data) {
-            alert(data);
+            commRow.Status = shareSettingsService.getStatus().Fail;
+            commRow.Message = data;
+            $('.btn-primary').removeAttr("disabled");
         });
     };
-
-    $scope.backEditComm = function () {
-        $location.path("/EditComm");
-    };
-}]);
+} ]);
