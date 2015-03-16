@@ -19,7 +19,7 @@
         {
             // Bind data
             BSRows = new List<BSCheckableRowViewModel>();
-
+            
             foreach (var key in dctGameType.Keys)
             {
                 BSCheckableRowViewModel kenoVm;
@@ -28,9 +28,9 @@
                 {
                     kenoVm = new BSCheckableRowViewModel(
                         key.SportTypeId,
-                        dctGameType[key],
+                        dctGameType[key].Split(';')[0],
                         key.BetTypeId,
-                        dctGameType[key],
+                        dctGameType[key].Split(';')[1],
                         ((int)item.MinBet).ToString(),
                         ((int)item.MaxBet).ToString(),
                         ((int)item.MaxPerMatch).ToString(),
@@ -42,9 +42,9 @@
                 {
                     kenoVm = new BSCheckableRowViewModel(
                         key.SportTypeId,
-                        dctGameType[key],
+                        dctGameType[key].Split(';')[0],
                         key.BetTypeId,
-                        dctGameType[key],
+                        dctGameType[key].Split(';')[1],
                         string.Empty,
                         string.Empty,
                         string.Empty,

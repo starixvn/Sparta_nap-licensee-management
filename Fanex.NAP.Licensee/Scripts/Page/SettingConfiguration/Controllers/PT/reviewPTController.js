@@ -42,7 +42,7 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
             $('.btn-primary').removeAttr("disabled");
         })
         .error(function (data) {
-            $('#notice').html(show);
+            $('#notice').html(data);
             $('#notice').removeClass('alert-success').addClass('alert-danger show');
             $('.btn-primary').removeAttr("disabled");
         });

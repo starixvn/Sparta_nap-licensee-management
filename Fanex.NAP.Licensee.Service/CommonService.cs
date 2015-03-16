@@ -211,8 +211,8 @@ namespace Fanex.NAP.Licensee.Service
             get
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(151, 31), "Racing;UK/Irish Tote");
-                dctGameType.Add(new BSKeyPair(151, 41), "Racing;SA Tote");
+                dctGameType.Add(new BSKeyPair(151, 41), "Racing;UK/Irish Tote");
+                dctGameType.Add(new BSKeyPair(151, 31), "Racing;SA Tote");
                 dctGameType.Add(new BSKeyPair(151, 51), "Racing;Aust Tote");
                 dctGameType.Add(new BSKeyPair(152, 41), "Greyhound;UK/Irish Tote");
                 dctGameType.Add(new BSKeyPair(152, 51), "Greyhound;Aust Tote");
