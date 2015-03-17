@@ -9,6 +9,9 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
  'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl', 'ContextFunc',
 function ($scope, $http, $location, $route, $routeParams,
  shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl, ContextFunc) {
+    $scope.isUpdateEnable = true;
+    $scope.isButtonEnable = true;
+
     // Load data for ddls
     $scope.filterData = {
         // licensees
@@ -93,6 +96,7 @@ function ($scope, $http, $location, $route, $routeParams,
 
     $scope.updateBS = function () {
         $scope.IsUpdating = true;
+        $scope.isUpdateEnable = false;
         var BSRows = shareSettingsService.getCurSettings().BSRows;
         var rowIndex = getRowIndex(BSRows, -1);
         if (rowIndex !== undefined) {
@@ -115,8 +119,7 @@ function ($scope, $http, $location, $route, $routeParams,
             prodId = shareSettingsService.getWorkingContext().ProdId,
             isApplyExistingMember = shareSettingsService.getCurSettings().IsApplyExistingMemberChecked;
         bsRow.Status = shareSettingsService.getStatus().Loading;
-
-        $('.btn-primary').attr('disabled', 'disabled');
+        $scope.isButtonEnable = false;
 
         $http.post(
             shareSettingsService.getWorkingContext().Url,
@@ -136,15 +139,15 @@ function ($scope, $http, $location, $route, $routeParams,
             else {
                 bsRow.Status = shareSettingsService.getStatus().Fail;
             }
-            $('.btn-primary').removeAttr("disabled");
             if (rowIndex !== undefined) {
                 postBetSetting(BSRows, rowIndex);
             }
+            $scope.isButtonEnable = true;
         })
         .error(function (data) {
             bsRow.Status = shareSettingsService.getStatus().Fail;
             bsRow.Message = data;
-            $('.btn-primary').removeAttr("disabled");
+            $scope.isButtonEnable = true;
         });
     };
 } ]);

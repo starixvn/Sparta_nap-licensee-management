@@ -19,7 +19,7 @@
                         Max Bet
                     </th>
                     <th>
-                        Max Per Match
+                        Max Bet Per Draw
                     </th>
                     <th>
                         Super
@@ -70,8 +70,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="button" value="Update" class="btn-primary" ng-click="updateBS()" />
-                        <input type="button" value="Back" class="btn-primary" ng-click="backEditBS()" />
+                        <input type="button" value="Update" class="btn-primary" ng-click="updateBS()" ng-disabled="!isUpdateEnable" />
+                        <input type="button" value="Back" class="btn-primary" ng-click="backEditBS()" ng-disabled="!isButtonEnable" />
                     </td>
                 </tr>
             </tbody>
