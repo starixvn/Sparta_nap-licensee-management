@@ -25,7 +25,7 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             ngModel.$parsers.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
-                return valid ? value : undefined;
+                return value;
             });
 
             //For model -> DOM validation

@@ -1,14 +1,14 @@
 ﻿/* jshint ignore:start */
 var directiveModule = angular.module('settingConfiguration.directives', []);
 
-directiveModule.directive("onlyInteger", function () {
+directiveModule.directive("onlyinteger", function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
             $(element).numeric(
                 {
                     negative: false,
-                    decimal: false
+                    decimal: true
                 }
             );
         }
