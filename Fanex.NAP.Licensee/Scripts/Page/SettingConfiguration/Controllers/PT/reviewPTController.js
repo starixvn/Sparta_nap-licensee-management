@@ -24,11 +24,9 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
         $http.post(
             "UpdatePT",
             {
-                params: {
-                    CustId: shareSettingsService.getWorkingContext().CustId,
-                    ProductId: shareSettingsService.getWorkingContext().ProdId,
-                    PTValue: shareSettingsService.getCurSettings().SelectedPositionTaking
-                }
+                CustId: shareSettingsService.getWorkingContext().CustId,
+                ProductId: shareSettingsService.getWorkingContext().ProdId,
+                PTValue: shareSettingsService.getCurSettings().SelectedPositionTaking
             })
         .success(function (data) {
             if (data.IsOk === true) {

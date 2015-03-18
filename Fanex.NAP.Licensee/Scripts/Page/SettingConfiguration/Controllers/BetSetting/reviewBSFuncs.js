@@ -6,6 +6,7 @@
 var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
 
     $scope.reviewBS = shareSettingsService.getCurSettings();
+    $scope.isUpdateEnable = true;
     $http.get(
             "GetEditBetSettingData",
             {

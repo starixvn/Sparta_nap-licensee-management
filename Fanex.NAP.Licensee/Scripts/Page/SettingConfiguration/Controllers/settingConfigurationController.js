@@ -114,21 +114,20 @@ function ($scope, $http, $location, $route, $routeParams,
     };
 
     var postBetSetting = function (BSRows, rowIndex) {
-        var bsRow = BSRows[rowIndex],
-            custId = shareSettingsService.getWorkingContext().CustId,
-            prodId = shareSettingsService.getWorkingContext().ProdId,
-            isApplyExistingMember = shareSettingsService.getCurSettings().IsApplyExistingMemberChecked;
+        var bsRow = BSRows[rowIndex];
         bsRow.Status = shareSettingsService.getStatus().Loading;
+        
+        var updatedParams = {
+            CustId: shareSettingsService.getWorkingContext().CustId,
+            ProdId: shareSettingsService.getWorkingContext().ProdId,
+            SportBetSetting: bsRow,
+            IsApplyExistingMemberChecked: shareSettingsService.getCurSettings().IsApplyExistingMemberChecked,
+            IsEnableChecked: shareSettingsService.getCurSettings().IsEnableChecked,
+            IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked
+        };
         $scope.isButtonEnable = false;
 
-        $http.post(
-            shareSettingsService.getWorkingContext().Url,
-            {
-                CustId: custId,
-                ProdId: prodId,
-                IsApplyExistingMemberChecked: isApplyExistingMember,
-                SportBetSetting: bsRow
-            })
+        $http.post(shareSettingsService.getWorkingContext().Url, updatedParams)
         .success(function (data) {
             bsRow.Message = data.Message;
             rowIndex = getRowIndex(BSRows, rowIndex);

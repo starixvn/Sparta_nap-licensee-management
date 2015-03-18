@@ -5,6 +5,12 @@
         Apply existing members: {{reviewBS.IsApplyExistingMemberChecked === true ? "Yes"
         : "No"}}
     </h5>
+    <h5>
+        Enable Product: {{reviewBS.IsEnableChecked === true ? "Yes" : "No"}}
+    </h5>
+    <h5>
+        Enable Downline: {{reviewBS.IsDownlineChecked === true ? "Yes" : "No"}}
+    </h5>
     <div>
         <table class="table table-bordered table-setting">
             <thead>
@@ -20,12 +26,6 @@
                     </th>
                     <th>
                         Max Bet Per Draw
-                    </th>
-                    <th>
-                        Super
-                    </th>
-                    <th>
-                        Downline
                     </th>
                     <th>
                         Updated
@@ -51,12 +51,6 @@
                     </td>
                     <td>
                         {{item.MaxPerMatch}}
-                    </td>
-                    <td>
-                        {{item.IsSuperChecked === true? 'X': ''}}
-                    </td>
-                    <td>
-                        {{item.IsDownlineChecked === true? 'X': ''}}
                     </td>
                     <td>
                         {{item.IsRowSelected === true? 'X': ''}}

@@ -69,9 +69,9 @@
                         dctGameType[key],
                         key.BetTypeId,
                         dctGameType[key],
-                        item.MinBet.ToString(),
-                        item.MaxBet.ToString(),
-                        item.MaxPerMatch.ToString(),
+                        item.MinBet.ToString("0"),
+                        item.MaxBet.ToString("0"),
+                        item.MaxPerMatch.ToString("0"),
                         !item.DisableSuper,
                         !item.DisableDownline,
                         true);
