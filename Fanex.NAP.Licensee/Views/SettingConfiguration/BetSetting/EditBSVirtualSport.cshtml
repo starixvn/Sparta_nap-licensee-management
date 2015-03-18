@@ -3,7 +3,7 @@
         Edit Bet Setting Virtual Sport
     </h2>
     <label class="checkbox-inline">
-        <input ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        <input ng-change="applyExistingMembers()" ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
         Apply existing menbers
     </label>
     <label class="checkbox-inline">
