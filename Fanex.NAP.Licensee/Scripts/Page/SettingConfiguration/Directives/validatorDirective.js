@@ -3,6 +3,7 @@
 angular.module('settingConfiguration.directives', []).directive('bsValidation', function () {
     return {
         require: 'ngModel',
+        scope: true,
         link: function (scope, elem, attr, ngModel) {
             var bsType = attr.bsValidation;
             var validFn = function (value) {
@@ -21,6 +22,17 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
                         return true;
                 }
             };
+
+
+
+            ngModel.$parsers.push(function (inputValue) {
+                var transformedText = inputValue.replace(/\D/g, '');
+                if (transformedText !== inputValue) {
+                    ngModel.$setViewValue(transformedText);
+                    ngModel.$render();
+                }
+            });
+
             //For DOM -> model validation
             ngModel.$parsers.unshift(function (value) {
                 var valid = validFn(value);
@@ -32,6 +44,7 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             ngModel.$formatters.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+                
                 return value;
             });
         }
