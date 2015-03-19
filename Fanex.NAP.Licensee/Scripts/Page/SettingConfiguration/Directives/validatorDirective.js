@@ -3,34 +3,40 @@
 angular.module('settingConfiguration.directives', []).directive('bsValidation', function () {
     return {
         require: 'ngModel',
-        scope: true,
-        link: function (scope, elem, attr, ngModel) {
-            var bsType = attr.bsValidation;
-            var validFn = function (value) {
-                switch (bsType) {
-                    case "MinBet":
-                        return parseFloat(value) < parseFloat(scope.item.MaxBet);
-                    case "MaxBet":
-                        return parseFloat(value) > parseFloat(scope.item.MinBet) && parseFloat(value) < parseFloat(scope.item.MaxPerMatch);
-                    case "MaxPerMatch":
-                        var validMaxPerBall = (scope.item.MaxPerBall === undefined || parseFloat(value) < parseFloat(scope.item.MaxPerBall));
+        restrict: 'A',
+        link: function (scope, elem, attrs, ngModel) {
 
-                        return (parseFloat(value) > parseFloat(scope.item.MaxBet)) && validMaxPerBall;
-                    case "MaxPerBall":
-                        return parseFloat(value) > parseFloat(scope.item.MaxPerMatch);
-                    default:
-                        return true;
-                }
+            var validFn = function (value) {
+                var min = parseInt(attrs['min']);
+                var max = parseInt(attrs['max']);
+
+                var numValue = parseInt(value);
+                return numValue >= min && (numValue <= max || attrs['max'] === "*");
             };
 
+            attrs.$observe('min', function (newValue) {
+                var valid = validFn($(elem).val());
 
+                ngModel.$setValidity('bsValidation', valid);
+
+                if (!valid) {
+                    ngModel.$setDirty(true);
+
+                }
+                return newValue;
+
+            });
 
             ngModel.$parsers.push(function (inputValue) {
                 var transformedText = inputValue.replace(/\D/g, '');
                 if (transformedText !== inputValue) {
                     ngModel.$setViewValue(transformedText);
                     ngModel.$render();
+
+                    return transformedText;
                 }
+
+                return inputValue;
             });
 
             //For DOM -> model validation
@@ -44,7 +50,7 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             ngModel.$formatters.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
-                
+
                 return value;
             });
         }

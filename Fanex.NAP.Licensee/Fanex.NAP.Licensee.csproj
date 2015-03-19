@@ -376,7 +376,6 @@
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\reviewPTController.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfiguration.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfigurationController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Directives\onlyIntegerDirective.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Directives\validatorDirective.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Services\filterDataService.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Services\shareSettingsService.js" />
