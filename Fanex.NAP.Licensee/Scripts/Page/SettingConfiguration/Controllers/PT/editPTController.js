@@ -25,7 +25,7 @@ settingConfigurationApp.controller("editPTCtrl", ['$scope', '$http', '$location'
             })
         .success(function (data) {
             shareSettingsService.saveOrgSettings(angular.copy(data));
-            if (shareSettingsService.getWorkingContext().IsBack) {
+            if ($scope.buttonStatus.IsBack) {
                 $scope.editPTData = shareSettingsService.getCurSettings();
             }
             else {

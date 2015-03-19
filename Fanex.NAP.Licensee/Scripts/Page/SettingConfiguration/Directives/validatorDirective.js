@@ -27,6 +27,19 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
 
             });
 
+            attrs.$observe('max', function (newValue) {
+                var valid = validFn($(elem).val());
+
+                ngModel.$setValidity('bsValidation', valid);
+
+                if (!valid) {
+                    ngModel.$setDirty(true);
+
+                }
+                return newValue;
+
+            });
+
             ngModel.$parsers.push(function (inputValue) {
                 var transformedText = inputValue.replace(/\D/g, '');
                 if (transformedText !== inputValue) {

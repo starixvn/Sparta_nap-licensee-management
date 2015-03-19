@@ -9,7 +9,6 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
  'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl', 'ContextFunc',
 function ($scope, $http, $location, $route, $routeParams,
  shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl, ContextFunc) {
-    $scope.isUpdateEnable = true;
     $scope.isButtonEnable = true;
 
     // Load data for ddls
@@ -21,6 +20,15 @@ function ($scope, $http, $location, $route, $routeParams,
         // selectedSuperLicensee
         // selectedProductType
         // selectedFunction
+    };
+
+    $scope.buttonStatus = {
+        isNextEnabled: false,
+        isBack: false,
+        isUpdated: false,
+        isButtonEnable: true,
+        isSuccess: true,
+        isCalled: false
     };
 
     // Load licensees
@@ -64,6 +72,7 @@ function ($scope, $http, $location, $route, $routeParams,
             CustId: $scope.filterData.selectedSuperLicensee.Id,
             ProdId: $scope.filterData.selectedProductType.Id
         });
+        $scope.buttonStatus.IsBack = false;
 
         var curPath = $location.path();
 
@@ -95,8 +104,8 @@ function ($scope, $http, $location, $route, $routeParams,
     };
 
     $scope.updateBS = function () {
-        $scope.IsUpdating = true;
-        $scope.isUpdateEnable = false;
+        $scope.buttonStatus.isUpdated = true;
+        $scope.buttonStatus.isButtonEnable = false;
         var BSRows = shareSettingsService.getCurSettings().BSRows;
         var rowIndex = getRowIndex(BSRows, -1);
         if (rowIndex !== undefined) {
@@ -105,8 +114,9 @@ function ($scope, $http, $location, $route, $routeParams,
     };
 
     var getRowIndex = function (BSRows, rowIndex) {
+        var setting = shareSettingsService.getCurSettings();
         for (var index = rowIndex + 1; index < BSRows.length; index++) {
-            if (BSRows[index].IsRowSelected) {
+            if (BSRows[index].IsRowSelected || (setting.IsEnableChecked && !setting.IsEnableDisabled)) {
                 return index;
             }
         }
@@ -116,7 +126,6 @@ function ($scope, $http, $location, $route, $routeParams,
     var postBetSetting = function (BSRows, rowIndex) {
         var bsRow = BSRows[rowIndex];
         bsRow.Status = shareSettingsService.getStatus().Loading;
-        
         var updatedParams = {
             CustId: shareSettingsService.getWorkingContext().CustId,
             ProdId: shareSettingsService.getWorkingContext().ProdId,
@@ -125,7 +134,6 @@ function ($scope, $http, $location, $route, $routeParams,
             IsEnableChecked: shareSettingsService.getCurSettings().IsEnableChecked,
             IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked
         };
-        $scope.isButtonEnable = false;
 
         $http.post(shareSettingsService.getWorkingContext().Url, updatedParams)
         .success(function (data) {
@@ -138,15 +146,17 @@ function ($scope, $http, $location, $route, $routeParams,
             else {
                 bsRow.Status = shareSettingsService.getStatus().Fail;
             }
+
             if (rowIndex !== undefined) {
                 postBetSetting(BSRows, rowIndex);
             }
-            $scope.isButtonEnable = true;
+            else {
+                $scope.buttonStatus.isButtonEnable = true;
+            }
         })
         .error(function (data) {
             bsRow.Status = shareSettingsService.getStatus().Fail;
             bsRow.Message = data;
-            $scope.isButtonEnable = true;
         });
     };
 } ]);

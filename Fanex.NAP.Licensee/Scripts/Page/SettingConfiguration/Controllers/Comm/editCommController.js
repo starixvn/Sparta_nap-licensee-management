@@ -2,7 +2,7 @@
 "use strict";
 
 // Edit Comm controller
-settingConfigurationApp.controller("editCommCtrl", ['$scope', '$http', '$location', 'shareSettingsService', 'ContextFunc', 
+settingConfigurationApp.controller("editCommCtrl", ['$scope', '$http', '$location', 'shareSettingsService', 'ContextFunc',
 function ($scope, $http, $location, shareSettingsService, ContextFunc) {
 
     $scope.selectedContext = shareSettingsService.getWorkingContext();
@@ -13,7 +13,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
 
     $scope.EditCommRows = {};
     $scope.isCopyAll = false;
-    $scope.isNextEnabled = false;
+    $scope.buttonStatus.isNextEnabled = false;
 
     $http.get(
             "GetEditCommData",
@@ -24,7 +24,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
             })
         .success(function (data) {
             shareSettingsService.saveOrgSettings(angular.copy(data));
-            if (shareSettingsService.getWorkingContext().IsBack) {
+            if ($scope.buttonStatus.IsBack) {
                 $scope.EditCommRows = shareSettingsService.getCurSettings();
             }
             else {
@@ -63,7 +63,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
     };
 
     $scope.$watch("EditCommRows", function () {
-        $scope.isNextEnabled = false;
+        $scope.buttonStatus.isNextEnabled = false;
         var orgCommList = shareSettingsService.getOrgSettings();
         var curCommList = $scope.EditCommRows;
 
@@ -72,7 +72,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
             $.each(curCommList, function (index, element) {
                 if (element.IsChecked === true) {
                     if (curCommList[index].SelectedComm !== orgCommList[index].SelectedComm) {
-                        $scope.isNextEnabled = true;
+                        $scope.buttonStatus.isNextEnabled = true;
                     }
                 }
             });
@@ -83,4 +83,4 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
         shareSettingsService.saveCurSettings($scope.EditCommRows);
         $location.path("/ReviewComm");
     };
-}]);
+} ]);

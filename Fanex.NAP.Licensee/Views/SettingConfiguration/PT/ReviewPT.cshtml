@@ -11,8 +11,10 @@
         Current PT: <strong>{{reviewPTData.CurPT}}</strong>
     </div>
     <div class="form-group">
-        <input type="button" value="Update" class="btn-primary" ng-click="updatePT()" />
-        <input type="button" value="Back" class="btn-primary" ng-click="backEditPT()" />
+        <input type="button" value="Update" class="btn-primary" ng-click="updatePT()" ng-disabled="buttonStatus.isUpdated" />
+        <input type="button" value="Back" class="btn-primary" ng-click="backEditPT()" ng-disabled="!buttonStatus.isButtonEnable" />
     </div>
-    <div id="notice" class="col-sm-12 alert hide" role="alert"></div>
+    <div class="col-sm-12 alert" ng-class="isSuccess?'alert-success':'alert-danger'" ng-show="isFinish" role="alert">
+        {{ptMessage}}
+    </div>
 </div>

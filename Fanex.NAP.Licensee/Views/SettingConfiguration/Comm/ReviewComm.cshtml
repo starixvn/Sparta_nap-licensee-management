@@ -18,10 +18,10 @@
                     <th>
                         Updated
                     </th>
-                    <th ng-if="IsUpdating">
+                    <th ng-if="buttonStatus.isUpdated">
                         Status
                     </th>
-                    <th ng-if="IsUpdating">
+                    <th ng-if="buttonStatus.isUpdated">
                         Message
                     </th>
                 </tr>
@@ -43,17 +43,17 @@
                     <td>
                         {{reviewCommData.CurComm[$index].IsChecked === true? 'X': ''}}
                     </td>
-                    <td ng-if="IsUpdating">
+                    <td ng-if="buttonStatus.isUpdated">
                         <span class="glyphicon {{reviewCommData.CurComm[$index].Status}}"></span>
                     </td>
-                    <td ng-if="IsUpdating">
+                    <td ng-if="buttonStatus.isUpdated">
                         {{reviewCommData.CurComm[$index].Message}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="button" value="Update" class="btn-primary" ng-click="updateComm()" />
-                        <input type="button" value="Back" class="btn-primary" ng-click="backEditComm()" />
+                        <input type="button" value="Update" class="btn-primary" ng-click="updateComm()" ng-disabled="buttonStatus.isUpdated" />
+                        <input type="button" value="Back" class="btn-primary" ng-click="backEditComm()" ng-disabled="!buttonStatus.isButtonEnable" />
                     </td>
                 </tr>
             </tbody>

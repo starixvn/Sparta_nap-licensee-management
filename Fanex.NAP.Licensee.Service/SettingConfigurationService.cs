@@ -43,7 +43,7 @@ namespace Fanex.NAP.Licensee.Service
             {
                 db.AddInParameter("CustID", DbType.Int32, custId);
                 db.AddInParameter("SportType", DbType.Int32, productId);
-                db.AddInParameter("ptVALUE", DbType.Double, positionTakingValue);
+                db.AddInParameter("ptVALUE", DbType.Decimal, positionTakingValue);
                 AddResultParameters(db);
 
                 db.ExecuteNonQuery();
@@ -75,7 +75,7 @@ namespace Fanex.NAP.Licensee.Service
                 db.AddInParameter("CustID", DbType.Int32, custId);
                 db.AddInParameter("Sporttype", DbType.Int32, sportTypeId);
                 db.AddInParameter("Bettype", DbType.Int32, betTypeId);
-                db.AddInParameter("Discount", DbType.Double, commValue);
+                db.AddInParameter("Discount", DbType.Decimal, commValue);
 
                 AddResultParameters(db);
 

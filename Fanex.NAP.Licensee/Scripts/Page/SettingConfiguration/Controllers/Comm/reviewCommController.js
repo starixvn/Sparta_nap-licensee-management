@@ -19,7 +19,8 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     };
 
     $scope.updateComm = function () {
-        $scope.IsUpdating = true;
+        $scope.buttonStatus.isUpdated = true;
+        $scope.buttonStatus.isButtonEnable = false;
         var CommRows = shareSettingsService.getCurSettings();
         var rowIndex = getRowIndex(CommRows, -1);
         if (rowIndex !== undefined) {
@@ -28,7 +29,14 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     };
 
     $scope.backEditComm = function () {
-        shareSettingsService.getWorkingContext().IsBack = true;
+        if ($scope.buttonStatus.isUpdated) {
+            $scope.buttonStatus.isUpdated = false;
+            $scope.buttonStatus.isNextEnabled = false;
+            $scope.buttonStatus.IsBack = false;
+        }
+        else {
+            $scope.buttonStatus.IsBack = true;
+        }
         $location.path("/EditComm");
     };
 
@@ -44,7 +52,6 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     var postCommission = function (CommRows, rowIndex) {
         var commRow = CommRows[rowIndex];
         commRow.Status = shareSettingsService.getStatus().Loading;
-        $('.btn-primary').attr('disabled', 'disabled');
         $http.post(
             "UpdateComm",
             {
@@ -61,15 +68,17 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
             else {
                 commRow.Status = shareSettingsService.getStatus().Fail;
             }
-            $('.btn-primary').removeAttr("disabled");
+
             if (rowIndex !== undefined) {
                 postCommission(CommRows, rowIndex);
+            }
+            else {
+                $scope.buttonStatus.isButtonEnable = true;
             }
         })
         .error(function (data) {
             commRow.Status = shareSettingsService.getStatus().Fail;
             commRow.Message = data;
-            $('.btn-primary').removeAttr("disabled");
         });
     };
 } ]);

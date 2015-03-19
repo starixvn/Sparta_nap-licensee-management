@@ -16,7 +16,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
         })
     .success(function (data) {
         shareSettingsService.saveOrgSettings(angular.copy(data));
-        if (shareSettingsService.getWorkingContext().IsBack) {
+        if ($scope.buttonStatus.IsBack) {
             $scope.editBS = shareSettingsService.getCurSettings();
         }
         else {
@@ -121,7 +121,7 @@ var editBSRowCheckableFunc = function ($scope) {
     $scope.applyExistingMembers = function () {
         $.each($scope.editBS.BSRows, function (index, element) {
             if (element.IsRowSelected) {
-                $scope.isNextEnabled = true;
+                $scope.buttonStatus.isNextEnabled = true;
             }
         });
     };
@@ -201,21 +201,21 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
 var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {
     // Private functions
     var checkDirty = function () {
-        $scope.isNextEnabled = false;
+        $scope.buttonStatus.isNextEnabled = false;
         // A little hack: Watch when it has data
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
 
             if ($scope.isCopyAll === true) {
-                $scope.isNextEnabled = true;
+                $scope.buttonStatus.isNextEnabled = true;
                 return;
             }
-            $scope.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows);
+            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows);
         }
     };
 
-    $scope.isNextEnabled = false;
+    $scope.buttonStatus.isNextEnabled = false;
 
     $scope.$watch("editBS.BSRows", checkDirty, true);
 };
@@ -258,19 +258,18 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         if (hasError === true) {
             return;
         }
-
         shareSettingsService.saveCurSettings($scope.editBS);
         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
     };
 
     $scope.changeNextButtonStatus = function () {
         if ($scope.editBS.IsEnableChecked) {
-            $scope.isNextEnabled = true;
+            $scope.buttonStatus.isNextEnabled = true;
         }
         else {
             var curBSRows = $scope.editBS.BSRows;
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
-            $scope.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows) || false;
+            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows) || false;
         }
     };
 };

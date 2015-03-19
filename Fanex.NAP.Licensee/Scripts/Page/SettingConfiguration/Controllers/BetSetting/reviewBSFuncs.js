@@ -6,7 +6,6 @@
 var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
 
     $scope.reviewBS = shareSettingsService.getCurSettings();
-    $scope.isUpdateEnable = true;
     $http.get(
             "GetEditBetSettingData",
             {
@@ -31,7 +30,14 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
         }
 
         $scope.backEditBS = function () {
-            shareSettingsService.getWorkingContext().IsBack = true;
+            if ($scope.buttonStatus.isUpdated) {
+                $scope.buttonStatus.isUpdated = false;
+                $scope.buttonStatus.isNextEnabled = false;
+                $scope.buttonStatus.IsBack = false;
+            }
+            else {
+                $scope.buttonStatus.IsBack = true;
+            }
             $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
         };
     };

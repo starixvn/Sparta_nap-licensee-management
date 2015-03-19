@@ -20,7 +20,8 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
     };
 
     $scope.updatePT = function () {
-        $('.btn-primary').attr('disabled', 'disabled');
+        $scope.isUpdateEnable = false;
+        $scope.isButtonEnable = false;
         $http.post(
             "UpdatePT",
             {
@@ -30,24 +31,24 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
             })
         .success(function (data) {
             if (data.IsOk === true) {
-                $('#notice').html("Update PT successfully!");
-                $('#notice').removeClass('alert-danger').addClass('alert-success show');
+                $scope.ptMessage = "Update PT successfully!";
+                $scope.isSuccess = true;
             }
             else {
-                $('#notice').html(data.Message);
-                $('#notice').removeClass('alert-success').addClass('alert-danger show');
+                $scope.ptMessage = data.Message;
+                $scope.isSuccess = false;
             }
-            $('.btn-primary').removeAttr("disabled");
+            $scope.isButtonEnable = true;
         })
         .error(function (data) {
-            $('#notice').html(data);
-            $('#notice').removeClass('alert-success').addClass('alert-danger show');
-            $('.btn-primary').removeAttr("disabled");
+            $scope.ptMessage = data;
+            $scope.isSuccess = false;
+            $scope.isButtonEnable = true;
         });
     };
 
     $scope.backEditPT = function () {
-        shareSettingsService.getWorkingContext().IsBack = true;
+        $scope.buttonStatus.IsBack = true;
         $location.path("/EditPT");
     };
 } ]);

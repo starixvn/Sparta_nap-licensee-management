@@ -39,19 +39,19 @@
                     </label>
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MinBet" bs-validation="MinBet" only-integer />
+                    <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" bs-validation="MinBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxBet" bs-validation="MaxBet" only-integer />
+                    <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" bs-validation="MaxBet" only-integer />
                 </td>
                 <td>
-                    <input type="text" ng-model="item.MaxPerMatch" bs-validation="MaxPerMatch" only-integer />
+                    <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerMatch" bs-validation="MaxPerMatch" only-integer />
                 </td>
             </tr>
             <tr>
                 <td>
                     <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary"
-                        ng-disabled="!isNextEnabled" />
+                        ng-disabled="!buttonStatus.isNextEnabled" />
                 </td>
             </tr>
         </tbody>
