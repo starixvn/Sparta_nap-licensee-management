@@ -23,7 +23,7 @@
             string maxBet,
             string maxPerMatch,
             string maxPerBall)
-            : base(sportTypeId, sportTypeName, betTypeId, betTypeName, minBet, maxBet, maxPerMatch, false)
+            : base(sportTypeId, sportTypeName, betTypeId, betTypeName, minBet, maxBet, maxPerMatch, true)
         {
             MaxPerBall = maxPerBall;
         }

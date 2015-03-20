@@ -1,6 +1,7 @@
 ﻿<div class="clearfix">
 </div>
 <div class="filter-form">
+    <h2>Review Position Taking {{reviewPTData.ProductName}}</h2>
     <div>
         The values will be updated to supers <strong>{{reviewPTData.SuperUsername}}</strong>
     </div>
@@ -14,7 +15,7 @@
         <input type="button" value="Update" class="btn-primary" ng-click="updatePT()" ng-disabled="buttonStatus.isUpdated" />
         <input type="button" value="Back" class="btn-primary" ng-click="backEditPT()" ng-disabled="!buttonStatus.isButtonEnable" />
     </div>
-    <div class="col-sm-12 alert" ng-class="isSuccess?'alert-success':'alert-danger'" ng-show="isFinish" role="alert">
+    <div class="col-sm-12 alert" ng-class="buttonStatus.isSuccess?'alert-success':'alert-danger'" ng-if="buttonStatus.isUpdated" role="alert">
         {{ptMessage}}
     </div>
 </div>

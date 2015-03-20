@@ -27,8 +27,7 @@ function ($scope, $http, $location, $route, $routeParams,
         isBack: false,
         isUpdated: false,
         isButtonEnable: true,
-        isSuccess: true,
-        isCalled: false
+        isSuccess: true
     };
 
     // Load licensees
@@ -77,7 +76,6 @@ function ($scope, $http, $location, $route, $routeParams,
         $scope.buttonStatus.IsBack = false;
         $scope.buttonStatus.isUpdated = false;
         $scope.buttonStatus.isButtonEnable = true;
-        $scope.buttonStatus.isCalled = false;
 
         var curPath = $location.path();
 

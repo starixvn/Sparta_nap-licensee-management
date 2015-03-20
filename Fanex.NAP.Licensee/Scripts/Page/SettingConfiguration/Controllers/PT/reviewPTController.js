@@ -11,17 +11,16 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
         return;
     }
 
-    $scope.reviewPTData = {};
-
     $scope.reviewPTData = {
+        ProductName: shareSettingsService.getCurSettings().ProductName,
         SuperUsername: shareSettingsService.getWorkingContext().CustName,
         OrgPT: shareSettingsService.getOrgSettings().SelectedPositionTaking,
         CurPT: shareSettingsService.getCurSettings().SelectedPositionTaking
     };
 
     $scope.updatePT = function () {
-        $scope.isUpdateEnable = false;
-        $scope.isButtonEnable = false;
+        $scope.buttonStatus.isUpdated = true;
+        $scope.buttonStatus.isButtonEnable = false;
         $http.post(
             "UpdatePT",
             {
@@ -32,23 +31,29 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
         .success(function (data) {
             if (data.IsOk === true) {
                 $scope.ptMessage = "Update PT successfully!";
-                $scope.isSuccess = true;
+                $scope.buttonStatus.isSuccess = true;
             }
             else {
                 $scope.ptMessage = data.Message;
-                $scope.isSuccess = false;
+                $scope.buttonStatus.isSuccess = false;
             }
-            $scope.isButtonEnable = true;
+            $scope.buttonStatus.isButtonEnable = true;
         })
         .error(function (data) {
             $scope.ptMessage = data;
-            $scope.isSuccess = false;
-            $scope.isButtonEnable = true;
+            $scope.buttonStatus.isSuccess = false;
         });
     };
 
     $scope.backEditPT = function () {
-        $scope.buttonStatus.IsBack = true;
+        if ($scope.buttonStatus.isUpdated) {
+            $scope.buttonStatus.isUpdated = false;
+            $scope.buttonStatus.isNextEnabled = false;
+            $scope.buttonStatus.IsBack = false;
+        }
+        else {
+            $scope.buttonStatus.IsBack = true;
+        }
         $location.path("/EditPT");
     };
 } ]);

@@ -12,4 +12,5 @@ settingConfigurationApp.controller("editBSKenoCtrl",['$scope','$injector', funct
     $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
+
 }]);

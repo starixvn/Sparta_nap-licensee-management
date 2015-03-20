@@ -26,10 +26,10 @@
                     Max Per Match
                 </th>
                 <th>
-                    Super
+                    Enable Product
                 </th>
                 <th>
-                    Downline
+                    Enable Downline
                 </th>
             </tr>
         </thead>
@@ -46,15 +46,15 @@
                 </td>
                 <td>
                     <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                         bs-validation="MinBet" only-integer />
+                         bs-validation="MinBet" />
                 </td>
                 <td>
                     <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                         bs-validation="MaxBet" only-integer />
+                         bs-validation="MaxBet" />
                 </td>
                 <td>
                     <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                         bs-validation="MaxPerMatch" only-integer />
+                         bs-validation="MaxPerMatch" />
                 </td>
                 <td>
                     <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || item.IsSuperDisabled || item.IsRowDisabled" />
