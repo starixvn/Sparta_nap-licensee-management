@@ -72,7 +72,12 @@ function ($scope, $http, $location, $route, $routeParams,
             CustId: $scope.filterData.selectedSuperLicensee.Id,
             ProdId: $scope.filterData.selectedProductType.Id
         });
+
+        // Refresh button on page.
         $scope.buttonStatus.IsBack = false;
+        $scope.buttonStatus.isUpdated = false;
+        $scope.buttonStatus.isButtonEnable = true;
+        $scope.buttonStatus.isCalled = false;
 
         var curPath = $location.path();
 

@@ -351,8 +351,8 @@ namespace Fanex.NAP.Licensee.Controllers
                 Converter.ToDecimal(kenoVM.SportBetSetting.MinBet),
                 Converter.ToDecimal(kenoVM.SportBetSetting.MaxBet),
                 Converter.ToDecimal(kenoVM.SportBetSetting.MaxPerMatch),
-                kenoVM.IsEnableDisabled,
-                kenoVM.IsDownlineDisabled,
+                kenoVM.IsEnableChecked,
+                kenoVM.IsDownlineChecked,
                 kenoVM.IsApplyExistingMemberChecked);
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
