@@ -184,15 +184,14 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
     });
 
     if (arrValidRows.length !== 0) {
-        var hasError = true;
+        var hasError = false;
         angular.forEach(arrValidRows, function (value) {
-            if (!value) {
-                hasError = false;
+            if (value) {
+                hasError = true;
             }
         });
         return scope.editBS.IsApplyExistingMemberChecked || !hasError;
     }
-
     return false;
 };
 var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {

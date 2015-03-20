@@ -33,7 +33,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
         });
 
     $scope.copyAll = function () {
-        if ($scope.isCopyAll === true) {
+        if ($scope.isCopyAll) {
             $.each($scope.EditCommRows, function (index, element) {
                 // Disable all checkboxes 1 -> n
                 if (index === 0) {
@@ -42,22 +42,17 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
                 else {
                     element.IsChecked = true;
                     element.IsDisabled = true;
-                    $scope.copyComm();
+                    element.SelectedComm = $scope.EditCommRows[0].SelectedComm;
                 }
             });
         }
         else {
+            var orgComms = shareSettingsService.getOrgSettings();
+
             $.each($scope.EditCommRows, function (index, element) {
                 element.IsChecked = false;
                 element.IsDisabled = false;
-            });
-        }
-    };
-
-    $scope.copyComm = function () {
-        if ($scope.isCopyAll === true) {
-            $.each($scope.EditCommRows, function (index, element) {
-                element.SelectedComm = $scope.EditCommRows[0].SelectedComm;
+                element.SelectedComm = orgComms[index].SelectedComm;
             });
         }
     };
@@ -69,15 +64,28 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
 
         // A litle hack: Watch when it has data
         if (curCommList[0] !== undefined) {
-            $.each(curCommList, function (index, element) {
-                if (element.IsChecked === true) {
-                    if (curCommList[index].SelectedComm !== orgCommList[index].SelectedComm) {
-                        $scope.buttonStatus.isNextEnabled = true;
-                    }
-                }
-            });
+            $scope.buttonStatus.isNextEnabled = $scope.isChanged(orgCommList, curCommList);
         }
     }, true);
+
+    $scope.isChanged = function (orgCommList, curCommList) {
+        var numberChangedComm = 0;
+        var isChanged = true;
+
+        $.each(curCommList, function (index, element) {
+            if (element.IsChecked === true) {
+                numberChangedComm++;
+                if (curCommList[index].SelectedComm === orgCommList[index].SelectedComm) {
+                    isChanged = false;
+                }
+            }
+            else {
+                curCommList[index].SelectedComm = orgCommList[index].SelectedComm;
+            }
+        });
+
+        return (isChanged && numberChangedComm > 0) || $scope.isCopyAll;
+    };
 
     $scope.nextReviewComm = function () {
         shareSettingsService.saveCurSettings($scope.EditCommRows);
