@@ -70,9 +70,6 @@
         /// </summary>
         private void BuildRowSpan()
         {
-            // Sort
-            BSRows = BSRows.OrderBy(n => n.SportTypeId).ThenBy(n => n.BetTypeId).ToList();
-
             List<int> lstSpans = BSRows.GroupBy(n => n.SportTypeId, (key, g) => g.Count()).ToList();
 
             // Get first of group

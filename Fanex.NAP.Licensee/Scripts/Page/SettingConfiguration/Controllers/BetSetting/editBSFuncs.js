@@ -119,11 +119,7 @@ var editBSRowCheckableFunc = function ($scope) {
     };
 
     $scope.applyExistingMembers = function () {
-        $.each($scope.editBS.BSRows, function (index, element) {
-            if (element.IsRowSelected) {
-                $scope.buttonStatus.isNextEnabled = true;
-            }
-        });
+        $scope.buttonStatus.isNextEnabled = true;
     };
 };
 editBSRowCheckableFunc.$inject = ['$scope'];
@@ -171,10 +167,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             };
 
             if (angular.equals(curRow, orgRow)) {
-                arrValidRows.push(false);
+                arrValidRows.push(true);
             }
             else {
-                arrValidRows.push(true);
+                arrValidRows.push(false);
             }
         }
         else {
@@ -188,9 +184,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
     });
 
     if (arrValidRows.length !== 0) {
-        var hasError = $(arrValidRows).is(function (index, element) {
-            if (!element) {
-                return false;
+        var hasError = true;
+        angular.forEach(arrValidRows, function (value) {
+            if (!value) {
+                hasError = false;
             }
         });
         return scope.editBS.IsApplyExistingMemberChecked || !hasError;

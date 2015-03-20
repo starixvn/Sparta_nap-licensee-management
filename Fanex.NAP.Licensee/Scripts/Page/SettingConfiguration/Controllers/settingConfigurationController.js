@@ -119,7 +119,9 @@ function ($scope, $http, $location, $route, $routeParams,
     var getRowIndex = function (BSRows, rowIndex) {
         var setting = shareSettingsService.getCurSettings();
         for (var index = rowIndex + 1; index < BSRows.length; index++) {
-            if (BSRows[index].IsRowSelected || (setting.IsEnableChecked && !setting.IsEnableDisabled)) {
+            if (BSRows[index].IsRowSelected
+                || setting.IsApplyExistingMemberChecked
+                || (setting.IsEnableChecked && !setting.IsEnableDisabled)) {
                 return index;
             }
         }
