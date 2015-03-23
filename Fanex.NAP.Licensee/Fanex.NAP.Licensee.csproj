@@ -353,8 +353,8 @@
     <Content Include="Content\Plugin\multi-select-control.css" />
     <Content Include="Content\SettingConfiguration\setting-configuration.less" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
-    <Content Include="Scripts\angular\angular-validator.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\numeric.js" />
@@ -430,7 +430,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Deployment.ignore" />
-    <Content Include="Scripts\angular\angular-animate.min.js" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <None Include="SiteConfig\Web.AppSettings.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

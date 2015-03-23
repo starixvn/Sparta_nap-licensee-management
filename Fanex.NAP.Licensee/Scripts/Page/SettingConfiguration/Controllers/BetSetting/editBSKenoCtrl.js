@@ -1,4 +1,4 @@
-﻿/* global settingConfigurationApp, editBSNavigatorFunc, editBSModelFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* global settingConfigurationApp, editBSNavigatorFunc, editBSModelFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
@@ -8,6 +8,8 @@ settingConfigurationApp.controller("editBSKenoCtrl",['$scope','$injector', funct
     $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSModelFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
 
