@@ -59,7 +59,7 @@
                     <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || item.IsSuperDisabled || item.IsRowDisabled" />
                 </td>
                 <td class="content-center">
-                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="!item.IsRowSelected  || item.IsDownlineDisabled || item.IsRowDisabled" />
+                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="!item.IsRowSelected  || item.IsDownlineDisabled || item.IsRowDisabled || !item.IsSuperChecked" />
                 </td>
             </tr>
             <tr>

@@ -261,12 +261,14 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
     $scope.changeNextButtonStatus = function () {
         if ($scope.editBS.IsEnableChecked) {
             $scope.buttonStatus.isNextEnabled = true;
+            $scope.editBS.IsDownlineDisabled = false;
         }
         else {
             var curBSRows = $scope.editBS.BSRows;
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+            $scope.editBS.IsDownlineDisabled = true;
             $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows) || false;
-        }
+        } 
     };
 };
 editBSNextConstraintsFunc.$inject = ['$scope', '$location', 'shareSettingsService'];

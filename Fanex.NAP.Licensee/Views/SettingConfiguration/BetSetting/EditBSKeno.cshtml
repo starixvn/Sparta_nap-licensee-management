@@ -9,7 +9,7 @@
         Enable Product
     </label>
     <label class="checkbox-inline">
-        <input ng-model="editBS.IsDownlineChecked" ng-disabled="editBS.IsDownlineDisabled"
+        <input ng-model="editBS.IsDownlineChecked" ng-disabled="editBS.IsDownlineDisabled || !editBS.IsEnableChecked"
             type="checkbox">
         Enable Members
     </label>
