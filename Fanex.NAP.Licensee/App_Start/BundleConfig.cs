@@ -63,7 +63,7 @@
 
             coreJs.Transforms.Add(scriptTransformer);
             bundles.Add(coreJs);
-
+            
             var settingConfigurationJs = new Bundle("~/bundles/settingConfigurationJs")
                 .IncludeDirectory("~/Scripts/page/SettingConfiguration/", "*.js", true);
 
@@ -86,6 +86,14 @@
             fanexGridJs.Transforms.Add(scriptTransformer);
 
             bundles.Add(fanexGridJs);
+
+            var recheckInJs = new Bundle("~/bundles/recheckInJs")
+                                .Include("~/Areas/UserLogin/scripts/ReCheckIn.js");
+
+            recheckInJs.Transforms.Add(scriptTransformer);
+
+            bundles.Add(recheckInJs);
+
             /*If you'd like to test the optimization locally,
             you can use this line to force it.*/
             BundleTable.EnableOptimizations = true;
