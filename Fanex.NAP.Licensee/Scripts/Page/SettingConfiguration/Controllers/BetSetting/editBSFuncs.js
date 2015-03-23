@@ -172,6 +172,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             else {
                 arrValidRows.push(false);
             }
+
+            if (!curBSRows[index].IsSuperChecked) {
+                curBSRows[index].IsDownlineChecked = false;
+            }
         }
         else {
             curBSRows[index].MinBet = orgBSRows[index].MinBet;
@@ -267,6 +271,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             var curBSRows = $scope.editBS.BSRows;
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             $scope.editBS.IsDownlineDisabled = true;
+            $scope.editBS.IsDownlineChecked = false;
             $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows) || false;
         } 
     };
