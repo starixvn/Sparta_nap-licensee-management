@@ -118,9 +118,14 @@ function ($scope, $http, $location, $route, $routeParams,
 
     var getRowIndex = function (BSRows, rowIndex) {
         var setting = shareSettingsService.getCurSettings();
+
+        // only one row and check apply exist member
+        if (BSRows.length === 1 && setting.IsApplyExistingMemberChecked) {
+            return 0;
+        }
+
         for (var index = rowIndex + 1; index < BSRows.length; index++) {
             if (BSRows[index].IsRowSelected
-                || setting.IsApplyExistingMemberChecked
                 || (setting.IsEnableChecked && !setting.IsEnableDisabled)
                 || (setting.IsDownlineChecked && !setting.IsDownlineDisabled)) {
                 return index;
@@ -153,7 +158,7 @@ function ($scope, $http, $location, $route, $routeParams,
                 bsRow.Status = shareSettingsService.getStatus().Fail;
             }
 
-            if (rowIndex !== undefined) {
+            if (rowIndex !== undefined && BSRows.length > 1) {
                 postBetSetting(BSRows, rowIndex);
             }
             else {

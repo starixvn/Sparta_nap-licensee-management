@@ -71,7 +71,7 @@ var editBSAllSportFunc = function ($scope) {
 };
 editBSAllSportFunc.$inject = ['$scope'];
 // Row is checkable
-var editBSRowCheckableFunc = function ($scope) {
+var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
 
     $scope.isCopyAll = false;
     $scope.listener = null;
@@ -119,10 +119,14 @@ var editBSRowCheckableFunc = function ($scope) {
     };
 
     $scope.applyExistingMembers = function () {
-        $scope.buttonStatus.isNextEnabled = true;
+        var curBSRows = $scope.editBS.BSRows;
+        var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+        if ($scope.editBS.BSRows.length === 1) {
+            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || getNextEnable($scope, curBSRows, orgBSRows);
+        }
     };
 };
-editBSRowCheckableFunc.$inject = ['$scope'];
+editBSRowCheckableFunc.$inject = ['$scope', 'shareSettingsService'];
 // Row is checkable with super and down line
 var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
     // Inherit editBSRowCheckableFunc
@@ -173,7 +177,7 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 arrValidRows.push(false);
             }
 
-            if (!curBSRows[index].IsSuperChecked) {
+            if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
                 curBSRows[index].IsDownlineChecked = false;
             }
         }
