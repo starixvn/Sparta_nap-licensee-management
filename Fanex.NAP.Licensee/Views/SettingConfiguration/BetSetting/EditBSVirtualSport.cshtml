@@ -14,7 +14,7 @@
     </label>
     <label class="checkbox-inline">
         <input ng-model="editBS.IsDownlineChecked" ng-disabled="editBS.IsDownlineDisabled || !editBS.IsEnableChecked"
-            type="checkbox">
+            ng-click="changeNextButtonStatus()" type="checkbox">
         Enable Members
     </label>
     <table class="table table-bordered table-setting">
