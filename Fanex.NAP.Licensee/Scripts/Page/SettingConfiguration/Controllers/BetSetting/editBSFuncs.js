@@ -272,8 +272,21 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             $scope.editBS.IsDownlineDisabled = true;
             $scope.editBS.IsDownlineChecked = false;
-            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows) || false;
-        } 
+            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || getNextEnable($scope, curBSRows, orgBSRows);
+        }
+    };
+
+    $scope.enableMembers = function () {
+        if ($scope.editBS.IsDownlineChecked) {
+            $scope.buttonStatus.isNextEnabled = true;
+        }
+        else {
+            var curBSRows = $scope.editBS.BSRows;
+            var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+            $scope.buttonStatus.isNextEnabled = ($scope.editBS.IsEnableChecked && !$scope.editBS.IsEnableDisabled)
+                                                || $scope.editBS.IsApplyExistingMemberChecked
+                                                || getNextEnable($scope, curBSRows, orgBSRows);
+        }
     };
 };
 editBSNextConstraintsFunc.$inject = ['$scope', '$location', 'shareSettingsService'];
