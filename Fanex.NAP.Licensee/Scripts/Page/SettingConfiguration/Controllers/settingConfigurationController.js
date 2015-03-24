@@ -121,7 +121,8 @@ function ($scope, $http, $location, $route, $routeParams,
         for (var index = rowIndex + 1; index < BSRows.length; index++) {
             if (BSRows[index].IsRowSelected
                 || setting.IsApplyExistingMemberChecked
-                || (setting.IsEnableChecked && !setting.IsEnableDisabled)) {
+                || (setting.IsEnableChecked && !setting.IsEnableDisabled)
+                || (setting.IsDownlineChecked && !setting.IsDownlineDisabled)) {
                 return index;
             }
         }
