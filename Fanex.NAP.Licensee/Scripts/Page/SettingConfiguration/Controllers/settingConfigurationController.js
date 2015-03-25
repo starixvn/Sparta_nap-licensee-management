@@ -141,7 +141,7 @@ function ($scope, $http, $location, $route, $routeParams,
             CustId: shareSettingsService.getWorkingContext().CustId,
             ProdId: shareSettingsService.getWorkingContext().ProdId,
             SportBetSetting: bsRow,
-            IsApplyExistingMemberChecked: shareSettingsService.getCurSettings().IsApplyExistingMemberChecked,
+            IsApplyExistingMemberChecked: bsRow.IsRowSelected ? shareSettingsService.getCurSettings().IsApplyExistingMemberChecked : false,
             IsEnableChecked: shareSettingsService.getCurSettings().IsEnableChecked,
             IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked
         };

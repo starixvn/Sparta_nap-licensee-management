@@ -70,6 +70,60 @@ var editBSAllSportFunc = function ($scope) {
     $scope.$watch("editBS.BSRows", syncAllSport, true);
 };
 editBSAllSportFunc.$inject = ['$scope'];
+var getNextEnable = function (scope, curBSRows, orgBSRows) {
+    var arrValidRows = [];
+    $.each(curBSRows, function (index, element) {
+        if (element.IsRowSelected === true) {
+            var orgRow = {
+                MinBet: orgBSRows[index].MinBet,
+                MaxBet: orgBSRows[index].MaxBet,
+                MaxPerMatch: orgBSRows[index].MaxPerMatch,
+                MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
+                IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
+                IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
+            };
+
+            var curRow = {
+                MinBet: curBSRows[index].MinBet,
+                MaxBet: curBSRows[index].MaxBet,
+                MaxPerMatch: curBSRows[index].MaxPerMatch,
+                MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
+                IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
+                IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
+            };
+
+            if (angular.equals(curRow, orgRow)) {
+                arrValidRows.push(true);
+            }
+            else {
+                arrValidRows.push(false);
+            }
+
+            if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
+                curBSRows[index].IsDownlineChecked = false;
+            }
+        }
+        else {
+            curBSRows[index].MinBet = orgBSRows[index].MinBet;
+            curBSRows[index].MaxBet = orgBSRows[index].MaxBet;
+            curBSRows[index].MaxPerMatch = orgBSRows[index].MaxPerMatch;
+            curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
+            curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
+            curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
+        }
+    });
+
+    if (arrValidRows.length !== 0) {
+        var hasError = false;
+        angular.forEach(arrValidRows, function (value) {
+            if (value) {
+                hasError = true;
+            }
+        });
+        return scope.editBS.IsApplyExistingMemberChecked || !hasError;
+    }
+    return false;
+};
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
 
@@ -148,60 +202,6 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
     };
 };
 editBSRowCheckableSuperDownlineFunc.$inject = ['$scope', '$injector'];
-var getNextEnable = function (scope, curBSRows, orgBSRows) {
-    var arrValidRows = [];
-    $.each(curBSRows, function (index, element) {
-        if (element.IsRowSelected === true) {
-            var orgRow = {
-                MinBet: orgBSRows[index].MinBet,
-                MaxBet: orgBSRows[index].MaxBet,
-                MaxPerMatch: orgBSRows[index].MaxPerMatch,
-                MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
-                IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
-                IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
-            };
-
-            var curRow = {
-                MinBet: curBSRows[index].MinBet,
-                MaxBet: curBSRows[index].MaxBet,
-                MaxPerMatch: curBSRows[index].MaxPerMatch,
-                MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
-                IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
-                IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
-            };
-
-            if (angular.equals(curRow, orgRow)) {
-                arrValidRows.push(true);
-            }
-            else {
-                arrValidRows.push(false);
-            }
-
-            if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
-                curBSRows[index].IsDownlineChecked = false;
-            }
-        }
-        else {
-            curBSRows[index].MinBet = orgBSRows[index].MinBet;
-            curBSRows[index].MaxBet = orgBSRows[index].MaxBet;
-            curBSRows[index].MaxPerMatch = orgBSRows[index].MaxPerMatch;
-            curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
-            curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
-            curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
-        }
-    });
-
-    if (arrValidRows.length !== 0) {
-        var hasError = false;
-        angular.forEach(arrValidRows, function (value) {
-            if (value) {
-                hasError = true;
-            }
-        });
-        return scope.editBS.IsApplyExistingMemberChecked || !hasError;
-    }
-    return false;
-};
 var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {
     // Private functions
     var checkDirty = function () {
