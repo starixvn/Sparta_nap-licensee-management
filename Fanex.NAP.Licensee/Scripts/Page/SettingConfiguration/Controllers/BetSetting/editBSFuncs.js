@@ -194,9 +194,6 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
                 element.MinBet = firstRowData.MinBet;
                 element.MaxBet = firstRowData.MaxBet;
                 element.MaxPerMatch = firstRowData.MaxPerMatch;
-
-                element.IsSuperChecked = firstRowData.IsSuperChecked;
-                element.IsDownlinesChecked = firstRowData.IsDownlinesChecked;
             });
         }
     };

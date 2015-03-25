@@ -42,7 +42,7 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
                 else {
                     element.IsChecked = true;
                     element.IsDisabled = true;
-                    element.SelectedComm = $scope.EditCommRows[0].SelectedComm;
+                    $scope.copyComm();
                 }
             });
         }
@@ -53,6 +53,14 @@ function ($scope, $http, $location, shareSettingsService, ContextFunc) {
                 element.IsChecked = false;
                 element.IsDisabled = false;
                 element.SelectedComm = orgComms[index].SelectedComm;
+            });
+        }
+    };
+
+    $scope.copyComm = function () {
+        if ($scope.isCopyAll === true) {
+            $.each($scope.EditCommRows, function (index, element) {
+                element.SelectedComm = $scope.EditCommRows[0].SelectedComm;
             });
         }
     };
