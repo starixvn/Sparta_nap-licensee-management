@@ -124,6 +124,13 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
     }
     return false;
 };
+var editCheckedRows = function (curBSRows) {
+    $.each(curBSRows, function (index, element) {
+        if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
+            curBSRows[index].IsDownlineChecked = false;
+        }
+    });
+};
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
 
@@ -145,6 +152,7 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
                 else {
                     element.IsRowSelected = true;
                     element.IsRowDisabled = true;
+                    element.IsSuperDisabled = element.IsSuperChecked;
                 }
             });
         }
@@ -209,6 +217,7 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
             var curBSRows = $scope.editBS.BSRows;
 
             if ($scope.isCopyAll === true) {
+                editCheckedRows($scope.editBS.BSRows);
                 $scope.buttonStatus.isNextEnabled = true;
                 return;
             }

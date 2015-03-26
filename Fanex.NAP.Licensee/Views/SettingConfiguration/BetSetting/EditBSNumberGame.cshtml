@@ -24,20 +24,16 @@
         <tbody>
             <tr ng-repeat="item in editBS.BSRows">
                 <td>
-                    <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        bs-validation="MinBet" />
+                    <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        bs-validation="MaxBet" />
+                    <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="{{item.MaxPerBall}}" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                       bs-validation="MaxPerMatch"  />
+                    <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="{{item.MaxPerBall}}" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MaxPerMatch}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled"
-                        bs-validation="MaxPerBall" />
+                    <input type="text" ng-attr-min="{{item.MaxPerMatch}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
             </tr>
             <tr>
