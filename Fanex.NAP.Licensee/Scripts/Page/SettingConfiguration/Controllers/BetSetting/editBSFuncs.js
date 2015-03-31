@@ -183,8 +183,12 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
     $scope.applyExistingMembers = function () {
         var curBSRows = $scope.editBS.BSRows;
         var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+        var nextEnable = getNextEnable($scope, curBSRows, orgBSRows);
         if ($scope.editBS.BSRows.length === 1) {
-            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || getNextEnable($scope, curBSRows, orgBSRows);
+            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || nextEnable;
+        }
+        else {
+            $scope.buttonStatus.isNextEnabled = nextEnable;
         }
     };
 };
