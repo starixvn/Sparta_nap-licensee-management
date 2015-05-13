@@ -1,0 +1,59 @@
+﻿<div ng-controller="reviewBSNumberGameCtrl" class="filter-form">
+    <h4>Review Bet Setting Number Game</h4>
+    <h5>
+        Apply existing members: {{reviewBS.IsApplyExistingMemberChecked === true ? "Yes"
+        : "No"}}
+    </h5>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th class="width-150">
+                    Min Bet
+                </th>
+                <th class="width-150">
+                    Max Bet
+                </th>
+                <th class="width-150">
+                    Max Per Match
+                </th>
+                <th class="width-150">
+                    Max Per Ball
+                </th>
+                <th ng-if="buttonStatus.isUpdated">
+                    Status
+                </th>
+                <th ng-if="buttonStatus.isUpdated">
+                    Message
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in reviewBS.BSRows">
+                <td>
+                    {{item.MinBet}}
+                </td>
+                <td>
+                    {{item.MaxBet}}
+                </td>
+                <td>
+                    {{item.MaxPerMatch}}
+                </td>
+                <td>
+                    {{item.MaxPerBall}}
+                </td>
+                 <td ng-if="buttonStatus.isUpdated">
+                    <span class="glyphicon {{item.Status}}"></span>
+                </td>
+                <td ng-if="buttonStatus.isUpdated">
+                    {{item.Message}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
+                    <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -17,7 +17,11 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
-    <JSLintSkip>\Scripts\head.min.js|\Scripts\head.js|\Scripts\respond.js|\Scripts\Plugin\multi-select-control.js</JSLintSkip>
+    <JSLintSkip>\Scripts\head.min.js|\Scripts\head.js|\Scripts\respond.js|\Scripts\Plugin\multi-select-control.js|\Scripts\numeric.js</JSLintSkip>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,17 +44,24 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="BundleTransformer.Core">
-      <HintPath>..\packages\BundleTransformer.Core.1.9.13\lib\net40\BundleTransformer.Core.dll</HintPath>
+    <Reference Include="BundleTransformer.Core, Version=1.9.34.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BundleTransformer.Core.1.9.34\lib\net40\BundleTransformer.Core.dll</HintPath>
     </Reference>
     <Reference Include="BundleTransformer.Less">
       <HintPath>..\packages\BundleTransformer.Less.1.9.13\lib\net40\BundleTransformer.Less.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Yui">
+      <HintPath>..\packages\BundleTransformer.Yui.1.9.34\lib\net40\BundleTransformer.Yui.dll</HintPath>
     </Reference>
     <Reference Include="ClearScript">
       <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.12\lib\net40\ClearScript.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
     </Reference>
     <Reference Include="Enyim.Caching">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
@@ -61,8 +72,9 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data">
-      <HintPath>..\packages\Fanex.Data.0.5.404.62\lib\net40\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
@@ -210,6 +222,9 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="Yahoo.Yui.Compressor">
+      <HintPath>..\packages\YUICompressor.NET.2.7.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -298,6 +313,10 @@
     <Content Include="Content\Fanex.Grid\images\white-top-bottom.gif" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\jquery-ui\base\accordion.css" />
+    <Content Include="Content\Core\angularjs.less" />
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Content\jquery-ui\base\all.css.nk" />
     <Content Include="Content\jquery-ui\base\autocomplete.css" />
     <None Include="Content\jquery-ui\base\base.css.bk" />
@@ -332,7 +351,34 @@
     <Content Include="Content\jquery-ui\base\theme.css" />
     <Content Include="Content\jquery-ui\base\tooltip.css" />
     <Content Include="Content\Plugin\multi-select-control.css" />
+    <Content Include="Content\SettingConfiguration\setting-configuration.less" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular\angular-animate.min.js" />
+    <Content Include="Scripts\angular\angular-route.min.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\numeric.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSFuncs.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSRacingCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSRacingCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSSportbookCtrl.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\editCommController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\editPTController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\reviewCommController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\reviewPTController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfiguration.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfigurationController.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Directives\validatorDirective.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Services\filterDataService.js" />
+    <Content Include="Scripts\Page\SettingConfiguration\Services\shareSettingsService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
@@ -368,7 +414,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.ConnectionString.config.txt" />
     <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -434,6 +479,24 @@
     <Content Include="SiteConfig\Web.UAT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
+    <Content Include="Views\SettingConfiguration\Index.cshtml" />
+    <Content Include="Views\SettingConfiguration\PT\EditPT.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\EditComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\ReviewComm.cshtml" />
+    <Content Include="Views\SettingConfiguration\PT\ReviewPT.cshtml" />
+    <Content Include="Views\SettingConfiguration\Comm\UpdateCommResult.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSSportbook.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSNumberGame.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSKeno.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSKeno.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSNumberGame.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSVirtualSport.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSRacing.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSRacing.cshtml" />
+    <Content Include="Views\Error\UnsupportedFunction.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
+    <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -461,7 +524,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.ConnectionString.config" />
+    <Content Include="Web.ConnectionString.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
@@ -479,9 +544,6 @@
     <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
     <None Include="Areas\UserLogin\themes\select-site.less" />
     <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
-    <None Include="BundleTransformer.Configuration.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Content\Core\variables.less" />
     <Content Include="Content\Core\common.less" />
     <Content Include="Content\Core\site.less" />
@@ -595,7 +657,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54840</DevelopmentServerPort>
+          <DevelopmentServerPort>51180</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

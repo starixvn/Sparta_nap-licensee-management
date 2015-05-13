@@ -43,8 +43,9 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data">
-      <HintPath>..\packages\Fanex.Data.0.5.404.62\lib\net40\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
@@ -118,32 +119,62 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
+    <Compile Include="DTO\ProductTypeItem.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
     <Compile Include="DTO\DefaultBetSetting\SettingLogItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\SportOrGameItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\XmlLog\LogTemplate.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSBaseItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSKenoItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSNumberGameItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSRacingItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSSportbookItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSVirtualSportItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
+    <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
+    <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="DataDomain\NapLicenseeFunctionKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NapLicenseeFunctionKeys.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <Compile Include="SettingItemHelper.cs" />
-    <Compile Include="ViewModel\SingleDefaultBetSettingViewModel.cs" />
+    <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSKenoViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSNumberGameRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSNumberGameViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSRowBaseViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSSportbookViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSVirtualSportViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\CommRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\SettingConfigFilterViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateBSResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
+    <Compile Include="ViewModel\DefaultBetSetting\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\DefaultBetSetting\" />
-  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

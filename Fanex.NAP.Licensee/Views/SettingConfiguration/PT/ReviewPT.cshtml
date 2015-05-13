@@ -1,0 +1,21 @@
+﻿<div class="clearfix">
+</div>
+<div class="filter-form">
+    <h4>Review Position Taking {{reviewPTData.ProductName}}</h4>
+    <div>
+        The values will be updated to supers <strong>{{reviewPTData.SuperUsername}}</strong>
+    </div>
+    <div>
+        Original PT: <strong>{{reviewPTData.OrgPT === "-1" ? "None" : reviewPTData.OrgPT}}</strong>
+    </div>
+    <div>
+        Current PT: <strong>{{reviewPTData.CurPT}}</strong>
+    </div>
+    <div class="form-group">
+        <input type="button" value="Update" class="btn btn-primary" ng-click="updatePT()" ng-disabled="buttonStatus.isUpdated" />
+        <input type="button" value="Back" class="btn btn-primary" ng-click="backEditPT()" ng-disabled="!buttonStatus.isButtonEnable" />
+    </div>
+    <div class="col-sm-12 alert" ng-class="buttonStatus.isSuccess?'alert-success':'alert-danger'" ng-if="buttonStatus.isUpdated" role="alert">
+        {{ptMessage}}
+    </div>
+</div>

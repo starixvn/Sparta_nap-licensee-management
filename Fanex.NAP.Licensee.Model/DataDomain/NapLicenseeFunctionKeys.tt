@@ -30,7 +30,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 	<#
 		SqlConnection conn = new SqlConnection(connectionString);
 
-		string command = string.Format("SELECT DISTINCT FunctionKey from [Functions] INNER JOIN [Sites] on [Functions].SiteId=[Sites].SiteId WHERE SiteName='NAP Licensee Mangament' AND [Functions].IsActive =1");
+		string command = string.Format("SELECT DISTINCT FunctionKey from [Functions] INNER JOIN [Sites] on [Functions].SiteId=[Sites].SiteId WHERE SiteName='NAP Licensee Management' AND [Functions].IsActive =1");
 
 		SqlCommand comm = new SqlCommand(command, conn);
 

@@ -1,0 +1,81 @@
+﻿@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Default";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Bet Setting</li>
+        <li class="current">Licensee Setting</li>
+    </ul>
+}
+@section HeadCss
+{
+    @Styles.Render("~/bundles/settingConfigurationCss")
+}
+<div ng-app="settingConfiguration" ng-controller="settingConfigurationCtrl">
+    <div class="col-md-12 filter-form">
+        <div class="row">
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <label class="col-md-5">
+                        Licensee
+                    </label>
+                    <select ng-options="item.Name for item in filterData.licensees track by item.Name"
+                        ng-model="filterData.selectedLicensee" ng-change="selectedLicenseeChanged()"
+                        id="licensee" class="col-md-3 width-160">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <label class="col-md-5">
+                        Super Username
+                    </label>
+                    <select ng-options="item.Name for item in filterData.superLicensees track by item.Id"
+                        ng-model="filterData.selectedSuperLicensee" id="super-username" class="col-md-3 width-160">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <label class="col-md-5">
+                        Select Product
+                    </label>
+                    <select ng-options="item.Name for item in filterData.productTypes track by item.Id"
+                        ng-model="filterData.selectedProductType" ng-change="selectedProductTypeChanged()"
+                        id="product-type" class="col-md-3 width-160">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <label class="col-md-5">
+                        Select Function
+                    </label>
+                    <select ng-options="item for item in filterData.selectedProductType.Functions track by item"
+                        ng-model="filterData.selectedFunction" ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
+                        id="product-function" class="col-md-3 width-160">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <input type="button" id="Select" value="Select" class="btn btn-primary" ng-click="selectEventHandler()" ng-disabled="!buttonStatus.isButtonEnable" />
+            </div>
+        </div>
+    </div>
+    <!--Dynamic View-->
+    <div ng-view class="fade-in">
+    </div>
+</div>
+@section FooterJs
+{
+    <script src="@Url.Content("~/Scripts/angular/angular.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/angular/angular-route.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/angular/angular-animate.min.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/settingConfigurationJs")
+}

@@ -1,0 +1,70 @@
+﻿<div ng-controller="editBSRacingCtrl" class="filter-form">
+    <h4>Edit Bet Setting Racing</h4>
+    <label class="checkbox-inline">
+        <input ng-change="applyExistingMembers()" ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        Apply existing members
+    </label>
+    <label class="checkbox-inline">
+        <input ng-change="copyAllFromOne()" ng-model="isCopyAll" type="checkbox">
+        Copy all Bet Setting from 1st row
+    </label>
+    <table class="table table-bordered table-setting">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    <input type="checkbox" ng-model="isAllSportChecked" ng-change="checkAllSports()" />
+                    All sports
+                </th>
+                <th>
+                    Min Bet
+                </th>
+                <th>
+                    Max Bet
+                </th>
+                <th>
+                    Max Per Match
+                </th>
+                <th>
+                    Enable Product
+                </th>
+                <th>
+                    Enable Members
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in editBS.BSRows">
+                <td ng-if="item.RowSpan != -1" rowspan="{{item.RowSpan}}" style="vertical-align: middle">
+                    {{item.SportTypeName}}
+                </td>
+                <td>
+                    <label style="font-weight: normal; display: inline;">
+                        <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="item.IsRowDisabled" />
+                        {{item.BetTypeName}}
+                    </label>
+                </td>
+                <td>
+                    <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                </td>
+                <td>
+                    <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                </td>
+                <td>
+                    <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                </td>
+                <td class="content-center">
+                    <input type="checkbox" ng-model="item.IsSuperChecked" ng-disabled="!item.IsRowSelected || item.IsSuperDisabled" />
+                </td>
+                <td class="content-center">
+                    <input type="checkbox" ng-model="item.IsDownlineChecked" ng-disabled="!item.IsRowSelected  || item.IsDownlineDisabled || !item.IsSuperChecked" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary"
+                        ng-disabled="!buttonStatus.isNextEnabled" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

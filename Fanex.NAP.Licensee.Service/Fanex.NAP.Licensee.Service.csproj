@@ -43,8 +43,9 @@
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data">
-      <HintPath>..\packages\Fanex.Data.0.5.404.62\lib\net40\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
       <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
@@ -115,7 +116,9 @@
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="Core\IObjectDbGenerator.cs" />
+    <Compile Include="ISettingConfigurationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingConfigurationService.cs" />
     <Compile Include="Utilities\AppSession.cs" />
     <Compile Include="Utilities\PermissionService.cs" />
     <Compile Include="Utilities\SessionManager.cs" />
