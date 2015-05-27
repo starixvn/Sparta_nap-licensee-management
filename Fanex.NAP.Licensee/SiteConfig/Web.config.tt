@@ -102,6 +102,7 @@
         <authorization>
             <allow users="*" />
         </authorization>
+		 <#=site.SessionState#>
         <pages>
             <namespaces>
                 <add namespace="System.Web" />
