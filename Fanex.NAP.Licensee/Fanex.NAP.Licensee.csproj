@@ -469,6 +469,7 @@
     </Content>
     <Content Include="SiteConfig\Web.LOCAL.config">
       <DependentUpon>Web.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SiteConfig\Web.PRO.config">
       <DependentUpon>Web.config.tt</DependentUpon>
@@ -478,6 +479,7 @@
     </Content>
     <Content Include="SiteConfig\Web.UAT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\SettingConfiguration\Index.cshtml" />
     <Content Include="Views\SettingConfiguration\PT\EditPT.cshtml" />
