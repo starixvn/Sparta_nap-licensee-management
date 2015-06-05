@@ -138,7 +138,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
                             {
                                 // Check-in user
                                 var criteria = SetUserCheckInCriteria(user.Id);
-                                _userService.UserCheckIn(ref criteria);
+                                _userService.UserCheckIn(criteria);
 
                                 // Saves user session
                                 SaveUserSession(user, username, criteria.OnUserId);
@@ -261,7 +261,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 
                     var criteria = new UserReCheckInUserCriteria();
                     criteria.OnUserId = Convert.ToInt32(_currentSession.OnUserId);
-                    _userService.ReUserCheckIn(ref criteria);
+                    _userService.ReUserCheckIn(criteria);
 
                     return Json(new
                     {
@@ -312,7 +312,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// <param name="user">User info.</param>
         private void CreateAuthInfo(IUser user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
+            var currentDomain = CurrentContext.CurrentDomain;
             var authInfo = new AuthInfo { UserId = user.Id, OnUserId = _currentSession.OnUserId };
             var authTicket = new FormsAuthenticationTicket(
                 1,
