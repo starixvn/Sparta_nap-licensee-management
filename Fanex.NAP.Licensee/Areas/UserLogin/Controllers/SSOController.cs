@@ -89,7 +89,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             if (expiration.TotalSeconds <= _timeExipration)
             {
                 var criteria = SetUserCriteria(Convert.ToInt32(userId), Convert.ToInt32(onuserId));
-                _userService.UserSSOCheckIn(ref criteria);
+                _userService.UserSSOCheckIn(criteria);
 
                 if (criteria.OnUserId != 0)
                 {
@@ -161,7 +161,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
                         Platform = CurrentContext.Platform
                     };
 
-                    _userService.UserCheckIn(ref criteria);
+                    _userService.UserCheckIn(criteria);
 
                     _currentSession.UserId = user.Id;
                     _currentSession.Username = user.Username;
@@ -220,7 +220,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// <param name="user">User info.</param>
         private void CreateAuthInfo(IUser user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
+            var currentDomain = CurrentContext.CurrentDomain;
 
             var authInfo = new AuthInfo();
 

@@ -1,7 +1,1 @@
 ﻿
-// Generated helper templates
-// Generated items
-// Fanex.NAP.Licensee\SiteConfig\Web.ConnectionString.SANDBOX.config
-// Fanex.NAP.Licensee\SiteConfig\Web.ConnectionString.PRO.config
-// Fanex.NAP.Licensee\SiteConfig\Web.ConnectionString.UAT.config
-// Fanex.NAP.Licensee\SiteConfig\Web.ConnectionString.LOCAL.config

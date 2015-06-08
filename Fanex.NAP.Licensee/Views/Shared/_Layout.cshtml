@@ -12,7 +12,7 @@
     <title>Licensee Management</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @RenderSection("HeadCss", false)
-    @Styles.Render("~/bundles/coreCss")  
+    @Styles.Render("~/bundles/coreCss")
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~/")';
     </script>
@@ -20,25 +20,24 @@
 <body>
     <div class="container-fluid page">
         <header class="row header">
-            <a class="logo" href="@Url.Action("Index","Home")">
-                Licensee
-                <span> Management</span>
+            <a class="logo" href="@Url.Action("Index", "Home")">Licensee <span>Management</span>
             </a>
             @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
             <div class="user-info">
-                <span class="info-bar">Howdy, <span class="account-name">@ViewBag.Session.Username</span><span class="caret"></span></span>
-                @*<ul class="user-dropdown">
-                    <li><a href="#">Sign Out</a></li>
-                </ul>*@
+                <span class="info-bar">Howdy, <span class="account-name">@ViewBag.Session.Username</span><span
+                    class="caret"></span></span>
+                <ul class="user-dropdown">
+                    <li><a href="@Url.Content("~/UserLogin/Login/LogOut")">Sign Out</a></li>
+                </ul>
             </div>
         </header>
         <section id="headline" class="row title-bar">
-        @RenderSection("Headline", false)
+            @RenderSection("Headline", false)
         </section>
-        <section id="body" class="row body">          
+        <section id="body" class="row body">
             @RenderBody()
-            <div id="loadingMsgBox" class="icon-loading hidden"></div>
-
+            <div id="loadingMsgBox" class="icon-loading hidden">
+            </div>
         </section>
     </div>
     @RenderSection("Foot", false)
@@ -47,6 +46,6 @@
     {
         @Scripts.Render("~/bundles/recheckInJs")
     }
+    @RenderSection("FooterJs", false)
 </body>
-@RenderSection("FooterJs",false)
 </html>

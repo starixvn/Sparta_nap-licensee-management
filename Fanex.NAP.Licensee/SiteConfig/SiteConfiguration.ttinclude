@@ -55,15 +55,15 @@
 		public string SessionState
         {
             get
-            {
+			{
                 switch (SiteEnvironment)
                 {
                     case SiteEnvironment.LOCAL:                        
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     case SiteEnvironment.UAT:
-                        return "<sessionState mode=\"StateServer\" timeout=\"60\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
                     case SiteEnvironment.PRO:
-                        return "<sessionState mode=\"StateServer\" timeout=\"60\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
                     case SiteEnvironment.SANDBOX:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     default:
