@@ -505,9 +505,6 @@
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
-    <Content Include="SiteConfig\Web.ConnectionString.NEWLOCAL.config">
-      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
