@@ -16,7 +16,7 @@
 <#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#
     var manager = TemplateFileManager.Create(this);
-	List<string> sites = new List<string>() {"LOCAL","NEWLOCAL","UAT","PRO","SANDBOX"};
+	List<string> sites = new List<string>() {"LOCAL","UAT","PRO","SANDBOX"};
     foreach(var site in sites)
     {
         var fileName = string.Format("Web.ConnectionString.{0}.config", site);
