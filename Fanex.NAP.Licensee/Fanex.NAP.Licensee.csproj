@@ -246,9 +246,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="%40JSense.js" />
+    <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="App_Data\FanexSpName.xml.bk">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="App_Data\NAPFrameworkSpNames.xml" />
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Error.css" />
@@ -501,6 +505,9 @@
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
+    <Content Include="SiteConfig\Web.ConnectionString.NEWLOCAL.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -528,9 +535,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.ConnectionString.config">
+    <Content Include="Web.ConnectionString.config" />
+    <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />

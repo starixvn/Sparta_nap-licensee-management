@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Site.Nap.Licensee">
-    <Setting Key="NAP_SpecialCustSetting_CurrencyList" SpName="NAP_SpecialCustSetting_CurrencyList" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_CurrencyList" SpName="NAP_SpecialCustSetting_CurrencyList" DbName="DBCUST.CustDB.bodbLicenseeNet">
       <Mapping DataField="exchangeid" ObjectProperty="Id" />
       <Mapping DataField="currency" ObjectProperty="Name" />
     </Setting>
@@ -9,11 +9,11 @@
       <Mapping DataField="SiteID" ObjectProperty="Id" />
       <Mapping DataField="SiteName" ObjectProperty="Name" />
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_List" SpName="NAP_SpecialCustSetting_List" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
       <Mapping DataField="AgentID" ObjectProperty="Id" />
@@ -21,7 +21,7 @@
     </Setting>
     <Setting Key="NAP_SpecialCustSetting_LogSel" SpName="NAP_SpecialCustSetting_LogSel" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
   </Function>
   <Function Name="Site.Nap.Licensee.SettingConfiguration">
@@ -33,18 +33,18 @@
 
     <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_LM_LicenseePositionTakingUpd" SpName="NAP_LM_LicenseePositionTakingUpd" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseePositionTakingUpd" SpName="NAP_LM_LicenseePositionTakingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
     <Setting Key="NAP_LM_LicenseeCommissionSel" SpName="NAP_LM_LicenseeCommissionSel" DbName="DBEXT.bodb02.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_LM_LicenseeCommissionUpd" SpName="NAP_LM_LicenseeCommissionUpd" DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeCommissionUpd" SpName="NAP_LM_LicenseeCommissionUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
     <!--Bet setting-->
     <Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd " DbName="DBTXN.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd " DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
   </Function>

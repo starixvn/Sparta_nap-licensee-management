@@ -5,6 +5,7 @@
         {
             SiteEnvironment = SiteEnvironment.LOCAL
         },
+		
         new SiteInfo
         {
             SiteEnvironment = SiteEnvironment.UAT
@@ -58,7 +59,7 @@
 			{
                 switch (SiteEnvironment)
                 {
-                    case SiteEnvironment.LOCAL:                        
+                    case SiteEnvironment.LOCAL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     case SiteEnvironment.UAT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
