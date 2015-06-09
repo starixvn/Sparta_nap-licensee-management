@@ -26,23 +26,23 @@
   </Function>
   <Function Name="Site.Nap.Licensee.SettingConfiguration">
 
-    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList " DbName="DBEXT.bodb02.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList " DbName="DBCUST.CustDB.bodbLicenseeNet">
       <Mapping DataField="custid" ObjectProperty="Id" />
       <Mapping DataField="username" ObjectProperty="Name" />
     </Setting>
 
-    <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_LM_LicenseePositionTakingUpd" SpName="NAP_LM_LicenseePositionTakingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
-    <Setting Key="NAP_LM_LicenseeCommissionSel" SpName="NAP_LM_LicenseeCommissionSel" DbName="DBEXT.bodb02.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeCommissionSel" SpName="NAP_LM_LicenseeCommissionSel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_LM_LicenseeCommissionUpd" SpName="NAP_LM_LicenseeCommissionUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
     <!--Bet setting-->
-    <Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel " DbName="DBEXT.bodb02.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel " DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd " DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
