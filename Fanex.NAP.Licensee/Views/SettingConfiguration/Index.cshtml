@@ -74,8 +74,6 @@
 </div>
 @section FooterJs
 {
-    <script src="@Url.Content("~/Scripts/angular/angular.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/angular/angular-route.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/angular/angular-animate.min.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundle/AngularJS")
     @Scripts.Render("~/bundles/settingConfigurationJs")
 }

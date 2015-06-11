@@ -331,20 +331,32 @@
     <Content Include="Content\jquery-ui\base\datepicker.css" />
     <Content Include="Content\jquery-ui\base\dialog.css" />
     <Content Include="Content\jquery-ui\base\draggable.css" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_flat_10_000000_40x100.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_glass_100_fdf5ce_1x400.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_glass_65_ffffff_1x400.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_glass_75_dadada_1x400.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
     <Content Include="Content\jquery-ui\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-icons_228ef1_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_cbd4e6_256x240.png" />
     <Content Include="Content\jquery-ui\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\jquery-ui\base\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jquery-ui\base\menu.css" />
     <Content Include="Content\jquery-ui\base\progressbar.css" />
     <Content Include="Content\jquery-ui\base\resizable.css" />
@@ -356,12 +368,16 @@
     <Content Include="Content\jquery-ui\base\tabs.css" />
     <Content Include="Content\jquery-ui\base\theme.css" />
     <Content Include="Content\jquery-ui\base\tooltip.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.theme.min.css" />
     <Content Include="Content\Plugin\multi-select-control.css" />
     <Content Include="Content\SettingConfiguration\setting-configuration.less" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\jquery-ui.min.1.11.4.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\numeric.js" />
     <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
@@ -479,6 +495,7 @@
     </Content>
     <Content Include="SiteConfig\Web.PRO.config">
       <DependentUpon>Web.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SiteConfig\Web.SANDBOX.config">
       <DependentUpon>Web.config.tt</DependentUpon>
