@@ -21,10 +21,8 @@
         public static void RegisterBundles(BundleCollection bundles)
         {
             var cssTransformer = new StyleTransformer();
-            //cssTransformer.CombineFilesBeforeMinification = true;
 
             var scriptTransformer = new ScriptTransformer();
-            // scriptTransformer.CombineFilesBeforeMinification = true;
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")

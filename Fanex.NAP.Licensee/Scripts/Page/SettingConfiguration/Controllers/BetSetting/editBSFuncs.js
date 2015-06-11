@@ -25,7 +25,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
     });
 
 };
-    editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
+editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
 // Navigator function
 var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
@@ -35,7 +35,7 @@ var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, Con
         return;
     }
 };
-editBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService','ContextFunc'];
+editBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService', 'ContextFunc'];
 // AllSport function
 var editBSAllSportFunc = function ($scope) {
 
@@ -126,7 +126,7 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
 };
 var editCheckedRows = function (curBSRows) {
     $.each(curBSRows, function (index, element) {
-        if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
+        if (element.IsSuperChecked !== undefined && !element.IsSuperChecked) {
             curBSRows[index].IsDownlineChecked = false;
         }
     });
