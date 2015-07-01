@@ -444,6 +444,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Deployment.ignore" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
+    <Content Include="SiteConfig\Web.AppSettings.BACKUPMNL.config">
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.AppSettings.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Web.AppSettings.config.txt</LastGenOutput>
@@ -460,10 +463,16 @@
     <Content Include="SiteConfig\Web.AppSettings.UAT.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
+    <Content Include="SiteConfig\Web.BACKUPMNL.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Web.config1.txt</LastGenOutput>
     </None>
+    <Content Include="SiteConfig\Web.ConnectionString.BACKUPMNL.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.ConnectionString.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Web.ConnectionString.config1.txt</LastGenOutput>

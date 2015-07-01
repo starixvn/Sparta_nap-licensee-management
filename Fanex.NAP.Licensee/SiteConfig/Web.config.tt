@@ -76,6 +76,15 @@
         </Domain>
     </NapSettings>
 	<#
+	 break;
+	  case "BACKUPMNL":
+	  #>
+	   <NapSettings UMAddress="tcp://10.2.96.1:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://nap-hub.ibcbk.com">
+        <Domain>
+            <add Name="http://nap-lm.ibcbk.com" Path="/" />
+        </Domain>
+    </NapSettings>
+	<#
 	break;
 	  case "PRO":
 	  #>
