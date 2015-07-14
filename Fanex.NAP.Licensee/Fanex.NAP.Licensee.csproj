@@ -255,7 +255,9 @@
     <None Include="App_Data\FanexSpName.xml.bk">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="App_Data\NAPFrameworkSpNames.xml" />
+    <Content Include="App_Data\NAPFrameworkSpNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Error.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\accessDenied.gif" />
