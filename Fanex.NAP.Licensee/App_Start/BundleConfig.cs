@@ -21,18 +21,18 @@
         public static void RegisterBundles(BundleCollection bundles)
         {
             var cssTransformer = new StyleTransformer();
-            cssTransformer.CombineFilesBeforeMinification = true;
 
             var scriptTransformer = new ScriptTransformer();
-            scriptTransformer.CombineFilesBeforeMinification = true;
             BundleResolver.Current = new CustomBundleResolver();
 
             var css = new Bundle("~/bundles/coreCss")
-            .IncludeDirectory("~/Content/jquery-ui/base/", "*.css")
             .Include("~/Content/bootstrap/bootstrap.less")
+           .Include("~/Content/Core/site.less")
            .Include("~/Content/Plugin/multi-select-control.css")
-           .Include("~/Content/Core/site.less");
-
+           .Include("~/Content/jquery-ui/jquery-ui.min.css")
+           .Include("~/Content/jquery-ui/jquery-ui.theme.min.css")
+           .Include("~/Content/jquery-ui/jquery-ui.structure.min.css");
+            
             css.Transforms.Add(cssTransformer);
 
             bundles.Add(css);
@@ -53,17 +53,17 @@
 
             var coreJs = new Bundle("~/bundles/coreJs")
                 .Include(
-                "~/Scripts/jquery-1.9.0.js",
-                "~/Scripts/jquery-ui-1.11.1.js",
+                "~/Scripts/jquery-1.9.0.min.js",
+                "~/Scripts/jquery-ui.min.1.11.4.js",
                 "~/Scripts/jquery.number.js",
                 "~/Scripts/numeric.js",
                 "~/Scripts/Plugin/multi-select-control.js",
-                "~/Scripts/bootstrap.js",
+                "~/Scripts/bootstrap.min.js",
                 "~/Scripts/Core/site.js");
 
             coreJs.Transforms.Add(scriptTransformer);
             bundles.Add(coreJs);
-            
+
             var settingConfigurationJs = new Bundle("~/bundles/settingConfigurationJs")
                 .IncludeDirectory("~/Scripts/page/SettingConfiguration/", "*.js", true);
 
@@ -94,6 +94,12 @@
 
             bundles.Add(recheckInJs);
 
+            var angularJs = new Bundle("~/bundle/AngularJS")
+            .Include("~/scripts/angular/angular.min.js")
+             .Include("~/scripts/angular/angular-route.min.js")
+                .Include("~/scripts/angular/angular-animate.min.js");
+            angularJs.Transforms.Add(scriptTransformer);
+            bundles.Add(angularJs);
             /*If you'd like to test the optimization locally,
             you can use this line to force it.*/
             BundleTable.EnableOptimizations = true;

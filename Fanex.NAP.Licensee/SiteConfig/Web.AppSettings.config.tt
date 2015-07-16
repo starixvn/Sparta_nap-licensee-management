@@ -16,7 +16,7 @@
 <#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#
     var manager = TemplateFileManager.Create(this);
-	List<string> sites = new List<string>() {"LOCAL","UAT","PRO","SANDBOX"};
+	List<string> sites = new List<string>() {"LOCAL","UAT","BACKUPMNL","PRO","SANDBOX"};
     foreach(var site in sites)
     {
         var x = site.ToString();
@@ -25,6 +25,7 @@
 		switch(site)
 		{
 			case "LOCAL":
+			
 				#>
 <appSettings>
     <clear />
@@ -72,6 +73,24 @@
     <add key="IsLocalTest" value="0"/>
 	<add key="RemoteRefURL" value="tcp://10.40.40.29:8098/CallGetRefFunction" />
 	<add key="RemoteCacheUrl" value="tcp://10.3.21.14:8090/CallGetOddsFunction" />
+    <add key="Glimpse:DisableAsyncSupport" value="true" />
+
+</appSettings>
+
+				<#
+				break;
+			case "BACKUPMNL":
+				#>
+				<appSettings>
+    <clear />
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="IsLocalTest" value="0"/>
+	<add key="RemoteRefURL" value="tcp://10.40.40.130:8098/CallGetRefFunction" />
+	<add key="RemoteCacheUrl" value="tcp://10.40.40.130:8099/CallGetOddsFunction" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>

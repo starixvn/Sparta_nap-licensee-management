@@ -39,3 +39,4 @@ _ReSharper*/
 MsBuild.xml
 MSBUILD.SUMMARY.email
 SUMMARY.DISPLAY.xml
+/packages

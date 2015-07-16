@@ -60,7 +60,7 @@
 		 case "LOCAL":
 		 case "SANDBOX":
 		 #>
-    <NapSettings UMAddress="tcp://10.40.40.200:8989/LoadBalancerInterface" Environment="UAT" EnableDirectLogin="1" SiteId="90" EnableCheckUM="false" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://10.18.200.209:8009/nap-home-local3">
+    <NapSettings UMAddress="tcp://10.40.40.200:8989/LoadBalancerInterface" Environment="UAT" EnableDirectLogin="1" SiteId="87" EnableCheckUM="false" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://10.18.200.209:8009/nap-home-local3">
         <Domain>
             <add Name="localhost:54840/" Path="/" />
         </Domain>
@@ -73,6 +73,15 @@
 	   <NapSettings UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" Environment="UAT" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://qa-naphub.starific.net/User/Login">
         <Domain>
             <add Name="qa-naplm.starific.net" Path="/" />
+        </Domain>
+    </NapSettings>
+	<#
+	 break;
+	  case "BACKUPMNL":
+	  #>
+	   <NapSettings UMAddress="tcp://10.2.96.1:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://nap-hub.ibcbk.com">
+        <Domain>
+            <add Name="http://nap-lm.ibcbk.com" Path="/" />
         </Domain>
     </NapSettings>
 	<#

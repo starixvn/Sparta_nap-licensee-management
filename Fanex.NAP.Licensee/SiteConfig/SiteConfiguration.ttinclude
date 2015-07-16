@@ -5,9 +5,14 @@
         {
             SiteEnvironment = SiteEnvironment.LOCAL
         },
+		
         new SiteInfo
         {
             SiteEnvironment = SiteEnvironment.UAT
+        },
+		  new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.BACKUPMNL
         },
         new SiteInfo
         {
@@ -24,6 +29,7 @@
     {
         LOCAL,
         UAT,
+		BACKUPMNL,
         PRO,
         SANDBOX
     }
@@ -43,7 +49,10 @@
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"Licensee-Local\" />";
                     case SiteEnvironment.UAT:
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.40.40.73\\private$\\entlib\" defaultCategory=\"Licensee-UAT\" />";
-                    case SiteEnvironment.PRO:
+                    case SiteEnvironment.BACKUPMNL:
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=TCP:10.2.98.3\\private$\\entlib\" defaultCategory=\"Licensee-Live\" />";
+
+					case SiteEnvironment.PRO:
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://10.40.40.127/msmq/Private$/entlib\" defaultCategory=\"Licensee-Live\" />";
                     case SiteEnvironment.SANDBOX:
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"Licensee-Local\" />";
@@ -58,11 +67,14 @@
 			{
                 switch (SiteEnvironment)
                 {
-                    case SiteEnvironment.LOCAL:                        
+                    case SiteEnvironment.LOCAL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     case SiteEnvironment.UAT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
-                    case SiteEnvironment.PRO:
+                    case SiteEnvironment.BACKUPMNL:
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.2.12.10:42424\" />";
+
+				    case SiteEnvironment.PRO:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
                     case SiteEnvironment.SANDBOX:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
