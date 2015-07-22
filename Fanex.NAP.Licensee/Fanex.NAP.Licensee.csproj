@@ -485,6 +485,7 @@
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
