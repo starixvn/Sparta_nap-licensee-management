@@ -132,6 +132,7 @@
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
+    <Compile Include="DTO\LoginUser.cs" />
     <Compile Include="DTO\ProductTypeItem.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
     <Compile Include="DTO\DefaultBetSetting\SettingLogItem.cs" />
@@ -148,6 +149,8 @@
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
     <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
     <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
+    <Compile Include="Enumerations\HashType.cs" />
+    <Compile Include="Enumerations\NapLoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

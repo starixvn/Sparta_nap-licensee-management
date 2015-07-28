@@ -15,6 +15,7 @@ namespace Fanex.NAP.Licensee.Service
     using System.Collections.Generic;
     using Fanex.Logging;
     using NAP.Core.Model;
+    using Fanex.NAP.Core.Web.Session;
 
     /// <summary>
     /// AppSession class.
@@ -29,6 +30,7 @@ namespace Fanex.NAP.Licensee.Service
         private const string IsAccountingLoginKey = "Fanex.NAP.Licensee.Contants.AppSession.IsAccountingLogin";
         private const string ViewIpVnKey = "ViewIPVN";
         private const string CurrentWorkingOnMenuKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentWorkingOnMenu";
+        private const string NappSessionKey = "Fanex.NAP.Licensee.Contants.AppSession.NappSessionKey";
 
         /// <summary>
         ///     Gets or sets current login user.
@@ -109,5 +111,12 @@ namespace Fanex.NAP.Licensee.Service
 
             set { SessionManager.Set(ViewIpVnKey, value); }
         }
+
+        /*public static ICurrentSession NapSession
+        {
+            get { return SessionManager.Get<ICurrentSession>(NappSessionKey); }
+
+            set { SessionManager.Set(NappSessionKey, value); }
+        }*/
     }
 }

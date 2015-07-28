@@ -20,8 +20,10 @@
         If you are having problems, try <a href='http://browsehappy.com/'>this</a> for full
         browsing experience. Thank you!
     </div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmLogin" }))
     {
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="loginToken" name="loginToken" value="@ViewBag.LoginToken" />
         <div class="center">
             <div id="login-box">
                 <div id="msg">
@@ -44,98 +46,13 @@
             </div>
         </div>
     }
+    @Scripts.Render("~/bundles/loginJs")
 </body>
 </html>
-
 <script type="text/javascript">
-
-    var msg, username, password, btnSubmit;
-
+    
     window.onload = function () {
         setInterval('window.history.forward()', 0);
-
-        msg = document.getElementById('msg');
-        innerMsg = document.getElementById('inner-msg');
-        username = document.getElementById('username');
-        password = document.getElementById('password');
-        btnSubmit = document.getElementById('submit');
-
-        checkBrowser(); // check if the client's browser is supported
-        username.focus();
-        if (innerMsg.innerHTML.length > 0) {
-            msg.style.display = 'block';
-            shake('msg', 0, 100);
-        } else {
-            msg.style.display = 'none';
-        }
-    };
-
-    document.forms[0].onsubmit = function () {
-        msg.style.display = 'none';
-
-        var isValid = true;
-
-        username.value = username.value.trim();
-
-        if (username.value.length == 0) {
-            username.classList.add('err');
-            isValid = false;
-            shake('username', 0, 100);
-        } else {
-            username.classList.remove('err');
-        }
-
-        if (password.value.length == 0) {
-            password.classList.add('err');
-            isValid = false;
-            shake('password', 0, 100);
-        } else {
-            password.classList.remove('err');
-        }
-
-        return isValid;
-    };
-
-    String.prototype.trim = function () {
-        return this.replace(/^\s*/, "").replace(/\s*$/, "");
-    };
-
-    function shake(target, times, duration) {
-        for (var i = times, j = 0; i >= 0; i--) {
-            setTimeout(target + ".style.left = '-" + i + "0px'", j++ * duration);
-            setTimeout(target + ".style.left = '" + i + "0px'", j++ * duration);
-        }
     }
-
-    function checkBrowser() {
-        var msieVersion = getIeVersion();
-
-        if (msieVersion != -1 && msieVersion < 8.0) {
-            var warnPnl = document.getElementById('not-supported-browser-panel');
-            if (warnPnl.style.display == 'none') {
-                warnPnl.style.display = 'block';
-            }
-        }
-    }
-
-    ;
-
-    // Returns the version of Internet Explorer or -1
-    // (indicating the use of another browser).
-
-    function getIeVersion() {
-        var version = -1; // Return value assumes failure.
-
-        if (window.navigator.userAgent.indexOf("MSIE") > 0) {
-            var usrAgent = navigator.userAgent;
-            var reg = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-
-            if (reg.exec(usrAgent) != null) version = parseFloat(RegExp.$1);
-        }
-
-        return version;
-    }
-
-    ;
 
 </script>
