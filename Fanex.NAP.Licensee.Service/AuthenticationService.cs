@@ -47,7 +47,6 @@
             IFunctionService napFunctionService = null,
             ICurrentSession currentSession = null)
         {
-
             _napCurrentContext = napCurrentContext ?? new CurrentContext();
             _napUserService = napUserService ?? new UserService();
             _napSiteService = napSiteService ?? new SiteService();
@@ -90,21 +89,16 @@
 
             var menus = _napMenuItemService.GetByUserAndSiteIncludeGroup(user.Id, loginUser.NapSiteId, loginUser.Enviroment, true) as IList<MenuItem>;
 
-            if (menus.Count == 0 || menus.FirstOrDefault(m => m.Parent == null) == null)
+            if (!menus.Any(m => m.Parent == null))
             {
                 return NapLoginStatus.UserNoMenuPermission;
             }
 
-            AssignSession(user, menus, loginUser);
+            AssignSession(user, loginUser);
             
             return NapLoginStatus.LoginSuccessful;
         }
 
-        // <summary>
-        /// Gets the login status error.
-        /// </summary>
-        /// <param name="loginStatus">The login status.</param>
-        /// <returns>The error string.</returns>
         public string GetLoginStatusError(NapLoginStatus loginStatus)
         {
             string error = string.Empty;
@@ -151,7 +145,7 @@
                 1,
                 currentSession.Username,
                 currentTime,
-                currentTime.AddMinutes(FormsAuthentication.Timeout.Minutes),
+                currentTime.AddMinutes(20000),
                 false,
                 userData,
                 cookiePath);
@@ -211,7 +205,7 @@
         /// <param name="user">The logged-in user.</param>
         /// <param name="menus">The menus.</param>
         /// <param name="sessionId">The session id.</param>
-        private void AssignSession(User user, IList<MenuItem> menus, LoginUser loginUser)
+        private void AssignSession(User user, LoginUser loginUser)
         {
             int userId = user.Id;
             int siteId = NapSettings.Settings.SiteId;

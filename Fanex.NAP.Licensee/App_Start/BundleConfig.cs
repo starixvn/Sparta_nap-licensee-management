@@ -78,8 +78,8 @@
 
         private static void Login(BundleCollection bundles, ScriptTransformer scriptTransformer)
         {
-            var loginJs = new Bundle("~/bundles/loginJs")
-                .Include("~/Scripts/jquery-1.9.0.min.js", 
+            var loginJs = new Bundle("~/bundles/loginJs").Include(
+                        "~/Scripts/jquery-1.9.0.min.js", 
                         "~/Areas/UserLogin/scripts/Login.js",
                         "~/Scripts/CryptoJS.js");
 
@@ -89,8 +89,7 @@
 
         private static void RecheckIn(BundleCollection bundles, ScriptTransformer scriptTransformer)
         {
-            var recheckInJs = new Bundle("~/bundles/recheckInJs")
-                                .Include("~/Areas/UserLogin/scripts/ReCheckIn.js");
+            var recheckInJs = new Bundle("~/bundles/recheckInJs").Include("~/Areas/UserLogin/scripts/ReCheckIn.js");
 
             recheckInJs.Transforms.Add(scriptTransformer);
             bundles.Add(recheckInJs);
@@ -98,13 +97,11 @@
 
         private static void FanexGrid(BundleCollection bundles, StyleTransformer cssTransformer, ScriptTransformer scriptTransformer)
         {
-            var cssFanexGrid = new Bundle("~/bundles/FanexGridCss")
-                .IncludeDirectory("~/Content/Fanex.Grid", "*.css");
+            var cssFanexGrid = new Bundle("~/bundles/FanexGridCss").IncludeDirectory("~/Content/Fanex.Grid", "*.css");
             cssFanexGrid.Transforms.Add(cssTransformer);
             bundles.Add(cssFanexGrid);
 
-            var fanexGridJs = new Bundle("~/bundles/FanexGridJs")
-                .IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
+            var fanexGridJs = new Bundle("~/bundles/FanexGridJs").IncludeDirectory("~/Scripts/Fanex.Grid", "*.js", true);
 
             fanexGridJs.Transforms.Add(scriptTransformer);
             bundles.Add(fanexGridJs);

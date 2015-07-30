@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Sign In</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="@Url.Content("/Content/Core/Img/favicon.ico")" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <link href="~/areas/userlogin/themes/login.css" rel="stylesheet" type="text/css" />
 </head>
@@ -27,7 +27,7 @@
         <div class="center">
             <div id="login-box">
                 <div id="msg">
-                    <span id="inner-msg">@ViewBag.Message</span>
+                    <span id="inner-msg">@ViewBag.ErrorMessage</span>
                 </div>
                 <div class="header">
                     <div class="welcome">
@@ -49,10 +49,3 @@
     @Scripts.Render("~/bundles/loginJs")
 </body>
 </html>
-<script type="text/javascript">
-    
-    window.onload = function () {
-        setInterval('window.history.forward()', 0);
-    }
-
-</script>

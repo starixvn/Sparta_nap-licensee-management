@@ -15,7 +15,6 @@ namespace Fanex.NAP.Licensee.Service
     using System.Collections.Generic;
     using Fanex.Logging;
     using NAP.Core.Model;
-    using Fanex.NAP.Core.Web.Session;
 
     /// <summary>
     /// AppSession class.

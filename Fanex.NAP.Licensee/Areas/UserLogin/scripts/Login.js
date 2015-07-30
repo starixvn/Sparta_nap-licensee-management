@@ -6,7 +6,8 @@ var login = (function () {
     var $username = $('#username');
     var $password = $('#password');
     var $token = $('#loginToken');
-    var $msgbox = $('#inner-msg');
+    var $msgbox = $('#msg');
+    var $innerMsg = $('#inner-msg');
 
     function trim(string) {
         return string.replace(/^\s+|\s+$/g, '');
@@ -17,42 +18,63 @@ var login = (function () {
         var token = $token.val();
         var hashPwd = CryptoJS.SHA256(encryptPwd + token);
 
-        // prepare to Submit.
         $password.val(hashPwd);
     }
 
     function doLogin() {
         clearError();
-        var username = trim($username.val());
-        if (username.length === 0) {
-            showError(usersResources.UsernameOrPasswordEmptyError);
+        if (!checkInputValid()) {
             return false;
         }
 
-        var password = $password.val();
-        if (password.length === 0) {
-            showError(usersResources.UsernameOrPasswordEmptyError);
-            return false;
-        }
-
-        encryptPassword(password);
-        //document.forms[0].submit();
+        encryptPassword($password.val());
 
         return true;
     }
 
+    function checkInputValid() {
+        var isValid = true;
+
+        var username = trim($username.val());
+        if (username.length === 0) {
+            $username.addClass('err');
+            isValid = false;
+        }
+        else {
+            $username.removeClass('err');
+        }
+
+        var password = $password.val();
+        if (password.length === 0) {
+            $password.addClass('err');
+            isValid = false;
+        }
+        else {
+            $password.removeClass('err');
+        }
+
+        return isValid;
+    }
+
     function clearError() {
-        $msgbox.addClass('hide').html('');
+        $msgbox.html('');
+        $msgbox.hide();
     }
 
     function showError(message) {
-        $msgbox.removeClass('hide').html(message);
+        $msgbox.show();
     }
 
 
     function init() {
+        if ($innerMsg.html().length > 0) {
+            showError();
+        }
+        else {
+            clearError();
+        }
+
         $loginForm.submit(function (e) {
-            //e.preventDefault();
             return doLogin();
         });
 

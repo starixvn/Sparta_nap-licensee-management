@@ -11,13 +11,12 @@
 namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.Licensee.Controllers;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.Enumerations;
@@ -25,12 +24,8 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using Logging;
     using NAP.Core.Configuration;
     using NAP.Core.Criteria.User;
-    using NAP.Core.Domain;
-    using NAP.Core.Model;
-    using NAP.Core.Model.ValueObject;
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
-    using NAP.Core.Web.Auth;
     using NAP.Core.Web.Session;
 
     /// <summary>
@@ -41,6 +36,33 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         #region members
 
         private const string LoginTokenName = "__SecureFormToken";
+
+        private readonly ICurrentSession _currentSession;
+        private readonly IMaintenanceService _maintenanceService;
+        private readonly ISiteService _siteService;
+        private readonly IUserService _userService;
+        private readonly IAuthenticationService _authenticationService;
+
+        #endregion members
+
+        public LoginController()
+            : this(null, null, null, null, null)
+        {
+        }
+
+        public LoginController(
+            IUserService userService,
+            ISiteService siteService,
+            ICurrentSession currentSession,
+            IMaintenanceService maintenanceService,
+            IAuthenticationService authenticationService)
+        {
+            _userService = userService ?? new UserService();
+            _siteService = siteService ?? new SiteService();
+            _currentSession = currentSession ?? new CurrentSession();
+            _maintenanceService = maintenanceService ?? new MaintenanceService();
+            _authenticationService = authenticationService ?? new AuthenticationService();
+        }
 
         private static string LoginTokenSession
         {
@@ -53,36 +75,6 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             {
                 SessionManager.Set(LoginTokenName, value);
             }
-        }
-
-        private readonly ICurrentSession _currentSession;
-        private readonly IMaintenanceService _maintenanceService;
-        private readonly IMenuItemService _menuItemService;
-        private readonly ISiteService _siteService;
-        private readonly IUserService _userService;
-        private readonly IAuthenticationService _authenticationService;
-
-        #endregion members
-
-        public LoginController()
-            : this(null, null, null, null, null, null)
-        {
-        }
-
-        public LoginController(
-            IUserService userService,
-            ISiteService siteService,
-            IMenuItemService menuItemService,
-            ICurrentSession currentSession,
-            IMaintenanceService maintenanceService,
-            IAuthenticationService authenticationService)
-        {
-            _userService = userService ?? new UserService();
-            _siteService = siteService ?? new SiteService();
-            _menuItemService = menuItemService ?? new MenuItemService();
-            _currentSession = currentSession ?? new CurrentSession();
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
-            _authenticationService = authenticationService ?? new AuthenticationService();
         }
 
         #region sign in
@@ -132,7 +124,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 
             if (!ValidateLoginToken(loginToken))
             {
-                //return LoginError(ViewResources.Authentication_SessionTimeout);
+                return LoginError(ViewResources.Your_account_was_suspended);
             }
 
             NapLoginStatus loginStatus = _authenticationService.ValidateUser(new LoginUser
