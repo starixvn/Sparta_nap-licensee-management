@@ -114,9 +114,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationService.cs" />
     <Compile Include="BetSettingService.cs" />
     <Compile Include="CommonService.cs" />
     <Compile Include="Core\ObjectDbGenerator.cs" />
+    <Compile Include="IAuthenticationService.cs" />
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="Core\IObjectDbGenerator.cs" />

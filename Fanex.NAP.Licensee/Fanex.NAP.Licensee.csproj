@@ -258,6 +258,7 @@
     <Content Include="App_Data\NAPFrameworkSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\UserLogin\scripts\Login.js" />
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Error.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\accessDenied.gif" />
@@ -372,6 +373,7 @@
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\CryptoJS.js" />
     <Content Include="Scripts\jquery-ui.min.1.11.4.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\numeric.js" />
@@ -485,6 +487,7 @@
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
