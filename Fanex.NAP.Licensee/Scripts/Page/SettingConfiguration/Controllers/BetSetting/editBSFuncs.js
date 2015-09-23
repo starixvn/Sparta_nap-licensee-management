@@ -261,7 +261,8 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
 
                 // If MaxPerBall exists => Check
                 if (curBSRows[index].MaxPerBall !== undefined) {
-                    if (parseFloat(getValidNumber(curBSRows[index].MaxPerBall)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))) {
+                    if (parseFloat(getValidNumber(curBSRows[index].MaxPerBall)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
+                    || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerBall))) {
                         hasError = true;
                         return false;
                     }
