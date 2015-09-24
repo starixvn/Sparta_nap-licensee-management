@@ -6,13 +6,22 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
     // Get common bet setting data
     $scope.editBS = {};
 
+    function getAjaxHeader() {
+        return {
+            'FROM-ANGULAR': 'true',
+            'X-Requested-With': 'XMLHttpRequest',
+            'If-Modified-Since': '0'
+        };
+    }
+
     $http.get(
         "GetEditBetSettingData",
         {
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
                 prodId: shareSettingsService.getWorkingContext().ProdId
-            }
+            },
+            headers: getAjaxHeader()
         })
     .success(function (data) {
         shareSettingsService.saveOrgSettings(angular.copy(data));
@@ -23,7 +32,6 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             $scope.editBS = data;
         }
     });
-
 };
 editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
 // Navigator function
