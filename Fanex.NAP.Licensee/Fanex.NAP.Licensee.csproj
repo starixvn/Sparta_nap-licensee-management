@@ -16,7 +16,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
-    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <JSLintSkip>\Scripts\head.min.js|\Scripts\head.js|\Scripts\respond.js|\Scripts\Plugin\multi-select-control.js|\Scripts\numeric.js</JSLintSkip>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -24,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,27 +44,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.Core, Version=1.9.34.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Core.1.9.34\lib\net40\BundleTransformer.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.Less">
-      <HintPath>..\packages\BundleTransformer.Less.1.9.13\lib\net40\BundleTransformer.Less.dll</HintPath>
-    </Reference>
-    <Reference Include="BundleTransformer.Yui">
-      <HintPath>..\packages\BundleTransformer.Yui.1.9.34\lib\net40\BundleTransformer.Yui.dll</HintPath>
-    </Reference>
-    <Reference Include="ClearScript">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.12\lib\net40\ClearScript.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
-    </Reference>
-    <Reference Include="EcmaScript.NET">
-      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
     </Reference>
     <Reference Include="Enyim.Caching">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
@@ -104,15 +89,6 @@
     <Reference Include="IBCFile">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
     </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Core">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.3\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Msie">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.Msie.1.1.11\lib\net40\JavaScriptEngineSwitcher.Msie.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.V8">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.12\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
-    </Reference>
     <Reference Include="Less">
       <HintPath>..\packages\Less.3.0\lib\Less.dll</HintPath>
     </Reference>
@@ -138,9 +114,6 @@
     <Reference Include="Microsoft.Practices.Unity.Interception">
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
-    <Reference Include="MsieJavaScriptEngine">
-      <HintPath>..\packages\MsieJavaScriptEngine.1.4.4\lib\net40\MsieJavaScriptEngine.dll</HintPath>
-    </Reference>
     <Reference Include="MvcPager">
       <HintPath>..\packages\MvcPager.1.5.0.28157\lib\net40\MvcPager.dll</HintPath>
     </Reference>
@@ -163,8 +136,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Optimization">
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -223,11 +197,9 @@
     <Reference Include="UMControllerLibrary">
       <HintPath>..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Yahoo.Yui.Compressor">
-      <HintPath>..\packages\YUICompressor.NET.2.7.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -259,11 +231,15 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\UserLogin\scripts\Login.js" />
+    <Content Include="Areas\UserLogin\scripts\Login.min.js" />
+    <Content Include="Areas\UserLogin\scripts\ReCheckIn.min.js" />
+    <Content Include="Areas\UserLogin\themes\login.min.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.css" />
+    <Content Include="Areas\UserLogin\Views\Common\Style\AccessDenied.min.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Error.css" />
+    <Content Include="Areas\UserLogin\Views\Common\Style\Error.min.css" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\accessDenied.gif" />
     <Content Include="Areas\UserLogin\Views\Common\Style\Images\UnderMaintenance.gif" />
-    <Content Include="Areas\UserLogin\scripts\lib\jquery-1.9.0.min.js" />
     <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
     <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
     <Content Include="Areas\UserLogin\themes\img\bg.png" />
@@ -282,51 +258,55 @@
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome2.png" />
     <Content Include="Areas\UserLogin\themes\login.css" />
+    <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\Core\img\btn-close.png" />
-    <Content Include="Content\Core\img\favicon.ico" />
-    <Content Include="Content\Core\img\icon-calendar.png" />
-    <Content Include="Content\Core\img\icon-question.png" />
-    <Content Include="Content\Core\img\loading.gif" />
-    <Content Include="Content\Core\img\sprites.png" />
-    <Content Include="Content\Core\img\user.png" />
-    <Content Include="Content\Fanex.Grid\Fanex.Grid.css" />
-    <Content Include="Content\Fanex.Grid\Fanex.Pagination.css" />
-    <Content Include="Content\Fanex.Grid\images\1350530947_page_excel.png" />
-    <Content Include="Content\Fanex.Grid\images\ajax-loader.gif" />
-    <Content Include="Content\Fanex.Grid\images\back-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\bgtitle.png" />
-    <Content Include="Content\Fanex.Grid\images\bg_gloss_wave.png" />
-    <Content Include="Content\Fanex.Grid\images\check-box.png" />
-    <Content Include="Content\Fanex.Grid\images\collapse-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\collapse-small.png" />
-    <Content Include="Content\Fanex.Grid\images\email.png" />
-    <Content Include="Content\Fanex.Grid\images\excel-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\expand-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\expand-small.png" />
-    <Content Include="Content\Fanex.Grid\images\go-hover-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\icn_add.png" />
-    <Content Include="Content\Fanex.Grid\images\icn_del.png" />
-    <Content Include="Content\Fanex.Grid\images\icn_edit.png" />
-    <Content Include="Content\Fanex.Grid\images\icon_page.gif" />
-    <Content Include="Content\Fanex.Grid\images\refresh_icon.png" />
-    <Content Include="Content\Fanex.Grid\images\report_check.png" />
-    <Content Include="Content\Fanex.Grid\images\send-mail.png" />
-    <Content Include="Content\Fanex.Grid\images\seperations.png" />
-    <Content Include="Content\Fanex.Grid\images\setting.png" />
-    <Content Include="Content\Fanex.Grid\images\sort-icon-new.png" />
-    <Content Include="Content\Fanex.Grid\images\sort-icon-new1.png" />
-    <Content Include="Content\Fanex.Grid\images\sort-icon-new3.png" />
-    <Content Include="Content\Fanex.Grid\images\sort-icon.png" />
-    <Content Include="Content\Fanex.Grid\images\sorting_asc.gif" />
-    <Content Include="Content\Fanex.Grid\images\sorting_bg.gif" />
-    <Content Include="Content\Fanex.Grid\images\sorting_desc.gif" />
-    <Content Include="Content\Fanex.Grid\images\white-top-bottom.gif" />
+    <Content Include="Content\core\angularjs.min.css" />
+    <Content Include="Content\core\common.min.css" />
+    <Content Include="Content\core\custom.min.css" />
+    <Content Include="Content\core\img\btn-close.png" />
+    <Content Include="Content\core\img\favicon.ico" />
+    <Content Include="Content\core\img\icon-calendar.png" />
+    <Content Include="Content\core\img\icon-question.png" />
+    <Content Include="Content\core\img\loading.gif" />
+    <Content Include="Content\core\img\sprites.png" />
+    <Content Include="Content\core\img\user.png" />
+    <Content Include="Content\core\site.min.css" />
+    <Content Include="Content\fanex.grid\Fanex.Grid.css" />
+    <Content Include="Content\fanex.grid\Fanex.Grid.min.css" />
+    <Content Include="Content\fanex.grid\Fanex.Pagination.css" />
+    <Content Include="Content\fanex.grid\Fanex.Pagination.min.css" />
+    <Content Include="Content\fanex.grid\images\1350530947_page_excel.png" />
+    <Content Include="Content\fanex.grid\images\ajax-loader.gif" />
+    <Content Include="Content\fanex.grid\images\back-icon.png" />
+    <Content Include="Content\fanex.grid\images\bgtitle.png" />
+    <Content Include="Content\fanex.grid\images\bg_gloss_wave.png" />
+    <Content Include="Content\fanex.grid\images\check-box.png" />
+    <Content Include="Content\fanex.grid\images\collapse-icon.png" />
+    <Content Include="Content\fanex.grid\images\collapse-small.png" />
+    <Content Include="Content\fanex.grid\images\email.png" />
+    <Content Include="Content\fanex.grid\images\excel-icon.png" />
+    <Content Include="Content\fanex.grid\images\expand-icon.png" />
+    <Content Include="Content\fanex.grid\images\expand-small.png" />
+    <Content Include="Content\fanex.grid\images\go-hover-icon.png" />
+    <Content Include="Content\fanex.grid\images\icn_add.png" />
+    <Content Include="Content\fanex.grid\images\icn_del.png" />
+    <Content Include="Content\fanex.grid\images\icn_edit.png" />
+    <Content Include="Content\fanex.grid\images\icon_page.gif" />
+    <Content Include="Content\fanex.grid\images\refresh_icon.png" />
+    <Content Include="Content\fanex.grid\images\report_check.png" />
+    <Content Include="Content\fanex.grid\images\send-mail.png" />
+    <Content Include="Content\fanex.grid\images\seperations.png" />
+    <Content Include="Content\fanex.grid\images\setting.png" />
+    <Content Include="Content\fanex.grid\images\sort-icon-new.png" />
+    <Content Include="Content\fanex.grid\images\sort-icon-new1.png" />
+    <Content Include="Content\fanex.grid\images\sort-icon-new3.png" />
+    <Content Include="Content\fanex.grid\images\sort-icon.png" />
+    <Content Include="Content\fanex.grid\images\sorting_asc.gif" />
+    <Content Include="Content\fanex.grid\images\sorting_bg.gif" />
+    <Content Include="Content\fanex.grid\images\sorting_desc.gif" />
+    <Content Include="Content\fanex.grid\images\white-top-bottom.gif" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\Core\angularjs.less" />
-    <None Include="BundleTransformer.Configuration.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Content\core\angularjs.less" />
     <Content Include="Content\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -367,60 +347,103 @@
     <Content Include="Content\jquery-ui\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui\jquery-ui.theme.min.css" />
-    <Content Include="Content\Plugin\multi-select-control.css" />
-    <Content Include="Content\SettingConfiguration\setting-configuration.less" />
+    <Content Include="Content\plugin\multi-select-control.css" />
+    <Content Include="Content\plugin\multi-select-control.min.css" />
+    <Content Include="Content\settingconfiguration\setting-configuration.less" />
+    <Content Include="Content\settingconfiguration\setting-configuration.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-route.min.js" />
     <Content Include="Scripts\angular\angular.min.js" />
-    <Content Include="Scripts\CryptoJS.js" />
-    <Content Include="Scripts\jquery-ui.min.1.11.4.js" />
-    <Content Include="Scripts\jquery.blockUI.js" />
-    <Content Include="Scripts\numeric.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSFuncs.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSRacingCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSRacingCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\BetSetting\editBSSportbookCtrl.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\editCommController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\editPTController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\Comm\reviewCommController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\PT\reviewPTController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfiguration.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Controllers\settingConfigurationController.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Directives\validatorDirective.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Services\filterDataService.js" />
-    <Content Include="Scripts\Page\SettingConfiguration\Services\shareSettingsService.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
-    <Content Include="Scripts\Fanex.Grid\Fanex.Pagination.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.en-US.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.ja-JP.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.ko-KR.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.th-TH.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.vi-VN.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-CN.js" />
-    <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-TW.js" />
-    <Content Include="Scripts\Fanex.Grid\moment.min.js" />
-    <Content Include="Scripts\Fanex.Grid\numeral.min.js" />
-    <Content Include="Scripts\jquery-1.9.0-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.9.0.js" />
-    <Content Include="Scripts\jquery-1.9.0.min.js" />
-    <Content Include="Scripts\Core\site.js" />
-    <Content Include="Scripts\jquery.number.js" />
-    <Content Include="Scripts\Page\DefaultBetSetting\viewlog.js" />
-    <Content Include="Scripts\Page\DefaultBetSetting\edit.js" />
-    <Content Include="Scripts\Page\DefaultBetSetting\addnew.js" />
-    <Content Include="Scripts\Page\DefaultBetSetting\default.js" />
-    <Content Include="Scripts\Plugin\multi-select-control.js" />
+    <Content Include="Scripts\core\site.min.js" />
+    <Content Include="Scripts\cryptoJs.js" />
+    <Content Include="Scripts\cryptoJs.min.js" />
+    <Content Include="Scripts\fanex.grid\Fanex.Grid.min.js" />
+    <Content Include="Scripts\fanex.grid\Fanex.Pagination.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.en-US.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ja-JP.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ko-KR.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.th-TH.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.vi-VN.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-CN.min.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-TW.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui.min.1.11.4.js" />
+    <Content Include="Scripts\jquery\jquery-ui.min.1.11.4.min.js" />
+    <Content Include="Scripts\jquery\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery\jquery.blockUI.min.js" />
+    <Content Include="Scripts\jquery\jquery.number.min.js" />
+    <Content Include="Scripts\jquery\numeric.js" />
+    <Content Include="Scripts\jquery\numeric.min.js" />
+    <Content Include="Scripts\page\defaultbetsetting\addnew.min.js" />
+    <Content Include="Scripts\page\defaultbetsetting\default.min.js" />
+    <Content Include="Scripts\page\defaultbetsetting\edit.min.js" />
+    <Content Include="Scripts\page\defaultbetsetting\viewlog.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSFuncs.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSKenoCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSNumberGameCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSRacingCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSSportbookCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSFuncs.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSRacingCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSFuncs.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSKenoCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSRacingCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSRacingCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSSportbookCtrl.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\Comm\editCommController.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\Comm\editCommController.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\Comm\reviewCommController.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\PT\editPTController.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\Comm\reviewCommController.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\PT\editPTController.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\PT\reviewPTController.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\PT\reviewPTController.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\settingConfiguration.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\settingConfiguration.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\settingConfigurationController.js" />
+    <Content Include="Scripts\page\settingconfiguration\Controllers\settingConfigurationController.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Directives\validatorDirective.js" />
+    <Content Include="Scripts\page\settingconfiguration\Directives\validatorDirective.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Services\filterDataService.js" />
+    <Content Include="Scripts\page\settingconfiguration\Services\filterDataService.min.js" />
+    <Content Include="Scripts\page\settingconfiguration\Services\shareSettingsService.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\fanex.grid\Fanex.Grid.js" />
+    <Content Include="Scripts\fanex.grid\Fanex.Pagination.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.en-US.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ja-JP.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ko-KR.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.th-TH.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.vi-VN.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-CN.js" />
+    <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-TW.js" />
+    <Content Include="Scripts\fanex.grid\moment.min.js" />
+    <Content Include="Scripts\fanex.grid\numeral.min.js" />
+    <Content Include="Scripts\jquery\jquery-1.9.0-vsdoc.js" />
+    <Content Include="Scripts\jquery\jquery-1.9.0.js" />
+    <Content Include="Scripts\jquery\jquery-1.9.0.min.js" />
+    <Content Include="Scripts\core\site.js" />
+    <Content Include="Scripts\jquery\jquery.number.js" />
+    <Content Include="Scripts\page\defaultbetsetting\viewlog.js" />
+    <Content Include="Scripts\page\defaultbetsetting\edit.js" />
+    <Content Include="Scripts\page\defaultbetsetting\addnew.js" />
+    <Content Include="Scripts\page\defaultbetsetting\default.js" />
+    <Content Include="Scripts\page\settingconfiguration\Services\shareSettingsService.min.js" />
+    <Content Include="Scripts\plugin\multi-select-control.js" />
+    <Content Include="Scripts\plugin\multi-select-control.min.js" />
     <Content Include="SiteConfig\Web.AppSettings.config.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -447,6 +470,51 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Deployment.ignore" />
+    <None Include="Areas\UserLogin\scripts\Login.min.js.map" />
+    <None Include="Areas\UserLogin\scripts\ReCheckIn.min.js.map" />
+    <None Include="Scripts\bootstrap\bootstrap.min.js.map" />
+    <None Include="Scripts\core\site.min.js.map" />
+    <None Include="Scripts\cryptoJs.min.js.map" />
+    <None Include="Scripts\fanex.grid\Fanex.Grid.min.js.map" />
+    <None Include="Scripts\fanex.grid\Fanex.Pagination.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.en-US.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ja-JP.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.ko-KR.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.th-TH.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.vi-VN.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-CN.min.js.map" />
+    <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.zh-TW.min.js.map" />
+    <None Include="Scripts\jquery\jquery-1.9.0.min.js.map" />
+    <None Include="Scripts\jquery\jquery-ui.min.1.11.4.min.js.map" />
+    <None Include="Scripts\jquery\jquery.blockUI.min.js.map" />
+    <None Include="Scripts\jquery\jquery.number.min.js.map" />
+    <None Include="Scripts\jquery\numeric.min.js.map" />
+    <None Include="Scripts\page\defaultbetsetting\addnew.min.js.map" />
+    <None Include="Scripts\page\defaultbetsetting\default.min.js.map" />
+    <None Include="Scripts\page\defaultbetsetting\edit.min.js.map" />
+    <None Include="Scripts\page\defaultbetsetting\viewlog.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSFuncs.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSKenoCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSNumberGameCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSRacingCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSSportbookCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSFuncs.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSKenoCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSRacingCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\Comm\editCommController.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\Comm\reviewCommController.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\PT\editPTController.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\PT\reviewPTController.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\settingConfiguration.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Controllers\settingConfigurationController.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Directives\validatorDirective.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Services\filterDataService.min.js.map" />
+    <None Include="Scripts\page\settingconfiguration\Services\shareSettingsService.min.js.map" />
+    <None Include="Scripts\plugin\multi-select-control.min.js.map" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <Content Include="SiteConfig\Web.AppSettings.BACKUPMNL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
@@ -576,9 +644,9 @@
     <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
     <None Include="Areas\UserLogin\themes\select-site.less" />
     <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
-    <Content Include="Content\Core\variables.less" />
-    <Content Include="Content\Core\common.less" />
-    <Content Include="Content\Core\site.less" />
+    <Content Include="Content\core\variables.less" />
+    <Content Include="Content\core\common.less" />
+    <Content Include="Content\core\site.less" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -655,8 +723,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Core\custom.less" />
-    <None Include="Scripts\jquery-1.9.0.min.map" />
+    <Content Include="Content\core\custom.less" />
+    <None Include="Scripts\jquery\jquery-1.9.0.min.map" />
     <Content Include="Web.AppSettings.config" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\BetSetting\Default.cshtml" />

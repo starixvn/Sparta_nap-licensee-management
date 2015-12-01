@@ -25,6 +25,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers", "Fanex.NAP.Licensee.Controllers\Fanex.NAP.Licensee.Controllers.csproj", "{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grunt", "grunt", "{204A9528-77B4-412C-BCB0-68B9C52DEB53}"
+	ProjectSection(SolutionItems) = preProject
+		Gruntfile.js = Gruntfile.js
+		package.json = package.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

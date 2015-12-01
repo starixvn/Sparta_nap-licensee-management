@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadCss {
-    @Styles.Render("~/bundles/FanexGridCss")
+    @Styles.Render("~/bundles/fanexGridCss")
 }
 @section Headline {
     <ul class="breadcrumb title">
@@ -71,9 +71,8 @@
 </div>
 @section FooterJs
 {
-
-    @Scripts.Render("~/bundles/FanexGridJs")
-    @Scripts.Render("~/bundles/DefaultBetSettingJs")
+    @Scripts.Render("~/bundles/fanexGridJs")
+    @Scripts.Render("~/bundles/defaultBetSettingJs")
     <script type="text/javascript">
         $(document).ready(function () {
             defaultSetting.setup();
