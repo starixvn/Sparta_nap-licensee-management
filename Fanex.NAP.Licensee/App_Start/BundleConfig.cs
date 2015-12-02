@@ -42,7 +42,7 @@
         {
             bundles.Add(new ScriptBundle("~/bundles/coreJs").Include(
                 "~/Scripts/jquery/jquery-1.9.0.js",
-                "~/Scripts/jquery/jquery-ui.1.11.4.js",
+                "~/Scripts/jquery/jquery-ui.1.11.4.min.js",
                 "~/Scripts/jquery/jquery.number.js",
                 "~/Scripts/jquery/numeric.js",
                 "~/Scripts/plugin/multi-select-control.js",

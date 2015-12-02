@@ -360,8 +360,7 @@
     <Content Include="Scripts\fanex.grid\Fanex.Grid.min.js" />
     <Content Include="Scripts\fanex.grid\Fanex.Pagination.min.js" />
     <Content Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.en-US.min.js" />
-    <Content Include="Scripts\jquery\jquery-ui.min.1.11.4.js" />
-    <Content Include="Scripts\jquery\jquery-ui.min.1.11.4.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui.1.11.4.min.js" />
     <Content Include="Scripts\jquery\jquery.blockUI.js" />
     <Content Include="Scripts\jquery\jquery.blockUI.min.js" />
     <Content Include="Scripts\jquery\jquery.number.min.js" />
@@ -466,7 +465,6 @@
     <None Include="Scripts\fanex.grid\Fanex.Pagination.min.js.map" />
     <None Include="Scripts\fanex.grid\Language\Fanex.Gird.Lang.en-US.min.js.map" />
     <None Include="Scripts\jquery\jquery-1.9.0.min.js.map" />
-    <None Include="Scripts\jquery\jquery-ui.min.1.11.4.min.js.map" />
     <None Include="Scripts\jquery\jquery.blockUI.min.js.map" />
     <None Include="Scripts\jquery\jquery.number.min.js.map" />
     <None Include="Scripts\jquery\numeric.min.js.map" />
