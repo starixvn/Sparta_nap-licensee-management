@@ -68,7 +68,7 @@
 
         private static void RecheckIn(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundle/recheckInJs").Include("~/Areas/UserLogin/scripts/ReCheckIn.js"));
+            bundles.Add(new ScriptBundle("~/bundles/recheckInJs").Include("~/Areas/UserLogin/scripts/ReCheckIn.js"));
         }
 
         private static void FanexGrid(BundleCollection bundles)
