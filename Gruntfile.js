@@ -15,6 +15,7 @@ module.exports = function (grunt) {
         "Fanex.NAP.Licensee/Content/**/*.less",
         "!Fanex.NAP.Licensee/Content/bootstrap/*.less",
         "!Fanex.NAP.Licensee/Content/bootstrap/**/*.less",
+        "!Fanex.NAP.Licensee/Content/core/common.less",
         "!**/variables.less",
         "!**/mixins.less",
         "Fanex.NAP.Licensee/Content/bootstrap/bootstrap.less",

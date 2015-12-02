@@ -261,7 +261,6 @@
     <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\core\angularjs.min.css" />
-    <Content Include="Content\core\common.min.css" />
     <Content Include="Content\core\custom.min.css" />
     <Content Include="Content\core\img\btn-close.png" />
     <Content Include="Content\core\img\favicon.ico" />
