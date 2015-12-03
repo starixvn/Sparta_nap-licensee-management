@@ -1,1 +1,24 @@
-.fade-in.ng-enter{transition:all .5s linear;opacity:0;}.fade-in.ng-enter-active{opacity:1;}
+@charset "UTF-8";
+/********************************************************/
+/*					      Amination                        */
+/********************************************************/
+.fade-in.ng-enter {
+  transition: all .5s linear;
+  opacity: 0;
+}
+.fade-in.ng-enter-active {
+  opacity: 1;
+}
+/* Include this file in your html if you are using the CSP mode. */
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+  display: none !important;
+}
+ng\:form {
+  display: block;
+}
