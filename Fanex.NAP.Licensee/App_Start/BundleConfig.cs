@@ -27,7 +27,7 @@
             DefaultBetSetting(bundles);
             SettingConfiguration(bundles);
 
-            // BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = true;
         }
 
         private static void AngularJs(BundleCollection bundles)
