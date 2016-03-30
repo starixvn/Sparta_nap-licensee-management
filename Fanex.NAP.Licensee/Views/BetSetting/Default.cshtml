@@ -1,10 +1,9 @@
-﻿@using System.Web.Optimization;
-@{
+﻿@{
     ViewBag.Title = "Default";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadCss {
-    @Styles.Render("~/bundles/fanexGridCss")
+    <link href="@Url.Content("~/Content/build/fanexgrid.min.css")" rel='stylesheet' type='text/css' media='all' />
 }
 @section Headline {
     <ul class="breadcrumb title">
@@ -71,8 +70,8 @@
 </div>
 @section FooterJs
 {
-    @Scripts.Render("~/bundles/fanexGridJs")
-    @Scripts.Render("~/bundles/defaultBetSettingJs")
+    <script src="@Url.Content("~/Scripts/build/fanexgrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/build/betsetting.min.js")"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             defaultSetting.setup();

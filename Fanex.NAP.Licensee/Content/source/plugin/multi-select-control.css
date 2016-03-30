@@ -1,0 +1,104 @@
+﻿/* File Created: July 16, 2014 */
+.multi-select-control {
+	background-color: #fff;
+    border: 1px solid #bdc7d8;
+    float: left;
+    height: 25px;
+    overflow: hidden;
+    position: absolute;
+}
+.multi-select-control:hover
+{
+    border-radius : 2px;
+    box-shadow: 0 0 2px 2px #3b5998;
+}
+.multi-select-control .control-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 3px;	
+    z-index: 1000;
+}
+.multi-select-control .icon {
+    background-image: url('images/ui-icons_2e83ff_256x240.png');
+}
+.multi-select-control .arrow-expand {	
+	background-position: -64px -16px;
+	float: right;
+	right: 5px;
+	top: 5px;
+	width: 16px;
+	height: 16px;
+	position: absolute;	
+	cursor: pointer;	
+}
+.multi-select-control .arrow-collapse {	
+	background-position: 0 -16px;
+	float: right;
+	right: 5px;
+	top: 5px;
+	width: 16px;
+	height: 16px;
+	position: absolute;	
+	cursor: pointer;	
+}
+.multi-select-control .control-filter
+{
+    border: 1px solid #bdc7d8;
+    border-radius : 2px;
+    box-shadow: 0 0 2px 2px #999999;
+    margin-top: 8px;
+    padding: 3px;    
+    display: none;	
+}
+.multi-select-control .control-filter .checkbox-tree {
+	overflow: auto;	
+}
+.multi-select-control .control-filter .checkbox-tree table tr td input {
+	cursor: pointer;	
+}
+.multi-select-control .control-filter .filter-header {
+	font-size: 12px;
+	font-weight: bold;	
+}
+.multi-select-control .filter-text {
+	font-size: 11px;
+	color: #999999;
+	width: 140px;
+}
+.multi-select-control .filter-text-onchange {
+	font-size: 11px;	
+	width: 140px;
+}
+.multi-select-control .close-filter{
+	background-position: -96px -128px;
+	float: right;
+	right: 5px;
+	top: 35px;
+	width: 16px;
+	height: 16px;
+	position: absolute;	
+	cursor: pointer;	
+}
+.multi-select-control .control-filter .uncheck-all 
+{
+    background-position: -96px -128px;
+    width: 16px;
+	height: 16px;
+	top: 3px;	
+	margin-left: 15px;
+}
+
+.multi-select-control .control-filter .check-all {
+   background-position: -64px -144px;
+   width: 16px;
+	height: 13px;
+	top: 3px;
+}
+.multi-select-control .control-filter .btn-check {
+	color: #0000FF;
+	text-decoration: underline;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 12px;
+}

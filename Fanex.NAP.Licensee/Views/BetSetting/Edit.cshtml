@@ -1,6 +1,4 @@
-﻿@using System.Web.Optimization;
-
-@{
+﻿@{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -61,8 +59,7 @@ else
 }
 @section FooterJs
 {
-    @Scripts.Render("~/bundles/defaultBetSettingJs")
-
+    <script src="@Url.Content("~/Scripts/build/betsetting.min.js")"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             editingSetting.setup();

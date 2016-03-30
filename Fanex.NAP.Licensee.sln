@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee", "Fanex.NAP.Licensee\Fanex.NAP.Licensee.csproj", "{0970FB24-9D16-4C86-A170-C2A2156C97EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Model", "Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj", "{F07AB61E-FC65-4292-A968-F124C5A28F30}"
@@ -27,6 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controll
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grunt", "grunt", "{204A9528-77B4-412C-BCB0-68B9C52DEB53}"
 	ProjectSection(SolutionItems) = preProject
+		grunt.json = grunt.json
 		Gruntfile.js = Gruntfile.js
 		package.json = package.json
 	EndProjectSection
