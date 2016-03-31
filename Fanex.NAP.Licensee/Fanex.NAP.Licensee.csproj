@@ -203,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
@@ -218,7 +217,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="%40JSense.js" />
     <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
@@ -614,7 +612,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
-    <Folder Include="ClearScript.V8\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
