@@ -337,7 +337,6 @@
     <Content Include="Content\build\licenseesetting.css" />
     <Content Include="Content\build\licenseesetting.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\source\bootstrap\bootstrap.min.css" />
     <Content Include="Content\source\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\source\core\angularjs.min.css" />
     <Content Include="Content\source\core\custom.min.css" />
