@@ -5,6 +5,7 @@ editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = {};
+    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
 
     function getAjaxHeader() {
         return {
@@ -48,7 +49,6 @@ editBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService', 'C
 var editBSAllSportFunc = function ($scope, shareSettingsService) {
 
     $scope.isAllSportChecked = false;
-    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
 
     $scope.checkAllSports = function () {
         if ($scope.isAllSportChecked === true) {
