@@ -9,6 +9,7 @@ settingConfigurationApp = angular.module("settingConfiguration",
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
 settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
 settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
+settingConfigurationApp.constant("GetSettingsUrl", "GetSettings");
 
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
