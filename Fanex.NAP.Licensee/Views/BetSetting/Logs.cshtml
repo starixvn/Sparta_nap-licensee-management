@@ -71,8 +71,7 @@
 </table>
 @section FooterJs
 {
-    @Scripts.Render("~/bundles/defaultBetSettingJs")
-
+    <script src="@Url.Content("~/Scripts/build/betsetting.min.js")"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             viewLog.setup();

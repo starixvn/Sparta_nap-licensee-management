@@ -1,0 +1,79 @@
+{
+  "jsFilters": [
+    "Fanex.NAP.Licensee/Areas/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/**/*.js",
+    "!*.min.js",
+    "!**/*.min.js",
+    "!**/*-vsdoc.js",
+    "!**/npm.js"
+  ],
+  "lessFilters": [
+    "Fanex.NAP.Licensee/Content/source/**/*.less",
+    "!Fanex.NAP.Licensee/Content/source/bootstrap/*.less",
+    "!Fanex.NAP.Licensee/Content/source/bootstrap/**/*.less",
+    "!Fanex.NAP.Licensee/Content/source/core/common.less",
+    "!**/variables.less",
+    "!**/mixins.less",
+    "Fanex.NAP.Licensee/Content/source/bootstrap/bootstrap.less"
+  ],
+  "cssFilters": [
+    "Fanex.NAP.Licensee/Content/source/**/*.css",
+    "Fanex.NAP.Licensee/Areas/**/*.css",
+    "!*.min.css",
+    "!**/*.min.css"
+  ],
+  "jsLogin": [
+    "Fanex.NAP.Licensee/Scripts/source/jquery/jquery-1.9.0.js",
+    "Fanex.NAP.Licensee/Scripts/source/cryptoJs.js",
+    "Fanex.NAP.Licensee/Areas/UserLogin/scripts/Login.js"
+  ],
+  "jsCore": [
+    "Fanex.NAP.Licensee/Scripts/source/jquery/jquery-1.9.0.js",
+    "Fanex.NAP.Licensee/Scripts/source/jquery/jquery-ui.1.11.4.min.js",
+    "Fanex.NAP.Licensee/Scripts/source/jquery/jquery.number.js",
+    "Fanex.NAP.Licensee/Scripts/source/jquery/numeric.js",
+    "Fanex.NAP.Licensee/Scripts/source/plugin/multi-select-control.js",
+    "Fanex.NAP.Licensee/Scripts/source/bootstrap/bootstrap.js",
+    "Fanex.NAP.Licensee/Scripts/source/core/site.js"
+  ],
+  "cssCore": [
+    "Fanex.NAP.Licensee/Content/source/bootstrap/bootstrap.css",
+    "Fanex.NAP.Licensee/Content/source/core/site.css",
+    "Fanex.NAP.Licensee/Content/source/plugin/multi-select-control.css",
+    "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.min.css",
+    "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.theme.min.css",
+    "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.structure.min.css"
+  ],
+  "jsAngular": [
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular.js",
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-animate.js",
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js"
+  ],
+  "jsRecheckIn": [
+    "Fanex.NAP.Licensee/Areas/UserLogin/scripts/ReCheckIn.js"
+  ],
+  "jsFanexGrid": [
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Language/Fanex.Gird.Lang.en-US.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Grid.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Pagination.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/moment.min.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/numeral.min.js"
+  ],
+  "cssFanexGrid": [
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.min.css",
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.min.css"
+  ],
+  "jsBetSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
+  ],
+  "cssBetSetting": [ ],
+  "jsLicenseeSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/**/*.js",
+    "!*.min.js"
+  ],
+  "cssLicenseeSetting": [
+    "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.min.css"
+  ]
+}

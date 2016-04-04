@@ -1,5 +1,4 @@
 ﻿@using Fanex.NAP.Core.Configuration
-@using System.Web.Optimization;
 <!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
 <!--[if (IE 8)]><html lang="en" class="ie8 oldie"><![endif]-->
@@ -12,7 +11,7 @@
     <title>Licensee Management</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     @RenderSection("HeadCss", false)
-    @Styles.Render("~/bundles/coreCss")
+    <link href="@Url.Content("~/Content/build/core.min.css")" rel='stylesheet' type='text/css' media='all' />
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~/")';
     </script>
@@ -41,10 +40,10 @@
         </section>
     </div>
     @RenderSection("Foot", false)
-    @Scripts.Render("~/bundles/coreJs")
+    <script src="@Url.Content("~/Scripts/build/core.min.js")"></script>
     @if (NapSettings.Settings.EnableReCheckIn)
     {
-        @Scripts.Render("~/bundles/recheckInJs")
+        <script src="@Url.Content("~/Scripts/build/recheckin.min.js")"></script>
     }
     @RenderSection("FooterJs", false)
 </body>

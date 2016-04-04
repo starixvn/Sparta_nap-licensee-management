@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization;
-@{
+﻿@{
     ViewBag.Title = "Default";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,7 +10,7 @@
 }
 @section HeadCss
 {
-    @Styles.Render("~/bundles/settingConfigurationCss")
+    <link href="@Url.Content("~/Content/build/licenseesetting.min.css")" rel='stylesheet' type='text/css' media='all' />
 }
 <div ng-app="settingConfiguration" ng-controller="settingConfigurationCtrl">
     <div class="col-md-12 filter-form">
@@ -74,6 +73,6 @@
 </div>
 @section FooterJs
 {
-    @Scripts.Render("~/bundles/angularJS")
-    @Scripts.Render("~/bundles/settingConfigurationJs")
+    <script src="@Url.Content("~/Scripts/build/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/build/licenseesetting.min.js")"></script>
 }

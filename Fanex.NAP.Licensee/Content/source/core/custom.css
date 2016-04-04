@@ -1,0 +1,235 @@
+/********************************************************/
+/*					      Common                        */
+/********************************************************/
+/********************************************************/
+/*					        Menu                        */
+/********************************************************/
+/********************************************************/
+/*					    User info                       */
+/********************************************************/
+/********************************************************/
+/*					    Sub Menu                        */
+/********************************************************/
+/********************************************************/
+/*					    Filter                           */
+/********************************************************/
+/********************************************************/
+/*					    Table                           */
+/********************************************************/
+/********************************************************/
+/*					    Calendar                        */
+/********************************************************/
+/********************************************************/
+/*					    Group                           */
+/********************************************************/
+/********************************************************/
+/*					     Popup                          */
+/********************************************************/
+/********************************************************/
+/*					     Message                        */
+/********************************************************/
+/********************************************************/
+/*                     Functions                        */
+/********************************************************/
+/********************************************************/
+/*             Multiple selected                        */
+/********************************************************/
+.multi-select-control {
+  z-index: 10;
+  border-color: #CECCCD;
+}
+.multi-select-control .control-filter {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+.multi-select-control .control-header {
+  padding-top: 1px;
+  margin-bottom: 3px;
+  font-weight: normal;
+}
+.multi-select-control .control-filter {
+  border-width: 1px 0 0;
+  border-color: #CECCCD;
+  padding: 5px 3px;
+  margin-top: 5px;
+}
+.multi-select-control .control-filter table {
+  margin-top: 3px;
+}
+.multi-select-control .control-filter .checkbox-tree input[type="radio"],
+.multi-select-control .control-filter .checkbox-tree input[type="checkbox"] {
+  margin: 0 8px 3px;
+}
+.multi-select-control .control-filter .check-all,
+.multi-select-control .control-filter .uncheck-all {
+  margin-right: 3px;
+}
+.multi-select-control hr {
+  margin: 10px 0;
+}
+.multi-select-control .icon {
+  background-image: url(images/ui-icons_888888_256x240.png);
+}
+/********************************************************/
+/*                         Grid                         */
+/********************************************************/
+.freegrid {
+  float: left;
+}
+.freegrid .list-action {
+  margin: auto;
+}
+.freegrid .icon-edit {
+  margin: 4px 10px 0 auto;
+}
+.freegrid .icon-delete {
+  margin: 4px 0 0 auto;
+}
+.freegrid .freegrid-even td {
+  background-color: #f2f1f0;
+}
+.freegrid tr.highlight-row:hover td {
+  background-color: #FCFBCA;
+}
+/********************************************************/
+/*                Custom jQuery Datepicker              */
+/********************************************************/
+.ui-datepicker {
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  background: #fff;
+  border-color: #a6c9e2;
+  color: #222;
+}
+.ui-datepicker input,
+.ui-datepicker textarea,
+.ui-datepicker select,
+.ui-datepicker button {
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 1em;
+}
+.ui-datepicker .ui-widget-header {
+  background: #4E71BB;
+}
+.ui-datepicker .ui-widget-header .ui-icon {
+  background-image: url(images/ui-icons_cbd4e6_256x240.png);
+}
+.ui-datepicker .ui-widget-header .ui-datepicker-month,
+.ui-datepicker .ui-widget-header .ui-datepicker-year {
+  color: #fff;
+}
+.ui-datepicker .ui-widget-header .ui-datepicker-title select {
+  font-size: 12px;
+  margin: 1px 6px;
+  border: 1px solid #CECCCD;
+  height: 18px;
+}
+.ui-datepicker .ui-widget-header .ui-datepicker-prev-hover,
+.ui-datepicker .ui-widget-header .ui-datepicker-next-hover {
+  top: 2px;
+}
+.ui-datepicker .ui-widget-header .ui-datepicker-prev-hover {
+  left: 2px;
+}
+.ui-datepicker .ui-widget-header .ui-datepicker-next-hover {
+  right: 2px;
+}
+.ui-datepicker .ui-state-default {
+  background: #F4F3F1;
+  border-color: #c4d6fc;
+  color: #000;
+}
+.ui-datepicker .ui-state-default.ui-state-highlight {
+  background: #FBF9EE;
+  border-color: #fcefa1;
+  color: #363636;
+}
+.ui-datepicker .ui-state-default.ui-state-active {
+  background: #4E71BB;
+  color: #fff;
+}
+.ui-datepicker .ui-state-hover {
+  background: #5476bb;
+  border-color: #6483c4;
+  color: #050505;
+}
+.ui-datepicker .ui-datepicker-week-end {
+  color: #C84519;
+}
+.ui-datepicker .ui-corner-all,
+.ui-datepicker .ui-corner-bottom,
+.ui-datepicker .ui-corner-right,
+.ui-datepicker .ui-corner-br {
+  border-bottom-right-radius: 0;
+}
+.ui-datepicker .ui-corner-all,
+.ui-datepicker .ui-corner-bottom,
+.ui-datepicker .ui-corner-left,
+.ui-datepicker .ui-corner-bl {
+  border-bottom-left-radius: 0;
+}
+.ui-datepicker .ui-corner-all,
+.ui-datepicker .ui-corner-top,
+.ui-datepicker .ui-corner-right,
+.ui-datepicker .ui-corner-tr {
+  border-top-right-radius: 0;
+}
+.ui-datepicker .ui-corner-all,
+.ui-datepicker .ui-corner-top,
+.ui-datepicker .ui-corner-left,
+.ui-datepicker .ui-corner-tl {
+  border-top-left-radius: 0;
+}
+/********************************************************/
+/*                   Custom jQuery Dialog               */
+/********************************************************/
+.ui-dialog {
+  background: #fff;
+  color: #fff;
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
+.ui-dialog .ui-dialog-titlebar {
+  background: #466ab6;
+  border: 0;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
+  height: 35px;
+  line-height: 35px;
+  margin: -5px -5px 5px;
+  padding: 0 20px;
+  color: #fff;
+}
+.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  margin-top: 0;
+}
+.ui-dialog .ui-dialog-title {
+  font-size: 13px;
+}
+.ui-dialog .ui-dialog-content {
+  background-color: #fff;
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  color: #000;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  border: 0;
+  top: 19px;
+  right: 10px;
+  padding: 0;
+  background: url(images/btn-close.png) 0px -47px no-repeat;
+}
+.ui-dialog .btn-primary,
+.ui-dialog .btn-back {
+  font-size: 13px;
+}
+.ui-dialog .confirm-message {
+  background: url(images/icon-question.png) left top no-repeat;
+  padding: 12px 0 0 50px;
+  margin: 14px 15px;
+}

@@ -1,0 +1,219 @@
+﻿@import "variables.less";
+@import "common.less";
+
+/********************************************************/
+/*             Multiple selected                        */
+/********************************************************/
+.multi-select-control {
+	z-index: 10;
+	border-color: @border-color;
+	.control-filter {
+		.box-shadow(none);
+	}
+
+	.control-header {
+		padding-top: 1px;
+		margin-bottom: 3px;
+		font-weight: normal;
+	}
+
+	.control-filter {
+		border-width: 1px 0 0;
+		border-color: @border-color;
+		padding: 5px 3px;
+		margin-top: 5px;
+
+		table {
+			margin-top: 3px;
+		}
+
+		.checkbox-tree {
+			input[type="radio"], input[type="checkbox"] {
+				margin: 0 8px 3px;
+			}
+		}
+
+		.check-all, .uncheck-all {
+			margin-right: 3px;
+		}
+	}
+
+	hr {
+		margin: 10px 0;
+	}
+
+	.icon {
+		background-image: url(images/ui-icons_888888_256x240.png);
+	}
+}
+
+/********************************************************/
+/*                         Grid                         */
+/********************************************************/
+.freegrid {
+    float: left;
+
+	.list-action {
+		margin: auto;
+	}
+	
+	.icon-edit {
+		margin: 4px 10px 0 auto;
+	}
+
+	.icon-delete {
+		margin: 4px 0 0 auto;
+	}
+
+	.freegrid-even td {
+		background-color: @grid-row-even-bg;
+	}
+	
+	tr.highlight-row:hover td {
+		background-color: @grid-row-bg-hover;
+	}
+}
+
+/********************************************************/
+/*                Custom jQuery Datepicker              */
+/********************************************************/
+.ui-datepicker {
+	font-family: @calendar-font;
+    font-size: @font-size;
+	background: @calendar-bg;
+	border-color: @calendar-border;
+    color: @calendar-color;
+
+    input, textarea, select, button {
+        font-family: @calendar-font;
+        font-size: 1em;
+    }
+
+	.ui-widget-header {
+		background: @calendar-header-bg;
+
+		.ui-icon {
+			background-image: url(images/ui-icons_cbd4e6_256x240.png);
+		}
+
+		.ui-datepicker-month, .ui-datepicker-year {
+			color: @white;
+		}
+
+		.ui-datepicker-title {
+			select {
+				font-size: @font-size - 1; 
+				margin:1px 6px; 
+				border: 1px solid @calendar-input-hover;
+				height: 18px;
+			}
+		}
+
+		.ui-datepicker-prev-hover, .ui-datepicker-next-hover {
+			top: 2px;
+		}
+
+		.ui-datepicker-prev-hover { left:2px; }
+		.ui-datepicker-next-hover { right:2px; }		
+	}
+
+	.ui-state-default {
+		background: @calendar-default-state-bg;
+		border-color: @calendar-default-state-border;
+		color: @calendar-default-state-color;
+
+		&.ui-state-highlight {
+			background: @calendar-highlight-state-bg;
+			border-color: @calendar-highlight-state-border;
+			color: @calendar-highlight-state-color;
+		}
+
+	
+		&.ui-state-active {
+			background: @calendar-active-state-bg;
+			color: @calendar-active-state-color;
+		}
+	}
+
+	.ui-state-hover {
+		background: @calendar-state-bg-hover;
+		border-color: @calendar-state-border-hover;
+		color: @calendar-state-color-hover;
+	}
+
+	.ui-datepicker-week-end {
+		color: @calendar-weekend-color;
+	}
+
+	.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+		border-bottom-right-radius: 0;
+	}
+
+	.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+		border-bottom-left-radius: 0;
+	}
+
+	.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+		border-top-right-radius: 0;
+	}
+
+	.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+		border-top-left-radius: 0;
+	}
+}
+
+/********************************************************/
+/*                   Custom jQuery Dialog               */
+/********************************************************/
+.ui-dialog {
+    background: @popup-bg;
+    color: #fff;
+    .border-radius(0);
+    .box-shadow(0 3px 9px rgba(0, 0, 0, 0.5));
+
+    .ui-dialog-titlebar {
+        background: #466ab6;
+        border: 0;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.15);
+        height: 35px;
+        line-height: 35px;
+        margin: -5px -5px 5px;
+        padding: 0 20px;
+        color: @white;
+
+        .ui-dialog-title {
+            margin-top: 0;
+        }
+    }
+
+	.ui-dialog-title {
+		font-size: @font-size;
+	}
+
+    .ui-dialog-content {
+        background-color: @white;
+        .border-radius(0);
+        color: @text;
+    }
+
+    .ui-dialog-titlebar-close {
+        border: 0;
+        top: 19px;
+        right: 10px;
+        padding: 0;
+		background: url(images/btn-close.png) 0px -47px no-repeat;
+
+
+
+    }
+
+	.btn-primary, .btn-back {
+		font-size: @font-size;
+	}
+
+	.confirm-message {
+		background: url(images/icon-question.png) left top no-repeat;
+		padding: 12px 0 0 50px;
+		margin: 14px 15px
+	}
+}
