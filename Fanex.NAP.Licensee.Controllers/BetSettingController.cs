@@ -12,11 +12,13 @@
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
     using Fanex.NAP.Licensee.Service;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Bet setting controller.
     /// </summary>
     [CustomHandleError]
+    [CheckUMFilter]
     public class BetSettingController : BaseController
     {
         private readonly ICommonService _commonService;

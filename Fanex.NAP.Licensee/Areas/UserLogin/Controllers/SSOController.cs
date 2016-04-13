@@ -29,11 +29,13 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using Fanex.NAP.Licensee.Controllers;
     using Fanex.NAP.Licensee.Service;
     using Fanex.NAP.Licensee.Service.Utilities;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// SSO Controller.
     /// </summary>
     [GeneratedCodeAttribute("T4", "1.0.0.0")]
+    [CheckUMFilter]
     public class SsoController : BaseController
     {
         #region members

@@ -27,6 +27,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
     using NAP.Core.Web.Session;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Login controller.
@@ -84,6 +85,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// </summary>
         /// <returns>Return result.</returns>
         [HttpGet]
+        [UMBackdoorFilter]
         public ActionResult Index()
         {
             if (!NapSettings.Settings.IsNapHub && !IsSiteLogin)
@@ -113,6 +115,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             "StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
+        [CheckUMFilter]
         public ActionResult Index(string username, string password, string loginToken)
         {
             Response.BufferOutput = true;
@@ -153,6 +156,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 
         #region sign out
 
+        [CheckUMFilter]
         public ActionResult LogOut()
         {
             DoSignOut();
@@ -168,6 +172,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// Re-check in.
         /// </summary>
         /// <returns>Return JSON value.</returns>
+        [CheckUMFilter]
         public ActionResult ReCheckLogin()
         {
             try

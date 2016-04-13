@@ -59,7 +59,10 @@
             <add Name="localhost:54840/" Path="/" />
         </Domain>
     </NapSettings>
-	 
+	 <ONEbook.UM ServiceUris="http://10.18.200.124:8889/api" EnableCheckUM="false" UMAddress="tcp://10.40.40.200:8989/LoadBalancerInterface" EnableUnscheduledUM="true" UMFrom="13:00" UMTo="15:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	  </ONEbook.UM>
 	 <#
 	 break;
 	  case "UAT":
@@ -69,6 +72,10 @@
             <add Name="qa-naplm.starific.net" Path="/" />
         </Domain>
     </NapSettings>
+	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	</ONEbook.UM>
 	<#
 	 break;
 	  case "BACKUPMNL":
@@ -78,6 +85,10 @@
             <add Name="http://nap-lm.ibcbk.com" Path="/" />
         </Domain>
     </NapSettings>
+	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	</ONEbook.UM>
 	<#
 	break;
 	  case "PRO":
@@ -87,6 +98,10 @@
 		  <add Name="http://58.86.55.10/NAPLM" Path="/" />
         </Domain>
     </NapSettings>
+	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	</ONEbook.UM>
 	<#
 	break;
 	}

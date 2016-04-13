@@ -20,12 +20,14 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Setting Configuration Controller.
     /// </summary>
     [CustomHandleError]
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
+    [CheckUMFilter]
     public class SettingConfigurationController : BaseController
     {
         private readonly ICommonService _commonService;
