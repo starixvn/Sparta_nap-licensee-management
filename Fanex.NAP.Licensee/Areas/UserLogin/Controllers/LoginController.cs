@@ -39,7 +39,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         private const string LoginTokenName = "__SecureFormToken";
 
         private readonly ICurrentSession _currentSession;
-        private readonly IMaintenanceService _maintenanceService;
+        private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
         private readonly ISiteService _siteService;
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
@@ -55,13 +55,13 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             IUserService userService,
             ISiteService siteService,
             ICurrentSession currentSession,
-            IMaintenanceService maintenanceService,
+            ONEbook.UM.Services.IMaintenanceService maintenanceService,
             IAuthenticationService authenticationService)
         {
             _userService = userService ?? new UserService();
             _siteService = siteService ?? new SiteService();
             _currentSession = currentSession ?? new CurrentSession();
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
+            _maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
             _authenticationService = authenticationService ?? new AuthenticationService();
         }
 
@@ -93,12 +93,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
                 // if login-directly feature is disabled then redirect users to NAP Hub
                 return Redirect(NapSettings.Settings.HubUrl);
             }
-
-            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
-            {
-                return RedirectToAction("Offline", "Common");
-            }
-
+            
             SetLoginTokenToCookieSession(CreateToken());
 
             return View();
@@ -179,16 +174,6 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             {
                 if (!ConfigurationManager.AppSettings["IsLocalTest"].Equals("1"))
                 {
-                    var maintenanceInfo = _maintenanceService.GetDowntimeInfo();
-
-                    if (maintenanceInfo.IsDowntime)
-                    {
-                        return Json(new
-                        {
-                            IsKickedOut = "3"
-                        });
-                    }
-
                     var siteStatus = _siteService.GetStatusById(SiteId);
 
                     if (!siteStatus)
