@@ -5,6 +5,7 @@
 function ReCheckin() {
     var urlRecheck = window.rootUrl + "UserLogin/Login/ReCheckLogin";
     var urlLogout = window.rootUrl + "UserLogin/Login/LogOut";
+    var underMaintenanceCode = 999999;
 
     $.ajax({
         url: urlRecheck,
@@ -16,7 +17,11 @@ function ReCheckin() {
                 window.location.href = urlLogout;
             }
         },
-        error: function () {
+        error: function (response) {
+            var result = $.parseJSON(response.responseText);
+            if (result.code === underMaintenanceCode) {
+                window.location.href = urlLogout;
+            }
         }
     });
 }
