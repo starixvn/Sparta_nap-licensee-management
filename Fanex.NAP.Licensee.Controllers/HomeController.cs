@@ -2,12 +2,13 @@
 {
     using System.Web.Mvc;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Core.Web.Session;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Home controller.
     /// </summary>
     [NapSuperAuth]
+    [CheckUMFilter]
     public class HomeController : BaseController
     {
         public ActionResult Index()

@@ -9,6 +9,7 @@ settingConfigurationApp = angular.module("settingConfiguration",
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
 settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
 settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
+settingConfigurationApp.constant("GetSettingsUrl", "GetSettings");
 
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
@@ -916,9 +917,8 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
 
 settingConfigurationApp.controller("settingConfigurationCtrl", [
 '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
- 'GetLicenseeListUrl', 'GetSuperLicenseeListUrl', 'GetProductTypeListUrl', 'ContextFunc',
-function ($scope, $http, $location, $route, $routeParams,
- shareSettingsService, GetLicenseeListUrl, GetSuperLicenseeListUrl, GetProductTypeListUrl, ContextFunc) {
+ 'GetSuperLicenseeListUrl', 'ContextFunc', 'GetSettingsUrl',
+function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, ContextFunc, GetSettingsUrl) {
     $scope.isButtonEnable = true;
 
     // Load data for ddls
@@ -940,22 +940,6 @@ function ($scope, $http, $location, $route, $routeParams,
         isSuccess: true
     };
 
-    // Load licensees
-    $http.get(GetLicenseeListUrl)
-        .success(function (data) {
-            $scope.filterData.licensees = data;
-            $scope.filterData.selectedLicensee = data[0];
-            $scope.selectedLicenseeChanged();
-        });
-
-    // Load products
-    $http.get(GetProductTypeListUrl)
-        .success(function (data) {
-            $scope.filterData.productTypes = data;
-            $scope.filterData.selectedProductType = data[0];
-            $scope.selectedProductTypeChanged();
-        });
-
     $scope.selectedProductTypeChanged = function () {
         $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
     };
@@ -972,6 +956,20 @@ function ($scope, $http, $location, $route, $routeParams,
             $scope.filterData.selectedSuperLicensee = data[0];
         });
     };
+
+    $http.get(GetSettingsUrl)
+        .success(function (data) {
+            $scope.filterData.licensees = data.LicenseeList;
+            $scope.filterData.selectedLicensee = data.LicenseeList[0];
+
+            $scope.filterData.productTypes = data.ProductTypeList;
+            $scope.filterData.selectedProductType = data.ProductTypeList[0];
+            $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
+
+            $scope.filterData.superLicensees = data.SuperLicenseeList;
+            $scope.filterData.selectedSuperLicensee = data.SuperLicenseeList[0];
+        });
+
 
     $scope.selectEventHandler = function () {
         // Save working context
@@ -1080,7 +1078,7 @@ function ($scope, $http, $location, $route, $routeParams,
             bsRow.Message = data;
         });
     };
-} ]);
+}]);
 
 ﻿"use strict";
 

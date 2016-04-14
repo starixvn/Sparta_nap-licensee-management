@@ -1,8 +1,8 @@
-/// <vs Clean='all' />
+/// <binding ProjectOpened='watch' />
 module.exports = function (grunt) {
-"use strict";
+    "use strict";
 
-var configs = grunt.file.readJSON('grunt.json');
+    var configs = grunt.file.readJSON('grunt.json');
 
     function buildCss(grunt, srcFiles, destPath) {
         srcFiles.forEach(function (file) {
@@ -59,7 +59,7 @@ var configs = grunt.file.readJSON('grunt.json');
             }
         });
     }
-    
+
     grunt.file.defaultEncoding = "utf-8";
     grunt.file.preserveBOM = true;
 
@@ -115,31 +115,36 @@ var configs = grunt.file.readJSON('grunt.json');
                 extDot: "last"
             }
         },
+        jshint: {
+            options: grunt.file.readJSON('jshint.json'),
+            beforeconcat: configs.jsFilters,
+            afterconcat: ['dist/output.js']
+        },
         watch: {
             options: {
                 spawn: false,
                 nospawn: true,
                 event: ['all']
             },
-            js: {
+            jshint: {
                 files: configs.jsFilters,
-                tasks: ['uglify:all']
+                tasks: ['jshint:all']
             },
             less: {
                 files: configs.lessFilters,
                 tasks: ['less:all']
             },
-            css: {
+            csslint: {
                 files: configs.cssFilters,
-                tasks: ['cssmin:all']
+                tasks: ['csslint:all']
             }
         }
     });
 
     grunt.event.on('watch', function (action, filepath) {
+        grunt.config('jshint.all.src', filepath);
+        grunt.config('csslint.all.src', filepath);
         grunt.config('less.all.src', filepath);
-        grunt.config('cssmin.all.src', filepath);
-        grunt.config('uglify.all.src', filepath);
     });
 
     grunt.registerTask("jsCore", "", function () {
@@ -192,6 +197,7 @@ var configs = grunt.file.readJSON('grunt.json');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks('grunt-contrib-csslint');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task(s).
     grunt.registerTask("default", ["watch"]);

@@ -27,6 +27,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
     using NAP.Core.Web.Session;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Login controller.
@@ -38,7 +39,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         private const string LoginTokenName = "__SecureFormToken";
 
         private readonly ICurrentSession _currentSession;
-        private readonly IMaintenanceService _maintenanceService;
+        private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
         private readonly ISiteService _siteService;
         private readonly IUserService _userService;
         private readonly IAuthenticationService _authenticationService;
@@ -54,13 +55,13 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             IUserService userService,
             ISiteService siteService,
             ICurrentSession currentSession,
-            IMaintenanceService maintenanceService,
+            ONEbook.UM.Services.IMaintenanceService maintenanceService,
             IAuthenticationService authenticationService)
         {
             _userService = userService ?? new UserService();
             _siteService = siteService ?? new SiteService();
             _currentSession = currentSession ?? new CurrentSession();
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
+            _maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
             _authenticationService = authenticationService ?? new AuthenticationService();
         }
 
@@ -84,6 +85,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// </summary>
         /// <returns>Return result.</returns>
         [HttpGet]
+        [UMBackdoorFilter]
         public ActionResult Index()
         {
             if (!NapSettings.Settings.IsNapHub && !IsSiteLogin)
@@ -91,12 +93,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
                 // if login-directly feature is disabled then redirect users to NAP Hub
                 return Redirect(NapSettings.Settings.HubUrl);
             }
-
-            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
-            {
-                return RedirectToAction("Offline", "Common");
-            }
-
+            
             SetLoginTokenToCookieSession(CreateToken());
 
             return View();
@@ -113,6 +110,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
             "StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
+        [CheckUMFilter]
         public ActionResult Index(string username, string password, string loginToken)
         {
             Response.BufferOutput = true;
@@ -153,6 +151,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 
         #region sign out
 
+        [CheckUMFilter]
         public ActionResult LogOut()
         {
             DoSignOut();
@@ -168,22 +167,13 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// Re-check in.
         /// </summary>
         /// <returns>Return JSON value.</returns>
+        [CheckUMFilter]
         public ActionResult ReCheckLogin()
         {
             try
             {
                 if (!ConfigurationManager.AppSettings["IsLocalTest"].Equals("1"))
                 {
-                    var maintenanceInfo = _maintenanceService.GetDowntimeInfo();
-
-                    if (maintenanceInfo.IsDowntime)
-                    {
-                        return Json(new
-                        {
-                            IsKickedOut = "3"
-                        });
-                    }
-
                     var siteStatus = _siteService.GetStatusById(SiteId);
 
                     if (!siteStatus)

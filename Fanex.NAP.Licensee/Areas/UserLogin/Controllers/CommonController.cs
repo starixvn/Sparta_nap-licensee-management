@@ -1,18 +1,9 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CommonController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2013.1.4">Created</change>
-// </history>
-
-namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
+﻿namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
 
     /// <summary>
     /// Common Controller.
@@ -37,9 +28,8 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// <returns>Return result.</returns>
         public ActionResult Offline()
         {
-            var downTime = _maintenanceService.GetDowntimeInfo();
-
-            if (!downTime.IsDowntime)
+            var downTime = _maintenanceService.GetUnderMaintenanceTime();
+            if (!downTime.IsUnderMaintenanceTime)
             {
                 FormsAuthentication.RedirectToLoginPage();
             }

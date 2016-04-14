@@ -6,7 +6,6 @@
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -21,11 +20,14 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Setting Configuration Controller.
     /// </summary>
     [CustomHandleError]
+    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
+    [CheckUMFilter]
     public class SettingConfigurationController : BaseController
     {
         private readonly ICommonService _commonService;
@@ -44,15 +46,12 @@ namespace Fanex.NAP.Licensee.Controllers
             _settingConfigurationService = settingConfigurationService;
         }
 
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult Index()
         {
             return View();
         }
 
         #region PT
-
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult EditPT()
         {
             return PartialView("PT/EditPT");
@@ -63,7 +62,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="settingConfigVM">Setting configuration view model.</param>
         /// <returns>String return.</returns>
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult GetEditPTData(SettingConfigFilterViewModel settingConfigVM)
         {
             string value = _settingConfigurationService.GetPositionTaking(settingConfigVM.CustId, settingConfigVM.ProdId);
@@ -80,14 +78,12 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(editPTVm, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult ReviewPT()
         {
             return PartialView("PT/ReviewPT");
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdatePT(UpdatePTViewModel updatePTViewModel)
         {
             ResultInfo result = _settingConfigurationService.UpdatePositionTaking(updatePTViewModel.CustId, updatePTViewModel.ProductId, updatePTViewModel.PTValue);
@@ -99,13 +95,11 @@ namespace Fanex.NAP.Licensee.Controllers
 
         #region Comm
 
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult EditComm()
         {
             return PartialView("Comm/EditComm");
         }
 
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult GetEditCommData(int custId)
         {
             IList<CommItem> lstCommItems = _settingConfigurationService.GetCommList(custId);
@@ -115,7 +109,6 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(editCommVm.EditCommRows, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult ReviewComm()
         {
             return PartialView("Comm/ReviewComm");
@@ -127,7 +120,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="updateCommVM">Update commission view model.</param>
         /// <returns>String result.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateComm(UpdateCommViewModel updateCommVM)
         {
             var result = _settingConfigurationService.UpdateComm(
@@ -136,13 +128,13 @@ namespace Fanex.NAP.Licensee.Controllers
                 updateCommVM.SportCommission.BetTypeId,
                 float.Parse(updateCommVM.SportCommission.SelectedComm));
 
-            return new JsonResult 
-            { 
+            return new JsonResult
+            {
                 Data = new UpdateCommResultViewModel(
-                        updateCommVM.SportCommission.SportTypeName, 
-                        updateCommVM.SportCommission.BetTypeName, 
-                        result.IsOk, 
-                        result.Message) 
+                        updateCommVM.SportCommission.SportTypeName,
+                        updateCommVM.SportCommission.BetTypeName,
+                        result.IsOk,
+                        result.Message)
             };
         }
 
@@ -155,7 +147,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="sportType">Sport type.</param>
         /// <returns>Partial view.</returns>
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult EditBetSetting(int sportType)
         {
             string rootPath = "BetSetting/";
@@ -181,7 +172,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="settingConfigVM">Setting config filter view model.</param>
         /// <returns>String result.</returns>
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel settingConfigVM)
         {
             switch (settingConfigVM.ProdId)
@@ -216,7 +206,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// </summary>
         /// <param name="sportType">Sport type.</param>
         /// <returns>Partial view.</returns>
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public PartialViewResult ReviewBetSetting(int sportType)
         {
             string rootPath = "BetSetting/";
@@ -243,7 +232,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="sportbookVM">Bet setting sport book view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
         {
             var updItem = new UpdateBetSettingItem(
@@ -266,7 +254,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="numberGameVM">Bet setting number game view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
         {
             var updItem = new UpdateBetSettingItem
@@ -291,7 +278,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="virtualSportVM">Bet setting virtual sport view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
         {
             var updItem = new UpdateBetSettingItem(
@@ -316,7 +302,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="racingVM">Bet setting racing view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
         {
             var updItem = new UpdateBetSettingItem(
@@ -341,7 +326,6 @@ namespace Fanex.NAP.Licensee.Controllers
         /// <param name="kenoVM">Bet setting keno view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
         public JsonResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
         {
             var updItem = new UpdateBetSettingItem(
@@ -367,29 +351,41 @@ namespace Fanex.NAP.Licensee.Controllers
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public JsonResult GetLicenseeList()
+        public ActionResult GetLicenseeList()
         {
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public JsonResult GetSuperLicenseeList(string siteName)
+        public ActionResult GetSuperLicenseeList(string siteName)
         {
-            IList<LicenseeItem> lstLicenseeSuper = _commonService.GetSuperLicenseeList(siteName);
-            return Json(lstLicenseeSuper, JsonRequestBehavior.AllowGet);
+            return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
-        public JsonResult GetProductTypeList()
+        public ActionResult GetProductTypeList()
         {
-            IList<ProductTypeItem> dctProductTypes = _commonService.GetProductTypeList;
-            return Json(dctProductTypes, JsonRequestBehavior.AllowGet);
+            return Json(_commonService.GetProductTypeList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
+        public ActionResult GetSettings()
+        {
+            var licensees = _commonService.GetLicenseeList;
+
+            return Json(
+            new
+            {
+                LicenseeList = licensees,
+                SuperLicenseeList = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name),
+                ProductTypeList = _commonService.GetProductTypeList
+            },
+            JsonRequestBehavior.AllowGet);
         }
 
         #endregion
