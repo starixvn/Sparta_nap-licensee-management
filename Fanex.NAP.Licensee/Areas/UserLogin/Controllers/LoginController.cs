@@ -85,7 +85,7 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// </summary>
         /// <returns>Return result.</returns>
         [HttpGet]
-        [UMBackdoorFilter]
+        [CheckUMFilter]
         public ActionResult Index()
         {
             if (!NapSettings.Settings.IsNapHub && !IsSiteLogin)
