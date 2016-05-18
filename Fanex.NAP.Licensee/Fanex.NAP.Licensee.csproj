@@ -648,6 +648,9 @@
   <ItemGroup>
     <Content Include="Web.ConnectionString.config" />
     <Content Include="Views\LicenseeManagement\Create.cshtml" />
+    <None Include="SiteConfig\Web.SIT.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </None>
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

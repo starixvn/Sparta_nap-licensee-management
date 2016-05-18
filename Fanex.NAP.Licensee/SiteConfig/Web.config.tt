@@ -104,6 +104,20 @@
 	</ONEbook.UM>
 	<#
 	break;
+	case "SIT":
+	  #>
+	   <NapSettings UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://58.86.55.10/NapHub/Sites/UserSites/Sites">
+        <Domain>
+		  <add Name="http://58.86.55.10/NAPLM" Path="/" />
+        </Domain>
+    </NapSettings>
+	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	</ONEbook.UM>
+	<#
+	break;
+
 	}
 	#>
     <system.web>
