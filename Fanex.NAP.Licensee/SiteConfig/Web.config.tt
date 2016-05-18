@@ -111,7 +111,7 @@
 		  <add Name="http://58.86.55.10/NAPLM" Path="/" />
         </Domain>
     </NapSettings>
-	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://172.16.4.106:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
