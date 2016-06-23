@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SingleDefaultBetSettingViewModel.cs" company="Nexcel">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;

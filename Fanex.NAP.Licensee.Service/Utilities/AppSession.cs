@@ -1,15 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="AppSession.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Bao" date="2012.10.18">Created</change>
-//   <change who="Ricky.Nguyen" date="2012.11.22">Update Session Manager</change>
-//   <change who="Kaden.Trinh" date="2013.09.16">Check styleCop</change>
-// </history>
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
     using System;
     using System.Collections.Generic;

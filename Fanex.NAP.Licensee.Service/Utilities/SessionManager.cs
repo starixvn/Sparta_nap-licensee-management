@@ -1,18 +1,8 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SessionManager.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2012.11.22">Created</change>
-// </history>
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
     using System;
     using System.CodeDom.Compiler;
     using System.Web;
-    using Fanex.Logging;
 
     /// <summary>
     ///     TODO: Update summary.

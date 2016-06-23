@@ -122,8 +122,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ONEbook.UM, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.1.0.1.4\lib\net40\ONEbook.UM.dll</HintPath>
+    <Reference Include="ONEbook.UM, Version=2.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.2.0.2.6\lib\net40\ONEbook.UM.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -563,6 +563,9 @@
       <DependentUpon>Web.config.tt</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="SiteConfig\Web.AppSettings.SIT.config">
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Web.config1.txt</LastGenOutput>
@@ -648,6 +651,12 @@
   <ItemGroup>
     <Content Include="Web.ConnectionString.config" />
     <Content Include="Views\LicenseeManagement\Create.cshtml" />
+    <Content Include="SiteConfig\Web.ConnectionString.SIT.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.SIT.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

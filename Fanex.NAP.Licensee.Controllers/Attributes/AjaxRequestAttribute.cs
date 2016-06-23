@@ -1,9 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="AjaxRequestAttribute.cs" company="Nexcel">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-namespace Fanex.NAP.Licensee.Controllers.Attributes
+﻿namespace Fanex.NAP.Licensee.Controllers.Attributes
 {
     using System;
     using System.Reflection;
