@@ -576,7 +576,7 @@
     * @return string : The formatted number as a string.
     */
     $.number = function (number, decimals, dec_point, thousands_sep) {
-        /* Hack by alex.nguyen@nexcel.vn
+        /* Hack by alex.nguyen@gmail.vn
         *  - Allow set "empty" value !
         */
         var orginalNumber = number;

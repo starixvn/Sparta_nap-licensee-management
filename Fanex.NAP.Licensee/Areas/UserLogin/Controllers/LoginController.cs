@@ -1,14 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LoginController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2012.12.12">Created</change>
-//   <change who="Kaden.Trinh" date="2013.08.30">Check StyleCop</change>
-// </history>
-
-namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
+﻿namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System;
     using System.Configuration;
@@ -106,10 +96,6 @@ namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
         /// <param name="password">Password value.</param>
         /// <returns>Return result.</returns>
         [HttpPost]
-        [SuppressMessage(
-            "StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         [CheckUMFilter]
         public ActionResult Index(string username, string password, string loginToken)
         {

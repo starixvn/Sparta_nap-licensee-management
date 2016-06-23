@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SportOrGameItem.cs" company="Nexcel">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
     using System;
 

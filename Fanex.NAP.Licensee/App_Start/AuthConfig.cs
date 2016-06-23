@@ -1,14 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="AuthConfig.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2013.1.25">Created</change>
-//   <change who="Kaden.Trinh" date="2013.09.17">Check StyleCop</change>
-// </history>
-
-namespace Fanex.NAP.Licensee.AppStart
+﻿namespace Fanex.NAP.Licensee.AppStart
 {
     using System.Web;
     using System.Web.Security;

@@ -1,14 +1,4 @@
-﻿// ----------------------------------------------------------------------
-// <copyright file="SSOController.cs" company="Nexcel Solutions Vietnam">
-//     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// ------------------------------------------------------------------------
-// <history>
-//   <change who="Jeff.Nguyen" date="2013/08/30">Created</change>
-//   <change who="" date=""></change>
-// </history>
-
-namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
+﻿namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System;
     using System.CodeDom.Compiler;

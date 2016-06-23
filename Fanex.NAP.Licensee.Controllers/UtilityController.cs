@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UtilityController.cs" company="Nexcel">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Controllers
+﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
