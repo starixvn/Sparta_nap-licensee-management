@@ -9,7 +9,7 @@ namespace Fanex.NAP.Licensee.Service.Utilities
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Model.ValueObject;
+    using NAP.Core.Models.ValueObject;
 
     /// <summary>
     /// TODO: Update summary.

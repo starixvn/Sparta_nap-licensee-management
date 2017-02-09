@@ -28,6 +28,8 @@
         /// <summary>
         /// The user no menu permission.
         /// </summary>
-        UserNoMenuPermission
+        UserNoMenuPermission,
+
+        ValidatedSuccess
     }
 }

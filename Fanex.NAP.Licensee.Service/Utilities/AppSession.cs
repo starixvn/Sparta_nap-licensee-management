@@ -3,11 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Fanex.Logging;
-    using NAP.Core.Model;
+    using NAP.Core.Models;
 
-    /// <summary>
-    /// AppSession class.
-    /// </summary>
     public static class AppSession
     {
         private const string CurrentActionNameKey = "Fanex.NAP.Licensee.Contants.AppSession.CurrentActionName";
@@ -99,12 +96,5 @@
 
             set { SessionManager.Set(ViewIpVnKey, value); }
         }
-
-        /*public static ICurrentSession NapSession
-        {
-            get { return SessionManager.Get<ICurrentSession>(NappSessionKey); }
-
-            set { SessionManager.Set(NappSessionKey, value); }
-        }*/
     }
 }

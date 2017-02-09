@@ -54,12 +54,12 @@
 		 case "LOCAL":
 		 case "SANDBOX":
 		 #>
-    <NapSettings UMAddress="tcp://10.40.40.200:8989/LoadBalancerInterface" Environment="UAT" EnableDirectLogin="1" SiteId="90" EnableCheckUM="false" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://10.18.200.209:8009/nap-home-local3">
-        <Domain>
-            <add Name="localhost:54840/" Path="/" />
-        </Domain>
-    </NapSettings>
-	 <ONEbook.UM ServiceUris="http://10.18.200.124:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="13:00" UMTo="15:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://10.36.36.20:8009/nap-home-local3" ServiceUrls="http://ha.nexdev.net:1711/api" AccessKey="8VWXgdj1dqISn5o5cE/PT/YfjDUu3OCJObGKAeDw5SQ=">
+		<Domain>
+			<add Name="localhost:54840/" Path="/" />
+		</Domain>
+	</NapSettings>
+	 <ONEbook.UM ServiceUris="http://ha.nexdev.net:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="13:00" UMTo="15:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	  </ONEbook.UM>
@@ -67,11 +67,11 @@
 	 break;
 	  case "UAT":
 	  #>
-	   <NapSettings UMAddress="tcp://10.3.213.153:8991/UMControllerInterface" Environment="UAT" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://qa-naphub.starific.net/User/Login">
-        <Domain>
-            <add Name="qa-naplm.starific.net" Path="/" />
-        </Domain>
-    </NapSettings>
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://qa-naphub.starific.net/User/Login" ServiceUrls="http://ha.nexdev.net:1711/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+		<Domain>
+			<add Name="qa-naplm.starific.net" Path="/" />
+		</Domain>
+	</NapSettings>
 	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
@@ -80,11 +80,11 @@
 	 break;
 	  case "BACKUPMNL":
 	  #>
-	   <NapSettings UMAddress="tcp://10.2.96.1:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://nap-hub.ibcbk.com">
-        <Domain>
-            <add Name="http://nap-lm.ibcbk.com" Path="/" />
-        </Domain>
-    </NapSettings>
+	 <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-hub.ibcbk.com" ServiceUrls="http://10.40.40.22:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+		<Domain>
+			<add Name="http://nap-lm.ibcbk.com" Path="/" />
+		</Domain>
+	</NapSettings>
 	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
@@ -93,11 +93,11 @@
 	break;
 	  case "PRO":
 	  #>
-	   <NapSettings UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="true" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://58.86.55.10/NapHub/Sites/UserSites/Sites">
-        <Domain>
-		  <add Name="http://58.86.55.10/NAPLM" Path="/" />
-        </Domain>
-    </NapSettings>
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://58.86.55.10/NapHub/Sites/UserSites/Sites" ServiceUrls="http://10.40.40.22:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+		<Domain>
+			<add Name="http://58.86.55.10/NAPLM" Path="/" />
+		</Domain>
+	</NapSettings>
 	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
@@ -106,11 +106,11 @@
 	break;
 	case "SIT":
 	  #>
-	   <NapSettings UMAddress="tcp://10.40.40.150:8990/UMControllerInterface" Environment="LIVE" EnableDirectLogin="1" SiteId="22" EnableCheckUM="false" EnableReCheckin="true" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites">
-        <Domain>
-		  <add Name="http://nap-lm.playthefun.com" Path="/" />
-        </Domain>
-    </NapSettings>
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://10.40.40.22:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+		<Domain>
+			<add Name="http://nap-lm.playthefun.com" Path="/" />
+		</Domain>
+	</NapSettings>
 	<ONEbook.UM ServiceUris="http://172.16.4.106:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>

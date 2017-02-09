@@ -13,8 +13,8 @@
 
         public string SessionId { get; set; }
 
-        public string Enviroment { get; set; }
+        public string Environment { get; set; }
 
-        public int NapSiteId { get; set; }
+        public int SiteId { get; set; }
     }
 }
