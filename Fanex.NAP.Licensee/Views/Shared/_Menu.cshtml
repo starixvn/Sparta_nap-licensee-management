@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Model
+﻿@using Fanex.NAP.Core.Models
 @{
     List<MenuItem> menuItemList = ViewBag.MenuItemList != null ? ViewBag.MenuItemList as List<MenuItem> : new List<MenuItem>();
     List<MenuItem> lvl0MenuItemList = menuItemList.Where(m => m.Parent == null).OrderBy(m => m.DisplayOrder).ToList();

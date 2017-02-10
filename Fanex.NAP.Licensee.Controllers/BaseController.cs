@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Web.Mvc;
+    using Core.Context;
     using Core.Web;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web.Context;
@@ -15,6 +16,13 @@
 
         public BaseController()
         {
+            CurrentContext = new CurrentContext();
+
+            if (NapSettings.Settings != null)
+            {
+                CurrentSession = new CurrentSession();
+                ViewBag.Session = CurrentSession;
+            }
         }
 
         public int SiteId

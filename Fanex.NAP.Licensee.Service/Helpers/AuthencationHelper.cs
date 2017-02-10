@@ -39,9 +39,9 @@
 
         private static HttpCookie CreateAuthenticationCookie(string cookiePath, User user, int onuserid)
         {
-            string cookieName = FormsAuthentication.FormsCookieName;
+            var cookieName = FormsAuthentication.FormsCookieName;
 
-            string userData = (new AuthInfo
+            var userData = (new AuthInfo
             {
                 UserId = user.Id,
                 OnUserId = onuserid,
@@ -52,12 +52,12 @@
                 1,
                 user.Username,
                 currentTime,
-                currentTime.AddMinutes(FormsAuthentication.Timeout.Minutes),
+                currentTime.AddMinutes(20000),
                 false,
                 userData,
                 cookiePath);
 
-            string encryptTicket = FormsAuthentication.Encrypt(formAuthentiationTicket);
+            var encryptTicket = FormsAuthentication.Encrypt(formAuthentiationTicket);
 
             return new HttpCookie(cookieName, encryptTicket)
             {
