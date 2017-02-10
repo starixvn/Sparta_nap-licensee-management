@@ -77,7 +77,7 @@
                 switch (SiteEnvironment)
                 {
                     case SiteEnvironment.LOCAL:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" stateConnectionString=\"tcpip=10.35.35.254:42424\" />";
                     case SiteEnvironment.UAT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
                     case SiteEnvironment.BACKUPMNL:
