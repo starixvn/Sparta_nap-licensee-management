@@ -52,7 +52,28 @@
             return ProcessLogin(user, loginUser, napCurrentSession);
         }
 
-        #region Validation
+        private static void ClearToken()
+        {
+            var cookies = HttpContext.Current.Request.Cookies;
+            if (cookies[LoginTokenName] != null)
+            {
+                var tokenCookie = new HttpCookie(LoginTokenName)
+                {
+                    Expires = DateTime.Now.AddDays(-1)
+                };
+
+                HttpContext.Current.Response.Cookies.Add(tokenCookie);
+            }
+
+            HttpContext.Current.Session.Remove(LoginTokenName);
+        }
+
+        private static bool ValidatePassword(User user, LoginUser loginUser)
+        {
+            var hashUserPassword = SecurityHelper.HashText(string.Format("{0}{1}", user.Password, loginUser.LoginToken), HashType.Sha256);
+
+            return string.Equals(loginUser.Password, hashUserPassword, StringComparison.CurrentCulture);
+        }
 
         private NapLoginStatus ValidateUser(User user, LoginUser loginUser)
         {
@@ -84,13 +105,6 @@
             return NapLoginStatus.ValidatedSuccess;
         }
 
-        private bool ValidatePassword(User user, LoginUser loginUser)
-        {
-            var hashUserPassword = SecurityHelper.HashText(string.Format("{0}{1}", user.Password, loginUser.LoginToken), HashType.Sha256);
-
-            return string.Equals(loginUser.Password, hashUserPassword, StringComparison.CurrentCulture);
-        }
-
         private bool IsExistNapSite(User user, LoginUser loginUser)
         {
             return _userService
@@ -117,8 +131,6 @@
         {
             return _userService.GetMenuItem(user.Id, loginUser.SiteId, loginUser.Environment, true).Any(m => m.Parent == null);
         }
-
-        #endregion Validation
 
         private NapLoginStatus ProcessLogin(User user, LoginUser loginUser, ICurrentSession napCurrentSession)
         {
@@ -157,24 +169,5 @@
                     Platform = _currentContext.Platform
                 });
         }
-
-        #region helper
-
-        private static void ClearToken()
-        {
-            var cookies = HttpContext.Current.Request.Cookies;
-            if (cookies[LoginTokenName] != null)
-            {
-                var tokenCookie = new HttpCookie(LoginTokenName)
-                {
-                    Expires = DateTime.Now.AddDays(-1)
-                };
-
-                HttpContext.Current.Response.Cookies.Add(tokenCookie);
-            }
-
-            HttpContext.Current.Session.Remove(LoginTokenName);
-        }
-        #endregion helper
     }
 }
