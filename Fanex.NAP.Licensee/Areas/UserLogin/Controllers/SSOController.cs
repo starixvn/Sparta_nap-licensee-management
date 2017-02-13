@@ -20,7 +20,6 @@
     public class SsoController : BaseController
     {
         private readonly ICurrentSession _currentSession;
-        private readonly int _timeExipration = 30;
         private readonly IUserService _userService;
         private readonly ISSOAuthenticationService _ssoService;
 
