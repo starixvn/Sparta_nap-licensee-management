@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration
 {
-    using Fanex.NAP.Framework.Data;
+    using Data.Repository;
 
     /// <summary>
     /// Update bet setting item.

@@ -1,13 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="GetSettingLogCriteria.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Data.Repository;
 
     /// <summary>
     /// TODO: Update summary.

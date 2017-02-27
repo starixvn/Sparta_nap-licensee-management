@@ -1,15 +1,13 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Web.Mvc;
+    using Core.Context;
+    using Core.Web;
     using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Model.Enumerations;
 
-    /// <summary>
-    /// Base controller.
-    /// </summary>
     public class BaseController : Controller
     {
         private readonly string _environment = NapSettings.Settings == null ? string.Empty : NapSettings.Settings.Environment;
@@ -24,11 +22,6 @@
             {
                 CurrentSession = new CurrentSession();
                 ViewBag.Session = CurrentSession;
-                ServiceContext = new ServiceContext
-                {
-                    UserId = CurrentSession.UserId,
-                    Ip = CurrentContext.IP
-                };
             }
         }
 
@@ -47,12 +40,6 @@
             get { return _environment; }
         }
 
-        public IServiceContext ServiceContext
-        {
-            get;
-            set;
-        }
-
         public ICurrentContext CurrentContext
         {
             get;
@@ -63,6 +50,31 @@
         {
             get;
             set;
+        }
+
+        public string GetLoginStatusError(NapLoginStatus loginStatus)
+        {
+            var error = string.Empty;
+            switch (loginStatus)
+            {
+                case NapLoginStatus.InvalidUsernameOrPassword:
+                    error = ViewResources.Invalid_Username_or_Password;
+                    break;
+
+                case NapLoginStatus.UserSuspended:
+                    error = ViewResources.Your_account_was_suspended;
+                    break;
+
+                case NapLoginStatus.UserNoAuthorization:
+                case NapLoginStatus.UserNoMenuPermission:
+                    error = ViewResources.You_have_no_authorization;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return error;
         }
     }
 }

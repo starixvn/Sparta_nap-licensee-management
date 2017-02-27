@@ -1,8 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Areas.UserLogin.Controllers
 {
     using System;
-    using System.Configuration;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -11,17 +9,13 @@
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.Enumerations;
     using Fanex.NAP.Licensee.Service;
-    using Logging;
     using NAP.Core.Configuration;
-    using NAP.Core.Criteria.User;
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
     using NAP.Core.Web.Session;
     using ONEbook.UM.Filters;
+    using ONEbook.UM.Services;
 
-    /// <summary>
-    /// Login controller.
-    /// </summary>
     public class LoginController : BaseController
     {
         #region members
@@ -29,15 +23,16 @@
         private const string LoginTokenName = "__SecureFormToken";
 
         private readonly ICurrentSession _currentSession;
-        private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
+        private readonly IMaintenanceService _maintenanceService;
         private readonly ISiteService _siteService;
         private readonly IUserService _userService;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly ILocalAuthenticationService _localService;
+        private readonly ICommonAuthenticationService _authenticationService;
 
         #endregion members
 
         public LoginController()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null, null, null)
         {
         }
 
@@ -45,14 +40,17 @@
             IUserService userService,
             ISiteService siteService,
             ICurrentSession currentSession,
-            ONEbook.UM.Services.IMaintenanceService maintenanceService,
-            IAuthenticationService authenticationService)
+            IMaintenanceService maintenanceService,
+            ILocalAuthenticationService localService,
+            ICommonAuthenticationService authenticationService)
         {
             _userService = userService ?? new UserService();
             _siteService = siteService ?? new SiteService();
             _currentSession = currentSession ?? new CurrentSession();
             _maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
-            _authenticationService = authenticationService ?? new AuthenticationService();
+
+            _localService = localService ?? new LocalAuthenticationService();
+            _authenticationService = authenticationService ?? new CommonAuthenticationService();
         }
 
         private static string LoginTokenSession
@@ -68,12 +66,6 @@
             }
         }
 
-        #region sign in
-
-        /// <summary>
-        /// Login action.
-        /// </summary>
-        /// <returns>Return result.</returns>
         [HttpGet]
         [CheckUMFilter]
         public ActionResult Index()
@@ -89,122 +81,48 @@
             return View();
         }
 
-        /// <summary>
-        /// Login function.
-        /// </summary>
-        /// <param name="username">User name value.</param>
-        /// <param name="password">Password value.</param>
-        /// <returns>Return result.</returns>
         [HttpPost]
         [CheckUMFilter]
-        public ActionResult Index(string username, string password, string loginToken)
+        public ActionResult Index(LoginUser loginUser)
         {
-            Response.BufferOutput = true;
-
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(loginUser.UserName) || string.IsNullOrWhiteSpace(loginUser.Password))
             {
                 return LoginError("Invalid input!");
             }
 
-            if (!ValidateLoginToken(loginToken))
+            if (!ValidateLoginToken(loginUser.LoginToken))
             {
                 return LoginError(ViewResources.Your_account_was_suspended);
             }
 
-            NapLoginStatus loginStatus = _authenticationService.ValidateUser(new LoginUser
-            {
-                UserName = username,
-                Password = password,
-                Enviroment = Environment,
-                LoginToken = loginToken,
-                NapSiteId = NapSettings.Settings.SiteId,
-                SessionId = Session.SessionID
-            });
+            loginUser.Environment = NapSettings.Settings.Environment;
+            loginUser.SiteId = NapSettings.Settings.SiteId;
+            loginUser.SessionId = Session.SessionID;
+
+            var loginStatus = _localService.Login(loginUser, _currentSession);
 
             if (loginStatus != NapLoginStatus.LoginSuccessful)
             {
-                return LoginError(_authenticationService.GetLoginStatusError(loginStatus));
+                return LoginError(GetLoginStatusError(loginStatus));
             }
-
-            ClearLoginTokenFromCookieSession();
-
-            Response.Cookies.Add(_authenticationService.CreateAuthenticationCookie(_currentSession));
 
             return Redirect(FormsAuthentication.DefaultUrl);
         }
 
-        #endregion sign in
-
-        #region sign out
-
         [CheckUMFilter]
         public ActionResult LogOut()
         {
-            DoSignOut();
+            _authenticationService.Logout(_currentSession);
 
             return Redirect(FormsAuthentication.LoginUrl);
         }
 
-        #endregion sign out
-
-        #region re check in
-
-        /// <summary>
-        /// Re-check in.
-        /// </summary>
-        /// <returns>Return JSON value.</returns>
         [CheckUMFilter]
         public ActionResult ReCheckLogin()
         {
-            try
-            {
-                if (!ConfigurationManager.AppSettings["IsLocalTest"].Equals("1"))
-                {
-                    var siteStatus = _siteService.GetStatusById(SiteId);
+            var recheckInStatus = _authenticationService.RecheckIn(_currentSession);
 
-                    if (!siteStatus)
-                    {
-                        return Json(new
-                        {
-                            IsKickedOut = "2"
-                        });
-                    }
-
-                    var criteria = new UserReCheckInUserCriteria();
-                    criteria.OnUserId = Convert.ToInt32(_currentSession.OnUserId);
-                    _userService.ReUserCheckIn(criteria);
-
-                    return Json(new
-                    {
-                        OnUserId = Convert.ToInt32(_currentSession.OnUserId),
-                        IsKickedOut = criteria.IsKickedOut ? "1" : "0"
-                    });
-                }
-
-                return Json(new
-                {
-                    IsKickedOut = "0"
-                });
-            }
-            catch (Exception exception)
-            {
-                LogService.Error(exception.Message, exception);
-                throw;
-            }
-        }
-
-        #endregion re check in
-
-        #region helpers
-
-        private void DoSignOut()
-        {
-            _userService.UserLogOut(new LogOutUserCriteria
-            {
-                OnUserId = _currentSession.OnUserId
-            });
-            FormsAuthentication.SignOut();
-            _currentSession.ClearAll();
+            return Json(new { IsKickedOut = recheckInStatus });
         }
 
         private bool ValidateLoginToken(string loginToken)
@@ -222,21 +140,6 @@
             ViewBag.ErrorMessage = errorMessage;
 
             return View("~/Areas/UserLogin/Views/Login/Index.cshtml");
-        }
-
-        private void ClearLoginTokenFromCookieSession()
-        {
-            // Set Cookie is expired.
-            var cookies = Request.Cookies;
-            if (cookies[LoginTokenName] != null)
-            {
-                var tokenCookie = new HttpCookie(LoginTokenName);
-                tokenCookie.Expires = DateTime.UtcNow.AddDays(-1);
-                cookies.Add(tokenCookie);
-            }
-
-            // Remove from Session.
-            Session.Remove(LoginTokenName);
         }
 
         private void SetLoginTokenToCookieSession(string loginToken)
@@ -268,7 +171,5 @@
         {
             return Guid.NewGuid().ToString("N");
         }
-
-        #endregion helpers
     }
 }

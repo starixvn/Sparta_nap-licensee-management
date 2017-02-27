@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
-    using Fanex.NAP.Framework.Data;
+    using Data.Repository;
 
     /// <summary>
     /// Insert or update  - criterion.

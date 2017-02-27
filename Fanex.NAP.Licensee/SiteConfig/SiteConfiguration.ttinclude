@@ -51,7 +51,7 @@
                 switch (SiteEnvironment)
                 {
                     case SiteEnvironment.LOCAL:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.35.35.254\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
                     case SiteEnvironment.UAT:
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.40.40.73\\private$\\entlib\" defaultCategory=\"NAP-LM-UAT\" />";
                     case SiteEnvironment.BACKUPMNL:
@@ -64,7 +64,7 @@
 					return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://172.16.4.107:9099/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
 
 				    case SiteEnvironment.SANDBOX:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.18.200.209\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.35.35.254\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
                     default:
                         return string.Empty;
                 }
@@ -77,7 +77,7 @@
                 switch (SiteEnvironment)
                 {
                     case SiteEnvironment.LOCAL:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" stateConnectionString=\"tcpip=10.35.35.254:42424\" />";
                     case SiteEnvironment.UAT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"10\"  stateConnectionString=\"tcpip=10.40.40.135:42424\" />";
                     case SiteEnvironment.BACKUPMNL:

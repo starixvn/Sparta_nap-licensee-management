@@ -2,10 +2,11 @@
 {
     using System.Web;
     using System.Web.Security;
-    using NAP.Core.Criteria.User;
+    using Core.Auth;
     using NAP.Core.Service.Impl;
     using NAP.Core.Web.Auth;
     using NAP.Core.Web.Session;
+    using Service;
 
     /// <summary>
     /// Authentication class.
@@ -32,7 +33,7 @@
                         return;
                     }
 
-                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
+                    var ticket = FormsAuthentication.Decrypt(httpCookie.Value);
                     if (ticket == null || ticket.Expired)
                     {
                         return;
@@ -53,12 +54,8 @@
 
         public static void SignOut()
         {
-            var currentSession = new CurrentSession();
-            var userService = new UserService();
-            var logOutUserCriteria = new LogOutUserCriteria { OnUserId = currentSession.OnUserId };
-
-            userService.UserLogOut(logOutUserCriteria);
-            currentSession.ClearAll();
+            var authenticationService = new CommonAuthenticationService();
+            authenticationService.Logout(new CurrentSession());
         }
     }
 }
