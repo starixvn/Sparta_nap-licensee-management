@@ -41,3 +41,4 @@ MSBUILD.SUMMARY.email
 SUMMARY.DISPLAY.xml
 /packages
 node_modules
+.vs/config/applicationhost.config
