@@ -53,7 +53,7 @@
                 return Redirect(FormsAuthentication.LoginUrl);
             }
 
-            return Redirect(ssoLogin.RedirectUrl);
+            return Redirect(string.IsNullOrEmpty(ssoLogin.RedirectUrl) ? FormsAuthentication.DefaultUrl : ssoLogin.RedirectUrl);
         }
 
         [AllowAnonymous]
