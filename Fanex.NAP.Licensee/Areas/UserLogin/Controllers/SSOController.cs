@@ -52,7 +52,7 @@
             {
                 return Redirect(FormsAuthentication.LoginUrl);
             }
-            
+
             return Redirect(ssoLogin.RedirectUrl);
         }
 
@@ -77,7 +77,7 @@
 
                 AppSession.IsAccountingLogin = true;
 
-                return Redirect(ssoLogin.RedirectUrl);
+                return Redirect(string.IsNullOrEmpty(ssoLogin.RedirectUrl) ? FormsAuthentication.DefaultUrl : ssoLogin.RedirectUrl);
             }
             catch (Exception exception)
             {
