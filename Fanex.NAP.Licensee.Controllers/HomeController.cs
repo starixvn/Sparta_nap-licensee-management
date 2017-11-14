@@ -22,5 +22,7 @@
             ViewBag.MenuItemList = CurrentSession.MenuItemList;
             return PartialView("~/Views/Shared/_Menu.cshtml");
         }
+
+        public ActionResult Demo() => View();
     }
 }
