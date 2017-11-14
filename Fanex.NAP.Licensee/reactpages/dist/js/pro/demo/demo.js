@@ -1,0 +1,2 @@
+webpackJsonp([1],{6:function(e,t,d){"use strict";function l(e){return e&&e.__esModule?e:{default:e}}var n=d(0),a=l(n),c=d(1),o=l(c),u=document.createElement("dev");document.body.appendChild(u),o.default.render(a.default.createElement("h1",{className:"welcome"},"Helloworld"),u)}},[6]);
+//# sourceMappingURL=demo.js.map
