@@ -232,6 +232,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
+    <Content Include=".webpack\build\utils.js" />
+    <Content Include=".webpack\build\webpack.base.conf.js" />
+    <Content Include=".webpack\build\webpack.dev.conf.js" />
+    <Content Include=".webpack\build\webpack.pro.conf.js" />
+    <Content Include=".webpack\config\alias.js" />
+    <Content Include=".webpack\config\loader.js" />
+    <Content Include=".webpack\config\path.js" />
+    <Content Include=".webpack\config\plugin.js" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
     </Content>
