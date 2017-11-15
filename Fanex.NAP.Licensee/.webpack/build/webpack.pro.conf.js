@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 const utils = require('./utils');
 const baseWebpackConfigGenerator = require('./webpack.base.conf');
 const loader = require('../config/loader');
+const BundleVersionPlugin = require('../plugins/BundleVersionPlugin');
 
 module.exports = merge(
     baseWebpackConfigGenerator('pro'),
@@ -11,6 +12,7 @@ module.exports = merge(
         devtool: 'source-map',
         module: {
             loaders: [loader.generateSassLoaders(true)]
-        }
+        },
+        plugins:[new BundleVersionPlugin()]
     }
 );
