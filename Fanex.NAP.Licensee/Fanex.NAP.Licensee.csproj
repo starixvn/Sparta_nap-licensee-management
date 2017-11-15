@@ -661,7 +661,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.ConnectionString.config" />
-    <Content Include="Views\LicenseeManagement\Create.cshtml" />
     <Content Include="SiteConfig\Web.ConnectionString.SIT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
@@ -688,7 +687,6 @@
     <None Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
     <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
     <None Include="Areas\UserLogin\themes\select-site.less" />
-    <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
     <Content Include="Content\source\core\variables.less" />
     <Content Include="Content\source\core\common.less" />
     <Content Include="Content\source\core\site.less" />

@@ -166,7 +166,6 @@
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />
-    <Compile Include="Extensions\BundlesExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
