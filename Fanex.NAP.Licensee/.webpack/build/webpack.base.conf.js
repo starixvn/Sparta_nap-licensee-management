@@ -18,7 +18,8 @@ function generateConfig(environment) {
     return {
         context: pathConfig.projectRoot,
         resolve: {
-            alias: alias
+            alias: alias,
+            extensions: ['.js', '.jsx']
         },
         entry: entries,
         output: {
@@ -26,9 +27,8 @@ function generateConfig(environment) {
             filename: "[name].js"
         },
         module: {
-            loaders: [
-                ...loader.babelLoaders,
-                ...loader.cssUrlLoaders                
+            rules: [
+                ...loader.babelLoaders,             
             ]
         },
         plugins: pluginGenerator(environment),

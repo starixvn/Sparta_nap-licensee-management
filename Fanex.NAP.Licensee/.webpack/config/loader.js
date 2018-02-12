@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
     babelLoaders: [{
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
             loader: 'babel-loader',
@@ -14,31 +14,27 @@ module.exports = {
             }
         }
     }],
-    cssUrlLoaders: [{
-        test: /\.(png|jpg|gif)$/,
-        loader: 'url-loader',
-        options: {
-            limit: 1024,
-            publicPath: url => `../images/${path.basename(url)}`,
-            name: '[name].[ext]?[hash]',
-            outputPath: './reactpages/dist/images/'
-        }
-    }],
     generateSassLoaders: isProduction => {
         return {
             test: /\.s?css$/,
             use: ExtractTextPlugin.extract({
                 use: [{
                     loader: 'css-loader',
-                    options: isProduction ? {
-                        minimize: {
-                            discardComments: {
-                                removeAll: true
-                            }
-                        }
-                    } : {}
+                    options: {
+                        minimize: isProduction ? 
+                            {
+                                discardComments: {
+                                    removeAll: true
+                                }
+                            }: false,
+                        url: false
+                    },
                 }, {
-                    loader: 'sass-loader'
+                    loader: 'sass-loader',
+                    options: {
+                        minimize: isProduction,
+                        url: false
+                    }
                 }],
                 // use style-loader in development
                 fallback: 'style-loader'

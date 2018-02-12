@@ -9,9 +9,8 @@ module.exports = merge(
     baseWebpackConfigGenerator('pro'),
     utils.setDefinePlugin('process.env.NODE_ENV', 'production'),
     utils.minify(), {
-        devtool: 'source-map',
         module: {
-            loaders: [loader.generateSassLoaders(true)]
+            rules: [loader.generateSassLoaders(true)]
         },
         plugins:[new BundleVersionPlugin()]
     }

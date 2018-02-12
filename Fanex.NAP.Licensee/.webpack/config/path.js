@@ -12,8 +12,9 @@ const scriptPaths = {
     // output path
     build: './reactpages/dist/js',
 
-    // components css input source paths
-    demo: './reactpages/src/scripts/modules/demo'
+    // components js input source paths
+    demo: './reactpages/src/scripts/modules/demo',
+    vendor: './reactpages/src/scripts/modules/vendor'
 };
 
 module.exports = {

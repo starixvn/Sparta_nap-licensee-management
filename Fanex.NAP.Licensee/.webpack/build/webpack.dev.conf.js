@@ -7,9 +7,9 @@ const loader = require('../config/loader');
 module.exports = merge(
     baseWebpackConfigGenerator('dev'),
     utils.setDefinePlugin('process.env.NODE_ENV', 'development'), {
-        devtool: 'cheap-eval-source-map',
+        devtool: 'source-map',
         module: {
-            loaders: [loader.generateSassLoaders(false)]
+            rules: [loader.generateSassLoaders(false)]
         }
     }
 );
