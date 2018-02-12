@@ -3802,7 +3802,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             _react2.default.createElement(
                                 'td',
                                 null,
-                                item.IsTest
+                                item.IsTest ? "1" : "0"
                             ),
                             _react2.default.createElement(
                                 'td',
@@ -3812,7 +3812,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             _react2.default.createElement(
                                 'td',
                                 null,
-                                item.Disable
+                                item.Disable ? "1" : "0"
                             )
                         );
                     })

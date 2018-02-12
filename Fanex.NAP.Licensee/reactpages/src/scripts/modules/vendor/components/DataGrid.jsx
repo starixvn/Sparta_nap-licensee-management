@@ -49,9 +49,9 @@ export class DataGrid extends Component {
                                     <td>{item.LrfUrl}</td>
                                     <td>{item.AffiliateUrl}</td>
                                     <td>{item.Exclusions}</td>
-                                    <td>{item.IsTest}</td>
+                                    <td>{item.IsTest ? "1" : "0"}</td>
                                     <td>{item.SiteId}</td>
-                                    <td>{item.Disable}</td>
+                                    <td>{item.Disable ? "1" : "0"}</td>
                                 </tr>
                             )
                         })
