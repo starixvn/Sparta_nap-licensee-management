@@ -1,0 +1,18 @@
+﻿@using Fanex.NAP.Licensee.Web
+@{
+    ViewBag.Title = "_ReactPageLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headline {
+    @RenderSection("Headline", false)
+}
+@section HeadCss{
+    @RenderSection("HeadCss", false)
+}
+@section FooterJs{
+    @BundleManager.IncludeScriptsByEnv("~/reactpages/dist/js/vendor.js")
+    @RenderSection("FooterJs", false)
+}
+
+@RenderBody()

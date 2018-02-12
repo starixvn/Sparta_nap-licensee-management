@@ -447,6 +447,12 @@
     <Content Include="Content\source\settingconfiguration\setting-configuration.less" />
     <Content Include="Content\source\settingconfiguration\setting-configuration.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="reactpages\dist\css\dev\demo\demo.css" />
+    <Content Include="reactpages\dist\css\pro\demo\demo.css" />
+    <Content Include="reactpages\dist\js\dev\demo\demo.js" />
+    <Content Include="reactpages\dist\js\dev\vendor.js" />
+    <Content Include="reactpages\dist\js\pro\demo\demo.js" />
+    <Content Include="reactpages\dist\js\pro\vendor.js" />
     <Content Include="Scripts\build\angular.js" />
     <Content Include="Scripts\build\angular.min.js" />
     <Content Include="Scripts\build\betsetting.js" />
@@ -664,6 +670,8 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="Views\Home\Demo.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
