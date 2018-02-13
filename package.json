@@ -4,11 +4,13 @@
   "scripts": {
     "build": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.dev.conf.js",
     "build-watch": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.dev.conf.js --watch",
-    "build-pro": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.pro.conf.js"
+    "build-pro": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.pro.conf.js",
+    "version": "node --version"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -29,7 +31,6 @@
     "npm": "^5.6.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.1",
-    "url-loader": "^0.6.2",
     "webpack": "^3.11.0",
     "webpack-merge": "^4.1.1"
   },

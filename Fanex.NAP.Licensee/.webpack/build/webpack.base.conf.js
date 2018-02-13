@@ -32,10 +32,6 @@ function generateConfig(environment) {
             ]
         },
         plugins: pluginGenerator(environment),
-        // use external libraries that not bundled by webpack
-        //externals: {
-        //    "jquery": 'jQuery'
-        //},
         stats: {
             assets: false,
             colors: true,

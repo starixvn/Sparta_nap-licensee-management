@@ -7,11 +7,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-            loader: 'babel-loader',
-            options: {
-                plugins: [require('babel-plugin-transform-object-rest-spread')],
-                presets: ['es2015', 'react']
-            }
+            loader: 'babel-loader'
         }
     }],
     generateSassLoaders: isProduction => {
@@ -27,13 +23,15 @@ module.exports = {
                                     removeAll: true
                                 }
                             }: false,
-                        url: false
+                        url: false,
+                        sourceMap: !isProduction
                     },
                 }, {
                     loader: 'sass-loader',
                     options: {
                         minimize: isProduction,
-                        url: false
+                        url: false,
+                        sourceMap: !isProduction
                     }
                 }],
                 // use style-loader in development
