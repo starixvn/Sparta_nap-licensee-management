@@ -9,8 +9,24 @@ export class DataGrid extends Component {
         super(props);
     }
 
-    componentDidMount(){
+    componentWillMount() {
         this.props.getGridData();
+    }
+
+    _renderExclusions(exclusions) {
+        const exclusionList = exclusions && JSON.parse(exclusions);
+
+        return (
+            <ul>
+                {
+                    exclusionList && exclusionList.map((item, index) => {
+                        return (
+                            <li key={`e-${index}`}>{item}</li>
+                        )
+                    })
+                }
+            </ul>
+        )
     }
 
     render() {
@@ -48,7 +64,7 @@ export class DataGrid extends Component {
                                     <td>{item.InternalUrl}</td>
                                     <td>{item.LrfUrl}</td>
                                     <td>{item.AffiliateUrl}</td>
-                                    <td>{item.Exclusions}</td>
+                                    <td>{this._renderExclusions(item.Exclusions)}</td>
                                     <td>{item.IsTest ? "1" : "0"}</td>
                                     <td>{item.SiteId}</td>
                                     <td>{item.Disable ? "1" : "0"}</td>

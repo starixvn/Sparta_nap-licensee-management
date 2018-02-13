@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using Fanex.NAP.Licensee.Model.DTO;
+    using Model.Criteria.Vendor;
 
     public interface IVendorService
     {
-        IEnumerable<Vendor> GetVendorList();
+        IEnumerable<Vendor> GetVendorList(VendorSearchingCriteria criteria);
     }
 }

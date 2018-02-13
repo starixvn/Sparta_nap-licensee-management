@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Web.Mvc;
+    using Model.Criteria.Vendor;
     using Service;
 
     public class VendorController : BaseController
@@ -18,9 +19,9 @@
         }
 
         [HttpPost]
-        public ActionResult GetVendorInfoList()
+        public ActionResult GetVendorInfoList(VendorSearchingCriteria criteria)
         {
-            return Json(_vendorService.GetVendorList());
+            return Json(_vendorService.GetVendorList(criteria));
         }
     }
 }
