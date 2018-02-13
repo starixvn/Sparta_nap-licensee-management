@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getGridData } from '../action'
+import { getGridData } from './action'
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -46,10 +46,11 @@ export class DataGrid extends Component {
                         <th>Internal Url</th>
                         <th>LRF Url</th>
                         <th>Affiliate Url</th>
-                        <th>Exclusions</th>
+                        <th>Ignored Functions</th>
                         <th>IsTest</th>
                         <th>Site Id</th>
                         <th>Disable</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
@@ -68,6 +69,7 @@ export class DataGrid extends Component {
                                     <td>{item.IsTest ? "1" : "0"}</td>
                                     <td>{item.SiteId}</td>
                                     <td>{item.Disable ? "1" : "0"}</td>
+                                    <td><a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`}>Edit</a></td>
                                 </tr>
                             )
                         })

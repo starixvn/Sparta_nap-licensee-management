@@ -7,5 +7,7 @@
     public interface IVendorService
     {
         IEnumerable<Vendor> GetVendorList(VendorSearchingCriteria criteria);
+
+        Vendor GetVendorById(string vendorId);
     }
 }

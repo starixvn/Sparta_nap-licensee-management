@@ -1,0 +1,33 @@
+﻿@using Fanex.NAP.Licensee.Web
+
+@model Fanex.NAP.Licensee.Model.DTO.Vendor
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Vendor Info</li>
+        <li>Licensee Site</li>
+        <li class="current">Edit</li>
+    </ul>
+}
+@section HeadCss{
+}
+
+@section FooterJs{
+    <script>
+        var initialState = {
+            vendorInfo: {
+                SiteName: '@Model.SiteName',
+                InternalUrl: '@Model.InternalUrl',
+                LrfUrl: '@Model.LrfUrl',
+                AffiliateUrl: '@Model.AffiliateUrl'
+            }
+        }
+    </script>
+    @BundleManager.IncludeScriptsByEnv("~/reactpages/dist/js/editvendor/editvendor.js")
+}
+
+<div id="app-container"></div>

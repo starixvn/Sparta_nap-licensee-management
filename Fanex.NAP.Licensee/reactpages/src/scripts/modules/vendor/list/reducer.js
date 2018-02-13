@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import createReducer from '../../lib/createReducer'
+import createReducer from '../../../lib/createReducer'
 import { SET_GRID_DATA } from './actionTypes'
 
 const gridData = createReducer({}, {

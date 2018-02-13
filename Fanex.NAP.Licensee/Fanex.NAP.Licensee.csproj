@@ -672,6 +672,7 @@
     <Content Include="Views\Home\Demo.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
+    <Content Include="Views\Vendor\Edit.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

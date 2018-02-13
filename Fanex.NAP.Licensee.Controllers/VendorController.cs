@@ -23,5 +23,13 @@
         {
             return Json(_vendorService.GetVendorList(criteria));
         }
+
+        [HttpGet]
+        public ActionResult Edit(string vendorId)
+        {
+            var vendor = _vendorService.GetVendorById(vendorId);
+
+            return View(vendor);
+        }
     }
 }

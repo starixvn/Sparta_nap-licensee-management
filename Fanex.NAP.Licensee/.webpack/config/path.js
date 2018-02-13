@@ -14,7 +14,8 @@ const scriptPaths = {
 
     // components js input source paths
     demo: './reactpages/src/scripts/modules/demo',
-    vendor: './reactpages/src/scripts/modules/vendor'
+    vendor: './reactpages/src/scripts/modules/vendor/list',
+    editvendor: './reactpages/src/scripts/modules/vendor/edit'
 };
 
 module.exports = {

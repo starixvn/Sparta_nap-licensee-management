@@ -21,5 +21,13 @@ namespace Fanex.NAP.Licensee.Service
                 return db.Query<Vendor>(criteria.GetSpParams());
             }
         }
+
+        public Vendor GetVendorById(string vendorId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_SelectById"))
+            {
+                return db.QueryEntity<Vendor>(new { vendorId });
+            }
+        }
     }
 }

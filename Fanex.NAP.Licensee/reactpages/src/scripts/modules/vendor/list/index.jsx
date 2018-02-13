@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import AppContainer from './components/AppContainer'
+import AppContainer from './AppContainer'
 import { Provider } from 'react-redux'
 import reducer from './reducer'
-import Store from '../../lib/store'
+import Store from '../../../lib/store'
 
 const defaultState = Object.assign({}, window.initialState);
 const store = Store.createStore(reducer, defaultState);

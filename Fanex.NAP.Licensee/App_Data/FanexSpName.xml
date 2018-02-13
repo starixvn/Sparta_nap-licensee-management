@@ -53,5 +53,9 @@
     <Setting Key="Nap_LM_LicVendorInfo_Select" SpName="Nap_LM_LicVendorInfo_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet">
       <Mapping DataField="LRF_Url" ObjectProperty="LrfUrl" />
     </Setting>
+
+    <Setting Key="Nap_LM_LicVendorInfo_SelectById" SpName="Nap_LM_LicVendorInfo_SelectById" DbName="DBCUST.SiteConfig.bodbLicenseeNet">
+      <Mapping DataField="LRF_Url" ObjectProperty="LrfUrl" />
+    </Setting>
   </Function>
 </Functions>

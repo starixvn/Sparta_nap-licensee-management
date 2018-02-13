@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getGridData } from '../action'
+import { getGridData } from './action'
 
 
 export class FormFilter extends Component {
@@ -26,7 +26,7 @@ export class FormFilter extends Component {
     submit = (event) => {
         event.preventDefault();
         console.log(this.params);
-        this.props.getGridData({data: this.params});
+        this.props.getGridData(this.params);
     }
 
     render() {
