@@ -9,5 +9,7 @@
         IEnumerable<Vendor> GetVendorList(VendorSearchingCriteria criteria);
 
         Vendor GetVendorById(string vendorId);
+
+        bool UpdateVendor(Vendor vendor);
     }
 }

@@ -1104,3 +1104,6 @@ input[type="submit"].btn-ok,
 .text-highlight {
   color: red;
 }
+.full-width {
+  width: 100%;
+}

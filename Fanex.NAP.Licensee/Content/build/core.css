@@ -6803,6 +6803,9 @@ input[type="submit"].btn-ok,
 .text-highlight {
   color: red;
 }
+.full-width {
+  width: 100%;
+}
 
 ﻿/* File Created: July 16, 2014 */
 .multi-select-control {

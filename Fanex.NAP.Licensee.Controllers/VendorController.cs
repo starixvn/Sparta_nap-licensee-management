@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Model.Criteria.Vendor;
+    using Model.DTO;
     using Service;
 
     public class VendorController : BaseController
@@ -30,6 +31,14 @@
             var vendor = _vendorService.GetVendorById(vendorId);
 
             return View(vendor);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Vendor vendor)
+        {
+            var result = _vendorService.UpdateVendor(vendor);
+
+            return Json(result);
         }
     }
 }
