@@ -5,7 +5,8 @@ const cssPaths = {
     build: './reactpages/dist/css',
 
     // components css input source paths
-    demo: './reactpages/src/styles/modules/demo'
+    demo: './reactpages/src/styles/modules/demo',
+    editvendor: './reactpages/src/styles/modules/vendor/index.scss'
 };
 
 const scriptPaths = {

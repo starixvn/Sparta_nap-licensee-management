@@ -1,4 +1,6 @@
-﻿namespace Fanex.NAP.Licensee.Model.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Fanex.NAP.Licensee.Model.DTO
 {
     public class Vendor
     {
@@ -8,12 +10,16 @@
 
         public byte LicenseeType { get; set; }
 
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string InternalUrl { get; set; }
 
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string LrfUrl { get; set; }
 
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string AffiliateUrl { get; set; }
 
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Exclusions { get; set; }
 
         public bool IsTest { get; set; }

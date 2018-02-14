@@ -639,6 +639,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
+    <Folder Include="reactpages\src\styles\modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

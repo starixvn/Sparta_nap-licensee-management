@@ -38,7 +38,14 @@ namespace Fanex.NAP.Licensee.Service
             {
                 using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Update"))
                 {
-                    db.ExecuteNonQuery(new { vendor.VendorId, vendor.InternalUrl, vendor.LrfUrl, vendor.AffiliateUrl });
+                    db.ExecuteNonQuery(new
+                    {
+                        vendor.VendorId,
+                        vendor.InternalUrl,
+                        vendor.LrfUrl,
+                        vendor.AffiliateUrl,
+                        vendor.Exclusions
+                    });
                 }
             }
             catch (Exception exception)

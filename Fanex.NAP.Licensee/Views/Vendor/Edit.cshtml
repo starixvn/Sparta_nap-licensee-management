@@ -14,6 +14,7 @@
     </ul>
 }
 @section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/reactpages/dist/css/editvendor/editvendor.css")
 }
 
 @section FooterJs{
@@ -23,7 +24,8 @@
                 SiteName: '@Model.SiteName',
                 InternalUrl: '@Model.InternalUrl',
                 LrfUrl: '@Model.LrfUrl',
-                AffiliateUrl: '@Model.AffiliateUrl'
+                AffiliateUrl: '@Model.AffiliateUrl',
+                IgnoredFunctions: '@Html.Raw(Model.Exclusions)'
             }
         }
     </script>
