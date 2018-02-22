@@ -15,16 +15,24 @@ export default class IgnoredFunctionList extends Component {
 
         const { functionToAdd, functionList } = this.state;
 
-        if(!functionToAdd){
+        if (!functionToAdd) {
             return;
         }
 
         const { onEdit } = this.props;
 
         const isMultiple = functionToAdd.indexOf(",") !== -1;
-        const newFunctionList = isMultiple ? 
-            [...functionList, ...functionToAdd.split(",").filter(f => f !== "")] :
-            [...functionList, functionToAdd];
+        const newFunctionList = isMultiple ?
+            [...functionList,
+            ...functionToAdd.split(",").reduce((addedList, item) => {
+                const func = item.trim();
+                if (func !== "") {
+                    addedList.push(func);
+                }
+
+                return addedList;
+            }, [])] :
+            [...functionList, functionToAdd.trim()];
 
         this.setState({
             functionList: newFunctionList,
@@ -57,14 +65,14 @@ export default class IgnoredFunctionList extends Component {
                 </div>
 
                 <div className="form-group row">
-                    <div className="col-sm-10 col-md-6">
+                    <div className="col-sm-10 col-md-10 col-lg-6">
                         <input type="text" className="full-width" value={functionToAdd} onChange={this.handleChange} />
                     </div>
                     <button type="button" className="btn btn-green col-sm-2 col-md-1 addFunction" onClick={this.handleAddFunction}>Add</button>
                 </div>
 
                 <div className="form-group row">
-                    <div className="col-sm-12 col-md-5">
+                    <div className="col-sm-12 col-md-10 col-lg-6">
                         <ul className="ignored-function">
                             {
                                 functionList &&
@@ -72,7 +80,7 @@ export default class IgnoredFunctionList extends Component {
                                     return (
                                         <li key={`f-${index}`}>
                                             {item}
-                                            <a href="javascript:void"
+                                            <a href="javascript:;"
                                                 className="remove-function"
                                                 onClick={(event) => { this.handleRemoveFunction(event, item) }}>
                                                 Remove

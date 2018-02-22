@@ -61,15 +61,15 @@ export class DataGrid extends Component {
                                 <tr key={index}>
                                     <td>{item.VendorId}</td>
                                     <td>{item.SiteName}</td>
-                                    <td>{item.LicenseeType}</td>
+                                    <td className="text-center">{item.LicenseeType}</td>
                                     <td>{item.InternalUrl}</td>
                                     <td>{item.LrfUrl}</td>
                                     <td>{item.AffiliateUrl}</td>
                                     <td>{this._renderExclusions(item.Exclusions)}</td>
-                                    <td>{item.IsTest ? "1" : "0"}</td>
-                                    <td>{item.SiteId}</td>
-                                    <td>{item.Disable ? "1" : "0"}</td>
-                                    <td><a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`}>Edit</a></td>
+                                    <td className="text-center">{item.IsTest ? "1" : "0"}</td>
+                                    <td className="text-center">{item.SiteId}</td>
+                                    <td className="text-center">{item.Disable ? "1" : "0"}</td>
+                                    <td className="text-center"><a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`}>Edit</a></td>
                                 </tr>
                             )
                         })

@@ -9,9 +9,11 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li><a href="~/Vendor">Licensee Site</a></li>
+        <li>Licensee Site</li>
         <li class="current">Edit</li>
     </ul>
+
+    <a class="btn-back" href="~/Vendor">← Back To List</a>
 }
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/reactpages/dist/css/editvendor/editvendor.css")
@@ -21,6 +23,7 @@
     <script>
         var initialState = {
             vendorInfo: {
+                VendorId: '@Model.VendorId',
                 SiteName: '@Model.SiteName',
                 InternalUrl: '@Model.InternalUrl',
                 LrfUrl: '@Model.LrfUrl',

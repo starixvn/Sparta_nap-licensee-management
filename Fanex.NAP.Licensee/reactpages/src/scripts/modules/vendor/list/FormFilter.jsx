@@ -15,17 +15,22 @@ export class FormFilter extends Component {
         }
     }
 
-    handleChangeVendorId = (event) => {
-        this.params.vendorId = event.target.value;
+    handleChange = (event) => {
+        const target = event.target;
+        const name = target.name;
+
+        this.params[name] = target.value;
     }
 
-    handleChangeSiteName = (event) => {
-        this.params.siteName = event.target.value;
+    handleKeyPress = (event) => {
+        if (event.charCode === 13) {
+            event.preventDefault();
+            this.props.getGridData(this.params);
+        }
     }
 
     submit = (event) => {
         event.preventDefault();
-        console.log(this.params);
         this.props.getGridData(this.params);
     }
 
@@ -34,12 +39,12 @@ export class FormFilter extends Component {
             <div className="col-xs-12 form-inline filter-form">
                 <div className="form-group">
                     <label>VendorId</label>
-                    <input type="text" onChange={this.handleChangeVendorId} />
+                    <input type="text" name="vendorId" onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                 </div>
 
                 <div className="form-group">
                     <label>Site Name</label>
-                    <input type="text" onChange={this.handleChangeSiteName} />
+                    <input type="text" name="siteName" onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                 </div>
 
                 <div className="form-group">

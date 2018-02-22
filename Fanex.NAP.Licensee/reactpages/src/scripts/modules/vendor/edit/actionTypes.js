@@ -1,2 +1,1 @@
 export const SET_VENDOR_INFO = "SET_VENDOR_INFO";
-export const UPDATE_VENDOR_INFO = "UPDATE_VENDOR_INFO";

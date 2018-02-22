@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import IgnoredFunctionList from './IgnoredFunctionList'
-import Site from '../../../lib/site'
 import { updateVendor } from './action'
 
 export class EditForm extends Component {
     constructor(props) {
         super(props);
 
-        const { SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = this.props.vendorInfo;
+        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = this.props.vendorInfo;
 
         this.state = {
-            vendorId: Site.getUrlParameter("vendorId"),
+            vendorId: VendorId,
             siteName: SiteName,
             internalUrl: InternalUrl,
             lrfUrl: LrfUrl,
@@ -30,9 +29,7 @@ export class EditForm extends Component {
     }
 
     handleOnEditIgnoredFunction = (ignoredFunctions) => {
-        const ignoredFunctionsJson = ignoredFunctions && ignoredFunctions.length ?
-            JSON.stringify(ignoredFunctions) : "";
-        console.log(ignoredFunctionsJson);
+        const ignoredFunctionsJson = ignoredFunctions && ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : "";
 
         this.setState({ exclusions: ignoredFunctionsJson });
     }
@@ -49,7 +46,7 @@ export class EditForm extends Component {
     }
 
     render() {
-        const { siteName, internalUrl, lrfUrl, affiliateUrl } = this.state;
+        const { siteName, internalUrl, lrfUrl, affiliateUrl, exclusions } = this.state;
         return (
             <div className="edit-form">
                 <div className="row">
@@ -85,7 +82,7 @@ export class EditForm extends Component {
                     </div>
 
                     <div className="col-sm-6 col-md-6">
-                        <IgnoredFunctionList functionList={this.state.exclusions} onEdit={this.handleOnEditIgnoredFunction} />
+                        <IgnoredFunctionList functionList={exclusions} onEdit={this.handleOnEditIgnoredFunction} />
                     </div>
                 </div>
             </div>
