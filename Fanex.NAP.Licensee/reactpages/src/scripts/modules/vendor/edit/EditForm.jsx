@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import Loader from '../../../components/Loader'
 import IgnoredFunctionList from './IgnoredFunctionList'
-import { updateVendor } from './action'
+import { updateVendor, toggleLoader } from './action'
 
 export class EditForm extends Component {
     constructor(props) {
@@ -36,12 +37,14 @@ export class EditForm extends Component {
 
     submit = (event) => {
         event.preventDefault();
-        
+
         const param = Object.assign({}, this.state);
 
+        this.props.toggleLoader(true);
         this.props.updateVendor(param).then(response => {
             const message = response.data ? "Update Successfully" : "Update Failed";
             window.alert(message);
+            this.props.toggleLoader(false);
         })
     }
 
@@ -49,6 +52,7 @@ export class EditForm extends Component {
         const { siteName, internalUrl, lrfUrl, affiliateUrl, exclusions } = this.state;
         return (
             <div className="edit-form">
+                <Loader isLoading={this.props.isLoading} />
                 <div className="row">
                     <div className="col-sm-6 sol-md-6">
                         <div className="form-group row">
@@ -91,11 +95,11 @@ export class EditForm extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ updateVendor }, dispatch);
+    return bindActionCreators({ updateVendor, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { vendorInfo } = state;
-    return { vendorInfo };
+    const { vendorInfo, isLoading } = state;
+    return { vendorInfo, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

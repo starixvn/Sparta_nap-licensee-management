@@ -82,8 +82,9 @@ export default class IgnoredFunctionList extends Component {
                                             {item}
                                             <a href="javascript:;"
                                                 className="remove-function"
+                                                title="Remove"
                                                 onClick={(event) => { this.handleRemoveFunction(event, item) }}>
-                                                Remove
+                                                <i className="icon-delete"></i>
                                             </a>
                                         </li>
                                     )

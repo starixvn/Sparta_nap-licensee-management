@@ -69,7 +69,11 @@ export class DataGrid extends Component {
                                     <td className="text-center">{item.IsTest ? "1" : "0"}</td>
                                     <td className="text-center">{item.SiteId}</td>
                                     <td className="text-center">{item.Disable ? "1" : "0"}</td>
-                                    <td className="text-center"><a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`}>Edit</a></td>
+                                    <td className="text-center">
+                                        <a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`} title="Edit">
+                                            <i className="icon-edit"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             )
                         })
