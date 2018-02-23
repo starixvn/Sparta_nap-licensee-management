@@ -12,6 +12,6 @@ module.exports = merge(
         module: {
             rules: [loader.generateSassLoaders(true)]
         },
-        plugins:[new BundleVersionPlugin()]
+        //plugins:[new BundleVersionPlugin()]
     }
 );

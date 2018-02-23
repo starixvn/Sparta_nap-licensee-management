@@ -1,4 +1,5 @@
 ﻿const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 exports.setDefinePlugin = function (key, value) {
     const env = {};
@@ -14,14 +15,13 @@ exports.setDefinePlugin = function (key, value) {
 exports.minify = function () {
     return {
         plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true,
-                beautify: false,
-                comments: false,
-                output: { comments: false },
-                compress: {
-                    warnings: false,
-                    drop_console: true
+            new UglifyJsPlugin({
+                parallel: true,
+                uglifyOptions: {
+                    warnings: true,
+                    compress: {
+                        drop_console: true
+                    }
                 }
             })
         ]
