@@ -5412,8 +5412,7 @@ var IgnoredFunctionToggleable = function (_Component) {
         };
 
         _this.state = {
-            show: false,
-            IgnoredFunctions: JSON.parse(_this.props.functionList)
+            show: false
         };
         return _this;
     }
@@ -5421,9 +5420,9 @@ var IgnoredFunctionToggleable = function (_Component) {
     _createClass(IgnoredFunctionToggleable, [{
         key: "render",
         value: function render() {
-            var _state = this.state,
-                IgnoredFunctions = _state.IgnoredFunctions,
-                show = _state.show;
+            var show = this.state.show;
+
+            var ignoredFunctions = JSON.parse(this.props.functionList);
 
             return _react2.default.createElement(
                 "div",
@@ -5434,13 +5433,13 @@ var IgnoredFunctionToggleable = function (_Component) {
                         onClick: this.toggleFunctionList, style: { marginLeft: 10, display: "inline-block" } },
                     _react2.default.createElement("i", { "class": show ? "icon-collapse" : "icon-expand" }),
                     " [",
-                    IgnoredFunctions.length,
+                    ignoredFunctions.length,
                     " Function(s)]"
                 ),
                 _react2.default.createElement(
                     "ul",
                     { style: { display: show ? "block" : "none" } },
-                    IgnoredFunctions.map(function (item, index) {
+                    ignoredFunctions.map(function (item, index) {
                         return _react2.default.createElement(
                             "li",
                             { key: "e-" + index },

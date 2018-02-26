@@ -5179,7 +5179,12 @@ var IgnoredFunctionList = function (_Component) {
                 functionList = _this$state.functionList;
 
 
-            if (!functionToAdd) {
+            if (!functionToAdd.trim()) {
+                return;
+            }
+
+            if (functionList.indexOf(functionToAdd) !== -1) {
+                alert("Function is duplicated!");
                 return;
             }
 
@@ -5187,14 +5192,19 @@ var IgnoredFunctionList = function (_Component) {
 
 
             var isMultiple = functionToAdd.indexOf(",") !== -1;
-            var newFunctionList = isMultiple ? [].concat(_toConsumableArray(functionList), _toConsumableArray(functionToAdd.split(",").reduce(function (addedList, item) {
-                var func = item.trim();
-                if (func !== "") {
-                    addedList.push(func);
-                }
+            var newFunctionList = void 0;
+            if (isMultiple) {
+                newFunctionList = [].concat(_toConsumableArray(functionList), _toConsumableArray(functionToAdd.split(",").reduce(function (addedList, item) {
+                    var func = item.trim();
+                    if (func !== "" && functionList.indexOf(func) === -1) {
+                        addedList.push(func);
+                    }
 
-                return addedList;
-            }, []))) : [].concat(_toConsumableArray(functionList), [functionToAdd.trim()]);
+                    return addedList;
+                }, [])));
+            } else {
+                newFunctionList = [].concat(_toConsumableArray(functionList), [functionToAdd.trim()]);
+            }
 
             _this.setState({
                 functionList: newFunctionList,
