@@ -39,6 +39,7 @@
 	  <add name="DBEXT.bodb02.bodbLicenseeNet"
        connectionString="Data Source=10.18.200.231;Initial Catalog=bodb02;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA=="
        providerName="System.Data.SqlClient"/>
+	<add name="DBCUST.SiteConfig.bodbLicenseeNet" connectionString="packet size=4096; Data Source=10.18.200.233;Initial Catalog=SiteConfig;integrated security=false; User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient" />
 </connectionStrings>
 <#
 
@@ -60,6 +61,7 @@
   <add name="DBEXT.bodb02.bodbLicenseeNet"
        connectionString="Data Source=10.40.40.92;Initial Catalog=bodb02;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA=="
        providerName="System.Data.SqlClient"/>
+	<add name="DBCUST.SiteConfig.bodbLicenseeNet" connectionString="packet size=4096; Data Source=10.40.40.191;Initial Catalog=SiteConfig;integrated security=false; User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient" />
 </connectionStrings>
 <#
 
@@ -80,6 +82,7 @@
   <add name="DBEXT.bodb02.bodbLicenseeNet"
        connectionString="Data Source=172.16.40.6;Initial Catalog=bodb02;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA=="
        providerName="System.Data.SqlClient"/>
+	<add name="DBCUST.SiteConfig.bodbLicenseeNet" connectionString="packet size=4096; Data Source=172.16.40.21;Initial Catalog=SiteConfig;integrated security=false; User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient" />
 </connectionStrings>
 <#
 break;
@@ -99,6 +102,7 @@ break;
   <add name="DBEXT.bodb02.bodbLicenseeNet"
        connectionString="Data Source=10.40.40.21;Initial Catalog=bodb02;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA=="
        providerName="System.Data.SqlClient"/>
+	<add name="DBCUST.SiteConfig.bodbLicenseeNet" connectionString="packet size=4096; Data Source=10.40.40.32;Initial Catalog=SiteConfig;integrated security=false; User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient" />
 </connectionStrings>
 		<#
 		break;
@@ -118,6 +122,7 @@ break;
   <add name="DBEXT.bodb02.bodbLicenseeNet"
        connectionString="Data Source=10.18.200.215;Initial Catalog=bodb02;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA=="
        providerName="System.Data.SqlClient"/>
+	<add name="DBCUST.SiteConfig.bodbLicenseeNet" connectionString="packet size=4096; Data Source=10.18.200.206;Initial Catalog=SiteConfig;integrated security=false; User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient" />  
 </connectionStrings>
 		<#
 		break;
