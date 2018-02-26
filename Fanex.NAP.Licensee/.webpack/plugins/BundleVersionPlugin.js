@@ -2,7 +2,7 @@ const pathConfig = require('../config/path');
 const fs = require('fs');
 
 class BundleVersionPlugin {
-    _onEmit(compilation) {
+    _onEmit(compilation, callback) {
         const siteConfigPath = `${pathConfig.projectRoot}/SiteConfig`;
         fs.readdir(siteConfigPath, (err, files) => {
             files.filter(name => name.match(/Web\.AppSettings\.[^\.]+\.config/i))
@@ -22,6 +22,8 @@ class BundleVersionPlugin {
                     }
                 });
         })
+
+        callback();
     }
 
     apply(compiler) {

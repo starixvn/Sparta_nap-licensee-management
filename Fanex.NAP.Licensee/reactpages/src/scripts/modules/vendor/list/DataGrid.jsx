@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { getGridData } from './action'
+import IgnoredFunctionToggleable from './IgnoredFunctionToggleable'
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -11,22 +12,6 @@ export class DataGrid extends Component {
 
     componentWillMount() {
         this.props.getGridData();
-    }
-
-    _renderExclusions(exclusions) {
-        const exclusionList = exclusions && JSON.parse(exclusions);
-
-        return (
-            <ul>
-                {
-                    exclusionList && exclusionList.map((item, index) => {
-                        return (
-                            <li key={`e-${index}`}>{item}</li>
-                        )
-                    })
-                }
-            </ul>
-        )
     }
 
     render() {
@@ -65,10 +50,12 @@ export class DataGrid extends Component {
                                     <td>{item.InternalUrl}</td>
                                     <td>{item.LrfUrl}</td>
                                     <td>{item.AffiliateUrl}</td>
-                                    <td>{this._renderExclusions(item.Exclusions)}</td>
-                                    <td className="text-center">{item.IsTest ? "1" : "0"}</td>
+                                    <td style={{ width: 240 }}>
+                                        {item.Exclusions && <IgnoredFunctionToggleable functionList={item.Exclusions} />}
+                                    </td>
+                                    <td className="text-center">{item.IsTest ? "Yes" : "No"}</td>
                                     <td className="text-center">{item.SiteId}</td>
-                                    <td className="text-center">{item.Disable ? "1" : "0"}</td>
+                                    <td className="text-center">{item.Disable ? "Yes" : "No"}</td>
                                     <td className="text-center">
                                         <a href={window.rootUrl + `Vendor/Edit?vendorId=${item.VendorId}`} title="Edit">
                                             <i className="icon-edit"></i>

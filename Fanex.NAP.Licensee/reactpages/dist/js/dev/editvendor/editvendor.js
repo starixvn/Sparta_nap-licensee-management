@@ -4851,7 +4851,8 @@ exports['default'] = thunk;
 /* 104 */,
 /* 105 */,
 /* 106 */,
-/* 107 */
+/* 107 */,
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4871,13 +4872,13 @@ var _reactDom = __webpack_require__(8);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EditForm = __webpack_require__(108);
+var _EditForm = __webpack_require__(109);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
 
 var _reactRedux = __webpack_require__(3);
 
-var _reducer = __webpack_require__(111);
+var _reducer = __webpack_require__(112);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -4925,7 +4926,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4950,11 +4951,11 @@ var _Loader = __webpack_require__(57);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _IgnoredFunctionList = __webpack_require__(109);
+var _IgnoredFunctionList = __webpack_require__(110);
 
 var _IgnoredFunctionList2 = _interopRequireDefault(_IgnoredFunctionList);
 
-var _action = __webpack_require__(110);
+var _action = __webpack_require__(111);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5136,7 +5137,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5305,7 +5306,7 @@ var IgnoredFunctionList = function (_Component) {
 exports.default = IgnoredFunctionList;
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5334,7 +5335,7 @@ exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5352,7 +5353,7 @@ var _createReducer2 = __webpack_require__(27);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _actionTypes = __webpack_require__(112);
+var _actionTypes = __webpack_require__(113);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5365,7 +5366,7 @@ var vendorInfo = (0, _createReducer3.default)({}, _defineProperty({}, _actionTyp
 exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5377,5 +5378,5 @@ Object.defineProperty(exports, "__esModule", {
 var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
 
 /***/ })
-],[107]);
+],[108]);
 //# sourceMappingURL=editvendor.js.map

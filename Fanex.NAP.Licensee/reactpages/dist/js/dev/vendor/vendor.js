@@ -4923,7 +4923,7 @@ var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(3);
 
-var _reducer = __webpack_require__(106);
+var _reducer = __webpack_require__(107);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -5183,6 +5183,10 @@ var _redux = __webpack_require__(2);
 
 var _action = __webpack_require__(84);
 
+var _IgnoredFunctionToggleable = __webpack_require__(106);
+
+var _IgnoredFunctionToggleable2 = _interopRequireDefault(_IgnoredFunctionToggleable);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5206,27 +5210,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
             this.props.getGridData();
         }
     }, {
-        key: '_renderExclusions',
-        value: function _renderExclusions(exclusions) {
-            var exclusionList = exclusions && JSON.parse(exclusions);
-
-            return _react2.default.createElement(
-                'ul',
-                null,
-                exclusionList && exclusionList.map(function (item, index) {
-                    return _react2.default.createElement(
-                        'li',
-                        { key: 'e-' + index },
-                        item
-                    );
-                })
-            );
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             var gridData = this.props.gridData;
 
 
@@ -5339,13 +5324,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             ),
                             _react2.default.createElement(
                                 'td',
-                                null,
-                                _this2._renderExclusions(item.Exclusions)
+                                { style: { width: 240 } },
+                                item.Exclusions && _react2.default.createElement(_IgnoredFunctionToggleable2.default, { functionList: item.Exclusions })
                             ),
                             _react2.default.createElement(
                                 'td',
                                 { className: 'text-center' },
-                                item.IsTest ? "1" : "0"
+                                item.IsTest ? "Yes" : "No"
                             ),
                             _react2.default.createElement(
                                 'td',
@@ -5355,7 +5340,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             _react2.default.createElement(
                                 'td',
                                 { className: 'text-center' },
-                                item.Disable ? "1" : "0"
+                                item.Disable ? "Yes" : "No"
                             ),
                             _react2.default.createElement(
                                 'td',
@@ -5389,6 +5374,91 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 /* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var IgnoredFunctionToggleable = function (_Component) {
+    _inherits(IgnoredFunctionToggleable, _Component);
+
+    function IgnoredFunctionToggleable(props) {
+        _classCallCheck(this, IgnoredFunctionToggleable);
+
+        var _this = _possibleConstructorReturn(this, (IgnoredFunctionToggleable.__proto__ || Object.getPrototypeOf(IgnoredFunctionToggleable)).call(this, props));
+
+        _this.toggleFunctionList = function (event) {
+            event.preventDefault();
+
+            _this.setState({ show: !_this.state.show });
+        };
+
+        _this.state = {
+            show: false,
+            IgnoredFunctions: JSON.parse(_this.props.functionList)
+        };
+        return _this;
+    }
+
+    _createClass(IgnoredFunctionToggleable, [{
+        key: "render",
+        value: function render() {
+            var _state = this.state,
+                IgnoredFunctions = _state.IgnoredFunctions,
+                show = _state.show;
+
+            return _react2.default.createElement(
+                "div",
+                { className: "ignored-function" },
+                _react2.default.createElement(
+                    "a",
+                    { href: "javascript:;", title: "Click to " + (show ? "collapse" : "expand"),
+                        onClick: this.toggleFunctionList, style: { marginLeft: 10, display: "inline-block" } },
+                    _react2.default.createElement("i", { "class": show ? "icon-collapse" : "icon-expand" }),
+                    " [",
+                    IgnoredFunctions.length,
+                    " Function(s)]"
+                ),
+                _react2.default.createElement(
+                    "ul",
+                    { style: { display: show ? "block" : "none" } },
+                    IgnoredFunctions.map(function (item, index) {
+                        return _react2.default.createElement(
+                            "li",
+                            { key: "e-" + index },
+                            item
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return IgnoredFunctionToggleable;
+}(_react.Component);
+
+exports.default = IgnoredFunctionToggleable;
+
+/***/ }),
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
