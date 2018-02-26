@@ -5,8 +5,7 @@ export default class IgnoredFunctionToggleable extends Component {
         super(props);
 
         this.state = {
-            show: false,
-            IgnoredFunctions: JSON.parse(this.props.functionList)
+            show: false
         }
     }
 
@@ -17,17 +16,19 @@ export default class IgnoredFunctionToggleable extends Component {
     }
 
     render() {
-        const { IgnoredFunctions, show } = this.state;
+        const { show } = this.state;
+        const ignoredFunctions = JSON.parse(this.props.functionList);
+        
         return (
             <div className="ignored-function">
                 <a href="javascript:;" title={`Click to ${show ? "collapse" : "expand"}`}
                     onClick={this.toggleFunctionList} style={{marginLeft: 10, display: "inline-block"}}>
-                    <i class={show ? "icon-collapse" : "icon-expand"}></i> [{IgnoredFunctions.length} Function(s)]
+                    <i class={show ? "icon-collapse" : "icon-expand"}></i> [{ignoredFunctions.length} Function(s)]
                 </a>
 
                 <ul style={{ display: show ? "block" : "none" }}>
                     {
-                        IgnoredFunctions.map((item, index) => {
+                        ignoredFunctions.map((item, index) => {
                             return (
                                 <li key={`e-${index}`}>{item}</li>
                             )

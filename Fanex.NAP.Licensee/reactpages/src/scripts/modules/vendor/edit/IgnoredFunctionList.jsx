@@ -15,24 +15,35 @@ export default class IgnoredFunctionList extends Component {
 
         const { functionToAdd, functionList } = this.state;
 
-        if (!functionToAdd) {
+        if (!functionToAdd.trim()) {
+            return;
+        }
+
+        if (functionList.indexOf(functionToAdd) !== -1) {
+            alert("Function is duplicated!");
             return;
         }
 
         const { onEdit } = this.props;
 
         const isMultiple = functionToAdd.indexOf(",") !== -1;
-        const newFunctionList = isMultiple ?
-            [...functionList,
-            ...functionToAdd.split(",").reduce((addedList, item) => {
-                const func = item.trim();
-                if (func !== "") {
-                    addedList.push(func);
-                }
+        let newFunctionList;
+        if (isMultiple) {
+            newFunctionList = [
+                ...functionList,
+                ...functionToAdd.split(",").reduce((addedList, item) => {
+                    const func = item.trim();
+                    if (func !== "" && functionList.indexOf(func) === -1) {
+                        addedList.push(func);
+                    }
 
-                return addedList;
-            }, [])] :
-            [...functionList, functionToAdd.trim()];
+                    return addedList;
+                }, [])
+            ]
+        }
+        else {
+            newFunctionList = [...functionList, functionToAdd.trim()];
+        }
 
         this.setState({
             functionList: newFunctionList,
