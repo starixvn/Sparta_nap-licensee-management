@@ -1,4 +1,12 @@
 import React, { Component } from 'react'
+import { AFFILIATE_PREREQUISITE_KEY, AffiliateFunctionList } from '../constant'
+
+function isValidAffliateFunction(functionList) {
+    const individualAffiliateFunction = functionList.find(f => AffiliateFunctionList.includes(f));
+
+    return !individualAffiliateFunction ||
+        (individualAffiliateFunction && functionList.indexOf(AFFILIATE_PREREQUISITE_KEY) !== -1);
+}
 
 export default class IgnoredFunctionList extends Component {
     constructor(props) {
@@ -15,16 +23,29 @@ export default class IgnoredFunctionList extends Component {
 
         const { functionToAdd, functionList } = this.state;
 
-        if (!functionToAdd.trim()) {
+        if (!functionToAdd.trim() || functionList.indexOf(functionToAdd) !== -1) {
+            this.setState({ functionToAdd: "" });
             return;
         }
 
-        if (functionList.indexOf(functionToAdd) !== -1) {
-            alert("Function is duplicated!");
+        const newFunctionList = this._getFunctionListAfterAdding();
+
+        if (!isValidAffliateFunction(newFunctionList)) {
+            alert("Please add 'AffiliateItems' first!");
             return;
         }
+
+        this.setState({
+            functionList: newFunctionList,
+            functionToAdd: ""
+        });
 
         const { onEdit } = this.props;
+        onEdit && onEdit(newFunctionList);
+    }
+
+    _getFunctionListAfterAdding() {
+        const { functionToAdd, functionList } = this.state;
 
         const isMultiple = functionToAdd.indexOf(",") !== -1;
         let newFunctionList;
@@ -45,22 +66,43 @@ export default class IgnoredFunctionList extends Component {
             newFunctionList = [...functionList, functionToAdd.trim()];
         }
 
-        this.setState({
-            functionList: newFunctionList,
-            functionToAdd: ""
-        }, () => onEdit && onEdit(newFunctionList));
+        return newFunctionList;
     }
 
     handleRemoveFunction = (event, functionName) => {
         event.preventDefault();
 
-        const { onEdit } = this.props;
-        const { functionList } = this.state;
-        const newFunctionList = functionList.filter(item => item !== functionName);
+        const newFunctionList = this._getFunctionListAfterRemoving(functionName);
+
+        if (newFunctionList === null) {
+            return;
+        }
 
         this.setState({
             functionList: newFunctionList
-        }, () => onEdit && onEdit(newFunctionList));
+        });
+
+        const { onEdit } = this.props;
+        onEdit && onEdit(newFunctionList);
+    }
+
+    _getFunctionListAfterRemoving(functionName) {
+        const { functionList } = this.state;
+        let newFunctionList;
+
+        if (functionName === AFFILIATE_PREREQUISITE_KEY) {
+            if (confirm("All Affiliate functions will be removed, are you sure?")) {
+                newFunctionList = functionList.filter(item => item !== functionName && AffiliateFunctionList.indexOf(item) === -1);
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            newFunctionList = functionList.filter(item => item !== functionName);
+        }
+
+        return newFunctionList;
     }
 
     handleChange = (event) => {

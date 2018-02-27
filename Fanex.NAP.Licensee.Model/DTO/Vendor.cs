@@ -19,7 +19,7 @@ namespace Fanex.NAP.Licensee.Model.DTO
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string AffiliateUrl { get; set; }
 
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Exclusions { get; set; }
 
         public bool IsTest { get; set; }

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { getGridData } from './action'
 import IgnoredFunctionToggleable from './IgnoredFunctionToggleable'
+import { LicenseeType } from '../constant'
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ export class DataGrid extends Component {
                                 <tr key={index}>
                                     <td>{item.VendorId}</td>
                                     <td>{item.SiteName}</td>
-                                    <td className="text-center">{item.LicenseeType}</td>
+                                    <td className="text-center">{LicenseeType[item.LicenseeType] || item.LicenseeType}</td>
                                     <td>{item.InternalUrl}</td>
                                     <td>{item.LrfUrl}</td>
                                     <td>{item.AffiliateUrl}</td>

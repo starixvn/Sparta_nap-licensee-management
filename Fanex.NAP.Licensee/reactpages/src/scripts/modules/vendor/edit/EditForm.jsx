@@ -30,9 +30,9 @@ export class EditForm extends Component {
     }
 
     handleOnEditIgnoredFunction = (ignoredFunctions) => {
-        const ignoredFunctionsJson = ignoredFunctions && ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : "";
+        const exclusions = ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : null;
 
-        this.setState({ exclusions: ignoredFunctionsJson });
+        this.setState({ exclusions });
     }
 
     submit = (event) => {

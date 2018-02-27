@@ -23,7 +23,7 @@ export default class IgnoredFunctionToggleable extends Component {
             <div className="ignored-function">
                 <a href="javascript:;" title={`Click to ${show ? "collapse" : "expand"}`}
                     onClick={this.toggleFunctionList} style={{marginLeft: 10, display: "inline-block"}}>
-                    <i class={show ? "icon-collapse" : "icon-expand"}></i> [{ignoredFunctions.length} Function(s)]
+                    <i className={show ? "icon-collapse" : "icon-expand"}></i> [{ignoredFunctions.length} Function(s)]
                 </a>
 
                 <ul style={{ display: show ? "block" : "none" }}>
