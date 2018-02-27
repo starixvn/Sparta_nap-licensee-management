@@ -4736,6 +4736,25 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var AFFILIATE_PREREQUISITE_KEY = exports.AFFILIATE_PREREQUISITE_KEY = "AffiliateItems";
+
+var AffiliateFunctionList = exports.AffiliateFunctionList = ["[Affiliate]", "[Payment]", "[CommissionGroup]", "[AffReport]", "[Media]", "[HotNews]", "[AffEx.Rate]", "lblAffiliateStatistics"];
+
+var LicenseeType = exports.LicenseeType = {
+    0: "Api",
+    1: "None Api"
+};
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.isLoading = undefined;
 
 var _types = __webpack_require__(26);
@@ -4755,7 +4774,7 @@ var isLoading = exports.isLoading = (0, _createReducer3.default)(defaultValue, _
 }));
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4769,7 +4788,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _redux = __webpack_require__(2);
 
-var _reduxThunk = __webpack_require__(82);
+var _reduxThunk = __webpack_require__(83);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -4798,7 +4817,7 @@ var Store = function () {
 exports.default = Store;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4827,7 +4846,6 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
@@ -4852,7 +4870,8 @@ exports['default'] = thunk;
 /* 105 */,
 /* 106 */,
 /* 107 */,
-/* 108 */
+/* 108 */,
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4872,17 +4891,17 @@ var _reactDom = __webpack_require__(8);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EditForm = __webpack_require__(109);
+var _EditForm = __webpack_require__(110);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
 
 var _reactRedux = __webpack_require__(3);
 
-var _reducer = __webpack_require__(112);
+var _reducer = __webpack_require__(113);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _store = __webpack_require__(81);
+var _store = __webpack_require__(82);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -4926,7 +4945,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4951,11 +4970,11 @@ var _Loader = __webpack_require__(57);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _IgnoredFunctionList = __webpack_require__(110);
+var _IgnoredFunctionList = __webpack_require__(111);
 
 var _IgnoredFunctionList2 = _interopRequireDefault(_IgnoredFunctionList);
 
-var _action = __webpack_require__(111);
+var _action = __webpack_require__(112);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4983,9 +5002,9 @@ var EditForm = exports.EditForm = function (_Component) {
         };
 
         _this.handleOnEditIgnoredFunction = function (ignoredFunctions) {
-            var ignoredFunctionsJson = ignoredFunctions && ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : "";
+            var exclusions = ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : null;
 
-            _this.setState({ exclusions: ignoredFunctionsJson });
+            _this.setState({ exclusions: exclusions });
         };
 
         _this.submit = function (event) {
@@ -5137,7 +5156,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5153,6 +5172,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _constant = __webpack_require__(80);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -5162,6 +5183,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function isValidAffliateFunction(functionList) {
+    var individualAffiliateFunction = functionList.find(function (f) {
+        return _constant.AffiliateFunctionList.includes(f);
+    });
+
+    return !individualAffiliateFunction || individualAffiliateFunction && functionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) !== -1;
+}
 
 var IgnoredFunctionList = function (_Component) {
     _inherits(IgnoredFunctionList, _Component);
@@ -5179,16 +5208,63 @@ var IgnoredFunctionList = function (_Component) {
                 functionList = _this$state.functionList;
 
 
-            if (!functionToAdd.trim()) {
+            if (!functionToAdd.trim() || functionList.indexOf(functionToAdd) !== -1) {
+                _this.setState({ functionToAdd: "" });
                 return;
             }
 
-            if (functionList.indexOf(functionToAdd) !== -1) {
-                alert("Function is duplicated!");
+            var newFunctionList = _this._getFunctionListAfterAdding();
+
+            if (!isValidAffliateFunction(newFunctionList)) {
+                alert("Please add 'AffiliateItems' first!");
                 return;
             }
+
+            _this.setState({
+                functionList: newFunctionList,
+                functionToAdd: ""
+            });
 
             var onEdit = _this.props.onEdit;
+
+            onEdit && onEdit(newFunctionList);
+        };
+
+        _this.handleRemoveFunction = function (event, functionName) {
+            event.preventDefault();
+
+            var newFunctionList = _this._getFunctionListAfterRemoving(functionName);
+
+            if (newFunctionList === null) {
+                return;
+            }
+
+            _this.setState({
+                functionList: newFunctionList
+            });
+
+            var onEdit = _this.props.onEdit;
+
+            onEdit && onEdit(newFunctionList);
+        };
+
+        _this.handleChange = function (event) {
+            _this.setState({ functionToAdd: event.target.value });
+        };
+
+        _this.state = {
+            functionToAdd: "",
+            functionList: _this.props.functionList && JSON.parse(_this.props.functionList)
+        };
+        return _this;
+    }
+
+    _createClass(IgnoredFunctionList, [{
+        key: '_getFunctionListAfterAdding',
+        value: function _getFunctionListAfterAdding() {
+            var _state = this.state,
+                functionToAdd = _state.functionToAdd,
+                functionList = _state.functionList;
 
 
             var isMultiple = functionToAdd.indexOf(",") !== -1;
@@ -5206,100 +5282,89 @@ var IgnoredFunctionList = function (_Component) {
                 newFunctionList = [].concat(_toConsumableArray(functionList), [functionToAdd.trim()]);
             }
 
-            _this.setState({
-                functionList: newFunctionList,
-                functionToAdd: ""
-            }, function () {
-                return onEdit && onEdit(newFunctionList);
-            });
-        };
+            return newFunctionList;
+        }
+    }, {
+        key: '_getFunctionListAfterRemoving',
+        value: function _getFunctionListAfterRemoving(functionName) {
+            var functionList = this.state.functionList;
 
-        _this.handleRemoveFunction = function (event, functionName) {
-            event.preventDefault();
+            var newFunctionList = void 0;
 
-            var onEdit = _this.props.onEdit;
-            var functionList = _this.state.functionList;
+            if (functionName === _constant.AFFILIATE_PREREQUISITE_KEY) {
+                if (confirm("All Affiliate functions will be removed, are you sure?")) {
+                    newFunctionList = functionList.filter(function (item) {
+                        return item !== functionName && _constant.AffiliateFunctionList.indexOf(item) === -1;
+                    });
+                } else {
+                    return null;
+                }
+            } else {
+                newFunctionList = functionList.filter(function (item) {
+                    return item !== functionName;
+                });
+            }
 
-            var newFunctionList = functionList.filter(function (item) {
-                return item !== functionName;
-            });
-
-            _this.setState({
-                functionList: newFunctionList
-            }, function () {
-                return onEdit && onEdit(newFunctionList);
-            });
-        };
-
-        _this.handleChange = function (event) {
-            _this.setState({ functionToAdd: event.target.value });
-        };
-
-        _this.state = {
-            functionToAdd: "",
-            functionList: _this.props.functionList && JSON.parse(_this.props.functionList)
-        };
-        return _this;
-    }
-
-    _createClass(IgnoredFunctionList, [{
-        key: "render",
+            return newFunctionList;
+        }
+    }, {
+        key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var _state = this.state,
-                functionToAdd = _state.functionToAdd,
-                functionList = _state.functionList;
+            var _state2 = this.state,
+                functionToAdd = _state2.functionToAdd,
+                functionList = _state2.functionList;
 
             return _react2.default.createElement(
-                "div",
-                { className: "col-sm-12" },
+                'div',
+                { className: 'col-sm-12' },
                 _react2.default.createElement(
-                    "div",
-                    { className: "form-group row" },
+                    'div',
+                    { className: 'form-group row' },
                     _react2.default.createElement(
-                        "p",
-                        { className: "col-sm-12" },
-                        "Ignored Function List"
+                        'p',
+                        { className: 'col-sm-12' },
+                        'Ignored Function List'
                     )
                 ),
                 _react2.default.createElement(
-                    "div",
-                    { className: "form-group row" },
+                    'div',
+                    { className: 'form-group row' },
                     _react2.default.createElement(
-                        "div",
-                        { className: "col-sm-10 col-md-10 col-lg-6" },
-                        _react2.default.createElement("input", { type: "text", className: "full-width", value: functionToAdd, onChange: this.handleChange })
+                        'div',
+                        { className: 'col-sm-10 col-md-10 col-lg-6' },
+                        _react2.default.createElement('input', { type: 'text', className: 'full-width', value: functionToAdd, onChange: this.handleChange })
                     ),
                     _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "btn btn-green col-sm-2 col-md-1 addFunction", onClick: this.handleAddFunction },
-                        "Add"
+                        'button',
+                        { type: 'button', className: 'btn btn-green col-sm-2 col-md-1 addFunction', onClick: this.handleAddFunction },
+                        'Add'
                     )
                 ),
                 _react2.default.createElement(
-                    "div",
-                    { className: "form-group row" },
+                    'div',
+                    { className: 'form-group row' },
                     _react2.default.createElement(
-                        "div",
-                        { className: "col-sm-12 col-md-10 col-lg-6" },
+                        'div',
+                        { className: 'col-sm-12 col-md-10 col-lg-6' },
                         _react2.default.createElement(
-                            "ul",
-                            { className: "ignored-function" },
+                            'ul',
+                            { className: 'ignored-function' },
                             functionList && functionList.map(function (item, index) {
                                 return _react2.default.createElement(
-                                    "li",
-                                    { key: "f-" + index },
+                                    'li',
+                                    { key: 'f-' + index },
                                     item,
                                     _react2.default.createElement(
-                                        "a",
-                                        { href: "javascript:;",
-                                            className: "remove-function",
-                                            title: "Remove",
+                                        'a',
+                                        { href: 'javascript:;',
+                                            className: 'remove-function',
+                                            title: 'Remove',
                                             onClick: function onClick(event) {
                                                 _this2.handleRemoveFunction(event, item);
                                             } },
-                                        _react2.default.createElement("i", { className: "icon-delete" })
+                                        _react2.default.createElement('i', { className: 'icon-delete' })
                                     )
                                 );
                             })
@@ -5316,7 +5381,7 @@ var IgnoredFunctionList = function (_Component) {
 exports.default = IgnoredFunctionList;
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5345,7 +5410,7 @@ exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5357,13 +5422,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(2);
 
-var _loaderReducer = __webpack_require__(80);
+var _loaderReducer = __webpack_require__(81);
 
 var _createReducer2 = __webpack_require__(27);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _actionTypes = __webpack_require__(113);
+var _actionTypes = __webpack_require__(114);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5376,7 +5441,7 @@ var vendorInfo = (0, _createReducer3.default)({}, _defineProperty({}, _actionTyp
 exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5388,5 +5453,5 @@ Object.defineProperty(exports, "__esModule", {
 var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
 
 /***/ })
-],[108]);
+],[109]);
 //# sourceMappingURL=editvendor.js.map

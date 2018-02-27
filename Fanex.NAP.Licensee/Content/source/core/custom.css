@@ -216,6 +216,7 @@
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   color: #000;
+  overflow: visible;
 }
 .ui-dialog .ui-dialog-titlebar-close {
   border: 0;

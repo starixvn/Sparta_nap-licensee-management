@@ -4736,6 +4736,25 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var AFFILIATE_PREREQUISITE_KEY = exports.AFFILIATE_PREREQUISITE_KEY = "AffiliateItems";
+
+var AffiliateFunctionList = exports.AffiliateFunctionList = ["[Affiliate]", "[Payment]", "[CommissionGroup]", "[AffReport]", "[Media]", "[HotNews]", "[AffEx.Rate]", "lblAffiliateStatistics"];
+
+var LicenseeType = exports.LicenseeType = {
+    0: "Api",
+    1: "None Api"
+};
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.isLoading = undefined;
 
 var _types = __webpack_require__(26);
@@ -4755,7 +4774,7 @@ var isLoading = exports.isLoading = (0, _createReducer3.default)(defaultValue, _
 }));
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4769,7 +4788,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _redux = __webpack_require__(2);
 
-var _reduxThunk = __webpack_require__(82);
+var _reduxThunk = __webpack_require__(83);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
@@ -4798,7 +4817,7 @@ var Store = function () {
 exports.default = Store;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4827,8 +4846,8 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 83 */,
-/* 84 */
+/* 84 */,
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4839,7 +4858,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getGridData = undefined;
 
-var _actionTypes = __webpack_require__(85);
+var _actionTypes = __webpack_require__(86);
 
 var _site = __webpack_require__(58);
 
@@ -4869,7 +4888,7 @@ function setGridData(data) {
 exports.getGridData = getGridData;
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4881,7 +4900,6 @@ Object.defineProperty(exports, "__esModule", {
 var SET_GRID_DATA = exports.SET_GRID_DATA = "SET_GRID_DATA";
 
 /***/ }),
-/* 86 */,
 /* 87 */,
 /* 88 */,
 /* 89 */,
@@ -4897,7 +4915,8 @@ var SET_GRID_DATA = exports.SET_GRID_DATA = "SET_GRID_DATA";
 /* 99 */,
 /* 100 */,
 /* 101 */,
-/* 102 */
+/* 102 */,
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4917,17 +4936,17 @@ var _reactDom = __webpack_require__(8);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(103);
+var _AppContainer = __webpack_require__(104);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(3);
 
-var _reducer = __webpack_require__(107);
+var _reducer = __webpack_require__(108);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _store = __webpack_require__(81);
+var _store = __webpack_require__(82);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -4971,7 +4990,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4996,11 +5015,11 @@ var _Loader = __webpack_require__(57);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(104);
+var _FormFilter = __webpack_require__(105);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(105);
+var _DataGrid = __webpack_require__(106);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -5046,7 +5065,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5067,7 +5086,7 @@ var _reactRedux = __webpack_require__(3);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(84);
+var _action = __webpack_require__(85);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5160,7 +5179,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5181,11 +5200,13 @@ var _reactRedux = __webpack_require__(3);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(84);
+var _action = __webpack_require__(85);
 
-var _IgnoredFunctionToggleable = __webpack_require__(106);
+var _IgnoredFunctionToggleable = __webpack_require__(107);
 
 var _IgnoredFunctionToggleable2 = _interopRequireDefault(_IgnoredFunctionToggleable);
+
+var _constant = __webpack_require__(80);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5305,7 +5326,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             _react2.default.createElement(
                                 'td',
                                 { className: 'text-center' },
-                                item.LicenseeType
+                                _constant.LicenseeType[item.LicenseeType] || item.LicenseeType
                             ),
                             _react2.default.createElement(
                                 'td',
@@ -5373,7 +5394,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5431,7 +5452,7 @@ var IgnoredFunctionToggleable = function (_Component) {
                     "a",
                     { href: "javascript:;", title: "Click to " + (show ? "collapse" : "expand"),
                         onClick: this.toggleFunctionList, style: { marginLeft: 10, display: "inline-block" } },
-                    _react2.default.createElement("i", { "class": show ? "icon-collapse" : "icon-expand" }),
+                    _react2.default.createElement("i", { className: show ? "icon-collapse" : "icon-expand" }),
                     " [",
                     ignoredFunctions.length,
                     " Function(s)]"
@@ -5457,7 +5478,7 @@ var IgnoredFunctionToggleable = function (_Component) {
 exports.default = IgnoredFunctionToggleable;
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5469,13 +5490,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(2);
 
-var _loaderReducer = __webpack_require__(80);
+var _loaderReducer = __webpack_require__(81);
 
 var _createReducer2 = __webpack_require__(27);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _actionTypes = __webpack_require__(85);
+var _actionTypes = __webpack_require__(86);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5488,5 +5509,5 @@ var gridData = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes
 exports.default = (0, _redux.combineReducers)({ gridData: gridData, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[102]);
+],[103]);
 //# sourceMappingURL=vendor.js.map
