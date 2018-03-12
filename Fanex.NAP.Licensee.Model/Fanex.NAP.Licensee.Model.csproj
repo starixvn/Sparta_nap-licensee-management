@@ -128,6 +128,7 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
@@ -163,6 +164,7 @@
     <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="DTO\Vendor.cs" />
+    <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
