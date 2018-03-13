@@ -11,5 +11,7 @@
         Vendor GetVendorById(string vendorId);
 
         bool UpdateVendor(Vendor vendor);
+
+        IEnumerable<string> GetFunctionKeyList();
     }
 }

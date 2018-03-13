@@ -459,6 +459,7 @@
     <Content Include="reactpages\dist\js\pro\editvendor\editvendor.js" />
     <Content Include="reactpages\dist\js\pro\vendor.js" />
     <Content Include="reactpages\dist\js\pro\vendor\vendor.js" />
+    <Content Include="reactpages\src\styles\components\react-select\react-select.min.css" />
     <Content Include="Scripts\build\angular.js" />
     <Content Include="Scripts\build\angular.min.js" />
     <Content Include="Scripts\build\betsetting.js" />
@@ -558,6 +559,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="reactpages\src\styles\components\react-select\react-select.custom.scss" />
+    <Content Include="reactpages\src\styles\components\react-select\react-select.main.scss" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <Content Include="SiteConfig\Web.AppSettings.BACKUPMNL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>

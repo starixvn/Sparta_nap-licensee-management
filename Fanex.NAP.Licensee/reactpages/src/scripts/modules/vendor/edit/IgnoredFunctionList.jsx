@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Select from 'react-select'
+
 import { AFFILIATE_PREREQUISITE_KEY, AffiliateFunctionList } from '../constant'
 
 function isValidAffliateFunction(functionList) {
@@ -12,105 +14,55 @@ export default class IgnoredFunctionList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            functionToAdd: "",
-            functionList: this.props.functionList && JSON.parse(this.props.functionList)
-        }
+        const selectedFunctionList = (this.props.exclusionList && JSON.parse(this.props.exclusionList)) || [];
+
+        this.state = { selectedFunctionList }
     }
 
-    handleAddFunction = (event) => {
-        event.preventDefault();
+    handleChangeFunction = (newSelectedFunctions) => {
+        let newFunctionList = newSelectedFunctions.map(item => item.value);
+        const oldSelectedFunctionList = this.state.selectedFunctionList;
 
-        const { functionToAdd, functionList } = this.state;
+        const isAdding = newFunctionList.length > oldSelectedFunctionList.length;
 
-        if (!functionToAdd.trim() || functionList.indexOf(functionToAdd) !== -1) {
-            this.setState({ functionToAdd: "" });
-            return;
+        if (isAdding) {
+            if (!isValidAffliateFunction(newFunctionList)) {
+                alert("Please add 'AffiliateItems' first!");
+                return;
+            }
+        }
+        else {
+            const isRemovingAffPrerequisiteKey = oldSelectedFunctionList.indexOf(AFFILIATE_PREREQUISITE_KEY) > -1 &&
+                newFunctionList.indexOf(AFFILIATE_PREREQUISITE_KEY) === -1
+
+            if (isRemovingAffPrerequisiteKey) {
+                newFunctionList = confirm("All Affiliate functions will be removed, are you sure?") ?
+                    newFunctionList.filter(item => item !== AFFILIATE_PREREQUISITE_KEY && AffiliateFunctionList.indexOf(item) === -1) :
+                    oldSelectedFunctionList;
+            }
         }
 
-        const newFunctionList = this._getFunctionListAfterAdding();
-
-        if (!isValidAffliateFunction(newFunctionList)) {
-            alert("Please add 'AffiliateItems' first!");
-            return;
-        }
-
-        this.setState({
-            functionList: newFunctionList,
-            functionToAdd: ""
-        });
+        this.setState({ selectedFunctionList: newFunctionList });
 
         const { onEdit } = this.props;
         onEdit && onEdit(newFunctionList);
     }
 
-    _getFunctionListAfterAdding() {
-        const { functionToAdd, functionList } = this.state;
-
-        const isMultiple = functionToAdd.indexOf(",") !== -1;
-        let newFunctionList;
-        if (isMultiple) {
-            newFunctionList = [
-                ...functionList,
-                ...functionToAdd.split(",").reduce((addedList, item) => {
-                    const func = item.trim();
-                    if (func !== "" && functionList.indexOf(func) === -1) {
-                        addedList.push(func);
-                    }
-
-                    return addedList;
-                }, [])
-            ]
-        }
-        else {
-            newFunctionList = [...functionList, functionToAdd.trim()];
-        }
-
-        return newFunctionList;
+    handleChangeSelectedFunctionList = (selectedFunction) => {
+        this.handleChangeFunction(selectedFunction);
     }
 
-    handleRemoveFunction = (event, functionName) => {
-        event.preventDefault();
-
-        const newFunctionList = this._getFunctionListAfterRemoving(functionName);
-
-        if (newFunctionList === null) {
-            return;
-        }
-
-        this.setState({
-            functionList: newFunctionList
-        });
-
-        const { onEdit } = this.props;
-        onEdit && onEdit(newFunctionList);
-    }
-
-    _getFunctionListAfterRemoving(functionName) {
-        const { functionList } = this.state;
-        let newFunctionList;
-
-        if (functionName === AFFILIATE_PREREQUISITE_KEY) {
-            if (confirm("All Affiliate functions will be removed, are you sure?")) {
-                newFunctionList = functionList.filter(item => item !== functionName && AffiliateFunctionList.indexOf(item) === -1);
+    _buildSelectOption() {
+        return this.props.functionKeyList.map(item => {
+            return {
+                value: item,
+                label: item
             }
-            else {
-                return null;
-            }
-        }
-        else {
-            newFunctionList = functionList.filter(item => item !== functionName);
-        }
-
-        return newFunctionList;
-    }
-
-    handleChange = (event) => {
-        this.setState({ functionToAdd: event.target.value });
+        })
     }
 
     render() {
-        const { functionToAdd, functionList } = this.state;
+        const { selectedFunctionList } = this.state;
         return (
             <div className="col-sm-12">
                 <div className="form-group row">
@@ -118,32 +70,17 @@ export default class IgnoredFunctionList extends Component {
                 </div>
 
                 <div className="form-group row">
-                    <div className="col-sm-10 col-md-10 col-lg-6">
-                        <input type="text" className="full-width" value={functionToAdd} onChange={this.handleChange} />
-                    </div>
-                    <button type="button" className="btn btn-green col-sm-2 col-md-1 addFunction" onClick={this.handleAddFunction}>Add</button>
-                </div>
-
-                <div className="form-group row">
-                    <div className="col-sm-12 col-md-10 col-lg-6">
-                        <ul className="ignored-function">
-                            {
-                                functionList &&
-                                functionList.map((item, index) => {
-                                    return (
-                                        <li key={`f-${index}`}>
-                                            {item}
-                                            <a href="javascript:;"
-                                                className="remove-function"
-                                                title="Remove"
-                                                onClick={(event) => { this.handleRemoveFunction(event, item) }}>
-                                                <i className="icon-delete"></i>
-                                            </a>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
+                    <div className="col-sm-10 col-md-10 col-lg-10">
+                        <Select
+                            name="form-field-name"
+                            placeholder="Select Functions..."
+                            multi={true}
+                            closeOnSelect={false}
+                            removeSelected={true}
+                            value={selectedFunctionList}
+                            onChange={this.handleChangeSelectedFunctionList}
+                            options={this._buildSelectOption()}
+                        />
                     </div>
                 </div>
             </div>

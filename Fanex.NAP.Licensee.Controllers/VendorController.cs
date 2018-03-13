@@ -6,6 +6,8 @@
     using Model.Criteria.Vendor;
     using Model.DataDomain;
     using Model.DTO;
+    using Model.ViewModel.LicenseeVendor;
+    using Newtonsoft.Json;
     using Service;
 
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSite, Policy = Constant.Policy.Read)]
@@ -34,9 +36,13 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(string vendorId)
         {
-            var vendor = _vendorService.GetVendorById(vendorId);
+            var viewModel = new EditVendorViewModel
+            {
+                VendorInfo = _vendorService.GetVendorById(vendorId),
+                FunctionKeyList = JsonConvert.SerializeObject(_vendorService.GetFunctionKeyList())
+            };
 
-            return View(vendor);
+            return View(viewModel);
         }
 
         [HttpPost]

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { isLoading } from '../../../reducers/loaderReducer'
 
 import createReducer from '../../../lib/createReducer'
-import { SET_VENDOR_INFO } from './actionTypes'
+import { SET_VENDOR_INFO, SET_FUNCTION_LIST } from './actionTypes'
 
 const vendorInfo = createReducer({}, {
     [SET_VENDOR_INFO](state, action) {
@@ -10,4 +10,10 @@ const vendorInfo = createReducer({}, {
     }
 });
 
-export default combineReducers({ vendorInfo, isLoading })
+const functionKeyList = createReducer([], {
+    [SET_FUNCTION_LIST](state, action) {
+        return action.data;
+    }
+});
+
+export default combineReducers({ vendorInfo, functionKeyList, isLoading })

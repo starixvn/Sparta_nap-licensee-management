@@ -1,9 +1,11 @@
 ﻿@using Fanex.NAP.Licensee.Web
 
-@model Fanex.NAP.Licensee.Model.DTO.Vendor
+@model Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor.EditVendorViewModel
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var vendor = Model.VendorInfo;
 }
 
 @section Headline {
@@ -23,13 +25,14 @@
     <script>
         var initialState = {
             vendorInfo: {
-                VendorId: '@Model.VendorId',
-                SiteName: '@Model.SiteName',
-                InternalUrl: '@Model.InternalUrl',
-                LrfUrl: '@Model.LrfUrl',
-                AffiliateUrl: '@Model.AffiliateUrl',
-                IgnoredFunctions: '@Html.Raw(Model.Exclusions)'
-            }
+                VendorId: '@vendor.VendorId',
+                SiteName: '@vendor.SiteName',
+                InternalUrl: '@vendor.InternalUrl',
+                LrfUrl: '@vendor.LrfUrl',
+                AffiliateUrl: '@vendor.AffiliateUrl',
+                IgnoredFunctions: '@Html.Raw(vendor.Exclusions)'
+            },
+            functionKeyList: @Html.Raw(Model.FunctionKeyList)
         }
     </script>
     @BundleManager.IncludeScriptsByEnv("~/reactpages/dist/js/editvendor/editvendor.js")

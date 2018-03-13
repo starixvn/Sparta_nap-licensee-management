@@ -86,7 +86,7 @@ export class EditForm extends Component {
                     </div>
 
                     <div className="col-sm-6 col-md-6">
-                        <IgnoredFunctionList functionList={exclusions} onEdit={this.handleOnEditIgnoredFunction} />
+                        <IgnoredFunctionList exclusionList={exclusions} functionKeyList={this.props.functionKeyList} onEdit={this.handleOnEditIgnoredFunction} />
                     </div>
                 </div>
             </div>
@@ -98,8 +98,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ updateVendor, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { vendorInfo, isLoading } = state;
-    return { vendorInfo, isLoading };
+    const { vendorInfo, functionKeyList, isLoading } = state;
+    return { vendorInfo, functionKeyList, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

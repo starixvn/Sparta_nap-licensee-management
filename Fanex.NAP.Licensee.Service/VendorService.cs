@@ -65,6 +65,14 @@ namespace Fanex.NAP.Licensee.Service
             return result;
         }
 
+        public IEnumerable<string> GetFunctionKeyList()
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_VendorFunction_Select"))
+            {
+                return db.Query<string>();
+            }
+        }
+
         private void WriteActionLog(Vendor oldValue, Vendor newValue)
         {
             var userId = AppSession.CurrentUser.Id;

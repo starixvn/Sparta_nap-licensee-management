@@ -1,4 +1,6 @@
-﻿.edit-form {
+﻿@import "../../components/react-select/react-select.main";
+
+.edit-form {
     margin-top: 15px;
 
     .addFunction{
