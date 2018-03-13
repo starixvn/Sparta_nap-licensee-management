@@ -93,11 +93,13 @@ namespace Fanex.NAP.Licensee.Service
             var result = new StringBuilder();
 
             result.Append("<Action value=\"UpdateLapVendorInfo\">");
-            result.Append("<SpName value=\"Nap_LM_LicVendorInfo_Update\" />");
+            result.Append("<SpName>Nap_LM_LicVendorInfo_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
             result.Append($"<Vendor Id=\"{newValue.VendorId}\" Name=\"{newValue.SiteName}\" />");
-            result.Append($"<Old InternalUrl=\"{oldValue.InternalUrl}\" LrfUrl=\"{oldValue.LrfUrl}\" AffiliateUrl=\"{oldValue.AffiliateUrl}\" Exclusions=\"{oldValue.Exclusions}\" />");
-            result.Append($"<New InternalUrl=\"{newValue.InternalUrl}\" LrfUrl=\"{newValue.LrfUrl}\" AffiliateUrl=\"{newValue.AffiliateUrl}\" Exclusions=\"{newValue.Exclusions}\" />");
+            result.Append($"<Old InternalUrl=\"{oldValue.InternalUrl}\" LrfUrl=\"{oldValue.LrfUrl}\" AffiliateUrl=\"{oldValue.AffiliateUrl}\" />");
+            result.Append($"<OldExclusions>{oldValue.Exclusions}</OldExclusions>");
+            result.Append($"<New InternalUrl=\"{newValue.InternalUrl}\" LrfUrl=\"{newValue.LrfUrl}\" AffiliateUrl=\"{newValue.AffiliateUrl}\" />");
+            result.Append($"<NewExclusions>{newValue.Exclusions}</NewExclusions>");
             result.Append("</Action>");
 
             return result.ToString();
