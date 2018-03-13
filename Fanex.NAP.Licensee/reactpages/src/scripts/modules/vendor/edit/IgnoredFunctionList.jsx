@@ -14,7 +14,9 @@ export default class IgnoredFunctionList extends Component {
     constructor(props) {
         super(props);
 
-        const selectedFunctionList = (this.props.exclusionList && JSON.parse(this.props.exclusionList)) || [];
+        const { exclusionList, functionKeyList } = this.props;
+        const ignoredFunctionList = (exclusionList && JSON.parse(exclusionList)) || [];
+        const selectedFunctionList = ignoredFunctionList.filter(item => functionKeyList.includes(item));
 
         this.state = { selectedFunctionList }
     }
@@ -53,7 +55,9 @@ export default class IgnoredFunctionList extends Component {
     }
 
     _buildSelectOption() {
-        return this.props.functionKeyList.map(item => {
+        const { functionKeyList } = this.props;
+
+        return functionKeyList && functionKeyList.map(item => {
             return {
                 value: item,
                 label: item

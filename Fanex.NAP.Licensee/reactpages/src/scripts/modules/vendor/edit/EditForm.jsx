@@ -10,7 +10,8 @@ export class EditForm extends Component {
     constructor(props) {
         super(props);
 
-        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = this.props.vendorInfo;
+        const { vendorInfo } = this.props;
+        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = vendorInfo;
 
         this.state = {
             vendorId: VendorId,

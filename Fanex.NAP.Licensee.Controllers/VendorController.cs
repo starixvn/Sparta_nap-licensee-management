@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Core.Business;
     using Core.Web.Attribute;
@@ -36,22 +38,68 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(string vendorId)
         {
-            var viewModel = new EditVendorViewModel
+            var vendor = _vendorService.GetVendorById(vendorId);
+
+            if (vendor != null)
             {
-                VendorInfo = _vendorService.GetVendorById(vendorId),
-                FunctionKeyList = JsonConvert.SerializeObject(_vendorService.GetFunctionKeyList())
+                var viewModel = new EditVendorViewModel
+                {
+                    VendorInfo = vendor,
+                    FunctionKeyList = JsonConvert.SerializeObject(_vendorService.GetFunctionKeyList())
+                };
+
+                return View(viewModel);
+            }
+
+            var emptyResult = new EditVendorViewModel
+            {
+                VendorInfo = new Vendor(),
+                FunctionKeyList = JsonConvert.SerializeObject(new List<string>())
             };
 
-            return View(viewModel);
+            return View(emptyResult);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(Vendor vendor)
         {
+            var exclusionList = GetExternalExclusionList(vendor.VendorId, vendor.Exclusions);
+            var exclusionJson = exclusionList.Any() ? JsonConvert.SerializeObject(exclusionList) : null;
+            vendor.Exclusions = exclusionJson;
+
             var result = _vendorService.UpdateVendor(vendor);
 
             return Json(result);
+        }
+
+        private IEnumerable<string> GetExternalExclusionList(string vendorId, string newExclusionJson)
+        {
+            var vendor = _vendorService.GetVendorById(vendorId);
+            if (vendor != null)
+            {
+                var originalExclusionJson = vendor.Exclusions;
+                var originalExclusionList = string.IsNullOrEmpty(originalExclusionJson) ?
+                    new List<string>() :
+                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson);
+
+                var functionKeyList = _vendorService.GetFunctionKeyList();
+
+                var externalFunctionKeyList = originalExclusionList.Where(f => !functionKeyList.Contains(f));
+
+                if (string.IsNullOrEmpty(newExclusionJson))
+                {
+                    return externalFunctionKeyList;
+                }
+                else
+                {
+                    var newExclusionList = JsonConvert.DeserializeObject<List<string>>(newExclusionJson);
+
+                    return externalFunctionKeyList.Union(newExclusionList);
+                }
+            }
+
+            return new List<string>();
         }
     }
 }
