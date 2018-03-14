@@ -42,10 +42,20 @@
 
             if (vendor != null)
             {
+                var originalExclusionJson = vendor.Exclusions;
+                var originalExclusionList = string.IsNullOrEmpty(originalExclusionJson) ?
+                    new List<string>() :
+                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson);
+
+                var functionKeyList = _vendorService.GetFunctionKeyList();
+
+                var renderingExclusionList = originalExclusionList.Where(f => functionKeyList.Contains(f));
+                vendor.Exclusions = JsonConvert.SerializeObject(renderingExclusionList);
+
                 var viewModel = new EditVendorViewModel
                 {
                     VendorInfo = vendor,
-                    FunctionKeyList = JsonConvert.SerializeObject(_vendorService.GetFunctionKeyList())
+                    FunctionKeyList = JsonConvert.SerializeObject(functionKeyList)
                 };
 
                 return View(viewModel);
@@ -87,16 +97,9 @@
 
                 var externalFunctionKeyList = originalExclusionList.Where(f => !functionKeyList.Contains(f));
 
-                if (string.IsNullOrEmpty(newExclusionJson))
-                {
-                    return externalFunctionKeyList;
-                }
-                else
-                {
-                    var newExclusionList = JsonConvert.DeserializeObject<List<string>>(newExclusionJson);
-
-                    return externalFunctionKeyList.Union(newExclusionList);
-                }
+                return string.IsNullOrEmpty(newExclusionJson) ?
+                    externalFunctionKeyList :
+                    externalFunctionKeyList.Union(JsonConvert.DeserializeObject<List<string>>(newExclusionJson));
             }
 
             return new List<string>();
