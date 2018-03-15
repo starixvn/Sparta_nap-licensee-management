@@ -14,10 +14,17 @@ export default class IgnoredFunctionList extends Component {
     constructor(props) {
         super(props);
 
-        const { exclusionList } = this.props;
+        const { exclusionList, functionKeyList } = this.props;
         const selectedFunctionList = (exclusionList && JSON.parse(exclusionList)) || [];
 
-        this.state = { selectedFunctionList }
+        this.state = {
+            selectedFunctionList,
+            functionKeyList: this._buildFunctionKeyList(),
+            addingFunctionText: "",
+            removingFunctionText: ""
+        }
+
+        this.originalFunctionList = selectedFunctionList;
     }
 
     handleChangeFunction = (newSelectedFunctions) => {
@@ -25,7 +32,6 @@ export default class IgnoredFunctionList extends Component {
         const oldSelectedFunctionList = this.state.selectedFunctionList;
 
         const isAdding = newFunctionList.length > oldSelectedFunctionList.length;
-
         if (isAdding) {
             if (!isValidAffliateFunction(newFunctionList)) {
                 alert("Please add 'AffiliateItems' first!");
@@ -43,17 +49,37 @@ export default class IgnoredFunctionList extends Component {
             }
         }
 
-        this.setState({ selectedFunctionList: newFunctionList });
+        this._setState(newFunctionList);
 
         const { onEdit } = this.props;
         onEdit && onEdit(newFunctionList);
+    }
+
+    _setState(newFunctionList) {
+        const { functionKeyList } = this.state;
+        const addedFunctionText = newFunctionList.filter(item => !this.originalFunctionList.includes(item)).join(",");
+        const removedFunctionText = this.originalFunctionList.filter(item => !newFunctionList.includes(item)).join(",");
+
+        const exceptionFunctionList = newFunctionList.filter(item => !functionKeyList.includes(item));
+
+        const newState = {
+            selectedFunctionList: newFunctionList,
+            addingFunctionText: addedFunctionText,
+            removingFunctionText: removedFunctionText
+        }
+
+        if (exceptionFunctionList.length) {
+            newState["functionKeyList"] = functionKeyList.concat(exceptionFunctionList);
+        }
+
+        this.setState(newState);
     }
 
     handleChangeSelectedFunctionList = (selectedFunction) => {
         this.handleChangeFunction(selectedFunction);
     }
 
-    _buildSelectOption() {
+    _buildFunctionKeyList() {
         const { functionKeyList } = this.props;
 
         return functionKeyList && functionKeyList.map(item => {
@@ -64,8 +90,16 @@ export default class IgnoredFunctionList extends Component {
         })
     }
 
+    get originalFunctionText() {
+        return this.originalFunctionList.join(",");
+    }
+
+    get selectedFunctionText() {
+        return this.state.selectedFunctionList.join(",");
+    }
+
     render() {
-        const { selectedFunctionList } = this.state;
+        const { selectedFunctionList, addingFunctionText, removingFunctionText, functionKeyList } = this.state;
         return (
             <div className="col-sm-12">
                 <div className="form-group row">
@@ -73,8 +107,38 @@ export default class IgnoredFunctionList extends Component {
                 </div>
 
                 <div className="form-group row">
+                    <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Old List: </label>
+                    <div className="col-sm-9 col-md-9 col-lg-10">
+                        <p className="text-wrap">{this.originalFunctionText}</p>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Adding: </label>
+                    <div className="col-sm-9 col-md-9 col-lg-10">
+                        <p className="text-wrap">{addingFunctionText}</p>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Removing: </label>
+                    <div className="col-sm-9 col-md-9 col-lg-10">
+                        <p className="text-wrap">{removingFunctionText}</p>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">New List: </label>
+                    <div className="col-sm-9 col-md-9 col-lg-10">
+                        <p className="text-wrap">{this.selectedFunctionText}</p>
+                    </div>
+                </div>
+                <div className="form-group row">
+                    <div className="col-sm-12 col-md-12 col-lg-12">
+                        <label className="text-wrap"><i>Enter a value that's NOT in the list</i></label>
+                    </div>
                     <div className="col-sm-10 col-md-10 col-lg-10">
-                        <Select
+                        <Select.Creatable
                             name="form-field-name"
                             placeholder="Select Functions..."
                             multi={true}
@@ -82,7 +146,7 @@ export default class IgnoredFunctionList extends Component {
                             removeSelected={true}
                             value={selectedFunctionList}
                             onChange={this.handleChangeSelectedFunctionList}
-                            options={this._buildSelectOption()}
+                            options={functionKeyList}
                         />
                     </div>
                 </div>

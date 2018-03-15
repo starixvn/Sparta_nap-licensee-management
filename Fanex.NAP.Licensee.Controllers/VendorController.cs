@@ -48,14 +48,12 @@
                     JsonConvert.DeserializeObject<List<string>>(originalExclusionJson);
 
                 var functionKeyList = _vendorService.GetFunctionKeyList();
-
-                var renderingExclusionList = originalExclusionList.Where(f => functionKeyList.Contains(f));
-                vendor.Exclusions = JsonConvert.SerializeObject(renderingExclusionList);
+                var renderingFunctionKeyList = functionKeyList.Union(originalExclusionList);
 
                 var viewModel = new EditVendorViewModel
                 {
                     VendorInfo = vendor,
-                    FunctionKeyList = JsonConvert.SerializeObject(functionKeyList)
+                    FunctionKeyList = JsonConvert.SerializeObject(renderingFunctionKeyList)
                 };
 
                 return View(viewModel);
@@ -74,35 +72,9 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(Vendor vendor)
         {
-            var exclusionList = GetExternalExclusionList(vendor.VendorId, vendor.Exclusions);
-            var exclusionJson = exclusionList.Any() ? JsonConvert.SerializeObject(exclusionList) : null;
-            vendor.Exclusions = exclusionJson;
-
             var result = _vendorService.UpdateVendor(vendor);
 
             return Json(result);
-        }
-
-        private IEnumerable<string> GetExternalExclusionList(string vendorId, string newExclusionJson)
-        {
-            var vendor = _vendorService.GetVendorById(vendorId);
-            if (vendor != null)
-            {
-                var originalExclusionJson = vendor.Exclusions;
-                var originalExclusionList = string.IsNullOrEmpty(originalExclusionJson) ?
-                    new List<string>() :
-                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson);
-
-                var functionKeyList = _vendorService.GetFunctionKeyList();
-
-                var externalFunctionKeyList = originalExclusionList.Where(f => !functionKeyList.Contains(f));
-
-                return string.IsNullOrEmpty(newExclusionJson) ?
-                    externalFunctionKeyList :
-                    externalFunctionKeyList.Union(JsonConvert.DeserializeObject<List<string>>(newExclusionJson));
-            }
-
-            return new List<string>();
         }
     }
 }
