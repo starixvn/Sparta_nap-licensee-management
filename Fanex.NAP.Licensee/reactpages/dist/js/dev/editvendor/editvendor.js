@@ -5016,6 +5016,7 @@ var EditForm = exports.EditForm = function (_Component) {
             _this.props.updateVendor(param).then(function (response) {
                 var message = response.data ? "Update Successfully" : "Update Failed";
                 window.alert(message);
+                _this.props.updateOriginalExclusionList(param.exclusions);
                 _this.props.toggleLoader(false);
             });
         };
@@ -5133,7 +5134,11 @@ var EditForm = exports.EditForm = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-6 col-md-6' },
-                        _react2.default.createElement(_IgnoredFunctionList2.default, { exclusionList: exclusions, functionKeyList: this.props.functionKeyList, onEdit: this.handleOnEditIgnoredFunction })
+                        _react2.default.createElement(_IgnoredFunctionList2.default, {
+                            originalExclusionList: this.props.originalExclusionList,
+                            exclusionList: exclusions,
+                            functionKeyList: this.props.functionKeyList,
+                            onEdit: this.handleOnEditIgnoredFunction })
                     )
                 )
             );
@@ -5144,14 +5149,15 @@ var EditForm = exports.EditForm = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ updateVendor: _action.updateVendor, toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ updateVendor: _action.updateVendor, toggleLoader: _action.toggleLoader, updateOriginalExclusionList: _action.updateOriginalExclusionList }, dispatch);
 }
 function mapStateToProps(state) {
     var vendorInfo = state.vendorInfo,
         functionKeyList = state.functionKeyList,
+        originalExclusionList = state.originalExclusionList,
         isLoading = state.isLoading;
 
-    return { vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: isLoading };
+    return { vendorInfo: vendorInfo, functionKeyList: functionKeyList, originalExclusionList: originalExclusionList, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
@@ -5192,7 +5198,7 @@ function isValidAffliateFunction(functionList) {
         return _constant.AffiliateFunctionList.includes(f);
     });
 
-    return !individualAffiliateFunction || individualAffiliateFunction && functionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) !== -1;
+    return !individualAffiliateFunction || individualAffiliateFunction && functionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) === -1;
 }
 
 var IgnoredFunctionList = function (_Component) {
@@ -5210,23 +5216,14 @@ var IgnoredFunctionList = function (_Component) {
             var oldSelectedFunctionList = _this.state.selectedFunctionList;
 
             var isAdding = newFunctionList.length > oldSelectedFunctionList.length;
-
             if (isAdding) {
                 if (!isValidAffliateFunction(newFunctionList)) {
-                    alert("Please add 'AffiliateItems' first!");
+                    alert("Please use either 'AffiliateItems' or Affiliate function!");
                     return;
-                }
-            } else {
-                var isRemovingAffPrerequisiteKey = oldSelectedFunctionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) > -1 && newFunctionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) === -1;
-
-                if (isRemovingAffPrerequisiteKey) {
-                    newFunctionList = confirm("All Affiliate functions will be removed, are you sure?") ? newFunctionList.filter(function (item) {
-                        return item !== _constant.AFFILIATE_PREREQUISITE_KEY && _constant.AffiliateFunctionList.indexOf(item) === -1;
-                    }) : oldSelectedFunctionList;
                 }
             }
 
-            _this.setState({ selectedFunctionList: newFunctionList });
+            _this._setState(newFunctionList);
 
             var onEdit = _this.props.onEdit;
 
@@ -5239,15 +5236,17 @@ var IgnoredFunctionList = function (_Component) {
 
         var exclusionList = _this.props.exclusionList;
 
-        var selectedFunctionList = exclusionList && JSON.parse(exclusionList) || [];
 
-        _this.state = { selectedFunctionList: selectedFunctionList };
+        _this.state = {
+            selectedFunctionList: exclusionList && JSON.parse(exclusionList) || [],
+            functionKeyList: _this._buildFunctionKeyList()
+        };
         return _this;
     }
 
     _createClass(IgnoredFunctionList, [{
-        key: '_buildSelectOption',
-        value: function _buildSelectOption() {
+        key: '_buildFunctionKeyList',
+        value: function _buildFunctionKeyList() {
             var functionKeyList = this.props.functionKeyList;
 
 
@@ -5259,9 +5258,41 @@ var IgnoredFunctionList = function (_Component) {
             });
         }
     }, {
+        key: '_setState',
+        value: function _setState(newFunctionList) {
+            var functionKeyList = this.state.functionKeyList;
+
+            var exceptionFunctionList = newFunctionList.filter(function (item) {
+                return !functionKeyList.includes(item);
+            });
+
+            var newState = {
+                selectedFunctionList: newFunctionList
+            };
+
+            if (exceptionFunctionList.length) {
+                newState["functionKeyList"] = functionKeyList.concat(exceptionFunctionList);
+            }
+
+            this.setState(newState);
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var selectedFunctionList = this.state.selectedFunctionList;
+            var _state = this.state,
+                selectedFunctionList = _state.selectedFunctionList,
+                functionKeyList = _state.functionKeyList;
+
+
+            var originalExclusionList = this.props.originalExclusionList && JSON.parse(this.props.originalExclusionList) || [];
+
+            var originalFunctionText = originalExclusionList.join(",");
+            var addingFunctionText = selectedFunctionList.filter(function (item) {
+                return !originalExclusionList.includes(item);
+            }).join(",");
+            var removingFunctionText = originalExclusionList.filter(function (item) {
+                return !selectedFunctionList.includes(item);
+            }).join(",");
 
             return _react2.default.createElement(
                 'div',
@@ -5279,9 +5310,76 @@ var IgnoredFunctionList = function (_Component) {
                     'div',
                     { className: 'form-group row' },
                     _react2.default.createElement(
+                        'label',
+                        { className: 'col-sm-3 col-md-3 col-lg-2 col-form-label' },
+                        'Old List: '
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-9 col-md-9 col-lg-10' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'text-wrap' },
+                            originalFunctionText
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group row' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-sm-3 col-md-3 col-lg-2 col-form-label' },
+                        'Adding: '
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-9 col-md-9 col-lg-10' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'text-wrap' },
+                            addingFunctionText
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group row' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-sm-3 col-md-3 col-lg-2 col-form-label' },
+                        'Removing: '
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-9 col-md-9 col-lg-10' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'text-wrap' },
+                            removingFunctionText
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-12 col-md-12 col-lg-12' },
+                        _react2.default.createElement(
+                            'label',
+                            { className: 'text-wrap' },
+                            _react2.default.createElement(
+                                'i',
+                                null,
+                                'Selected Functions (Enter a value that\'s NOT in the list)'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
                         'div',
                         { className: 'col-sm-10 col-md-10 col-lg-10' },
-                        _react2.default.createElement(_reactSelect2.default, {
+                        _react2.default.createElement(_reactSelect2.default.Creatable, {
                             name: 'form-field-name',
                             placeholder: 'Select Functions...',
                             multi: true,
@@ -5289,7 +5387,7 @@ var IgnoredFunctionList = function (_Component) {
                             removeSelected: true,
                             value: selectedFunctionList,
                             onChange: this.handleChangeSelectedFunctionList,
-                            options: this._buildSelectOption()
+                            options: functionKeyList
                         })
                     )
                 )
@@ -8331,13 +8429,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleLoader = exports.updateVendor = undefined;
+exports.updateOriginalExclusionList = exports.toggleLoader = exports.updateVendor = undefined;
 
 var _loaderAction = __webpack_require__(79);
 
 var _site = __webpack_require__(58);
 
 var _site2 = _interopRequireDefault(_site);
+
+var _actionTypes = __webpack_require__(117);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8347,8 +8447,16 @@ function updateVendor(param) {
     };
 }
 
+function updateOriginalExclusionList(data) {
+    return {
+        type: _actionTypes.UPDATE_EXCLUSION_LIST,
+        data: data
+    };
+}
+
 exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
+exports.updateOriginalExclusionList = updateOriginalExclusionList;
 
 /***/ }),
 /* 116 */
@@ -8365,9 +8473,9 @@ var _redux = __webpack_require__(2);
 
 var _loaderReducer = __webpack_require__(81);
 
-var _createReducer3 = __webpack_require__(27);
+var _createReducer4 = __webpack_require__(27);
 
-var _createReducer4 = _interopRequireDefault(_createReducer3);
+var _createReducer5 = _interopRequireDefault(_createReducer4);
 
 var _actionTypes = __webpack_require__(117);
 
@@ -8375,15 +8483,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var vendorInfo = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
+var vendorInfo = (0, _createReducer5.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
     return action.data;
 }));
 
-var functionKeyList = (0, _createReducer4.default)([], _defineProperty({}, _actionTypes.SET_FUNCTION_LIST, function (state, action) {
+var functionKeyList = (0, _createReducer5.default)([], _defineProperty({}, _actionTypes.SET_FUNCTION_LIST, function (state, action) {
     return action.data;
 }));
 
-exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
+var originalExclusionList = (0, _createReducer5.default)("", _defineProperty({}, _actionTypes.UPDATE_EXCLUSION_LIST, function (state, action) {
+    return action.data;
+}));
+
+exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, originalExclusionList: originalExclusionList, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
 /* 117 */
@@ -8397,6 +8509,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
 var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
+var UPDATE_EXCLUSION_LIST = exports.UPDATE_EXCLUSION_LIST = "UPDATE_EXCLUSION_LIST";
 
 /***/ })
 ],[109]);
