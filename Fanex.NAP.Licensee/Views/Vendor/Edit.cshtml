@@ -32,6 +32,7 @@
                 AffiliateUrl: '@vendor.AffiliateUrl',
                 IgnoredFunctions: '@Html.Raw(vendor.Exclusions)'
             },
+            originalExclusionList: '@Html.Raw(vendor.Exclusions)',
             functionKeyList: @Html.Raw(Model.FunctionKeyList)
         }
     </script>

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
 import IgnoredFunctionList from './IgnoredFunctionList'
-import { updateVendor, toggleLoader } from './action'
+import { updateVendor, toggleLoader, updateOriginalExclusionList } from './action'
 
 export class EditForm extends Component {
     constructor(props) {
@@ -45,6 +45,7 @@ export class EditForm extends Component {
         this.props.updateVendor(param).then(response => {
             const message = response.data ? "Update Successfully" : "Update Failed";
             window.alert(message);
+            this.props.updateOriginalExclusionList(param.exclusions);
             this.props.toggleLoader(false);
         })
     }
@@ -87,7 +88,11 @@ export class EditForm extends Component {
                     </div>
 
                     <div className="col-sm-6 col-md-6">
-                        <IgnoredFunctionList exclusionList={exclusions} functionKeyList={this.props.functionKeyList} onEdit={this.handleOnEditIgnoredFunction} />
+                        <IgnoredFunctionList
+                            originalExclusionList={this.props.originalExclusionList}
+                            exclusionList={exclusions}
+                            functionKeyList={this.props.functionKeyList}
+                            onEdit={this.handleOnEditIgnoredFunction} />
                     </div>
                 </div>
             </div>
@@ -96,11 +101,11 @@ export class EditForm extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ updateVendor, toggleLoader }, dispatch);
+    return bindActionCreators({ updateVendor, toggleLoader, updateOriginalExclusionList }, dispatch);
 }
 function mapStateToProps(state) {
-    const { vendorInfo, functionKeyList, isLoading } = state;
-    return { vendorInfo, functionKeyList, isLoading };
+    const { vendorInfo, functionKeyList, originalExclusionList, isLoading } = state;
+    return { vendorInfo, functionKeyList, originalExclusionList, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

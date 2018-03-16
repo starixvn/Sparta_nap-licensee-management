@@ -14,19 +14,12 @@ export default class IgnoredFunctionList extends Component {
     constructor(props) {
         super(props);
 
-        const selectedFunctionList = this._parseExclusionList();
-        
+        const { exclusionList } = this.props;
+
         this.state = {
-            selectedFunctionList: selectedFunctionList,
+            selectedFunctionList: (exclusionList && JSON.parse(exclusionList)) || [],
             functionKeyList: this._buildFunctionKeyList()
         }
-
-        this.originalFunctionList = selectedFunctionList;
-    }
-
-    _parseExclusionList() {
-        const { exclusionList } = this.props;
-        return (exclusionList && JSON.parse(exclusionList)) || [];
     }
 
     _buildFunctionKeyList() {
@@ -38,18 +31,6 @@ export default class IgnoredFunctionList extends Component {
                 label: item
             }
         })
-    }
-
-    get originalFunctionText() {
-        return this.originalFunctionList.join(",");
-    }
-
-    get addingFunctionText() {
-        return this.state.selectedFunctionList.filter(item => !this.originalFunctionList.includes(item)).join(",")
-    }
-
-    get removingFunctionText() {
-        return this.originalFunctionList.filter(item => !this.state.selectedFunctionList.includes(item)).join(",");
     }
 
     handleChangeFunction = (newSelectedFunctions) => {
@@ -91,6 +72,13 @@ export default class IgnoredFunctionList extends Component {
 
     render() {
         const { selectedFunctionList, functionKeyList } = this.state;
+
+        const originalExclusionList = (this.props.originalExclusionList && JSON.parse(this.props.originalExclusionList)) || [];
+
+        const originalFunctionText = originalExclusionList.join(",");
+        const addingFunctionText = selectedFunctionList.filter(item => !originalExclusionList.includes(item)).join(",");
+        const removingFunctionText = originalExclusionList.filter(item => !selectedFunctionList.includes(item)).join(",");
+
         return (
             <div className="col-sm-12">
                 <div className="form-group row">
@@ -100,21 +88,21 @@ export default class IgnoredFunctionList extends Component {
                 <div className="form-group row">
                     <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Old List: </label>
                     <div className="col-sm-9 col-md-9 col-lg-10">
-                        <p className="text-wrap">{this.originalFunctionText}</p>
+                        <p className="text-wrap">{originalFunctionText}</p>
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Adding: </label>
                     <div className="col-sm-9 col-md-9 col-lg-10">
-                        <p className="text-wrap">{this.addingFunctionText}</p>
+                        <p className="text-wrap">{addingFunctionText}</p>
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <label className="col-sm-3 col-md-3 col-lg-2 col-form-label">Removing: </label>
                     <div className="col-sm-9 col-md-9 col-lg-10">
-                        <p className="text-wrap">{this.removingFunctionText}</p>
+                        <p className="text-wrap">{removingFunctionText}</p>
                     </div>
                 </div>
 
