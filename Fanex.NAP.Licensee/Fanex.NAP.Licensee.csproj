@@ -704,9 +704,9 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="Views\Home\Demo.cshtml" />
-    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
-    <Content Include="Views\Vendor\Edit.cshtml" />
+    <Content Include="Views\LicenseeVendor\Edit.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

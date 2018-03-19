@@ -13,13 +13,13 @@
     using Service;
 
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSite, Policy = Constant.Policy.Read)]
-    public class VendorController : BaseController
+    public class LicenseeVendorController : BaseController
     {
-        private readonly IVendorService _vendorService;
+        private readonly ILicenseeVendorService _vendorService;
 
-        public VendorController()
+        public LicenseeVendorController()
         {
-            _vendorService = new VendorService();
+            _vendorService = new LicenseeVendorService();
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditLicenseeVendor, Policy = Constant.Policy.Host)]
         public ActionResult Edit(string vendorId)
         {
             var vendor = _vendorService.GetVendorById(vendorId);
@@ -61,7 +61,7 @@
 
             var emptyResult = new EditVendorViewModel
             {
-                VendorInfo = new Vendor(),
+                VendorInfo = new LicenseeVendor(),
                 FunctionKeyList = JsonConvert.SerializeObject(new List<string>())
             };
 
@@ -69,8 +69,8 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(Vendor vendor)
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditLicenseeVendor, Policy = Constant.Policy.Host)]
+        public ActionResult Edit(LicenseeVendor vendor)
         {
             var result = _vendorService.UpdateVendor(vendor);
 

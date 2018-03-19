@@ -163,7 +163,7 @@
     <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
     <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="DTO\SSOLogin.cs" />
-    <Compile Include="DTO\Vendor.cs" />
+    <Compile Include="DTO\LicenseeVendor.cs" />
     <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />

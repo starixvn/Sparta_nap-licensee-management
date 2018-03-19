@@ -5,7 +5,7 @@ import { toggleLoader } from '../../../actions/loaderAction'
 function getGridData(param) {
     return (dispatch) => {
         dispatch(toggleLoader(true));
-        Site.fetchData(param, 'Vendor/GetVendorInfoList').then(response => {
+        Site.fetchData(param, 'LicenseeVendor/GetVendorInfoList').then(response => {
             dispatch(setGridData(response.data));
             dispatch(toggleLoader(false));
         });

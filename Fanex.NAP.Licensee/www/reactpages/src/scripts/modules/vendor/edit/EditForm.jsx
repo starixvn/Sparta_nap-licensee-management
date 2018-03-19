@@ -10,8 +10,8 @@ export class EditForm extends Component {
     constructor(props) {
         super(props);
 
-        const { vendorInfo } = this.props;
-        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = vendorInfo;
+        const { licenseeVendorInfo } = this.props;
+        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = licenseeVendorInfo;
 
         this.state = {
             vendorId: VendorId,
@@ -109,8 +109,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ updateVendor, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { vendorInfo, functionKeyList, isLoading } = state;
-    return { vendorInfo, functionKeyList, isLoading };
+    const { licenseeVendorInfo, functionKeyList, isLoading } = state;
+    return { licenseeVendorInfo, functionKeyList, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm);

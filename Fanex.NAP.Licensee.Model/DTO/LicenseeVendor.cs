@@ -2,7 +2,7 @@
 
 namespace Fanex.NAP.Licensee.Model.DTO
 {
-    public class Vendor
+    public class LicenseeVendor
     {
         public string VendorId { get; set; }
 

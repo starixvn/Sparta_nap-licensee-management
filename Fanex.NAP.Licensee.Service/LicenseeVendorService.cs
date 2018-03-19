@@ -8,34 +8,34 @@ using Fanex.NAP.Licensee.Service.Core;
 
 namespace Fanex.NAP.Licensee.Service
 {
-    public class VendorService : IVendorService
+    public class LicenseeVendorService : ILicenseeVendorService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
         private readonly ILogWriterService _logWriter;
 
-        public VendorService()
+        public LicenseeVendorService()
         {
             _objectDbGenerator = new ObjectDbGenerator();
             _logWriter = new LogWriterService();
         }
 
-        public IEnumerable<Vendor> GetVendorList(VendorSearchingCriteria criteria)
+        public IEnumerable<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Select"))
             {
-                return db.Query<Vendor>(criteria.GetSpParams());
+                return db.Query<LicenseeVendor>(criteria.GetSpParams());
             }
         }
 
-        public Vendor GetVendorById(string vendorId)
+        public LicenseeVendor GetVendorById(string vendorId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_SelectById"))
             {
-                return db.QueryEntity<Vendor>(new { vendorId });
+                return db.QueryEntity<LicenseeVendor>(new { vendorId });
             }
         }
 
-        public bool UpdateVendor(Vendor vendor)
+        public bool UpdateVendor(LicenseeVendor vendor)
         {
             var result = true;
             try
@@ -73,7 +73,7 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
-        private void WriteActionLog(Vendor oldValue, Vendor newValue)
+        private void WriteActionLog(LicenseeVendor oldValue, LicenseeVendor newValue)
         {
             var userId = AppSession.CurrentUser.Id;
 
@@ -88,7 +88,7 @@ namespace Fanex.NAP.Licensee.Service
             _logWriter.WriteActionLog(actionLogCriteria);
         }
 
-        private string BuildUpdatingLogContent(Vendor oldValue, Vendor newValue)
+        private string BuildUpdatingLogContent(LicenseeVendor oldValue, LicenseeVendor newValue)
         {
             var result = new StringBuilder();
 

@@ -138,14 +138,14 @@
     <Compile Include="Core\IObjectDbGenerator.cs" />
     <Compile Include="ILogWriterService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />
-    <Compile Include="IVendorService.cs" />
+    <Compile Include="ILicenseeVendorService.cs" />
     <Compile Include="LogWriterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingConfigurationService.cs" />
     <Compile Include="Utilities\AppSession.cs" />
     <Compile Include="Utilities\PermissionService.cs" />
     <Compile Include="Utilities\SessionManager.cs" />
-    <Compile Include="VendorService.cs" />
+    <Compile Include="LicenseeVendorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj">

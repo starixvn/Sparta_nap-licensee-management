@@ -4,7 +4,7 @@
 
     public class EditVendorViewModel
     {
-        public Vendor VendorInfo { get; set; }
+        public LicenseeVendor VendorInfo { get; set; }
 
         public string FunctionKeyList { get; set; }
     }
