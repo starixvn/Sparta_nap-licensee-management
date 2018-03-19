@@ -7,7 +7,7 @@ function isValidAffliateFunction(functionList) {
     const individualAffiliateFunction = functionList.find(f => AffiliateFunctionList.includes(f));
 
     return !individualAffiliateFunction ||
-        (individualAffiliateFunction && functionList.indexOf(AFFILIATE_PREREQUISITE_KEY) === -1);
+        (individualAffiliateFunction && !functionList.includes(AFFILIATE_PREREQUISITE_KEY));
 }
 
 export default class IgnoredFunctionList extends Component {
@@ -40,7 +40,7 @@ export default class IgnoredFunctionList extends Component {
         const isAdding = newFunctionList.length > oldSelectedFunctionList.length;
         if (isAdding) {
             if (!isValidAffliateFunction(newFunctionList)) {
-                alert("Please use either 'AffiliateItems' or Affiliate function!");
+                alert("Please use either 'AffiliateItems' or individual affiliate function!");
                 return;
             }
         }

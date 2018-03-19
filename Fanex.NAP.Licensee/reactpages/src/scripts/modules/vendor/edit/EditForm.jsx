@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
 import IgnoredFunctionList from './IgnoredFunctionList'
-import { updateVendor, toggleLoader, updateOriginalExclusionList } from './action'
+import { updateVendor, toggleLoader } from './action'
 
 export class EditForm extends Component {
     constructor(props) {
@@ -19,7 +19,8 @@ export class EditForm extends Component {
             internalUrl: InternalUrl,
             lrfUrl: LrfUrl,
             affiliateUrl: AffiliateUrl,
-            exclusions: IgnoredFunctions
+            exclusions: IgnoredFunctions,
+            originalExclusions: IgnoredFunctions
         }
     }
 
@@ -39,19 +40,23 @@ export class EditForm extends Component {
     submit = (event) => {
         event.preventDefault();
 
-        const param = Object.assign({}, this.state);
+        const { originalExclusions, ...param } = this.state;
 
         this.props.toggleLoader(true);
         this.props.updateVendor(param).then(response => {
-            const message = response.data ? "Update Successfully" : "Update Failed";
+            const updateSuccess = response.data;
+            const message = updateSuccess ? "Update Successfully" : "Update Failed";
             window.alert(message);
-            this.props.updateOriginalExclusionList(param.exclusions);
+            if (updateSuccess) {
+                const { exclusions } = this.state;
+                this.setState({ originalExclusions: exclusions });
+            }
             this.props.toggleLoader(false);
         })
     }
 
     render() {
-        const { siteName, internalUrl, lrfUrl, affiliateUrl, exclusions } = this.state;
+        const { siteName, internalUrl, lrfUrl, affiliateUrl, exclusions, originalExclusions } = this.state;
         return (
             <div className="edit-form">
                 <Loader isLoading={this.props.isLoading} />
@@ -89,7 +94,7 @@ export class EditForm extends Component {
 
                     <div className="col-sm-6 col-md-6">
                         <IgnoredFunctionList
-                            originalExclusionList={this.props.originalExclusionList}
+                            originalExclusionList={originalExclusions}
                             exclusionList={exclusions}
                             functionKeyList={this.props.functionKeyList}
                             onEdit={this.handleOnEditIgnoredFunction} />
@@ -101,11 +106,11 @@ export class EditForm extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ updateVendor, toggleLoader, updateOriginalExclusionList }, dispatch);
+    return bindActionCreators({ updateVendor, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { vendorInfo, functionKeyList, originalExclusionList, isLoading } = state;
-    return { vendorInfo, functionKeyList, originalExclusionList, isLoading };
+    const { vendorInfo, functionKeyList, isLoading } = state;
+    return { vendorInfo, functionKeyList, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditForm);
