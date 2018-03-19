@@ -4849,7 +4849,19 @@ exports['default'] = thunk;
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */,
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
+var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
+
+/***/ }),
 /* 88 */,
 /* 89 */,
 /* 90 */,
@@ -4871,7 +4883,8 @@ exports['default'] = thunk;
 /* 106 */,
 /* 107 */,
 /* 108 */,
-/* 109 */
+/* 109 */,
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4891,13 +4904,13 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EditForm = __webpack_require__(110);
+var _EditForm = __webpack_require__(111);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
 
 var _reactRedux = __webpack_require__(4);
 
-var _reducer = __webpack_require__(116);
+var _reducer = __webpack_require__(117);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -4945,7 +4958,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4970,13 +4983,15 @@ var _Loader = __webpack_require__(57);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _IgnoredFunctionList = __webpack_require__(111);
+var _IgnoredFunctionList = __webpack_require__(112);
 
 var _IgnoredFunctionList2 = _interopRequireDefault(_IgnoredFunctionList);
 
-var _action = __webpack_require__(115);
+var _action = __webpack_require__(116);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -5010,13 +5025,20 @@ var EditForm = exports.EditForm = function (_Component) {
         _this.submit = function (event) {
             event.preventDefault();
 
-            var param = Object.assign({}, _this.state);
+            var _this$state = _this.state,
+                originalExclusions = _this$state.originalExclusions,
+                param = _objectWithoutProperties(_this$state, ['originalExclusions']);
 
             _this.props.toggleLoader(true);
             _this.props.updateVendor(param).then(function (response) {
-                var message = response.data ? "Update Successfully" : "Update Failed";
+                var updateSuccess = response.data;
+                var message = updateSuccess ? "Update Successfully" : "Update Failed";
                 window.alert(message);
-                _this.props.updateOriginalExclusionList(param.exclusions);
+                if (updateSuccess) {
+                    var exclusions = _this.state.exclusions;
+
+                    _this.setState({ originalExclusions: exclusions });
+                }
                 _this.props.toggleLoader(false);
             });
         };
@@ -5036,7 +5058,8 @@ var EditForm = exports.EditForm = function (_Component) {
             internalUrl: InternalUrl,
             lrfUrl: LrfUrl,
             affiliateUrl: AffiliateUrl,
-            exclusions: IgnoredFunctions
+            exclusions: IgnoredFunctions,
+            originalExclusions: IgnoredFunctions
         };
         return _this;
     }
@@ -5049,7 +5072,8 @@ var EditForm = exports.EditForm = function (_Component) {
                 internalUrl = _state.internalUrl,
                 lrfUrl = _state.lrfUrl,
                 affiliateUrl = _state.affiliateUrl,
-                exclusions = _state.exclusions;
+                exclusions = _state.exclusions,
+                originalExclusions = _state.originalExclusions;
 
             return _react2.default.createElement(
                 'div',
@@ -5135,7 +5159,7 @@ var EditForm = exports.EditForm = function (_Component) {
                         'div',
                         { className: 'col-sm-6 col-md-6' },
                         _react2.default.createElement(_IgnoredFunctionList2.default, {
-                            originalExclusionList: this.props.originalExclusionList,
+                            originalExclusionList: originalExclusions,
                             exclusionList: exclusions,
                             functionKeyList: this.props.functionKeyList,
                             onEdit: this.handleOnEditIgnoredFunction })
@@ -5149,21 +5173,20 @@ var EditForm = exports.EditForm = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ updateVendor: _action.updateVendor, toggleLoader: _action.toggleLoader, updateOriginalExclusionList: _action.updateOriginalExclusionList }, dispatch);
+    return (0, _redux.bindActionCreators)({ updateVendor: _action.updateVendor, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     var vendorInfo = state.vendorInfo,
         functionKeyList = state.functionKeyList,
-        originalExclusionList = state.originalExclusionList,
         isLoading = state.isLoading;
 
-    return { vendorInfo: vendorInfo, functionKeyList: functionKeyList, originalExclusionList: originalExclusionList, isLoading: isLoading };
+    return { vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5179,7 +5202,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = __webpack_require__(112);
+var _reactSelect = __webpack_require__(113);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
@@ -5198,7 +5221,7 @@ function isValidAffliateFunction(functionList) {
         return _constant.AffiliateFunctionList.includes(f);
     });
 
-    return !individualAffiliateFunction || individualAffiliateFunction && functionList.indexOf(_constant.AFFILIATE_PREREQUISITE_KEY) === -1;
+    return !individualAffiliateFunction || individualAffiliateFunction && !functionList.includes(_constant.AFFILIATE_PREREQUISITE_KEY);
 }
 
 var IgnoredFunctionList = function (_Component) {
@@ -5218,7 +5241,7 @@ var IgnoredFunctionList = function (_Component) {
             var isAdding = newFunctionList.length > oldSelectedFunctionList.length;
             if (isAdding) {
                 if (!isValidAffliateFunction(newFunctionList)) {
-                    alert("Please use either 'AffiliateItems' or Affiliate function!");
+                    alert("Please use either 'AffiliateItems' or individual affiliate function!");
                     return;
                 }
             }
@@ -5401,7 +5424,7 @@ var IgnoredFunctionList = function (_Component) {
 exports.default = IgnoredFunctionList;
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5415,9 +5438,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultArrowRenderer", function() { return arrowRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultClearRenderer", function() { return clearRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultFilterOptions", function() { return filterOptions; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
@@ -8091,7 +8114,7 @@ Select$1.Option = Option;
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8365,7 +8388,7 @@ AutosizeInput.defaultProps = {
 exports.default = AutosizeInput;
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -8420,7 +8443,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8429,15 +8452,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.updateOriginalExclusionList = exports.toggleLoader = exports.updateVendor = undefined;
+exports.toggleLoader = exports.updateVendor = undefined;
 
 var _loaderAction = __webpack_require__(79);
 
 var _site = __webpack_require__(58);
 
 var _site2 = _interopRequireDefault(_site);
-
-var _actionTypes = __webpack_require__(117);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8447,19 +8468,11 @@ function updateVendor(param) {
     };
 }
 
-function updateOriginalExclusionList(data) {
-    return {
-        type: _actionTypes.UPDATE_EXCLUSION_LIST,
-        data: data
-    };
-}
-
 exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
-exports.updateOriginalExclusionList = updateOriginalExclusionList;
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8473,44 +8486,26 @@ var _redux = __webpack_require__(2);
 
 var _loaderReducer = __webpack_require__(81);
 
-var _createReducer4 = __webpack_require__(27);
+var _createReducer3 = __webpack_require__(27);
 
-var _createReducer5 = _interopRequireDefault(_createReducer4);
+var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _actionTypes = __webpack_require__(117);
+var _actionTypes = __webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var vendorInfo = (0, _createReducer5.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
+var vendorInfo = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
     return action.data;
 }));
 
-var functionKeyList = (0, _createReducer5.default)([], _defineProperty({}, _actionTypes.SET_FUNCTION_LIST, function (state, action) {
+var functionKeyList = (0, _createReducer4.default)([], _defineProperty({}, _actionTypes.SET_FUNCTION_LIST, function (state, action) {
     return action.data;
 }));
 
-var originalExclusionList = (0, _createReducer5.default)("", _defineProperty({}, _actionTypes.UPDATE_EXCLUSION_LIST, function (state, action) {
-    return action.data;
-}));
-
-exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, originalExclusionList: originalExclusionList, isLoading: _loaderReducer.isLoading });
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
-var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
-var UPDATE_EXCLUSION_LIST = exports.UPDATE_EXCLUSION_LIST = "UPDATE_EXCLUSION_LIST";
+exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[109]);
+],[110]);
 //# sourceMappingURL=editvendor.js.map
