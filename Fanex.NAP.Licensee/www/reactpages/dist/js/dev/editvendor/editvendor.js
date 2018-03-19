@@ -5030,13 +5030,13 @@ var EditForm = exports.EditForm = function (_Component) {
             });
         };
 
-        var vendorInfo = _this.props.vendorInfo;
-        var VendorId = vendorInfo.VendorId,
-            SiteName = vendorInfo.SiteName,
-            InternalUrl = vendorInfo.InternalUrl,
-            LrfUrl = vendorInfo.LrfUrl,
-            AffiliateUrl = vendorInfo.AffiliateUrl,
-            IgnoredFunctions = vendorInfo.IgnoredFunctions;
+        var licenseeVendorInfo = _this.props.licenseeVendorInfo;
+        var VendorId = licenseeVendorInfo.VendorId,
+            SiteName = licenseeVendorInfo.SiteName,
+            InternalUrl = licenseeVendorInfo.InternalUrl,
+            LrfUrl = licenseeVendorInfo.LrfUrl,
+            AffiliateUrl = licenseeVendorInfo.AffiliateUrl,
+            IgnoredFunctions = licenseeVendorInfo.IgnoredFunctions;
 
 
         _this.state = {
@@ -5163,11 +5163,11 @@ function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ updateVendor: _action.updateVendor, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    var vendorInfo = state.vendorInfo,
+    var licenseeVendorInfo = state.licenseeVendorInfo,
         functionKeyList = state.functionKeyList,
         isLoading = state.isLoading;
 
-    return { vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: isLoading };
+    return { licenseeVendorInfo: licenseeVendorInfo, functionKeyList: functionKeyList, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
@@ -8451,7 +8451,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function updateVendor(param) {
     return function () {
-        return _site2.default.fetchData(param, 'Vendor/Edit');
+        return _site2.default.fetchData(param, 'LicenseeVendor/Edit');
     };
 }
 
@@ -8483,7 +8483,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var vendorInfo = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
+var licenseeVendorInfo = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_VENDOR_INFO, function (state, action) {
     return action.data;
 }));
 
@@ -8491,7 +8491,7 @@ var functionKeyList = (0, _createReducer4.default)([], _defineProperty({}, _acti
     return action.data;
 }));
 
-exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
+exports.default = (0, _redux.combineReducers)({ licenseeVendorInfo: licenseeVendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
 /* 117 */

@@ -4871,7 +4871,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function getGridData(param) {
     return function (dispatch) {
         dispatch((0, _loaderAction.toggleLoader)(true));
-        _site2.default.fetchData(param, 'Vendor/GetVendorInfoList').then(function (response) {
+        _site2.default.fetchData(param, 'LicenseeVendor/GetVendorInfoList').then(function (response) {
             dispatch(setGridData(response.data));
             dispatch((0, _loaderAction.toggleLoader)(false));
         });
@@ -5368,7 +5368,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 { className: 'text-center' },
                                 _react2.default.createElement(
                                     'a',
-                                    { href: window.rootUrl + ('Vendor/Edit?vendorId=' + item.VendorId), title: 'Edit' },
+                                    { href: window.rootUrl + ('LicenseeVendor/Edit?vendorId=' + item.VendorId), title: 'Edit' },
                                     _react2.default.createElement('i', { className: 'icon-edit' })
                                 )
                             )
