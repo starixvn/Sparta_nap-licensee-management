@@ -2,9 +2,9 @@
   "name": "Fanex.NAP.Licensee",
   "version": "1.0.1",
   "scripts": {
-    "build": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.dev.conf.js",
-    "build-watch": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.dev.conf.js --watch",
-    "build-pro": "webpack --config Fanex.NAP.Licensee\\.webpack\\build\\webpack.pro.conf.js",
+    "build": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.dev.conf.js",
+    "build-watch": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.dev.conf.js --watch",
+    "build-pro": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.pro.conf.js",
     "version": "node --version"
   },
   "devDependencies": {

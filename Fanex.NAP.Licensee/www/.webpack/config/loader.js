@@ -1,6 +1,4 @@
 ﻿const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const configPath = require('./path');
-const path = require('path');
 
 module.exports = {
     babelLoaders: [{

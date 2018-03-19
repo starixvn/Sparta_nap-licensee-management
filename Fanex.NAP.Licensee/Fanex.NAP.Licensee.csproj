@@ -229,14 +229,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
-    <Content Include=".webpack\build\utils.js" />
-    <Content Include=".webpack\build\webpack.base.conf.js" />
-    <Content Include=".webpack\build\webpack.dev.conf.js" />
-    <Content Include=".webpack\build\webpack.pro.conf.js" />
-    <Content Include=".webpack\config\alias.js" />
-    <Content Include=".webpack\config\loader.js" />
-    <Content Include=".webpack\config\path.js" />
-    <Content Include=".webpack\config\plugin.js" />
+    <Content Include="www\.webpack\build\utils.js" />
+    <Content Include="www\.webpack\build\webpack.base.conf.js" />
+    <Content Include="www\.webpack\build\webpack.dev.conf.js" />
+    <Content Include="www\.webpack\build\webpack.pro.conf.js" />
+    <Content Include="www\.webpack\config\alias.js" />
+    <Content Include="www\.webpack\config\loader.js" />
+    <Content Include="www\.webpack\config\path.js" />
+    <Content Include="www\.webpack\config\plugin.js" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -447,19 +447,34 @@
     <Content Include="Content\source\settingconfiguration\setting-configuration.less" />
     <Content Include="Content\source\settingconfiguration\setting-configuration.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="reactpages\dist\css\dev\demo\demo.css" />
-    <Content Include="reactpages\dist\css\dev\editvendor\editvendor.css" />
-    <Content Include="reactpages\dist\css\pro\demo\demo.css" />
-    <Content Include="reactpages\dist\css\pro\editvendor\editvendor.css" />
-    <Content Include="reactpages\dist\js\dev\demo\demo.js" />
-    <Content Include="reactpages\dist\js\dev\editvendor\editvendor.js" />
-    <Content Include="reactpages\dist\js\dev\vendor.js" />
-    <Content Include="reactpages\dist\js\dev\vendor\vendor.js" />
-    <Content Include="reactpages\dist\js\pro\demo\demo.js" />
-    <Content Include="reactpages\dist\js\pro\editvendor\editvendor.js" />
-    <Content Include="reactpages\dist\js\pro\vendor.js" />
-    <Content Include="reactpages\dist\js\pro\vendor\vendor.js" />
-    <Content Include="reactpages\src\styles\components\react-select\react-select.min.css" />
+    <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
+    <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
+    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
+    <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
+    <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
+    <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
+    <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\vendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
+    <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\vendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
+    <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
+    <Content Include="www\reactpages\src\scripts\actions\types.js" />
+    <Content Include="www\reactpages\src\scripts\lib\createReducer.js" />
+    <Content Include="www\reactpages\src\scripts\lib\site.js" />
+    <Content Include="www\reactpages\src\scripts\lib\store.js" />
+    <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\reducers\loaderReducer.js" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.min.css" />
     <Content Include="Scripts\build\angular.js" />
     <Content Include="Scripts\build\angular.min.js" />
     <Content Include="Scripts\build\betsetting.js" />
@@ -559,8 +574,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="reactpages\src\styles\components\react-select\react-select.custom.scss" />
-    <Content Include="reactpages\src\styles\components\react-select\react-select.main.scss" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.custom.scss" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.main.scss" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <Content Include="SiteConfig\Web.AppSettings.BACKUPMNL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
@@ -645,10 +660,19 @@
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
+    <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\EditForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\IgnoredFunctionList.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\IgnoredFunctionToggleable.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\index.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
-    <Folder Include="reactpages\src\styles\modules\" />
+    <Folder Include="www\reactpages\src\styles\modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
