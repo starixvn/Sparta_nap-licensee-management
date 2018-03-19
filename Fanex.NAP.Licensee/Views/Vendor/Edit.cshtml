@@ -18,7 +18,7 @@
     <a class="btn-back" href="~/Vendor">← Back To List</a>
 }
 @section HeadCss{
-    @BundleManager.IncludeStylesByEnv("~/reactpages/dist/css/editvendor/editvendor.css")
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/editvendor/editvendor.css")
 }
 
 @section FooterJs{
@@ -35,7 +35,7 @@
             functionKeyList: @Html.Raw(Model.FunctionKeyList)
         }
     </script>
-    @BundleManager.IncludeScriptsByEnv("~/reactpages/dist/js/editvendor/editvendor.js")
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editvendor/editvendor.js")
 }
 
 <div id="app-container"></div>

@@ -4849,19 +4849,7 @@ exports['default'] = thunk;
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
-var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
-
-/***/ }),
+/* 87 */,
 /* 88 */,
 /* 89 */,
 /* 90 */,
@@ -4883,8 +4871,7 @@ var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
 /* 106 */,
 /* 107 */,
 /* 108 */,
-/* 109 */,
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4904,13 +4891,13 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EditForm = __webpack_require__(111);
+var _EditForm = __webpack_require__(110);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
 
 var _reactRedux = __webpack_require__(4);
 
-var _reducer = __webpack_require__(117);
+var _reducer = __webpack_require__(116);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -4958,7 +4945,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4983,11 +4970,11 @@ var _Loader = __webpack_require__(57);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _IgnoredFunctionList = __webpack_require__(112);
+var _IgnoredFunctionList = __webpack_require__(111);
 
 var _IgnoredFunctionList2 = _interopRequireDefault(_IgnoredFunctionList);
 
-var _action = __webpack_require__(116);
+var _action = __webpack_require__(115);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5186,7 +5173,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5202,7 +5189,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = __webpack_require__(113);
+var _reactSelect = __webpack_require__(112);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
@@ -5424,7 +5411,7 @@ var IgnoredFunctionList = function (_Component) {
 exports.default = IgnoredFunctionList;
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5438,9 +5425,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultArrowRenderer", function() { return arrowRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultClearRenderer", function() { return clearRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultFilterOptions", function() { return filterOptions; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
@@ -8114,7 +8101,7 @@ Select$1.Option = Option;
 
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8388,7 +8375,7 @@ AutosizeInput.defaultProps = {
 exports.default = AutosizeInput;
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -8443,7 +8430,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8472,7 +8459,7 @@ exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8490,7 +8477,7 @@ var _createReducer3 = __webpack_require__(27);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _actionTypes = __webpack_require__(87);
+var _actionTypes = __webpack_require__(117);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8506,6 +8493,19 @@ var functionKeyList = (0, _createReducer4.default)([], _defineProperty({}, _acti
 
 exports.default = (0, _redux.combineReducers)({ vendorInfo: vendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
 
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
+var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
+
 /***/ })
-],[110]);
+],[109]);
 //# sourceMappingURL=editvendor.js.map
