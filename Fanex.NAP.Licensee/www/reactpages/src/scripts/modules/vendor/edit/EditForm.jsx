@@ -11,18 +11,8 @@ export class EditForm extends Component {
         super(props);
 
         const { licenseeVendorInfo } = this.props;
-        const { VendorId, SiteName, PortalUrl, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = licenseeVendorInfo;
 
-        this.state = {
-            vendorId: VendorId,
-            siteName: SiteName,
-            portalUrl: PortalUrl,
-            internalUrl: InternalUrl,
-            lrfUrl: LrfUrl,
-            affiliateUrl: AffiliateUrl,
-            exclusions: IgnoredFunctions,
-            originalExclusions: IgnoredFunctions
-        }
+        this.state = Object.assign({}, licenseeVendorInfo, { originalExclusions: licenseeVendorInfo.exclusions });
     }
 
     handleOnChange = (event) => {
@@ -90,7 +80,7 @@ export class EditForm extends Component {
                                 <input type="text" id="lrfUrl" className="full-width" name="lrfUrl" value={lrfUrl} onChange={this.handleOnChange} />
                             </div>
                         </div>
-                        
+
                         <div className="form-group row">
                             <label htmlFor="affiliateUrl" className="col-sm-3 col-md-3 col-form-label">Affiliate Url</label>
                             <div className="col-sm-9 col-md-8">

@@ -25,12 +25,13 @@
     <script>
         var initialState = {
             licenseeVendorInfo: {
-                VendorId: '@vendor.VendorId',
-                SiteName: '@vendor.SiteName',
-                InternalUrl: '@vendor.InternalUrl',
-                LrfUrl: '@vendor.LrfUrl',
-                AffiliateUrl: '@vendor.AffiliateUrl',
-                IgnoredFunctions: '@Html.Raw(vendor.Exclusions)'
+                vendorId: '@vendor.VendorId',
+                siteName: '@vendor.SiteName',
+                portalUrl: '@vendor.PortalUrl',
+                internalUrl: '@vendor.InternalUrl',
+                lrfUrl: '@vendor.LrfUrl',
+                affiliateUrl: '@vendor.AffiliateUrl',
+                exclusions: '@Html.Raw(vendor.Exclusions)'
             },
             functionKeyList: @Html.Raw(Model.FunctionKeyList)
         }
