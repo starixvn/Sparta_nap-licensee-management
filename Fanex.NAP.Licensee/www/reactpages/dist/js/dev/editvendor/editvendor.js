@@ -5031,23 +5031,9 @@ var EditForm = exports.EditForm = function (_Component) {
         };
 
         var licenseeVendorInfo = _this.props.licenseeVendorInfo;
-        var VendorId = licenseeVendorInfo.VendorId,
-            SiteName = licenseeVendorInfo.SiteName,
-            InternalUrl = licenseeVendorInfo.InternalUrl,
-            LrfUrl = licenseeVendorInfo.LrfUrl,
-            AffiliateUrl = licenseeVendorInfo.AffiliateUrl,
-            IgnoredFunctions = licenseeVendorInfo.IgnoredFunctions;
 
 
-        _this.state = {
-            vendorId: VendorId,
-            siteName: SiteName,
-            internalUrl: InternalUrl,
-            lrfUrl: LrfUrl,
-            affiliateUrl: AffiliateUrl,
-            exclusions: IgnoredFunctions,
-            originalExclusions: IgnoredFunctions
-        };
+        _this.state = Object.assign({}, licenseeVendorInfo, { originalExclusions: licenseeVendorInfo.exclusions });
         return _this;
     }
 
@@ -5056,6 +5042,7 @@ var EditForm = exports.EditForm = function (_Component) {
         value: function render() {
             var _state = this.state,
                 siteName = _state.siteName,
+                portalUrl = _state.portalUrl,
                 internalUrl = _state.internalUrl,
                 lrfUrl = _state.lrfUrl,
                 affiliateUrl = _state.affiliateUrl,
@@ -5088,6 +5075,20 @@ var EditForm = exports.EditForm = function (_Component) {
                                     null,
                                     siteName
                                 )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { htmlFor: 'portalUrl', className: 'col-sm-3 col-md-3 col-form-label' },
+                                'Portal Url'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-9 col-md-8' },
+                                _react2.default.createElement('input', { type: 'text', id: 'portalUrl', className: 'full-width', name: 'portalUrl', value: portalUrl, onChange: this.handleOnChange })
                             )
                         ),
                         _react2.default.createElement(

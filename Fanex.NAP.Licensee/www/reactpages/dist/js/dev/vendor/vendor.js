@@ -5267,6 +5267,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         _react2.default.createElement(
                             'th',
                             null,
+                            'Portal Url'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
                             'Internal Url'
                         ),
                         _react2.default.createElement(
@@ -5327,6 +5332,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 'td',
                                 { className: 'text-center' },
                                 _constant.LicenseeType[item.LicenseeType] || item.LicenseeType
+                            ),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                item.PortalUrl
                             ),
                             _react2.default.createElement(
                                 'td',
