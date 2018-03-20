@@ -11,6 +11,9 @@ namespace Fanex.NAP.Licensee.Model.DTO
         public byte LicenseeType { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]
+        public string PortalUrl { get; set; }
+
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string InternalUrl { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]

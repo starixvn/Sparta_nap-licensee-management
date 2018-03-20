@@ -11,11 +11,12 @@ export class EditForm extends Component {
         super(props);
 
         const { licenseeVendorInfo } = this.props;
-        const { VendorId, SiteName, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = licenseeVendorInfo;
+        const { VendorId, SiteName, PortalUrl, InternalUrl, LrfUrl, AffiliateUrl, IgnoredFunctions } = licenseeVendorInfo;
 
         this.state = {
             vendorId: VendorId,
             siteName: SiteName,
+            portalUrl: PortalUrl,
             internalUrl: InternalUrl,
             lrfUrl: LrfUrl,
             affiliateUrl: AffiliateUrl,
@@ -56,7 +57,7 @@ export class EditForm extends Component {
     }
 
     render() {
-        const { siteName, internalUrl, lrfUrl, affiliateUrl, exclusions, originalExclusions } = this.state;
+        const { siteName, portalUrl, internalUrl, lrfUrl, affiliateUrl, exclusions, originalExclusions } = this.state;
         return (
             <div className="edit-form">
                 <Loader isLoading={this.props.isLoading} />
@@ -68,18 +69,28 @@ export class EditForm extends Component {
                                 <p>{siteName}</p>
                             </div>
                         </div>
+
+                        <div className="form-group row">
+                            <label htmlFor="portalUrl" className="col-sm-3 col-md-3 col-form-label">Portal Url</label>
+                            <div className="col-sm-9 col-md-8">
+                                <input type="text" id="portalUrl" className="full-width" name="portalUrl" value={portalUrl} onChange={this.handleOnChange} />
+                            </div>
+                        </div>
+
                         <div className="form-group row">
                             <label htmlFor="internalUrl" className="col-sm-3 col-md-3 col-form-label">Internal Url</label>
                             <div className="col-sm-9 col-md-8">
                                 <input type="text" id="internalUrl" className="full-width" name="internalUrl" value={internalUrl} onChange={this.handleOnChange} />
                             </div>
                         </div>
+
                         <div className="form-group row">
                             <label htmlFor="lrfUrl" className="col-sm-3 col-md-3 col-form-label">Lrf Url</label>
                             <div className="col-sm-9 col-md-8">
                                 <input type="text" id="lrfUrl" className="full-width" name="lrfUrl" value={lrfUrl} onChange={this.handleOnChange} />
                             </div>
                         </div>
+                        
                         <div className="form-group row">
                             <label htmlFor="affiliateUrl" className="col-sm-3 col-md-3 col-form-label">Affiliate Url</label>
                             <div className="col-sm-9 col-md-8">
