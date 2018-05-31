@@ -44,3 +44,8 @@ node_modules
 .vs/config/applicationhost.config
 .vs/config/applicationhost.config
 .vs/config/applicationhost.config
+/.vs/Fanex.NAP.Licensee/DesignTimeBuild/.dtbcache
+/.vs/Fanex.NAP.Licensee/v15/Server/sqlite3/db.lock
+/.vs/Fanex.NAP.Licensee/v15/Server/sqlite3/storage.ide
+/.vs/Fanex.NAP.Licensee/v15/Server/sqlite3/storage.ide-shm
+/.vs/Fanex.NAP.Licensee/v15/Server/sqlite3/storage.ide-wal

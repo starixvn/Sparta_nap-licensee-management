@@ -38,7 +38,7 @@
             <section name="core" type="JavaScriptEngineSwitcher.Core.Configuration.CoreConfiguration, JavaScriptEngineSwitcher.Core" />
             <section name="msie" type="JavaScriptEngineSwitcher.Msie.Configuration.MsieConfiguration, JavaScriptEngineSwitcher.Msie" />
         </sectionGroup>
-        <section name="glimpse" type="Glimpse.Core.Configuration.Section, Glimpse.Core" />
+       
     </configSections>
     <appSettings configSource="Web.AppSettings.config" />
     <connectionStrings configSource="Web.ConnectionString.config" />
@@ -123,7 +123,7 @@
     <system.web>
 
         <compilation debug="false" targetFramework="4.0" />
-        <customErrors mode="Off">
+        <customErrors mode="RemoteOnly">
             <error statusCode="403" redirect="~/Utility/Error?err=403" />
             <error statusCode="404" redirect="~/Utility/Error?err=404" />
             <error statusCode="400" redirect="~/Utility/Error?err=404" />
@@ -148,14 +148,7 @@
             </namespaces>
         </pages>
 
-        <!-- Glimpse: This can be commented in to add additional data to the Trace tab when using WebForms
-        <trace writeToDiagnosticsTrace="true" enabled="true" pageOutput="false" /> -->
-        <httpModules>
-            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" />
-        </httpModules>
-        <httpHandlers>
-            <add path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" />
-        </httpHandlers>
+        
     </system.web>
 
     <system.webServer>
@@ -170,10 +163,6 @@
             <clientCache cacheControlMaxAge="8.00:00:00" cacheControlMode="UseMaxAge" />
         </staticContent>
         <validation validateIntegratedModeConfiguration="false" />
-
-        <modules runAllManagedModulesForAllRequests="true">
-            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
-        </modules>
 
         <handlers>
             <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
@@ -234,17 +223,7 @@
             </dependentAssembly>
         </assemblyBinding>
     </runtime>
-    <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
-        <!--
-          For more information on how to configure Glimpse, please visit http://getglimpse.com/Help/Configuration
-          or access {your site}/Glimpse.axd for even more details and a Configuration Tool to support you.
-      -->
-        <runtimePolicies>
-            <ignoredTypes>
-                <add type="Glimpse.AspNet.Policy.LocalPolicy, Glimpse.AspNet" />
-            </ignoredTypes>
-        </runtimePolicies>
-    </glimpse>
+
 </configuration>
 <#
 }

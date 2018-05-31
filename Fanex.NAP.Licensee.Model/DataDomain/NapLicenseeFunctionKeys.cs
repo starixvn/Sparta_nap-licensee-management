@@ -3,7 +3,7 @@
 // </summary>
 //
 // <history>
-//  <change date="6/23/2016 9:27:59 AM">Created and Implement</change>
+//  <change date="5/31/2018 11:11:00 AM">Created and Implement</change>
 // </history>
 namespace Fanex.NAP.Licensee.Model.DataDomain
 {
@@ -32,11 +32,15 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 	      
 		public  const  string EditDefaultBetSetting="EditDefaultBetSetting" ;       
 	      
+		public  const  string EditLicenseeVendor="EditLicenseeVendor" ;       
+	      
 		public  const  string Home="Home" ;       
 	      
 		public  const  string ITUsersManagement="ITUsersManagement" ;       
 	      
 		public  const  string LicenseeManagement="LicenseeManagement" ;       
+	      
+		public  const  string LicenseeSite="LicenseeSite" ;       
 	      
 		public  const  string ManageFunction="ManageFunction" ;       
 	      
@@ -47,6 +51,8 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 		public  const  string ManageMenu="ManageMenu" ;       
 	      
 		public  const  string ManageUser="ManageUser" ;       
+	      
+		public  const  string ManageVendorInfo="ManageVendorInfo" ;       
 	      
 		public  const  string SettingConfiguration="SettingConfiguration" ;       
 	      
