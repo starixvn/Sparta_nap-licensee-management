@@ -450,9 +450,13 @@
     <Content Include="reactpages\dist\css\dev\demo\demo.css" />
     <Content Include="reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="reactpages\dist\js\dev\demo\demo.js" />
+    <Content Include="reactpages\dist\js\dev\editvendor\editvendor.js" />
     <Content Include="reactpages\dist\js\dev\vendor.js" />
+    <Content Include="reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="reactpages\dist\js\pro\demo\demo.js" />
+    <Content Include="reactpages\dist\js\pro\editvendor\editvendor.js" />
     <Content Include="reactpages\dist\js\pro\vendor.js" />
+    <Content Include="reactpages\dist\js\pro\vendor\vendor.js" />
     <Content Include="Scripts\build\angular.js" />
     <Content Include="Scripts\build\angular.min.js" />
     <Content Include="Scripts\build\betsetting.js" />

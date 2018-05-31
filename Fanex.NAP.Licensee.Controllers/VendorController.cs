@@ -1,10 +1,14 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Web.Mvc;
+    using Core.Business;
+    using Core.Web.Attribute;
     using Model.Criteria.Vendor;
+    using Model.DataDomain;
     using Model.DTO;
     using Service;
 
+    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSite, Policy = Constant.Policy.Read)]
     public class VendorController : BaseController
     {
         private readonly IVendorService _vendorService;
@@ -14,6 +18,7 @@
             _vendorService = new VendorService();
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
@@ -26,6 +31,7 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(string vendorId)
         {
             var vendor = _vendorService.GetVendorById(vendorId);
@@ -34,6 +40,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditBetSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(Vendor vendor)
         {
             var result = _vendorService.UpdateVendor(vendor);

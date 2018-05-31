@@ -7,8 +7,7 @@
 // </history>
 namespace Fanex.NAP.Licensee.Model.DataDomain
 {
-	using System.Diagnostics.CodeAnalysis;
-	/// <summary>
+    /// <summary>
     /// Function keys.
     /// </summary>
 	public static class NapLicenseeFunctionKeys
