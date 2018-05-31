@@ -50,6 +50,11 @@
                 return RecheckInStatus.InvalidSite;
             }
 
+            if (currentSession == null || currentSession.OnUserId == 0)
+            {
+                return RecheckInStatus.KickOut;
+            }
+
             var status = _securityService.ReCheckIn(currentSession.OnUserId, settings.SiteId);
 
             return status > 0 ? RecheckInStatus.KickOut : RecheckInStatus.Success;
