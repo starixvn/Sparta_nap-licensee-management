@@ -24,7 +24,7 @@
 
             if (lvl1MenuItemList.Count == 0)
             {
-                <li class="@className"><a href="@Url.Content("~" + menuItem.Url)">@menuItem.Name</a></li>
+                <li class="@className"><a href="@Url.Content("~/" + menuItem.Url)">@menuItem.Name</a></li>
             }
             else
             {
@@ -35,7 +35,7 @@
                     <ul>
                         @foreach (MenuItem subMenuItem in lvl1MenuItemList)
                         {
-                            <li><a href="@Url.Content("~" + subMenuItem.Url)">@subMenuItem.Name</a></li>
+                            <li><a href="@Url.Content("~/" + subMenuItem.Url)">@subMenuItem.Name</a></li>
                         }
                     </ul>
                 </li>
