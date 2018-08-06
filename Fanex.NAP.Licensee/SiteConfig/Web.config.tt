@@ -34,11 +34,6 @@
         <section name="Fanex.Logging" type="Fanex.Logging.Configuration.LoggingSettings, Fanex.Logging" />
         <section name="NapSettings" type="Fanex.NAP.Core.Configuration.NapSettings, Fanex.NAP.Core" />
 		<section name="ONEbook.UM" type="ONEbook.UM.Configurations.UMClientConfiguration, ONEbook.UM" />
-        <sectionGroup name="jsEngineSwitcher">
-            <section name="core" type="JavaScriptEngineSwitcher.Core.Configuration.CoreConfiguration, JavaScriptEngineSwitcher.Core" />
-            <section name="msie" type="JavaScriptEngineSwitcher.Msie.Configuration.MsieConfiguration, JavaScriptEngineSwitcher.Msie" />
-        </sectionGroup>
-       
     </configSections>
     <appSettings configSource="Web.AppSettings.config" />
     <connectionStrings configSource="Web.ConnectionString.config" />
@@ -121,7 +116,7 @@
 	}
 	#>
     <system.web>
-
+		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
         <customErrors mode="RemoteOnly">
             <error statusCode="403" redirect="~/Utility/Error?err=403" />
@@ -136,17 +131,17 @@
         </authorization>
 	<#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
-        <pages>
-            <namespaces>
-                <add namespace="System.Web" />
-                <add namespace="System.Web.Helpers" />
-                <add namespace="System.Web.Mvc" />
-                <add namespace="System.Web.Mvc.Ajax" />
-                <add namespace="System.Web.Mvc.Html" />
-                <add namespace="System.Web.Routing" />
-                <add namespace="System.Web.WebPages" />
-            </namespaces>
-        </pages>
+         <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web" />
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>
 
         
     </system.web>
@@ -162,29 +157,19 @@
         <staticContent>
             <clientCache cacheControlMaxAge="8.00:00:00" cacheControlMode="UseMaxAge" />
         </staticContent>
-        <validation validateIntegratedModeConfiguration="false" />
+       <modules runAllManagedModulesForAllRequests="true">
 
-        <handlers>
-            <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
-            <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" />
-            <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
-            <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0" />
-            <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
-            <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
-            <add name="LessAssetHandler" path="*.less" verb="GET" type="BundleTransformer.Less.HttpHandlers.LessAssetHandler, BundleTransformer.Less" resourceType="File" preCondition="" />
-        </handlers>
-        <security>
-            <requestFiltering>
-                <hiddenSegments>
-                    <add segment="ClearScript.V8" />
-                </hiddenSegments>
-            </requestFiltering>
-        </security>
+    </modules>
+	 <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
     </system.webServer>
 
-    <runtime>
-
-           <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+   <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
         <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-11.0.0.0" newVersion="11.0.0.0" />
@@ -230,8 +215,7 @@
         <bindingRedirect oldVersion="0.0.0.0-4.1.1.2" newVersion="4.1.1.2" />
       </dependentAssembly>
     </assemblyBinding>
-
-    </runtime>
+  </runtime>
 
 </configuration>
 <#
