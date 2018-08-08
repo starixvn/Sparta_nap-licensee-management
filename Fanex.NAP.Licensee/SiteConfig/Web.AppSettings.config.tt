@@ -35,10 +35,8 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="1"/>
-    <add key="RemoteRefURL" value="tcp://ha.nexdev.net:8888/CallGetRefFunction" />
-    <!--<add key="RemoteCacheUrl" value="tcp://10.3.21.14:8090/CallGetOddsFunction" />-->
-    <add key="RemoteCacheUrl" value="tcp://ha.nexdev.net:8888/CallGetRefFunction" />
-    <add key="Glimpse:DisableAsyncSupport" value="true" />
+ <add key="Fanex.RemotingRef.Service.Url" value="http://ha.nexdev.net:7258/Main/" />
+ <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>
 				<#
@@ -53,8 +51,8 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="RemoteRefURL" value="tcp://10.40.40.29:8098/CallGetRefFunction" />
-	<add key="RemoteCacheUrl" value="tcp://10.3.21.14:8090/CallGetOddsFunction" />
+	 <add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.73:7207/Main/" />
+
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>
@@ -71,8 +69,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="RemoteRefURL" value="tcp://10.40.40.29:8098/CallGetRefFunction" />
-	<add key="RemoteCacheUrl" value="tcp://10.3.21.14:8090/CallGetOddsFunction" />
+	 <add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.47:7258/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>
@@ -89,8 +86,8 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="RemoteRefURL" value="tcp://172.16.4.118:8098/CallGetRefFunction" />
-	<add key="RemoteCacheUrl" value="tcp://172.16.4.118:8098/CallGetOddsFunction" />
+	 <add key="Fanex.RemotingRef.Service.Url" value="http://172.16.4.105:6207/Main/" />
+
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>
@@ -123,9 +120,8 @@ break;
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="1"/>
-    <add key="RemoteRefURL" value="tcp://ha.nexdev.net:8888/CallGetRefFunction" />
-    <!--<add key="RemoteCacheUrl" value="tcp://10.3.21.14:8090/CallGetOddsFunction" />-->
-    <add key="RemoteCacheUrl" value="tcp://ha.nexdev.net:8888/CallGetRefFunction" />
+ <add key="Fanex.RemotingRef.Service.Url" value="http://ha.nexdev.net:7258/Main/" />
+
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 
 </appSettings>

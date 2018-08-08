@@ -11,6 +11,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
     using System.Xml.Linq;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO.XmlLog;
+    using Fanex.RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -73,7 +74,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
             if (bettype > 0 && sport > 0)
             {
                 result.Id = sport;
-                result.Name = RemotingRef.RefData.GetSportName(sport.ToString(), ENGLISHLANGCODE);
+                result.Name = new RemotingRefService().GetSportName(sport.ToString(), ENGLISHLANGCODE);
                 if (sport == ORTHERSPORT)
                 {
                     if (bettype == MIXPARLAYBETTYPE)
