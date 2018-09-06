@@ -27,8 +27,6 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -180,6 +178,10 @@
     <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -224,26 +226,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppress.cs" />
-    <Compile Include="Web\BundleManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
-    <Content Include="SiteConfig\Web.config1.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.config.tt</DependentUpon>
-    </Content>
-    <Content Include="www\.webpack\build\utils.js" />
-    <Content Include="www\.webpack\build\webpack.base.conf.js" />
-    <Content Include="www\.webpack\build\webpack.dev.conf.js" />
-    <Content Include="www\.webpack\build\webpack.pro.conf.js" />
-    <Content Include="www\.webpack\config\alias.js" />
-    <Content Include="www\.webpack\config\loader.js" />
-    <Content Include="www\.webpack\config\path.js" />
-    <Content Include="www\.webpack\config\plugin.js" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -454,34 +442,6 @@
     <Content Include="Content\source\settingconfiguration\setting-configuration.less" />
     <Content Include="Content\source\settingconfiguration\setting-configuration.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
-    <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
-    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
-    <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
-    <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
-    <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
-    <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
-    <Content Include="www\reactpages\dist\js\dev\vendor.js" />
-    <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
-    <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
-    <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
-    <Content Include="www\reactpages\dist\js\pro\vendor.js" />
-    <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
-    <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
-    <Content Include="www\reactpages\src\scripts\actions\types.js" />
-    <Content Include="www\reactpages\src\scripts\lib\createReducer.js" />
-    <Content Include="www\reactpages\src\scripts\lib\site.js" />
-    <Content Include="www\reactpages\src\scripts\lib\store.js" />
-    <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\actionTypes.js" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\reducers\loaderReducer.js" />
-    <Content Include="www\reactpages\src\styles\components\react-select\react-select.min.css" />
     <Content Include="Scripts\build\angular.js" />
     <Content Include="Scripts\build\angular.min.js" />
     <Content Include="Scripts\build\betsetting.js" />
@@ -545,6 +505,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
+    <Content Include="SiteConfig\Web.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
     <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -576,8 +541,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="www\reactpages\src\styles\components\react-select\react-select.custom.scss" />
-    <Content Include="www\reactpages\src\styles\components\react-select\react-select.main.scss" />
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <Content Include="SiteConfig\Web.AppSettings.BACKUPMNL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
@@ -662,19 +625,9 @@
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
-    <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\EditForm.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\IgnoredFunctionList.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\AppContainer.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\DataGrid.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\FormFilter.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\IgnoredFunctionToggleable.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\vendor\list\index.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
-    <Folder Include="www\reactpages\src\styles\modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -699,16 +652,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.ConnectionString.config" />
+    <Content Include="Views\LicenseeManagement\Create.cshtml" />
     <Content Include="SiteConfig\Web.ConnectionString.SIT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
     <Content Include="SiteConfig\Web.SIT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
-    <Content Include="Views\Home\Demo.cshtml" />
-    <Content Include="Views\LicenseeVendor\Index.cshtml" />
-    <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
-    <Content Include="Views\LicenseeVendor\Edit.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
@@ -728,6 +678,7 @@
     <None Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
     <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
     <None Include="Areas\UserLogin\themes\select-site.less" />
+    <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
     <Content Include="Content\source\core\variables.less" />
     <Content Include="Content\source\core\common.less" />
     <Content Include="Content\source\core\site.less" />
@@ -787,9 +738,12 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
