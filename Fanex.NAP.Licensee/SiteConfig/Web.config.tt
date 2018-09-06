@@ -62,7 +62,7 @@
 	 break;
 	  case "UAT":
 	  #>
-	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.2.23.6:7257/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.40.40.248:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
 		<Domain>
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
@@ -75,7 +75,7 @@
 	 break;
 	  case "BACKUPMNL":
 	  #>
-	 <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-hub.ibcbk.com" ServiceUrls="http://10.40.40.22:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	 <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-hub.ibcbk.com" ServiceUrls="http://10.40.40.202:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
 		<Domain>
 			<add Name="http://nap-lm.ibcbk.com" Path="/" />
 		</Domain>
