@@ -67,7 +67,7 @@
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://10.40.40.248:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
@@ -80,7 +80,7 @@
 			<add Name="http://nap-lm.ibcbk.com" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.40.40.22:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://10.40.40.202:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
