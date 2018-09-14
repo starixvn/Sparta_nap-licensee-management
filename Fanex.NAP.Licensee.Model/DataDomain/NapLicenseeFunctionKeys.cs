@@ -35,11 +35,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
         public const string Home = "Home";
 
-        public const string ITUsersManagement = "ITUsersManagement";
-
-        public const string LicenseeManagement = "LicenseeManagement";
-
-        public const string LicenseeSite = "LicenseeSite";
+        public const string ManageLicenseeVendor = "ManageLicenseeVendor";
 
         public const string ManageFunction = "ManageFunction";
 

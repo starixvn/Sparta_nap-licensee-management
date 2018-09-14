@@ -12,7 +12,7 @@
     using Newtonsoft.Json;
     using Service;
 
-    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSite, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLicenseeVendor, Policy = Constant.Policy.Read)]
     public class LicenseeVendorController : BaseController
     {
         private readonly ILicenseeVendorService _vendorService;
