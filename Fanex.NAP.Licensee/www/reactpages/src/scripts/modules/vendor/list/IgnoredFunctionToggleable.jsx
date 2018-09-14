@@ -17,12 +17,11 @@ export default class IgnoredFunctionToggleable extends Component {
 
     render() {
         const { show } = this.state;
-        const ignoredFunctions = JSON.parse(this.props.functionList);
-        
+        const ignoredFunctions = JSON.parse(this.props.functionList.replace(",,", ","));
         return (
             <div className="ignored-function">
                 <a href="javascript:;" title={`Click to ${show ? "collapse" : "expand"}`}
-                    onClick={this.toggleFunctionList} style={{marginLeft: 10, display: "inline-block"}}>
+                    onClick={this.toggleFunctionList} style={{ marginLeft: 10, display: "inline-block" }}>
                     <i className={show ? "icon-collapse" : "icon-expand"}></i> [{ignoredFunctions.length} Function(s)]
                 </a>
 

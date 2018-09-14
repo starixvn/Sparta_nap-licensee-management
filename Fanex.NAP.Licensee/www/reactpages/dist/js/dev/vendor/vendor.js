@@ -5453,8 +5453,9 @@ var IgnoredFunctionToggleable = function (_Component) {
         value: function render() {
             var show = this.state.show;
 
-            var ignoredFunctions = JSON.parse(this.props.functionList);
-
+            var ignoredFunctions = this.props.functionList.split(",").filter(function (x) {
+                return !!x;
+            });
             return _react2.default.createElement(
                 "div",
                 { className: "ignored-function" },

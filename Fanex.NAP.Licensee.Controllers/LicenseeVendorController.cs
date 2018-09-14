@@ -31,6 +31,7 @@
         [HttpPost]
         public ActionResult GetVendorInfoList(VendorSearchingCriteria criteria)
         {
+            var vendorList = _vendorService.GetVendorList(criteria);
             return Json(_vendorService.GetVendorList(criteria));
         }
 
