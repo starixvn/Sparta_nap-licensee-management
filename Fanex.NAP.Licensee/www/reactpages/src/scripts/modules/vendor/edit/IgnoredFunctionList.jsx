@@ -73,7 +73,7 @@ export default class IgnoredFunctionList extends Component {
     render() {
         const { selectedFunctionList, functionKeyList } = this.state;
 
-        const originalExclusionList = (this.props.originalExclusionList && JSON.parse(this.props.originalExclusionList)) || [];
+        const originalExclusionList = (this.props.originalExclusionList && JSON.parse(this.props.originalExclusionList.replace(",,", ","))) || [];
 
         const originalFunctionText = originalExclusionList.join(",");
         const addingFunctionText = selectedFunctionList.filter(item => !originalExclusionList.includes(item)).join(",");
