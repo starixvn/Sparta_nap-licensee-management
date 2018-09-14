@@ -1,1 +1,9 @@
-﻿ErrorGeneratingOutput
+﻿
+// Generated helper templates
+// Generated items
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.SANDBOX.config
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.SIT.config
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.PRO.config
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.BACKUPMNL.config
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.UAT.config
+// Fanex.NAP.Licensee\SiteConfig\Web.AppSettings.LOCAL.config
