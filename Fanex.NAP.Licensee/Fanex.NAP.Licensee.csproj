@@ -652,13 +652,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.ConnectionString.config" />
-    <Content Include="Views\LicenseeManagement\Create.cshtml" />
     <Content Include="SiteConfig\Web.ConnectionString.SIT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
     <Content Include="SiteConfig\Web.SIT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
+    <Content Include="Views\LicenseeVendor\Edit.cshtml" />
+    <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
