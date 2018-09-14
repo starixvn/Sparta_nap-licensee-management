@@ -18,7 +18,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	SELECT TOP 1 
+	SELECT TOP(1)
 		   VendorID
 		  ,SiteName
 		  ,PortalUrl

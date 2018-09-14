@@ -18,10 +18,10 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	DECLARE @affActiveFunction TABLE(FunctionName NVARCHAR(50) NOT NULL);
-	INSERT INTO @affActiveFunction
+	INSERT INTO @affActiveFunction(FunctionName)
 	VALUES ('AffiliateItems'),('[Affiliate]'), ('[Payment]'), ('[CommissionGroup]'), ('[AffReport]'), ('[Media]'), ('[HotNews]'),('[AffEx.Rate]'),('lblAffiliateStatistics')
 	
-	INSERT INTO @affActiveFunction
+	INSERT INTO @affActiveFunction(FunctionName)
 	SELECT FunctionKey
 	FROM DBLIC.bodb_licensee.dbo.Functions WITH(NOLOCK)
 	WHERE isActive = 1 AND 

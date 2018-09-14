@@ -20,7 +20,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	UPDATE LicVendorProfile
+	UPDATE LicVendorProfile WITH (ROWLOCK, UPDLOCK)
 	SET PortalUrl = @PortalUrl,
 		InternalUrl = @InternalUrl,
 		LRF_Url = @LrfUrl,
