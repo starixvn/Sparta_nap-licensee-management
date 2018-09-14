@@ -1,20 +1,17 @@
-USE [SiteConfig]
-GO
-/****** Object:  StoredProcedure [dbo].[Nap_LM_LicVendorInfo_SelectById]    Script Date: 03/20/2018 12:51:00 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
+
 ALTER PROCEDURE [dbo].[Nap_LM_LicVendorInfo_SelectById]
 	@VendorId VARCHAR(50)
 AS
 /*
-	 Created by: [20180213@Walter]
+	 Created: Walter
+	 Date: 2018-02-13
 	 Task: Implement Vendor Info Management
 	 DB: DBCUST.SiteConfig
-	 Param's Explanation:  
+	 
 	 Revisions:
 	  - 20180213@Walter: Select Vendor Info By Vendor Id [Redmine: #83584]
+	  
 	 Example:
 	  exec Nap_LM_LicVendorInfo_SelectById @VendorId='59dq84e'
 */
@@ -32,3 +29,4 @@ BEGIN
 	  FROM LicVendorProfile WITH(NOLOCK)
 	  WHERE VendorID = @VendorId
 END
+GO
