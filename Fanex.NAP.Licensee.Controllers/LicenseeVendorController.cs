@@ -46,7 +46,7 @@
                 var originalExclusionJson = vendor.Exclusions;
                 var originalExclusionList = string.IsNullOrEmpty(originalExclusionJson) ?
                     new List<string>() :
-                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson);
+                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson.Replace(",,", ","));
 
                 var functionKeyList = _vendorService.GetFunctionKeyList();
                 var renderingFunctionKeyList = functionKeyList.Union(originalExclusionList);
