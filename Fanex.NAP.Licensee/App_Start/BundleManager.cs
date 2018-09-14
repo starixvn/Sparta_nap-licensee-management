@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 
-namespace Fanex.NAP.Licensee.Web
+namespace Fanex.NAP.Licensee.App_Start
 {
     public static class BundleManager
     {

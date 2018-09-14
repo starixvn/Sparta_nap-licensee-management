@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleManager.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
@@ -231,6 +232,62 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <None Include="SiteConfig\Web.ConnectionString.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </None>
+    <Content Include="www\.webpack\build\utils.js" />
+    <Content Include="www\.webpack\build\webpack.base.conf.js" />
+    <Content Include="www\.webpack\build\webpack.dev.conf.js" />
+    <Content Include="www\.webpack\build\webpack.pro.conf.js" />
+    <Content Include="www\.webpack\config\alias.js" />
+    <Content Include="www\.webpack\config\loader.js" />
+    <Content Include="www\.webpack\config\path.js" />
+    <Content Include="www\.webpack\config\plugin.js" />
+    <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
+    <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
+    <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
+    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
+    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
+    <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
+    <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
+    <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
+    <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\vendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
+    <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\vendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
+    <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
+    <Content Include="www\reactpages\src\scripts\actions\types.js" />
+    <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
+    <Content Include="www\reactpages\src\scripts\lib\createReducer.js" />
+    <Content Include="www\reactpages\src\scripts\lib\site.js" />
+    <Content Include="www\reactpages\src\scripts\lib\store.js" />
+    <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\EditForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\IgnoredFunctionList.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\edit\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\IgnoredFunctionToggleable.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\vendor\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\reducers\loaderReducer.js" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.min.css" />
+    <Content Include="www\reactpages\src\styles\modules\demo\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="www\reactpages\src\styles\modules\demo\index.js" />
     <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
@@ -620,6 +677,18 @@
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
+    <Content Include="www\reactpages\dist\css\dev\demo\demo.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\demo\demo.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\demo\demo.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\vendor.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js.map" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.custom.scss" />
+    <Content Include="www\reactpages\src\styles\components\react-select\react-select.main.scss" />
+    <Content Include="www\reactpages\src\styles\modules\demo\_demo.scss" />
+    <Content Include="www\reactpages\src\styles\modules\vendor\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
