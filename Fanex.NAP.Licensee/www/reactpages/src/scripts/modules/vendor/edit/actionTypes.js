@@ -1,0 +1,2 @@
+export const SET_VENDOR_INFO = "SET_VENDOR_INFO";
+export const SET_FUNCTION_LIST = "SET_FUNCTION_LIST";

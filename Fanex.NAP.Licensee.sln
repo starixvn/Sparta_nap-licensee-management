@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee", "Fanex.NAP.Licensee\Fanex.NAP.Licensee.csproj", "{0970FB24-9D16-4C86-A170-C2A2156C97EB}"
 EndProject
@@ -27,8 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.Licensee.Controllers", "Fanex.NAP.Licensee.Controllers\Fanex.NAP.Licensee.Controllers.csproj", "{4C37DC9E-1058-4DD9-AFA8-00B4F9C326EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grunt", "grunt", "{204A9528-77B4-412C-BCB0-68B9C52DEB53}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend-config", "frontend-config", "{204A9528-77B4-412C-BCB0-68B9C52DEB53}"
 	ProjectSection(SolutionItems) = preProject
+		.babelrc = .babelrc
 		grunt.json = grunt.json
 		Gruntfile.js = Gruntfile.js
 		package.json = package.json

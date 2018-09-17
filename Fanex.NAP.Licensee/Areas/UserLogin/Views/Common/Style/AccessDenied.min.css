@@ -1,1 +1,1 @@
-#deadcentre,#horizon{position:absolute;visibility:visible}#horizon{display:block;height:1px;left:0;overflow:visible;text-align:center;top:50%;width:100%}#deadcentre{background:url(images/accessDenied.gif);height:90px;left:50%;margin-left:-65px;top:-45px;width:130px}
+#horizon{display:block;height:1px;left:0;overflow:visible;position:absolute;text-align:center;top:50%;visibility:visible;width:100%}#deadcentre{background:url(images/accessDenied.gif);height:90px;left:50%;margin-left:-65px;position:absolute;top:-45px;visibility:visible;width:130px}

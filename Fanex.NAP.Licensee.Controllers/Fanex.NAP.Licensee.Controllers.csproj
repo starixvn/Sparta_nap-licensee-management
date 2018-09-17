@@ -150,6 +150,7 @@
     <Compile Include="UtilityController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LicenseeVendorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj">

@@ -23,6 +23,8 @@
     </Setting>
     <Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
+    <Setting Key="WriteLog_UserLog_UserControl" SpName="WriteLog_UserLog_UserControl" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet">
+    </Setting>
   </Function>
   <Function Name="Site.Nap.Licensee.SettingConfiguration">
 
@@ -47,5 +49,12 @@
     <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 
+  </Function>
+
+  <Function Name="Site.Nap.Licensee.VendorInfoManagement">
+    <Setting Key="Nap_LM_LicVendorInfo_Select" SpName="Nap_LM_LicVendorInfo_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicVendorInfo_SelectById" SpName="Nap_LM_LicVendorInfo_SelectById" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicVendorInfo_Update" SpName="Nap_LM_LicVendorInfo_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

@@ -37,7 +37,7 @@
     <add key="IsLocalTest" value="1"/>
  <add key="Fanex.RemotingRef.Service.Url" value="http://ha.nexdev.net:7258/Main/" />
  <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 				<#
 				break;
@@ -54,7 +54,7 @@
 	 <add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.248:7207/Main/" />
 
     <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 
 				<#
@@ -71,7 +71,7 @@
     <add key="IsLocalTest" value="0"/>
 	 <add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.47:7258/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 
 				<#
@@ -89,7 +89,7 @@
 	 <add key="Fanex.RemotingRef.Service.Url" value="http://172.16.4.105:6207/Main/" />
 
     <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 <#
 break;
@@ -105,7 +105,7 @@ break;
     <add key="IsLocalTest" value="0"/>
  <add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.202:7258/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 				<#
 				break;
@@ -122,7 +122,7 @@ break;
  <add key="Fanex.RemotingRef.Service.Url" value="http://ha.nexdev.net:7258/Main/" />
 
     <add key="Glimpse:DisableAsyncSupport" value="true" />
-
+    <add key="BundlesVersion" value="0" />
 </appSettings>
 				<#
 				break;

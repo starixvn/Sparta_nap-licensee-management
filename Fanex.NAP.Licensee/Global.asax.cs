@@ -1,13 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee
 {
+    using Fanex.Data.Configuration;
+    using Fanex.NAP.Licensee.AppStart;
     using System;
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;
-    using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.Data.Configuration;
-    using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
 
     /// <summary>

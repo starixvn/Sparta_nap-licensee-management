@@ -38,11 +38,11 @@
   ],
   "cssCore": [
     "Fanex.NAP.Licensee/Content/source/bootstrap/bootstrap.css",
-    "Fanex.NAP.Licensee/Content/source/core/site.css",
     "Fanex.NAP.Licensee/Content/source/plugin/multi-select-control.css",
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.min.css",
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.theme.min.css",
-    "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.structure.min.css"
+    "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.structure.min.css",
+    "Fanex.NAP.Licensee/Content/source/core/site.css"
   ],
   "jsAngular": [
     "Fanex.NAP.Licensee/Scripts/source/angular/angular.js",

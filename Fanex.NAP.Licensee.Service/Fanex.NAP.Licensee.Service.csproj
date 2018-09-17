@@ -104,9 +104,6 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NSubstitute">
-      <HintPath>..\packages\NSubstitute.1.7.2.0\lib\NET40\NSubstitute.dll</HintPath>
-    </Reference>
     <Reference Include="ONEbook.UM, Version=2.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.9\lib\net40\ONEbook.UM.dll</HintPath>
     </Reference>
@@ -139,12 +136,16 @@
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="Core\IObjectDbGenerator.cs" />
+    <Compile Include="ILogWriterService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />
+    <Compile Include="ILicenseeVendorService.cs" />
+    <Compile Include="LogWriterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingConfigurationService.cs" />
     <Compile Include="Utilities\AppSession.cs" />
     <Compile Include="Utilities\PermissionService.cs" />
     <Compile Include="Utilities\SessionManager.cs" />
+    <Compile Include="LicenseeVendorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.Licensee.Model\Fanex.NAP.Licensee.Model.csproj">

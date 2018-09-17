@@ -1,0 +1,28 @@
+﻿@import "../../components/react-select/react-select.main";
+
+.edit-form {
+    margin-top: 15px;
+
+    .addFunction{
+        margin-right: 0;
+    }
+
+    .ignored-function {
+        padding: 0;
+        overflow: auto;
+        max-height: 250px;
+
+        li {
+            padding: 10px 0;
+
+            &:hover {
+                background: #dedcd0;
+            }
+        }
+    }
+
+    .remove-function {
+        float: right;
+        padding-right: 10px;
+    }
+}

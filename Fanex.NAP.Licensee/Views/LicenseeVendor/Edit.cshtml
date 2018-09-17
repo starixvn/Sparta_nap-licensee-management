@@ -1,0 +1,43 @@
+﻿
+@using Fanex.NAP.Licensee.App_Start
+
+@model Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor.EditVendorViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var vendor = Model.VendorInfo;
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Vendor Info</li>
+        <li>Licensee Site</li>
+        <li class="current">Edit</li>
+    </ul>
+
+    <a class="btn-back" href="@Url.Content("~/LicenseeVendor")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/editvendor/editvendor.css")
+}
+
+@section FooterJs{
+    <script>
+        var initialState = {
+            licenseeVendorInfo: {
+                vendorId: '@vendor.VendorId',
+                siteName: '@vendor.SiteName',
+                portalUrl: '@vendor.PortalUrl',
+                internalUrl: '@vendor.InternalUrl',
+                lrfUrl: '@vendor.LrfUrl',
+                affiliateUrl: '@vendor.AffiliateUrl',
+                exclusions: '@Html.Raw(vendor.Exclusions)'
+            },
+            functionKeyList: @Html.Raw(Model.FunctionKeyList)
+        }
+    </script>
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editvendor/editvendor.js")
+}
+
+<div id="app-container"></div>
