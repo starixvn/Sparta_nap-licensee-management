@@ -4,7 +4,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_Operator_Select]
 	@SiteName	VARCHAR(50)	= '',
 	@CurrencyId	INT			= 0,
 	@OperatorId	VARCHAR(50)	= '',
-	@AgenId		INT			= 0
+	@AgentId	INT			= 0
 AS
 /*
 	 Created: Amanda
@@ -27,6 +27,6 @@ BEGIN
 	  WHERE (@SiteName = '' OR o.SiteName = @SiteName)
 			AND (@CurrencyId = 0 OR o.Currency = @CurrencyId)
 			AND (@OperatorId = 0 OR o.OperatorID = @OperatorId)
-			AND (@AgenId = 0 OR o.AgentID = @AgenId)
+			AND (@AgentId = 0 OR o.AgentID = @AgentId)
 END
 GO
