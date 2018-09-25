@@ -57,4 +57,9 @@
     <Setting Key="Nap_LM_LicVendorInfo_Update" SpName="Nap_LM_LicVendorInfo_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
+
+  <Function Name="Site.Nap.Licensee.OperatorManagement">
+    <Setting Key="Nap_LM_Operator_Select" SpName="Nap_LM_Operator_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_SubsidiarySiteName_Select" SpName="Nap_LM_SubsidiarySiteName_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+  </Function>
 </Functions>

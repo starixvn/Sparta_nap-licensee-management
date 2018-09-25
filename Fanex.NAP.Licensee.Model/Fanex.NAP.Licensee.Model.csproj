@@ -128,6 +128,7 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
     <Compile Include="DTO\LoginUser.cs" />
+    <Compile Include="DTO\Operator.cs" />
     <Compile Include="DTO\ProductTypeItem.cs" />
     <Compile Include="DTO\RecheckInStatus.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
@@ -179,6 +181,7 @@
     </None>
     <None Include="packages.config" />
     <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
+    <Compile Include="ViewModel\ManageOperator\ManageOperatorViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />

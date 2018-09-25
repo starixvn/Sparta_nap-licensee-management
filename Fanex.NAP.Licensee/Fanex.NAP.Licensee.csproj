@@ -305,6 +305,9 @@
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -710,6 +713,11 @@
     <Content Include="www\reactpages\src\styles\components\react-select\react-select.main.scss" />
     <Content Include="www\reactpages\src\styles\modules\demo\_demo.scss" />
     <Content Include="www\reactpages\src\styles\modules\vendor\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\operator\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -747,6 +755,8 @@
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
     <Content Include="TestFolder\SimpleSample.txt4" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\ManageOperator\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
@@ -828,10 +838,6 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
