@@ -24,9 +24,9 @@ BEGIN
 	SELECT o.AgentID, o.SiteName, o.Currency, e.currency, o.OperatorID
 	  FROM dbo.Operator o WITH(NOLOCK)
 	  INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
-	  WHERE (@SiteName = '' OR o.SiteName = @SiteName)
+	  WHERE (ISNULL(@SiteName,'') = '' OR o.SiteName = @SiteName)
 			AND (@CurrencyId = 0 OR o.Currency = @CurrencyId)
-			AND (@OperatorId = 0 OR o.OperatorID = @OperatorId)
+			AND (ISNULL(@OperatorId,'') = '' OR o.OperatorID = @OperatorId)
 			AND (@AgentId = 0 OR o.AgentID = @AgentId)
 END
 GO
