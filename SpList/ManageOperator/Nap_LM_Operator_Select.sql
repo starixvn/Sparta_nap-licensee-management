@@ -1,10 +1,11 @@
 /*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Operator_Select]
-	@SiteName	VARCHAR(50)	= '',
-	@CurrencyId	INT			= 0,
-	@OperatorId	VARCHAR(50)	= '',
-	@AgentId	INT			= 0
+	@SiteName			VARCHAR(50)	= '',
+	@CurrencyId			INT			= 0,
+	@OperatorId			VARCHAR(50)	= '',
+	@AgentId			INT			= 0,
+	@IsEmptyOperatorId	BIT			= 0
 AS
 /*
 	 Created: Amanda
@@ -21,12 +22,16 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	SELECT o.AgentID, o.SiteName, o.Currency, e.currency, o.OperatorID
+	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID
 	  FROM dbo.Operator o WITH(NOLOCK)
 	  INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
-	  WHERE (ISNULL(@SiteName,'') = '' OR o.SiteName = @SiteName)
+	  WHERE (@AgentId = 0 OR o.AgentID = @AgentId) 
+			AND (ISNULL(@SiteName,'') = '' OR o.SiteName = @SiteName)
 			AND (@CurrencyId = 0 OR o.Currency = @CurrencyId)
-			AND (ISNULL(@OperatorId,'') = '' OR o.OperatorID = @OperatorId)
-			AND (@AgentId = 0 OR o.AgentID = @AgentId)
+			AND (
+				(@IsEmptyOperatorId = 1 AND ISNULL(o.OperatorID,'') = '') 
+				OR 
+				(@IsEmptyOperatorId = 0 AND (ISNULL(@OperatorId,'') = '' OR o.OperatorID = @OperatorId))
+			)
 END
 GO
