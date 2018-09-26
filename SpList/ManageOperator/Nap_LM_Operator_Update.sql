@@ -19,8 +19,11 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	UPDATE dbo.Operator WITH(ROWLOCK, UPDLOCK)
-	SET OperatorID = @OperatorId
-	WHERE AgentID = @AgentId
+	IF EXISTS (SELECT 1 FROM dbo.Operator WITH (NOLOCK) WHERE AgentID = @AgentId AND ISNULL(OperatorID,'') = '' )
+	BEGIN
+		UPDATE dbo.Operator WITH(ROWLOCK, UPDLOCK)
+		SET OperatorID = @OperatorId
+		WHERE AgentID = @AgentId
+	END
 END
 GO

@@ -3,7 +3,7 @@
 CREATE PROCEDURE [dbo].[Nap_LM_Operator_Insert]
 	@SiteName			VARCHAR(50),
 	@CurrencyId			INT,
-	@OperatorId			VARCHAR(50),
+	@OperatorId			VARCHAR(50) = NULL,
 	@AgentId			INT
 AS
 /*
