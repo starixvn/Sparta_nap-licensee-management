@@ -1,0 +1,41 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.OperatorViewModel
+@{
+    var serializer = new JavaScriptSerializer();
+
+    var currencyList = Model.ViewData.CurrencyList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    var siteNameList = Model.ViewData.SiteNameList.Select(x => new { label = x, value = x }).ToList();
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Manage Operator</li>
+        <li class="current">Operator</li>
+    </ul>
+
+    <a class="btn-back" href="@Url.Content("~/ManageOperator")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/operator/operator.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            currencyList: @Html.Raw(serializer.Serialize(currencyList)),
+            selectedCurrency: @Html.Raw(serializer.Serialize(currencyList.FirstOrDefault())),
+            siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
+            selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
+            operator: @Html.Raw(serializer.Serialize(Model.Operator))
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/operator/operator.js")
+}
+
+<div id="app-container"></div>
+

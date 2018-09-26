@@ -3,20 +3,28 @@
 .Select {
     display: inline-block;
     width: 150px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
 }
 
-.Select-value {
-    line-height: 23px !important;
-}
-
-.Select-placeholder {
-    line-height: 27px !important;
-}
-
-.Select-input {
-    height: 23px;
-}
-
-.Select-control {
-    height: 25px;
+.edit-form {
+    margin-top: 10px;
 }

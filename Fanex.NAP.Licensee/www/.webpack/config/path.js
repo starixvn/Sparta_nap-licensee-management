@@ -18,7 +18,8 @@ const scriptPaths = {
     demo: './www/reactpages/src/scripts/modules/demo',
     vendor: './www/reactpages/src/scripts/modules/vendor/list',
     editvendor: './www/reactpages/src/scripts/modules/vendor/edit',
-    operator: './www/reactpages/src/scripts/modules/operator/list'
+    operatorlist: './www/reactpages/src/scripts/modules/operator/list',
+    operator: './www/reactpages/src/scripts/modules/operator/item'
 };
 
 module.exports = {

@@ -6,10 +6,10 @@
 
         public int AgentId { get; set; }
 
-        public string Currency { get; set; }
+        public string CurrencyName { get; set; }
 
         public int CurrencyId { get; set; }
 
-        public string OperatorID { get; set; }
+        public string OperatorId { get; set; }
     }
 }

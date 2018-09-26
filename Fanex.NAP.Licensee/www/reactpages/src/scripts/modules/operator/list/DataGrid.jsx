@@ -42,6 +42,7 @@ export class DataGrid extends Component {
                             <th>Agent ID</th>
                             <th>Currency</th>
                             <th>Operator ID</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -52,8 +53,17 @@ export class DataGrid extends Component {
                                     <tr key={index}>
                                         <td>{item.SiteName}</td>
                                         <td>{item.AgentId}</td>
-                                        <td>{item.Currency}</td>
-                                        <td>{item.OperatorID}</td>
+                                        <td>{item.CurrencyName}</td>
+                                        <td>{item.OperatorId}</td>
+                                        {
+                                            (item.OperatorId === null || item.OperatorId === '')
+                                            ? <td className="text-center">
+                                                <a href={window.rootUrl + `ManageOperator/Get?agentId=${item.AgentId}`}>
+                                                    <i className="icon-edit"></i>
+                                                </a>
+                                              </td>
+                                            : <td></td>
+                                        }
                                     </tr>
                                 )
                             })

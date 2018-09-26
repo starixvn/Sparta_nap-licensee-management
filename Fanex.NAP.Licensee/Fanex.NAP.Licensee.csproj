@@ -273,6 +273,7 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="TestFolder\ReadMe.txt" />
+    <Content Include="Views\ManageOperator\Get.cshtml" />
     <Content Include="www\.webpack\build\utils.js" />
     <Content Include="www\.webpack\build\webpack.base.conf.js" />
     <Content Include="www\.webpack\build\webpack.dev.conf.js" />
@@ -305,6 +306,8 @@
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\item\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\item\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\reducer.js" />

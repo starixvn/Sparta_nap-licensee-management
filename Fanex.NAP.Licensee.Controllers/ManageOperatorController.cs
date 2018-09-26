@@ -23,19 +23,48 @@
         [HttpGet]
         public ActionResult Index()
         {
-            return View(GetViewModel());
+            return View(GetSearchViewModel());
+        }
+
+        [HttpGet]
+        public ActionResult Get(int agentId = 0)
+        {
+            var viewModel = new OperatorViewModel();
+            if (agentId == 0)
+            {
+                viewModel.ViewData = GetSearchViewModel();
+            }
+            else {
+                viewModel.Operator = _operatorService.GetOperator(agentId);
+            }
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public JsonResult Search(OperatorCriteria criteria)
+        public JsonResult Search(SearchOperatorCriteria criteria)
         {
             var result = _operatorService.GetOperators(criteria);
             return Json(result);
         }
 
-        private ManageOperatorViewModel GetViewModel()
+        [HttpPost]
+        public JsonResult Add(OperatorCriteria criteria)
         {
-            return new ManageOperatorViewModel
+            var result = _operatorService.AddOperator(criteria);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult Update(OperatorCriteria criteria)
+        {
+            var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId);
+            return Json(result);
+        }
+
+        private SearchOperatorViewModel GetSearchViewModel()
+        {
+            return new SearchOperatorViewModel
             {
                 SiteNameList = _operatorService.GetSiteNames(),
                 CurrencyList = _commonService.GetCurrencyList

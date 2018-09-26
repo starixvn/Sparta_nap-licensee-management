@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using DTO;
 
-    public class ManageOperatorViewModel
+    public class SearchOperatorViewModel
     {
         public IEnumerable<CurrencyItem> CurrencyList { get; set; }
 

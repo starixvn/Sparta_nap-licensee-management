@@ -8,6 +8,12 @@
     {
         IEnumerable<string> GetSiteNames();
 
-        IEnumerable<Operator> GetOperators(OperatorCriteria criteria);
+        IEnumerable<Operator> GetOperators(SearchOperatorCriteria criteria);
+
+        Operator AddOperator(OperatorCriteria criteria);
+
+        Operator UpdateOperator(int agentId, string operatorId);
+
+        Operator GetOperator(int agentId);
     }
 }

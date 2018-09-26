@@ -17,7 +17,8 @@ export class FormFilter extends Component {
 
         this.params = {
             operatorId: '',
-            agentId: ''
+            agentId: '',
+            isEmptyOperatorId: false
         };
     }
 
@@ -26,6 +27,13 @@ export class FormFilter extends Component {
         const name = target.name;
 
         this.params[name] = target.value;
+    }
+
+    _handleOnCheck = (e) => {
+        const target = e.target;
+        const name = target.name;
+
+        this.params[name] = target.checked;
     }
 
     _handleKeyPress = (e) => {
@@ -66,6 +74,7 @@ export class FormFilter extends Component {
             agentId: this.params.agentId,
             siteName: this.state.selectedSiteName.value,
             currencyId: this.state.selectedCurrency.value,
+            isEmptyOperatorId: this.params.isEmptyOperatorId,
             timeStamp: new Date().getTime()
         };
 
@@ -101,6 +110,13 @@ export class FormFilter extends Component {
                 <div className="form-group">
                     <label>Agent ID</label>
                     <input type="text" name="agentId" onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
+                </div>
+
+                <div className="form-group">
+                    <label className="checkbox-inline">           
+                        <input type="checkbox" name="isEmptyOperatorId" onChange={this._handleOnCheck} />
+                        Empty Operator ID
+                    </label>
                 </div>
 
                 <div className="form-group">

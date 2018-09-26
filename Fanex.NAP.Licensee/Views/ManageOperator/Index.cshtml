@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 }
-@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.ManageOperatorViewModel
+@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.SearchOperatorViewModel
 @{
     var serializer = new JavaScriptSerializer();
 
@@ -33,7 +33,7 @@
         }
     </script>
 
-    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/operator/operator.js")
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/operatorlist/operatorlist.js")
 }
 
 <div id="app-container"></div>
