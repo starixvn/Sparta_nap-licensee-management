@@ -20,7 +20,7 @@ BEGIN
 	
 	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID 
 	FROM dbo.Operator o WITH(NOLOCK)
-	INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.currency
+	INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
 	WHERE o.AgentID = @AgentId
 END
 GO
