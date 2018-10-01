@@ -47,8 +47,6 @@ namespace Fanex.NAP.Licensee.Service
                     db.ExecuteNonQuery(new
                     {
                         vendor.VendorId,
-                        vendor.PortalUrl,
-                        vendor.InternalUrl,
                         vendor.LrfUrl,
                         vendor.AffiliateUrl,
                         vendor.Exclusions

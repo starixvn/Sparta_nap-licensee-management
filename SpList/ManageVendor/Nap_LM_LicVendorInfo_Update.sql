@@ -2,8 +2,6 @@
 
 ALTER PROCEDURE [dbo].[Nap_LM_LicVendorInfo_Update]
 	@VendorId VARCHAR(50),
-	@PortalUrl VARCHAR(200) = NULL,
-	@InternalUrl VARCHAR(200) = NULL,
 	@LrfUrl VARCHAR(200) = NULL,
 	@AffiliateUrl VARCHAR(200) = NULL,
 	@Exclusions VARCHAR(MAX) = NULL
@@ -21,9 +19,7 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	UPDATE LicVendorProfile WITH (ROWLOCK, UPDLOCK)
-	SET PortalUrl = @PortalUrl,
-		InternalUrl = @InternalUrl,
-		LRF_Url = @LrfUrl,
+	SET LRF_Url = @LrfUrl,
 		AffiliateUrl = @AffiliateUrl,
 		Exclusions = @Exclusions
 	WHERE VendorID = @VendorId

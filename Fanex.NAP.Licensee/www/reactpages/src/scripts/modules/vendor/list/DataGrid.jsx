@@ -49,10 +49,10 @@ export class DataGrid extends Component {
                                     <td>{item.VendorId}</td>
                                     <td>{item.SiteName}</td>
                                     <td className="text-center">{LicenseeType[item.LicenseeType] || item.LicenseeType}</td>
-                                    <td>{item.PortalUrl}</td>
-                                    <td>{item.InternalUrl}</td>
-                                    <td>{item.LrfUrl}</td>
-                                    <td>{item.AffiliateUrl}</td>
+                                    <td><a href={item.PortalUrl} target="_blank">{item.PortalUrl}</a></td>
+                                    <td><a href={item.InternalUrl} target="_blank">{item.InternalUrl}</a></td>
+                                    <td><a href={item.LrfUrl} target="_blank">{item.LrfUrl}</a></td>
+                                    <td><a href={item.AffiliateUrl} target="_blank">{item.AffiliateUrl}</a></td>
                                     <td style={{ width: 240 }}>
                                         {item.Exclusions && <IgnoredFunctionToggleable functionList={item.Exclusions} />}
                                     </td>
