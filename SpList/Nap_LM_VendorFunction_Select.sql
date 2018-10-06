@@ -10,6 +10,7 @@ AS
 	 
 	 Revisions:
 	  - 20180212@Walter: Select Functions From Lrf and AFF [Redmine: #83584]
+	  - 20181005@Amanda: Remove alias DBLIC [Redmine: #99855]
 	  
 	 Example:
 	  exec Nap_LM_VendorFunction_Select
@@ -23,7 +24,7 @@ BEGIN
 	
 	INSERT INTO @affActiveFunction(FunctionName)
 	SELECT FunctionKey
-	FROM DBLIC.bodb_licensee.dbo.Functions WITH(NOLOCK)
+	FROM bodb_licensee.dbo.Functions WITH(NOLOCK)
 	WHERE isActive = 1 AND 
 		 Environment = 'LIVE' AND 
 		 ParentId <> 6 AND 
