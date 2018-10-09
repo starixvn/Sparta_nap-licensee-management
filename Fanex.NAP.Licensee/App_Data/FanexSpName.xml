@@ -13,7 +13,7 @@
     </Setting>
     <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBCUST.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify_UAT4" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
       <Mapping DataField="AgentID" ObjectProperty="Id" />
