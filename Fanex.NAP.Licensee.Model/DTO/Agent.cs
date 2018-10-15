@@ -10,6 +10,7 @@
             {
                 return _sitename;
             }
+
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))

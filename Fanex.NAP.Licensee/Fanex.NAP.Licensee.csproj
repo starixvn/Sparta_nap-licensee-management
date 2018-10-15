@@ -273,6 +273,7 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="TestFolder\ReadMe.txt" />
+    <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
     <Content Include="Views\ManageOperator\Get.cshtml" />
     <Content Include="www\.webpack\build\utils.js" />
     <Content Include="www\.webpack\build\webpack.base.conf.js" />
@@ -721,6 +722,8 @@
     <Content Include="www\reactpages\src\scripts\modules\operator\list\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\AppContainer.jsx" />
     <Content Include="www\reactpages\src\styles\modules\operator\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\import\ImportPage.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\import\index.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -760,6 +763,7 @@
     <Content Include="TestFolder\SimpleSample.txt4" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\ManageOperator\Index.cshtml" />
+    <Content Include="Views\ManageOperator\Import.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

@@ -4,11 +4,13 @@
     {
         private string _operatorId;
 
-        public string OperatorId {
+        public string OperatorId
+        {
             get
             {
                 return _operatorId;
             }
+
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
@@ -18,6 +20,6 @@
             }
         }
 
-        public bool IsValid => AgentId > 0 && CurrencyId > 0 && !string.IsNullOrWhiteSpace(SiteName);
+        public bool IsValid => AgentId > 0 && !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(SiteName);
     }
 }

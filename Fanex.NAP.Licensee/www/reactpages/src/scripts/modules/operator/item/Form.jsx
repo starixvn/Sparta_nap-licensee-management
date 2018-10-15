@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import Select from 'react-select';
 import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 
@@ -9,61 +8,61 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
 
-        const agentId = defaultState.operator.AgentId;
-
         this.state = {
-            selectedSiteName: agentId === 0 ? defaultState.selectedSiteName : { value: defaultState.operator.SiteName, label: defaultState.operator.SiteName },
-            isValidSiteName: true,
-            selectedCurrency: agentId === 0 ? defaultState.selectedCurrency : { value: defaultState.operator.CurrencyId, label: defaultState.operator.CurrencyName },
-            isValidCurrency: true,
             isLoading: false,
-            operator: defaultState.operator
+            operator: Object.assign({}, defaultState.operator),
+            error: defaultState.operator.AgentId ? '' : 'Agent ID is empty',
+            agentId: ''
         };
 
-        this.params = {
-            agentId: agentId === 0 ? '' : agentId,
-            operatorId: agentId === 0 ? '' : defaultState.operator.OperatorId
-        };
-    }
-
-    _handleInputChange = (e) => {
-        const target = e.target;
-        const name = target.name;
-
-        this.params[name] = target.value;
+        this.originalAgentId = defaultState.operator.AgentId;
+        this.originalOperatorId = defaultState.operator.OperatorId;
     }
 
     _handleSubmit = (e) => {
         e.preventDefault();
 
-        if (this._validate()) {
+        const { operator, error } = this.state.operator;
+
+        if (!error) {
             const params = {
-                operatorId: this.params.operatorId,
-                agentId: this.params.agentId,
-                siteName: this.state.selectedSiteName.value,
-                currencyId: this.state.selectedCurrency.value
+                operatorId: operator.OperatorId,
+                agentId: operator.AgentId
             };
 
             this._submit(params);
         }
+        else {
+            this._alert('Invalid input!');
+        }
+    }
+
+    _handleOperatorIdChanged = (e) => {
+        let operator = Object.assign({}, this.state.operator);
+        operator.OperatorId = e.target.value;
+
+        this.setState({operator: operator});
+
     }
 
     _submit(params) {
         this._toggleLoader(true);
-        const url = this.state.operator.AgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
+        const url = this.originalAgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
         Site.fetchData(params, url)
-            .then(response => {
-                this.setState({
-                    operator: response.data, 
-                    isLoading: false 
-                });
-                
-                if (this.state.operator.AgentId > 0 && this.state.operator.OperatorId !== params.operatorId) {
+            .then(response => {                
+                if (this.state.operator.AgentId > 0 && response.data.OperatorId !== params.operatorId) {
                     this._alert('OperatorId has been updated by someone!');
                 }
                 else {
                     this._alert('Success!');
                 }
+
+                this.setState({
+                    operator: response.data, 
+                    isLoading: false 
+                });
+                this.originalAgentId = response.data.AgentId;
+                this.originalOperatorId = response.data.OperatorId;
             }).catch(err => {
                 this._alert('Please try again!');
                 this._toggleLoader(false);
@@ -78,14 +77,44 @@ export default class Form extends Component {
         this.setState({ isLoading: isLoading });
     }
 
-    _validate() {
-        return true;
+    _validateAgent = () => {
+        Site.fetchData({ agentId : this.state.agentId }, 'ManageOperator/Validate')
+            .then(response => {                
+                if (response.data.IsValid) {
+                    this.setState({
+                        operator: response.data.Agent,
+                        error: '',
+                        isLoading: false 
+                    });
+                }
+                else {
+                    this.setState({
+                        error: response.data.Error,
+                        isLoading: false,
+                        operator: Object.assign({}, defaultState.operator)
+                    });
+                }
+            }).catch(err => {
+                this.setState({
+                    error: "Error",
+                    isLoading: false,
+                    operator: Object.assign({}, defaultState.operator)
+                });
+            });
+    }
+
+    _handleKeyPress = (e) => {
+        if (e.charCode === 13) {
+            e.preventDefault();
+            
+            this._validateAgent();
+        }
     }
 
     render() {
-        const { selectedSiteName, selectedCurrency, isLoading, operator } = this.state;
-        const isNew = operator.AgentId === 0;
-        const hasEmptyOperator = operator.OperatorId === null || operator.OperatorId === '';
+        const { isLoading, operator, error, agentId } = this.state;
+        const isNew = this.originalAgentId === 0;
+        const hasEmptyOperator = this.originalOperatorId === null || this.originalOperatorId === '';
 
         return (
             <div className="edit-form">
@@ -93,52 +122,53 @@ export default class Form extends Component {
                 <div className="row">
                     <div className="col-xs-12">
                         <div className="form-group row">
-                            <label className="col-sm-12 col-md-1 col-form-label">Site Name</label>
-                            <div className="col-sm-12 col-md-5">
+                            <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">Agent ID</label>
                             {
                                 isNew
-                                ? (<Select instanceId="ddlSiteName"
-                                    className="full-width"
-                                    value={selectedSiteName}
-                                    options={defaultState.siteNameList}
-                                    onChange={(item) => this.setState({ selectedSiteName: item })} />)
-                                : selectedSiteName.label
+                                ? (<div className="col-sm-12 col-md-5">
+                                    <div className="group-input">
+                                        <input type="text"
+                                            value={agentId}
+                                            className={`full-width ${error ? 'has-error' : 'valid'}`}
+                                            onChange={(e) => this.setState({ agentId: e.target.value })} 
+                                            onKeyPress={this._handleKeyPress} />
+                                        <button type="button" className="btn btn-green" onClick={this._validateAgent}>Validate</button>
+                                    </div>
+                                    <span className="error-message">{error}</span>                                      
+                                </div>)
+                                : (<div className="col-sm-12 col-md-5">{operator.AgentId}</div>)
                             }
+                        </div>
+
+                        <div className="form-group row">
+                            <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">User Name</label>
+                            <div className="col-sm-12 col-md-5">
+                                {operator.UserName}
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-12 col-md-1 col-form-label">Currency</label>
+                            <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">Site Name</label>
                             <div className="col-sm-12 col-md-5">
-                            {
-                                isNew
-                                ? (<Select instanceId="ddlCurrency"
-                                    className="full-width"
-                                    value={selectedCurrency}
-                                    options={defaultState.currencyList}
-                                    onChange={(item) => this.setState({ selectedCurrency: item })} />)
-                                : selectedCurrency.label
-                            }
+                                {operator.SiteName}
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-12 col-md-1 col-form-label">Agent ID</label>
+                            <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">Currency</label>
                             <div className="col-sm-12 col-md-5">
-                            {
-                                isNew
-                                ? (<input type="text" id="agentId" className="full-width" name="agentId" onChange={this._handleInputChange} />)
-                                : operator.AgentId
-                            }
+                                {operator.CurrencyName}
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label className="col-sm-12 col-md-1 col-form-label">Operator ID</label>
+                            <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">Operator ID</label>
                             <div className="col-sm-12 col-md-5">
                             {
                                 hasEmptyOperator
-                                ? (<input type="text" id="operatorId" className="full-width" name="operatorId" onChange={this._handleInputChange} />)
+                                ? (<input type="text" value={operator.OperatorId}
+                                    className="full-width"
+                                    onChange={this._handleOperatorIdChanged} />)
                                 : operator.OperatorId
                             }
                             </div>
@@ -147,7 +177,9 @@ export default class Form extends Component {
                             hasEmptyOperator
                             &&
                             (<div className="form-group row col-sm-12">
-                                <button type="button" className="btn btn-primary" onClick={this._handleSubmit}>Submit</button>
+                                <button type="button" className="btn btn-primary" onClick={this._handleSubmit} disabled={error}>
+                                    Submit
+                                </button>
                             </div>)
                         }
                     </div>

@@ -15,5 +15,9 @@
         Operator UpdateOperator(int agentId, string operatorId);
 
         Operator GetOperator(int agentId);
+
+        Agent GetAgent(int agentId);
+
+        IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml);
     }
 }

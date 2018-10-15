@@ -34,8 +34,16 @@
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Update"))
             {
-                db.ExecuteNonQuery(new { AgentId = agentId, OperatorId = operatorId  });
+                db.ExecuteNonQuery(new { AgentId = agentId, OperatorId = operatorId });
                 return GetOperator(agentId);
+            }
+        }
+
+        public Agent GetAgent(int agentId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_GetAgentInfoByAgentId"))
+            {
+                return db.QueryEntity<Agent>(new { AgentId = agentId });
             }
         }
 
@@ -53,6 +61,14 @@
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Get"))
             {
                 return db.QueryEntity<Operator>(new { AgentId = agentId });
+            }
+        }
+
+        public IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Import"))
+            {
+                return db.Query<ImportOperatorResult>(new { OperatorXml = operatorXml });
             }
         }
     }

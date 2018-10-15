@@ -141,9 +141,11 @@
     </Compile>
     <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
+    <Compile Include="DTO\Agent.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\ImportOperatorResult.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
     <Compile Include="DTO\LoginUser.cs" />
@@ -182,7 +184,6 @@
     </None>
     <None Include="packages.config" />
     <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
-    <Compile Include="ViewModel\ManageOperator\OperatorViewModel.cs" />
     <Compile Include="ViewModel\ManageOperator\SearchOperatorViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />

@@ -1,5 +1,9 @@
 ﻿@import "../../components/react-select/react-select.main";
 
+$red: #a94442;
+$green: #729446;
+$yellow: #fecc35;
+
 .Select {
     display: inline-block;
     width: 150px;
@@ -27,4 +31,56 @@
 
 .edit-form {
     margin-top: 10px;
+
+    input {
+        &.has-error {
+            border: 2px solid $red;
+        }
+
+        &.valid{
+            border: 2px solid $green;
+        }
+    }
+
+    .group-input {
+        position: relative;
+
+        button {
+            position: absolute;
+            right: 0;
+            height: 24px;
+            border-radius: 0;
+            margin: 0;
+        }
+    }
+
+    .error-message {
+        color: $red;
+        font-size: 0.9em;
+    }
+}
+
+.help-block {
+    .has-error {
+        color: $red;
+
+        p {
+            padding-left: 10px;
+            line-height: 0.5em;
+        }
+    }
+
+    td {
+        &.Add {
+            color: $green;
+        }
+
+        &.Error {
+            color: $red;
+        }
+
+        &.Update {
+            color: $yellow;
+        }
+    }
 }

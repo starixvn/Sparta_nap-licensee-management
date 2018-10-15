@@ -17,7 +17,8 @@ export class AppContainer extends Component {
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
                 <div style={{ display: 'inline-block' }}>
-                    <a className="btn btn-green" href="Get">+ Add New Operator</a>
+                    <a className="btn btn-green" href={window.rootUrl + 'ManageOperator/Get'}>+ Add New Operator</a>
+                    <a className="btn btn-green" href={window.rootUrl + 'ManageOperator/Import'}><i className="list-icon"></i>Import file</a>
                 </div>
                 <DataGrid />
             </div>

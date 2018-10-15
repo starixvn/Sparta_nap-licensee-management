@@ -1,12 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee
 {
-    using Fanex.Data.Configuration;
-    using Fanex.NAP.Licensee.AppStart;
     using System;
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.Data.Configuration;
+    using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
 
     /// <summary>
@@ -23,10 +23,8 @@
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            RefDataTypeContainer
-       .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
-       .FromApplication("Fanex.NAP.LicenseeManagement");
-
+            RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
+                .FromApplication("Fanex.NAP.LicenseeManagement");
         }
 
         protected void Session_End(object sender, EventArgs e)

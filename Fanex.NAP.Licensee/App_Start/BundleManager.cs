@@ -7,12 +7,13 @@ namespace Fanex.NAP.Licensee.App_Start
 {
     public static class BundleManager
     {
-        private static readonly string _bundlesVersion = ConfigurationManager.AppSettings["BundlesVersion"];
-        private const string _supportedBundles = "/reactpages/";
+        private const string SupportedBundles = "/reactpages/";
 
-        private static string BundleVersion => string.IsNullOrEmpty(_bundlesVersion) ? DateTime.Now.Ticks.ToString() : _bundlesVersion;
+        private static readonly string BundlesVersion = ConfigurationManager.AppSettings["BundlesVersion"];
 
-        private static string Environment => string.IsNullOrEmpty(_bundlesVersion) ? "dev" : "pro";
+        private static string BundleVersion => string.IsNullOrEmpty(BundlesVersion) ? DateTime.Now.Ticks.ToString() : BundlesVersion;
+
+        private static string Environment => string.IsNullOrEmpty(BundlesVersion) ? "dev" : "pro";
 
         public static IHtmlString IncludeScriptsByEnv(params string[] scripts)
         {
@@ -42,7 +43,7 @@ namespace Fanex.NAP.Licensee.App_Start
 
         private static string ResolveLink(string link) => link[0] == '~' ? VirtualPathUtility.ToAbsolute(link) : link;
 
-        private static bool IsSupportedBundles(string link) => link.IndexOf(_supportedBundles, StringComparison.OrdinalIgnoreCase) >= 0;
+        private static bool IsSupportedBundles(string link) => link.IndexOf(SupportedBundles, StringComparison.OrdinalIgnoreCase) >= 0;
 
         private static string ResolveJsLink(string link) => link.Replace("/dist/js/", $"/dist/js/{Environment}/");
 
