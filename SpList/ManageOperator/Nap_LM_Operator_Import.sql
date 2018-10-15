@@ -22,7 +22,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	CREATE TABLE #Operators (AgentId INT PRIMARY KEY, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100))
+	CREATE TABLE #Operators (AgentId INT PRIMARY KEY, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT IDENTITY(1,1))
 
 	BEGIN TRY
 		BEGIN TRANSACTION
@@ -39,25 +39,28 @@ BEGIN
 			-- update operator
 			UPDATE o
 			SET o.[Status] = CASE 
-								WHEN ISNULL(o1.OperatorId, '') <> '' OR o.SiteName <> o1.SiteName THEN 'Error'
+								WHEN ISNULL(o1.OperatorId, '') <> '' OR o.UserName <> c.username OR o.SiteName <> o1.SiteName THEN 'Error'
 								ELSE 'Update'
 							END,
 				o.Error = CASE 
-								WHEN ISNULL(o1.OperatorId, '') <> '' THEN 'Operator exists' 
+								WHEN ISNULL(o1.OperatorId, '') <> '' THEN 'Operator exists'
+								WHEN ISNULL(o1.OperatorId, '') = '' AND o.UserName <> c.username THEN 'Wrong user name'
 								WHEN ISNULL(o1.OperatorId, '') = '' AND o.SiteName <> o1.SiteName THEN 'Wrong site name'
 								ELSE NULL
 							END
 			FROM #Operators o
 			INNER JOIN dbo.Operator o1 WITH (NOLOCK) ON o.AgentId = o1.AgentID
+			INNER JOIN CustDB.dbo.Customer c WITH (NOLOCK) ON o1.AgentID = c.custid
 			
 			-- validate new operator with customer
 			UPDATE o
 			SET o.[Status] = CASE 
-								WHEN c.CustId IS NULL OR o.SiteName <> c.[site] THEN 'Error'
+								WHEN c.CustId IS NULL OR o.UserName <> c.username OR o.SiteName <> c.[site] THEN 'Error'
 								ELSE 'Add'
 							END,
 				o.Error = CASE 
-								WHEN c.CustId IS NULL THEN 'Agent does not exist' 
+								WHEN c.CustId IS NULL THEN 'Agent does not exist'
+								WHEN c.CustId IS NOT NULL AND o.UserName <> c.username THEN 'Wrong user name'
 								WHEN c.CustId IS NOT NULL AND o.SiteName <> c.[site] THEN 'Wrong site name'
 								ELSE NULL
 							END,
@@ -77,7 +80,7 @@ BEGIN
 			INNER JOIN #Operators src WITH (NOLOCK) ON dest.AgentID = src.AgentId
 			WHERE src.[Status] = 'Update' AND ISNULL(dest.OperatorID, '') = ''
 			
-			SELECT AgentId, SiteName, UserName, OperatorId, [Status], Error FROM #Operators
+			SELECT AgentId, SiteName, UserName, OperatorId, [Status], Error FROM #Operators ORDER BY ID
 			
 		COMMIT
 	END TRY
