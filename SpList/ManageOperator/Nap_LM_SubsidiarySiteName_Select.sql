@@ -10,9 +10,6 @@ AS
 	 
 	 Revisions:
 	  - 20180924@Amanda: Select Lrf Site Name which enable subsidiary  [Redmine: #83584]
-	  
-	 Example:
-	  exec Nap_LM_SubsidiarySiteName_Select
 */
 BEGIN
 	SET NOCOUNT ON;

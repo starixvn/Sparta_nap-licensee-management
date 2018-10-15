@@ -14,9 +14,6 @@ AS
 	 
 	 Revisions:
 	  - 20180925@Amanda: Add new operator [Redmine: #83584]
-	  
-	 Example:
-	  exec Nap_LM_Operator_Select
 */
 BEGIN
 	SET NOCOUNT ON;

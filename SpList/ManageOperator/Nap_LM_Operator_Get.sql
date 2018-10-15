@@ -10,17 +10,15 @@ AS
 	 DB: DBCUST.SiteConfig
 	 
 	 Revisions:
-	  - 20180925@Amanda: Get operator by @AgentId [Redmine: #83584]
-	  
-	 Example:
-	  exec Nap_LM_Operator_Select
+	  - 20180925@Amanda: Get operator by @AgentId [Redmine: #83584] 
 */
 BEGIN
 	SET NOCOUNT ON;
 	
-	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID 
+	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID, c.UserName
 	FROM dbo.Operator o WITH(NOLOCK)
 	INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
+	INNER JOIN CUSTDB.dbo.Customer c WITH(NOLOCK) ON c.CustId = o.AgentId
 	WHERE o.AgentID = @AgentId
 END
 GO

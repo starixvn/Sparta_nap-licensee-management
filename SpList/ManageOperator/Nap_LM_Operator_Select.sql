@@ -22,10 +22,11 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID
+	SELECT o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID, c.username
 	  FROM dbo.Operator o WITH(NOLOCK)
 	  INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
-	  WHERE (@AgentId = 0 OR o.AgentID = @AgentId) 
+	  INNER JOIN CustDB.dbo.Customer c WITH(NOLOCK) ON o.AgentID = c.custid
+	  WHERE (@IsEmptyOperatorId = 1 OR @AgentId = 0 OR o.AgentID = @AgentId) 
 			AND (ISNULL(@SiteName,'') = '' OR o.SiteName = @SiteName)
 			AND (@CurrencyId = 0 OR o.Currency = @CurrencyId)
 			AND (
