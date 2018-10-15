@@ -15,14 +15,14 @@ AS
 	 Note:
 	  @OperatorXml: xml structure. ex:
 		  <ROOT>
-			  <Operator AgentId="1" UserName="12betUUS01" SiteName="12bet" OperatorId="oper" />
-			  <Operator AgentId="2" UserName="spondemoEUR01" SiteName="spondemo" OperatorId="" />
+			  <Operator ID="1" AgentId="1" UserName="12betUUS01" SiteName="12bet" OperatorId="oper" />
+			  <Operator ID="2" AgentId="2" UserName="spondemoEUR01" SiteName="spondemo" OperatorId="" />
 		  </ROOT>
 */
 BEGIN
 	SET NOCOUNT ON;
 	
-	CREATE TABLE #Operators (AgentId INT PRIMARY KEY, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT IDENTITY(1,1))
+	CREATE TABLE #Operators (AgentId INT PRIMARY KEY, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT)
 
 	BEGIN TRY
 		BEGIN TRANSACTION
@@ -30,9 +30,9 @@ BEGIN
 			DECLARE @DocHandler INT
 			EXEC sp_xml_preparedocument @DocHandler OUTPUT
 					,@OperatorXml
-			INSERT INTO #Operators (AgentId, UserName, SiteName, OperatorId)
-			SELECT AgentId, UserName, SiteName, OperatorId
-			FROM OPENXML(@DocHandler, '/ROOT/Operator', 1) WITH (AgentId INT, UserName VARCHAR(30), SiteName VARCHAR(50), OperatorId VARCHAR(50)) AS Data
+			INSERT INTO #Operators (ID, AgentId, UserName, SiteName, OperatorId)
+			SELECT ID, AgentId, UserName, SiteName, CASE WHEN OperatorId = '' THEN NULL ELSE OperatorId END
+			FROM OPENXML(@DocHandler, '/ROOT/Operator', 1) WITH (ID INT, AgentId INT, UserName VARCHAR(30), SiteName VARCHAR(50), OperatorId VARCHAR(50)) AS Data
 
 			EXEC sp_xml_removedocument @DocHandler
 
