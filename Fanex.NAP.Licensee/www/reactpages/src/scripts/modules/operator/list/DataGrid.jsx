@@ -40,6 +40,7 @@ export class DataGrid extends Component {
                         <tr>
                             <th>Site Name</th>
                             <th>Agent ID</th>
+                            <th>User Name</th>
                             <th>Currency</th>
                             <th>Operator ID</th>
                             <th>Action</th>
@@ -53,6 +54,7 @@ export class DataGrid extends Component {
                                     <tr key={index}>
                                         <td>{item.SiteName}</td>
                                         <td>{item.AgentId}</td>
+                                        <td>{item.UserName}</td>
                                         <td>{item.CurrencyName}</td>
                                         <td>{item.OperatorId}</td>
                                         {

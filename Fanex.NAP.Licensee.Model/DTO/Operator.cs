@@ -1,15 +1,23 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO
 {
-    public class Operator
+    public class Operator : Agent
     {
-        public string SiteName { get; set; }
+        private string _operatorId;
 
-        public int AgentId { get; set; }
+        public string OperatorId {
+            get
+            {
+                return _operatorId;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _operatorId = value.Trim();
+                }
+            }
+        }
 
-        public string CurrencyName { get; set; }
-
-        public int CurrencyId { get; set; }
-
-        public string OperatorId { get; set; }
+        public bool IsValid => AgentId > 0 && CurrencyId > 0 && !string.IsNullOrWhiteSpace(SiteName);
     }
 }
