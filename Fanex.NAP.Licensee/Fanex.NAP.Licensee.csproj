@@ -288,10 +288,14 @@
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.css" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\pro\operator\operator.css" />
+    <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\js\dev\import\import.js" />
@@ -733,6 +737,8 @@
     <Content Include="www\reactpages\dist\js\dev\import\import.js.map" />
     <Content Include="www\reactpages\dist\js\dev\operatorlist\operatorlist.js.map" />
     <Content Include="www\reactpages\dist\js\dev\operator\operator.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
