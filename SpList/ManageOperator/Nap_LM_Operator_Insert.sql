@@ -18,7 +18,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	INSERT INTO dbo.Operator(AgentID, SiteName, Currency, OperatorID)
-	VALUES (@AgentId, @SiteName, @CurrencyId, @OperatorId)
+	IF NOT EXISTS (SELECT 1 FROM dbo.Operator WITH(NOLOCK) WHERE AgentID = @AgentId)
+	BEGIN
+		INSERT INTO dbo.Operator(AgentID, SiteName, Currency, OperatorID)
+		VALUES (@AgentId, @SiteName, @CurrencyId, @OperatorId)
+	END
 END
 GO

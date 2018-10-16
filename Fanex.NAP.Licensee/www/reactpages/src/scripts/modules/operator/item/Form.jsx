@@ -22,15 +22,10 @@ export default class Form extends Component {
     _handleSubmit = (e) => {
         e.preventDefault();
 
-        const { operator, error } = this.state.operator;
+        const { operator, error } = this.state;
 
         if (!error) {
-            const params = {
-                operatorId: operator.OperatorId,
-                agentId: operator.AgentId
-            };
-
-            this._submit(params);
+            this._submit(operator);
         }
         else {
             this._alert('Invalid input!');
@@ -50,19 +45,19 @@ export default class Form extends Component {
         const url = this.originalAgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
         Site.fetchData(params, url)
             .then(response => {                
-                if (this.state.operator.AgentId > 0 && response.data.OperatorId !== params.operatorId) {
-                    this._alert('OperatorId has been updated by someone!');
+                if (params.OperatorId && response.data.OperatorId && response.data.OperatorId !== params.OperatorId) {
+                    this._alert('OperatorId has been added/updated by someone!');
                 }
                 else {
                     this._alert('Success!');
                 }
 
+                this.originalAgentId = response.data.AgentId;
+                this.originalOperatorId = response.data.OperatorId;
                 this.setState({
                     operator: response.data, 
                     isLoading: false 
                 });
-                this.originalAgentId = response.data.AgentId;
-                this.originalOperatorId = response.data.OperatorId;
             }).catch(err => {
                 this._alert('Please try again!');
                 this._toggleLoader(false);
@@ -166,7 +161,7 @@ export default class Form extends Component {
                             <div className="col-sm-12 col-md-5">
                             {
                                 hasEmptyOperator
-                                ? (<input type="text" value={operator.OperatorId}
+                                ? (<input type="text" value={operator.OperatorId ? operator.OperatorId : ''}
                                     className="full-width"
                                     onChange={this._handleOperatorIdChanged} />)
                                 : operator.OperatorId

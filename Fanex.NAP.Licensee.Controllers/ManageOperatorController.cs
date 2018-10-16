@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -127,20 +126,20 @@
                     line++;
                 }
 
-                if (!operators.Any())
+                if (errors.Any())
                 {
-                    errors.Add("Imported file is empty");
                     return Json(new { IsSuccess = false, Errors = errors });
                 }
-                else if (errors.Any())
+                else if (!operators.Any())
                 {
+                    errors.Add("Imported file is empty");
                     return Json(new { IsSuccess = false, Errors = errors });
                 }
                 else
                 {
                     var result = _operatorService.ImportOperators(BuildOperatorXml(operators));
                     return Json(new { IsSuccess = true, Result = result });
-                }             
+                }
             }
         }
 
