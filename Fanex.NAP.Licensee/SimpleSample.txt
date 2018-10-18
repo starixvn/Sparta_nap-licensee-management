@@ -1,0 +1,21 @@
+﻿
+
+// <summary file="$filename$" company="...">
+// some text...
+// </summary>
+
+//-> SimpleClass1.cs
+
+//-> SimpleClass2.cs
+
+//-> SimpleClass3.cs
+
+//-> SimpleClass4.cs
+// Generated helper templates
+// Fanex.NAP.Licensee\TestFolder\SimpleSample.txt4
+// Generated items
+// Fanex.NAP.Licensee\TestFolder\SimpleClass4.cs
+// Fanex.NAP.Licensee\TestFolder\SimpleClass3.cs
+// Fanex.NAP.Licensee\TestFolder\SimpleClass2.cs
+// Fanex.NAP.Licensee\TestFolder\SimpleClass1.cs
+
