@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
+import Select from 'react-select';
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -8,24 +9,27 @@ export default class Form extends Component {
     constructor(props) {
         super(props);
 
+        this.originalAgentId = defaultState.operator.AgentId;
+        this.originalOperatorId = defaultState.operator.OperatorId;
+
         this.state = {
             isLoading: false,
             operator: Object.assign({}, defaultState.operator),
-            error: defaultState.operator.AgentId ? '' : 'Agent ID is empty',
-            agentId: ''
+            error: this.originalAgentId ? '' : 'Agent ID is empty',
+            agentId: '',
+            selectedSiteName: this.originalAgentId === 0 ? defaultState.selectedSiteName : null
         };
-
-        this.originalAgentId = defaultState.operator.AgentId;
-        this.originalOperatorId = defaultState.operator.OperatorId;
     }
 
     _handleSubmit = (e) => {
         e.preventDefault();
 
-        const { operator, error } = this.state;
+        const { operator, error, agentId, selectedSiteName } = this.state;
 
-        if (!error) {
-            this._submit(operator);
+        if (!error && selectedSiteName) {
+            const param = Object.assign({}, operator, { AgentId: agentId, SiteName: selectedSiteName.value });
+
+            this._submit(param);
         }
         else {
             this._alert('Invalid input!');
@@ -37,7 +41,6 @@ export default class Form extends Component {
         operator.OperatorId = e.target.value;
 
         this.setState({operator: operator});
-
     }
 
     _submit(params) {
@@ -73,7 +76,15 @@ export default class Form extends Component {
     }
 
     _validateAgent = () => {
-        Site.fetchData({ agentId : this.state.agentId }, 'ManageOperator/Validate')
+        const agentId = this.state.agentId.trim();
+
+        if (!agentId)
+        {
+            this.setState({ error: 'Agent ID is empty' });
+            return;
+        }
+
+        Site.fetchData({ agentId : agentId }, 'ManageOperator/Validate')
             .then(response => {                
                 if (response.data.IsValid) {
                     this.setState({
@@ -107,7 +118,7 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isLoading, operator, error, agentId } = this.state;
+        const { isLoading, operator, error, agentId, selectedSiteName } = this.state;
         const isNew = this.originalAgentId === 0;
         const hasEmptyOperator = this.originalOperatorId === null || this.originalOperatorId === '';
 
@@ -145,7 +156,15 @@ export default class Form extends Component {
                         <div className="form-group row">
                             <label className="col-sm-12 col-lg-1 col-md-2 col-form-label">Site Name</label>
                             <div className="col-sm-12 col-md-5">
-                                {operator.SiteName}
+                            {
+                                isNew
+                                ? (<Select instanceId="ddlSiteName"
+                                    className={`full-width ${selectedSiteName ? '' : 'has-error'}`}
+                                    value={selectedSiteName}
+                                    options={defaultState.siteNameList}
+                                    onChange={(item) => this.setState({ selectedSiteName: item })} />)
+                                : operator.SiteName
+                            }
                             </div>
                         </div>
 
@@ -172,7 +191,7 @@ export default class Form extends Component {
                             hasEmptyOperator
                             &&
                             (<div className="form-group row col-sm-12">
-                                <button type="button" className="btn btn-primary" onClick={this._handleSubmit} disabled={error}>
+                                <button type="button" className="btn btn-primary" onClick={this._handleSubmit} disabled={error || !selectedSiteName}>
                                     Submit
                                 </button>
                             </div>)

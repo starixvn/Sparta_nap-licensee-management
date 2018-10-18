@@ -55,20 +55,26 @@ BEGIN
 			-- validate new operator with customer
 			UPDATE o
 			SET o.[Status] = CASE 
-								WHEN c.CustId IS NULL OR o.UserName <> c.username OR o.SiteName <> c.[site] THEN 'Error'
+								WHEN o.UserName <> c.username OR l.SiteName IS NULL THEN 'Error'
 								ELSE 'Add'
 							END,
 				o.Error = CASE 
-								WHEN c.CustId IS NULL THEN 'Agent does not exist'
-								WHEN c.CustId IS NOT NULL AND o.UserName <> c.username THEN 'Wrong user name'
-								WHEN c.CustId IS NOT NULL AND o.SiteName <> c.[site] THEN 'Wrong site name'
+								WHEN o.UserName <> c.username THEN 'Wrong user name'
+								WHEN l.SiteName IS NULL THEN 'Wrong site name'
 								ELSE NULL
 							END,
 				o.CurrencyId = c.currency
 			FROM #Operators o
-			LEFT JOIN CUSTDB.dbo.Customer c WITH (NOLOCK) ON o.AgentId = c.CustId
+			INNER JOIN CUSTDB.dbo.Customer c WITH (NOLOCK) ON o.AgentId = c.CustId
+			LEFT JOIN dbo.LicVendorProfile l WITH (NOLOCK) ON o.SiteName = l.SiteName
 			WHERE o.[Status] IS NULL
 
+			-- update error for rows that its agent does not exists
+			UPDATE #Operators
+			SET Error = 'Agent does not exist', [Status] = 'Error'
+			WHERE [Status] IS NULL
+			
+			-- insert/update real data
 			INSERT INTO dbo.Operator(AgentId, Currency, SiteName, OperatorID)
 			SELECT AgentId, CurrencyId, SiteName, OperatorId
 			FROM #Operators
@@ -80,6 +86,7 @@ BEGIN
 			INNER JOIN #Operators src WITH (NOLOCK) ON dest.AgentID = src.AgentId
 			WHERE src.[Status] = 'Update' AND ISNULL(dest.OperatorID, '') = ''
 			
+			-- return result
 			SELECT AgentId, SiteName, UserName, OperatorId, [Status], Error FROM #Operators ORDER BY ID
 			
 		COMMIT

@@ -15,7 +15,6 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	SELECT SiteName
-	  FROM LicVendorProfile WITH(NOLOCK)
-	  WHERE SubsidiaryEnabled = 1
+	FROM LicVendorProfile WITH(NOLOCK)
 END
 GO

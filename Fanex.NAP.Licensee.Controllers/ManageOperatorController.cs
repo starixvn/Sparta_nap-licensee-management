@@ -35,7 +35,17 @@
         [HttpGet]
         public ActionResult Get(int agentId = 0)
         {
-            var viewModel = agentId == 0 ? new Operator() : _operatorService.GetOperator(agentId);
+            var viewModel = agentId == 0
+                ? new OperatorViewModel
+                {
+                    Operator = new Operator(),
+                    SiteNameList = _operatorService.GetSiteNames()
+                }
+                : new OperatorViewModel
+                {
+                    Operator = _operatorService.GetOperator(agentId),
+                    SiteNameList = Enumerable.Empty<string>()
+                };
 
             return View(viewModel);
         }

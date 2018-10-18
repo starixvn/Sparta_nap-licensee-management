@@ -4,9 +4,10 @@
     ViewBag.Title = "Operator";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 }
-@model Fanex.NAP.Licensee.Model.DTO.Operator
+@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.OperatorViewModel
 @{
     var serializer = new JavaScriptSerializer();
+    var siteNameList = Model.SiteNameList.Select(x => new { label = x, value = x }).ToList();
 }
 
 @section Headline {
@@ -23,7 +24,9 @@
 @section FooterJs{
     <script>
         var initialState = {
-            operator: @Html.Raw(serializer.Serialize(Model))
+            operator: @Html.Raw(serializer.Serialize(Model.Operator)),
+            siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
+            selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault()))
         }
     </script>
 

@@ -24,6 +24,12 @@ $yellow: #fecc35;
         }
     }
 
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+
     .Select-control {
         height: 25px;
     }
@@ -32,14 +38,18 @@ $yellow: #fecc35;
 .edit-form {
     margin-top: 10px;
 
-    input {
+    input[type=text] {
         &.has-error {
-            border: 2px solid $red;
+            border: 1px solid $red;
         }
 
         &.valid{
-            border: 2px solid $green;
+            border: 1px solid $green;
         }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
     }
 
     .group-input {
@@ -48,7 +58,7 @@ $yellow: #fecc35;
         button {
             position: absolute;
             right: 0;
-            height: 24px;
+            height: 25px;
             border-radius: 0;
             margin: 0;
         }
