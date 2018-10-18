@@ -5,7 +5,7 @@
       <Mapping DataField="exchangeid" ObjectProperty="Id" />
       <Mapping DataField="currency" ObjectProperty="Name" />
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList_UAT4" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_LicenseeList" SpName="NAP_SpecialCustSetting_LicenseeList" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
       <Mapping DataField="SiteID" ObjectProperty="Id" />
       <Mapping DataField="SiteName" ObjectProperty="Name" />
     </Setting>
