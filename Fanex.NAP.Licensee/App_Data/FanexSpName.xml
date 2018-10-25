@@ -13,7 +13,7 @@
     </Setting>
     <Setting Key="NAP_SpecialCustSetting_Sel" SpName="NAP_SpecialCustSetting_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
-    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify_UAT4" DbName="DBCUST.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_SpecialCustSetting_Modify" SpName="NAP_SpecialCustSetting_Modify" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" SpName="NAP_SpecialCustSettingAgent_SelByCurrencyAndLicensee" DbName="DBLIC.bodb_Licensee.bodbLicenseeNet">
       <Mapping DataField="AgentID" ObjectProperty="Id" />
@@ -55,6 +55,6 @@
     <Setting Key="Nap_LM_LicVendorInfo_Select" SpName="Nap_LM_LicVendorInfo_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicVendorInfo_SelectById" SpName="Nap_LM_LicVendorInfo_SelectById" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicVendorInfo_Update" SpName="Nap_LM_LicVendorInfo_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select_UAT4" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>
