@@ -227,16 +227,52 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppress.cs" />
+    <Compile Include="TestFolder\SimpleClass1.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass2.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass3.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass4.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="SimpleParameterTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
+    </Content>
+    <Content Include="SimpleParameterTemplate.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleParameterTemplate.tt</DependentUpon>
+    </Content>
+    <Content Include="SimpleSample.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimpleSample.txt</LastGenOutput>
+    </Content>
+    <Content Include="SimpleSample.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleSample.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.ConnectionString.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </None>
+    <Content Include="SiteConfig\Web.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="www\.webpack\build\utils.js" />
     <Content Include="www\.webpack\build\webpack.base.conf.js" />
     <Content Include="www\.webpack\build\webpack.dev.conf.js" />
@@ -288,14 +324,7 @@
     <Content Include="www\reactpages\src\styles\components\react-select\react-select.min.css" />
     <Content Include="www\reactpages\src\styles\modules\demo\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="www\reactpages\src\styles\modules\demo\index.js" />
-    <None Include="App_Data\NAPFrameworkSpNames.xml.bk" />
     <Content Include="App_Data\FanexSpName.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="App_Data\FanexSpName.xml.bk">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="App_Data\NAPFrameworkSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\UserLogin\scripts\Login.js" />
@@ -562,11 +591,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.config1.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.config.tt</DependentUpon>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -637,9 +661,6 @@
     <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SiteConfig\Web.ConnectionString.SANDBOX.config">
-      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.UAT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
@@ -725,6 +746,7 @@
     <Content Include="Views\LicenseeVendor\Edit.cshtml" />
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
+    <Content Include="TestFolder\SimpleSample.txt4" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

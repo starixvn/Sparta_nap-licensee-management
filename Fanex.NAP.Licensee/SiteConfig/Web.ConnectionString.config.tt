@@ -16,7 +16,7 @@
 <#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#
     var manager = TemplateFileManager.Create(this);
-	List<string> sites = new List<string>() {"LOCAL","UAT","BACKUPMNL","PRO","SIT","SANDBOX"};
+	List<string> sites = new List<string>() {"LOCAL","UAT","BACKUPMNL","PRO","SIT"};
     foreach(var site in sites)
     {
         var fileName = string.Format("Web.ConnectionString.{0}.config", site);
@@ -27,9 +27,6 @@
 #>
 <connectionStrings>
     <clear />
-    <add name="DBNAP.bodb_NAP.bodbAdminNet"
-       connectionString="Data Source=10.18.200.231;Initial Catalog=bodb_NAP;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
-       providerName="System.Data.SqlClient" />
     <add name="DBCUST.CustDB.bodbAdminNet"
         connectionString="Data Source=10.18.200.233;Initial Catalog=CustDB;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
         providerName="System.Data.SqlClient"/>
@@ -50,9 +47,6 @@
 <connectionStrings>
     <clear/>  
   	<add name="DBLIC.bodb_Licensee.bodbLicenseeNet" connectionString="Data Source=10.40.40.92;Initial Catalog=bodb_Licensee;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient"/>
-  <add name="DBNAP.bodb_NAP.bodbAdminNet"
-       connectionString="Data Source=10.40.40.92;Initial Catalog=bodb_NAP;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
-       providerName="System.Data.SqlClient" />
     <add name="DBCUST.CustDB.bodbAdminNet"
         connectionString="Data Source=10.40.40.191;Initial Catalog=CustDB;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
         providerName="System.Data.SqlClient"/>
@@ -71,9 +65,6 @@
 <connectionStrings>
     <clear/>  
   	<add name="DBLIC.bodb_Licensee.bodbLicenseeNet" connectionString="Data Source=172.16.40.6;Initial Catalog=bodb_Licensee;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient"/>
-  <add name="DBNAP.bodb_NAP.bodbAdminNet"
-       connectionString="Data Source=172.16.40.6;Initial Catalog=bodb_NAP;integrated security=false; User ID=bodbAdminNet;Password=j+UGweaEw4d2X3mfHMROgA==;"
-       providerName="System.Data.SqlClient" />
     <add name="DBCUST.CustDB.bodbAdminNet"
         connectionString="Data Source=172.16.40.21;Initial Catalog=CustDB;integrated security=false; User ID=bodbAdminNet;Password=j+UGweaEw4d2X3mfHMROgA==;"
         providerName="System.Data.SqlClient"/>
@@ -91,9 +82,6 @@ break;
 <connectionStrings>
     <clear/>  
   	<add name="DBLIC.bodb_Licensee.bodbLicenseeNet" connectionString="Data Source=10.40.40.21;Initial Catalog=bodb_Licensee;User Id=bodbLicenseeNet;Password=rQdgyA7UNg5isU2wtrRVyRrWEq1gYCANdd3I4UUfIHA==" providerName="System.Data.SqlClient"/>
-  <add name="DBNAP.bodb_NAP.bodbAdminNet"
-       connectionString="Data Source=10.40.40.21;Initial Catalog=bodb_NAP;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
-       providerName="System.Data.SqlClient" />
     <add name="DBCUST.CustDB.bodbAdminNet"
         connectionString="Data Source=10.40.40.32;Initial Catalog=CustDB;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
         providerName="System.Data.SqlClient"/>
@@ -110,9 +98,6 @@ break;
 		#>
 <connectionStrings>
     <clear />
-    <add name="DBNAP.bodb_NAP.bodbAdminNet"
-       connectionString="Data Source=10.18.200.215;Initial Catalog=bodb_NAP;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
-       providerName="System.Data.SqlClient" />
     <add name="DBCUST.CustDB.bodbAdminNet"
         connectionString="Data Source=10.18.200.206;Initial Catalog=CustDB;integrated security=false; User ID=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr="
         providerName="System.Data.SqlClient"/>
