@@ -1,1 +1,3 @@
 export const SET_GRID_DATA = "SET_GRID_DATA"
+
+export const GET_FUNCTION_KEY_LIST = "GET_FUNCTION_KEY_LIST";

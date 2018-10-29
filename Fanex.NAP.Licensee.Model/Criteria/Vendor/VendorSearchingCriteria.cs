@@ -7,5 +7,7 @@
         public string VendorId { get; set; }
 
         public string SiteName { get; set; }
+
+        public string FunctionKey { get; set; }
     }
 }
