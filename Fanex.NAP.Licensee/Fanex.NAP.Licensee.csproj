@@ -776,7 +776,6 @@
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
     <Content Include="TestFolder\SimpleSample.txt4" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\ManageOperator\Index.cshtml" />
     <Content Include="Views\ManageOperator\Import.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
