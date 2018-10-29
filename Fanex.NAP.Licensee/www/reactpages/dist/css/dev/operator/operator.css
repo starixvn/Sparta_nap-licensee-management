@@ -401,21 +401,27 @@
     height: 23px; }
     .Select .Select-input input {
       padding: 0; }
+  .Select.has-error .Select-control {
+    border: 1px solid #a94442; }
   .Select .Select-control {
     height: 25px; }
 
 .edit-form {
   margin-top: 10px; }
-  .edit-form input.has-error {
-    border: 2px solid #a94442; }
-  .edit-form input.valid {
-    border: 2px solid #729446; }
+  .edit-form input[type=text] {
+    border: 1px solid #CECCCD;
+    height: 25px;
+    padding: 2px; }
+    .edit-form input[type=text].has-error {
+      border: 1px solid #a94442; }
+    .edit-form input[type=text].valid {
+      border: 1px solid #729446; }
   .edit-form .group-input {
     position: relative; }
     .edit-form .group-input button {
       position: absolute;
       right: 0;
-      height: 24px;
+      height: 25px;
       border-radius: 0;
       margin: 0; }
   .edit-form .error-message {
