@@ -2,7 +2,8 @@
 
 ALTER PROCEDURE [dbo].[Nap_LM_LicVendorInfo_Select]
 	@VendorId VARCHAR(50) = NULL,
-	@SiteName VARCHAR(50) = NULL
+	@SiteName VARCHAR(50) = NULL,
+	@FunctionKey VARCHAR(50) = NULL
 AS
 /*
 	 Created: Walter
@@ -32,7 +33,8 @@ BEGIN
 		  ,Disable
 	  FROM LicVendorProfile WITH(NOLOCK)
 	  WHERE (ISNULL(@VendorId,'') = '' OR VendorId = @VendorId) AND 
-			(ISNULL(@SiteName, '') = '' OR  SiteName LIKE '%' + @SiteName + '%')
+			(ISNULL(@SiteName, '') = '' OR  SiteName LIKE '%' + @SiteName + '%') AND
+			(ISNULL(@FunctionKey,'') = '' OR ISNULL(Exclusions,'') = '' OR Exclusions NOT LIKE '%' + @FunctionKey + '%')
 	ORDER BY SiteName ASC
 END
 GO
