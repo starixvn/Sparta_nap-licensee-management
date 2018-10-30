@@ -22,6 +22,10 @@ BEGIN
 	BEGIN
 		INSERT INTO dbo.Operator(AgentID, SiteName, Currency, OperatorID)
 		VALUES (@AgentId, @SiteName, @CurrencyId, @OperatorId)
+
+		SELECT 1
 	END
+
+	SELECT 0
 END
 GO

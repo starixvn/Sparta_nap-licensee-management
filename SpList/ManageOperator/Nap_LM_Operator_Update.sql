@@ -21,6 +21,10 @@ BEGIN
 		UPDATE dbo.Operator WITH(ROWLOCK, UPDLOCK)
 		SET OperatorID = @OperatorId
 		WHERE AgentID = @AgentId
+
+		SELECT 1
 	END
+
+	SELECT 0
 END
 GO
