@@ -16,8 +16,10 @@ export default class Form extends Component {
             isLoading: false,
             operator: Object.assign({}, defaultState.operator),
             error: this.originalAgentId ? '' : 'Agent ID is empty',
-            agentId: '',
-            selectedSiteName: this.originalAgentId === 0 ? defaultState.selectedSiteName : null
+            agentId: this.originalAgentId === 0 ? '' : this.originalAgentId,
+            selectedSiteName: this.originalAgentId === 0 
+                ? defaultState.selectedSiteName 
+                : { label: defaultState.operator.SiteName, value: defaultState.operator.SiteName }
         };
     }
 
@@ -48,17 +50,17 @@ export default class Form extends Component {
         const url = this.originalAgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
         Site.fetchData(params, url)
             .then(response => {                
-                if (params.OperatorId && response.data.OperatorId && response.data.OperatorId !== params.OperatorId) {
+                if (!response.data.IsSuccess) {
                     this._alert('OperatorId has been added/updated by someone!');
                 }
                 else {
                     this._alert('Success!');
                 }
 
-                this.originalAgentId = response.data.AgentId;
-                this.originalOperatorId = response.data.OperatorId;
+                this.originalAgentId = response.data.Data.AgentId;
+                this.originalOperatorId = response.data.Data.OperatorId;
                 this.setState({
-                    operator: response.data, 
+                    operator: response.data.Data, 
                     isLoading: false 
                 });
             }).catch(err => {

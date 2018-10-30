@@ -47,7 +47,8 @@ BEGIN
 								WHEN o.UserName <> c.username THEN 'Wrong user name'
 								WHEN o.SiteName <> o1.SiteName THEN 'Wrong site name'
 								ELSE NULL
-							END
+							END,
+				o.CurrencyId = o1.Currency
 			FROM #Operators o
 			INNER JOIN dbo.Operator o1 WITH (NOLOCK) ON o.AgentId = o1.AgentID
 			INNER JOIN CustDB.dbo.Customer c WITH (NOLOCK) ON o1.AgentID = c.custid

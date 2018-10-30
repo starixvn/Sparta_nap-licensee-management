@@ -152,6 +152,7 @@
     <Compile Include="DTO\Operator.cs" />
     <Compile Include="DTO\ProductTypeItem.cs" />
     <Compile Include="DTO\RecheckInStatus.cs" />
+    <Compile Include="DTO\ResultData.cs" />
     <Compile Include="DTO\ResultInfo.cs" />
     <Compile Include="DTO\DefaultBetSetting\SettingLogItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\SportOrGameItem.cs" />

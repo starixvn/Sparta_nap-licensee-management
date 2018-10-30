@@ -48,7 +48,7 @@ export default class ImportPage extends Component {
 
                    this._toggleLoader(false);
                }).catch(err => {
-                   this.setState({ errors: ["Invalid import template"], isLoading: false });
+                   this.setState({ errors: ["Failed!"], isLoading: false });
                });
         }
     }

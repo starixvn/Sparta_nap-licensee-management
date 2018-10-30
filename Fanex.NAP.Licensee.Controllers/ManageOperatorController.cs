@@ -5,15 +5,18 @@
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
+    using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
     using Model.Criteria.Operator;
     using Model.DataDomain;
     using Model.DTO;
     using Model.ViewModel.ManageOperator;
+    using ONEbook.UM.Filters;
     using Service;
 
-    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Read)]
+    [CustomHandleError]
+    [CheckUMFilter]
     public class ManageOperatorController : BaseController
     {
         private const string ImportTemplatePath = @"~/App_Data/Template/OperatorImportTemplate.csv";
@@ -27,12 +30,14 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View(GetSearchViewModel());
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public ActionResult Get(int agentId = 0)
         {
             var viewModel = agentId == 0
@@ -51,12 +56,14 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public ActionResult Import()
         {
             return View();
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Read)]
         public JsonResult Search(SearchOperatorCriteria criteria)
         {
             var result = _operatorService.GetOperators(criteria);
@@ -64,20 +71,23 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult Add(OperatorCriteria criteria)
         {
-            var result = _operatorService.AddOperator(criteria);
+            var result = _operatorService.AddOperator(criteria, CurrentSession.UserId);
             return Json(result);
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult Update(OperatorCriteria criteria)
         {
-            var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId);
+            var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId, CurrentSession.UserId);
             return Json(result);
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Read)]
         public ActionResult Validate(int agentId)
         {
             var opt = _operatorService.GetOperator(agentId);
@@ -96,12 +106,14 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public ActionResult DownLoadImportTemplate()
         {
             return File(ImportTemplatePath, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(ImportTemplatePath));
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult ImportFile()
         {
             var content = Request.Files["file"].InputStream;
@@ -147,7 +159,7 @@
                 }
                 else
                 {
-                    var result = _operatorService.ImportOperators(BuildOperatorXml(operators));
+                    var result = _operatorService.ImportOperators(BuildOperatorXml(operators), CurrentSession.UserId);
                     return Json(new { IsSuccess = true, Result = result });
                 }
             }

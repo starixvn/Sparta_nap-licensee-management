@@ -10,14 +10,14 @@
 
         IEnumerable<Operator> GetOperators(SearchOperatorCriteria criteria);
 
-        Operator AddOperator(OperatorCriteria criteria);
+        ResultData<Operator> AddOperator(OperatorCriteria criteria, int userId);
 
-        Operator UpdateOperator(int agentId, string operatorId);
+        ResultData<Operator> UpdateOperator(int agentId, string operatorId, int userId);
 
         Operator GetOperator(int agentId);
 
         Agent GetAgent(int agentId);
 
-        IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml);
+        IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId);
     }
 }
