@@ -22,10 +22,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	CREATE TABLE #Operators (AgentId INT PRIMARY KEY, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT)
+	CREATE TABLE #Operators (AgentId INT, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT)
 
 	BEGIN TRY
-		BEGIN TRANSACTION
+		BEGIN TRANSACTION ImportOperator
 	
 			DECLARE @DocHandler INT
 			EXEC sp_xml_preparedocument @DocHandler OUTPUT
@@ -39,13 +39,13 @@ BEGIN
 			-- update operator
 			UPDATE o
 			SET o.[Status] = CASE 
-								WHEN ISNULL(o1.OperatorId, '') <> '' OR o.UserName <> c.username OR o.SiteName <> o1.SiteName THEN 'Error'
+								WHEN ISNULL(o1.OperatorId, '') <> '' OR ISNULL(o.OperatorId, '') = '' OR o.UserName <> c.username OR o.SiteName <> o1.SiteName THEN 'Error'
 								ELSE 'Update'
 							END,
 				o.Error = CASE 
-								WHEN ISNULL(o1.OperatorId, '') <> '' THEN 'Operator exists'
-								WHEN ISNULL(o1.OperatorId, '') = '' AND o.UserName <> c.username THEN 'Wrong user name'
-								WHEN ISNULL(o1.OperatorId, '') = '' AND o.SiteName <> o1.SiteName THEN 'Wrong site name'
+								WHEN ISNULL(o1.OperatorId, '') <> '' OR ISNULL(o.OperatorId, '') = '' THEN 'Operator exists'
+								WHEN o.UserName <> c.username THEN 'Wrong user name'
+								WHEN o.SiteName <> o1.SiteName THEN 'Wrong site name'
 								ELSE NULL
 							END
 			FROM #Operators o
@@ -87,14 +87,28 @@ BEGIN
 			WHERE src.[Status] = 'Update' AND ISNULL(dest.OperatorID, '') = ''
 			
 			-- return result
-			SELECT AgentId, SiteName, UserName, OperatorId, [Status], Error FROM #Operators ORDER BY ID
-			
-		COMMIT
+			SELECT AgentId, SiteName, UserName, OperatorId, CurrencyId, [Status], Error FROM #Operators ORDER BY ID
+
+		COMMIT TRANSACTION ImportOperator
 	END TRY
 	
 	BEGIN CATCH
 		IF @@TRANCOUNT > 0
-			ROLLBACK
+			ROLLBACK TRANSACTION ImportOperator
+			
+		DECLARE @ErrorMessage NVARCHAR(4000);  
+		DECLARE @ErrorSeverity INT;  
+		DECLARE @ErrorState INT;  
+
+		SELECT   
+			@ErrorMessage = ERROR_MESSAGE(),  
+			@ErrorSeverity = ERROR_SEVERITY(),  
+			@ErrorState = ERROR_STATE();  
+
+			RAISERROR (@ErrorMessage, -- Message text.  
+					   @ErrorSeverity, -- Severity.  
+					   @ErrorState -- State.  
+					   );  
 	END CATCH
 	
 	DROP TABLE #Operators
