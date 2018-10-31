@@ -5736,8 +5736,8 @@ var Form = function (_Component) {
             isLoading: false,
             operator: Object.assign({}, defaultState.operator),
             error: _this.originalAgentId ? '' : 'Agent ID is empty',
-            agentId: '',
-            selectedSiteName: _this.originalAgentId === 0 ? defaultState.selectedSiteName : null
+            agentId: _this.originalAgentId === 0 ? '' : _this.originalAgentId,
+            selectedSiteName: _this.originalAgentId === 0 ? defaultState.selectedSiteName : { label: defaultState.operator.SiteName, value: defaultState.operator.SiteName }
         };
         return _this;
     }
@@ -5750,16 +5750,16 @@ var Form = function (_Component) {
             this._toggleLoader(true);
             var url = this.originalAgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
             _site2.default.fetchData(params, url).then(function (response) {
-                if (params.OperatorId && response.data.OperatorId && response.data.OperatorId !== params.OperatorId) {
+                if (!response.data.IsSuccess) {
                     _this2._alert('OperatorId has been added/updated by someone!');
                 } else {
                     _this2._alert('Success!');
                 }
 
-                _this2.originalAgentId = response.data.AgentId;
-                _this2.originalOperatorId = response.data.OperatorId;
+                _this2.originalAgentId = response.data.Data.AgentId;
+                _this2.originalOperatorId = response.data.Data.OperatorId;
                 _this2.setState({
-                    operator: response.data,
+                    operator: response.data.Data,
                     isLoading: false
                 });
             }).catch(function (err) {

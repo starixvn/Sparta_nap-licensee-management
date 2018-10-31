@@ -5689,7 +5689,7 @@ var ImportPage = function (_Component) {
 
                     _this._toggleLoader(false);
                 }).catch(function (err) {
-                    _this.setState({ errors: ["Invalid import template"], isLoading: false });
+                    _this.setState({ errors: ["Failed!"], isLoading: false });
                 });
             }
         };
