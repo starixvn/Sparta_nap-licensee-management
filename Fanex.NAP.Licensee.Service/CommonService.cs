@@ -149,8 +149,6 @@ namespace Fanex.NAP.Licensee.Service
                 dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
                 dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
-                dctGameType.Add(new BSKeyPair(154, 20), "HR Fixed Odds");
-                dctGameType.Add(new BSKeyPair(44, 3), "Muay Thai");
 
                 return dctGameType;
             }
