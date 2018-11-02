@@ -81,7 +81,7 @@ $yellow: #fecc35;
     }
 
     td {
-        &.Add {
+        &.Added {
             color: $green;
         }
 
@@ -89,7 +89,7 @@ $yellow: #fecc35;
             color: $red;
         }
 
-        &.Update {
+        &.Updated {
             color: $yellow;
         }
     }

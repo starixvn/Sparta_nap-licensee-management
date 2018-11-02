@@ -31,7 +31,7 @@
 
         public IEnumerable<Operator> GetOperators(SearchOperatorCriteria criteria)
         {
-            using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Select"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Search"))
             {
                 return db.Query<Operator>(criteria);
             }

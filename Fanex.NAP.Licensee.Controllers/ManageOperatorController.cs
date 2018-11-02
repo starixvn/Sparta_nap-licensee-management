@@ -88,15 +88,23 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Read)]
-        public ActionResult Validate(int agentId)
+        public ActionResult Validate(string agentId)
         {
-            var opt = _operatorService.GetOperator(agentId);
-            if (opt != null)
+            int value = 0;
+            int.TryParse(agentId, out value);
+
+            if (value <= 0)
             {
-                return Json(new { IsValid = false, Error = "Operator exists" });
+                return Json(new { IsValid = false, Error = "Invalid input" });
             }
 
-            var agent = _operatorService.GetAgent(agentId);
+            var opt = _operatorService.GetOperator(value);
+            if (opt != null)
+            {
+                return Json(new { IsValid = false, Error = "Operator setting of this agent already exists" });
+            }
+
+            var agent = _operatorService.GetAgent(value);
             if (agent == null)
             {
                 return Json(new { IsValid = false, Error = "Agent does not exist" });

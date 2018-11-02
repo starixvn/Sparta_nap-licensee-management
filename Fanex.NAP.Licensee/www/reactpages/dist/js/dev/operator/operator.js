@@ -5722,10 +5722,18 @@ var Form = function (_Component) {
         };
 
         _this._handleKeyPress = function (e) {
-            if (e.charCode === 13) {
+            var code = e.charCode;
+
+            if (code === 13) {
                 e.preventDefault();
 
                 _this._validateAgent();
+            } else {
+                if (code >= 48 && code <= 57) {
+                    return;
+                }
+
+                e.preventDefault();
             }
         };
 

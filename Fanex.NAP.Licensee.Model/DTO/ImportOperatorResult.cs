@@ -2,7 +2,9 @@
 {
     public class ImportOperatorResult : Operator
     {
-        public string Status { get; set; }
+        public string Action { get; set; }
+
+        public string Status => Action == "Add" ? "Added" : (Action == "Update" ? "Updated" : Action);
 
         public string Error { get; set; }
     }

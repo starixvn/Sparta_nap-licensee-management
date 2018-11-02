@@ -112,10 +112,20 @@ export default class Form extends Component {
     }
 
     _handleKeyPress = (e) => {
-        if (e.charCode === 13) {
+        const code = e.charCode;
+
+        if (code === 13) {
             e.preventDefault();
             
             this._validateAgent();
+        }
+        else
+        {
+            if (code >= 48 && code <= 57) {
+                return;
+            }
+
+            e.preventDefault();
         }
     }
 
