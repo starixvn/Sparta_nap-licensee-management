@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
-CREATE PROCEDURE [dbo].[Nap_LM_Operator_Select]
+CREATE PROCEDURE [dbo].[Nap_LM_Operator_Search]
 	@SiteName			VARCHAR(50)	= '',
 	@CurrencyId			INT			= 0,
 	@OperatorId			VARCHAR(50)	= '',

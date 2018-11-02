@@ -22,7 +22,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	CREATE TABLE #Operators (AgentId INT, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Status] VARCHAR(10), Error VARCHAR(100), ID INT)
+	CREATE TABLE #Operators (AgentId INT, SiteName VARCHAR(50), UserName VARCHAR(30), OperatorId VARCHAR(50), CurrencyId INT, [Action] VARCHAR(10), Error VARCHAR(100), ID INT)
 
 	BEGIN TRY
 		BEGIN TRANSACTION ImportOperator
@@ -38,12 +38,12 @@ BEGIN
 
 			-- update operator
 			UPDATE o
-			SET o.[Status] = CASE 
+			SET o.[Action] = CASE 
 								WHEN ISNULL(o1.OperatorId, '') <> '' OR ISNULL(o.OperatorId, '') = '' OR o.UserName <> c.username OR o.SiteName <> o1.SiteName THEN 'Error'
 								ELSE 'Update'
 							END,
 				o.Error = CASE 
-								WHEN ISNULL(o1.OperatorId, '') <> '' OR ISNULL(o.OperatorId, '') = '' THEN 'Operator exists'
+								WHEN ISNULL(o1.OperatorId, '') <> '' OR ISNULL(o.OperatorId, '') = '' THEN 'Operator setting of this agent already exists'
 								WHEN o.UserName <> c.username THEN 'Wrong user name'
 								WHEN o.SiteName <> o1.SiteName THEN 'Wrong site name'
 								ELSE NULL
@@ -55,7 +55,7 @@ BEGIN
 			
 			-- validate new operator with customer
 			UPDATE o
-			SET o.[Status] = CASE 
+			SET o.[Action] = CASE 
 								WHEN o.UserName <> c.username OR l.SiteName IS NULL THEN 'Error'
 								ELSE 'Add'
 							END,
@@ -68,27 +68,27 @@ BEGIN
 			FROM #Operators o
 			INNER JOIN CUSTDB.dbo.Customer c WITH (NOLOCK) ON o.AgentId = c.CustId
 			LEFT JOIN dbo.LicVendorProfile l WITH (NOLOCK) ON o.SiteName = l.SiteName
-			WHERE o.[Status] IS NULL
+			WHERE o.[Action] IS NULL
 
 			-- update error for rows that its agent does not exists
 			UPDATE #Operators
-			SET Error = 'Agent does not exist', [Status] = 'Error'
-			WHERE [Status] IS NULL
+			SET Error = 'Agent does not exist', [Action] = 'Error'
+			WHERE [Action] IS NULL
 			
 			-- insert/update real data
 			INSERT INTO dbo.Operator(AgentId, Currency, SiteName, OperatorID)
 			SELECT AgentId, CurrencyId, SiteName, OperatorId
 			FROM #Operators
-			WHERE [Status] = 'Add'
+			WHERE [Action] = 'Add'
 			
 			UPDATE dest
 			SET OperatorID = src.OperatorId
-			FROM dbo.Operator dest WITH (NOLOCK)
-			INNER JOIN #Operators src WITH (NOLOCK) ON dest.AgentID = src.AgentId
-			WHERE src.[Status] = 'Update' AND ISNULL(dest.OperatorID, '') = ''
+			FROM dbo.Operator dest WITH (ROWLOCK, UPDLOCK)
+			INNER JOIN #Operators src ON dest.AgentID = src.AgentId
+			WHERE src.[Action] = 'Update' AND ISNULL(dest.OperatorID, '') = ''
 			
 			-- return result
-			SELECT AgentId, SiteName, UserName, OperatorId, CurrencyId, [Status], Error FROM #Operators ORDER BY ID
+			SELECT AgentId, SiteName, UserName, OperatorId, CurrencyId, [Action], Error FROM #Operators ORDER BY ID
 
 		COMMIT TRANSACTION ImportOperator
 	END TRY
