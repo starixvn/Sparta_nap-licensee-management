@@ -1,0 +1,19 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+<ul class="breadcrumb title">
+    <li>Licensee Setting</li>
+    <li class="current">Licensee</li>
+</ul>
+}
+@section HeadCss{
+}
+@section FooterJs{
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/licensee/licensee.js")
+}
+
+<div id="app-container"></div>

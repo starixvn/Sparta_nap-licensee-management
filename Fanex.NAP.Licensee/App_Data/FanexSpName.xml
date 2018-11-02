@@ -67,4 +67,8 @@
     <Setting Key="Nap_LM_GetAgentInfoByAgentId" SpName="Nap_LM_GetAgentInfoByAgentId" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Operator_Import" SpName="Nap_LM_Operator_Import" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
+
+  <Function Name="Site.Nap.Licensee.LicenseeSetting">
+    <Setting Key="Nap_LM_Licensee_Select" SpName="Nap_LM_Licensee_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+  </Function>
 </Functions>

@@ -322,6 +322,9 @@
     <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -739,6 +742,11 @@
     <Content Include="www\reactpages\dist\js\dev\operator\operator.js.map" />
     <Content Include="www\reactpages\dist\css\dev\operator\operator.css.map" />
     <Content Include="www\reactpages\dist\css\dev\operator\operator.js.map" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\list\index.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\licensee\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -778,6 +786,7 @@
     <Content Include="TestFolder\SimpleSample.txt4" />
     <Content Include="Views\ManageOperator\Index.cshtml" />
     <Content Include="Views\ManageOperator\Import.cshtml" />
+    <Content Include="Views\LicenseeSetting\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

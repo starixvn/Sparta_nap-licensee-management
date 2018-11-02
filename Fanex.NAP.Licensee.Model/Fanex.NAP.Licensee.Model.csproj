@@ -130,6 +130,7 @@
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\Operator\SearchOperatorCriteria.cs" />
     <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\ImportOperatorResult.cs" />
+    <Compile Include="DTO\Licensee.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
     <Compile Include="DTO\LoginUser.cs" />

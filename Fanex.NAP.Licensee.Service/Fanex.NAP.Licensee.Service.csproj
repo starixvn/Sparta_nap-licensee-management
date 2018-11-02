@@ -136,10 +136,12 @@
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="Core\IObjectDbGenerator.cs" />
+    <Compile Include="ILicenseeSettingService.cs" />
     <Compile Include="ILogWriterService.cs" />
     <Compile Include="IManageOperatorService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />
     <Compile Include="ILicenseeVendorService.cs" />
+    <Compile Include="LicenseeSettingService.cs" />
     <Compile Include="LogWriterService.cs" />
     <Compile Include="ManageOperatorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

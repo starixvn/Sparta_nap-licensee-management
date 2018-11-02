@@ -7,7 +7,8 @@ const cssPaths = {
     // components css input source paths
     demo: './www/reactpages/src/styles/modules/demo',
     editvendor: './www/reactpages/src/styles/modules/vendor/index.scss',
-    operator: './www/reactpages/src/styles/modules/operator/index.scss'
+    operator: './www/reactpages/src/styles/modules/operator/index.scss',
+    licensee: './www/reactpages/src/styles/modules/licensee/index.scss'
 };
 
 const scriptPaths = {
@@ -20,7 +21,8 @@ const scriptPaths = {
     editvendor: './www/reactpages/src/scripts/modules/vendor/edit',
     operatorlist: './www/reactpages/src/scripts/modules/operator/list',
     operator: './www/reactpages/src/scripts/modules/operator/item',
-    import: './www/reactpages/src/scripts/modules/operator/import'
+    import: './www/reactpages/src/scripts/modules/operator/import',
+    licensee: './www/reactpages/src/scripts/modules/licensee/list'
 };
 
 module.exports = {
