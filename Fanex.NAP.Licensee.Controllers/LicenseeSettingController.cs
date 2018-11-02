@@ -1,7 +1,10 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
+    using System.Linq;
     using Model.Criteria.LicenseeSetting;
+    using Model.ViewModel.LicenseeSetting;
     using Service;
 
     public class LicenseeSettingController : BaseController
@@ -24,6 +27,66 @@
         {
             var result = _service.Search(criteria);
             return Json(result);
+        }
+
+        [HttpGet]
+        public ActionResult Add()
+        {
+            var viewModel = new NewLicenseeViewModel
+            {
+                ProductList = _service.GetProductList(),
+                SystemList = _service.GetSystemList(),
+                ResellerList = new List<string> { "ONEworks", "Boping", "Zelianta" }
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int licenseeId)
+        {
+            var viewModel = new LicenseeViewModel
+            {
+                Licensee = _service.GetLicensee(licenseeId),
+                ProductList = _service.GetLicenseeProducts(licenseeId)
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public JsonResult SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
+        {
+            var error = CheckValidNewLicensee(criteria);
+            if (error != null)
+            {
+                return Json(new { IsSuccess = false, Errors = error });
+            }
+
+            var newLicensee = _service.SetUpNewLicensee(criteria);
+
+            return Json(new { IsSuccess = true, Result = newLicensee });
+        }
+
+        private string CheckValidNewLicensee(SetUpNewLicenseeCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
+            {
+                return "Licensee Name is empty";
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.ResellerName))
+            {
+                return "Licensee Type is empty";
+            }
+
+            var existedLicensees = _service.Search(new LicenseeCriteria { IsAll = true });
+            if(existedLicensees.Any(x => x.LicenseeName == criteria.LicenseeName))
+            {
+                return "Licensee Name already exists";
+            }
+
+            return null;
         }
     }
 }

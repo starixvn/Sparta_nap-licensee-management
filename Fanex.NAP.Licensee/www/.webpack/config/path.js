@@ -22,7 +22,8 @@ const scriptPaths = {
     operatorlist: './www/reactpages/src/scripts/modules/operator/list',
     operator: './www/reactpages/src/scripts/modules/operator/item',
     import: './www/reactpages/src/scripts/modules/operator/import',
-    licensee: './www/reactpages/src/scripts/modules/licensee/list'
+    licensee: './www/reactpages/src/scripts/modules/licensee/list',
+    addlicensee: './www/reactpages/src/scripts/modules/licensee/add'
 };
 
 module.exports = {

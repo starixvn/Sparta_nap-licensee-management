@@ -7,5 +7,9 @@
         public bool IsActive { get; set; }
 
         public bool IsLaunched { get; set; }
+
+        public bool IsAll { get; set; }
+
+        public int LicenseeId { get; set; }
     }
 }

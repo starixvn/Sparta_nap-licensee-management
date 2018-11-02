@@ -155,7 +155,7 @@ namespace Fanex.NAP.Licensee.Service
         /// </summary>
         /// <param name="result">The view model.</param>
         /// <param name="reader">The data reader.</param>
-        private void BindBetSettingBySport(SingleDefaultBetSettingViewModel result, System.Data.IDataReader reader)
+        private void BindBetSettingBySport(SingleDefaultBetSettingViewModel result, IDataReader reader)
         {
             var group = reader["Group"].ToString().Trim();
             switch (group)

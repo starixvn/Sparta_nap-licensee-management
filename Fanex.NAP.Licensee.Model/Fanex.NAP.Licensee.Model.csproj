@@ -131,6 +131,7 @@
     <Compile Include="Criteria\Operator\SearchOperatorCriteria.cs" />
     <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />
     <Compile Include="DTO\LoginUser.cs" />
     <Compile Include="DTO\Operator.cs" />
+    <Compile Include="DTO\LicenseeProduct .cs" />
+    <Compile Include="DTO\Product.cs" />
     <Compile Include="DTO\ProductTypeItem.cs" />
     <Compile Include="DTO\RecheckInStatus.cs" />
     <Compile Include="DTO\ResultData.cs" />
@@ -172,10 +175,13 @@
     <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="DTO\LicenseeVendor.cs" />
+    <Compile Include="DTO\SystemItem.cs" />
     <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
+    <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
