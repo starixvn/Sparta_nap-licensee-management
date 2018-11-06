@@ -1,7 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferedProduct]
-	@LicenseeId		BIT			= 0
+	@LicenseeId		INT = 0
 AS
 /*
 	 Created: Amanda
