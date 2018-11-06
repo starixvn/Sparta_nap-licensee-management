@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Select]
 	@IsActive		BIT			= 1,
 	@IsLaunched		BIT			= 0,
 	@IsAll			BIT			= 0,
-	@LicenseeId		BIT			= 0
+	@LicenseeId		INT			= 0
 AS
 /*
 	 Created: Amanda
