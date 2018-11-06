@@ -33,11 +33,16 @@ BEGIN
 			l.EditBetSetting
 	FROM dbo.Licensees l WITH(NOLOCK)
 	WHERE l.LicenseeID = @LicenseeId
-			OR @IsAll = 1
-			OR (
-				(ISNULL(@LicenseeName,'') = '' OR l.LicenseeName LIKE '%' + @LicenseeName + '%')
-				AND l.IsActive = @IsActive
-				AND (@IsLaunched <> 1 OR l.AffectedDate IS NOT NULL)
-			)
+			OR ( 
+					@LicenseeId = 0 
+					AND (
+							@IsAll = 1
+							OR (
+								(ISNULL(@LicenseeName,'') = '' OR l.LicenseeName LIKE '%' + @LicenseeName + '%')
+								AND l.IsActive = @IsActive
+								AND (@IsLaunched <> 1 OR l.AffectedDate IS NOT NULL)
+							)
+						)
+				)	
 END
 GO
