@@ -3,7 +3,9 @@
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Select]
 	@LicenseeName	VARCHAR(50)	= '',
 	@IsActive		BIT			= 1,
-	@IsLaunched		BIT			= 0
+	@IsLaunched		BIT			= 0,
+	@IsAll			BIT			= 0,
+	@LicenseeId		BIT			= 0
 AS
 /*
 	 Created: Amanda
@@ -30,8 +32,12 @@ BEGIN
 			l.IsAllowedMemberComm,
 			l.EditBetSetting
 	FROM dbo.Licensees l WITH(NOLOCK)
-	WHERE (ISNULL(@LicenseeName,'') = '' OR l.LicenseeName LIKE '%' + @LicenseeName + '%')
-			AND l.IsActive = @IsActive
-			AND (@IsLaunched <> 1 OR l.AffectedDate IS NOT NULL)
+	WHERE l.LicenseeID = @LicenseeId
+			OR @IsAll = 1
+			OR (
+				(ISNULL(@LicenseeName,'') = '' OR l.LicenseeName LIKE '%' + @LicenseeName + '%')
+				AND l.IsActive = @IsActive
+				AND (@IsLaunched <> 1 OR l.AffectedDate IS NOT NULL)
+			)
 END
 GO
