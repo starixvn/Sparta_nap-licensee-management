@@ -61,16 +61,16 @@ export class EditForm extends Component {
                         </div>
 
                         <div className="form-group row">
-                            <label htmlFor="portalUrl" className="col-sm-3 col-md-3 col-form-label">Portal Url</label>
+                            <label className="col-sm-3 col-md-3 col-form-label">Portal Url</label>
                             <div className="col-sm-9 col-md-8">
-                                <input type="text" id="portalUrl" className="full-width" name="portalUrl" value={portalUrl} onChange={this.handleOnChange} />
+                                <a className="full-width" href={portalUrl} target="_blank">{portalUrl}</a>
                             </div>
                         </div>
 
                         <div className="form-group row">
-                            <label htmlFor="internalUrl" className="col-sm-3 col-md-3 col-form-label">Internal Url</label>
+                            <label className="col-sm-3 col-md-3 col-form-label">Internal Url</label>
                             <div className="col-sm-9 col-md-8">
-                                <input type="text" id="internalUrl" className="full-width" name="internalUrl" value={internalUrl} onChange={this.handleOnChange} />
+                                <a className="full-width" href={internalUrl} target="_blank">{internalUrl}</a>
                             </div>
                         </div>
 

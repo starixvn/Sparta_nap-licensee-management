@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
+import Select from 'react-select'
 import { getGridData } from './action'
-
 
 export class FormFilter extends Component {
     constructor(props) {
@@ -11,8 +10,13 @@ export class FormFilter extends Component {
 
         this.params = {
             vendorId: "",
-            siteName: ""
-        }
+            siteName: "",
+            functionKey: ""
+        };
+
+        this.state = {
+            selectedFunctionKey: null
+        };
     }
 
     handleChange = (event) => {
@@ -29,8 +33,14 @@ export class FormFilter extends Component {
         }
     }
 
+    handleFunctionKeyChange = (item) => {
+        this.setState({ selectedFunctionKey: item });
+        this.params.functionKey = item === null ? "" : item.value;
+    }
+
     submit = (event) => {
         event.preventDefault();
+
         this.props.getGridData(this.params);
     }
 
@@ -48,6 +58,14 @@ export class FormFilter extends Component {
                 </div>
 
                 <div className="form-group">
+                    <label>Function Key</label>
+                    <Select instanceId="ddlFunction"
+                    value={this.state.selectedFunctionKey}
+                    options={this.props.functionKeyList}
+                    onChange={this.handleFunctionKeyChange} />
+                </div>
+
+                <div className="form-group">
                     <button type="button" className="btn btn-primary" onClick={this.submit}>Submit</button>
                 </div>
             </div>
@@ -58,5 +76,8 @@ export class FormFilter extends Component {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ getGridData }, dispatch);
 }
-
-export default connect(null, mapDispatchToProps)(FormFilter);
+function mapStateToProps(state) {
+    const { functionKeyList } = state;
+    return { functionKeyList };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

@@ -1,0 +1,22 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@{
+    ViewBag.Title = "Import Operator";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Manage Operator</li>
+        <li class="current">Import Operator</li>
+    </ul>
+
+    <a class="btn-back" href="@Url.Content("~/ManageOperator")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/operator/operator.css")
+}
+@section FooterJs{
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/import/import.js")
+}
+<div id="app-container"></div>
+

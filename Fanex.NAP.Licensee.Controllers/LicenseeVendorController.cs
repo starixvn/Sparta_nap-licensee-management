@@ -25,13 +25,13 @@
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var functionKeyList = _vendorService.GetFunctionKeyList();
+            return View(functionKeyList);
         }
 
         [HttpPost]
         public ActionResult GetVendorInfoList(VendorSearchingCriteria criteria)
         {
-            var vendorList = _vendorService.GetVendorList(criteria);
             return Json(_vendorService.GetVendorList(criteria));
         }
 

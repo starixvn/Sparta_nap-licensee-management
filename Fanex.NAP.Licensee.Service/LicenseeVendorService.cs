@@ -47,8 +47,6 @@ namespace Fanex.NAP.Licensee.Service
                     db.ExecuteNonQuery(new
                     {
                         vendor.VendorId,
-                        vendor.PortalUrl,
-                        vendor.InternalUrl,
                         vendor.LrfUrl,
                         vendor.AffiliateUrl,
                         vendor.Exclusions
@@ -97,9 +95,9 @@ namespace Fanex.NAP.Licensee.Service
             result.Append("<SpName>Nap_LM_LicVendorInfo_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
             result.Append($"<Vendor Id=\"{newValue.VendorId}\" Name=\"{newValue.SiteName}\" />");
-            result.Append($"<Old InternalUrl=\"{oldValue.InternalUrl}\" LrfUrl=\"{oldValue.LrfUrl}\" AffiliateUrl=\"{oldValue.AffiliateUrl}\" />");
+            result.Append($"<Old LrfUrl=\"{oldValue.LrfUrl}\" AffiliateUrl=\"{oldValue.AffiliateUrl}\" />");
             result.Append($"<OldExclusions>{oldValue.Exclusions}</OldExclusions>");
-            result.Append($"<New InternalUrl=\"{newValue.InternalUrl}\" LrfUrl=\"{newValue.LrfUrl}\" AffiliateUrl=\"{newValue.AffiliateUrl}\" />");
+            result.Append($"<New LrfUrl=\"{newValue.LrfUrl}\" AffiliateUrl=\"{newValue.AffiliateUrl}\" />");
             result.Append($"<NewExclusions>{newValue.Exclusions}</NewExclusions>");
             result.Append("</Action>");
 

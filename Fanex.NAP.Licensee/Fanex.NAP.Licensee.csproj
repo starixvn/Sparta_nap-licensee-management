@@ -273,6 +273,8 @@
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="TestFolder\ReadMe.txt" />
+    <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
+    <Content Include="Views\ManageOperator\Get.cshtml" />
     <Content Include="www\.webpack\build\utils.js" />
     <Content Include="www\.webpack\build\webpack.base.conf.js" />
     <Content Include="www\.webpack\build\webpack.dev.conf.js" />
@@ -286,16 +288,26 @@
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.css" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\pro\operator\operator.css" />
+    <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\import\import.js" />
+    <Content Include="www\reactpages\dist\js\dev\operatorlist\operatorlist.js" />
+    <Content Include="www\reactpages\dist\js\dev\operator\operator.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\import\import.js" />
+    <Content Include="www\reactpages\dist\js\pro\operatorlist\operatorlist.js" />
+    <Content Include="www\reactpages\dist\js\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
@@ -305,6 +317,11 @@
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\item\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\item\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -710,6 +727,18 @@
     <Content Include="www\reactpages\src\styles\components\react-select\react-select.main.scss" />
     <Content Include="www\reactpages\src\styles\modules\demo\_demo.scss" />
     <Content Include="www\reactpages\src\styles\modules\vendor\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\operator\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\import\ImportPage.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\operator\import\index.jsx" />
+    <Content Include="www\reactpages\dist\js\dev\import\import.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\operatorlist\operatorlist.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\operator\operator.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\operator\operator.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -747,6 +776,8 @@
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
     <Content Include="TestFolder\SimpleSample.txt4" />
+    <Content Include="Views\ManageOperator\Index.cshtml" />
+    <Content Include="Views\ManageOperator\Import.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
@@ -828,10 +859,6 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,11 +1,11 @@
-webpackJsonp([3],{
+webpackJsonp([6],{
 
-/***/ 120:
+/***/ 131:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[120]);
+},[131]);
 //# sourceMappingURL=editvendor.js.map

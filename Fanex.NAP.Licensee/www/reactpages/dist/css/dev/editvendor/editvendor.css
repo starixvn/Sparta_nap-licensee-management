@@ -406,4 +406,18 @@
     float: right;
     padding-right: 10px; }
 
+.Select {
+  display: inline-block;
+  width: 250px; }
+  .Select .Select-value {
+    line-height: 23px !important; }
+  .Select .Select-placeholder {
+    line-height: 27px !important; }
+  .Select .Select-input {
+    height: 23px; }
+    .Select .Select-input input {
+      padding: 0; }
+  .Select .Select-control {
+    height: 25px; }
+
 /*# sourceMappingURL=editvendor.css.map*/

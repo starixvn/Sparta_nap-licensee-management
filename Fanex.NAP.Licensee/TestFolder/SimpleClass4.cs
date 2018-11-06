@@ -8,6 +8,7 @@ namespace SimpleTest.Namespace
     public class SimpleClass4
     {
         public int Id { get; set; }
+
         public string Descripition { get; set; }
     }
 }

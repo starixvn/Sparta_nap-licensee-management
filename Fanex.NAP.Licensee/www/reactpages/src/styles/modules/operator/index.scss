@@ -1,0 +1,96 @@
+﻿@import "../../components/react-select/react-select.main";
+
+$red: #a94442;
+$green: #729446;
+$yellow: #fecc35;
+
+.Select {
+    display: inline-block;
+    width: 150px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
+}
+
+.edit-form {
+    margin-top: 10px;
+
+    input[type=text] {
+        &.has-error {
+            border: 1px solid $red;
+        }
+
+        &.valid{
+            border: 1px solid $green;
+        }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
+    }
+
+    .group-input {
+        position: relative;
+
+        button {
+            position: absolute;
+            right: 0;
+            height: 25px;
+            border-radius: 0;
+            margin: 0;
+        }
+    }
+
+    .error-message {
+        color: $red;
+        font-size: 0.9em;
+    }
+}
+
+.help-block {
+    .has-error {
+        color: $red;
+
+        p {
+            padding-left: 10px;
+            line-height: 0.5em;
+        }
+    }
+
+    td {
+        &.Added {
+            color: $green;
+        }
+
+        &.Error {
+            color: $red;
+        }
+
+        &.Updated {
+            color: $yellow;
+        }
+    }
+}

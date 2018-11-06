@@ -1,9 +1,16 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 }
+@model IEnumerable<string>
 
+@{
+    var serializer = new JavaScriptSerializer();
+
+    var functionKeyList = Model.Select(x => new { label = x, value = x }).ToList();
+}
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
@@ -11,8 +18,14 @@
     </ul> 
 }
 @section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/editvendor/editvendor.css")
 }
 @section FooterJs{
+    <script>
+            var initialState = {
+                functionKeyList: @Html.Raw(serializer.Serialize(functionKeyList))
+            }
+    </script>
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/vendor/vendor.js")
 }
 
