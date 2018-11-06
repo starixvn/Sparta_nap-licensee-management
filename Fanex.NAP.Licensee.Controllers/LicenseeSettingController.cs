@@ -1,12 +1,19 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using System.Linq;
+    using System.Web.Mvc;
+    using Attributes;
+    using Core.Business;
+    using Core.Web.Attribute;
     using Model.Criteria.LicenseeSetting;
+    using Model.DataDomain;
     using Model.ViewModel.LicenseeSetting;
+    using ONEbook.UM.Filters;
     using Service;
 
+    [CustomHandleError]
+    [CheckUMFilter]
     public class LicenseeSettingController : BaseController
     {
         private readonly ILicenseeSettingService _service;
@@ -17,12 +24,14 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Read)]
         public JsonResult Search(LicenseeCriteria criteria)
         {
             var result = _service.Search(criteria);
@@ -30,6 +39,7 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public ActionResult Add()
         {
             var viewModel = new NewLicenseeViewModel
@@ -43,6 +53,7 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int licenseeId)
         {
             var viewModel = new LicenseeViewModel
@@ -55,6 +66,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
             var error = CheckValidNewLicensee(criteria);
@@ -81,7 +93,7 @@
             }
 
             var existedLicensees = _service.Search(new LicenseeCriteria { IsAll = true });
-            if(existedLicensees.Any(x => x.LicenseeName == criteria.LicenseeName))
+            if (existedLicensees.Any(x => x.LicenseeName == criteria.LicenseeName))
             {
                 return "Licensee Name already exists";
             }
