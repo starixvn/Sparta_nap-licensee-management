@@ -52,19 +52,19 @@
   </Function>
 
   <Function Name="Site.Nap.Licensee.VendorInfoManagement">
-    <Setting Key="Nap_LM_LicVendorInfo_Select" SpName="Nap_LM_LicVendorInfo_Select_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_LicVendorInfo_SelectById" SpName="Nap_LM_LicVendorInfo_SelectById_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_LicVendorInfo_Update" SpName="Nap_LM_LicVendorInfo_Update_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicVendorInfo_Select" SpName="Nap_LM_LicVendorInfo_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicVendorInfo_SelectById" SpName="Nap_LM_LicVendorInfo_SelectById" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicVendorInfo_Update" SpName="Nap_LM_LicVendorInfo_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.OperatorManagement">
-    <Setting Key="Nap_LM_Operator_Search" SpName="Nap_LM_Operator_Search_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_SubsidiarySiteName_Select" SpName="Nap_LM_SubsidiarySiteName_Select_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Operator_Get" SpName="Nap_LM_Operator_Get_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Operator_Insert" SpName="Nap_LM_Operator_Insert_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Operator_Update" SpName="Nap_LM_Operator_Update_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_GetAgentInfoByAgentId" SpName="Nap_LM_GetAgentInfoByAgentId_xtest" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Operator_Import" SpName="Nap_LM_Operator_Import_xtest" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Search" SpName="Nap_LM_Operator_Search" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_SubsidiarySiteName_Select" SpName="Nap_LM_SubsidiarySiteName_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Get" SpName="Nap_LM_Operator_Get" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Insert" SpName="Nap_LM_Operator_Insert" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Update" SpName="Nap_LM_Operator_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_GetAgentInfoByAgentId" SpName="Nap_LM_GetAgentInfoByAgentId" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Import" SpName="Nap_LM_Operator_Import" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>
