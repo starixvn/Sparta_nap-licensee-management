@@ -11,8 +11,10 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Licensee Setting</li>
-        <li class="current">Set Up New Licensee</li>
+        <li class="current">Edit Licensee</li>
     </ul>
+
+    <a class="btn-back" href="@Url.Content("~/LicenseeSetting/Index")">← Back To List</a>
 }
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/licensee/licensee.css")
@@ -25,7 +27,7 @@
         }
     </script>
 
-    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/addlicensee/addlicensee.js")
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editlicensee/editlicensee.js")
 }
 
 <div id="app-container"></div>

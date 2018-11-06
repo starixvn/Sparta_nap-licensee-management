@@ -4,7 +4,7 @@
 
     public class Licensee
     {
-        public int LicenseeId { get; set; }
+        public int LicenseeID { get; set; }
 
         public string LicenseeName { get; set; }
 

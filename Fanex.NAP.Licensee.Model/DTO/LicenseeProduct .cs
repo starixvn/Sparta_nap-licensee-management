@@ -8,6 +8,8 @@
 
         public bool WinLoss { get; set; }
 
-        public DateTime EffectiveDate { get; set; }
+        public DateTime? EffectiveDate { get; set; }
+
+        public string EffectiveDateString => EffectiveDate?.ToString("MM/dd/yyyy");
     }
 }

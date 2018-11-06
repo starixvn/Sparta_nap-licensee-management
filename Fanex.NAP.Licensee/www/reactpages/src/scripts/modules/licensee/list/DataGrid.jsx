@@ -61,7 +61,7 @@ export class DataGrid extends Component {
                                     <td>{item.LicenseeName}</td>
                                     <td>{item.Description}</td>
                                     <td className="text-center"><span className={item.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                    <td>{item.AffectedDateString}</td>
+                                    <td className="text-right">{item.AffectedDateString}</td>
                                     <td className="text-center"><span className={item.IsActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center"><span className={item.IsKPIActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center"><span className={item.IsOneWorkActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
@@ -70,7 +70,7 @@ export class DataGrid extends Component {
                                     <td className="text-center"><span className={item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center"><span className={item.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center">
-                                        <a href={window.rootUrl + `LicenseeSetting/Get?licenseeId=${item.licenseeId}`}>
+                                        <a href={window.rootUrl + `LicenseeSetting/Edit?licenseeId=${item.LicenseeID}`}>
                                             <i className="icon-edit"></i>
                                         </a>
                                     </td>

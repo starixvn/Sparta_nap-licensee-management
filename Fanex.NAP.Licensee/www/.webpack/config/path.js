@@ -21,9 +21,10 @@ const scriptPaths = {
     editvendor: './www/reactpages/src/scripts/modules/vendor/edit',
     operatorlist: './www/reactpages/src/scripts/modules/operator/list',
     operator: './www/reactpages/src/scripts/modules/operator/item',
-    import: './www/reactpages/src/scripts/modules/operator/import',
+    importoperator: './www/reactpages/src/scripts/modules/operator/import',
     licensee: './www/reactpages/src/scripts/modules/licensee/list',
-    addlicensee: './www/reactpages/src/scripts/modules/licensee/add'
+    addlicensee: './www/reactpages/src/scripts/modules/licensee/add',
+    editlicensee: './www/reactpages/src/scripts/modules/licensee/edit'
 };
 
 module.exports = {
