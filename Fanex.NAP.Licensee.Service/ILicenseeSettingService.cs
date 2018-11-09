@@ -12,10 +12,16 @@
 
         IEnumerable<SystemItem> GetSystemList();
 
-        Licensee SetUpNewLicensee(SetUpNewLicenseeCriteria criteria);
+        ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria);
 
         Licensee GetLicensee(int licenseeId);
 
         IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId);
+
+        bool LaunchProduct(LaunchProductCriteria criteria);
+
+        bool OfferProduct(OfferProductCriteria criteria);
+
+        bool RemoveProduct(LicenseeProductCriteria criteria);
     }
 }

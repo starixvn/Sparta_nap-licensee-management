@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
-CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferedProduct]
+CREATE PROCEDURE [dbo].[Nap_LM_Licensee_GetOfferedProduct]
 	@LicenseeId		INT = 0
 AS
 /*
@@ -25,7 +25,7 @@ BEGIN
 				ELSE p.ProductName END AS ProductName
 	FROM dbo.LicenseeProduct3rd lp WITH(NOLOCK)
 	LEFT JOIN dbo.Product3rd p WITH(NOLOCK) ON lp.ProductID = p.Productid
-	WHERE lp.LicenseeID = @LicenseeId
+	WHERE lp.LicenseeID = @LicenseeId AND (lp.ProductID = 0 OR p.Productid IS NOT NULL)
 
 END
 GO

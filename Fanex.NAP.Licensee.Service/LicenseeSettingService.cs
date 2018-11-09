@@ -39,7 +39,7 @@
             }
         }
 
-        public Licensee SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
+        public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
             var licenseeId = 0;
             using (var db = _objectDbGenerator.Create("DBA_Lrf_CreateNewLicensee"))
@@ -47,7 +47,11 @@
                 licenseeId = db.QueryEntity<int>(criteria);
             }
 
-            return GetLicensee(licenseeId);
+            return new ResultData<Licensee>
+            {
+                IsSuccess = licenseeId > 0,
+                Data = licenseeId > 0 ? GetLicensee(licenseeId) : null
+            };
         }
 
         public Licensee GetLicensee(int licenseeId)
@@ -57,9 +61,39 @@
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)
         {
-            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferedProduct"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetOfferedProduct"))
             {
                 return db.Query<LicenseeProduct>(new { LicenseeId = licenseeId });
+            }
+        }
+
+        public bool LaunchProduct(LaunchProductCriteria criteria)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_LaunchProduct"))
+            {
+                var isSuccess = db.QueryEntity<int>(criteria) == 1;
+
+                return isSuccess;
+            }
+        }
+
+        public bool OfferProduct(OfferProductCriteria criteria)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
+            {
+                var isSuccess = db.QueryEntity<int>(criteria) == 1;
+
+                return isSuccess;
+            }
+        }
+
+        public bool RemoveProduct(LicenseeProductCriteria criteria)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
+            {
+                var isSuccess = db.QueryEntity<int>(criteria) == 1;
+
+                return isSuccess;
             }
         }
     }

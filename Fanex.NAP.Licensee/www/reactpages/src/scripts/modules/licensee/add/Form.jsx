@@ -2,6 +2,7 @@
 import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 import Select from 'react-select';
+import Utility from '../../../lib/utility';
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -30,32 +31,34 @@ export default class Form extends Component {
         return licenseeName && selectedReseller && !isSuccess;
     }
 
+    _getParams() {
+        return {
+            LicenseeName: this.state.licenseeName,
+            SuperWildCard: this.state.superWildCard,
+            ResellerName: this.state.selectedReseller.value,
+            ProductCode: this.state.selectedProduct == null ? '' : this.state.selectedProduct.map(i => i.value).join(','),
+            SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(i => i.value).join(','),
+            IsSpecial: this.state.isSpecial,
+            IsAllowMemberComm: this.state.isAllowMemberComm,
+            IsAllowWLbyLeague: this.state.isAllowWLbyLeague,
+            IsPullService: this.state.isPullService
+        };
+    }
+
     _onChangeLicenseeName = (e) => {
         const value = e.target.value;
 
         this.setState({ licenseeName: value, superWildCard: value + 'Super' });
     }
 
-    _handleSubmit = (e) => {
-        e.preventDefault();
-
+    _handleSubmit = () => {
         if (this.isValid) {
-            const param = {
-                LicenseeName: this.state.licenseeName,
-                SuperWildCard: this.state.superWildCard,
-                ResellerName: this.state.selectedReseller.value,
-                ProductCode: this.state.selectedProduct == null? '' : this.state.selectedProduct.map(i => i.value).join(','),
-                SystemisActive: this.state.selectedSystem == null? '' : this.state.selectedSystem.map(i => i.value).join(','),
-                IsSpecial: this.state.isSpecial,
-                IsAllowMemberComm: this.state.isAllowMemberComm,
-                IsAllowWLbyLeague: this.state.isAllowWLbyLeague,
-                IsPullService: this.state.isPullService
-            };
+            const param = this._getParams();
 
             this._submit(param);
         }
         else {
-            this._alert('Invalid input!');
+            Utility.showMessage('Invalid input!');
         }
     }
 
@@ -65,22 +68,18 @@ export default class Form extends Component {
         Site.fetchData(params, url)
             .then(response => {                
                 if (!response.data.IsSuccess) {
-                    this._alert(response.data.Errors);
+                    Utility.showMessage(response.data.Errors);
                 }
                 else {
-                    this._alert('Success!');
+                    Utility.showMessage('Success!');
                     this.setState({ isSuccess: true });
                 }
 
                 this._toggleLoader(false);
             }).catch(err => {
-                this._alert('Please try again!');
+                Utility.showMessage('Please try again!');
                 this._toggleLoader(false);
             });
-    }
-
-    _alert(msg) {
-        window.alert(msg);
     }
 
     _toggleLoader(isLoading) {
@@ -121,7 +120,7 @@ export default class Form extends Component {
                             </div>
                         </div>
                         <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Reseller</label>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Licensee Type</label>
                             <div className='col-sm-12 col-md-5'>
                                 <Select instanceId='ddlReseller'
                                     className={`full-width ${selectedReseller ? '' : 'has-error'}`}
@@ -193,12 +192,12 @@ export default class Form extends Component {
                             </div>
                         </div>
                         <div className='form-group row col-sm-12'>
-                            <button type='button' className={`btn btn-primary ${isSuccess ? 'hide' : ''}`} onClick={this._handleSubmit} disabled={!this.isValid}>
+                            <button className={`btn btn-primary ${isSuccess ? 'hide' : ''}`} onClick={this._handleSubmit} disabled={!this.isValid}>
                                 Submit
                             </button>
-                            <a className={`btn btn-green ${isSuccess ? '' : 'hide'}`}>
+                            <button className={`btn btn-green ${isSuccess ? '' : 'hide'}`}>
                                 View New Licensee
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>

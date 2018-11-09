@@ -95,19 +95,19 @@
 
             if (value <= 0)
             {
-                return Json(new { IsValid = false, Error = "Invalid input" });
+                return Json(new { IsValid = false, Error = "Invalid input!" });
             }
 
             var opt = _operatorService.GetOperator(value);
             if (opt != null)
             {
-                return Json(new { IsValid = false, Error = "Operator setting of this agent already exists" });
+                return Json(new { IsValid = false, Error = "Operator setting of this agent already exists!" });
             }
 
             var agent = _operatorService.GetAgent(value);
             if (agent == null)
             {
-                return Json(new { IsValid = false, Error = "Agent does not exist" });
+                return Json(new { IsValid = false, Error = "Agent does not exist!" });
             }
 
             return Json(new { IsValid = true, Agent = agent });
@@ -146,7 +146,7 @@
 
                     if (!opt.IsValid)
                     {
-                        errors.Add($"Invalid data in line {line}");
+                        errors.Add($"Invalid data in line {line}!");
                     }
                     else
                     {
@@ -162,7 +162,7 @@
                 }
                 else if (!operators.Any())
                 {
-                    errors.Add("Imported file is empty");
+                    errors.Add("Imported file is empty!");
                     return Json(new { IsSuccess = false, Errors = errors });
                 }
                 else

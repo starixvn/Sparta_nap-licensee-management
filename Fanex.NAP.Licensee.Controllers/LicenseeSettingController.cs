@@ -75,27 +75,117 @@
                 return Json(new { IsSuccess = false, Errors = error });
             }
 
-            var newLicensee = _service.SetUpNewLicensee(criteria);
+            var result = _service.SetUpNewLicensee(criteria);
 
-            return Json(new { IsSuccess = true, Result = newLicensee });
+            return Json(result);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult LaunchProduct(LaunchProductCriteria criteria)
+        {
+            var error = CheckValidLaunchedProduct(criteria);
+            if (error != null)
+            {
+                return Json(new { IsSuccess = false, Errors = error });
+            }
+
+            var result = _service.LaunchProduct(criteria);
+
+            return Json(new { IsSuccess = result, Errors = result ? string.Empty : "This product was launched by another user!" });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult OfferProduct(OfferProductCriteria criteria)
+        {
+            var error = CheckValidLicenseeProduct(criteria);
+            if (error != null)
+            {
+                return Json(new { IsSuccess = false, Errors = error });
+            }
+
+            var result = _service.OfferProduct(criteria);
+
+            return Json(new { IsSuccess = result, Errors = result ? string.Empty : "This product was added by another user!" });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult RemoveProduct(LicenseeProductCriteria criteria)
+        {
+            var error = CheckValidLicenseeProduct(criteria);
+            if (error != null)
+            {
+                return Json(new { IsSuccess = false, Errors = error });
+            }
+
+            var result = _service.RemoveProduct(criteria);
+
+            return Json(new { IsSuccess = result, Errors = result ? string.Empty : "This product was launched by another user!" });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetLicenseeProductList(int licenseeId)
+        {
+            return Json(_service.GetLicenseeProducts(licenseeId));
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetProductList(int excludeLicenseeId)
+        {
+            var allProducts = _service.GetProductList();
+
+            if (excludeLicenseeId == 0)
+            {
+                return Json(allProducts);
+            }
+
+            var licenseeProduct = _service.GetLicenseeProducts(excludeLicenseeId);
+            var result = allProducts.Where(x => !licenseeProduct.Any(y => y.ProductCode == x.ProductCode)).ToList();
+
+            return Json(result);
+        }
+
+        private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.EffectiveDate))
+            {
+                return "Invalid data!";
+            }
+
+            return CheckValidLicenseeProduct(criteria);
+        }
+
+        private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.LicenseeName)
+                || string.IsNullOrWhiteSpace(criteria.ProductCode))
+            {
+                return "Invalid data!";
+            }
+
+            return null;
         }
 
         private string CheckValidNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
             if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
             {
-                return "Licensee Name is empty";
+                return "Licensee Name is empty!";
             }
 
             if (string.IsNullOrWhiteSpace(criteria.ResellerName))
             {
-                return "Licensee Type is empty";
+                return "Licensee Type is empty!";
             }
 
             var existedLicensees = _service.Search(new LicenseeCriteria { IsAll = true });
             if (existedLicensees.Any(x => x.LicenseeName == criteria.LicenseeName))
             {
-                return "Licensee Name already exists";
+                return "Licensee Name already exists!";
             }
 
             return null;

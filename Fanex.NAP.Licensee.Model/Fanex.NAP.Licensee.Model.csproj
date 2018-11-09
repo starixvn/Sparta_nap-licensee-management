@@ -128,6 +128,9 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\LicenseeProductCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\LaunchProductCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\OfferProductCriteria.cs" />
     <Compile Include="Criteria\Operator\SearchOperatorCriteria.cs" />
     <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
