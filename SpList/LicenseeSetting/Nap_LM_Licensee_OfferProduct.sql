@@ -1,7 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
-	@LicenseeName	INT,
+	@LicenseeName	VARCHAR(50),
 	@ProductCode	VARCHAR(100)='',
 	@EffectiveDate	SMALLDATETIME ='',
 	@IsPullService  BIT  = 1 
@@ -49,6 +49,14 @@ BEGIN
 		RETURN
 	END
 	
+	DECLARE @XACT_ABORT VARCHAR(3) = 'OFF';  
+	IF ( (16384 & @@OPTIONS) = 16384 ) SET @XACT_ABORT = 'ON';  
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT ON
+	END
+	
 	BEGIN TRY
 	BEGIN TRANSACTION OfferProduct
 		
@@ -81,5 +89,10 @@ BEGIN
 					   @ErrorState -- State.
 					   );
 	END CATCH
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT OFF
+	END
 END
 GO

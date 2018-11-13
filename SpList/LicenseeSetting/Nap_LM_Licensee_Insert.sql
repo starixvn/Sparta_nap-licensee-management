@@ -35,6 +35,14 @@ BEGIN
 		RETURN
 	END
 	
+	DECLARE @XACT_ABORT VARCHAR(3) = 'OFF';  
+	IF ( (16384 & @@OPTIONS) = 16384 ) SET @XACT_ABORT = 'ON';  
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT ON
+	END
+	
 	BEGIN TRY
 	BEGIN TRANSACTION SetUpNewLicensee
 		
@@ -83,5 +91,10 @@ BEGIN
 					   @ErrorState -- State.
 					   );
 	END CATCH
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT OFF
+	END
 END
 GO

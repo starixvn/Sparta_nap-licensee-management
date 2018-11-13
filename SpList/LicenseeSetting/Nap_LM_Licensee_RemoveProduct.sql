@@ -1,7 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_RemoveProduct]
-	@LicenseeName	INT,  
+	@LicenseeName	VARCHAR(50),  
 	@ProductCode	VARCHAR(5)=''
 AS
 /*
@@ -54,7 +54,7 @@ BEGIN
 	BEGIN TRANSACTION LaunchProduct
 	
 		-- delete setting
-		DELETE dbo.LicenseeProduct3rd
+		DELETE dbo.LicenseeProduct3rd WITH(ROWLOCK)
 		WHERE ProductID = @ProductId AND LicenseeID = @LicenseeId
 		
 		-- delete permission
@@ -63,12 +63,12 @@ BEGIN
 		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductCode
 		
 		DELETE lf
-		FROM dbo.LicenseeFunctions lf
+		FROM dbo.LicenseeFunctions lf WITH(ROWLOCK)
 		INNER JOIN @function f ON f.FunctionId = lf.FunctionId
 		WHERE lf.LicenseeId = @LicenseeId AND f.TypeID = 1 -- LRF
 		
 		DELETE luf
-		FROM dbo.LicenseeUserFunctions luf
+		FROM dbo.LicenseeUserFunctions luf WITH(ROWLOCK)
 		INNER JOIN @function f ON f.FunctionId = luf.FunctionId
 		WHERE luf.LicenseeId = @LicenseeId AND f.TypeID = 1 -- LRF
 
