@@ -7853,7 +7853,9 @@ exports['default'] = thunk;
 /* 90 */,
 /* 91 */,
 /* 92 */,
-/* 93 */
+/* 93 */,
+/* 94 */,
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7864,7 +7866,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toggleLoader = exports.setParams = undefined;
 
-var _types = __webpack_require__(94);
+var _types = __webpack_require__(96);
 
 var _loaderAction = __webpack_require__(82);
 
@@ -7879,7 +7881,7 @@ exports.setParams = setParams;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7891,8 +7893,6 @@ Object.defineProperty(exports, "__esModule", {
 var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 
 /***/ }),
-/* 95 */,
-/* 96 */,
 /* 97 */,
 /* 98 */,
 /* 99 */,
@@ -7929,7 +7929,8 @@ var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 /* 130 */,
 /* 131 */,
 /* 132 */,
-/* 133 */
+/* 133 */,
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7949,13 +7950,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(134);
+var _AppContainer = __webpack_require__(135);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(11);
 
-var _reducer = __webpack_require__(137);
+var _reducer = __webpack_require__(138);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -8002,7 +8003,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8027,11 +8028,11 @@ var _Loader = __webpack_require__(12);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(135);
+var _FormFilter = __webpack_require__(136);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(136);
+var _DataGrid = __webpack_require__(137);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -8065,7 +8066,7 @@ var AppContainer = exports.AppContainer = function (_Component) {
                     { style: { display: 'inline-block' } },
                     _react2.default.createElement(
                         'a',
-                        { className: 'btn btn-green', href: 'Add' },
+                        { className: 'btn btn-green', href: window.rootUrl + 'LicenseeSetting/Add' },
                         '+ Add New Licensee'
                     )
                 ),
@@ -8086,7 +8087,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8111,7 +8112,7 @@ var _reactSelect = __webpack_require__(17);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(93);
+var _action = __webpack_require__(95);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8248,7 +8249,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8269,7 +8270,7 @@ var _reactRedux = __webpack_require__(11);
 
 var _redux = __webpack_require__(5);
 
-var _action = __webpack_require__(93);
+var _action = __webpack_require__(95);
 
 var _site = __webpack_require__(13);
 
@@ -8474,7 +8475,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     { className: 'text-center' },
                                     _react2.default.createElement(
                                         'a',
-                                        { href: window.rootUrl + ('LicenseeSetting/Edit?licenseeId=' + item.LicenseeID) },
+                                        { href: window.rootUrl + ('LicenseeSetting/Edit?licenseeName=' + item.LicenseeName) },
                                         _react2.default.createElement('i', { className: 'icon-edit' })
                                     )
                                 )
@@ -8501,7 +8502,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8519,7 +8520,7 @@ var _createReducer2 = __webpack_require__(53);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _types = __webpack_require__(94);
+var _types = __webpack_require__(96);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8532,5 +8533,5 @@ var params = (0, _createReducer3.default)({}, _defineProperty({}, _types.SET_PAR
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[133]);
+],[134]);
 //# sourceMappingURL=licensee.js.map

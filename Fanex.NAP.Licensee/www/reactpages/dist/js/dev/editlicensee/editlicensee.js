@@ -5522,8 +5522,49 @@ module.exports = function spread(callback) {
 /* 83 */,
 /* 84 */,
 /* 85 */,
-/* 86 */,
-/* 87 */
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utility = function () {
+    function Utility() {
+        _classCallCheck(this, Utility);
+    }
+
+    _createClass(Utility, null, [{
+        key: 'getTodayString',
+        value: function getTodayString() {
+            var today = new Date();
+            var month = today.getMonth() + 1;
+            var day = today.getDate();
+
+            return today.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+        }
+    }, {
+        key: 'showMessage',
+        value: function showMessage(msg) {
+            window.alert(msg);
+        }
+    }]);
+
+    return Utility;
+}();
+
+exports.default = Utility;
+
+/***/ }),
+/* 87 */,
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5623,14 +5664,7 @@ exports.default = Popup;
 ;
 
 /***/ }),
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5650,7 +5684,7 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Popup = __webpack_require__(87);
+var _Popup = __webpack_require__(88);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
@@ -5742,6 +5776,12 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
@@ -5786,7 +5826,8 @@ exports.default = ConfirmBox;
 /* 137 */,
 /* 138 */,
 /* 139 */,
-/* 140 */
+/* 140 */,
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5806,7 +5847,7 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Form = __webpack_require__(141);
+var _Form = __webpack_require__(142);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -5843,7 +5884,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5863,11 +5904,11 @@ var _Loader = __webpack_require__(12);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _LaunchProductForm = __webpack_require__(142);
+var _LaunchProductForm = __webpack_require__(143);
 
 var _LaunchProductForm2 = _interopRequireDefault(_LaunchProductForm);
 
-var _OfferProductForm = __webpack_require__(143);
+var _OfferProductForm = __webpack_require__(144);
 
 var _OfferProductForm2 = _interopRequireDefault(_OfferProductForm);
 
@@ -5875,11 +5916,11 @@ var _site = __webpack_require__(13);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(149);
+var _utility = __webpack_require__(86);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _ConfirmBox = __webpack_require__(95);
+var _ConfirmBox = __webpack_require__(89);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
@@ -6181,7 +6222,7 @@ var Form = function (_Component) {
                         } }),
                     _react2.default.createElement(_LaunchProductForm2.default, {
                         isShow: launchPopup.isShow,
-                        licenseeName: this.licensee.licenseeName,
+                        licenseeName: this.licensee.LicenseeName,
                         productCode: launchPopup.productCode,
                         productName: launchPopup.productName,
                         onClose: function onClose(result) {
@@ -6189,7 +6230,7 @@ var Form = function (_Component) {
                         } }),
                     _react2.default.createElement(_OfferProductForm2.default, {
                         isShow: offerPopup.isShow,
-                        licenseeName: this.licensee.licenseeName,
+                        licenseeName: this.licensee.LicenseeName,
                         productList: offerPopup.productList,
                         onClose: function onClose(result) {
                             return _this6.onCloseOfferProductPopup(result, _this6.licensee.LicenseeID);
@@ -6386,6 +6427,16 @@ var Form = function (_Component) {
                                                     return _this6._offerProduct(_this6.licensee.LicenseeID);
                                                 } },
                                             '+ Offer New Product'
+                                        ),
+                                        this.licensee.AffectedDateString === null && _react2.default.createElement(
+                                            'button',
+                                            { className: 'btn btn-green' },
+                                            'Launch Licensee'
+                                        ),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'btn btn-primary' },
+                                            'Generate LAP Exclusions'
                                         )
                                     )
                                 ),
@@ -6404,7 +6455,7 @@ var Form = function (_Component) {
 exports.default = Form;
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6420,11 +6471,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Popup = __webpack_require__(87);
+var _Popup = __webpack_require__(88);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
-var _ConfirmBox = __webpack_require__(95);
+var _ConfirmBox = __webpack_require__(89);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
@@ -6436,7 +6487,7 @@ var _site = __webpack_require__(13);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(149);
+var _utility = __webpack_require__(86);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -6649,7 +6700,7 @@ var LaunchProductForm = function (_Component) {
 exports.default = LaunchProductForm;
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6665,11 +6716,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Popup = __webpack_require__(87);
+var _Popup = __webpack_require__(88);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
-var _ConfirmBox = __webpack_require__(95);
+var _ConfirmBox = __webpack_require__(89);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
@@ -6685,7 +6736,7 @@ var _reactSelect = __webpack_require__(17);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _utility = __webpack_require__(149);
+var _utility = __webpack_require__(86);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -6921,52 +6972,6 @@ var OfferProductForm = function (_Component) {
 
 exports.default = OfferProductForm;
 
-/***/ }),
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Utility = function () {
-    function Utility() {
-        _classCallCheck(this, Utility);
-    }
-
-    _createClass(Utility, null, [{
-        key: 'getTodayString',
-        value: function getTodayString() {
-            var today = new Date();
-            var month = today.getMonth() + 1;
-            var day = today.getDate();
-
-            return today.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
-        }
-    }, {
-        key: 'showMessage',
-        value: function showMessage(msg) {
-            window.alert(msg);
-        }
-    }]);
-
-    return Utility;
-}();
-
-exports.default = Utility;
-
 /***/ })
-],[140]);
+],[141]);
 //# sourceMappingURL=editlicensee.js.map

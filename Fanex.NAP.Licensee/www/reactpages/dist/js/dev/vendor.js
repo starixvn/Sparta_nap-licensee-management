@@ -98,7 +98,7 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 96);
+/******/ 	return __webpack_require__(__webpack_require__.s = 97);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -112,13 +112,53 @@
 if (false) {
   module.exports = require('./cjs/react.production.min.js');
 } else {
-  module.exports = __webpack_require__(97);
+  module.exports = __webpack_require__(98);
 }
 
 
 /***/ }),
 
 /***/ 100:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+/**
+ * Simple, lightweight module assisting with the detection and context of
+ * Worker. Helps avoid circular dependencies and allows code to reason about
+ * whether or not they are in a Worker, even if they never include the main
+ * `ReactWorker` dependency.
+ */
+var ExecutionEnvironment = {
+
+  canUseDOM: canUseDOM,
+
+  canUseWorkers: typeof Worker !== 'undefined',
+
+  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+  canUseViewport: canUseDOM && !!window.screen,
+
+  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+
+};
+
+module.exports = ExecutionEnvironment;
+
+/***/ }),
+
+/***/ 101:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -199,7 +239,7 @@ module.exports = EventListener;
 
 /***/ }),
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -242,7 +282,7 @@ module.exports = getActiveElement;
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -314,7 +354,7 @@ module.exports = shallowEqual;
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -329,7 +369,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(104);
+var isTextNode = __webpack_require__(105);
 
 /*eslint-disable no-bitwise */
 
@@ -358,7 +398,7 @@ module.exports = containsNode;
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -373,7 +413,7 @@ module.exports = containsNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(105);
+var isNode = __webpack_require__(106);
 
 /**
  * @param {*} object The object to check.
@@ -387,7 +427,7 @@ module.exports = isTextNode;
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -416,7 +456,7 @@ module.exports = isNode;
 
 /***/ }),
 
-/***/ 106:
+/***/ 107:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -447,7 +487,7 @@ module.exports = focusNode;
 
 /***/ }),
 
-/***/ 107:
+/***/ 108:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -462,7 +502,7 @@ module.exports = focusNode;
 
 
 
-var hyphenate = __webpack_require__(108);
+var hyphenate = __webpack_require__(109);
 
 var msPattern = /^ms-/;
 
@@ -490,7 +530,7 @@ module.exports = hyphenateStyleName;
 
 /***/ }),
 
-/***/ 108:
+/***/ 109:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -527,7 +567,7 @@ module.exports = hyphenate;
 
 /***/ }),
 
-/***/ 109:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -542,7 +582,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(110);
+var camelize = __webpack_require__(111);
 
 var msPattern = /^-ms-/;
 
@@ -571,7 +611,7 @@ module.exports = camelizeStyleName;
 
 /***/ }),
 
-/***/ 110:
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -647,7 +687,7 @@ if (false) {
   checkDCE();
   module.exports = require('./cjs/react-dom.production.min.js');
 } else {
-  module.exports = __webpack_require__(98);
+  module.exports = __webpack_require__(99);
 }
 
 
@@ -1010,7 +1050,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 88:
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1034,7 +1074,7 @@ module.exports = emptyObject;
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
@@ -1043,7 +1083,7 @@ module.exports = __webpack_require__(4);
 
 /***/ }),
 
-/***/ 97:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1065,7 +1105,7 @@ if (true) {
 'use strict';
 
 var _assign = __webpack_require__(54);
-var emptyObject = __webpack_require__(88);
+var emptyObject = __webpack_require__(90);
 var invariant = __webpack_require__(41);
 var warning = __webpack_require__(42);
 var emptyFunction = __webpack_require__(40);
@@ -2408,7 +2448,7 @@ module.exports = react;
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2432,18 +2472,18 @@ if (true) {
 var React = __webpack_require__(1);
 var invariant = __webpack_require__(41);
 var warning = __webpack_require__(42);
-var ExecutionEnvironment = __webpack_require__(99);
+var ExecutionEnvironment = __webpack_require__(100);
 var _assign = __webpack_require__(54);
 var emptyFunction = __webpack_require__(40);
-var EventListener = __webpack_require__(100);
-var getActiveElement = __webpack_require__(101);
-var shallowEqual = __webpack_require__(102);
-var containsNode = __webpack_require__(103);
-var focusNode = __webpack_require__(106);
-var emptyObject = __webpack_require__(88);
+var EventListener = __webpack_require__(101);
+var getActiveElement = __webpack_require__(102);
+var shallowEqual = __webpack_require__(103);
+var containsNode = __webpack_require__(104);
+var focusNode = __webpack_require__(107);
+var emptyObject = __webpack_require__(90);
 var checkPropTypes = __webpack_require__(55);
-var hyphenateStyleName = __webpack_require__(107);
-var camelizeStyleName = __webpack_require__(109);
+var hyphenateStyleName = __webpack_require__(108);
+var camelizeStyleName = __webpack_require__(110);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -17807,46 +17847,6 @@ module.exports = reactDom;
   })();
 }
 
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-
-/**
- * Simple, lightweight module assisting with the detection and context of
- * Worker. Helps avoid circular dependencies and allows code to reason about
- * whether or not they are in a Worker, even if they never include the main
- * `ReactWorker` dependency.
- */
-var ExecutionEnvironment = {
-
-  canUseDOM: canUseDOM,
-
-  canUseWorkers: typeof Worker !== 'undefined',
-
-  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-  canUseViewport: canUseDOM && !!window.screen,
-
-  isInWorker: !canUseDOM // For now, this is true - might change in the future.
-
-};
-
-module.exports = ExecutionEnvironment;
 
 /***/ })
 
