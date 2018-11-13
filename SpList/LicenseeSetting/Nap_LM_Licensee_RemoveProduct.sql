@@ -45,7 +45,7 @@ BEGIN
 		RETURN
 	END
 	
-	IF EXISTS (SELECT 1 FROM dbo.LicenseeProduct3rd WITH (NOLOCK) WHERE ProductID = @ProductId AND LicenseeID = @LicenseeId)
+	IF NOT EXISTS (SELECT 1 FROM dbo.LicenseeProduct3rd WITH (NOLOCK) WHERE ProductID = @ProductId AND LicenseeID = @LicenseeId)
 	BEGIN
 		RETURN
 	END
