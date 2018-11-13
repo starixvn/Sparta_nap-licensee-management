@@ -35,7 +35,7 @@ export default class Form extends Component {
         return {
             LicenseeName: this.state.licenseeName,
             SuperWildCard: this.state.superWildCard,
-            ResellerName: this.state.selectedReseller.value,
+            LicenseeType: this.state.selectedReseller.value,
             ProductCode: this.state.selectedProduct == null ? '' : this.state.selectedProduct.map(i => i.value).join(','),
             SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(i => i.value).join(','),
             IsSpecial: this.state.isSpecial,
@@ -195,9 +195,9 @@ export default class Form extends Component {
                             <button className={`btn btn-primary ${isSuccess ? 'hide' : ''}`} onClick={this._handleSubmit} disabled={!this.isValid}>
                                 Submit
                             </button>
-                            <button className={`btn btn-green ${isSuccess ? '' : 'hide'}`}>
+                            <a className={`btn btn-green ${isSuccess ? '' : 'hide'}`} href={window.rootUrl + 'LicenseeSetting/Edit?licenseeName=' + licenseeName}>
                                 View New Licensee
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

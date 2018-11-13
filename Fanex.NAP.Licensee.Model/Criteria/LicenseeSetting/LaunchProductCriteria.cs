@@ -1,7 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 {
+    using System;
+
     public class LaunchProductCriteria : LicenseeProductCriteria
     {
-        public string EffectiveDate { get; set; }
+        public DateTime? EffectiveDate { get; set; }
     }
 }

@@ -205,13 +205,13 @@ export default class Form extends Component {
                             onClose={(result) => this.onCloseRemoveConfirmBox(result, this.licensee.LicenseeID, this.licensee.LicenseeName, removePopup.productCode)} /> 
                         <LaunchProductForm 
                             isShow={launchPopup.isShow}
-                            licenseeName={this.licensee.licenseeName}
+                            licenseeName={this.licensee.LicenseeName}
                             productCode={launchPopup.productCode}
                             productName={launchPopup.productName}
                             onClose={(result) => this.onCloseLaunchProductPopup(result, this.licensee.LicenseeID)} />
                         <OfferProductForm 
                             isShow={offerPopup.isShow}
-                            licenseeName={this.licensee.licenseeName}
+                            licenseeName={this.licensee.LicenseeName}
                             productList={offerPopup.productList}
                             onClose={(result) => this.onCloseOfferProductPopup(result, this.licensee.LicenseeID)} />
                     </div>
@@ -286,7 +286,14 @@ export default class Form extends Component {
                             <div className='col-lg-5'>
                                 <label className='col-form-label full-width'>
                                     Offered Products 
-                                    { this.licensee.IsActive && <span><button className="btn btn-green" onClick={() => this._offerProduct(this.licensee.LicenseeID)}>+ Offer New Product</button></span> }
+                                    { 
+                                        this.licensee.IsActive &&
+                                        <span>
+                                            <button className="btn btn-green" onClick={() => this._offerProduct(this.licensee.LicenseeID)}>+ Offer New Product</button>
+                                            { this.licensee.AffectedDateString === null &&  <button className="btn btn-green">Launch Licensee</button> }
+                                            <button className="btn btn-primary">Generate LAP Exclusions</button>
+                                        </span> 
+                                    }
                                 </label>                           
                                 {this._renderProductList(productList, this.licensee.IsActive)}
                             </div>

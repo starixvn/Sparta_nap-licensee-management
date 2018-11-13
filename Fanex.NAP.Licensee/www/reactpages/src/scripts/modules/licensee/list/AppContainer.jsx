@@ -17,7 +17,7 @@ export class AppContainer extends Component {
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
                 <div style={{ display: 'inline-block' }}>
-                    <a className="btn btn-green" href="Add">+ Add New Licensee</a>
+                    <a className="btn btn-green" href={window.rootUrl + 'LicenseeSetting/Add'}>+ Add New Licensee</a>
                 </div>
                 <DataGrid />
             </div>

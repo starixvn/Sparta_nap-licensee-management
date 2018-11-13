@@ -70,7 +70,7 @@ export class DataGrid extends Component {
                                     <td className="text-center"><span className={item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center"><span className={item.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center">
-                                        <a href={window.rootUrl + `LicenseeSetting/Edit?licenseeId=${item.LicenseeID}`}>
+                                        <a href={window.rootUrl + `LicenseeSetting/Edit?licenseeName=${item.LicenseeName}`}>
                                             <i className="icon-edit"></i>
                                         </a>
                                     </td>

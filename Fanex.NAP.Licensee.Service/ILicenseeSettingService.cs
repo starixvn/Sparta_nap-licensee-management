@@ -14,14 +14,14 @@
 
         ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria);
 
-        Licensee GetLicensee(int licenseeId);
+        Licensee GetLicensee(string licenseeName);
 
         IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId);
 
-        bool LaunchProduct(LaunchProductCriteria criteria);
+        void LaunchProduct(LaunchProductCriteria criteria);
 
-        bool OfferProduct(OfferProductCriteria criteria);
+        void OfferProduct(OfferProductCriteria criteria);
 
-        bool RemoveProduct(LicenseeProductCriteria criteria);
+        void RemoveProduct(LicenseeProductCriteria criteria);
     }
 }

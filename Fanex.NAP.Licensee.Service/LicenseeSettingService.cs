@@ -41,59 +41,54 @@
 
         public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
-            var licenseeId = 0;
-            using (var db = _objectDbGenerator.Create("DBA_Lrf_CreateNewLicensee"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Insert"))
             {
-                licenseeId = db.QueryEntity<int>(criteria);
+                db.ExecuteNonQuery(criteria);
             }
+
+            var licensee = GetLicensee(criteria.LicenseeName);
 
             return new ResultData<Licensee>
             {
-                IsSuccess = licenseeId > 0,
-                Data = licenseeId > 0 ? GetLicensee(licenseeId) : null
+                IsSuccess = licensee != null,
+                Data = licensee
             };
         }
 
-        public Licensee GetLicensee(int licenseeId)
+        public Licensee GetLicensee(string licenseeName)
         {
-            return Search(new LicenseeCriteria { LicenseeId = licenseeId }).FirstOrDefault();
+            return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).FirstOrDefault();
         }
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetOfferedProduct"))
             {
-                return db.Query<LicenseeProduct>(new { LicenseeId = licenseeId });
+                return db.Query<LicenseeProduct>(new { licenseeId = licenseeId });
             }
         }
 
-        public bool LaunchProduct(LaunchProductCriteria criteria)
+        public void LaunchProduct(LaunchProductCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_LaunchProduct"))
             {
-                var isSuccess = db.QueryEntity<int>(criteria) == 1;
-
-                return isSuccess;
+                db.ExecuteNonQuery(criteria);
             }
         }
 
-        public bool OfferProduct(OfferProductCriteria criteria)
+        public void OfferProduct(OfferProductCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
             {
-                var isSuccess = db.QueryEntity<int>(criteria) == 1;
-
-                return isSuccess;
+                db.ExecuteNonQuery(criteria);
             }
         }
 
-        public bool RemoveProduct(LicenseeProductCriteria criteria)
+        public void RemoveProduct(LicenseeProductCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
             {
-                var isSuccess = db.QueryEntity<int>(criteria) == 1;
-
-                return isSuccess;
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

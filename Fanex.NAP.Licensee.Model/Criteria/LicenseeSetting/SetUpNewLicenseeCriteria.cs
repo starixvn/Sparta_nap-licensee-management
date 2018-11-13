@@ -6,7 +6,7 @@
 
         public string SuperWildCard { get; set; }
 
-        public string ResellerName { get; set; }
+        public string LicenseeType { get; set; }
 
         public bool IsSpecial { get; set; }
 
