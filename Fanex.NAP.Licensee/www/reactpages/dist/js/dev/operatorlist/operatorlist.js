@@ -8383,7 +8383,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'table',
-                    { className: 'table table-bordered' },
+                    { className: 'table table-bordered table-hover' },
                     _react2.default.createElement(
                         'thead',
                         null,

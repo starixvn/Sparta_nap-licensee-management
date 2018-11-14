@@ -6088,6 +6088,23 @@ var Form = function (_Component) {
             });
         }
     }, {
+        key: '_getLapExclusions',
+        value: function _getLapExclusions(licenseeId) {
+            var _this5 = this;
+
+            this._toggleLoader(true);
+            var url = 'LicenseeSetting/GetLapExclusions';
+
+            _site2.default.fetchData({ LicenseeId: licenseeId }, url).then(function (response) {
+                _utility2.default.showMessage(response.data);
+
+                _this5._toggleLoader(false);
+            }).catch(function (err) {
+                _utility2.default.showMessage('Please try later!');
+                _this5._toggleLoader(false);
+            });
+        }
+    }, {
         key: '_toggleLoader',
         value: function _toggleLoader(isLoading) {
             this.setState({ isLoading: isLoading });
@@ -6095,11 +6112,11 @@ var Form = function (_Component) {
     }, {
         key: '_renderProductList',
         value: function _renderProductList(productList, isActive) {
-            var _this5 = this;
+            var _this6 = this;
 
             return _react2.default.createElement(
                 'table',
-                { className: 'table table-bordered' },
+                { className: 'table table-bordered table-hover' },
                 _react2.default.createElement(
                     'thead',
                     null,
@@ -6176,14 +6193,14 @@ var Form = function (_Component) {
                                 item.EffectiveDateString === null && _react2.default.createElement(
                                     'span',
                                     { className: 'btn btn-green', onClick: function onClick() {
-                                            return _this5._launchProduct(item.ProductCode, item.ProductName);
+                                            return _this6._launchProduct(item.ProductCode, item.ProductName);
                                         } },
                                     'Launch'
                                 ),
                                 _react2.default.createElement(
                                     'span',
                                     { className: 'btn btn-red', onClick: function onClick() {
-                                            return _this5._removeProduct(item.ProductCode, item.ProductName);
+                                            return _this6._removeProduct(item.ProductCode, item.ProductName);
                                         } },
                                     'Remove'
                                 )
@@ -6196,7 +6213,7 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this7 = this;
 
             var _state = this.state,
                 isLoading = _state.isLoading,
@@ -6218,7 +6235,7 @@ var Form = function (_Component) {
                         message: 'Do you want to remove ' + removePopup.productName + '?',
                         style: { height: '150px', width: '400px' },
                         onClose: function onClose(result) {
-                            return _this6.onCloseRemoveConfirmBox(result, _this6.licensee.LicenseeID, _this6.licensee.LicenseeName, removePopup.productCode);
+                            return _this7.onCloseRemoveConfirmBox(result, _this7.licensee.LicenseeID, _this7.licensee.LicenseeName, removePopup.productCode);
                         } }),
                     _react2.default.createElement(_LaunchProductForm2.default, {
                         isShow: launchPopup.isShow,
@@ -6226,14 +6243,14 @@ var Form = function (_Component) {
                         productCode: launchPopup.productCode,
                         productName: launchPopup.productName,
                         onClose: function onClose(result) {
-                            return _this6.onCloseLaunchProductPopup(result, _this6.licensee.LicenseeID);
+                            return _this7.onCloseLaunchProductPopup(result, _this7.licensee.LicenseeID);
                         } }),
                     _react2.default.createElement(_OfferProductForm2.default, {
                         isShow: offerPopup.isShow,
                         licenseeName: this.licensee.LicenseeName,
                         productList: offerPopup.productList,
                         onClose: function onClose(result) {
-                            return _this6.onCloseOfferProductPopup(result, _this6.licensee.LicenseeID);
+                            return _this7.onCloseOfferProductPopup(result, _this7.licensee.LicenseeID);
                         } })
                 ),
                 _react2.default.createElement(
@@ -6424,7 +6441,7 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'button',
                                             { className: 'btn btn-green', onClick: function onClick() {
-                                                    return _this6._offerProduct(_this6.licensee.LicenseeID);
+                                                    return _this7._offerProduct(_this7.licensee.LicenseeID);
                                                 } },
                                             '+ Offer New Product'
                                         ),
@@ -6435,7 +6452,9 @@ var Form = function (_Component) {
                                         ),
                                         _react2.default.createElement(
                                             'button',
-                                            { className: 'btn btn-primary' },
+                                            { className: 'btn btn-primary', onClick: function onClick() {
+                                                    return _this7._getLapExclusions(_this7.licensee.LicenseeID);
+                                                } },
                                             'Generate LAP Exclusions'
                                         )
                                     )
