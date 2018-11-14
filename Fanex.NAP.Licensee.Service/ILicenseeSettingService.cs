@@ -23,5 +23,7 @@
         void OfferProduct(OfferProductCriteria criteria);
 
         void RemoveProduct(LicenseeProductCriteria criteria);
+
+        IEnumerable<string> GetLrfFucntionKey(int licenseeId);
     }
 }

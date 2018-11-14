@@ -77,5 +77,6 @@
     <Setting Key="Nap_LM_Licensee_LaunchProduct" SpName="Nap_LM_Licensee_LaunchProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_OfferProduct" SpName="Nap_LM_Licensee_OfferProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_RemoveProduct" SpName="Nap_LM_Licensee_RemoveProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

@@ -2,7 +2,7 @@
 {
     public class LicenseeCriteria
     {
-        public LicenseeCriteria ()
+        public LicenseeCriteria()
         {
             IsAll = true;
         }

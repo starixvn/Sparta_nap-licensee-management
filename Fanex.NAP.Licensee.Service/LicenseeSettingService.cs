@@ -91,5 +91,19 @@
                 db.ExecuteNonQuery(criteria);
             }
         }
+
+        public IEnumerable<string> GetLrfFucntionKey(int licenseeId)
+        {
+            var products = GetLicenseeProducts(licenseeId);
+            if (!products.Any())
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_LrfFunctionKey"))
+            {
+                return db.Query<string>(new { ProductCode = string.Join(",", products.Select(x => x.ProductCode)) });
+            }
+        }
     }
 }

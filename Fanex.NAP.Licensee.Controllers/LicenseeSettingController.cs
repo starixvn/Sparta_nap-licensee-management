@@ -16,11 +16,13 @@
     [CheckUMFilter]
     public class LicenseeSettingController : BaseController
     {
-        private readonly ILicenseeSettingService _service;
+        private readonly ILicenseeSettingService _licenseeService;
+        private readonly ILicenseeVendorService _vendorService;
 
         public LicenseeSettingController()
         {
-            _service = new LicenseeSettingService();
+            _licenseeService = new LicenseeSettingService();
+            _vendorService = new LicenseeVendorService();
         }
 
         [HttpGet]
@@ -35,7 +37,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Read)]
         public JsonResult Search(LicenseeCriteria criteria)
         {
-            var result = _service.Search(criteria);
+            var result = _licenseeService.Search(criteria);
             return Json(result);
         }
 
@@ -45,8 +47,8 @@
         {
             var viewModel = new NewLicenseeViewModel
             {
-                ProductList = _service.GetProductList(),
-                SystemList = _service.GetSystemList(),
+                ProductList = _licenseeService.GetProductList(),
+                SystemList = _licenseeService.GetSystemList(),
                 ResellerList = new List<string> { "ONEworks", "Boping", "Zelianta" }
             };
 
@@ -57,11 +59,11 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public ActionResult Edit(string licenseeName)
         {
-            var licensee = _service.GetLicensee(licenseeName);
+            var licensee = _licenseeService.GetLicensee(licenseeName);
             var viewModel = new LicenseeViewModel
             {
-                Licensee = _service.GetLicensee(licenseeName),
-                ProductList = _service.GetLicenseeProducts(licensee.LicenseeID)
+                Licensee = _licenseeService.GetLicensee(licenseeName),
+                ProductList = _licenseeService.GetLicenseeProducts(licensee.LicenseeID)
             };
 
             return View(viewModel);
@@ -78,7 +80,7 @@
                 return Json(new { IsSuccess = false, Errors = error });
             }
 
-            var result = _service.SetUpNewLicensee(criteria);
+            var result = _licenseeService.SetUpNewLicensee(criteria);
 
             return Json(result);
         }
@@ -94,7 +96,7 @@
                 return Json(new { IsSuccess = false, Errors = error });
             }
 
-            _service.LaunchProduct(criteria);
+            _licenseeService.LaunchProduct(criteria);
 
             return Json(new { IsSuccess = true });
         }
@@ -110,7 +112,7 @@
                 return Json(new { IsSuccess = false, Errors = error });
             }
 
-            _service.OfferProduct(criteria);
+            _licenseeService.OfferProduct(criteria);
 
             return Json(new { IsSuccess = true });
         }
@@ -126,7 +128,7 @@
                 return Json(new { IsSuccess = false, Errors = error });
             }
 
-            _service.RemoveProduct(criteria);
+            _licenseeService.RemoveProduct(criteria);
 
             return Json(new { IsSuccess = true });
         }
@@ -136,7 +138,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult GetLicenseeProductList(int licenseeId)
         {
-            return Json(_service.GetLicenseeProducts(licenseeId));
+            return Json(_licenseeService.GetLicenseeProducts(licenseeId));
         }
 
         [HttpPost]
@@ -144,17 +146,30 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult GetProductList(int excludeLicenseeId)
         {
-            var allProducts = _service.GetProductList();
+            var allProducts = _licenseeService.GetProductList();
 
             if (excludeLicenseeId == 0)
             {
                 return Json(allProducts);
             }
 
-            var licenseeProduct = _service.GetLicenseeProducts(excludeLicenseeId);
+            var licenseeProduct = _licenseeService.GetLicenseeProducts(excludeLicenseeId);
             var result = allProducts.Where(x => !licenseeProduct.Any(y => y.ProductCode == x.ProductCode)).ToList();
 
             return Json(result);
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public string GetLapExclusions(int licenseeId)
+        {
+            var lrfFunctions = _licenseeService.GetLrfFucntionKey(licenseeId);
+            var lapFunctions = _vendorService.GetFunctionKeyList();
+
+            var result = string.Join("<br/>", lapFunctions.Except(lrfFunctions));
+
+            return result;
         }
 
         private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)
@@ -190,7 +205,7 @@
                 return "Licensee Type is empty!";
             }
 
-            var existedLicensees = _service.GetLicensee(criteria.LicenseeName);
+            var existedLicensees = _licenseeService.GetLicensee(criteria.LicenseeName);
             if (existedLicensees != null)
             {
                 return "Licensee Name already exists!";

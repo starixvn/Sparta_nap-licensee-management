@@ -15,10 +15,25 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
+	DECLARE @tblProductPrefix AS TABLE(ID INT IDENTITY(1,1), ProductCode VARCHAR(100))
 	DECLARE @tblFunctions AS TABLE (ProductId INT,FunctionId INT,TypeID INT)
+	DECLARE @n INT, @m INT, @ProductName VARCHAR(5)
 	
-	INSERT INTO @tblFunctions
-	EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductCode
+	INSERT INTO @tblProductPrefix (ProductCode)  
+	SELECT val 
+	FROM CUSTDB.dbo.strSplit(@ProductCode,',')
+	
+	SELECT @n = 1  
+		,@m = MAX(ID) FROM @tblProductPrefix  
+	WHILE (@n <= @m)     
+	BEGIN  
+		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n  
+    
+		INSERT INTO @tblFunctions  
+		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductName  
+      
+		SET @n = @n +1   
+	END 
 	
 	SELECT af.FunctionKey
 	FROM dbo.Functions af WITH (NOLOCK)

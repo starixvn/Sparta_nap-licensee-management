@@ -35,7 +35,7 @@ export class DataGrid extends Component {
         return (
             <div>
                 <p>Search results: <b>{gridData.length}</b> item(s)</p>
-                <table className="table table-bordered">
+                <table className="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>Site Name</th>

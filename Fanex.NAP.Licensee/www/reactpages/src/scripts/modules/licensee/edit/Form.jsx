@@ -144,13 +144,28 @@ export default class Form extends Component {
             });
     }
 
+    _getLapExclusions(licenseeId) {
+        this._toggleLoader(true);
+        const url = 'LicenseeSetting/GetLapExclusions';
+
+        Site.fetchData({ LicenseeId: licenseeId }, url)
+            .then(response => {
+                Utility.showMessage(response.data);
+
+                this._toggleLoader(false);
+            }).catch(err => {
+                Utility.showMessage('Please try later!');
+                this._toggleLoader(false);
+            });
+    }
+
     _toggleLoader(isLoading) {
         this.setState({ isLoading: isLoading });
     }
 
     _renderProductList(productList, isActive) {
         return (
-            <table className="table table-bordered">
+            <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -291,7 +306,7 @@ export default class Form extends Component {
                                         <span>
                                             <button className="btn btn-green" onClick={() => this._offerProduct(this.licensee.LicenseeID)}>+ Offer New Product</button>
                                             { this.licensee.AffectedDateString === null &&  <button className="btn btn-green">Launch Licensee</button> }
-                                            <button className="btn btn-primary">Generate LAP Exclusions</button>
+                                            <button className="btn btn-primary" onClick={() => this._getLapExclusions(this.licensee.LicenseeID)}>Generate LAP Exclusions</button>
                                         </span> 
                                     }
                                 </label>                           
