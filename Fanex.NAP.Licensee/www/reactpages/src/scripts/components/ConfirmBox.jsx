@@ -15,7 +15,7 @@ export default class ConfirmBox extends React.Component {
 
     _buildContent(msg, onClose) {
         return (
-            <div className='edit-form'>
+            <div className='confirm-popup'>
                 <div className='form-group'>
                     {msg}
                 </div>

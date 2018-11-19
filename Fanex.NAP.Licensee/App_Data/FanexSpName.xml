@@ -66,6 +66,7 @@
     <Setting Key="Nap_LM_Operator_Update" SpName="Nap_LM_Operator_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_GetAgentInfoByAgentId" SpName="Nap_LM_GetAgentInfoByAgentId" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Operator_Import" SpName="Nap_LM_Operator_Import" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Operator_Delete" SpName="Nap_LM_Operator_Delete" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.LicenseeSetting">

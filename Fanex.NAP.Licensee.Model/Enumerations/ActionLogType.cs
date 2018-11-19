@@ -5,6 +5,7 @@
         UpdateLapVendorInfo = 5512,
         InsertOperator = 5522,
         UpdateOperator = 5523,
-        ImportOperator = 5524
+        ImportOperator = 5524,
+        DeleteOperator = 5525
     }
 }

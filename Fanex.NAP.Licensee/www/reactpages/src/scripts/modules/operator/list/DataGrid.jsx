@@ -2,13 +2,14 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
-import Site from '../../../lib/site'
+import Site from '../../../lib/site';
+import ConfirmBox from '../../../components/ConfirmBox';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [] };
+        this.state = { gridData: [], isShowConfirmBox: false };
     }
 
     componentDidUpdate(prevProps) {
@@ -25,8 +26,38 @@ export class DataGrid extends Component {
         });
     }
 
+    _onConfirm(value) {
+        this._showConfirmBox(false);
+
+        if (value) {
+            this._delete();
+        }
+    }
+
+    _showConfirmBox(isShow) {
+        this.setState({ isShowConfirmBox: isShow });
+    }
+
+    _delete() {
+        this.props.toggleLoader(true);
+        Site.fetchData(params, 'ManageOperator/Delete')
+            .then(response => {                
+                if (!response.data.IsSuccess) {
+                    this._alert('OperatorId has been deleted by someone!');
+                }
+                else {
+                    this._alert('Success!');
+                }
+                this.props.toggleLoader(false);
+                this._getData();
+            }).catch(err => {
+                this._alert('Please try again!');
+                this.props.toggleLoader(false);
+            });
+    }
+
     render() {
-        const gridData = this.state.gridData;
+        const { gridData, isShowConfirmBox } = this.state;
 
         if (gridData.length === 0) {
             return false;
@@ -34,6 +65,11 @@ export class DataGrid extends Component {
 
         return (
             <div>
+                <ConfirmBox isShow={isShowConfirmBox}
+                    title='Confirmation'
+                    message='Do you want to delete this operator?'
+                    style={{ height: '150px', width: '400px' }}
+                    onClose={(value) => this._onConfirm(value)} /> 
                 <p>Search results: <b>{gridData.length}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
@@ -51,7 +87,7 @@ export class DataGrid extends Component {
                         {
                             gridData.map((item, index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr key={item.AgentId}>
                                         <td>{item.SiteName}</td>
                                         <td>{item.AgentId}</td>
                                         <td>{item.UserName}</td>
@@ -60,9 +96,12 @@ export class DataGrid extends Component {
                                         {
                                             (item.OperatorId === null || item.OperatorId === '')
                                             ? <td className="text-center">
-                                                <a href={window.rootUrl + `ManageOperator/Get?agentId=${item.AgentId}`}>
+                                                <a href={window.rootUrl + `ManageOperator/Get?agentId=${item.AgentId}`} title='Edit'>
                                                     <i className="icon-edit"></i>
                                                 </a>
+                                                <span onClick={() => this._showConfirmBox(true)} title='Delete' style={{'paddingLeft': '15px'}}>
+                                                    <i className="icon-delete"></i>
+                                                </span>
                                               </td>
                                             : <td></td>
                                         }

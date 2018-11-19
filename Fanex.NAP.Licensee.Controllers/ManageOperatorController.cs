@@ -173,6 +173,14 @@
             }
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
+        public JsonResult Delete(int agentId)
+        {
+            var result = _operatorService.DeleteOperator(agentId, CurrentSession.UserId);
+            return Json(new { IsSuccess = result.IsSuccess });
+        }
+
         private string BuildOperatorXml(List<Operator> operators)
         {
             var builder = new StringBuilder("<ROOT>");
