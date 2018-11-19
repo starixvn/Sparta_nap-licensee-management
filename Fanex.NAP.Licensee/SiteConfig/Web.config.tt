@@ -101,7 +101,7 @@
 	break;
 	case "SIT":
 	  #>
-	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://10.40.40.22:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.4.106:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
 		<Domain>
 			<add Name="http://nap-lm.playthefun.com" Path="/" />
 		</Domain>
