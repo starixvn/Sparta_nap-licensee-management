@@ -5,6 +5,7 @@ import OfferProductForm from './OfferProductForm';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 import ConfirmBox from '../../../components/ConfirmBox';
+import AddAgentForm from './AddAgentForm'; 
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -17,7 +18,8 @@ export default class Form extends Component {
             isLoading: false,
             launchPopup: { isShow: false, productCode: '', productName: '' },
             offerPopup: { isShow: false, productList: [] },
-            removePopup: { isShow: false, productCode: '', productName: '' }
+            removePopup: { isShow: false, productCode: '', productName: '' },
+            agentPopup: { isShow: false, currencytList: [] }
         }
 
         this.licensee = Object.assign({}, defaultState.licensee);
@@ -129,6 +131,40 @@ export default class Form extends Component {
         this.setState({ removePopup: removePopup });
     }
 
+    _addAgent() {
+        this._toggleLoader(true);
+        const url = 'LicenseeSetting/GetCurrencyList';
+
+        Site.fetchData(null, url)
+            .then(response => {
+                var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
+                
+                const agentPopup = {
+                    isShow: true,
+                    currencyList: data
+                };
+                this.setState({ agentPopup: agentPopup });
+
+                this._toggleLoader(false);
+            }).catch(err => {
+                Utility.showMessage('Please try later!');
+                this._toggleLoader(false);
+            });
+    }
+
+    onCloseAddAgentPopup(result, licenseeId) {
+        if (result) {
+            this._updateProductList(licenseeId);
+        }
+
+        const agentPopup = {
+            isShow: false,
+            currencyList: []
+        };
+
+        this.setState({ agentPopup: agentPopup });
+    }
+
     _updateProductList(licenseeId) {
         this._toggleLoader(true);
         const url = 'LicenseeSetting/GetLicenseeProductList';
@@ -205,7 +241,7 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isLoading, productList, launchPopup, offerPopup, removePopup } = this.state;
+        const { isLoading, productList, launchPopup, offerPopup, removePopup, agentPopup } = this.state;
 
         return (
             <div className='edit-form'>
@@ -229,6 +265,11 @@ export default class Form extends Component {
                             licenseeName={this.licensee.LicenseeName}
                             productList={offerPopup.productList}
                             onClose={(result) => this.onCloseOfferProductPopup(result, this.licensee.LicenseeID)} />
+                        <AddAgentForm 
+                            isShow={agentPopup.isShow}
+                            licenseeName={this.licensee.LicenseeName}
+                            currencyList={agentPopup.currencyList}
+                            onClose={(result) => this.onCloseAddAgentPopup(result, this.licensee.LicenseeID)} />
                     </div>
                 }
                 <div className='row'>
@@ -306,6 +347,7 @@ export default class Form extends Component {
                                         <span>
                                             <button className="btn btn-green" onClick={() => this._offerProduct(this.licensee.LicenseeID)}>+ Offer New Product</button>
                                             { this.licensee.AffectedDateString === null &&  <button className="btn btn-green">Launch Licensee</button> }
+                                            <button className="btn btn-green" onClick={() => this._addAgent()}>Add Agent/Currency</button>
                                             <button className="btn btn-primary" onClick={() => this._getLapExclusions(this.licensee.LicenseeID)}>Generate LAP Exclusions</button>
                                         </span> 
                                     }

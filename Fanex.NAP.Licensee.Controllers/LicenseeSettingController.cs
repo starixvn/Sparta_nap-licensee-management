@@ -18,11 +18,13 @@
     {
         private readonly ILicenseeSettingService _licenseeService;
         private readonly ILicenseeVendorService _vendorService;
+        private readonly ICommonService _commonService;
 
         public LicenseeSettingController()
         {
             _licenseeService = new LicenseeSettingService();
             _vendorService = new LicenseeVendorService();
+            _commonService = new CommonService();
         }
 
         [HttpGet]
@@ -170,6 +172,31 @@
             var result = string.Join("<br/>", lapFunctions.Except(lrfFunctions));
 
             return result;
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult AddAgent(LicenseeAgentCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.SuperWildCard))
+            {
+                return Json(new { IsSuccess = false, Errors = "Supper Wild Card is empty!" });
+            }
+
+            _licenseeService.AddAgent(criteria);
+
+            return Json(new { IsSuccess = true });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetCurrencyList()
+        {
+            var result = _commonService.GetCurrencyList;
+
+            return Json(result);
         }
 
         private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)

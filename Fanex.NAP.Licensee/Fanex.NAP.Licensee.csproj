@@ -772,6 +772,7 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LaunchProductForm.jsx" />
     <Content Include="www\reactpages\src\scripts\components\ConfirmBox.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\OfferProductForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AddAgentForm.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

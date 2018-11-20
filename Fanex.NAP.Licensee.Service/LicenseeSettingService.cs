@@ -92,6 +92,14 @@
             }
         }
 
+        public void AddAgent(LicenseeAgentCriteria criteria)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+        }
+
         public IEnumerable<string> GetLrfFucntionKey(int licenseeId)
         {
             var products = GetLicenseeProducts(licenseeId);

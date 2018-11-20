@@ -25,5 +25,7 @@
         void RemoveProduct(LicenseeProductCriteria criteria);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
+
+        void AddAgent(LicenseeAgentCriteria criteria);
     }
 }
