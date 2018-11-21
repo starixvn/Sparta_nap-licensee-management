@@ -433,6 +433,9 @@
     height: calc(100% - 38px);
     padding: 20px; }
 
+.popup .confirm-popup .btn {
+  float: right !important; }
+
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 
@@ -460,10 +463,6 @@
 
 .edit-form {
   margin-top: 10px; }
-  .edit-form .btn {
-    float: right;
-    margin-right: 0;
-    margin-left: 5px; }
   .edit-form td .btn {
     float: none;
     font-size: 0.9em;
@@ -472,5 +471,8 @@
     height: 25px; }
     .edit-form input[type=date].has-error {
       border: 1px solid #a94442; }
+  .edit-form .button-group {
+    min-height: 25px;
+    overflow: hidden; }
 
 /*# sourceMappingURL=licensee.css.map*/

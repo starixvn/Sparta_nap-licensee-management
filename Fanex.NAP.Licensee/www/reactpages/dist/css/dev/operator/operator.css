@@ -390,6 +390,52 @@
   border-radius: 0;
   border: 1px solid #c3c0c2; }
 
+.popup .popup-container, .popup .popup-block-body {
+  display: none; }
+
+.popup.show .popup-block-body, .popup.show .popup-container {
+  display: block; }
+
+.popup .popup-block-body {
+  border: none;
+  background: rgba(0, 0, 0, 0.7) no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.popup .popup-container {
+  background: #fff;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  max-height: 80%;
+  max-width: 95%;
+  margin: auto; }
+  .popup .popup-container .popup-title {
+    background-color: #486cb8;
+    border: 1px solid #3c5b9b;
+    padding: 10px;
+    position: relative; }
+    .popup .popup-container .popup-title p {
+      color: #fff;
+      text-transform: uppercase;
+      display: inline-block;
+      margin: 0; }
+    .popup .popup-container .popup-title .popup-close {
+      color: #fff;
+      float: right; }
+  .popup .popup-container .popup-content {
+    overflow-y: auto;
+    height: calc(100% - 38px);
+    padding: 20px; }
+
+.popup .confirm-popup .btn {
+  float: right !important; }
+
 .Select {
   display: inline-block;
   width: 150px; }
