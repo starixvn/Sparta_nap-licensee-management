@@ -51,12 +51,6 @@ $yellow: #fecc35;
 .edit-form {
     margin-top: 10px;
 
-    .btn {
-        float: right;
-        margin-right: 0;
-        margin-left: 5px;
-    }
-
     td {
         .btn {
             float: none;
@@ -71,5 +65,10 @@ $yellow: #fecc35;
         &.has-error {
             border: 1px solid $red;
         }
+    }
+
+    .button-group {
+        min-height: 25px;
+        overflow: hidden;
     }
 }

@@ -100,6 +100,14 @@
             }
         }
 
+        public void TerminateLicensee(string licenseeName)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
+            {
+                db.ExecuteNonQuery(new { LicenseeName = licenseeName });
+            }
+        }
+
         public IEnumerable<string> GetLrfFucntionKey(int licenseeId)
         {
             var products = GetLicenseeProducts(licenseeId);

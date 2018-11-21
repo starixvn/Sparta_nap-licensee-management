@@ -27,5 +27,7 @@
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
         void AddAgent(LicenseeAgentCriteria criteria);
+
+        void TerminateLicensee(string licenseeName);
     }
 }

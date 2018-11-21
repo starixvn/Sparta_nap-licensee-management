@@ -199,6 +199,21 @@
             return Json(result);
         }
 
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult TerminateLicensee(string licenseeName)
+        {
+            if (string.IsNullOrWhiteSpace(licenseeName))
+            {
+                return Json(new { IsSuccess = false, Errors = "Licensee name is empty!" });
+            }
+
+            _licenseeService.TerminateLicensee(licenseeName);
+
+            return Json(new { IsSuccess = true });
+        }
+
         private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)
         {
             if (!criteria.EffectiveDate.HasValue)

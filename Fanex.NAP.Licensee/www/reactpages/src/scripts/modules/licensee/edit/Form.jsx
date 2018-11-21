@@ -18,11 +18,10 @@ export default class Form extends Component {
             isLoading: false,
             launchPopup: { isShow: false, productCode: '', productName: '' },
             offerPopup: { isShow: false, productList: [] },
-            removePopup: { isShow: false, productCode: '', productName: '' },
-            agentPopup: { isShow: false, currencytList: [] }
+            agentPopup: { isShow: false, currencytList: [] },
+            confirmPopup: { isShow: false, msg: '', onClose: null },
+            licensee: Object.assign({}, defaultState.licensee)
         }
-
-        this.licensee = Object.assign({}, defaultState.licensee);
     }
 
     _launchProduct(productCode, productName) {
@@ -35,9 +34,9 @@ export default class Form extends Component {
         this.setState({ launchPopup: launchPopup });
     }
 
-    onCloseLaunchProductPopup(result, licenseeId) {
+    onCloseLaunchProductPopup = (result) => {
         if (result) {
-            this._updateProductList(licenseeId);
+            this._updateProductList();
         }
 
         const launchPopup = {
@@ -49,11 +48,11 @@ export default class Form extends Component {
         this.setState({ launchPopup: launchPopup });
     }
 
-    _offerProduct(licenseeId) {
+    _offerProduct = () => {
         this._toggleLoader(true);
         const url = 'LicenseeSetting/GetProductList';
 
-        Site.fetchData({ ExcludeLicenseeId: licenseeId }, url)
+        Site.fetchData({ ExcludeLicenseeId: this.state.licensee.LicenseeID }, url)
             .then(response => {
                 if (!response.data || response.data.length === 0) {
                     Utility.showMessage('There is no product to offer!');
@@ -74,9 +73,9 @@ export default class Form extends Component {
             });
     }
 
-    onCloseOfferProductPopup(result, licenseeId) {
+    onCloseOfferProductPopup = (result) => {
         if (result) {
-            this._updateProductList(licenseeId);
+            this._updateProductList();
         }
 
         const offerPopup = {
@@ -87,23 +86,22 @@ export default class Form extends Component {
         this.setState({ offerPopup: offerPopup });
     }
 
-    _removeProduct(productCode, productName) {
-        const removePopup = {
+    _terminateLicensee = () => {
+        const confirmPopup = {
             isShow: true,
-            productCode: productCode,
-            productName: productName
+            msg: `Do you want to terminate this licensee?`,
+            onClose: this.onCloseTerminateLicensee
         }
 
-        this.setState({ removePopup: removePopup });
+        this.setState({ confirmPopup: confirmPopup });
     }
 
-    onCloseRemoveConfirmBox(value, licenseeId, licenseeName, productCode) {
+    onCloseTerminateLicensee = (value) => {
         if (value) {
             this._toggleLoader(true);
-            const url = 'LicenseeSetting/RemoveProduct';
+            const url = 'LicenseeSetting/TerminateLicensee';
             const param = {
-                LicenseeName: licenseeName,
-                ProductCode: productCode
+                LicenseeName: this.state.licensee.LicenseeName
             };
 
             Site.fetchData(param, url)
@@ -112,7 +110,7 @@ export default class Form extends Component {
                         Utility.showMessage(response.data.Errors);
                     }
                     else {
-                        this._updateProductList(licenseeId);
+                        this._updateProductList();
                     }
 
                     this._toggleLoader(false);
@@ -122,16 +120,52 @@ export default class Form extends Component {
                 });
         }
 
-        const removePopup = {
-            isShow: false,
-            productCode: '',
-            productName: ''
-        }
+        const confirmPopup = { isShow: false, msg: '', onClose: null };
 
-        this.setState({ removePopup: removePopup });
+        this.setState({ confirmPopup: confirmPopup });
     }
 
-    _addAgent() {
+    _removeProduct(productCode, productName) {
+        const confirmPopup = {
+            isShow: true,
+            msg: `Do you want to remove ${productName}?`,
+            onClose: (result) => this.onCloseRemoveConfirmBox(result, productCode)
+        }
+
+        this.setState({ confirmPopup: confirmPopup });
+    }
+
+    onCloseRemoveConfirmBox(value, productCode) {
+        if (value) {
+            this._toggleLoader(true);
+            const url = 'LicenseeSetting/RemoveProduct';
+            const param = {
+                LicenseeName: this.state.licensee.LicenseeName,
+                ProductCode: productCode
+            };
+
+            Site.fetchData(param, url)
+                .then(response => {
+                    if (!response.data.IsSuccess) {
+                        Utility.showMessage(response.data.Errors);
+                    }
+                    else {
+                        this._updateProductList();
+                    }
+
+                    this._toggleLoader(false);
+                }).catch(err => {
+                    Utility.showMessage('Please try later!');
+                    this._toggleLoader(false);
+                });
+        }
+
+        const confirmPopup = { isShow: false, msg: '', onClose: null };
+
+        this.setState({ confirmPopup: confirmPopup });
+    }
+
+    _addAgent = () => {
         this._toggleLoader(true);
         const url = 'LicenseeSetting/GetCurrencyList';
 
@@ -152,9 +186,9 @@ export default class Form extends Component {
             });
     }
 
-    onCloseAddAgentPopup(result, licenseeId) {
+    onCloseAddAgentPopup = (result) => {
         if (result) {
-            this._updateProductList(licenseeId);
+            this._updateProductList();
         }
 
         const agentPopup = {
@@ -165,11 +199,11 @@ export default class Form extends Component {
         this.setState({ agentPopup: agentPopup });
     }
 
-    _updateProductList(licenseeId) {
+    _updateProductList() {
         this._toggleLoader(true);
         const url = 'LicenseeSetting/GetLicenseeProductList';
 
-        Site.fetchData({ LicenseeId: licenseeId }, url)
+        Site.fetchData({ LicenseeId: this.state.licensee.LicenseeID }, url)
             .then(response => {
                 this.setState({ productList: response.data });
 
@@ -180,11 +214,11 @@ export default class Form extends Component {
             });
     }
 
-    _getLapExclusions(licenseeId) {
+    _getLapExclusions = () => {
         this._toggleLoader(true);
         const url = 'LicenseeSetting/GetLapExclusions';
 
-        Site.fetchData({ LicenseeId: licenseeId }, url)
+        Site.fetchData({ LicenseeId: this.state.licensee.LicenseeID }, url)
             .then(response => {
                 Utility.showMessage(response.data);
 
@@ -203,6 +237,12 @@ export default class Form extends Component {
         return (
             <table className="table table-bordered table-hover">
                 <thead>
+                    <tr>
+                        <th colSpan={isActive ? '6' : '5'}>
+                            Offered Products 
+                            {isActive && <button className="btn btn-green" onClick={this._offerProduct} title='Offer New Product'>+</button>}
+                        </th>
+                    </tr>
                     <tr>
                         <th>No</th>
                         <th>Product</th>
@@ -241,120 +281,122 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isLoading, productList, launchPopup, offerPopup, removePopup, agentPopup } = this.state;
+        const { isLoading, productList, launchPopup, offerPopup, agentPopup, confirmPopup, licensee } = this.state;
 
         return (
             <div className='edit-form'>
                 <Loader isLoading={isLoading} />
                 {
-                    this.licensee.IsActive &&
+                    licensee.IsActive &&
                     <div>
-                        <ConfirmBox isShow={removePopup.isShow}
+                        <ConfirmBox isShow={confirmPopup.isShow}
                             title='Confirmation'
-                            message={`Do you want to remove ${removePopup.productName}?`}
+                            message={confirmPopup.msg}
                             style={{ height: '150px', width: '400px' }}
-                            onClose={(result) => this.onCloseRemoveConfirmBox(result, this.licensee.LicenseeID, this.licensee.LicenseeName, removePopup.productCode)} /> 
+                            onClose={confirmPopup.onClose} />
                         <LaunchProductForm 
                             isShow={launchPopup.isShow}
-                            licenseeName={this.licensee.LicenseeName}
+                            licenseeName={licensee.LicenseeName}
                             productCode={launchPopup.productCode}
                             productName={launchPopup.productName}
-                            onClose={(result) => this.onCloseLaunchProductPopup(result, this.licensee.LicenseeID)} />
+                            onClose={this.onCloseLaunchProductPopup} />
                         <OfferProductForm 
                             isShow={offerPopup.isShow}
-                            licenseeName={this.licensee.LicenseeName}
+                            licenseeName={licensee.LicenseeName}
                             productList={offerPopup.productList}
-                            onClose={(result) => this.onCloseOfferProductPopup(result, this.licensee.LicenseeID)} />
+                            onClose={this.onCloseOfferProductPopup} />
                         <AddAgentForm 
                             isShow={agentPopup.isShow}
-                            licenseeName={this.licensee.LicenseeName}
+                            licenseeName={licensee.LicenseeName}
                             currencyList={agentPopup.currencyList}
-                            onClose={(result) => this.onCloseAddAgentPopup(result, this.licensee.LicenseeID)} />
+                            onClose={this.onCloseAddAgentPopup} />
                     </div>
-                }
+                }  
                 <div className='row'>
-                    <div className='col-xs-12'>
+                    <div className='col-xs-12 col-md-6'>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Licensee Name</label>
                             <div className='col-sx-12 col-sm-9'>
-                                {this.licensee.LicenseeName}
+                                {licensee.LicenseeName}
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Description</label>
                             <div className='col-sx-12 col-sm-9'>
-                                {this.licensee.Description}
+                                {licensee.Description}
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Deposit</label>
                             <div className='col-sx-12 col-sm-9'>
-                                <span className={this.licensee.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span>
+                                <span className={licensee.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span>
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Affected Date</label>
                             <div className='col-sx-12 col-sm-9'>
-                                {this.licensee.AffectedDateString}
+                                {licensee.AffectedDateString}
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Active</label>
                             <div className='col-sx-12 col-sm-9'>
-                                <span className={this.licensee.IsActive ? 'glyphicon glyphicon-ok' : ''}></span>
+                                <span className={licensee.IsActive ? 'glyphicon glyphicon-ok' : ''}></span>
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Brand Name</label>
                             <div className='col-sx-12 col-sm-9'>
-                                {this.licensee.BrandName}
+                                {licensee.BrandName}
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Company Name</label>
                             <div className='col-sx-12 col-sm-9'>
-                                {this.licensee.CompanyName}
+                                {licensee.CompanyName}
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className='col-lg-5'>
-                                <table className="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>KPI Active</th>
-                                            <th>OneWork Active</th>
-                                            <th>Allow Member Comm</th>
-                                            <th>Edit Bet Setting</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td className="text-center"><span className={this.licensee.IsKPIActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                            <td className="text-center"><span className={this.licensee.IsOneWorkActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                            <td className="text-center"><span className={this.licensee.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                            <td className="text-center"><span className={this.licensee.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                        <div className='form-group row'>
+                            <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>KPI Active</label>
+                            <div className='col-sx-12 col-sm-9'>
+                                <span className={licensee.IsKPIActive ? 'glyphicon glyphicon-ok' : ''}></span>
                             </div>
                         </div>
-                        <div className='row'>
-                            <div className='col-lg-5'>
-                                <label className='col-form-label full-width'>
-                                    Offered Products 
-                                    { 
-                                        this.licensee.IsActive &&
-                                        <span>
-                                            <button className="btn btn-green" onClick={() => this._offerProduct(this.licensee.LicenseeID)}>+ Offer New Product</button>
-                                            { this.licensee.AffectedDateString === null &&  <button className="btn btn-green">Launch Licensee</button> }
-                                            <button className="btn btn-green" onClick={() => this._addAgent()}>Add Agent/Currency</button>
-                                            <button className="btn btn-primary" onClick={() => this._getLapExclusions(this.licensee.LicenseeID)}>Generate LAP Exclusions</button>
-                                        </span> 
-                                    }
-                                </label>                           
-                                {this._renderProductList(productList, this.licensee.IsActive)}
+
+                        <div className='form-group row'>
+                            <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>OneWork Active</label>
+                            <div className='col-sx-12 col-sm-9'>
+                                <span className={licensee.IsOneWorkActive ? 'glyphicon glyphicon-ok' : ''}></span>
                             </div>
                         </div>
+
+                        <div className='form-group row'>
+                            <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Allow Member Comm</label>
+                            <div className='col-sx-12 col-sm-9'>
+                                <span className={licensee.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span>
+                            </div>
+                        </div>
+
+                        <div className='form-group row'>
+                            <label className='col-sx-12 col-lg-2 col-sm-3 col-form-label'>Edit Bet Setting</label>
+                            <div className='col-sx-12 col-sm-9'>
+                                <span className={licensee.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span>
+                            </div>
+                        </div>
+                        { 
+                            licensee.IsActive &&
+                            <div className='form-group button-group'>
+                            { licensee.AffectedDateString === null &&  <button className="btn btn-green">Launch Licensee</button> }
+                            { licensee.AffectedDateString !== null &&  <button className="btn btn-red" onClick={this._terminateLicensee}>Terminate Licensee</button> }
+                                <button className="btn btn-green" onClick={this._addAgent}>Add Agent/Currency</button>
+                                <button className="btn btn-primary" onClick={this._getLapExclusions}>Generate LAP Exclusions</button>
+                            </div>
+                        }     
+                        <div className='form-group'>                     
+                            {this._renderProductList(productList, licensee.IsActive)}
+                        </div>
+
                     </div>
                 </div>
             </div>
