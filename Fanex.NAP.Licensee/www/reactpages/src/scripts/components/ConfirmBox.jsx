@@ -20,11 +20,11 @@ export default class ConfirmBox extends React.Component {
                     {msg}
                 </div>
                 <div className='form-group'>
-                    <button className='btn btn-primary' onClick={() => this._onCick(true, onClose)}>
-                        Yes
-                    </button>
                     <button className='btn btn-red' onClick={() => this._onCick(false, onClose)}>
                         No
+                    </button>
+                    <button className='btn btn-primary' onClick={() => this._onCick(true, onClose)}>
+                        Yes
                     </button>
                 </div>
             </div>

@@ -114,7 +114,7 @@ export default class AddAgentForm extends Component {
                         <input type='checkbox' check={`${isSpecial}`} onChange={(e) => this.setState({ isSpecial: e.target.value })} />
                     </div>
                 </div>
-                <div className='form-group'>
+                <div className='form-group right'>
                     <button className='btn btn-primary' onClick={() => this._onSubmit()} disabled={!this.isValid}>
                         Submit
                     </button>
@@ -133,17 +133,19 @@ export default class AddAgentForm extends Component {
 
         return (
         <div> 
-                <ConfirmBox isShow={isShowConfirmBox}
-                            title='Confirmation'
-                            message='Do you want to add new agent/currency?'
-                            style={{ height: '150px', width: '400px' }}
-                            onClose={(value) => this._onConfirm(value, onClose)} /> 
-                <Popup isShow={isShow}
-                    title='Add Agent/Currency'
-                    content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, onClose)}
-                    style={{height: '350px', width: '600px'}}
-                    onClose={() => this._onClose(onClose)} />
-            </div>
+            <ConfirmBox isShow={isShowConfirmBox}
+                        title='Confirmation'
+                        message='Do you want to add new agent/currency?'
+                        style={{ height: '150px', width: '400px' }}
+                        onClose={(value) => this._onConfirm(value, onClose)}
+                        zIndex={61} /> 
+            <Popup isShow={isShow}
+                title='Add Agent/Currency'
+                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, onClose)}
+                style={{height: '330px', width: '600px'}}
+                onClose={() => this._onClose(onClose)}
+                zIndex={51} />
+        </div>
         );
     }
 }

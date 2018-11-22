@@ -103,7 +103,7 @@ export default class LaunchProductForm extends Component {
                         <input className={`full-width ${this.isValid ? '' : 'has-error'}`} type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
                     </div>
                 </div>
-                <div className='form-group'>
+                <div className='form-group right'>
                     <button className='btn btn-primary' onClick={() => this._onSubmit()} disabled={!this.isValid}>
                         Submit
                     </button>
@@ -126,12 +126,14 @@ export default class LaunchProductForm extends Component {
                             title='Confirmation'
                             message='Do you want to launch this product?'
                             style={{ height: '150px', width: '400px' }}
-                            onClose={(value) => this._onConfirm(value, onClose)} /> 
+                            onClose={(value) => this._onConfirm(value, onClose)}
+                            zIndex={63} /> 
                 <Popup isShow={isShow}
                     title='Launch Product'
                     content={this._buildContent(productCode, productName, date, onClose)}
-                    style={{height: '300px', width: '600px'}}
-                    onClose={() => this._onClose(onClose)} />
+                    style={{height: '250px', width: '600px'}}
+                    onClose={() => this._onClose(onClose)}
+                    zIndex={53} />
             </div>
         );
     }

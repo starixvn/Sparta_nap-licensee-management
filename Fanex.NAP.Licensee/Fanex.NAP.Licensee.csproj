@@ -262,15 +262,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSample.tt</DependentUpon>
     </Content>
-    <None Include="SiteConfig\Web.ConnectionString.config1.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
-    </None>
     <Content Include="SiteConfig\Web.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </Content>
     <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
@@ -773,6 +773,7 @@
     <Content Include="www\reactpages\src\scripts\components\ConfirmBox.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\OfferProductForm.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AddAgentForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\EnablePullServiceForm.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

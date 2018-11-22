@@ -81,5 +81,7 @@
     <Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_AddAgent" SpName="Nap_LM_Licensee_AddAgent" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_Terminate" SpName="Nap_LM_Licensee_Terminate" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_GetIntegrationSetting" SpName="Nap_LM_Licensee_GetIntegrationSetting" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

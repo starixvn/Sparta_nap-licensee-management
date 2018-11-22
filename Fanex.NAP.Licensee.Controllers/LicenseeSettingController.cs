@@ -12,8 +12,9 @@
     using ONEbook.UM.Filters;
     using Service;
 
-    [CustomHandleError]
+    [NapSuperAuth]
     [CheckUMFilter]
+    [CustomHandleError]
     public class LicenseeSettingController : BaseController
     {
         private readonly ILicenseeSettingService _licenseeService;
@@ -65,7 +66,7 @@
             var viewModel = new LicenseeViewModel
             {
                 Licensee = _licenseeService.GetLicensee(licenseeName),
-                ProductList = _licenseeService.GetLicenseeProducts(licensee.LicenseeID)
+                ProductList = _licenseeService.GetLicenseeProducts(licensee.LicenseeID, true)
             };
 
             return View(viewModel);
@@ -140,7 +141,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult GetLicenseeProductList(int licenseeId)
         {
-            return Json(_licenseeService.GetLicenseeProducts(licenseeId));
+            return Json(_licenseeService.GetLicenseeProducts(licenseeId, true));
         }
 
         [HttpPost]
@@ -209,9 +210,25 @@
                 return Json(new { IsSuccess = false, Errors = "Licensee name is empty!" });
             }
 
-            _licenseeService.TerminateLicensee(licenseeName);
+            var result = _licenseeService.TerminateLicensee(licenseeName);
 
-            return Json(new { IsSuccess = true });
+            return Json(new { IsSuccess = result, Errors = result ? null : "This licensee have been terminated or it does not support for this product!" });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult EnablePullService(LicenseeProductCriteria criteria)
+        {
+            var error = CheckValidLicenseeProduct(criteria);
+            if (error != null)
+            {
+                return Json(new { IsSuccess = false, Errors = error });
+            }
+
+            var result = _licenseeService.EnablePullService(criteria);
+
+            return Json(new { IsSuccess = result, Errors = result ? null : "The pull service have been enabled or it does not support for this product!" });
         }
 
         private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)

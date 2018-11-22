@@ -16,7 +16,7 @@
 
         Licensee GetLicensee(string licenseeName);
 
-        IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId);
+        IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId, bool showPullServiceSetting = false);
 
         void LaunchProduct(LaunchProductCriteria criteria);
 
@@ -28,6 +28,8 @@
 
         void AddAgent(LicenseeAgentCriteria criteria);
 
-        void TerminateLicensee(string licenseeName);
+        bool TerminateLicensee(string licenseeName);
+
+        bool EnablePullService(LicenseeProductCriteria criteria);
     }
 }

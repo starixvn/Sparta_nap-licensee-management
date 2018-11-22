@@ -20,6 +20,6 @@
 
         IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId);
 
-        ResultData<Operator> DeleteOperator(int agentId, int userId);
+        bool DeleteOperator(int agentId, int userId);
     }
 }

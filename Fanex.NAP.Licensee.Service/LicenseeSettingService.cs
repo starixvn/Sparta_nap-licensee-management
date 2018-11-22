@@ -5,10 +5,17 @@
     using Core;
     using Model.Criteria.LicenseeSetting;
     using Model.DTO;
+    using Model.Enumerations;
 
     public class LicenseeSettingService : ILicenseeSettingService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
+
+        private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
+        {
+            { ProductCode.AGCasino, "AGCasino_VersionKey" },
+            { ProductCode.GoldDeluxe, "GoldDeluxe_VersionKey" },
+        };
 
         public LicenseeSettingService()
         {
@@ -60,12 +67,33 @@
             return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).FirstOrDefault();
         }
 
-        public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)
+        public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId, bool showPullServiceSetting = false)
         {
+            IEnumerable<LicenseeProduct> products;
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetOfferedProduct"))
             {
-                return db.Query<LicenseeProduct>(new { licenseeId = licenseeId });
+                products = db.Query<LicenseeProduct>(new { licenseeId = licenseeId });
             }
+
+            if (!showPullServiceSetting)
+            {
+                return products;
+            }
+
+            var integrateSettings = GetIntegrateSetting(licenseeId);
+
+            foreach (var setting in _pullServiceSetting)
+            {
+                var product = products.FirstOrDefault(x => x.ProductCode == setting.Key);
+                if (product != null)
+                {
+                    product.PullServiceKey = setting.Value;
+                    product.EnablePullService = integrateSettings.Contains(setting.Value);
+                }
+            }
+
+            return products;
         }
 
         public void LaunchProduct(LaunchProductCriteria criteria)
@@ -100,11 +128,11 @@
             }
         }
 
-        public void TerminateLicensee(string licenseeName)
+        public bool TerminateLicensee(string licenseeName)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
             {
-                db.ExecuteNonQuery(new { LicenseeName = licenseeName });
+                return db.QueryEntity<int>(new { LicenseeName = licenseeName }) == 1;
             }
         }
 
@@ -119,6 +147,27 @@
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_LrfFunctionKey"))
             {
                 return db.Query<string>(new { ProductCode = string.Join(",", products.Select(x => x.ProductCode)) });
+            }
+        }
+
+        public bool EnablePullService(LicenseeProductCriteria criteria)
+        {
+            if (!_pullServiceSetting.ContainsKey(criteria.ProductCode))
+            {
+                return false;
+            }
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_EnablePullService"))
+            {
+                return db.QueryEntity<int>(new { LicenseeName = criteria.LicenseeName, SettingName = _pullServiceSetting[criteria.ProductCode] }) == 1;
+            }
+        }
+
+        private IEnumerable<string> GetIntegrateSetting(int licenseeId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetIntegrationSetting"))
+            {
+                return db.Query<string>(new { LicenseeId = licenseeId });
             }
         }
     }

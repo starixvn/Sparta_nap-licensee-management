@@ -15,8 +15,9 @@
     using ONEbook.UM.Filters;
     using Service;
 
-    [CustomHandleError]
+    [NapSuperAuth]
     [CheckUMFilter]
+    [CustomHandleError]
     public class ManageOperatorController : BaseController
     {
         private const string ImportTemplatePath = @"~/App_Data/Template/OperatorImportTemplate.csv";
@@ -178,7 +179,7 @@
         public JsonResult Delete(int agentId)
         {
             var result = _operatorService.DeleteOperator(agentId, CurrentSession.UserId);
-            return Json(new { IsSuccess = result.IsSuccess });
+            return Json(new { IsSuccess = result });
         }
 
         private string BuildOperatorXml(List<Operator> operators)

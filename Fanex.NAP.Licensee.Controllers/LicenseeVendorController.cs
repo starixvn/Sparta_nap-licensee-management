@@ -10,8 +10,11 @@
     using Model.DTO;
     using Model.ViewModel.LicenseeVendor;
     using Newtonsoft.Json;
+    using ONEbook.UM.Filters;
     using Service;
 
+    [NapSuperAuth]
+    [CheckUMFilter]
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLicenseeVendor, Policy = Constant.Policy.Read)]
     public class LicenseeVendorController : BaseController
     {

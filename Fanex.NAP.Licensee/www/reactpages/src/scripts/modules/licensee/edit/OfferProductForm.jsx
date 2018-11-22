@@ -115,7 +115,7 @@ export default class OfferProductForm extends Component {
                         <input type='checkbox' check={`${isPullServive}`} onChange={(e) => this.setState({ isPullServive: e.target.value })} />
                     </div>
                 </div>
-                <div className='form-group'>
+                <div className='form-group right'>
                     <button className='btn btn-primary' onClick={() => this._onSubmit()} disabled={!this.isValid}>
                         Submit
                     </button>
@@ -138,12 +138,14 @@ export default class OfferProductForm extends Component {
                             title='Confirmation'
                             message='Do you want to offer this product?'
                             style={{ height: '150px', width: '400px' }}
-                            onClose={(value) => this._onConfirm(value, onClose)} /> 
+                            onClose={(value) => this._onConfirm(value, onClose)}
+                            zIndex={64} /> 
                 <Popup isShow={isShow}
                     title='Offer New Product'
                     content={this._buildContent(selectedproduct, productList, date, onClose)}
-                    style={{height: '350px', width: '600px'}}
-                    onClose={() => this._onClose(onClose)} />
+                    style={{height: '330px', width: '600px'}}
+                    onClose={() => this._onClose(onClose)}
+                    zIndex={54} />
             </div>
         );
     }

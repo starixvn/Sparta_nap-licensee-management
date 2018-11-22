@@ -5,7 +5,8 @@ import OfferProductForm from './OfferProductForm';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 import ConfirmBox from '../../../components/ConfirmBox';
-import AddAgentForm from './AddAgentForm'; 
+import AddAgentForm from './AddAgentForm';
+import EnablePullServiceForm from './EnablePullServiceForm';
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -20,7 +21,8 @@ export default class Form extends Component {
             offerPopup: { isShow: false, productList: [] },
             agentPopup: { isShow: false, currencytList: [] },
             confirmPopup: { isShow: false, msg: '', onClose: null },
-            licensee: Object.assign({}, defaultState.licensee)
+            licensee: Object.assign({}, defaultState.licensee),
+            pullServicePopup: { isShow: false, productCode: '', productName: '', settingKey: '' }
         }
     }
 
@@ -46,6 +48,32 @@ export default class Form extends Component {
         }
 
         this.setState({ launchPopup: launchPopup });
+    }
+
+    _enablePullService(productCode, productName, settingKey) {
+        const pullServicePopup = {
+            isShow: true,
+            productCode: productCode,
+            productName: productName,
+            settingKey: settingKey
+        }
+
+        this.setState({ pullServicePopup: pullServicePopup });
+    }
+
+    onCloseEnablePullServicePopup = (result) => {
+        if (result) {
+            this._updateProductList();
+        }
+
+        const pullServicePopup = {
+            isShow: false,
+            productCode: '',
+            productName: '',
+            settingKey: ''
+        }
+
+        this.setState({ pullServicePopup: pullServicePopup });
     }
 
     _offerProduct = () => {
@@ -135,7 +163,7 @@ export default class Form extends Component {
         this.setState({ confirmPopup: confirmPopup });
     }
 
-    onCloseRemoveConfirmBox(value, productCode) {
+    onCloseRemoveConfirmBox = (value, productCode) => {
         if (value) {
             this._toggleLoader(true);
             const url = 'LicenseeSetting/RemoveProduct';
@@ -187,10 +215,6 @@ export default class Form extends Component {
     }
 
     onCloseAddAgentPopup = (result) => {
-        if (result) {
-            this._updateProductList();
-        }
-
         const agentPopup = {
             isShow: false,
             currencyList: []
@@ -233,12 +257,12 @@ export default class Form extends Component {
         this.setState({ isLoading: isLoading });
     }
 
-    _renderProductList(productList, isActive) {
+    _renderProductList(productList, isActive, isLaunched) {
         return (
             <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th colSpan={isActive ? '6' : '5'}>
+                        <th colSpan={isActive ? '7' : '6'}>
                             Offered Products 
                             {isActive && <button className="btn btn-green" onClick={this._offerProduct} title='Offer New Product'>+</button>}
                         </th>
@@ -249,6 +273,7 @@ export default class Form extends Component {
                         <th>Effective Date</th>
                         <th>Comm</th>
                         <th>Win Loss</th>
+                        <th>Pull Service</th>
                         { isActive && <th>Action</th> }
                     </tr>
                 </thead>
@@ -262,11 +287,16 @@ export default class Form extends Component {
                                 <td className="text-right">{item.EffectiveDateString}</td>
                                 <td className="text-center"><span className={item.Comm ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                 <td className="text-center"><span className={item.WinLoss ? 'glyphicon glyphicon-ok' : ''}></span></td>
+                                <td className="text-center"><span className={item.EnablePullService ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                 { isActive && 
                                     <td className="text-center">
                                         { 
-                                            item.EffectiveDateString === null 
+                                            item.EffectiveDateString === null && isLaunched
                                             && <span className="btn btn-green" onClick={() => this._launchProduct(item.ProductCode, item.ProductName)}>Launch</span> 
+                                        }
+                                        {
+                                            item.PullServiceKey && !item.EnablePullService
+                                            && <span className="btn btn-green" onClick={() => this._enablePullService(item.ProductCode, item.ProductName, item.PullServiceKey)}>Enable Pull Service</span> 
                                         }
                                         <span className="btn btn-red" onClick={() => this._removeProduct(item.ProductCode, item.ProductName)}>Remove</span>
                                     </td>
@@ -281,7 +311,7 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isLoading, productList, launchPopup, offerPopup, agentPopup, confirmPopup, licensee } = this.state;
+        const { isLoading, productList, launchPopup, offerPopup, agentPopup, confirmPopup, pullServicePopup, licensee } = this.state;
 
         return (
             <div className='edit-form'>
@@ -310,6 +340,13 @@ export default class Form extends Component {
                             licenseeName={licensee.LicenseeName}
                             currencyList={agentPopup.currencyList}
                             onClose={this.onCloseAddAgentPopup} />
+                        <EnablePullServiceForm 
+                            isShow={pullServicePopup.isShow}
+                            licenseeName={licensee.LicenseeName}
+                            productName={pullServicePopup.productName}
+                            productCode={pullServicePopup.productCode}
+                            settingKey={pullServicePopup.settingKey}
+                            onClose={this.onCloseEnablePullServicePopup} />
                     </div>
                 }  
                 <div className='row'>
@@ -394,7 +431,7 @@ export default class Form extends Component {
                             </div>
                         }     
                         <div className='form-group'>                     
-                            {this._renderProductList(productList, licensee.IsActive)}
+                            {this._renderProductList(productList, licensee.IsActive, licensee.AffectedDateString !== null)}
                         </div>
 
                     </div>

@@ -101,16 +101,16 @@
             return result;
         }
 
-        public ResultData<Operator> DeleteOperator(int agentId, int userId)
+        public bool DeleteOperator(int agentId, int userId)
         {
-            var result = new ResultData<Operator>();
+            var result = false;
 
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Delete"))
             {
-                result.IsSuccess = db.QueryEntity<int>(new { AgentId = agentId }) == 1;
+                result = db.QueryEntity<int>(new { AgentId = agentId }) == 1;
             }
 
-            if (result.IsSuccess)
+            if (result)
             {
                 WriteDeleteActionLog(agentId, userId);
             }
