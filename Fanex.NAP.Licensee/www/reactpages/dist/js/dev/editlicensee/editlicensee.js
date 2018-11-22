@@ -5591,17 +5591,17 @@ var ConfirmBox = function (_React$Component) {
                     { className: 'form-group' },
                     _react2.default.createElement(
                         'button',
-                        { className: 'btn btn-primary', onClick: function onClick() {
-                                return _this2._onCick(true, onClose);
-                            } },
-                        'Yes'
-                    ),
-                    _react2.default.createElement(
-                        'button',
                         { className: 'btn btn-red', onClick: function onClick() {
                                 return _this2._onCick(false, onClose);
                             } },
                         'No'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this2._onCick(true, onClose);
+                            } },
+                        'Yes'
                     )
                 )
             );
@@ -5928,6 +5928,10 @@ var _AddAgentForm = __webpack_require__(145);
 
 var _AddAgentForm2 = _interopRequireDefault(_AddAgentForm);
 
+var _EnablePullServiceForm = __webpack_require__(146);
+
+var _EnablePullServiceForm2 = _interopRequireDefault(_EnablePullServiceForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -5960,6 +5964,21 @@ var Form = function (_Component) {
             };
 
             _this.setState({ launchPopup: launchPopup });
+        };
+
+        _this.onCloseEnablePullServicePopup = function (result) {
+            if (result) {
+                _this._updateProductList();
+            }
+
+            var pullServicePopup = {
+                isShow: false,
+                productCode: '',
+                productName: '',
+                settingKey: ''
+            };
+
+            _this.setState({ pullServicePopup: pullServicePopup });
         };
 
         _this._offerProduct = function () {
@@ -6037,6 +6056,34 @@ var Form = function (_Component) {
             _this.setState({ confirmPopup: confirmPopup });
         };
 
+        _this.onCloseRemoveConfirmBox = function (value, productCode) {
+            if (value) {
+                _this._toggleLoader(true);
+                var url = 'LicenseeSetting/RemoveProduct';
+                var param = {
+                    LicenseeName: _this.state.licensee.LicenseeName,
+                    ProductCode: productCode
+                };
+
+                _site2.default.fetchData(param, url).then(function (response) {
+                    if (!response.data.IsSuccess) {
+                        _utility2.default.showMessage(response.data.Errors);
+                    } else {
+                        _this._updateProductList();
+                    }
+
+                    _this._toggleLoader(false);
+                }).catch(function (err) {
+                    _utility2.default.showMessage('Please try later!');
+                    _this._toggleLoader(false);
+                });
+            }
+
+            var confirmPopup = { isShow: false, msg: '', onClose: null };
+
+            _this.setState({ confirmPopup: confirmPopup });
+        };
+
         _this._addAgent = function () {
             _this._toggleLoader(true);
             var url = 'LicenseeSetting/GetCurrencyList';
@@ -6060,10 +6107,6 @@ var Form = function (_Component) {
         };
 
         _this.onCloseAddAgentPopup = function (result) {
-            if (result) {
-                _this._updateProductList();
-            }
-
             var agentPopup = {
                 isShow: false,
                 currencyList: []
@@ -6093,7 +6136,8 @@ var Form = function (_Component) {
             offerPopup: { isShow: false, productList: [] },
             agentPopup: { isShow: false, currencytList: [] },
             confirmPopup: { isShow: false, msg: '', onClose: null },
-            licensee: Object.assign({}, defaultState.licensee)
+            licensee: Object.assign({}, defaultState.licensee),
+            pullServicePopup: { isShow: false, productCode: '', productName: '', settingKey: '' }
         };
         return _this;
     }
@@ -6108,6 +6152,18 @@ var Form = function (_Component) {
             };
 
             this.setState({ launchPopup: launchPopup });
+        }
+    }, {
+        key: '_enablePullService',
+        value: function _enablePullService(productCode, productName, settingKey) {
+            var pullServicePopup = {
+                isShow: true,
+                productCode: productCode,
+                productName: productName,
+                settingKey: settingKey
+            };
+
+            this.setState({ pullServicePopup: pullServicePopup });
         }
     }, {
         key: '_removeProduct',
@@ -6125,51 +6181,20 @@ var Form = function (_Component) {
             this.setState({ confirmPopup: confirmPopup });
         }
     }, {
-        key: 'onCloseRemoveConfirmBox',
-        value: function onCloseRemoveConfirmBox(value, productCode) {
-            var _this3 = this;
-
-            if (value) {
-                this._toggleLoader(true);
-                var url = 'LicenseeSetting/RemoveProduct';
-                var param = {
-                    LicenseeName: this.state.licensee.LicenseeName,
-                    ProductCode: productCode
-                };
-
-                _site2.default.fetchData(param, url).then(function (response) {
-                    if (!response.data.IsSuccess) {
-                        _utility2.default.showMessage(response.data.Errors);
-                    } else {
-                        _this3._updateProductList();
-                    }
-
-                    _this3._toggleLoader(false);
-                }).catch(function (err) {
-                    _utility2.default.showMessage('Please try later!');
-                    _this3._toggleLoader(false);
-                });
-            }
-
-            var confirmPopup = { isShow: false, msg: '', onClose: null };
-
-            this.setState({ confirmPopup: confirmPopup });
-        }
-    }, {
         key: '_updateProductList',
         value: function _updateProductList() {
-            var _this4 = this;
+            var _this3 = this;
 
             this._toggleLoader(true);
             var url = 'LicenseeSetting/GetLicenseeProductList';
 
             _site2.default.fetchData({ LicenseeId: this.state.licensee.LicenseeID }, url).then(function (response) {
-                _this4.setState({ productList: response.data });
+                _this3.setState({ productList: response.data });
 
-                _this4._toggleLoader(false);
+                _this3._toggleLoader(false);
             }).catch(function (err) {
                 _utility2.default.showMessage('Please refresh');
-                _this4._toggleLoader(false);
+                _this3._toggleLoader(false);
             });
         }
     }, {
@@ -6179,8 +6204,8 @@ var Form = function (_Component) {
         }
     }, {
         key: '_renderProductList',
-        value: function _renderProductList(productList, isActive) {
-            var _this5 = this;
+        value: function _renderProductList(productList, isActive, isLaunched) {
+            var _this4 = this;
 
             return _react2.default.createElement(
                 'table',
@@ -6193,7 +6218,7 @@ var Form = function (_Component) {
                         null,
                         _react2.default.createElement(
                             'th',
-                            { colSpan: isActive ? '6' : '5' },
+                            { colSpan: isActive ? '7' : '6' },
                             'Offered Products',
                             isActive && _react2.default.createElement(
                                 'button',
@@ -6229,6 +6254,11 @@ var Form = function (_Component) {
                             'th',
                             null,
                             'Win Loss'
+                        ),
+                        _react2.default.createElement(
+                            'th',
+                            null,
+                            'Pull Service'
                         ),
                         isActive && _react2.default.createElement(
                             'th',
@@ -6269,20 +6299,32 @@ var Form = function (_Component) {
                                 { className: 'text-center' },
                                 _react2.default.createElement('span', { className: item.WinLoss ? 'glyphicon glyphicon-ok' : '' })
                             ),
+                            _react2.default.createElement(
+                                'td',
+                                { className: 'text-center' },
+                                _react2.default.createElement('span', { className: item.EnablePullService ? 'glyphicon glyphicon-ok' : '' })
+                            ),
                             isActive && _react2.default.createElement(
                                 'td',
                                 { className: 'text-center' },
-                                item.EffectiveDateString === null && _react2.default.createElement(
+                                item.EffectiveDateString === null && isLaunched && _react2.default.createElement(
                                     'span',
                                     { className: 'btn btn-green', onClick: function onClick() {
-                                            return _this5._launchProduct(item.ProductCode, item.ProductName);
+                                            return _this4._launchProduct(item.ProductCode, item.ProductName);
                                         } },
                                     'Launch'
+                                ),
+                                item.PullServiceKey && !item.EnablePullService && _react2.default.createElement(
+                                    'span',
+                                    { className: 'btn btn-green', onClick: function onClick() {
+                                            return _this4._enablePullService(item.ProductCode, item.ProductName, item.PullServiceKey);
+                                        } },
+                                    'Enable Pull Service'
                                 ),
                                 _react2.default.createElement(
                                     'span',
                                     { className: 'btn btn-red', onClick: function onClick() {
-                                            return _this5._removeProduct(item.ProductCode, item.ProductName);
+                                            return _this4._removeProduct(item.ProductCode, item.ProductName);
                                         } },
                                     'Remove'
                                 )
@@ -6302,6 +6344,7 @@ var Form = function (_Component) {
                 offerPopup = _state.offerPopup,
                 agentPopup = _state.agentPopup,
                 confirmPopup = _state.confirmPopup,
+                pullServicePopup = _state.pullServicePopup,
                 licensee = _state.licensee;
 
 
@@ -6332,7 +6375,14 @@ var Form = function (_Component) {
                         isShow: agentPopup.isShow,
                         licenseeName: licensee.LicenseeName,
                         currencyList: agentPopup.currencyList,
-                        onClose: this.onCloseAddAgentPopup })
+                        onClose: this.onCloseAddAgentPopup }),
+                    _react2.default.createElement(_EnablePullServiceForm2.default, {
+                        isShow: pullServicePopup.isShow,
+                        licenseeName: licensee.LicenseeName,
+                        productName: pullServicePopup.productName,
+                        productCode: pullServicePopup.productCode,
+                        settingKey: pullServicePopup.settingKey,
+                        onClose: this.onCloseEnablePullServicePopup })
                 ),
                 _react2.default.createElement(
                     'div',
@@ -6521,7 +6571,7 @@ var Form = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'form-group' },
-                            this._renderProductList(productList, licensee.IsActive)
+                            this._renderProductList(productList, licensee.IsActive, licensee.AffectedDateString !== null)
                         )
                     )
                 )
@@ -6713,7 +6763,7 @@ var LaunchProductForm = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'form-group right' },
                     _react2.default.createElement(
                         'button',
                         { className: 'btn btn-primary', onClick: function onClick() {
@@ -6755,14 +6805,16 @@ var LaunchProductForm = function (_Component) {
                     style: { height: '150px', width: '400px' },
                     onClose: function onClose(value) {
                         return _this4._onConfirm(value, _onClose2);
-                    } }),
+                    },
+                    zIndex: 63 }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Launch Product',
                     content: this._buildContent(productCode, productName, date, _onClose2),
-                    style: { height: '300px', width: '600px' },
+                    style: { height: '250px', width: '600px' },
                     onClose: function onClose() {
                         return _this4._onClose(_onClose2);
-                    } })
+                    },
+                    zIndex: 53 })
             );
         }
     }, {
@@ -6985,7 +7037,7 @@ var OfferProductForm = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'form-group right' },
                     _react2.default.createElement(
                         'button',
                         { className: 'btn btn-primary', onClick: function onClick() {
@@ -7028,14 +7080,16 @@ var OfferProductForm = function (_Component) {
                     style: { height: '150px', width: '400px' },
                     onClose: function onClose(value) {
                         return _this4._onConfirm(value, _onClose2);
-                    } }),
+                    },
+                    zIndex: 64 }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Offer New Product',
                     content: this._buildContent(selectedproduct, productList, date, _onClose2),
-                    style: { height: '350px', width: '600px' },
+                    style: { height: '330px', width: '600px' },
                     onClose: function onClose() {
                         return _this4._onClose(_onClose2);
-                    } })
+                    },
+                    zIndex: 54 })
             );
         }
     }, {
@@ -7255,7 +7309,7 @@ var AddAgentForm = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'form-group right' },
                     _react2.default.createElement(
                         'button',
                         { className: 'btn btn-primary', onClick: function onClick() {
@@ -7298,14 +7352,16 @@ var AddAgentForm = function (_Component) {
                     style: { height: '150px', width: '400px' },
                     onClose: function onClose(value) {
                         return _this4._onConfirm(value, _onClose2);
-                    } }),
+                    },
+                    zIndex: 61 }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Add Agent/Currency',
                     content: this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, _onClose2),
-                    style: { height: '350px', width: '600px' },
+                    style: { height: '330px', width: '600px' },
                     onClose: function onClose() {
                         return _this4._onClose(_onClose2);
-                    } })
+                    },
+                    zIndex: 51 })
             );
         }
     }, {
@@ -7321,6 +7377,260 @@ var AddAgentForm = function (_Component) {
 }(_react.Component);
 
 exports.default = AddAgentForm;
+
+/***/ }),
+/* 146 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Popup = __webpack_require__(87);
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
+var _ConfirmBox = __webpack_require__(86);
+
+var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
+
+var _Loader = __webpack_require__(11);
+
+var _Loader2 = _interopRequireDefault(_Loader);
+
+var _site = __webpack_require__(12);
+
+var _site2 = _interopRequireDefault(_site);
+
+var _reactSelect = __webpack_require__(14);
+
+var _reactSelect2 = _interopRequireDefault(_reactSelect);
+
+var _utility = __webpack_require__(88);
+
+var _utility2 = _interopRequireDefault(_utility);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EnablePullServiceForm = function (_Component) {
+    _inherits(EnablePullServiceForm, _Component);
+
+    function EnablePullServiceForm(props) {
+        _classCallCheck(this, EnablePullServiceForm);
+
+        var _this = _possibleConstructorReturn(this, (EnablePullServiceForm.__proto__ || Object.getPrototypeOf(EnablePullServiceForm)).call(this, props));
+
+        _this.state = {
+            isShowConfirmBox: false,
+            isLoading: false,
+            isAllowApiBalance: false
+        };
+        return _this;
+    }
+
+    _createClass(EnablePullServiceForm, [{
+        key: '_onClose',
+        value: function _onClose(callBack) {
+            this.setState({
+                isShowConfirmBox: false,
+                isLoading: false,
+                isAllowApiBalance: false
+            });
+            callBack && callBack(false);
+        }
+    }, {
+        key: '_onSubmit',
+        value: function _onSubmit() {
+            this._showConfirmBox(true);
+        }
+    }, {
+        key: '_showConfirmBox',
+        value: function _showConfirmBox(isShow) {
+            this.setState({ isShowConfirmBox: isShow });
+        }
+    }, {
+        key: '_onConfirm',
+        value: function _onConfirm(value, closeCallBack) {
+            this._showConfirmBox(false);
+
+            if (value) {
+                this._submit(closeCallBack);
+            }
+        }
+    }, {
+        key: '_submit',
+        value: function _submit(callBack) {
+            var _this2 = this;
+
+            this._toggleLoader(true);
+            var url = 'LicenseeSetting/EnablePullService';
+            var params = this._getParams();
+
+            _site2.default.fetchData(params, url).then(function (response) {
+                if (!response.data.IsSuccess) {
+                    _utility2.default.showMessage(response.data.Errors);
+                } else {
+                    _utility2.default.showMessage('Success!');
+                    _this2._onClose(function () {
+                        return callBack(true);
+                    });
+                }
+
+                _this2._toggleLoader(false);
+            }).catch(function (err) {
+                _utility2.default.showMessage('Error!');
+                _this2._toggleLoader(false);
+            });
+        }
+    }, {
+        key: '_toggleLoader',
+        value: function _toggleLoader(isLoading) {
+            this.setState({ isLoading: isLoading });
+        }
+    }, {
+        key: '_getParams',
+        value: function _getParams() {
+            var _props = this.props,
+                licenseeName = _props.licenseeName,
+                productCode = _props.productCode;
+            var isAllowApiBalance = this.state.isAllowApiBalance;
+
+
+            return {
+                LicenseeName: licenseeName,
+                ProductCode: productCode,
+                IsAllowApiBalance: isAllowApiBalance
+            };
+        }
+    }, {
+        key: '_buildContent',
+        value: function _buildContent(productName, settingKey, isAllowApiBalance, callBack) {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'edit-form' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-form-label' },
+                        'Product'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        productName
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-form-label' },
+                        'Setting Key'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        settingKey
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-form-label' },
+                        'Allow Api Balance'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'group-input' },
+                        _react2.default.createElement('input', { type: 'checkbox', check: '' + isAllowApiBalance, onChange: function onChange(e) {
+                                return _this3.setState({ isAllowApiBalance: e.target.value });
+                            } })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group right' },
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this3._onSubmit();
+                            } },
+                        'Submit'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-red', onClick: function onClick() {
+                                return _this3._onClose(callBack);
+                            } },
+                        'Cancel'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this4 = this;
+
+            var _props2 = this.props,
+                productName = _props2.productName,
+                settingKey = _props2.settingKey,
+                _onClose2 = _props2.onClose,
+                isShow = _props2.isShow;
+            var _state = this.state,
+                isAllowApiBalance = _state.isAllowApiBalance,
+                isShowConfirmBox = _state.isShowConfirmBox;
+
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_ConfirmBox2.default, { isShow: isShowConfirmBox,
+                    title: 'Confirmation',
+                    message: 'Do you want to enable ' + productName + ' pull service?',
+                    style: { height: '150px', width: '400px' },
+                    onClose: function onClose(value) {
+                        return _this4._onConfirm(value, _onClose2);
+                    },
+                    zIndex: 62 }),
+                _react2.default.createElement(_Popup2.default, { isShow: isShow,
+                    title: 'Enable Pull Service',
+                    content: this._buildContent(productName, settingKey, isAllowApiBalance, _onClose2),
+                    style: { height: '305px', width: '600px' },
+                    onClose: function onClose() {
+                        return _this4._onClose(_onClose2);
+                    },
+                    zIndex: 52 })
+            );
+        }
+    }]);
+
+    return EnablePullServiceForm;
+}(_react.Component);
+
+exports.default = EnablePullServiceForm;
 
 /***/ })
 ],[141]);

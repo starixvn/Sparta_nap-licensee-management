@@ -474,5 +474,7 @@
   .edit-form .button-group {
     min-height: 25px;
     overflow: hidden; }
+  .edit-form .right {
+    float: right; }
 
 /*# sourceMappingURL=licensee.css.map*/

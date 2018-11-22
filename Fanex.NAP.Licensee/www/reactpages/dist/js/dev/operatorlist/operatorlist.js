@@ -7915,17 +7915,17 @@ var ConfirmBox = function (_React$Component) {
                     { className: 'form-group' },
                     _react2.default.createElement(
                         'button',
-                        { className: 'btn btn-primary', onClick: function onClick() {
-                                return _this2._onCick(true, onClose);
-                            } },
-                        'Yes'
-                    ),
-                    _react2.default.createElement(
-                        'button',
                         { className: 'btn btn-red', onClick: function onClick() {
                                 return _this2._onCick(false, onClose);
                             } },
                         'No'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this2._onCick(true, onClose);
+                            } },
+                        'Yes'
                     )
                 )
             );
