@@ -16,5 +16,6 @@ BEGIN
 	
 	SELECT s.SystemName, s.[Description]
 	FROM dbo.Systems s
+	WHERE s.SystemName <> 'KPI'
 END
 GO

@@ -8,8 +8,8 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Insert]
 	, @ProductCode			VARCHAR(100) = ''
 	, @SystemisActive		VARCHAR(100) = ''
 	, @IsAllowMemberComm	BIT = 0
-	, @IsAllowWLbyLeague	BIT = 0
 	, @IsPullService		BIT = 1
+	, @EffectiveDate		DATE = ''
 AS
 /*
 	 Created: Amanda
@@ -24,6 +24,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @ProductPrefix AS TABLE(Id INT IDENTITY(1,1), ProductCode VARCHAR(100))
+	
+	INSERT INTO @ProductPrefix (ProductCode)  
+	SELECT val 
+	FROM CUSTDB.dbo.strSplit(@ProductCode,',')
 	
 	IF EXISTS (
 		SELECT 1
@@ -67,8 +71,8 @@ BEGIN
 			,@ProductCode	  	 	= @ProductCode
 			,@SystemisActive 	  	= @SystemisActive
 			,@IsAllowMemberComm     = @IsAllowMemberComm
-			,@IsAllowWLbyLeague	    = @IsAllowWLbyLeague
 			,@IsPullService			= @IsPullService
+			,@EffectiveDate			= @EffectiveDate
 
 	COMMIT TRANSACTION SetUpNewLicensee
 	END TRY

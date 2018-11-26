@@ -18,18 +18,21 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	DECLARE @IsDeposit BIT = 0
+	DECLARE @IsDeposit BIT = 1
+	DECLARE @SuperWildCardText VARCHAR(50)
 	
 	SELECT @IsDeposit = IsDeposit
 	FROM bodb_Licensee.dbo.Licensees WITH (NOLOCK)
 	WHERE LicenseeName = @LicenseeName
+
+	SET @SuperWildCardText = @SuperWildCard + '%'
 
 	BEGIN TRY
 	BEGIN TRANSACTION AddAgent
 
 		EXEC [DBA_CreateLicenseeAgent]
 			@LicenseeName   		= @LicenseeName,
-			@SuperWildCard			= @SuperWildCard,
+			@SuperWildCard			= @SuperWildCardText,
 			@Currency  	 			= @Currency,
 			@IsSpecial   	  		= @IsSpecial,
 			@IsDeposit				= @IsDeposit

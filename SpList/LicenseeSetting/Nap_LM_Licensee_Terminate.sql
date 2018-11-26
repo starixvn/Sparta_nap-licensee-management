@@ -23,7 +23,7 @@ BEGIN
 
 	IF ISNULL(@LicenseeId, 0) = 0
 	BEGIN
-		SELECT 0
+		RAISERROR ('Invalid licensee name', 16, 1)
 		RETURN
 	END
 	
@@ -32,6 +32,14 @@ BEGIN
 	BEGIN
 		SELECT 0
 		RETURN
+	END
+	
+	DECLARE @XACT_ABORT VARCHAR(3) = 'OFF';  
+	IF ( (16384 & @@OPTIONS) = 16384 ) SET @XACT_ABORT = 'ON';  
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT ON
 	END
 
 	BEGIN TRY
@@ -49,7 +57,7 @@ BEGIN
 								WHERE sl.LicenseeID = @LicenseeId AND sl.IsActive = 1
 							FOR XML PATH('')), 1, 1, '')  
 
-		EXEC dbo.DBA_Lrf_ActiveLicenseeSystem @LicenseeName = @LicenseeId, @SystemDeactivate = @SystemNames
+		EXEC dbo.DBA_Lrf_ActiveLicenseeSystem @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
 
 		COMMIT TRANSACTION TerminateLicensee
 	
@@ -74,5 +82,10 @@ BEGIN
 					   @ErrorState -- State.
 					   );
 	END CATCH
+	
+	IF @XACT_ABORT = 'OFF'
+	BEGIN
+		SET XACT_ABORT OFF
+	END
 END
 GO

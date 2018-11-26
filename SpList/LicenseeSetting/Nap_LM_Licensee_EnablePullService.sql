@@ -21,18 +21,13 @@ BEGIN
 
 	IF ISNULL(@LicenseeID, 0) = 0
 	BEGIN
-		SELECT 0
+		RAISERROR ('Invalid licensee name', 16, 1)
 		RETURN
 	END
 	
-	IF NOT EXISTS (SELECT 1 FROM dbo.LicIntegrationSetting WHERE LicenseeID = @LicenseeID AND SettingName = @SettingName)
-	BEGIN
-		INSERT INTO LicIntegrationSetting (LicenseeID, LicenseeName, SettingName, SettingValue,AllowApiBalance)
-		SELECT @LicenseeID, @LicenseeName, @SettingName, 0,0
-
-		SELECT 1
-	END
-	
-	SELECT 0
+	EXEC DBA_lrf_EnableService
+		@LicenseeId		= @LicenseeID,
+		@LicenseeName	= @LicenseeName,
+		@SettingName	= @SettingName
 END
 GO
