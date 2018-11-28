@@ -90,7 +90,7 @@ function mapDispatchToProps(dispatch) {
 }
 function mapStateToProps(state) {
     const { params } = state;
-    return Object.assign({}, { params });
+    return { params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

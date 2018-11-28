@@ -9,6 +9,7 @@
     var productList = Model.ProductList.Select(x => new { label = x.ProductName, value = x.ProductCode }).ToList();
     var resellerList = Model.ResellerList.Select(x => new { label = x, value = x }).ToList();
     var systemList = Model.SystemList.Select(x => new { label = x.Description, value = x.SystemName }).ToList();
+    var selectedSystem = Model.SelectedSystem.Select(x => new { label = x.Description, value = x.SystemName }).ToList();
 }
 
 @section Headline {
@@ -27,7 +28,8 @@
         var initialState = {
             productList: @Html.Raw(serializer.Serialize(productList)),
             resellerList: @Html.Raw(serializer.Serialize(resellerList)),
-            systemList: @Html.Raw(serializer.Serialize(systemList))
+            systemList: @Html.Raw(serializer.Serialize(systemList)),
+            selectedSystem: @Html.Raw(serializer.Serialize(selectedSystem)),
         }
     </script>
 

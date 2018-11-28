@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
 import Site from '../../../lib/site';
 import ConfirmBox from '../../../components/ConfirmBox';
+import Utility from '../../../lib/utility';
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -47,16 +48,16 @@ export class DataGrid extends Component {
         this.props.toggleLoader(true);
         Site.fetchData({ agentId: agentId }, 'ManageOperator/Delete')
             .then(response => {                
-                if (!response.data.IsSuccess) {
-                    this._alert('Success!');   
+                if (response.data.IsSuccess) {
+                    Utility.showMessage('Success!');   
                 }
                 else {
-                    this._alert(response.data.Error);
+                    Utility.showMessage(response.data.Error);
                 }
                 this.props.toggleLoader(false);
                 this._getData();
             }).catch(err => {
-                this._alert('Please try again!');
+                Utility.showMessage('Please try again!');
                 this.props.toggleLoader(false);
             });
     }
@@ -74,7 +75,7 @@ export class DataGrid extends Component {
                     title='Confirmation'
                     message={`Do you want to delete operator ${confirmBox.data}?`}
                     style={{ height: '150px', width: '400px' }}
-                    onClose={(value) => this._onConfirm(result, confirmBox.data)} /> 
+                    onClose={(value) => this._onConfirm(value, confirmBox.data)} /> 
                 <p>Search results: <b>{gridData.length}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>

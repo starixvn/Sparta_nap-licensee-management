@@ -1,9 +1,7 @@
 ﻿import React, { Component } from 'react';
 import Popup from '../../../components/Popup';
 import ConfirmBox from '../../../components/ConfirmBox';
-import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
-import Select from 'react-select';
 import Utility from '../../../lib/utility';
 
 export default class EnablePullServiceForm extends Component {
@@ -12,16 +10,14 @@ export default class EnablePullServiceForm extends Component {
 
         this.state = {
             isShowConfirmBox: false,
-            isLoading: false,
-            isAllowApiBalance: false
+            isLoading: false
         };
     };
 
     _onClose(callBack) {
         this.setState({ 
             isShowConfirmBox: false,
-            isLoading: false,
-            isAllowApiBalance: false
+            isLoading: false
         });
         callBack && callBack(false);
     }
@@ -50,7 +46,7 @@ export default class EnablePullServiceForm extends Component {
         Site.fetchData(params, url)
             .then(response => {
                 if (!response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Errors);
+                    Utility.showMessage(response.data.Error);
                 }
                 else {
                     Utility.showMessage('Success!');
@@ -71,16 +67,14 @@ export default class EnablePullServiceForm extends Component {
     _getParams()
     {
         const { licenseeName, productCode } = this.props;
-        const { isAllowApiBalance } = this.state;
 
         return {
             LicenseeName: licenseeName,
-            ProductCode: productCode,
-            IsAllowApiBalance: isAllowApiBalance
+            ProductCode: productCode
         };
     }
 
-    _buildContent(productName, settingKey, isAllowApiBalance, callBack) {
+    _buildContent(productName, settingKey, callBack) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -90,12 +84,6 @@ export default class EnablePullServiceForm extends Component {
                 <div className='form-group'>
                     <label className='col-form-label'>Setting Key</label>
                     <div>{settingKey}</div>
-                </div>
-                <div className='form-group'>
-                    <label className='col-form-label'>Allow Api Balance</label>
-                    <div className='group-input'>
-                        <input type='checkbox' check={`${isAllowApiBalance}`} onChange={(e) => this.setState({ isAllowApiBalance: e.target.value })} />
-                    </div>
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={() => this._onSubmit()}>
@@ -112,22 +100,20 @@ export default class EnablePullServiceForm extends Component {
     render()
     {
         const { productName, settingKey, onClose, isShow } = this.props;
-        const { isAllowApiBalance, isShowConfirmBox } = this.state;
+        const { isShowConfirmBox } = this.state;
 
         return (
-        <div> 
+        <div>
             <ConfirmBox isShow={isShowConfirmBox}
                         title='Confirmation'
                         message={`Do you want to enable ${productName} pull service?`}
                         style={{ height: '150px', width: '400px' }}
-                        onClose={(value) => this._onConfirm(value, onClose)}
-                        zIndex={62} /> 
+                        onClose={(value) => this._onConfirm(value, onClose)} /> 
             <Popup isShow={isShow}
                 title='Enable Pull Service'
-                content={this._buildContent(productName, settingKey, isAllowApiBalance, onClose)}
-                style={{height: '305px', width: '600px'}}
-                onClose={() => this._onClose(onClose)}
-                zIndex={52} />
+                content={this._buildContent(productName, settingKey, onClose)}
+                style={{height: '240px', width: '600px'}}
+                onClose={() => this._onClose(onClose)} />
             </div>
         );
     }

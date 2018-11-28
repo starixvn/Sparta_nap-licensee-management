@@ -14,8 +14,7 @@ export class FormFilter extends Component {
 
         this.params = {
             licenseeName: '',
-            isActive: true,
-            isLaunched: false
+            isActive: true
         };
     }
 
@@ -56,7 +55,6 @@ export class FormFilter extends Component {
         const params = {
             licenseeName: this.params.licenseeName,
             isActive: this.params.isActive,
-            isLaunched: this.params.isLaunched,
             timeStamp: new Date().getTime()
         };
 
@@ -75,13 +73,6 @@ export class FormFilter extends Component {
                 <label className="checkbox-inline">           
                     <input type="checkbox" name="isActive" onChange={this._handleOnActiveCheck} checked={this.state.isActive} />
                     Is Active
-                </label>
-            </div>
-
-            <div className="form-group">
-                <label className="checkbox-inline">           
-                    <input type="checkbox" name="isLaunched" onChange={this._handleOnCheck} />
-                    Is Launched
                 </label>
             </div>
 

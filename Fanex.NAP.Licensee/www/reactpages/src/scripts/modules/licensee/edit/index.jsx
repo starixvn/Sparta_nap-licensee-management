@@ -1,6 +1,12 @@
-﻿﻿import React from 'react';
+﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import Form from './Form';
+import AppContainer from './AppContainer';
+import { Provider } from 'react-redux';
+import reducer from './reducer';
+import Store from '../../../lib/store';
+
+const defaultState = Object.assign({}, window.initialState, { isLoading: false });
+const store = Store.createStore(reducer, defaultState);
 
 export default class App extends React.Component {
     constructor(props) {
@@ -9,9 +15,11 @@ export default class App extends React.Component {
 
     render() {
         return (
-          <Form />
+          <Provider store={store}>
+            <AppContainer />
+          </Provider>
         );
-    }
+}
 }
 
-ReactDOM.render(<App />, document.getElementById('app-container'));
+ReactDOM.render(<App />, document.getElementById("app-container"));

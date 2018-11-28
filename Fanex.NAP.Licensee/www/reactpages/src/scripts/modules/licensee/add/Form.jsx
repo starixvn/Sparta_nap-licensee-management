@@ -15,13 +15,13 @@ export default class Form extends Component {
             superWildCard: '',
             selectedReseller: null,
             selectedProduct: null,
-            selectedSystem: null,
+            selectedSystem: defaultState.selectedSystem,
             isSpecial: false,
             isAllowMemberComm: true,
-            isAllowWLbyLeague: false,
-            isPullService: false,
+            isPullService: true,
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
+            date: Utility.getTodayString()
         };
     }
 
@@ -40,8 +40,8 @@ export default class Form extends Component {
             SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(i => i.value).join(','),
             IsSpecial: this.state.isSpecial,
             IsAllowMemberComm: this.state.isAllowMemberComm,
-            IsAllowWLbyLeague: this.state.isAllowWLbyLeague,
-            IsPullService: this.state.isPullService
+            IsPullService: this.state.isPullService,
+            EffectiveDate: new Date(this.state.date)
         };
     }
 
@@ -67,12 +67,12 @@ export default class Form extends Component {
         const url = 'LicenseeSetting/SetUpNewLicensee';
         Site.fetchData(params, url)
             .then(response => {                
-                if (!response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Errors);
-                }
-                else {
+                if (response.data.IsSuccess) {     
                     Utility.showMessage('Success!');
                     this.setState({ isSuccess: true });
+                }
+                else {
+                    Utility.showMessage(response.data.Error);
                 }
 
                 this._toggleLoader(false);
@@ -88,8 +88,8 @@ export default class Form extends Component {
 
     render() {
         const { licenseeName, superWildCard, selectedReseller,
-            selectedProduct, selectedSystem, isSpecial,
-            isAllowMemberComm, isAllowWLbyLeague, isPullService,
+            selectedProduct, selectedSystem, isSpecial, date,
+            isAllowMemberComm, isPullService,
             isLoading, isSuccess } = this.state;
 
         return (
@@ -100,23 +100,19 @@ export default class Form extends Component {
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Licensee Name</label>
                             <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='text'
-                                    value={licenseeName}
-                                    className={`full-width ${licenseeName ? '' : 'has-error'}`}
-                                    onChange={this._onChangeLicenseeName} />
-                                </div>
+                                <input type='text'
+                                value={licenseeName}
+                                className={`full-width ${licenseeName ? '' : 'has-error'}`}
+                                onChange={this._onChangeLicenseeName} />
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Super Wild Card</label>
                             <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='text'
-                                    value={superWildCard}
-                                    className='full-width'
-                                    onChange={(e) => this.setState({ superWildCard: e.target.value })} />
-                                </div>
+                                <input type='text'
+                                value={superWildCard}
+                                className='full-width'
+                                onChange={(e) => this.setState({ superWildCard: e.target.value })} />
                             </div>
                         </div>
                         <div className='form-group row'>
@@ -152,43 +148,33 @@ export default class Form extends Component {
                             </div>
                         </div>
                         <div className='form-group row'>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Effective Date</label>
+                            <div className='col-sm-12 col-md-5'>
+                                <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
+                            </div>
+                        </div>
+                        <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Is Special</label>
                             <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='checkbox'
-                                    check={`${isSpecial}`}
-                                    onChange={(e) => this.setState({ isSpecial: e.target.value })} />
-                                </div>
+                                <input type='checkbox'
+                                checked={isSpecial}
+                                onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Allow Member Comm</label>
                             <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='checkbox'
-                                    check={`${isAllowMemberComm}`}
-                                    onChange={(e) => this.setState({ isAllowMemberComm: e.target.value })} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Allow Win Loss By League</label>
-                            <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='checkbox'
-                                    check={`${isAllowWLbyLeague}`}
-                                    onChange={(e) => this.setState({ isAllowWLbyLeague: e.target.value })} />
-                                </div>
+                                <input type='checkbox'
+                                checked={isAllowMemberComm}
+                                onChange={(e) => this.setState({ isAllowMemberComm: e.target.checked })} />
                             </div>
                         </div>
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Pull Service</label>
                             <div className='col-sm-12 col-md-5'>
-                                <div className='group-input'>
-                                    <input type='checkbox'
-                                    check={`${isPullService}`}
-                                    onChange={(e) => this.setState({ isPullService: e.target.value })} />
-                                </div>
+                                <input type='checkbox'
+                                checked={isPullService}
+                                onChange={(e) => this.setState({ isPullService: e.target.checked })} />
                             </div>
                         </div>
                         <div className='form-group row col-sm-12'>

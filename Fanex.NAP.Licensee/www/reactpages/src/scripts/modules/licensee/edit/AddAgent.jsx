@@ -1,20 +1,24 @@
 ﻿import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleLoader } from './action';
 import Popup from '../../../components/Popup';
 import ConfirmBox from '../../../components/ConfirmBox';
-import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 import Utility from '../../../lib/utility';
 
-export default class AddAgentForm extends Component {
+export class AddAgent extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            superWildCard: props.licenseeName + 'Super',
+            superWildCard: props.licensee.LicenseeName + 'Super',
             isShowConfirmBox: false,
             isSpecial: false,
-            selectedCurrency: null
+            selectedCurrency: null,
+            currencyList: [],
+            isShow: false
         };
     };
 
@@ -24,17 +28,18 @@ export default class AddAgentForm extends Component {
         return superWildCard !== null && superWildCard !== '';
     }
 
-    _onClose(callBack) {
+    onClose = () => {
         this.setState({ 
-            superWildCard: this.props.licenseeName + 'Super',
+            superWildCard: this.props.licensee.LicenseeName + 'Super',
             isShowConfirmBox: false,
             isSpecial: false,
-            selectedCurrency: null
+            selectedCurrency: null,
+            currencyList: [],
+            isShow: false
         });
-        callBack && callBack(false);
     }
 
-    _onSubmit() {
+    _onSubmit = () => {
         this._showConfirmBox(true);
     }
 
@@ -42,38 +47,34 @@ export default class AddAgentForm extends Component {
         this.setState({ isShowConfirmBox: isShow });
     }
 
-    _onConfirm(value, closeCallBack) {
+    onConfirm = (value) => {
         this._showConfirmBox(false);
 
         if (value) {
-            this._submit(closeCallBack);
+            this._submit();
         }
     }
 
-    _submit(callBack) {
-        this._toggleLoader(true);
+    _submit() {
+        this.props.toggleLoader(true);
         const url = 'LicenseeSetting/AddAgent';
         const params = this._getParams();
 
         Site.fetchData(params, url)
             .then(response => {
                 if (!response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Errors);
+                    Utility.showMessage(response.data.Error);
                 }
                 else {
                     Utility.showMessage('Success!');
-                    this._onClose(() => callBack(true));
+                    this.onClose();
                 }
 
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             }).catch(err => {
                 Utility.showMessage('Error!');
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             });
-    }
-
-    _toggleLoader(isLoading) {
-        this.setState({ isLoading: isLoading });
     }
 
     _getParams()
@@ -81,24 +82,39 @@ export default class AddAgentForm extends Component {
         const { superWildCard, selectedCurrency, isSpecial } = this.state;
 
         return {
-            LicenseeName: this.props.LicenseeName,
+            LicenseeName: this.props.licensee.LicenseeName,
             SuperWildCard: superWildCard,
             Currency: selectedCurrency == null ? 0 : selectedCurrency.value,
             IsSpecial: isSpecial
         };
     }
 
-    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, callBack) {
+    _addAgent = () => {
+        this.props.toggleLoader(true);
+        const url = 'LicenseeSetting/GetCurrencyList';
+
+        Site.fetchData(null, url)
+            .then(response => {
+                var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
+
+                this.setState({ currencyList: data, isShow: true });
+
+                this.props.toggleLoader(false);
+            }).catch(err => {
+                Utility.showMessage('Please try later!');
+                this.props.toggleLoader(false);
+            });
+    }
+
+    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Supper Wild Card</label>
-                    <div className='group-input'>
-                        <input className={`full-width ${this.isValid ? '' : 'has-error'}`}
-                            type='text'
-                            value={superWildCard}
-                            onChange={(e) => this.setState({ date: e.target.value })} />
-                    </div>
+                    <input className={`full-width ${this.isValid ? '' : 'has-error'}`}
+                        type='text'
+                        value={superWildCard}
+                        onChange={(e) => this.setState({ superWildCard: e.target.value })} />
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Currency</label>
@@ -110,15 +126,15 @@ export default class AddAgentForm extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Special</label>
-                    <div className='group-input'>
-                        <input type='checkbox' check={`${isSpecial}`} onChange={(e) => this.setState({ isSpecial: e.target.value })} />
+                    <div>
+                        <input type='checkbox' checked={isSpecial} onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
                     </div>
                 </div>
                 <div className='form-group right'>
-                    <button className='btn btn-primary' onClick={() => this._onSubmit()} disabled={!this.isValid}>
+                    <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
                     </button>
-                    <button className='btn btn-red' onClick={() => this._onClose(callBack)}>
+                    <button className='btn btn-red' onClick={this.onClose}>
                         Cancel
                     </button>
                 </div>
@@ -128,24 +144,32 @@ export default class AddAgentForm extends Component {
 
     render()
     {
-        const { currencyList, onClose, isShow } = this.props;
-        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency } = this.state;
+        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency, currencyList, isShow } = this.state;
 
         return (
-        <div> 
+        <div>
+            <button className="btn btn-green" onClick={this._addAgent}>Add Agent/Currency</button>
             <ConfirmBox isShow={isShowConfirmBox}
                         title='Confirmation'
                         message='Do you want to add new agent/currency?'
                         style={{ height: '150px', width: '400px' }}
-                        onClose={(value) => this._onConfirm(value, onClose)}
-                        zIndex={61} /> 
+                        onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Add Agent/Currency'
-                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, onClose)}
+                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial)}
                 style={{height: '330px', width: '600px'}}
-                onClose={() => this._onClose(onClose)}
-                zIndex={51} />
+                onClose={this.onClose} />
         </div>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ toggleLoader }, dispatch);
+}
+function mapStateToProps(state) {
+    const { licensee } = state;
+    return { licensee };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddAgent);

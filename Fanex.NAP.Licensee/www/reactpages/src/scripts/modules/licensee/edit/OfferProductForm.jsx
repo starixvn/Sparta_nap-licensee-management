@@ -1,12 +1,14 @@
 ﻿import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleLoader, getProductList } from './action';
 import Popup from '../../../components/Popup';
 import ConfirmBox from '../../../components/ConfirmBox';
-import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 import Utility from '../../../lib/utility';
 
-export default class OfferProductForm extends Component {
+export class OfferProductForm extends Component {
     constructor(props) {
         super(props);
 
@@ -14,7 +16,7 @@ export default class OfferProductForm extends Component {
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
             isLoading: false,
-            isPullServive: false,
+            isPullService: true,
             selectedproduct: null
         };
     };
@@ -25,18 +27,23 @@ export default class OfferProductForm extends Component {
         return selectedproduct !== null && selectedproduct.length > 0;
     }
 
-    _onClose(callBack) {
+    onClose(result) {
         this.setState({ 
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
             isLoading: false,
-            isPullService: false,
-            selectedproduct: null
+            isPullService: true,
+            selectedproduct: null,
+            isShow: false,
+            productList: []
         });
-        callBack && callBack(false);
+
+        if (result) {
+            this.props.getProductList(this.props.licensee.LicenseeID);
+        }
     }
 
-    _onSubmit() {
+    _onSubmit = () => {
         this._showConfirmBox(true);
     }
 
@@ -44,54 +51,71 @@ export default class OfferProductForm extends Component {
         this.setState({ isShowConfirmBox: isShow });
     }
 
-    _onConfirm(value, closeCallBack) {
+    onConfirm = (value) => {
         this._showConfirmBox(false);
 
         if (value) {
-            this._submit(closeCallBack);
+            this._submit();
         }
     }
 
-    _submit(callBack) {
-        this._toggleLoader(true);
+    _submit() {
+        this.props.toggleLoader(true);
         const url = 'LicenseeSetting/OfferProduct';
         const params = this._getParams();
 
         Site.fetchData(params, url)
             .then(response => {
                 if (!response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Errors);
+                    Utility.showMessage(response.data.Error);
                 }
                 else {
                     Utility.showMessage('Success!');
-                    this._onClose(() => callBack(true));
+                    this.onClose(true);
                 }
 
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             }).catch(err => {
                 Utility.showMessage('Error!');
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             });
-    }
-
-    _toggleLoader(isLoading) {
-        this.setState({ isLoading: isLoading });
     }
 
     _getParams()
     {
-        const { licenseeName } = this.props;
         const { date, isPullService, selectedproduct } = this.state;
 
         return {
-            LicenseeName: licenseeName,
+            LicenseeName: this.props.licensee.LicenseeName,
             ProductCode: selectedproduct == null ? '' : selectedproduct.map(i => i.value).join(','),
             EffectiveDate: new Date(date),
             IsPullService: isPullService
         };
     }
 
-    _buildContent(selectedproduct, productList, date, isPullServive, callBack) {
+    _offerProduct = () => {
+        this.props.toggleLoader(true);
+        const url = 'LicenseeSetting/GetProductList';
+
+        Site.fetchData({ ExcludeLicenseeId: this.props.licensee.LicenseeID }, url)
+            .then(response => {
+                if (!response.data || response.data.length === 0) {
+                    Utility.showMessage('There is no product to offer!');
+                }
+                else {
+                    const productList = response.data.map((item) => { return { label: item.ProductName, value: item.ProductCode }; });
+
+                    this.setState({ productList: productList, isShow: true });
+                }
+
+                this.props.toggleLoader(false);
+            }).catch(err => {
+                Utility.showMessage('Please try later!');
+                this.props.toggleLoader(false);
+            });
+    }
+
+    _buildContent(selectedproduct, productList, date, isPullService) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -105,21 +129,19 @@ export default class OfferProductForm extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Effective Date</label>
-                    <div className='group-input'>
-                        <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
-                    </div>
+                    <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Pull Service</label>
-                    <div className='group-input'>
-                        <input type='checkbox' check={`${isPullServive}`} onChange={(e) => this.setState({ isPullServive: e.target.value })} />
+                    <div>
+                        <input type='checkbox' checked={isPullService} onChange={(e) => this.setState({ isPullService: e.target.checked })} />
                     </div>
                 </div>
                 <div className='form-group right'>
-                    <button className='btn btn-primary' onClick={() => this._onSubmit()} disabled={!this.isValid}>
+                    <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
                     </button>
-                    <button className='btn btn-red' onClick={() => this._onClose(callBack)}>
+                    <button className='btn btn-red' onClick={() => this.onClose(false)}>
                         Cancel
                     </button>
                 </div>
@@ -129,24 +151,32 @@ export default class OfferProductForm extends Component {
 
     render()
     {
-        const { productList, onClose, isShow } = this.props;
-        const { date, isPullServive, isShowConfirmBox, selectedproduct } = this.state;
+        const { date, isPullService, isShowConfirmBox, selectedproduct, productList, isShow } = this.state;
 
         return (
         <div> 
-                <ConfirmBox isShow={isShowConfirmBox}
-                            title='Confirmation'
-                            message='Do you want to offer this product?'
-                            style={{ height: '150px', width: '400px' }}
-                            onClose={(value) => this._onConfirm(value, onClose)}
-                            zIndex={64} /> 
-                <Popup isShow={isShow}
-                    title='Offer New Product'
-                    content={this._buildContent(selectedproduct, productList, date, onClose)}
-                    style={{height: '330px', width: '600px'}}
-                    onClose={() => this._onClose(onClose)}
-                    zIndex={54} />
+            <button className="btn btn-green" onClick={this._offerProduct}>Offer New Product</button>
+            <ConfirmBox isShow={isShowConfirmBox}
+                        title='Confirmation'
+                        message='Do you want to offer this product?'
+                        style={{ height: '150px', width: '400px' }}
+                        onClose={this.onConfirm} /> 
+            <Popup isShow={isShow}
+                title='Offer New Product'
+                content={this._buildContent(selectedproduct, productList, date, isPullService)}
+                style={{height: '330px', width: '600px'}}
+                onClose={() => this.onClose(false)} />
             </div>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ toggleLoader, getProductList }, dispatch);
+}
+function mapStateToProps(state) {
+    const { licensee } = state;
+    return { licensee };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OfferProductForm);
