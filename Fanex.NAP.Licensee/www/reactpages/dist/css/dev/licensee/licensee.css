@@ -439,27 +439,18 @@
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 
-.add-form {
+.add-form, .edit-form {
   margin-top: 10px; }
-  .add-form input[type=text] {
+  .add-form input[type=text], .edit-form input[type=text] {
     border: 1px solid #CECCCD;
     height: 25px;
     padding: 2px; }
-    .add-form input[type=text].has-error {
+    .add-form input[type=text].has-error, .edit-form input[type=text].has-error {
       border: 1px solid #a94442; }
-    .add-form input[type=text].valid {
-      border: 1px solid #729446; }
-  .add-form .group-input {
-    position: relative; }
-    .add-form .group-input button {
-      position: absolute;
-      right: 0;
-      height: 25px;
-      border-radius: 0;
-      margin: 0; }
-  .add-form .error-message {
-    color: #a94442;
-    font-size: 0.9em; }
+  .add-form input[type=date], .edit-form input[type=date] {
+    height: 25px; }
+    .add-form input[type=date].has-error, .edit-form input[type=date].has-error {
+      border: 1px solid #a94442; }
 
 .edit-form {
   margin-top: 10px; }
@@ -467,10 +458,6 @@
     float: none;
     font-size: 0.9em;
     padding: 5px; }
-  .edit-form input[type=date] {
-    height: 25px; }
-    .edit-form input[type=date].has-error {
-      border: 1px solid #a94442; }
   .edit-form .button-group {
     min-height: 25px;
     overflow: hidden; }

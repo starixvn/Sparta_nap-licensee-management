@@ -5,7 +5,7 @@ webpackJsonp([5],[
 "use strict";
 
 
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(22);
 
 /*global toString:true*/
@@ -310,7 +310,8 @@ module.exports = {
 
 /***/ }),
 /* 1 */,
-/* 2 */
+/* 2 */,
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -335,7 +336,7 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(15)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(16)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -344,7 +345,7 @@ if (true) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -367,10 +368,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(8);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(7);
+    adapter = __webpack_require__(8);
   }
   return adapter;
 }
@@ -444,9 +445,9 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
 
 /***/ }),
-/* 4 */,
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -464,7 +465,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -475,7 +476,7 @@ var settle = __webpack_require__(26);
 var buildURL = __webpack_require__(28);
 var parseHeaders = __webpack_require__(29);
 var isURLSameOrigin = __webpack_require__(30);
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(9);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
 
 module.exports = function xhrAdapter(config) {
@@ -651,7 +652,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -676,7 +677,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -688,7 +689,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -712,62 +713,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(4);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Loader = function (_React$Component) {
-    _inherits(Loader, _React$Component);
-
-    function Loader(props) {
-        _classCallCheck(this, Loader);
-
-        return _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).call(this, props));
-    }
-
-    _createClass(Loader, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'loader', style: { display: '' + (this.props.isLoading ? 'block' : 'none') } },
-                _react2.default.createElement('div', { className: 'ui-widget-overlay ui-front' }),
-                _react2.default.createElement('div', { className: 'icon-loading' })
-            );
-        }
-    }]);
-
-    return Loader;
-}(_react2.default.Component);
-
-exports.default = Loader;
-;
 
 /***/ }),
 /* 12 */
@@ -826,7 +771,8 @@ exports.default = Site;
 
 /***/ }),
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -844,11 +790,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 
 
@@ -3516,7 +3462,7 @@ Select$1.Option = Option;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3529,9 +3475,9 @@ Select$1.Option = Option;
 
 
 
-var emptyFunction = __webpack_require__(40);
-var invariant = __webpack_require__(41);
-var warning = __webpack_require__(42);
+var emptyFunction = __webpack_require__(51);
+var invariant = __webpack_require__(52);
+var warning = __webpack_require__(53);
 var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(56);
@@ -4065,8 +4011,62 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 /***/ }),
-/* 16 */,
-/* 17 */,
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(5);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Loader = function (_React$Component) {
+    _inherits(Loader, _React$Component);
+
+    function Loader(props) {
+        _classCallCheck(this, Loader);
+
+        return _possibleConstructorReturn(this, (Loader.__proto__ || Object.getPrototypeOf(Loader)).call(this, props));
+    }
+
+    _createClass(Loader, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'loader', style: { display: '' + (this.props.isLoading ? 'block' : 'none') } },
+                _react2.default.createElement('div', { className: 'ui-widget-overlay ui-front' }),
+                _react2.default.createElement('div', { className: 'icon-loading' })
+            );
+        }
+    }]);
+
+    return Loader;
+}(_react2.default.Component);
+
+exports.default = Loader;
+;
+
+/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4085,7 +4085,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(2);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -4409,9 +4409,9 @@ module.exports = __webpack_require__(21);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(6);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(23);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -4444,9 +4444,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(10);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(38);
-axios.isCancel = __webpack_require__(9);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -4494,7 +4494,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(33);
 var dispatchRequest = __webpack_require__(34);
@@ -4789,7 +4789,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -5224,8 +5224,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(35);
-var isCancel = __webpack_require__(9);
-var defaults = __webpack_require__(3);
+var isCancel = __webpack_require__(10);
+var defaults = __webpack_require__(4);
 var isAbsoluteURL = __webpack_require__(36);
 var combineURLs = __webpack_require__(37);
 
@@ -5384,7 +5384,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(10);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -5522,9 +5522,7 @@ module.exports = function spread(callback) {
 /* 83 */,
 /* 84 */,
 /* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5565,6 +5563,8 @@ var Utility = function () {
 exports.default = Utility;
 
 /***/ }),
+/* 87 */,
+/* 88 */,
 /* 89 */,
 /* 90 */,
 /* 91 */,
@@ -5615,7 +5615,9 @@ exports.default = Utility;
 /* 136 */,
 /* 137 */,
 /* 138 */,
-/* 139 */
+/* 139 */,
+/* 140 */,
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5631,11 +5633,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Form = __webpack_require__(140);
+var _Form = __webpack_require__(142);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -5672,7 +5674,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 140 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5688,7 +5690,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Loader = __webpack_require__(11);
+var _Loader = __webpack_require__(17);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
@@ -5696,11 +5698,11 @@ var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _reactSelect = __webpack_require__(14);
+var _reactSelect = __webpack_require__(15);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _utility = __webpack_require__(88);
+var _utility = __webpack_require__(86);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -5743,13 +5745,13 @@ var Form = function (_Component) {
             superWildCard: '',
             selectedReseller: null,
             selectedProduct: null,
-            selectedSystem: null,
+            selectedSystem: defaultState.selectedSystem,
             isSpecial: false,
             isAllowMemberComm: true,
-            isAllowWLbyLeague: false,
-            isPullService: false,
+            isPullService: true,
             isLoading: false,
-            isSuccess: false
+            isSuccess: false,
+            date: _utility2.default.getTodayString()
         };
         return _this;
     }
@@ -5769,8 +5771,8 @@ var Form = function (_Component) {
                 }).join(','),
                 IsSpecial: this.state.isSpecial,
                 IsAllowMemberComm: this.state.isAllowMemberComm,
-                IsAllowWLbyLeague: this.state.isAllowWLbyLeague,
-                IsPullService: this.state.isPullService
+                IsPullService: this.state.isPullService,
+                EffectiveDate: new Date(this.state.date)
             };
         }
     }, {
@@ -5781,11 +5783,11 @@ var Form = function (_Component) {
             this._toggleLoader(true);
             var url = 'LicenseeSetting/SetUpNewLicensee';
             _site2.default.fetchData(params, url).then(function (response) {
-                if (!response.data.IsSuccess) {
-                    _utility2.default.showMessage(response.data.Errors);
-                } else {
+                if (response.data.IsSuccess) {
                     _utility2.default.showMessage('Success!');
                     _this2.setState({ isSuccess: true });
+                } else {
+                    _utility2.default.showMessage(response.data.Error);
                 }
 
                 _this2._toggleLoader(false);
@@ -5811,8 +5813,8 @@ var Form = function (_Component) {
                 selectedProduct = _state.selectedProduct,
                 selectedSystem = _state.selectedSystem,
                 isSpecial = _state.isSpecial,
+                date = _state.date,
                 isAllowMemberComm = _state.isAllowMemberComm,
-                isAllowWLbyLeague = _state.isAllowWLbyLeague,
                 isPullService = _state.isPullService,
                 isLoading = _state.isLoading,
                 isSuccess = _state.isSuccess;
@@ -5839,14 +5841,10 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'text',
-                                        value: licenseeName,
-                                        className: 'full-width ' + (licenseeName ? '' : 'has-error'),
-                                        onChange: this._onChangeLicenseeName })
-                                )
+                                _react2.default.createElement('input', { type: 'text',
+                                    value: licenseeName,
+                                    className: 'full-width ' + (licenseeName ? '' : 'has-error'),
+                                    onChange: this._onChangeLicenseeName })
                             )
                         ),
                         _react2.default.createElement(
@@ -5860,16 +5858,12 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'text',
-                                        value: superWildCard,
-                                        className: 'full-width',
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ superWildCard: e.target.value });
-                                        } })
-                                )
+                                _react2.default.createElement('input', { type: 'text',
+                                    value: superWildCard,
+                                    className: 'full-width',
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ superWildCard: e.target.value });
+                                    } })
                             )
                         ),
                         _react2.default.createElement(
@@ -5940,20 +5934,32 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'label',
                                 { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Effective Date'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { className: 'full-width', type: 'date', value: date, onChange: function onChange(e) {
+                                        return _this3.setState({ date: e.target.value });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
                                 'Is Special'
                             ),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'checkbox',
-                                        check: '' + isSpecial,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isSpecial: e.target.value });
-                                        } })
-                                )
+                                _react2.default.createElement('input', { type: 'checkbox',
+                                    checked: isSpecial,
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ isSpecial: e.target.checked });
+                                    } })
                             )
                         ),
                         _react2.default.createElement(
@@ -5967,37 +5973,11 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'checkbox',
-                                        check: '' + isAllowMemberComm,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isAllowMemberComm: e.target.value });
-                                        } })
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Allow Win Loss By League'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'checkbox',
-                                        check: '' + isAllowWLbyLeague,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isAllowWLbyLeague: e.target.value });
-                                        } })
-                                )
+                                _react2.default.createElement('input', { type: 'checkbox',
+                                    checked: isAllowMemberComm,
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ isAllowMemberComm: e.target.checked });
+                                    } })
                             )
                         ),
                         _react2.default.createElement(
@@ -6011,15 +5991,11 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'group-input' },
-                                    _react2.default.createElement('input', { type: 'checkbox',
-                                        check: '' + isPullService,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isPullService: e.target.value });
-                                        } })
-                                )
+                                _react2.default.createElement('input', { type: 'checkbox',
+                                    checked: isPullService,
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ isPullService: e.target.checked });
+                                    } })
                             )
                         ),
                         _react2.default.createElement(
@@ -6059,5 +6035,5 @@ var Form = function (_Component) {
 exports.default = Form;
 
 /***/ })
-],[139]);
+],[141]);
 //# sourceMappingURL=addlicensee.js.map
