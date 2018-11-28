@@ -3,7 +3,7 @@
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
 	@LicenseeName	VARCHAR(50),
 	@ProductCode	VARCHAR(100)='',
-	@EffectiveDate	SMALLDATETIME ='',
+	@EffectiveDate	DATE ='',
 	@IsPullService  BIT  = 1 
 AS
 /*
@@ -19,7 +19,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @LicenseeID INT, @ResellerID INT 
-	DECLARE @ProductPrefix AS TABLE(Id INT IDENTITY(1,1), ProductCode VARCHAR(100))
+	DECLARE @ProductPrefix AS TABLE(Id INT IDENTITY(1,1), ProductCode VARCHAR(10))
 	
 	SELECT @LicenseeID = LicenseeID
 	FROM dbo.Licensees WITH (NOLOCK)

@@ -2,7 +2,7 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_RemoveProduct]
 	@LicenseeName	VARCHAR(50),  
-	@ProductCode	VARCHAR(5),
+	@ProductCode	VARCHAR(10),
 	@PullServiceKey VARCHAR(50)=''
 AS
 /*

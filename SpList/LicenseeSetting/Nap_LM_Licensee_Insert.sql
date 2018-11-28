@@ -23,7 +23,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DECLARE @ProductPrefix AS TABLE(Id INT IDENTITY(1,1), ProductCode VARCHAR(100))
+	DECLARE @ProductPrefix AS TABLE(Id INT IDENTITY(1,1), ProductCode VARCHAR(10))
 	
 	INSERT INTO @ProductPrefix (ProductCode)  
 	SELECT val 
