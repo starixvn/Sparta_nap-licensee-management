@@ -40,10 +40,10 @@ export default class ImportPage extends Component {
             Site.fetchData(formData, "ManageOperator/ImportFile")
                .then(response => {
                    if (response.data.IsSuccess) {
-                       this.setState({ errors: '', isLoading: false, result: response.data.Result ? response.data.Result : [], file: null, fileValue: '' });
+                       this.setState({ errors: '', isLoading: false, result: response.data.Data ? response.data.Data : [], file: null, fileValue: '' });
                    }
                    else {
-                       this.setState({ errors: response.data.Errors, isLoading: false });
+                       this.setState({ errors: response.data.Error, isLoading: false });
                    }
 
                    this._toggleLoader(false);

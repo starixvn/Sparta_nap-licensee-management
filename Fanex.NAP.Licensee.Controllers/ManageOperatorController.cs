@@ -76,6 +76,9 @@
         public JsonResult Add(OperatorCriteria criteria)
         {
             var result = _operatorService.AddOperator(criteria, CurrentSession.UserId);
+
+            result.Error = result.IsSuccess ? null : "Operator has been added by someone!";
+
             return Json(result);
         }
 
@@ -84,6 +87,9 @@
         public JsonResult Update(OperatorCriteria criteria)
         {
             var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId, CurrentSession.UserId);
+
+            result.Error = result.IsSuccess ? null : "OperatorId has been updated by someone!";
+
             return Json(result);
         }
 
@@ -159,17 +165,17 @@
 
                 if (errors.Any())
                 {
-                    return Json(new { IsSuccess = false, Errors = errors });
+                    return Json(new { IsSuccess = false, Error = errors });
                 }
                 else if (!operators.Any())
                 {
                     errors.Add("Imported file is empty!");
-                    return Json(new { IsSuccess = false, Errors = errors });
+                    return Json(new { IsSuccess = false, Error = errors });
                 }
                 else
                 {
                     var result = _operatorService.ImportOperators(BuildOperatorXml(operators), CurrentSession.UserId);
-                    return Json(new { IsSuccess = true, Result = result });
+                    return Json(new { IsSuccess = true, Data = result });
                 }
             }
         }
@@ -179,7 +185,8 @@
         public JsonResult Delete(int agentId)
         {
             var result = _operatorService.DeleteOperator(agentId, CurrentSession.UserId);
-            return Json(new { IsSuccess = result });
+
+            return Json(new { IsSuccess = result, Error = result ? null : "Operator has been deleted by someone!" });
         }
 
         private string BuildOperatorXml(List<Operator> operators)

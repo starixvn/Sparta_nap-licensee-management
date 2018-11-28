@@ -50,11 +50,11 @@ export default class Form extends Component {
         const url = this.originalAgentId > 0 ? 'ManageOperator/Update' : 'ManageOperator/Add';
         Site.fetchData(params, url)
             .then(response => {                
-                if (!response.data.IsSuccess) {
-                    this._alert('OperatorId has been added/updated by someone!');
+                if (response.data.IsSuccess) {    
+                    this._alert('Success!');
                 }
                 else {
-                    this._alert('Success!');
+                    this._alert(response.data.Error);
                 }
 
                 this.originalAgentId = response.data.Data.AgentId;

@@ -9,7 +9,7 @@ export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], isShowConfirmBox: false };
+        this.state = { gridData: [], confirmBox: { isShow: false, data: 0 } };
     }
 
     componentDidUpdate(prevProps) {
@@ -26,27 +26,32 @@ export class DataGrid extends Component {
         });
     }
 
-    _onConfirm(value) {
-        this._showConfirmBox(false);
+    _onDelete(agentId) {
+        this._showConfirmBox(true, agentId);
 
-        if (value) {
-            this._delete();
+    }
+
+    _onConfirm(result, agentId) {
+        this._showConfirmBox(false, 0);
+
+        if (result) {
+            this._delete(agentId);
         }
     }
 
-    _showConfirmBox(isShow) {
-        this.setState({ isShowConfirmBox: isShow });
+    _showConfirmBox(isShow, data) {
+        this.setState({ confirmBox: { isShow: isShow, data: data } });
     }
 
-    _delete() {
+    _delete(agentId) {
         this.props.toggleLoader(true);
-        Site.fetchData(params, 'ManageOperator/Delete')
+        Site.fetchData({ agentId: agentId }, 'ManageOperator/Delete')
             .then(response => {                
                 if (!response.data.IsSuccess) {
-                    this._alert('OperatorId has been deleted by someone!');
+                    this._alert('Success!');   
                 }
                 else {
-                    this._alert('Success!');
+                    this._alert(response.data.Error);
                 }
                 this.props.toggleLoader(false);
                 this._getData();
@@ -57,7 +62,7 @@ export class DataGrid extends Component {
     }
 
     render() {
-        const { gridData, isShowConfirmBox } = this.state;
+        const { gridData, confirmBox } = this.state;
 
         if (gridData.length === 0) {
             return false;
@@ -65,11 +70,11 @@ export class DataGrid extends Component {
 
         return (
             <div>
-                <ConfirmBox isShow={isShowConfirmBox}
+                <ConfirmBox isShow={confirmBox.isShow}
                     title='Confirmation'
-                    message='Do you want to delete this operator?'
+                    message={`Do you want to delete operator ${confirmBox.data}?`}
                     style={{ height: '150px', width: '400px' }}
-                    onClose={(value) => this._onConfirm(value)} /> 
+                    onClose={(value) => this._onConfirm(result, confirmBox.data)} /> 
                 <p>Search results: <b>{gridData.length}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
@@ -99,7 +104,7 @@ export class DataGrid extends Component {
                                                 <a href={window.rootUrl + `ManageOperator/Get?agentId=${item.AgentId}`} title='Edit'>
                                                     <i className="icon-edit"></i>
                                                 </a>
-                                                <span onClick={() => this._showConfirmBox(true)} title='Delete' style={{'paddingLeft': '15px'}}>
+                                                <span onClick={() => this._onDelete(item.AgentId)} title='Delete' style={{'paddingLeft': '15px'}}>
                                                     <i className="icon-delete"></i>
                                                 </span>
                                               </td>
@@ -108,7 +113,7 @@ export class DataGrid extends Component {
                                     </tr>
                                 )
                             })
-                        }
+                    }
                     </tbody>
                 </table>
             </div>
@@ -121,7 +126,7 @@ function mapDispatchToProps(dispatch) {
 }
 function mapStateToProps(state) {
     const { params } = state;
-    return Object.assign({}, { params });
+    return { params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);
