@@ -12,24 +12,22 @@
 
         IEnumerable<SystemItem> GetSystemList();
 
-        ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria);
+        ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria, int userId);
 
         Licensee GetLicensee(string licenseeName);
 
         IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId, bool showPullServiceSetting = false);
 
-        void LaunchProduct(LaunchProductCriteria criteria);
+        void OfferProduct(OfferProductCriteria criteria, int userId);
 
-        void OfferProduct(OfferProductCriteria criteria);
-
-        void RemoveProduct(LicenseeProductCriteria criteria);
+        bool RemoveProduct(RemoveLicenseeProductCriteria criteria, int userId);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
-        void AddAgent(LicenseeAgentCriteria criteria);
+        void AddAgent(LicenseeAgentCriteria criteria, int userId);
 
-        bool TerminateLicensee(string licenseeName);
+        ResultData<Licensee> TerminateLicensee(string licenseeName, int userId);
 
-        bool EnablePullService(LicenseeProductCriteria criteria);
+        bool EnablePullService(LicenseeProductCriteria criteria, int userId);
     }
 }

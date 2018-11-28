@@ -1,7 +1,11 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 {
-    public class OfferProductCriteria : LaunchProductCriteria
+    using System;
+
+    public class OfferProductCriteria : LicenseeProductCriteria
     {
         public bool IsPullService { get; set; }
+
+        public DateTime? EffectiveDate { get; set; }
     }
 }

@@ -10,5 +10,7 @@
         public IEnumerable<SystemItem> SystemList { get; set; }
 
         public IEnumerable<string> ResellerList { get; set; }
+
+        public IEnumerable<SystemItem> SelectedSystem { get; set; }
     }
 }

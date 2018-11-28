@@ -328,6 +328,9 @@
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
     <Content Include="www\reactpages\src\scripts\lib\utility.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\item\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\item\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
@@ -763,17 +766,20 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js.map" />
     <Content Include="www\reactpages\dist\js\dev\licensee\licensee.js.map" />
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js.map" />
-    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\index.jsx" />
     <Content Include="www\reactpages\dist\js\dev\importoperator\importoperator.js.map" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js.map" />
     <Content Include="www\reactpages\src\scripts\components\Popup.jsx" />
     <Content Include="www\reactpages\src\styles\components\popup.scss" />
-    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LaunchProductForm.jsx" />
     <Content Include="www\reactpages\src\scripts\components\ConfirmBox.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\OfferProductForm.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AddAgentForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AddAgent.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\EnablePullServiceForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LicenseeInfo.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ProductGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LAPExclusions.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\TerminateLicensee.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

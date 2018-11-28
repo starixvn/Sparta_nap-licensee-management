@@ -54,6 +54,7 @@
                 SystemList = _licenseeService.GetSystemList(),
                 ResellerList = new List<string> { "ONEworks", "Boping", "Zelianta" }
             };
+            viewModel.SelectedSystem = viewModel.SystemList.Where(x => x.SystemName == "LRF" || x.SystemName == "OA" || x.SystemName == "Accounting").ToList();
 
             return View(viewModel);
         }
@@ -65,7 +66,7 @@
             var licensee = _licenseeService.GetLicensee(licenseeName);
             var viewModel = new LicenseeViewModel
             {
-                Licensee = _licenseeService.GetLicensee(licenseeName),
+                Licensee = licensee,
                 ProductList = _licenseeService.GetLicenseeProducts(licensee.LicenseeID, true)
             };
 
@@ -80,28 +81,13 @@
             var error = CheckValidNewLicensee(criteria);
             if (error != null)
             {
-                return Json(new { IsSuccess = false, Errors = error });
+                return Json(new { IsSuccess = false, Error = error });
             }
 
-            var result = _licenseeService.SetUpNewLicensee(criteria);
+            var result = _licenseeService.SetUpNewLicensee(criteria, CurrentSession.UserId);
+            result.Error = result.IsSuccess ? null : "Can not create this licensee. Please try later!";
 
             return Json(result);
-        }
-
-        [HttpPost]
-        [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public JsonResult LaunchProduct(LaunchProductCriteria criteria)
-        {
-            var error = CheckValidLaunchedProduct(criteria);
-            if (error != null)
-            {
-                return Json(new { IsSuccess = false, Errors = error });
-            }
-
-            _licenseeService.LaunchProduct(criteria);
-
-            return Json(new { IsSuccess = true });
         }
 
         [HttpPost]
@@ -112,10 +98,10 @@
             var error = CheckValidLicenseeProduct(criteria);
             if (error != null)
             {
-                return Json(new { IsSuccess = false, Errors = error });
+                return Json(new { IsSuccess = false, Error = error });
             }
 
-            _licenseeService.OfferProduct(criteria);
+            _licenseeService.OfferProduct(criteria, CurrentSession.UserId);
 
             return Json(new { IsSuccess = true });
         }
@@ -123,17 +109,17 @@
         [HttpPost]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public JsonResult RemoveProduct(LicenseeProductCriteria criteria)
+        public JsonResult RemoveProduct(RemoveLicenseeProductCriteria criteria)
         {
             var error = CheckValidLicenseeProduct(criteria);
             if (error != null)
             {
-                return Json(new { IsSuccess = false, Errors = error });
+                return Json(new { IsSuccess = false, Error = error });
             }
 
-            _licenseeService.RemoveProduct(criteria);
+            var result = _licenseeService.RemoveProduct(criteria, CurrentSession.UserId);
 
-            return Json(new { IsSuccess = true });
+            return Json(new { IsSuccess = result, Error = result ? null : "The product has been removed by someone!" });
         }
 
         [HttpPost]
@@ -182,10 +168,10 @@
         {
             if (string.IsNullOrWhiteSpace(criteria.SuperWildCard))
             {
-                return Json(new { IsSuccess = false, Errors = "Supper Wild Card is empty!" });
+                return Json(new { IsSuccess = false, Error = "Supper Wild Card is empty!" });
             }
 
-            _licenseeService.AddAgent(criteria);
+            _licenseeService.AddAgent(criteria, CurrentSession.UserId);
 
             return Json(new { IsSuccess = true });
         }
@@ -207,12 +193,22 @@
         {
             if (string.IsNullOrWhiteSpace(licenseeName))
             {
-                return Json(new { IsSuccess = false, Errors = "Licensee name is empty!" });
+                return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
             }
 
-            var result = _licenseeService.TerminateLicensee(licenseeName);
+            var result = _licenseeService.TerminateLicensee(licenseeName, CurrentSession.UserId);
 
-            return Json(new { IsSuccess = result, Errors = result ? null : "This licensee have been terminated or it does not support for this product!" });
+            if (result.Data == null)
+            {
+                return Json(new { IsSuccess = false, Error = "Licensee does not exists!" });
+            }
+
+            if (!result.IsSuccess)
+            {
+                return Json(new { IsSuccess = false, Error = "This licensee has been terminated by someone or it does not support for this product!" });
+            }
+
+            return Json(new { IsSuccess = true, Data = result.Data });
         }
 
         [HttpPost]
@@ -223,22 +219,12 @@
             var error = CheckValidLicenseeProduct(criteria);
             if (error != null)
             {
-                return Json(new { IsSuccess = false, Errors = error });
+                return Json(new { IsSuccess = false, Error = error });
             }
 
-            var result = _licenseeService.EnablePullService(criteria);
+            var result = _licenseeService.EnablePullService(criteria, CurrentSession.UserId);
 
-            return Json(new { IsSuccess = result, Errors = result ? null : "The pull service have been enabled or it does not support for this product!" });
-        }
-
-        private string CheckValidLaunchedProduct(LaunchProductCriteria criteria)
-        {
-            if (!criteria.EffectiveDate.HasValue)
-            {
-                return "Invalid data!";
-            }
-
-            return CheckValidLicenseeProduct(criteria);
+            return Json(new { IsSuccess = result, Error = result ? null : "The pull service does not support for this product!" });
         }
 
         private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)

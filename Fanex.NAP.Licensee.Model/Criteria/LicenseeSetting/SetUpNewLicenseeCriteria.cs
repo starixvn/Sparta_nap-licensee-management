@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 {
+    using System;
+
     public class SetUpNewLicenseeCriteria
     {
         public string LicenseeName { get; set; }
@@ -18,6 +20,6 @@
 
         public bool IsPullService { get; set; }
 
-        public bool IsAllowWLbyLeague { get; set; }
+        public DateTime EffectiveDate { get; set; }
     }
 }

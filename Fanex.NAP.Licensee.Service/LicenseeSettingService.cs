@@ -4,12 +4,14 @@
     using System.Linq;
     using Core;
     using Model.Criteria.LicenseeSetting;
+    using Model.Criteria.Vendor;
     using Model.DTO;
     using Model.Enumerations;
 
     public class LicenseeSettingService : ILicenseeSettingService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
+        private readonly ILogWriterService _logWriter;
 
         private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
         {
@@ -20,6 +22,7 @@
         public LicenseeSettingService()
         {
             _objectDbGenerator = new ObjectDbGenerator();
+            _logWriter = new LogWriterService();
         }
 
         public IEnumerable<Licensee> Search(LicenseeCriteria criteria)
@@ -46,7 +49,7 @@
             }
         }
 
-        public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
+        public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria, int userId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Insert"))
             {
@@ -54,6 +57,8 @@
             }
 
             var licensee = GetLicensee(criteria.LicenseeName);
+
+            WriteInsertLicenseeActionLog(criteria, userId);
 
             return new ResultData<Licensee>
             {
@@ -96,44 +101,70 @@
             return products;
         }
 
-        public void LaunchProduct(LaunchProductCriteria criteria)
-        {
-            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_LaunchProduct"))
-            {
-                db.ExecuteNonQuery(criteria);
-            }
-        }
-
-        public void OfferProduct(OfferProductCriteria criteria)
+        public void OfferProduct(OfferProductCriteria criteria, int userId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
             {
                 db.ExecuteNonQuery(criteria);
             }
+
+            WriteOfferProductActionLog(criteria, userId);
         }
 
-        public void RemoveProduct(LicenseeProductCriteria criteria)
+        public bool RemoveProduct(RemoveLicenseeProductCriteria criteria, int userId)
         {
+            var result = false;
+            var pullServiceKey = string.Empty;
+            if (criteria.IsRemovePullService)
+            {
+                _pullServiceSetting.TryGetValue(criteria.ProductCode, out pullServiceKey);
+            }
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
             {
-                db.ExecuteNonQuery(criteria);
+                result = db.QueryEntity<int>(new
+                {
+                    LicenseeName = criteria.LicenseeName,
+                    ProductCode = criteria.ProductCode,
+                    PullServiceKey = pullServiceKey
+                }) == 1;
             }
+
+            if (result)
+            {
+                WriteRemoveProductActionLog(criteria, userId);
+            }
+
+            return result;
         }
 
-        public void AddAgent(LicenseeAgentCriteria criteria)
+        public void AddAgent(LicenseeAgentCriteria criteria, int userId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
             {
                 db.ExecuteNonQuery(criteria);
             }
+
+            WriteAddAgentActionLog(criteria, userId);
         }
 
-        public bool TerminateLicensee(string licenseeName)
+        public ResultData<Licensee> TerminateLicensee(string licenseeName, int userId)
         {
+            var result = new ResultData<Licensee>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
             {
-                return db.QueryEntity<int>(new { LicenseeName = licenseeName }) == 1;
+                result.IsSuccess = db.QueryEntity<int>(new { LicenseeName = licenseeName }) == 1;
             }
+
+            result.Data = GetLicensee(licenseeName);
+
+            if (result.IsSuccess)
+            {
+                WriteTerminateLicenseeActionLog(licenseeName, userId);
+            }
+
+            return result;
         }
 
         public IEnumerable<string> GetLrfFucntionKey(int licenseeId)
@@ -150,7 +181,7 @@
             }
         }
 
-        public bool EnablePullService(LicenseeProductCriteria criteria)
+        public bool EnablePullService(LicenseeProductCriteria criteria, int userId)
         {
             if (!_pullServiceSetting.ContainsKey(criteria.ProductCode))
             {
@@ -159,8 +190,12 @@
 
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_EnablePullService"))
             {
-                return db.QueryEntity<int>(new { LicenseeName = criteria.LicenseeName, SettingName = _pullServiceSetting[criteria.ProductCode] }) == 1;
+                db.ExecuteNonQuery(new { LicenseeName = criteria.LicenseeName, SettingName = _pullServiceSetting[criteria.ProductCode] });
             }
+
+            WriteEnablePullServiceActionLog(criteria, userId);
+
+            return true;
         }
 
         private IEnumerable<string> GetIntegrateSetting(int licenseeId)
@@ -169,6 +204,99 @@
             {
                 return db.Query<string>(new { LicenseeId = licenseeId });
             }
+        }
+
+        private void WriteTerminateLicenseeActionLog(string licenseeName, int userId)
+        {
+            var doing = $"<Licensee>{licenseeName}</Licensee>";
+
+            WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing, userId);
+        }
+
+        private void WriteRemoveProductActionLog(RemoveLicenseeProductCriteria criteria, int userId)
+        {
+            var doing = "<Product"
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + $" IsRemovePullService=\"{criteria.IsRemovePullService}\""
+                        + ">"
+                        + criteria.ProductCode
+                        + "</Product>";
+
+            WriteLog(ActionLogType.Licensee_RemoveProduct, "Nap_LM_Licensee_RemoveProduct", doing, userId);
+        }
+
+        private void WriteEnablePullServiceActionLog(LicenseeProductCriteria criteria, int userId)
+        {
+            var doing = "<Product"
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + ">"
+                        + criteria.ProductCode
+                        + "</Product>";
+
+            WriteLog(ActionLogType.Licensee_AddPullService, "Nap_LM_Licensee_EnablePullService", doing, userId);
+        }
+
+        private void WriteInsertLicenseeActionLog(SetUpNewLicenseeCriteria criteria, int userId)
+        {
+            var doing = "<Licensee"
+                        + $" SuperWildCard=\"{criteria.SuperWildCard}\""
+                        + $" LicenseeType=\"{criteria.LicenseeType}\""
+                        + $" IsSpecial=\"{criteria.IsSpecial}\""
+                        + $" ProductCode=\"{criteria.ProductCode}\""
+                        + $" SystemisActive=\"{criteria.SystemisActive}\""
+                        + $" IsAllowMemberComm=\"{criteria.IsAllowMemberComm}\""
+                        + $" IsPullService=\"{criteria.IsPullService}\""
+                        + $" EffectiveDate=\"{criteria.EffectiveDate.ToString("MM/dd/yyyy")}\""
+                        + ">"
+                        + criteria.LicenseeName
+                        + "</Licensee>";
+
+            WriteLog(ActionLogType.Licensee_Insert, "Nap_LM_Licensee_Insert", doing, userId);
+        }
+
+        private void WriteAddAgentActionLog(LicenseeAgentCriteria criteria, int userId)
+        {
+            var doing = "<Agent"
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + $" SuperWildCard=\"{criteria.SuperWildCard}\""
+                        + $" IsSpecial=\"{criteria.IsSpecial}\""
+                        + $" Currency=\"{criteria.Currency}\""
+                        + ">"
+                        + "</Agent>";
+
+            WriteLog(ActionLogType.Licensee_AddAgent, "Nap_LM_Licensee_AddAgent", doing, userId);
+        }
+
+        private void WriteOfferProductActionLog(OfferProductCriteria criteria, int userId)
+        {
+            var doing = "<Product"
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + $" IsPullService=\"{criteria.IsPullService}\""
+                        + $" EffectiveDate=\"{criteria.EffectiveDate?.ToString("MM/dd/yyyy")}\""
+                        + ">"
+                        + criteria.ProductCode
+                        + "</Product>";
+
+            WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, userId);
+        }
+
+        private void WriteLog(ActionLogType action, string sp, string licensee, int userId)
+        {
+            var doing = $"<Action value=\"{action.ToString()}\">"
+                + $"<SpName>{sp}</SpName>"
+                + $"<User>{userId}</User>"
+                + licensee
+                + "</Action>";
+
+            var actionLogCriteria = new ActionLogCriteria
+            {
+                ActionId = (int)action,
+                CustId = userId,
+                UserId = userId,
+                Doing = doing
+            };
+
+            _logWriter.WriteActionLog(actionLogCriteria);
         }
     }
 }
