@@ -127,7 +127,7 @@ BEGIN
 		IF (ISNULL(@PullServiceKey, '') <> '' 
 			AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = @PullServiceKey))
 		BEGIN
-			EXEC DBPTCS.bodb_PlaytechCS.dbo.DBA_Lrf_PullServiceSetting
+			EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[DBA_Lrf_PullServiceSetting]
 				@LicenseeID = @LicenseeId, 
 				@LicenseeName = @LicenseeName, 
 				@SettingName = @PullServiceKey,

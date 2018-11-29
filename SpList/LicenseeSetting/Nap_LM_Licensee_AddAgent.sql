@@ -30,7 +30,7 @@ BEGIN
 	BEGIN TRY
 	BEGIN TRANSACTION AddAgent
 
-		EXEC [DBA_CreateLicenseeAgent]
+		EXEC [dbo].[DBA_CreateLicenseeAgent]
 			@LicenseeName   		= @LicenseeName,
 			@SuperWildCard			= @SuperWildCardText,
 			@Currency  	 			= @Currency,

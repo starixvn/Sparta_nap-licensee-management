@@ -62,7 +62,7 @@ BEGIN
 
 		SET @tmpSuperWildCard = @SuperWildCard + '%'
 
-		EXEC [DBA_Lrf_CreateNewLicensee]
+		EXEC [dbo].[DBA_Lrf_CreateNewLicensee]
 			@LicenseeName   		= @LicenseeName
 			,@SuperWildCard  	 	= @tmpSuperWildCard
 			,@ResellerName   	  	= @ResellerName

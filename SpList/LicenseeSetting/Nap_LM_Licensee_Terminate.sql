@@ -57,7 +57,7 @@ BEGIN
 								WHERE sl.LicenseeID = @LicenseeId AND sl.IsActive = 1
 							FOR XML PATH('')), 1, 1, '')  
 
-		EXEC dbo.DBA_Lrf_ActiveLicenseeSystem @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
+		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames]]
 
 		COMMIT TRANSACTION TerminateLicensee
 	
