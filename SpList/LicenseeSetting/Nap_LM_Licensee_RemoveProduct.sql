@@ -127,8 +127,11 @@ BEGIN
 		IF (ISNULL(@PullServiceKey, '') <> '' 
 			AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = @PullServiceKey))
 		BEGIN
-			DELETE DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (ROWLOCK)
-			WHERE LicenseeID = @LicenseeId AND SettingName = @PullServiceKey
+			EXEC DBPTCS.bodb_PlaytechCS.dbo.DBA_Lrf_PullServiceSetting
+				@LicenseeID = @LicenseeId, 
+				@LicenseeName = @LicenseeName, 
+				@SettingName = @PullServiceKey,
+				@IsDelete = 1
 		END
 		
 		SELECT 1
