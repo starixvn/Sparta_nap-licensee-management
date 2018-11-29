@@ -39,7 +39,7 @@ export default class Form extends Component {
             SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(i => i.value).join(','),
             IsSpecial: this.state.isSpecial,
             IsAllowMemberComm: this.state.isAllowMemberComm,
-            EffectiveDate: new Date(this.state.date)
+            EffectiveDate: this.state.date
         };
     }
 

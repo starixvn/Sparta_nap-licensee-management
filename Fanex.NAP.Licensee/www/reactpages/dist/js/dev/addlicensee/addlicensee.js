@@ -5770,7 +5770,7 @@ var Form = function (_Component) {
                 }).join(','),
                 IsSpecial: this.state.isSpecial,
                 IsAllowMemberComm: this.state.isAllowMemberComm,
-                EffectiveDate: new Date(this.state.date)
+                EffectiveDate: this.state.date
             };
         }
     }, {

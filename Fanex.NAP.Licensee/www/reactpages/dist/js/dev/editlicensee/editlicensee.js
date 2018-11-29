@@ -9843,7 +9843,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 ProductCode: selectedproduct == null ? '' : selectedproduct.map(function (i) {
                     return i.value;
                 }).join(','),
-                EffectiveDate: new Date(date)
+                EffectiveDate: date
             };
         }
     }, {

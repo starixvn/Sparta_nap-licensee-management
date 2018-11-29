@@ -86,7 +86,7 @@ export class OfferProductForm extends Component {
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             ProductCode: selectedproduct == null ? '' : selectedproduct.map(i => i.value).join(','),
-            EffectiveDate: new Date(date)
+            EffectiveDate: date
         };
     }
 
