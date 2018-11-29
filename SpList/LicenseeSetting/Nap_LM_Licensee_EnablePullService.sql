@@ -25,7 +25,7 @@ BEGIN
 		RETURN
 	END
 	
-	EXEC DBA_lrf_EnableService
+	EXEC dbo.DBA_Lrf_PullServiceSetting
 		@LicenseeId		= @LicenseeID,
 		@LicenseeName	= @LicenseeName,
 		@SettingName	= @SettingName
