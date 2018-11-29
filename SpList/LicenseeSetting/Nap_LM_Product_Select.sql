@@ -17,6 +17,6 @@ BEGIN
 	SELECT 'SB' AS ProductCode, 'Sportsbook' AS ProductName
 	UNION
 	SELECT p.ProductPrefix AS ProductCode, p.ProductName
-	FROM dbo.Product3rd p
+	FROM dbo.Product3rd p WITH (NOLOCK)
 END
 GO

@@ -3,8 +3,7 @@
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
 	@LicenseeName	VARCHAR(50),
 	@ProductCode	VARCHAR(100)='',
-	@EffectiveDate	DATE ='',
-	@IsPullService  BIT  = 1 
+	@EffectiveDate	DATE =''
 AS
 /*
 	 Created: Amanda
@@ -13,7 +12,7 @@ AS
 	 DB: DBCUST.bodb_licensee
 	 
 	 Revisions:
-	  - 20181112@Amanda: Remove Product from Licensee [Redmine: #83584]
+	  - 20181112@Amanda: Offer Product from Licensee [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -65,7 +64,7 @@ BEGIN
 		@LicenseeId  	= @LicenseeID,
 		@ProductCode  	= @ProductCode,
 		@EffectiveDate	= @EffectiveDate,
-		@IsPullService	= @IsPullService
+		@IsPullService	= 1
 
 	COMMIT TRANSACTION OfferProduct
 

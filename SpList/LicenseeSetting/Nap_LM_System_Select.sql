@@ -15,7 +15,7 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	SELECT s.SystemName, s.[Description]
-	FROM dbo.Systems s
+	FROM dbo.Systems s WITH (NOLOCK)
 	WHERE s.SystemName <> 'KPI'
 END
 GO

@@ -8,7 +8,6 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Insert]
 	, @ProductCode			VARCHAR(100) = ''
 	, @SystemisActive		VARCHAR(100) = ''
 	, @IsAllowMemberComm	BIT = 0
-	, @IsPullService		BIT = 1
 	, @EffectiveDate		DATE = ''
 AS
 /*
@@ -71,7 +70,7 @@ BEGIN
 			,@ProductCode	  	 	= @ProductCode
 			,@SystemisActive 	  	= @SystemisActive
 			,@IsAllowMemberComm     = @IsAllowMemberComm
-			,@IsPullService			= @IsPullService
+			,@IsPullService			= 1
 			,@EffectiveDate			= @EffectiveDate
 
 	COMMIT TRANSACTION SetUpNewLicensee
