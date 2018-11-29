@@ -18,7 +18,6 @@ export default class Form extends Component {
             selectedSystem: defaultState.selectedSystem,
             isSpecial: false,
             isAllowMemberComm: true,
-            isPullService: true,
             isLoading: false,
             isSuccess: false,
             date: Utility.getTodayString()
@@ -40,7 +39,6 @@ export default class Form extends Component {
             SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(i => i.value).join(','),
             IsSpecial: this.state.isSpecial,
             IsAllowMemberComm: this.state.isAllowMemberComm,
-            IsPullService: this.state.isPullService,
             EffectiveDate: new Date(this.state.date)
         };
     }
@@ -89,8 +87,7 @@ export default class Form extends Component {
     render() {
         const { licenseeName, superWildCard, selectedReseller,
             selectedProduct, selectedSystem, isSpecial, date,
-            isAllowMemberComm, isPullService,
-            isLoading, isSuccess } = this.state;
+            isAllowMemberComm, isLoading, isSuccess } = this.state;
 
         return (
             <div className='add-form'>
@@ -167,14 +164,6 @@ export default class Form extends Component {
                                 <input type='checkbox'
                                 checked={isAllowMemberComm}
                                 onChange={(e) => this.setState({ isAllowMemberComm: e.target.checked })} />
-                            </div>
-                        </div>
-                        <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Pull Service</label>
-                            <div className='col-sm-12 col-md-5'>
-                                <input type='checkbox'
-                                checked={isPullService}
-                                onChange={(e) => this.setState({ isPullService: e.target.checked })} />
                             </div>
                         </div>
                         <div className='form-group row col-sm-12'>

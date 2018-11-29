@@ -16,7 +16,6 @@ export class OfferProductForm extends Component {
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
             isLoading: false,
-            isPullService: true,
             selectedproduct: null
         };
     };
@@ -32,7 +31,6 @@ export class OfferProductForm extends Component {
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
             isLoading: false,
-            isPullService: true,
             selectedproduct: null,
             isShow: false,
             productList: []
@@ -83,13 +81,12 @@ export class OfferProductForm extends Component {
 
     _getParams()
     {
-        const { date, isPullService, selectedproduct } = this.state;
+        const { date, selectedproduct } = this.state;
 
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             ProductCode: selectedproduct == null ? '' : selectedproduct.map(i => i.value).join(','),
-            EffectiveDate: new Date(date),
-            IsPullService: isPullService
+            EffectiveDate: new Date(date)
         };
     }
 
@@ -115,7 +112,7 @@ export class OfferProductForm extends Component {
             });
     }
 
-    _buildContent(selectedproduct, productList, date, isPullService) {
+    _buildContent(selectedproduct, productList, date) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -131,12 +128,6 @@ export class OfferProductForm extends Component {
                     <label className='col-form-label'>Effective Date</label>
                     <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
                 </div>
-                <div className='form-group'>
-                    <label className='col-form-label'>Pull Service</label>
-                    <div>
-                        <input type='checkbox' checked={isPullService} onChange={(e) => this.setState({ isPullService: e.target.checked })} />
-                    </div>
-                </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
@@ -151,7 +142,7 @@ export class OfferProductForm extends Component {
 
     render()
     {
-        const { date, isPullService, isShowConfirmBox, selectedproduct, productList, isShow } = this.state;
+        const { date, isShowConfirmBox, selectedproduct, productList, isShow } = this.state;
 
         return (
         <div> 
@@ -163,7 +154,7 @@ export class OfferProductForm extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Offer New Product'
-                content={this._buildContent(selectedproduct, productList, date, isPullService)}
+                content={this._buildContent(selectedproduct, productList, date)}
                 style={{height: '330px', width: '600px'}}
                 onClose={() => this.onClose(false)} />
             </div>

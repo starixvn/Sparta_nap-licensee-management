@@ -99,6 +99,7 @@ export class ProductGrid extends Component {
                         Utility.showMessage(response.data.Error);
                     }
                     else {
+                        Utility.showMessage('Success!');
                         this.props.getProductList(this.props.licensee.LicenseeID);
                     }
 

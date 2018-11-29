@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setLicensee } from './action';
+import { toggleLoader, setLicensee, getProductList } from './action';
 import ConfirmBox from '../../../components/ConfirmBox';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
@@ -32,6 +32,7 @@ export class TerminateLicensee extends Component {
                     }
                     else {
                         this.props.setLicensee(response.data.Data);
+                        this.props.getProductList(this.props.licensee.LicenseeID);
                     }
 
                     this.props.toggleLoader(false);
@@ -62,7 +63,7 @@ export class TerminateLicensee extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader, setLicensee }, dispatch);
+    return bindActionCreators({ toggleLoader, setLicensee, getProductList }, dispatch);
 }
 function mapStateToProps(state) {
     const { licensee } = state;

@@ -4,8 +4,6 @@
 
     public class OfferProductCriteria : LicenseeProductCriteria
     {
-        public bool IsPullService { get; set; }
-
         public DateTime? EffectiveDate { get; set; }
     }
 }

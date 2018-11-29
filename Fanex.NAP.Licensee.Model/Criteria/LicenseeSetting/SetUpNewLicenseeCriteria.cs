@@ -18,8 +18,6 @@
 
         public bool IsAllowMemberComm { get; set; }
 
-        public bool IsPullService { get; set; }
-
         public DateTime EffectiveDate { get; set; }
     }
 }

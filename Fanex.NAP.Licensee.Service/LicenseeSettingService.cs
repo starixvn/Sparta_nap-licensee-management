@@ -245,7 +245,6 @@
                         + $" ProductCode=\"{criteria.ProductCode}\""
                         + $" SystemisActive=\"{criteria.SystemisActive}\""
                         + $" IsAllowMemberComm=\"{criteria.IsAllowMemberComm}\""
-                        + $" IsPullService=\"{criteria.IsPullService}\""
                         + $" EffectiveDate=\"{criteria.EffectiveDate.ToString("MM/dd/yyyy")}\""
                         + ">"
                         + criteria.LicenseeName
@@ -271,7 +270,6 @@
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
-                        + $" IsPullService=\"{criteria.IsPullService}\""
                         + $" EffectiveDate=\"{criteria.EffectiveDate?.ToString("MM/dd/yyyy")}\""
                         + ">"
                         + criteria.ProductCode
