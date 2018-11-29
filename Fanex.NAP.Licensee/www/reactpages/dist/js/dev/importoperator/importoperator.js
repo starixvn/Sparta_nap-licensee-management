@@ -3478,10 +3478,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(54);
+var assign = __webpack_require__(55);
 
-var ReactPropTypesSecret = __webpack_require__(56);
-var checkPropTypes = __webpack_require__(55);
+var ReactPropTypesSecret = __webpack_require__(57);
+var checkPropTypes = __webpack_require__(56);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
