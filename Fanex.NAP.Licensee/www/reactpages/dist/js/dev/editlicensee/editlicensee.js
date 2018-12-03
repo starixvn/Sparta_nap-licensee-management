@@ -788,6 +788,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+_axios2.default.interceptors.response.use(function (response) {
+    return Promise.resolve(response);
+}, function (error) {
+    var response = error.response;
+
+    if (response) {
+        var data = response.data;
+
+        var status = data && data.ErrCode || response.status;
+
+        switch (status) {
+            case 401:
+            case 403:
+                location.reload(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    return Promise.reject(error);
+});
+
 var Site = function () {
     function Site() {
         _classCallCheck(this, Site);
@@ -6468,6 +6491,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var DEFAULT_TIME_DELAY = 500;
+
 var Utility = function () {
     function Utility() {
         _classCallCheck(this, Utility);
@@ -6486,6 +6511,27 @@ var Utility = function () {
         key: 'showMessage',
         value: function showMessage(msg) {
             window.alert(msg);
+        }
+    }, {
+        key: 'debounce',
+        value: function debounce(func, wait, immediate) {
+            var timeout = void 0;
+            return function () {
+                var context = this,
+                    args = arguments;
+                var later = function later() {
+                    timeout = null;
+                    if (!immediate) {
+                        func.apply(context, args);
+                    }
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait || DEFAULT_TIME_DELAY);
+                if (callNow) {
+                    func.apply(context, args);
+                }
+            };
         }
     }]);
 
@@ -8132,16 +8178,11 @@ function setLicensee(data) {
 }
 
 function getProductList(licenseeID) {
-    var _this = this;
-
     var url = 'LicenseeSetting/GetLicenseeProductList';
 
     return function (dispatch) {
         _site2.default.fetchData({ LicenseeId: licenseeID }, url).then(function (response) {
             dispatch(setProductList(response.data));
-        }).catch(function (err) {
-            _utility2.default.showMessage('Please refresh');
-            _this._toggleLoader(false);
         });
     };
 }
@@ -8719,12 +8760,11 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                 _site2.default.fetchData(param, url).then(function (response) {
                     if (!response.data.IsSuccess) {
                         _utility2.default.showMessage(response.data.Error);
+                        _this.props.toggleLoader(false);
                     } else {
                         _utility2.default.showMessage('Success!');
                         _this.props.getProductList(_this.props.licensee.LicenseeID);
                     }
-
-                    _this.props.toggleLoader(false);
                 }).catch(function (err) {
                     _utility2.default.showMessage('Please try later!');
                     _this.props.toggleLoader(false);
@@ -8744,6 +8784,13 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
     }
 
     _createClass(ProductGrid, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.productList !== this.props.productList) {
+                this.props.toggleLoader(false);
+            }
+        }
+    }, {
         key: '_enablePullService',
         value: function _enablePullService(product) {
             var pullServicePopup = {
@@ -9062,14 +9109,13 @@ var EnablePullServiceForm = function (_Component) {
             _site2.default.fetchData(params, url).then(function (response) {
                 if (!response.data.IsSuccess) {
                     _utility2.default.showMessage(response.data.Error);
+                    _this2._toggleLoader(false);
                 } else {
                     _utility2.default.showMessage('Success!');
                     _this2._onClose(function () {
                         return callBack(true);
                     });
                 }
-
-                _this2._toggleLoader(false);
             }).catch(function (err) {
                 _utility2.default.showMessage('Error!');
                 _this2._toggleLoader(false);
@@ -9272,21 +9318,16 @@ var AddAgent = exports.AddAgent = function (_Component) {
         };
 
         _this._addAgent = function () {
-            _this.props.toggleLoader(true);
-            var url = 'LicenseeSetting/GetCurrencyList';
+            _this.setState({ isShow: true });
 
-            _site2.default.fetchData(null, url).then(function (response) {
-                var data = response.data ? response.data.map(function (item) {
-                    return { label: item.Name, value: item.Id };
-                }) : [];
+            _this._getCurrencyList();
+        };
 
-                _this.setState({ currencyList: data, isShow: true });
+        _this._onTextChange = function (e) {
+            var value = e.target.value;
+            _this.setState({ superWildCard: value });
 
-                _this.props.toggleLoader(false);
-            }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
-                _this.props.toggleLoader(false);
-            });
+            _this.changeCurrencyList();
         };
 
         _this.state = {
@@ -9297,6 +9338,8 @@ var AddAgent = exports.AddAgent = function (_Component) {
             currencyList: [],
             isShow: false
         };
+
+        _this.changeCurrencyList = _utility2.default.debounce(_this._getCurrencyList, 2000).bind(_this);
         return _this;
     }
 
@@ -9318,8 +9361,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 if (!response.data.IsSuccess) {
                     _utility2.default.showMessage(response.data.Error);
                 } else {
-                    _utility2.default.showMessage('Success!');
-                    _this2.onClose();
+                    _utility2.default.showMessage(response.data.Data);
                 }
 
                 _this2.props.toggleLoader(false);
@@ -9345,9 +9387,31 @@ var AddAgent = exports.AddAgent = function (_Component) {
             };
         }
     }, {
+        key: '_getCurrencyList',
+        value: function _getCurrencyList() {
+            var _this3 = this;
+
+            this.props.toggleLoader(true);
+            var url = 'LicenseeSetting/GetSuperCurrencyList';
+            var param = { SuperWildCard: this.state.superWildCard };
+
+            _site2.default.fetchData(param, url).then(function (response) {
+                var data = response.data ? response.data.map(function (item) {
+                    return { label: item.Name, value: item.Id };
+                }) : [];
+
+                _this3.setState({ currencyList: data, selectedCurrency: null });
+
+                _this3.props.toggleLoader(false);
+            }).catch(function (err) {
+                _utility2.default.showMessage('Please try later!');
+                _this3.props.toggleLoader(false);
+            });
+        }
+    }, {
         key: '_buildContent',
         value: function _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial) {
-            var _this3 = this;
+            var _this4 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -9363,9 +9427,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                     _react2.default.createElement('input', { className: 'full-width ' + (this.isValid ? '' : 'has-error'),
                         type: 'text',
                         value: superWildCard,
-                        onChange: function onChange(e) {
-                            return _this3.setState({ superWildCard: e.target.value });
-                        } })
+                        onChange: this._onTextChange })
                 ),
                 _react2.default.createElement(
                     'div',
@@ -9380,7 +9442,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         value: selectedCurrency,
                         options: currencyList,
                         onChange: function onChange(item) {
-                            return _this3.setState({ selectedCurrency: item });
+                            return _this4.setState({ selectedCurrency: item });
                         } })
                 ),
                 _react2.default.createElement(
@@ -9395,8 +9457,13 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         'div',
                         null,
                         _react2.default.createElement('input', { type: 'checkbox', checked: isSpecial, onChange: function onChange(e) {
-                                return _this3.setState({ isSpecial: e.target.checked });
-                            } })
+                                return _this4.setState({ isSpecial: e.target.checked });
+                            } }),
+                        _react2.default.createElement(
+                            'i',
+                            null,
+                            '(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -9443,7 +9510,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Add Agent/Currency',
                     content: this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial),
-                    style: { height: '330px', width: '600px' },
+                    style: { height: '350px', width: '650px' },
                     onClose: this.onClose })
             );
         }
@@ -9627,12 +9694,11 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
                 _site2.default.fetchData(param, url).then(function (response) {
                     if (!response.data.IsSuccess) {
                         _utility2.default.showMessage(response.data.Error);
+                        _this.props.toggleLoader(false);
                     } else {
                         _this.props.setLicensee(response.data.Data);
                         _this.props.getProductList(_this.props.licensee.LicenseeID);
                     }
-
-                    _this.props.toggleLoader(false);
                 }).catch(function (err) {
                     _utility2.default.showMessage('Please try later!');
                     _this.props.toggleLoader(false);
@@ -9819,12 +9885,11 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             _site2.default.fetchData(params, url).then(function (response) {
                 if (!response.data.IsSuccess) {
                     _utility2.default.showMessage(response.data.Error);
+                    _this2.props.toggleLoader(false);
                 } else {
                     _utility2.default.showMessage('Success!');
                     _this2.onClose(true);
                 }
-
-                _this2.props.toggleLoader(false);
             }).catch(function (err) {
                 _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
@@ -9930,7 +9995,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Offer New Product',
                     content: this._buildContent(selectedproduct, productList, date),
-                    style: { height: '330px', width: '600px' },
+                    style: { height: '270px', width: '600px' },
                     onClose: function onClose() {
                         return _this4.onClose(false);
                     } })

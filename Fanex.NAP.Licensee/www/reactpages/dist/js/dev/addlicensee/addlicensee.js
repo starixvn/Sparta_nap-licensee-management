@@ -735,6 +735,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+_axios2.default.interceptors.response.use(function (response) {
+    return Promise.resolve(response);
+}, function (error) {
+    var response = error.response;
+
+    if (response) {
+        var data = response.data;
+
+        var status = data && data.ErrCode || response.status;
+
+        switch (status) {
+            case 401:
+            case 403:
+                location.reload(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    return Promise.reject(error);
+});
+
 var Site = function () {
     function Site() {
         _classCallCheck(this, Site);
@@ -5504,6 +5527,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var DEFAULT_TIME_DELAY = 500;
+
 var Utility = function () {
     function Utility() {
         _classCallCheck(this, Utility);
@@ -5522,6 +5547,27 @@ var Utility = function () {
         key: 'showMessage',
         value: function showMessage(msg) {
             window.alert(msg);
+        }
+    }, {
+        key: 'debounce',
+        value: function debounce(func, wait, immediate) {
+            var timeout = void 0;
+            return function () {
+                var context = this,
+                    args = arguments;
+                var later = function later() {
+                    timeout = null;
+                    if (!immediate) {
+                        func.apply(context, args);
+                    }
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait || DEFAULT_TIME_DELAY);
+                if (callNow) {
+                    func.apply(context, args);
+                }
+            };
         }
     }]);
 
@@ -5956,7 +6002,16 @@ var Form = function (_Component) {
                                     checked: isSpecial,
                                     onChange: function onChange(e) {
                                         return _this3.setState({ isSpecial: e.target.checked });
-                                    } })
+                                    } }),
+                                _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement(
+                                        'i',
+                                        null,
+                                        '(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
+                                    )
+                                )
                             )
                         ),
                         _react2.default.createElement(

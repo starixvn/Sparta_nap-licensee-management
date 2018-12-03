@@ -439,6 +439,9 @@
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 
+.popup-content {
+  overflow-y: hidden !important; }
+
 .add-form, .edit-form {
   margin-top: 10px; }
   .add-form input[type=text], .edit-form input[type=text] {

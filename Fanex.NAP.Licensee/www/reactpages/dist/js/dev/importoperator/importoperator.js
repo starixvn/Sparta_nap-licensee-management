@@ -735,6 +735,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+_axios2.default.interceptors.response.use(function (response) {
+    return Promise.resolve(response);
+}, function (error) {
+    var response = error.response;
+
+    if (response) {
+        var data = response.data;
+
+        var status = data && data.ErrCode || response.status;
+
+        switch (status) {
+            case 401:
+            case 403:
+                location.reload(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    return Promise.reject(error);
+});
+
 var Site = function () {
     function Site() {
         _classCallCheck(this, Site);
