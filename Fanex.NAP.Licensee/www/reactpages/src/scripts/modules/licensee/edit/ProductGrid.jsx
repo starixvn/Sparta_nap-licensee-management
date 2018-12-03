@@ -103,12 +103,12 @@ export class ProductGrid extends Component {
                 .then(response => {
                     if (!response.data.IsSuccess) {
                         Utility.showMessage(response.data.Error);
-                        this.props.toggleLoader(false);
                     }
                     else {
                         Utility.showMessage('Success!');
-                        this.props.getProductList(this.props.licensee.LicenseeID);
                     }
+
+                    this.props.getProductList(this.props.licensee.LicenseeID);
                 }).catch(err => {
                     Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);

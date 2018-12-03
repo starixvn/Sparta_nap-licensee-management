@@ -29,11 +29,14 @@ export class TerminateLicensee extends Component {
                 .then(response => {
                     if (!response.data.IsSuccess) {
                         Utility.showMessage(response.data.Error);
-                        this.props.toggleLoader(false);
                     }
-                    else {
+
+                    if (response.data.Data) {
                         this.props.setLicensee(response.data.Data);
                         this.props.getProductList(this.props.licensee.LicenseeID);
+                    }
+                    else {
+                        this.props.toggleLoader(false);
                     }
                 }).catch(err => {
                     Utility.showMessage('Please try later!');

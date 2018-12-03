@@ -8,6 +8,8 @@
     using Core.Web.Attribute;
     using Model.Criteria.LicenseeSetting;
     using Model.DataDomain;
+    using Model.DTO;
+    using Model.Enumerations;
     using Model.ViewModel.LicenseeSetting;
     using ONEbook.UM.Filters;
     using Service;
@@ -19,6 +21,12 @@
     {
         private readonly ILicenseeSettingService _licenseeService;
         private readonly ILicenseeVendorService _vendorService;
+
+        private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
+        {
+            { ProductCode.AGCasino, "AGCasino_VersionKey" },
+            { ProductCode.GoldDeluxe, "GoldDeluxe_VersionKey" },
+        };
 
         public LicenseeSettingController()
         {
@@ -65,7 +73,7 @@
             var viewModel = new LicenseeViewModel
             {
                 Licensee = licensee,
-                ProductList = _licenseeService.GetLicenseeProducts(licensee.LicenseeID, true)
+                ProductList = GetLicenseeProductsWithPullService(licensee.LicenseeID)
             };
 
             return View(viewModel);
@@ -83,7 +91,9 @@
             }
 
             var result = _licenseeService.SetUpNewLicensee(criteria, CurrentSession.UserId);
-            result.Error = result.IsSuccess ? null : "Can not create this licensee. Please try later!";
+            result.Error = result.IsSuccess 
+                ? null
+                : (string.IsNullOrEmpty(result.Error) ? "Can not create this licensee. Please try later!" : result.Error);
 
             return Json(result);
         }
@@ -99,9 +109,9 @@
                 return Json(new { IsSuccess = false, Error = error });
             }
 
-            _licenseeService.OfferProduct(criteria, CurrentSession.UserId);
+            var result = _licenseeService.OfferProduct(criteria, CurrentSession.UserId);
 
-            return Json(new { IsSuccess = true });
+            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
         }
 
         [HttpPost]
@@ -115,9 +125,15 @@
                 return Json(new { IsSuccess = false, Error = error });
             }
 
-            var result = _licenseeService.RemoveProduct(criteria, CurrentSession.UserId);
+            var pullServiceKey = string.Empty;
+            if (criteria.IsRemovePullService)
+            {
+                _pullServiceSetting.TryGetValue(criteria.ProductCode, out pullServiceKey);
+            }
 
-            return Json(new { IsSuccess = result, Error = result ? null : "The product has been removed by someone!" });
+            var result = _licenseeService.RemoveProduct(criteria, pullServiceKey, CurrentSession.UserId);
+
+            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
         }
 
         [HttpPost]
@@ -125,7 +141,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult GetLicenseeProductList(int licenseeId)
         {
-            return Json(_licenseeService.GetLicenseeProducts(licenseeId, true));
+            return Json(GetLicenseeProductsWithPullService(licenseeId));
         }
 
         [HttpPost]
@@ -206,12 +222,7 @@
                 return Json(new { IsSuccess = false, Error = "Licensee does not exists!" });
             }
 
-            if (!result.IsSuccess)
-            {
-                return Json(new { IsSuccess = false, Error = "This licensee has been terminated by someone or it does not support for this product!" });
-            }
-
-            return Json(new { IsSuccess = true, Data = result.Data });
+            return Json(result);
         }
 
         [HttpPost]
@@ -225,9 +236,38 @@
                 return Json(new { IsSuccess = false, Error = error });
             }
 
-            var result = _licenseeService.EnablePullService(criteria, CurrentSession.UserId);
+            if (!_pullServiceSetting.ContainsKey(criteria.ProductCode))
+            {
+                return Json(new { IsSuccess = false, Error = "The pull service does not support for this product!" });
+            }
 
-            return Json(new { IsSuccess = result, Error = result ? null : "The pull service does not support for this product!" });
+            var result = _licenseeService.EnablePullService(criteria, _pullServiceSetting[criteria.ProductCode], CurrentSession.UserId);
+
+            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+        }
+
+        private IEnumerable<LicenseeProduct> GetLicenseeProductsWithPullService(int licenseeId)
+        {
+            var products = _licenseeService.GetLicenseeProducts(licenseeId);
+
+            if (!products.Any())
+            {
+                return products;
+            }
+
+            var integrateSettings = _licenseeService.GetIntegrateSetting(licenseeId);
+
+            foreach (var setting in _pullServiceSetting)
+            {
+                var product = products.FirstOrDefault(x => x.ProductCode == setting.Key);
+                if (product != null)
+                {
+                    product.PullServiceKey = setting.Value;
+                    product.EnablePullService = integrateSettings.Contains(setting.Value);
+                }
+            }
+
+            return products;
         }
 
         private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)

@@ -16,11 +16,11 @@
 
         Licensee GetLicensee(string licenseeName);
 
-        IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId, bool showPullServiceSetting = false);
+        IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId);
 
-        void OfferProduct(OfferProductCriteria criteria, int userId);
+        string OfferProduct(OfferProductCriteria criteria, int userId);
 
-        bool RemoveProduct(RemoveLicenseeProductCriteria criteria, int userId);
+        string RemoveProduct(RemoveLicenseeProductCriteria criteria, string pullServiceKey, int userId);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
@@ -28,8 +28,10 @@
 
         ResultData<Licensee> TerminateLicensee(string licenseeName, int userId);
 
-        bool EnablePullService(LicenseeProductCriteria criteria, int userId);
+        string EnablePullService(LicenseeProductCriteria criteria, string settingName, int userId);
 
         IEnumerable<CurrencyItem> GetSuperCurrency(string superWildCard);
+
+        IEnumerable<string> GetIntegrateSetting(int licenseeId);
     }
 }

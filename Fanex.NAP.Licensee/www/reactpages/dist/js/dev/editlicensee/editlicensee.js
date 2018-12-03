@@ -8760,11 +8760,11 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                 _site2.default.fetchData(param, url).then(function (response) {
                     if (!response.data.IsSuccess) {
                         _utility2.default.showMessage(response.data.Error);
-                        _this.props.toggleLoader(false);
                     } else {
                         _utility2.default.showMessage('Success!');
-                        _this.props.getProductList(_this.props.licensee.LicenseeID);
                     }
+
+                    _this.props.getProductList(_this.props.licensee.LicenseeID);
                 }).catch(function (err) {
                     _utility2.default.showMessage('Please try later!');
                     _this.props.toggleLoader(false);
@@ -9694,10 +9694,13 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
                 _site2.default.fetchData(param, url).then(function (response) {
                     if (!response.data.IsSuccess) {
                         _utility2.default.showMessage(response.data.Error);
-                        _this.props.toggleLoader(false);
-                    } else {
+                    }
+
+                    if (response.data.Data) {
                         _this.props.setLicensee(response.data.Data);
                         _this.props.getProductList(_this.props.licensee.LicenseeID);
+                    } else {
+                        _this.props.toggleLoader(false);
                     }
                 }).catch(function (err) {
                     _utility2.default.showMessage('Please try later!');
@@ -9854,7 +9857,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
 
     _createClass(OfferProductForm, [{
         key: 'onClose',
-        value: function onClose(result) {
+        value: function onClose() {
             this.setState({
                 date: _utility2.default.getTodayString(),
                 isShowConfirmBox: false,
@@ -9863,10 +9866,6 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 isShow: false,
                 productList: []
             });
-
-            if (result) {
-                this.props.getProductList(this.props.licensee.LicenseeID);
-            }
         }
     }, {
         key: '_showConfirmBox',
@@ -9885,11 +9884,12 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             _site2.default.fetchData(params, url).then(function (response) {
                 if (!response.data.IsSuccess) {
                     _utility2.default.showMessage(response.data.Error);
-                    _this2.props.toggleLoader(false);
                 } else {
                     _utility2.default.showMessage('Success!');
-                    _this2.onClose(true);
+                    _this2.onClose();
                 }
+
+                _this2.props.getProductList(_this2.props.licensee.LicenseeID);
             }).catch(function (err) {
                 _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
@@ -9959,7 +9959,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                     _react2.default.createElement(
                         'button',
                         { className: 'btn btn-red', onClick: function onClick() {
-                                return _this3.onClose(false);
+                                return _this3.onClose();
                             } },
                         'Cancel'
                     )
@@ -9997,7 +9997,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                     content: this._buildContent(selectedproduct, productList, date),
                     style: { height: '270px', width: '600px' },
                     onClose: function onClose() {
-                        return _this4.onClose(false);
+                        return _this4.onClose();
                     } })
             );
         }

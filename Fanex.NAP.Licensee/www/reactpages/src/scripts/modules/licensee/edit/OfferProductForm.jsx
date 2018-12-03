@@ -26,7 +26,7 @@ export class OfferProductForm extends Component {
         return selectedproduct !== null && selectedproduct.length > 0;
     }
 
-    onClose(result) {
+    onClose() {
         this.setState({ 
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
@@ -35,10 +35,6 @@ export class OfferProductForm extends Component {
             isShow: false,
             productList: []
         });
-
-        if (result) {
-            this.props.getProductList(this.props.licensee.LicenseeID);
-        }
     }
 
     _onSubmit = () => {
@@ -66,12 +62,13 @@ export class OfferProductForm extends Component {
             .then(response => {
                 if (!response.data.IsSuccess) {
                     Utility.showMessage(response.data.Error);
-                    this.props.toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
-                    this.onClose(true);
+                    this.onClose();
                 }
+
+                this.props.getProductList(this.props.licensee.LicenseeID);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
@@ -131,7 +128,7 @@ export class OfferProductForm extends Component {
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
                     </button>
-                    <button className='btn btn-red' onClick={() => this.onClose(false)}>
+                    <button className='btn btn-red' onClick={() => this.onClose()}>
                         Cancel
                     </button>
                 </div>
@@ -155,7 +152,7 @@ export class OfferProductForm extends Component {
                 title='Offer New Product'
                 content={this._buildContent(selectedproduct, productList, date)}
                 style={{height: '270px', width: '600px'}}
-                onClose={() => this.onClose(false)} />
+                onClose={() => this.onClose()} />
             </div>
         );
     }
