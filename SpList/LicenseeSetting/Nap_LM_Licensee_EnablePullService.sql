@@ -21,7 +21,7 @@ BEGIN
 
 	IF ISNULL(@LicenseeID, 0) = 0
 	BEGIN
-		RAISERROR ('Invalid licensee name', 16, 1)
+		SELECT 'Invalid licensee name'
 		RETURN
 	END
 	

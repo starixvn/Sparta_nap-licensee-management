@@ -30,7 +30,7 @@ BEGIN
 	
 	IF ISNULL(@LicenseeID, 0) = 0 OR ISNULL(@ResellerID, 0) = 0
 	BEGIN
-		RAISERROR ('Invalid licensee name', 16, 1)
+		SELECT 'Invalid licensee name'
 		RETURN
 	END
 	
@@ -44,54 +44,15 @@ BEGIN
 		LEFT JOIN dbo.Product3rd p WITH (NOLOCK) ON pp.ProductCode = p.ProductPrefix
 		WHERE pp.ProductCode <> 'SB' AND p.Productid IS NULL)
 	BEGIN
-		RAISERROR ('Invalid product', 16, 1)
+		SELECT 'Invalid product'
 		RETURN
 	END
 	
-	DECLARE @XACT_ABORT VARCHAR(3) = 'OFF';  
-	IF ( (16384 & @@OPTIONS) = 16384 ) SET @XACT_ABORT = 'ON';  
-	
-	IF @XACT_ABORT = 'OFF'
-	BEGIN
-		SET XACT_ABORT ON
-	END
-	
-	BEGIN TRY
-	BEGIN TRANSACTION OfferProduct
-		
-		EXEC [dbo].[DBA_Lrf_OfferProduct]
-		@ResellerID		= @ResellerID,
-		@LicenseeId  	= @LicenseeID,
-		@ProductCode  	= @ProductCode,
-		@EffectiveDate	= @EffectiveDate,
-		@IsPullService	= 1
-
-	COMMIT TRANSACTION OfferProduct
-
-	END TRY
-	 
-	BEGIN CATCH
-		IF @@TRANCOUNT > 0
-			ROLLBACK TRANSACTION OfferProduct
-			
-		DECLARE @ErrorMessage NVARCHAR(4000);
-		DECLARE @ErrorSeverity INT;
-		DECLARE @ErrorState INT;
-
-		SELECT
-			@ErrorMessage = ERROR_MESSAGE(),
-			@ErrorSeverity = ERROR_SEVERITY(),
-			@ErrorState = ERROR_STATE();
-
-			RAISERROR (@ErrorMessage, -- Message text.
-					   @ErrorSeverity, -- Severity.
-					   @ErrorState -- State.
-					   );
-	END CATCH
-	
-	IF @XACT_ABORT = 'OFF'
-	BEGIN
-		SET XACT_ABORT OFF
-	END
+	EXEC [dbo].[DBA_Lrf_OfferProduct]
+	@ResellerID		= @ResellerID,
+	@LicenseeId  	= @LicenseeID,
+	@ProductCode  	= @ProductCode,
+	@EffectiveDate	= @EffectiveDate,
+	@IsPullService	= 1
 END
 GO

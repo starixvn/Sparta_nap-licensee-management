@@ -30,7 +30,7 @@ BEGIN
 			l.IsAllowedMemberComm,
 			l.EditBetSetting
 	FROM dbo.Licensees l WITH(NOLOCK)
-	WHERE LicenseeName = @LicenseeName
+	WHERE ( @IsAll = 0 AND LicenseeName = @LicenseeName)
 			OR (
 				@IsAll = 1 AND
 				(ISNULL(@LicenseeName,'') = '' OR l.LicenseeName LIKE '%' + @LicenseeName + '%')

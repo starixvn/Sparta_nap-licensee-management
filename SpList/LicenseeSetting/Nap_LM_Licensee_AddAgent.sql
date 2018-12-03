@@ -28,41 +28,17 @@ BEGIN
 
 	SET @SuperWildCardText = @SuperWildCard + '%'
 
-	BEGIN TRY
-	BEGIN TRANSACTION AddAgent
-		SELECT @SumCust1 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
+	SELECT @SumCust1 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
 
-		EXEC [dbo].[DBA_CreateLicenseeAgent]
-			@LicenseeName   		= @LicenseeName,
-			@SuperWildCard			= @SuperWildCardText,
-			@Currency  	 			= @Currency,
-			@IsSpecial   	  		= @IsSpecial,
-			@IsDeposit				= @IsDeposit
-		
-		SELECT @SumCust2 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
-		
-		SELECT @SumCust2 - @SumCust1 AS AffectedRows
-
-	COMMIT TRANSACTION AddAgent
-	END TRY
-	 
-	BEGIN CATCH
-		IF @@TRANCOUNT > 0
-			ROLLBACK TRANSACTION AddAgent
-			
-		DECLARE @ErrorMessage NVARCHAR(4000);
-		DECLARE @ErrorSeverity INT;
-		DECLARE @ErrorState INT;
-
-		SELECT
-			@ErrorMessage = ERROR_MESSAGE(),
-			@ErrorSeverity = ERROR_SEVERITY(),
-			@ErrorState = ERROR_STATE();
-
-			RAISERROR (@ErrorMessage, -- Message text.
-					   @ErrorSeverity, -- Severity.
-					   @ErrorState -- State.
-					   );
-	END CATCH
+	EXEC [dbo].[DBA_CreateLicenseeAgent]
+		@LicenseeName   		= @LicenseeName,
+		@SuperWildCard			= @SuperWildCardText,
+		@Currency  	 			= @Currency,
+		@IsSpecial   	  		= @IsSpecial,
+		@IsDeposit				= @IsDeposit
+	
+	SELECT @SumCust2 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
+	
+	SELECT @SumCust2 - @SumCust1 AS AffectedRows
 END
 GO
