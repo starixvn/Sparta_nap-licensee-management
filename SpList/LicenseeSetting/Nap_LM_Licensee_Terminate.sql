@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
-CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Terminate]
+ALTER PROCEDURE [dbo].[Nap_LM_Licensee_Terminate]
 	@LicenseeName VARCHAR(50)
 AS
 /*
@@ -57,7 +57,7 @@ BEGIN
 								WHERE sl.LicenseeID = @LicenseeId AND sl.IsActive = 1
 							FOR XML PATH('')), 1, 1, '')  
 
-		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames]]
+		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
 
 		COMMIT TRANSACTION TerminateLicensee
 	

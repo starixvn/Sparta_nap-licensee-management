@@ -20,8 +20,9 @@ BEGIN
 	
 	DECLARE @IsDeposit BIT = 1
 	DECLARE @SuperWildCardText VARCHAR(50)
+	DECLARE @SumCust1 INT, @SumCust2 INT, @LicenseeId INT
 	
-	SELECT @IsDeposit = IsDeposit
+	SELECT @IsDeposit = IsDeposit, @LicenseeId = LicenseeID
 	FROM bodb_Licensee.dbo.Licensees WITH (NOLOCK)
 	WHERE LicenseeName = @LicenseeName
 
@@ -29,6 +30,7 @@ BEGIN
 
 	BEGIN TRY
 	BEGIN TRANSACTION AddAgent
+		SELECT @SumCust1 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
 
 		EXEC [dbo].[DBA_CreateLicenseeAgent]
 			@LicenseeName   		= @LicenseeName,
@@ -36,6 +38,10 @@ BEGIN
 			@Currency  	 			= @Currency,
 			@IsSpecial   	  		= @IsSpecial,
 			@IsDeposit				= @IsDeposit
+		
+		SELECT @SumCust2 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
+		
+		SELECT @SumCust2 - @SumCust1 AS AffectedRows
 
 	COMMIT TRANSACTION AddAgent
 	END TRY
