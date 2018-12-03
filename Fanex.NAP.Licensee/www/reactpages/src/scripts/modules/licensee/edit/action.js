@@ -17,9 +17,6 @@ function getProductList(licenseeID) {
         Site.fetchData({ LicenseeId: licenseeID }, url)
         .then(response => {
             dispatch(setProductList(response.data));
-        }).catch(err => {
-            Utility.showMessage('Please refresh');
-            this._toggleLoader(false);
         });
     };
 }

@@ -20,6 +20,8 @@ export class AddAgent extends Component {
             currencyList: [],
             isShow: false
         };
+
+        this.changeCurrencyList = Utility.debounce(this._getCurrencyList, 2000).bind(this);
     };
 
     get isValid() {
@@ -66,8 +68,7 @@ export class AddAgent extends Component {
                     Utility.showMessage(response.data.Error);
                 }
                 else {
-                    Utility.showMessage('Success!');
-                    this.onClose();
+                    Utility.showMessage(response.data.Data);
                 }
 
                 this.props.toggleLoader(false);
@@ -89,21 +90,35 @@ export class AddAgent extends Component {
         };
     }
 
-    _addAgent = () => {
+    _getCurrencyList() {
         this.props.toggleLoader(true);
-        const url = 'LicenseeSetting/GetCurrencyList';
+        const url = 'LicenseeSetting/GetSuperCurrencyList';
+        const param = { SuperWildCard: this.state.superWildCard };
 
-        Site.fetchData(null, url)
+        Site.fetchData(param, url)
             .then(response => {
                 var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
 
-                this.setState({ currencyList: data, isShow: true });
+                this.setState({ currencyList: data, selectedCurrency: null });
 
                 this.props.toggleLoader(false);
             }).catch(err => {
                 Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
             });
+    }
+
+    _addAgent = () => {
+        this.setState({ isShow: true });
+
+        this._getCurrencyList();
+    }
+
+    _onTextChange = (e) => {
+        const value = e.target.value;
+        this.setState({ superWildCard: value });
+
+        this.changeCurrencyList();
     }
 
     _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial) {
@@ -114,7 +129,7 @@ export class AddAgent extends Component {
                     <input className={`full-width ${this.isValid ? '' : 'has-error'}`}
                         type='text'
                         value={superWildCard}
-                        onChange={(e) => this.setState({ superWildCard: e.target.value })} />
+                        onChange={this._onTextChange} />
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Currency</label>
@@ -128,6 +143,7 @@ export class AddAgent extends Component {
                     <label className='col-form-label'>Special</label>
                     <div>
                         <input type='checkbox' checked={isSpecial} onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
+                        <i>(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i>
                     </div>
                 </div>
                 <div className='form-group right'>
@@ -157,7 +173,7 @@ export class AddAgent extends Component {
             <Popup isShow={isShow}
                 title='Add Agent/Currency'
                 content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial)}
-                style={{height: '330px', width: '600px'}}
+                style={{height: '350px', width: '650px'}}
                 onClose={this.onClose} />
         </div>
         );

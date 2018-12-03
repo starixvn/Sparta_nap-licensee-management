@@ -24,10 +24,12 @@
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
-        void AddAgent(LicenseeAgentCriteria criteria, int userId);
+        int AddAgent(LicenseeAgentCriteria criteria, int userId);
 
         ResultData<Licensee> TerminateLicensee(string licenseeName, int userId);
 
         bool EnablePullService(LicenseeProductCriteria criteria, int userId);
+
+        IEnumerable<CurrencyItem> GetSuperCurrency(string superWildCard);
     }
 }

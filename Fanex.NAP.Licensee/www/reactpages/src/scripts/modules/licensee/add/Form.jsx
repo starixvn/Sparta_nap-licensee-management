@@ -156,6 +156,7 @@ export default class Form extends Component {
                                 <input type='checkbox'
                                 checked={isSpecial}
                                 onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
+                                <div><i>(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i></div>
                             </div>
                         </div>
                         <div className='form-group row'>

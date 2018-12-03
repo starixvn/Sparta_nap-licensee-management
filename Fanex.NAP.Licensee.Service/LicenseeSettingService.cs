@@ -138,14 +138,17 @@
             return result;
         }
 
-        public void AddAgent(LicenseeAgentCriteria criteria, int userId)
+        public int AddAgent(LicenseeAgentCriteria criteria, int userId)
         {
+            var result = 0;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
             {
-                db.ExecuteNonQuery(criteria);
+                result = db.QueryEntity<int>(criteria);
             }
 
             WriteAddAgentActionLog(criteria, userId);
+
+            return result;
         }
 
         public ResultData<Licensee> TerminateLicensee(string licenseeName, int userId)
@@ -196,6 +199,14 @@
             WriteEnablePullServiceActionLog(criteria, userId);
 
             return true;
+        }
+
+        public IEnumerable<CurrencyItem> GetSuperCurrency(string superWildCard)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_SuperCurrency_Select"))
+            {
+                return db.Query<CurrencyItem>(new { SuperWildCard = superWildCard });
+            }
         }
 
         private IEnumerable<string> GetIntegrateSetting(int licenseeId)

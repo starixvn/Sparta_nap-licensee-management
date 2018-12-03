@@ -19,13 +19,11 @@
     {
         private readonly ILicenseeSettingService _licenseeService;
         private readonly ILicenseeVendorService _vendorService;
-        private readonly ICommonService _commonService;
 
         public LicenseeSettingController()
         {
             _licenseeService = new LicenseeSettingService();
             _vendorService = new LicenseeVendorService();
-            _commonService = new CommonService();
         }
 
         [HttpGet]
@@ -171,17 +169,22 @@
                 return Json(new { IsSuccess = false, Error = "Supper Wild Card is empty!" });
             }
 
-            _licenseeService.AddAgent(criteria, CurrentSession.UserId);
+            var result = _licenseeService.AddAgent(criteria, CurrentSession.UserId);
 
-            return Json(new { IsSuccess = true });
+            if (result <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "There is no new agent to added!" });
+            }
+
+            return Json(new { IsSuccess = true, Data = $"{result} {(result > 1 ? "agents have" : "agent has")} been added!" });
         }
 
         [HttpPost]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public JsonResult GetCurrencyList()
+        public JsonResult GetSuperCurrencyList(string superWildCard)
         {
-            var result = _commonService.GetCurrencyList;
+            var result = _licenseeService.GetSuperCurrency(superWildCard);
 
             return Json(result);
         }

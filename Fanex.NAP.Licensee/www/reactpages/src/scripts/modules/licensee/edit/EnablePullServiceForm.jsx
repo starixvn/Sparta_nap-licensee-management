@@ -47,13 +47,12 @@ export default class EnablePullServiceForm extends Component {
             .then(response => {
                 if (!response.data.IsSuccess) {
                     Utility.showMessage(response.data.Error);
+                    this._toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
                     this._onClose(() => callBack(true));
                 }
-
-                this._toggleLoader(false);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this._toggleLoader(false);

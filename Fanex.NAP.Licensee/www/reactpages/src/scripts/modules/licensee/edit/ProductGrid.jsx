@@ -17,6 +17,12 @@ export class ProductGrid extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.productList !== this.props.productList) {
+            this.props.toggleLoader(false);
+        }
+    }
+
     _enablePullService(product) {
         const pullServicePopup = {
             isShow: true,
@@ -97,13 +103,12 @@ export class ProductGrid extends Component {
                 .then(response => {
                     if (!response.data.IsSuccess) {
                         Utility.showMessage(response.data.Error);
+                        this.props.toggleLoader(false);
                     }
                     else {
                         Utility.showMessage('Success!');
                         this.props.getProductList(this.props.licensee.LicenseeID);
                     }
-
-                    this.props.toggleLoader(false);
                 }).catch(err => {
                     Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);

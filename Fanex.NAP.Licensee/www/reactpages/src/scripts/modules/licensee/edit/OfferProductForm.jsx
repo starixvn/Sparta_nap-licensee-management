@@ -66,13 +66,12 @@ export class OfferProductForm extends Component {
             .then(response => {
                 if (!response.data.IsSuccess) {
                     Utility.showMessage(response.data.Error);
+                    this.props.toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
                     this.onClose(true);
                 }
-
-                this.props.toggleLoader(false);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
@@ -155,7 +154,7 @@ export class OfferProductForm extends Component {
             <Popup isShow={isShow}
                 title='Offer New Product'
                 content={this._buildContent(selectedproduct, productList, date)}
-                style={{height: '330px', width: '600px'}}
+                style={{height: '270px', width: '600px'}}
                 onClose={() => this.onClose(false)} />
             </div>
         );

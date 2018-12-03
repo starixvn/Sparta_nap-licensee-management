@@ -13,6 +13,10 @@ $yellow: #fecc35;
     }
 }
 
+.popup-content {
+    overflow-y: hidden !important;
+}
+
 .add-form, .edit-form {
     margin-top: 10px;
 
