@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using Fanex.NAP.Licensee.Model.Criteria.Vendor;
 using Fanex.NAP.Licensee.Model.DTO;
 using Fanex.NAP.Licensee.Model.Enumerations;
 using Fanex.NAP.Licensee.Service.Core;
+using Newtonsoft.Json;
 
 namespace Fanex.NAP.Licensee.Service
 {
@@ -21,18 +23,66 @@ namespace Fanex.NAP.Licensee.Service
 
         public IEnumerable<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria)
         {
+            var result = new List<LicenseeVendor>();
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Select"))
+            using (var reader = db.ExecuteReader(criteria.GetSpParams()))
             {
-                return db.Query<LicenseeVendor>(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    result.Add(CreateLicenseeVendor(reader));
+
+                }
             }
+            return result;
+        }
+
+        private LicenseeVendor CreateLicenseeVendor(IDataReader reader)
+        {
+            return new LicenseeVendor
+            {
+                VendorId = reader["VendorId"].ToString(),
+                SiteId = reader["SiteId"]?.ToString(),
+                SiteName = reader["SiteName"].ToString(),
+                AffiliateUrl = reader["AffiliateUrl"].ToString(),
+                Disable = (bool)reader["Disable"],
+                Exclusions = ParseExclusion(reader["Exclusions"] != DBNull.Value ? reader["Exclusions"].ToString() : "[]"),
+                InternalUrl = reader["InternalUrl"].ToString(),
+                IsTest = (bool)reader["IsTest"],
+                LicenseeType = (byte)reader["LicenseeType"],
+                LrfUrl = reader["LrfUrl"].ToString(),
+                PortalUrl = reader["PortalUrl"].ToString(),
+            };
+        }
+
+        private string ParseExclusion(object exclusions)
+        {
+            var items = JsonConvert.DeserializeObject<string[]>(exclusions.ToString());
+            if (items == null) return "[]";
+            return items.Length > 0 ? JsonConvert.SerializeObject(items) : "[]";
         }
 
         public LicenseeVendor GetVendorById(string vendorId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_SelectById"))
             {
-                return db.QueryEntity<LicenseeVendor>(new { vendorId });
+                using (var reader = db.ExecuteReader(new { vendorId }))
+                {
+                    if (reader.Read())
+                    {
+                        return new LicenseeVendor
+                        {
+                            VendorId = reader["VendorId"].ToString(),
+                            SiteName = reader["SiteName"].ToString(),
+                            AffiliateUrl = reader["AffiliateUrl"].ToString(),
+                            Exclusions = ParseExclusion(reader["Exclusions"]),
+                            InternalUrl = reader["InternalUrl"].ToString(),
+                            LrfUrl = reader["LrfUrl"].ToString(),
+                            PortalUrl = reader["PortalUrl"].ToString(),
+                        };
+                    }
+                }
             }
+            return null;
         }
 
         public bool UpdateVendor(LicenseeVendor vendor)
