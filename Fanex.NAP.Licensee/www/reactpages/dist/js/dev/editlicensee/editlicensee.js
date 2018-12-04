@@ -9443,7 +9443,12 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         options: currencyList,
                         onChange: function onChange(item) {
                             return _this4.setState({ selectedCurrency: item });
-                        } })
+                        } }),
+                    _react2.default.createElement(
+                        'i',
+                        null,
+                        '(If there is no currency seleted, all new agents/currencies will be added)'
+                    )
                 ),
                 _react2.default.createElement(
                     'div',

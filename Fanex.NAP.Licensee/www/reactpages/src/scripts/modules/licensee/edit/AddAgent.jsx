@@ -138,6 +138,7 @@ export class AddAgent extends Component {
                         value={selectedCurrency}
                         options={currencyList}
                         onChange={(item) => this.setState({ selectedCurrency: item })} />
+                    <i>(If there is no currency seleted, all new agents/currencies will be added)</i>
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Special</label>
