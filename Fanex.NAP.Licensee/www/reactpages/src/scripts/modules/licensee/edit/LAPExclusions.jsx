@@ -4,11 +4,24 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
+import Popup from '../../../components/Popup';
 
 export class LAPExclusions extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            isShow: false,
+            content: null
+        }
     };
+
+    onClose = () => {
+        this.setState({ 
+            isShow: false,
+            content: null
+        });
+    }
 
     _getLapExclusions = () => {
         this.props.toggleLoader(true);
@@ -16,7 +29,10 @@ export class LAPExclusions extends Component {
 
         Site.fetchData({ LicenseeId: this.props.licensee.LicenseeID }, url)
             .then(response => {
-                Utility.showMessage(response.data);
+                this.setState({ 
+                    isShow: true,
+                    content: response.data
+                });
 
                 this.props.toggleLoader(false);
             }).catch(err => {
@@ -25,9 +41,26 @@ export class LAPExclusions extends Component {
             });
     }
 
+    _buildContent (content) {
+        return content && content.map((item, index) => {
+            return <p key={index}>{item}</p>
+        });
+    }
+
     render()
     {
-        return (<button className="btn btn-primary" onClick={this._getLapExclusions}>Generate LAP Exclusions</button>);
+        const { isShow, content } = this.state;
+
+        return (
+         <div>
+            <button className="btn btn-primary" onClick={this._getLapExclusions}>Generate LAP Exclusions</button>
+            <Popup isShow={isShow}
+                title='LAP EXCLUSIONS'
+                content={this._buildContent(content)}
+                style={{maxHeight: '50%', width: '300px'}}
+                onClose={this.onClose} />
+        </div>  
+        );
     }
 }
 

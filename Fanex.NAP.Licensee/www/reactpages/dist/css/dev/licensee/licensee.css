@@ -439,7 +439,7 @@
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 
-.popup-content {
+.no-scroll .popup-content {
   overflow-y: hidden !important; }
 
 .add-form, .edit-form {

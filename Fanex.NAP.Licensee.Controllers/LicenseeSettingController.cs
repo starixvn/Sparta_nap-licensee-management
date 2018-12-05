@@ -165,14 +165,14 @@
         [HttpPost]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public string GetLapExclusions(int licenseeId)
+        public JsonResult GetLapExclusions(int licenseeId)
         {
             var lrfFunctions = _licenseeService.GetLrfFucntionKey(licenseeId);
             var lapFunctions = _vendorService.GetFunctionKeyList();
 
-            var result = string.Join("<br/>", lapFunctions.Except(lrfFunctions));
+            var result = lapFunctions.Except(lrfFunctions);
 
-            return result;
+            return Json(result);
         }
 
         [HttpPost]

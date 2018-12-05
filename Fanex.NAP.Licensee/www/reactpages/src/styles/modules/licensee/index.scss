@@ -13,8 +13,10 @@ $yellow: #fecc35;
     }
 }
 
-.popup-content {
-    overflow-y: hidden !important;
+.no-scroll {
+    .popup-content {
+        overflow-y: hidden !important;
+    }
 }
 
 .add-form, .edit-form {

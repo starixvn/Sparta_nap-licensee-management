@@ -13,13 +13,13 @@ export default class Popup extends React.Component {
     }
 
     render() {
-        const { title, style, content, onClose, noShowCloseButton, isShow } = this.props;
-        const combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 })
+        const { title, style, content, onClose, noShowCloseButton, isShow, className } = this.props;
+        const combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
 
         return (
             <div className={`popup ${isShow ? 'show': ''}`}>
                 { isShow && <div className='popup-block-body' style={{zIndex: this.zIndex}}></div> }         
-                <div className='popup-container' style={combinedStyle}>
+                <div className={`popup-container ${className}`} style={combinedStyle}>
                     <div className='popup-title'>
                         <p>{title}</p>
                         { 

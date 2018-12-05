@@ -5906,7 +5906,18 @@ var Form = function (_Component) {
                                     className: 'full-width',
                                     onChange: function onChange(e) {
                                         return _this3.setState({ superWildCard: e.target.value });
-                                    } })
+                                    } }),
+                                _react2.default.createElement(
+                                    'i',
+                                    null,
+                                    '(Manually changing ',
+                                    _react2.default.createElement(
+                                        'b',
+                                        null,
+                                        '"Super Wild Card"'
+                                    ),
+                                    ' value will cause wrong setting for licensee agent. Please consider carefully)'
+                                )
                             )
                         ),
                         _react2.default.createElement(
@@ -6009,7 +6020,13 @@ var Form = function (_Component) {
                                     _react2.default.createElement(
                                         'i',
                                         null,
-                                        '(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
+                                        '(',
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Is Special'
+                                        ),
+                                        ' = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
                                     )
                                 )
                             )

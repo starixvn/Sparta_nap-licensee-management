@@ -8101,7 +8101,8 @@ var Popup = function (_React$Component) {
                 content = _props.content,
                 onClose = _props.onClose,
                 noShowCloseButton = _props.noShowCloseButton,
-                isShow = _props.isShow;
+                isShow = _props.isShow,
+                className = _props.className;
 
             var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
 
@@ -8111,7 +8112,7 @@ var Popup = function (_React$Component) {
                 isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'popup-container', style: combinedStyle },
+                    { className: 'popup-container ' + className, style: combinedStyle },
                     _react2.default.createElement(
                         'div',
                         { className: 'popup-title' },
@@ -9427,7 +9428,18 @@ var AddAgent = exports.AddAgent = function (_Component) {
                     _react2.default.createElement('input', { className: 'full-width ' + (this.isValid ? '' : 'has-error'),
                         type: 'text',
                         value: superWildCard,
-                        onChange: this._onTextChange })
+                        onChange: this._onTextChange }),
+                    _react2.default.createElement(
+                        'i',
+                        null,
+                        '(Manually changing ',
+                        _react2.default.createElement(
+                            'b',
+                            null,
+                            '"Super Wild Card"'
+                        ),
+                        ' value will cause wrong setting for licensee agent. Please consider carefully)'
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
@@ -9467,7 +9479,13 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         _react2.default.createElement(
                             'i',
                             null,
-                            '(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
+                            '(',
+                            _react2.default.createElement(
+                                'b',
+                                null,
+                                'Is Special'
+                            ),
+                            ' = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
                         )
                     )
                 ),
@@ -9515,7 +9533,8 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Add Agent/Currency',
                     content: this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial),
-                    style: { height: '350px', width: '650px' },
+                    className: 'no-scroll',
+                    style: { height: '370px', width: '720px' },
                     onClose: this.onClose })
             );
         }
@@ -9574,6 +9593,10 @@ var _utility = __webpack_require__(54);
 
 var _utility2 = _interopRequireDefault(_utility);
 
+var _Popup = __webpack_require__(88);
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9590,12 +9613,22 @@ var LAPExclusions = exports.LAPExclusions = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (LAPExclusions.__proto__ || Object.getPrototypeOf(LAPExclusions)).call(this, props));
 
+        _this.onClose = function () {
+            _this.setState({
+                isShow: false,
+                content: null
+            });
+        };
+
         _this._getLapExclusions = function () {
             _this.props.toggleLoader(true);
             var url = 'LicenseeSetting/GetLapExclusions';
 
             _site2.default.fetchData({ LicenseeId: _this.props.licensee.LicenseeID }, url).then(function (response) {
-                _utility2.default.showMessage(response.data);
+                _this.setState({
+                    isShow: true,
+                    content: response.data
+                });
 
                 _this.props.toggleLoader(false);
             }).catch(function (err) {
@@ -9604,16 +9637,45 @@ var LAPExclusions = exports.LAPExclusions = function (_Component) {
             });
         };
 
+        _this.state = {
+            isShow: false,
+            content: null
+        };
         return _this;
     }
 
     _createClass(LAPExclusions, [{
+        key: '_buildContent',
+        value: function _buildContent(content) {
+            return content && content.map(function (item, index) {
+                return _react2.default.createElement(
+                    'p',
+                    { key: index },
+                    item
+                );
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _state = this.state,
+                isShow = _state.isShow,
+                content = _state.content;
+
+
             return _react2.default.createElement(
-                'button',
-                { className: 'btn btn-primary', onClick: this._getLapExclusions },
-                'Generate LAP Exclusions'
+                'div',
+                null,
+                _react2.default.createElement(
+                    'button',
+                    { className: 'btn btn-primary', onClick: this._getLapExclusions },
+                    'Generate LAP Exclusions'
+                ),
+                _react2.default.createElement(_Popup2.default, { isShow: isShow,
+                    title: 'LAP EXCLUSIONS',
+                    content: this._buildContent(content),
+                    style: { maxHeight: '50%', width: '300px' },
+                    onClose: this.onClose })
             );
         }
     }]);
@@ -10000,6 +10062,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Offer New Product',
                     content: this._buildContent(selectedproduct, productList, date),
+                    className: 'no-scroll',
                     style: { height: '270px', width: '600px' },
                     onClose: function onClose() {
                         return _this4.onClose();

@@ -110,6 +110,7 @@ export default class Form extends Component {
                                 value={superWildCard}
                                 className='full-width'
                                 onChange={(e) => this.setState({ superWildCard: e.target.value })} />
+                                <i>(Manually changing <b>"Super Wild Card"</b> value will cause wrong setting for licensee agent. Please consider carefully)</i>
                             </div>
                         </div>
                         <div className='form-group row'>
@@ -156,7 +157,7 @@ export default class Form extends Component {
                                 <input type='checkbox'
                                 checked={isSpecial}
                                 onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
-                                <div><i>(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i></div>
+                                <div><i>(<b>Is Special</b> = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i></div>
                             </div>
                         </div>
                         <div className='form-group row'>

@@ -130,6 +130,7 @@ export class AddAgent extends Component {
                         type='text'
                         value={superWildCard}
                         onChange={this._onTextChange} />
+                    <i>(Manually changing <b>"Super Wild Card"</b> value will cause wrong setting for licensee agent. Please consider carefully)</i>
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Currency</label>
@@ -144,7 +145,7 @@ export class AddAgent extends Component {
                     <label className='col-form-label'>Special</label>
                     <div>
                         <input type='checkbox' checked={isSpecial} onChange={(e) => this.setState({ isSpecial: e.target.checked })} />
-                        <i>(Is Special = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i>
+                        <i>(<b>Is Special</b> = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i>
                     </div>
                 </div>
                 <div className='form-group right'>
@@ -174,7 +175,8 @@ export class AddAgent extends Component {
             <Popup isShow={isShow}
                 title='Add Agent/Currency'
                 content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial)}
-                style={{height: '350px', width: '650px'}}
+                className='no-scroll'
+                style={{height: '370px', width: '720px'}}
                 onClose={this.onClose} />
         </div>
         );

@@ -8101,7 +8101,8 @@ var Popup = function (_React$Component) {
                 content = _props.content,
                 onClose = _props.onClose,
                 noShowCloseButton = _props.noShowCloseButton,
-                isShow = _props.isShow;
+                isShow = _props.isShow,
+                className = _props.className;
 
             var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
 
@@ -8111,7 +8112,7 @@ var Popup = function (_React$Component) {
                 isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'popup-container', style: combinedStyle },
+                    { className: 'popup-container ' + className, style: combinedStyle },
                     _react2.default.createElement(
                         'div',
                         { className: 'popup-title' },

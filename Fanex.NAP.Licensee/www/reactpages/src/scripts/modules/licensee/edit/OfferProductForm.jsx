@@ -151,6 +151,7 @@ export class OfferProductForm extends Component {
             <Popup isShow={isShow}
                 title='Offer New Product'
                 content={this._buildContent(selectedproduct, productList, date)}
+                className='no-scroll'
                 style={{height: '270px', width: '600px'}}
                 onClose={() => this.onClose()} />
             </div>
