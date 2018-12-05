@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO
 {
+    using System.Collections.Generic;
+
     public class LicenseeVendor
     {
         public string VendorId { get; set; }
@@ -16,7 +18,7 @@
 
         public string AffiliateUrl { get; set; }
 
-        public string Exclusions { get; set; }
+        public IEnumerable<string> ExclusionList { get; set; }
 
         public bool IsTest { get; set; }
 

@@ -1,11 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor
 {
-    using Fanex.NAP.Licensee.Model.DTO;
+    using System.Collections.Generic;
+    using DTO;
 
     public class EditVendorViewModel
     {
         public LicenseeVendor VendorInfo { get; set; }
 
-        public string FunctionKeyList { get; set; }
+        public IEnumerable<string> FunctionKeyList { get; set; }
     }
 }

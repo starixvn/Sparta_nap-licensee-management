@@ -12,7 +12,7 @@ export class EditForm extends Component {
 
         const { licenseeVendorInfo } = this.props;
 
-        this.state = Object.assign({}, licenseeVendorInfo, { originalExclusions: licenseeVendorInfo.exclusions });
+        this.state = Object.assign({}, licenseeVendorInfo, { originalExclusions: licenseeVendorInfo.exclusionList });
     }
 
     handleOnChange = (event) => {
@@ -23,9 +23,9 @@ export class EditForm extends Component {
     }
 
     handleOnEditIgnoredFunction = (ignoredFunctions) => {
-        const exclusions = ignoredFunctions.length ? JSON.stringify(ignoredFunctions) : null;
+        const exclusionList = ignoredFunctions || [];
 
-        this.setState({ exclusions });
+        this.setState({ exclusionList });
     }
 
     submit = (event) => {
@@ -39,15 +39,15 @@ export class EditForm extends Component {
             const message = updateSuccess ? "Update Successfully" : "Update Failed";
             window.alert(message);
             if (updateSuccess) {
-                const { exclusions } = this.state;
-                this.setState({ originalExclusions: exclusions });
+                const { exclusionList } = this.state;
+                this.setState({ originalExclusions: exclusionList });
             }
             this.props.toggleLoader(false);
         })
     }
 
     render() {
-        const { siteName, portalUrl, internalUrl, lrfUrl, affiliateUrl, exclusions, originalExclusions } = this.state;
+        const { siteName, portalUrl, internalUrl, lrfUrl, affiliateUrl, exclusionList, originalExclusions } = this.state;
         return (
             <div className="edit-form">
                 <Loader isLoading={this.props.isLoading} />
@@ -96,7 +96,7 @@ export class EditForm extends Component {
                     <div className="col-sm-6 col-md-6">
                         <IgnoredFunctionList
                             originalExclusionList={originalExclusions}
-                            exclusionList={exclusions}
+                            exclusionList={exclusionList}
                             functionKeyList={this.props.functionKeyList}
                             onEdit={this.handleOnEditIgnoredFunction} />
                     </div>

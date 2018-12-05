@@ -1,12 +1,21 @@
-﻿
-@using Fanex.NAP.Licensee.App_Start
-
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
 @model Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor.EditVendorViewModel
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
     var vendor = Model.VendorInfo;
+    var serializer = new JavaScriptSerializer();
+    var licenseeVendorInfo = new {
+                vendorId = vendor.VendorId,
+                siteName = vendor.SiteName,
+                portalUrl = vendor.PortalUrl,
+                internalUrl = vendor.InternalUrl,
+                lrfUrl = vendor.LrfUrl,
+                affiliateUrl = vendor.AffiliateUrl,
+                exclusionList = vendor.ExclusionList
+    };
 }
 
 @section Headline {
@@ -25,16 +34,8 @@
 @section FooterJs{
     <script>
         var initialState = {
-            licenseeVendorInfo: {
-                vendorId: '@vendor.VendorId',
-                siteName: '@vendor.SiteName',
-                portalUrl: '@vendor.PortalUrl',
-                internalUrl: '@vendor.InternalUrl',
-                lrfUrl: '@vendor.LrfUrl',
-                affiliateUrl: '@vendor.AffiliateUrl',
-                exclusions: '@Html.Raw(vendor.Exclusions)'
-            },
-            functionKeyList: @Html.Raw(Model.FunctionKeyList)
+            licenseeVendorInfo: @Html.Raw(serializer.Serialize(licenseeVendorInfo)),
+            functionKeyList: @Html.Raw(serializer.Serialize(Model.FunctionKeyList))
         }
     </script>
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editvendor/editvendor.js")

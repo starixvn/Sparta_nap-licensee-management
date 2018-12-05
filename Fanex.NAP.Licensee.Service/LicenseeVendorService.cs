@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using Fanex.NAP.Licensee.Model.Criteria.Vendor;
-using Fanex.NAP.Licensee.Model.DTO;
-using Fanex.NAP.Licensee.Model.Enumerations;
-using Fanex.NAP.Licensee.Service.Core;
-using Newtonsoft.Json;
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.NAP.Licensee.Model.Criteria.Vendor;
+    using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.Enumerations;
+    using Fanex.NAP.Licensee.Service.Core;
+    using Newtonsoft.Json;
+
     public class LicenseeVendorService : ILicenseeVendorService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
         private readonly ILogWriterService _logWriter;
+
+        private readonly Func<LicenseeVendor, string, LicenseeVendor> _mapLicenseeVendor = (vendor, exclusion) =>
+        {
+            vendor.ExclusionList = exclusion?.Split('"', ',').Where(x => x != "]" && x != "[" && !string.IsNullOrEmpty(x));
+
+            return vendor;
+        };
 
         public LicenseeVendorService()
         {
@@ -23,69 +30,24 @@ namespace Fanex.NAP.Licensee.Service
 
         public IEnumerable<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria)
         {
-            var result = new List<LicenseeVendor>();
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Select"))
-            using (var reader = db.ExecuteReader(criteria.GetSpParams()))
             {
-                while (reader.Read())
-                {
-                    result.Add(CreateLicenseeVendor(reader));
-
-                }
+                return db.Query(
+                    _mapLicenseeVendor,
+                    "Exclusions",
+                    criteria.GetSpParams());
             }
-            return result;
-        }
-
-        private LicenseeVendor CreateLicenseeVendor(IDataReader reader)
-        {
-            return new LicenseeVendor
-            {
-                VendorId = reader["VendorId"].ToString(),
-                SiteId = reader["SiteId"]?.ToString(),
-                SiteName = reader["SiteName"].ToString(),
-                AffiliateUrl = reader["AffiliateUrl"].ToString(),
-                Disable = (bool)reader["Disable"],
-                Exclusions = ParseExclusion(reader),
-                InternalUrl = reader["InternalUrl"].ToString(),
-                IsTest = (bool)reader["IsTest"],
-                LicenseeType = (byte)reader["LicenseeType"],
-                LrfUrl = reader["LrfUrl"].ToString(),
-                PortalUrl = reader["PortalUrl"].ToString(),
-            };
-        }
-
-        private string ParseExclusion(IDataReader reader)
-        {
-            var items = JsonConvert.DeserializeObject<string[]>(reader["Exclusions"] != DBNull.Value ? reader["Exclusions"].ToString() : "[]");
-            if (items == null)
-            {
-                return "[]";
-            }
-            return items.Length > 0 ? JsonConvert.SerializeObject(items) : "[]";
         }
 
         public LicenseeVendor GetVendorById(string vendorId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_SelectById"))
             {
-                using (var reader = db.ExecuteReader(new { vendorId }))
-                {
-                    if (reader.Read())
-                    {
-                        return new LicenseeVendor
-                        {
-                            VendorId = reader["VendorId"].ToString(),
-                            SiteName = reader["SiteName"].ToString(),
-                            AffiliateUrl = reader["AffiliateUrl"].ToString(),
-                            Exclusions = ParseExclusion(reader),
-                            InternalUrl = reader["InternalUrl"].ToString(),
-                            LrfUrl = reader["LrfUrl"].ToString(),
-                            PortalUrl = reader["PortalUrl"].ToString(),
-                        };
-                    }
-                }
+                return db.QueryEntity(
+                     _mapLicenseeVendor,
+                    "Exclusions",
+                    new { vendorId });
             }
-            return null;
         }
 
         public bool UpdateVendor(LicenseeVendor vendor)
@@ -94,6 +56,7 @@ namespace Fanex.NAP.Licensee.Service
             try
             {
                 var oldValue = GetVendorById(vendor.VendorId);
+                var exclusions = SerializeExclusions(vendor.ExclusionList);
 
                 using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Update"))
                 {
@@ -102,7 +65,7 @@ namespace Fanex.NAP.Licensee.Service
                         vendor.VendorId,
                         vendor.LrfUrl,
                         vendor.AffiliateUrl,
-                        vendor.Exclusions
+                        Exclusions = exclusions
                     });
                 }
 
@@ -144,17 +107,27 @@ namespace Fanex.NAP.Licensee.Service
         {
             var result = new StringBuilder();
 
+            var oldExclusions = SerializeExclusions(oldValue.ExclusionList);
+            var newExclusions = SerializeExclusions(newValue.ExclusionList);
+
             result.Append("<Action value=\"UpdateLapVendorInfo\">");
             result.Append("<SpName>Nap_LM_LicVendorInfo_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
             result.Append($"<Vendor Id=\"{newValue.VendorId}\" Name=\"{newValue.SiteName}\" />");
             result.Append($"<Old LrfUrl=\"{oldValue.LrfUrl}\" AffiliateUrl=\"{oldValue.AffiliateUrl}\" />");
-            result.Append($"<OldExclusions>{oldValue.Exclusions}</OldExclusions>");
+            result.Append($"<OldExclusions>{oldExclusions}</OldExclusions>");
             result.Append($"<New LrfUrl=\"{newValue.LrfUrl}\" AffiliateUrl=\"{newValue.AffiliateUrl}\" />");
-            result.Append($"<NewExclusions>{newValue.Exclusions}</NewExclusions>");
+            result.Append($"<NewExclusions>{newExclusions}</NewExclusions>");
             result.Append("</Action>");
 
             return result.ToString();
+        }
+
+        private string SerializeExclusions(IEnumerable<string> exclusionList)
+        {
+            return exclusionList != null
+                ? JsonConvert.SerializeObject(exclusionList)
+                : null;
         }
     }
 }

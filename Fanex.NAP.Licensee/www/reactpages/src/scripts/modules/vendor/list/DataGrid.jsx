@@ -11,10 +11,6 @@ export class DataGrid extends Component {
         super(props);
     }
 
-    componentWillMount() {
-        this.props.getGridData();
-    }
-
     render() {
         const { gridData } = this.props;
 
@@ -54,7 +50,7 @@ export class DataGrid extends Component {
                                     <td><a href={item.LrfUrl} target="_blank">{item.LrfUrl}</a></td>
                                     <td><a href={item.AffiliateUrl} target="_blank">{item.AffiliateUrl}</a></td>
                                     <td style={{ width: 240 }}>
-                                        {item.Exclusions && <IgnoredFunctionToggleable functionList={item.Exclusions} />}
+                                        {item.ExclusionList && item.ExclusionList.length > 0 && <IgnoredFunctionToggleable functionList={item.ExclusionList} />}
                                     </td>
                                     <td className="text-center">{item.IsTest ? "Yes" : "No"}</td>
                                     <td className="text-center">{item.SiteId}</td>
