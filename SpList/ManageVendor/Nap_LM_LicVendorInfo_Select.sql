@@ -1,4 +1,4 @@
-/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 ALTER PROCEDURE [dbo].[Nap_LM_LicVendorInfo_Select]
 	@VendorId VARCHAR(50) = NULL,
@@ -13,6 +13,7 @@ AS
 	 
 	 Revisions:
 	  - 20180212@Walter: Select Vendor Info [Redmine: #83584]
+	  - 20181205@Amanda: Re-order returned column [Redmine: #83584]
 	  
 	 Example:
 	  exec Nap_LM_LicVendorInfo_Select
@@ -27,10 +28,10 @@ BEGIN
 		  ,InternalUrl
 		  ,LRF_Url AS LrfUrl
 		  ,AffiliateUrl
-		  ,Exclusions
 		  ,IsTest
 		  ,SiteId
 		  ,Disable
+		  ,Exclusions
 	  FROM LicVendorProfile WITH(NOLOCK)
 	  WHERE (ISNULL(@VendorId,'') = '' OR VendorId = @VendorId) AND 
 			(ISNULL(@SiteName, '') = '' OR  SiteName LIKE '%' + @SiteName + '%') AND
