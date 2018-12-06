@@ -1,0 +1,34 @@
+﻿@import "../../components/react-select/react-select.main";
+
+$red: #a94442;
+$green: #729446;
+$yellow: #fecc35;
+
+.Select {
+    display: inline-block;
+    width: 150px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
+}
+
+input[type=date] {
+    height: 25px;
+}

@@ -1,0 +1,44 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.SearchSourceLicenseeViewModel
+@{
+    var serializer = new JavaScriptSerializer();
+
+    var currencyList = Model.CurrencyList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    currencyList.Insert(0, new { label = "All", value = 0 });
+    var siteNameList = Model.SiteNameList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    siteNameList.Insert(0, new { label = "All", value = 0 });
+    var roleList = Model.RoleList.Select(x => new { label = x.Value, value = x.Key }).ToList();
+    roleList.Insert(0, new { label = "All", value = 0 });
+}
+@section Headline {
+<ul class="breadcrumb title">
+    <li>Source Licensee Setting</li>
+    <li class="current">Source Licensees</li>
+</ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/sourcelicensee/sourcelicensee.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            currencyList: @Html.Raw(serializer.Serialize(currencyList)),
+            selectedCurrency: @Html.Raw(serializer.Serialize(currencyList.First())),
+            siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
+            selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
+            selectedSourceSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
+            roleList: @Html.Raw(serializer.Serialize(roleList)),
+            selectedRole: @Html.Raw(serializer.Serialize(roleList.First())),
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/sourcelicenseelist/sourcelicenseelist.js")
+}
+
+<div id="app-container"></div>
+
