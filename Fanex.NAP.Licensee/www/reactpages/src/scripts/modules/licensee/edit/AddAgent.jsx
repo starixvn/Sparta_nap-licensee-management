@@ -18,7 +18,8 @@ export class AddAgent extends Component {
             isSpecial: false,
             selectedCurrency: null,
             currencyList: [],
-            isShow: false
+            isShow: false,
+            redMineId: ''
         };
 
         this.changeCurrencyList = Utility.debounce(this._getCurrencyList, 2000).bind(this);
@@ -37,7 +38,8 @@ export class AddAgent extends Component {
             isSpecial: false,
             selectedCurrency: null,
             currencyList: [],
-            isShow: false
+            isShow: false,
+            redMineId: ''
         });
     }
 
@@ -80,13 +82,14 @@ export class AddAgent extends Component {
 
     _getParams()
     {
-        const { superWildCard, selectedCurrency, isSpecial } = this.state;
+        const { superWildCard, selectedCurrency, isSpecial, redMineId } = this.state;
 
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             SuperWildCard: superWildCard,
             Currency: selectedCurrency == null ? 0 : selectedCurrency.value,
-            IsSpecial: isSpecial
+            IsSpecial: isSpecial,
+            RedMineId: redMineId
         };
     }
 
@@ -121,7 +124,7 @@ export class AddAgent extends Component {
         this.changeCurrencyList();
     }
 
-    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial) {
+    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -148,6 +151,13 @@ export class AddAgent extends Component {
                         <i>(<b>Is Special</b> = true: Update [Description] of Agent with normal/affiliate/banner/income access)</i>
                     </div>
                 </div>
+                <div className='form-group'>
+                    <label className='col-form-label'>Redmine Id</label>
+                    <input className='full-width'
+                        type='text'
+                        value={redMineId}
+                        onChange={(e) => this.setState({ redMineId: e.target.value })} />
+                </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
@@ -162,7 +172,7 @@ export class AddAgent extends Component {
 
     render()
     {
-        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency, currencyList, isShow } = this.state;
+        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency, currencyList, isShow, redMineId } = this.state;
 
         return (
         <div>
@@ -174,9 +184,9 @@ export class AddAgent extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Add Agent/Currency'
-                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial)}
+                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId)}
                 className='no-scroll'
-                style={{height: '370px', width: '720px'}}
+                style={{height: '420px', width: '720px'}}
                 onClose={this.onClose} />
         </div>
         );

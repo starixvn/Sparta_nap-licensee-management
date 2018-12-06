@@ -48,7 +48,7 @@
             var result = new ResultData<Licensee>();
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Insert"))
             {
-                result.Error = db.QueryEntity<string>(criteria);
+                result.Error = db.QueryEntity<string>(criteria.SpParam);
             }
 
             result.Data = GetLicensee(criteria.LicenseeName);
@@ -81,7 +81,7 @@
             string result = null;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
             {
-                result = db.QueryEntity<string>(criteria);
+                result = db.QueryEntity<string>(criteria.SpParam);
             }
 
             WriteOfferProductActionLog(criteria, userId);
@@ -115,7 +115,7 @@
             var result = 0;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
             {
-                result = db.QueryEntity<int>(criteria);
+                result = db.QueryEntity<int>(criteria.SpParam);
             }
 
             WriteAddAgentActionLog(criteria, userId);
@@ -224,14 +224,14 @@
                         + $" LicenseeType=\"{criteria.LicenseeType}\""
                         + $" IsSpecial=\"{criteria.IsSpecial}\""
                         + $" ProductCode=\"{criteria.ProductCode}\""
-                        + $" SystemisActive=\"{criteria.SystemisActive}\""
+                        + $" SystemIsActive=\"{criteria.SystemIsActive}\""
                         + $" IsAllowMemberComm=\"{criteria.IsAllowMemberComm}\""
                         + $" EffectiveDate=\"{criteria.EffectiveDate.ToString("MM/dd/yyyy")}\""
                         + ">"
                         + criteria.LicenseeName
                         + "</Licensee>";
 
-            WriteLog(ActionLogType.Licensee_Insert, "Nap_LM_Licensee_Insert", doing, userId);
+            WriteLog(ActionLogType.Licensee_Insert, "Nap_LM_Licensee_Insert", doing, userId, criteria.RedMineId);
         }
 
         private void WriteAddAgentActionLog(LicenseeAgentCriteria criteria, int userId)
@@ -244,7 +244,7 @@
                         + ">"
                         + "</Agent>";
 
-            WriteLog(ActionLogType.Licensee_AddAgent, "Nap_LM_Licensee_AddAgent", doing, userId);
+            WriteLog(ActionLogType.Licensee_AddAgent, "Nap_LM_Licensee_AddAgent", doing, userId, criteria.RedMineId);
         }
 
         private void WriteOfferProductActionLog(OfferProductCriteria criteria, int userId)
@@ -256,12 +256,13 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, userId);
+            WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, userId, criteria.RedMineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string licensee, int userId)
+        private void WriteLog(ActionLogType action, string sp, string licensee, int userId, string redMineId = "")
         {
             var doing = $"<Action value=\"{action.ToString()}\">"
+                + $"<RedmineId>{redMineId}</RedmineId>"
                 + $"<SpName>{sp}</SpName>"
                 + $"<User>{userId}</User>"
                 + licensee

@@ -15,8 +15,10 @@ export class OfferProductForm extends Component {
         this.state = {
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
-            isLoading: false,
-            selectedproduct: null
+            selectedproduct: null,
+            isShow: false,
+            productList: [],
+            redMineId: ''
         };
     };
 
@@ -30,10 +32,10 @@ export class OfferProductForm extends Component {
         this.setState({ 
             date: Utility.getTodayString(),
             isShowConfirmBox: false,
-            isLoading: false,
             selectedproduct: null,
             isShow: false,
-            productList: []
+            productList: [],
+            redMineId: ''
         });
     }
 
@@ -77,12 +79,13 @@ export class OfferProductForm extends Component {
 
     _getParams()
     {
-        const { date, selectedproduct } = this.state;
+        const { date, selectedproduct, redMineId } = this.state;
 
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             ProductCode: selectedproduct == null ? '' : selectedproduct.map(i => i.value).join(','),
-            EffectiveDate: date
+            EffectiveDate: date,
+            RedMineId: redMineId
         };
     }
 
@@ -108,7 +111,7 @@ export class OfferProductForm extends Component {
             });
     }
 
-    _buildContent(selectedproduct, productList, date) {
+    _buildContent(selectedproduct, productList, date, redMineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -124,6 +127,13 @@ export class OfferProductForm extends Component {
                     <label className='col-form-label'>Effective Date</label>
                     <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
                 </div>
+                <div className='form-group'>
+                    <label className='col-form-label'>Redmine Id</label>
+                    <input className='full-width'
+                        type='text'
+                        value={redMineId}
+                        onChange={(e) => this.setState({ redMineId: e.target.value })} />
+                </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
                         Submit
@@ -138,7 +148,7 @@ export class OfferProductForm extends Component {
 
     render()
     {
-        const { date, isShowConfirmBox, selectedproduct, productList, isShow } = this.state;
+        const { date, isShowConfirmBox, selectedproduct, productList, isShow, redMineId } = this.state;
 
         return (
         <div> 
@@ -150,9 +160,9 @@ export class OfferProductForm extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Offer New Product'
-                content={this._buildContent(selectedproduct, productList, date)}
+                content={this._buildContent(selectedproduct, productList, date, redMineId)}
                 className='no-scroll'
-                style={{height: '270px', width: '600px'}}
+                style={{height: '320px', width: '600px'}}
                 onClose={() => this.onClose()} />
             </div>
         );

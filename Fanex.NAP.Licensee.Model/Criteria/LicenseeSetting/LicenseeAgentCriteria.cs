@@ -9,5 +9,15 @@
         public bool IsSpecial { get; set; }
 
         public int Currency { get; set; }
+
+        public string RedMineId { get; set; }
+
+        public dynamic SpParam => new
+        {
+            LicenseeName = LicenseeName,
+            SuperWildCard = SuperWildCard,
+            IsSpecial = IsSpecial,
+            Currency = Currency
+        };
     }
 }

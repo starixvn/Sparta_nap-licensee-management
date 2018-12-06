@@ -14,10 +14,24 @@
 
         public string ProductCode { get; set; }
 
-        public string SystemisActive { get; set; }
+        public string SystemIsActive { get; set; }
 
         public bool IsAllowMemberComm { get; set; }
 
         public DateTime EffectiveDate { get; set; }
+
+        public string RedMineId { get; set; }
+
+        public dynamic SpParam => new
+        {
+            LicenseeName = LicenseeName,
+            SuperWildCard = SuperWildCard,
+            LicenseeType = LicenseeType,
+            IsSpecial = IsSpecial,
+            ProductCode = ProductCode,
+            SystemIsActive = SystemIsActive,
+            IsAllowMemberComm = IsAllowMemberComm,
+            EffectiveDate = EffectiveDate
+        };
     }
 }
