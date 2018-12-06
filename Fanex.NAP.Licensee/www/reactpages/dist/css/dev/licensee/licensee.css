@@ -467,4 +467,10 @@
   .edit-form .right {
     float: right; }
 
+.popup-content .Select-menu-outer {
+  max-height: 150px; }
+
+.popup-content .Select-menu {
+  max-height: 148px; }
+
 /*# sourceMappingURL=licensee.css.map*/

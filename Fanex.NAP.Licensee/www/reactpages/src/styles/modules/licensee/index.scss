@@ -61,3 +61,13 @@ $yellow: #fecc35;
         float: right;
     }
 }
+
+.popup-content {
+    .Select-menu-outer {
+        max-height: 150px;
+    }
+
+    .Select-menu {
+            max-height: 148px;
+        }
+}
