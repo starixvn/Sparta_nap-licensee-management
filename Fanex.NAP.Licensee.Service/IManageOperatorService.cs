@@ -19,5 +19,7 @@
         Agent GetAgent(int agentId);
 
         IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId);
+
+        bool DeleteOperator(int agentId, int userId);
     }
 }

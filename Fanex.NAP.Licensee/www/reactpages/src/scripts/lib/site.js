@@ -1,5 +1,25 @@
 import axios from 'axios'
 
+axios.interceptors.response.use(response => Promise.resolve(response),
+    error => {
+        const { response } = error;
+        if (response) {
+            const { data } = response;
+            const status = data && data.ErrCode || response.status;
+
+            switch (status) {
+                case 401:
+                case 403:
+                    location.reload(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return Promise.reject(error);
+    });
+
 export default class Site {
     static getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

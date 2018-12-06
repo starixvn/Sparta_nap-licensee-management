@@ -1,0 +1,73 @@
+﻿@import "../../components/react-select/react-select.main";
+@import "../../components/popup";
+
+$red: #a94442;
+$green: #729446;
+$yellow: #fecc35;
+
+.Select {
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+}
+
+.no-scroll {
+    .popup-content {
+        overflow-y: hidden !important;
+    }
+}
+
+.add-form, .edit-form {
+    margin-top: 10px;
+
+    input[type=text] {
+        &.has-error {
+            border: 1px solid $red;
+        }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
+    }
+
+    input[type=date] {
+        height: 25px;
+
+        &.has-error {
+            border: 1px solid $red;
+        }
+    }
+}
+
+.edit-form {
+    margin-top: 10px;
+
+    td {
+        .btn {
+            float: none;
+            font-size: 0.9em;
+            padding: 5px;
+        }
+    }
+
+    .button-group {
+        min-height: 25px;
+        overflow: hidden;
+    }
+
+    .right {
+        float: right;
+    }
+}
+
+.popup-content {
+    .Select-menu-outer {
+        max-height: 150px;
+    }
+
+    .Select-menu {
+            max-height: 148px;
+        }
+}

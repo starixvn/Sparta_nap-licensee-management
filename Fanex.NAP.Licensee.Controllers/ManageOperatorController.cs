@@ -15,8 +15,9 @@
     using ONEbook.UM.Filters;
     using Service;
 
-    [CustomHandleError]
+    [NapSuperAuth]
     [CheckUMFilter]
+    [CustomHandleError]
     public class ManageOperatorController : BaseController
     {
         private const string ImportTemplatePath = @"~/App_Data/Template/OperatorImportTemplate.csv";
@@ -75,6 +76,9 @@
         public JsonResult Add(OperatorCriteria criteria)
         {
             var result = _operatorService.AddOperator(criteria, CurrentSession.UserId);
+
+            result.Error = result.IsSuccess ? null : "Operator has been added by someone!";
+
             return Json(result);
         }
 
@@ -83,6 +87,9 @@
         public JsonResult Update(OperatorCriteria criteria)
         {
             var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId, CurrentSession.UserId);
+
+            result.Error = result.IsSuccess ? null : "OperatorId has been updated by someone!";
+
             return Json(result);
         }
 
@@ -95,19 +102,19 @@
 
             if (value <= 0)
             {
-                return Json(new { IsValid = false, Error = "Invalid input" });
+                return Json(new { IsValid = false, Error = "Invalid input!" });
             }
 
             var opt = _operatorService.GetOperator(value);
             if (opt != null)
             {
-                return Json(new { IsValid = false, Error = "Operator setting of this agent already exists" });
+                return Json(new { IsValid = false, Error = "Operator setting of this agent already exists!" });
             }
 
             var agent = _operatorService.GetAgent(value);
             if (agent == null)
             {
-                return Json(new { IsValid = false, Error = "Agent does not exist" });
+                return Json(new { IsValid = false, Error = "Agent does not exist!" });
             }
 
             return Json(new { IsValid = true, Agent = agent });
@@ -146,7 +153,7 @@
 
                     if (!opt.IsValid)
                     {
-                        errors.Add($"Invalid data in line {line}");
+                        errors.Add($"Invalid data in line {line}!");
                     }
                     else
                     {
@@ -158,19 +165,28 @@
 
                 if (errors.Any())
                 {
-                    return Json(new { IsSuccess = false, Errors = errors });
+                    return Json(new { IsSuccess = false, Error = errors });
                 }
                 else if (!operators.Any())
                 {
-                    errors.Add("Imported file is empty");
-                    return Json(new { IsSuccess = false, Errors = errors });
+                    errors.Add("Imported file is empty!");
+                    return Json(new { IsSuccess = false, Error = errors });
                 }
                 else
                 {
                     var result = _operatorService.ImportOperators(BuildOperatorXml(operators), CurrentSession.UserId);
-                    return Json(new { IsSuccess = true, Result = result });
+                    return Json(new { IsSuccess = true, Data = result });
                 }
             }
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
+        public JsonResult Delete(int agentId)
+        {
+            var result = _operatorService.DeleteOperator(agentId, CurrentSession.UserId);
+
+            return Json(new { IsSuccess = result, Error = result ? null : "Operator has been deleted by someone!" });
         }
 
         private string BuildOperatorXml(List<Operator> operators)

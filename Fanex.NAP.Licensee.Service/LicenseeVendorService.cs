@@ -45,7 +45,7 @@ namespace Fanex.NAP.Licensee.Service
                 SiteName = reader["SiteName"].ToString(),
                 AffiliateUrl = reader["AffiliateUrl"].ToString(),
                 Disable = (bool)reader["Disable"],
-                Exclusions = ParseExclusion(reader["Exclusions"] != DBNull.Value ? reader["Exclusions"].ToString() : "[]"),
+                Exclusions = ParseExclusion(reader),
                 InternalUrl = reader["InternalUrl"].ToString(),
                 IsTest = (bool)reader["IsTest"],
                 LicenseeType = (byte)reader["LicenseeType"],
@@ -54,10 +54,13 @@ namespace Fanex.NAP.Licensee.Service
             };
         }
 
-        private string ParseExclusion(object exclusions)
+        private string ParseExclusion(IDataReader reader)
         {
-            var items = JsonConvert.DeserializeObject<string[]>(exclusions.ToString());
-            if (items == null) return "[]";
+            var items = JsonConvert.DeserializeObject<string[]>(reader["Exclusions"] != DBNull.Value ? reader["Exclusions"].ToString() : "[]");
+            if (items == null)
+            {
+                return "[]";
+            }
             return items.Length > 0 ? JsonConvert.SerializeObject(items) : "[]";
         }
 
@@ -74,7 +77,7 @@ namespace Fanex.NAP.Licensee.Service
                             VendorId = reader["VendorId"].ToString(),
                             SiteName = reader["SiteName"].ToString(),
                             AffiliateUrl = reader["AffiliateUrl"].ToString(),
-                            Exclusions = ParseExclusion(reader["Exclusions"]),
+                            Exclusions = ParseExclusion(reader),
                             InternalUrl = reader["InternalUrl"].ToString(),
                             LrfUrl = reader["LrfUrl"].ToString(),
                             PortalUrl = reader["PortalUrl"].ToString(),

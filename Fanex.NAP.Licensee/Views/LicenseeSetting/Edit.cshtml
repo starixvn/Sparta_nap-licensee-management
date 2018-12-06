@@ -1,0 +1,33 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.ViewModel.LicenseeSetting.LicenseeViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var serializer = new JavaScriptSerializer();
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Licensee Setting</li>
+        <li class="current">Edit Licensee</li>
+    </ul>
+
+    <a class="btn-back" href="@Url.Content("~/LicenseeSetting/Index")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/licensee/licensee.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            licensee: @Html.Raw(serializer.Serialize(Model.Licensee)),
+            productList: @Html.Raw(serializer.Serialize(Model.ProductList))
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editlicensee/editlicensee.js")
+}
+
+<div id="app-container"></div>

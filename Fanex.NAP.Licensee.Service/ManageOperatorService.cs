@@ -1,14 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
     using System.Collections.Generic;
-    using System.Data.SqlClient;
     using System.Text;
     using Core;
     using Model.Criteria.Operator;
     using Model.Criteria.Vendor;
     using Model.DTO;
     using Model.Enumerations;
-    using NAP.Core.Models;
 
     public class ManageOperatorService : IManageOperatorService
     {
@@ -39,22 +37,20 @@
 
         public ResultData<Operator> UpdateOperator(int agentId, string operatorId, int userId)
         {
+            var result = new ResultData<Operator>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Update"))
             {
-                var isSuccess = db.QueryEntity<int>(new { AgentId = agentId, OperatorId = operatorId }) == 1;
-                var result = new ResultData<Operator>
-                {
-                    IsSuccess = isSuccess,
-                    Data = GetOperator(agentId)
-                };
-
-                if (isSuccess)
-                {
-                    WriteUpdateActionLog(operatorId, result.Data, userId);
-                }
-
-                return result;
+                result.IsSuccess = db.QueryEntity<int>(new { AgentId = agentId, OperatorId = operatorId }) == 1;
+                result.Data = GetOperator(agentId);
             }
+
+            if (result.IsSuccess)
+            {
+                WriteUpdateActionLog(operatorId, result.Data, userId);
+            }
+
+            return result;
         }
 
         public Agent GetAgent(int agentId)
@@ -67,22 +63,20 @@
 
         public ResultData<Operator> AddOperator(OperatorCriteria criteria, int userId)
         {
+            var result = new ResultData<Operator>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Insert"))
             {
-                var isSuccess = db.QueryEntity<int>(criteria) == 1;
-                var result = new ResultData<Operator>
-                {
-                    IsSuccess = isSuccess,
-                    Data = GetOperator(criteria.AgentId)
-                };
-
-                if (isSuccess)
-                {
-                    WriteInsertActionLog(result.Data, userId);
-                }
-
-                return result;
+                result.IsSuccess = db.QueryEntity<int>(criteria) == 1;
+                result.Data = GetOperator(criteria.AgentId);
             }
+
+            if (result.IsSuccess)
+            {
+                WriteInsertActionLog(result.Data, userId);
+            }
+
+            return result;
         }
 
         public Operator GetOperator(int agentId)
@@ -95,14 +89,33 @@
 
         public IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId)
         {
+            IEnumerable<ImportOperatorResult> result;
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Import"))
             {
-                var result = db.Query<ImportOperatorResult>(new { OperatorXml = operatorXml });
-
-                WriteImportActionLog(result, userId);
-
-                return result;
+                result = db.Query<ImportOperatorResult>(new { OperatorXml = operatorXml });
             }
+
+            WriteImportActionLog(result, userId);
+
+            return result;
+        }
+
+        public bool DeleteOperator(int agentId, int userId)
+        {
+            var result = false;
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Delete"))
+            {
+                result = db.QueryEntity<int>(new { AgentId = agentId }) == 1;
+            }
+
+            if (result)
+            {
+                WriteDeleteActionLog(agentId, userId);
+            }
+
+            return result;
         }
 
         private void WriteInsertActionLog(Operator newOperator, int userId)
@@ -122,6 +135,13 @@
                 + "</Operator>";
 
             WriteLog(ActionLogType.UpdateOperator, "Nap_LM_Operator_Update", doing, userId);
+        }
+
+        private void WriteDeleteActionLog(int agentId, int userId)
+        {
+            var doing = $"<Operator AgentId=\"{agentId}\"></Operator>";
+
+            WriteLog(ActionLogType.DeleteOperator, "Nap_LM_Operator_Delete", doing, userId);
         }
 
         private void WriteImportActionLog(IEnumerable<ImportOperatorResult> importResult, int userId)
