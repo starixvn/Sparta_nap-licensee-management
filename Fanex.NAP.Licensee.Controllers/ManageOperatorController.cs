@@ -75,7 +75,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult Add(OperatorCriteria criteria)
         {
-            var result = _operatorService.AddOperator(criteria, CurrentSession.UserId);
+            var result = _operatorService.AddOperator(criteria);
 
             result.Error = result.IsSuccess ? null : "Operator has been added by someone!";
 
@@ -86,7 +86,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult Update(OperatorCriteria criteria)
         {
-            var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId, CurrentSession.UserId);
+            var result = _operatorService.UpdateOperator(criteria.AgentId, criteria.OperatorId);
 
             result.Error = result.IsSuccess ? null : "OperatorId has been updated by someone!";
 
@@ -174,7 +174,7 @@
                 }
                 else
                 {
-                    var result = _operatorService.ImportOperators(BuildOperatorXml(operators), CurrentSession.UserId);
+                    var result = _operatorService.ImportOperators(BuildOperatorXml(operators));
                     return Json(new { IsSuccess = true, Data = result });
                 }
             }
@@ -184,7 +184,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageOperator, Policy = Constant.Policy.Host)]
         public JsonResult Delete(int agentId)
         {
-            var result = _operatorService.DeleteOperator(agentId, CurrentSession.UserId);
+            var result = _operatorService.DeleteOperator(agentId);
 
             return Json(new { IsSuccess = result, Error = result ? null : "Operator has been deleted by someone!" });
         }

@@ -43,7 +43,7 @@
             }
         }
 
-        public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria, int userId)
+        public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
             var result = new ResultData<Licensee>();
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Insert"))
@@ -54,7 +54,7 @@
             result.Data = GetLicensee(criteria.LicenseeName);
             result.IsSuccess = result.Data != null;
 
-            WriteInsertLicenseeActionLog(criteria, userId);
+            WriteInsertLicenseeActionLog(criteria);
 
             return result;
         }
@@ -76,7 +76,7 @@
             return products;
         }
 
-        public string OfferProduct(OfferProductCriteria criteria, int userId)
+        public string OfferProduct(OfferProductCriteria criteria)
         {
             string result = null;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
@@ -84,12 +84,12 @@
                 result = db.QueryEntity<string>(criteria.SpParam);
             }
 
-            WriteOfferProductActionLog(criteria, userId);
+            WriteOfferProductActionLog(criteria);
 
             return result;
         }
 
-        public string RemoveProduct(RemoveLicenseeProductCriteria criteria, string pullServiceKey, int userId)
+        public string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey)
         {
             string result = null;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
@@ -104,13 +104,13 @@
 
             if (string.IsNullOrEmpty(result))
             {
-                WriteRemoveProductActionLog(criteria, pullServiceKey, userId);
+                WriteRemoveProductActionLog(criteria, pullServiceKey);
             }
 
             return result;
         }
 
-        public int AddAgent(LicenseeAgentCriteria criteria, int userId)
+        public int AddAgent(LicenseeAgentCriteria criteria)
         {
             var result = 0;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
@@ -118,12 +118,12 @@
                 result = db.QueryEntity<int>(criteria.SpParam);
             }
 
-            WriteAddAgentActionLog(criteria, userId);
+            WriteAddAgentActionLog(criteria);
 
             return result;
         }
 
-        public ResultData<Licensee> TerminateLicensee(string licenseeName, int userId)
+        public ResultData<Licensee> TerminateLicensee(string licenseeName)
         {
             var result = new ResultData<Licensee>();
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
@@ -136,7 +136,7 @@
 
             if (result.IsSuccess)
             {
-                WriteTerminateLicenseeActionLog(licenseeName, userId);
+                WriteTerminateLicenseeActionLog(licenseeName);
             }
 
             return result;
@@ -156,7 +156,7 @@
             }
         }
 
-        public string EnablePullService(LicenseeProductCriteria criteria, string settingName, int userId)
+        public string EnablePullService(LicenseeProductCriteria criteria, string settingName)
         {
             string result = null;
 
@@ -165,7 +165,7 @@
                 result = db.QueryEntity<string>(new { LicenseeName = criteria.LicenseeName, SettingName = settingName });
             }
 
-            WriteEnablePullServiceActionLog(criteria, settingName, userId);
+            WriteEnablePullServiceActionLog(criteria, settingName);
 
             return result;
         }
@@ -186,14 +186,14 @@
             }
         }
 
-        private void WriteTerminateLicenseeActionLog(string licenseeName, int userId)
+        private void WriteTerminateLicenseeActionLog(string licenseeName)
         {
             var doing = $"<Licensee>{licenseeName}</Licensee>";
 
-            WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing, userId);
+            WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing);
         }
 
-        private void WriteRemoveProductActionLog(RemoveLicenseeProductCriteria criteria, string pullServiceKey, int userId)
+        private void WriteRemoveProductActionLog(LicenseeProductCriteria criteria, string pullServiceKey)
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
@@ -202,10 +202,10 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_RemoveProduct, "Nap_LM_Licensee_RemoveProduct", doing, userId);
+            WriteLog(ActionLogType.Licensee_RemoveProduct, "Nap_LM_Licensee_RemoveProduct", doing);
         }
 
-        private void WriteEnablePullServiceActionLog(LicenseeProductCriteria criteria, string settingName, int userId)
+        private void WriteEnablePullServiceActionLog(LicenseeProductCriteria criteria, string settingName)
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
@@ -214,10 +214,10 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_AddPullService, "Nap_LM_Licensee_EnablePullService", doing, userId);
+            WriteLog(ActionLogType.Licensee_AddPullService, "Nap_LM_Licensee_EnablePullService", doing);
         }
 
-        private void WriteInsertLicenseeActionLog(SetUpNewLicenseeCriteria criteria, int userId)
+        private void WriteInsertLicenseeActionLog(SetUpNewLicenseeCriteria criteria)
         {
             var doing = "<Licensee"
                         + $" SuperWildCard=\"{criteria.SuperWildCard}\""
@@ -231,10 +231,10 @@
                         + criteria.LicenseeName
                         + "</Licensee>";
 
-            WriteLog(ActionLogType.Licensee_Insert, "Nap_LM_Licensee_Insert", doing, userId, criteria.RedMineId);
+            WriteLog(ActionLogType.Licensee_Insert, "Nap_LM_Licensee_Insert", doing, criteria.RedmineId);
         }
 
-        private void WriteAddAgentActionLog(LicenseeAgentCriteria criteria, int userId)
+        private void WriteAddAgentActionLog(LicenseeAgentCriteria criteria)
         {
             var doing = "<Agent"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
@@ -244,10 +244,10 @@
                         + ">"
                         + "</Agent>";
 
-            WriteLog(ActionLogType.Licensee_AddAgent, "Nap_LM_Licensee_AddAgent", doing, userId, criteria.RedMineId);
+            WriteLog(ActionLogType.Licensee_AddAgent, "Nap_LM_Licensee_AddAgent", doing, criteria.RedmineId);
         }
 
-        private void WriteOfferProductActionLog(OfferProductCriteria criteria, int userId)
+        private void WriteOfferProductActionLog(OfferProductCriteria criteria)
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
@@ -256,23 +256,24 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, userId, criteria.RedMineId);
+            WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, criteria.RedmineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string licensee, int userId, string redMineId = "")
+        private void WriteLog(ActionLogType action, string sp, string licensee, string redmineId = "")
         {
+            var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"
-                + $"<RedmineId>{redMineId}</RedmineId>"
+                + $"<RedmineId>{redmineId}</RedmineId>"
                 + $"<SpName>{sp}</SpName>"
-                + $"<User>{userId}</User>"
+                + $"<UpdatedBy UserId=\"{user.Id}\" UserName=\"{user.Username}\" />"
                 + licensee
                 + "</Action>";
 
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)action,
-                CustId = userId,
-                UserId = userId,
+                CustId = user.Id,
+                UserId = user.Id,
                 Doing = doing
             };
 
