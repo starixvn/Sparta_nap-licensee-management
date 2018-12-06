@@ -8412,11 +8412,6 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             _react2.default.createElement(
                                 'th',
                                 null,
-                                'Edit Bet Setting'
-                            ),
-                            _react2.default.createElement(
-                                'th',
-                                null,
                                 'Action'
                             )
                         )
@@ -8477,11 +8472,6 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     'td',
                                     { className: 'text-center' },
                                     _react2.default.createElement('span', { className: item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : '' })
-                                ),
-                                _react2.default.createElement(
-                                    'td',
-                                    { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.EditBetSetting ? 'glyphicon glyphicon-ok' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',

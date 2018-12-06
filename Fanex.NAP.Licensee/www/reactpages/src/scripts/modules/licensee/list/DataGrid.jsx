@@ -48,7 +48,6 @@ export class DataGrid extends Component {
                             <th>Brand Name</th>
                             <th>Company Name</th>
                             <th>Allow Member Comm</th>
-                            <th>Edit Bet Setting</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -68,7 +67,6 @@ export class DataGrid extends Component {
                                     <td>{item.BrandName}</td>
                                     <td>{item.CompanyName}</td>
                                     <td className="text-center"><span className={item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                    <td className="text-center"><span className={item.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span></td>
                                     <td className="text-center">
                                         <a href={window.rootUrl + `LicenseeSetting/Edit?licenseeName=${item.LicenseeName}`}>
                                             <i className="icon-edit"></i>

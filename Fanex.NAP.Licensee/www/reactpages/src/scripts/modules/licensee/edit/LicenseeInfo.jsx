@@ -75,13 +75,6 @@ export class LicenseeInfo extends Component {
                         <span className={licensee.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span>
                     </div>
                 </div>
-
-                <div className='form-group row'>
-                    <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Edit Bet Setting</label>
-                    <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.EditBetSetting ? 'glyphicon glyphicon-ok' : ''}></span>
-                    </div>
-                </div>
             </div>
         </div>
         )

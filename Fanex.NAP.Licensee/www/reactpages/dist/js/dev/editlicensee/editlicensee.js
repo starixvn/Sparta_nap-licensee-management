@@ -8638,20 +8638,6 @@ var LicenseeInfo = exports.LicenseeInfo = function (_Component) {
                             { className: 'col-sx-12 col-sm-9' },
                             _react2.default.createElement('span', { className: licensee.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : '' })
                         )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group row' },
-                        _react2.default.createElement(
-                            'label',
-                            { className: 'col-sx-12 col-lg-3 col-sm-3 col-form-label' },
-                            'Edit Bet Setting'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'col-sx-12 col-sm-9' },
-                            _react2.default.createElement('span', { className: licensee.EditBetSetting ? 'glyphicon glyphicon-ok' : '' })
-                        )
                     )
                 )
             );
