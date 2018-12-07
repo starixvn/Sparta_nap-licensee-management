@@ -26,7 +26,7 @@
 
         int AddAgent(LicenseeAgentCriteria criteria);
 
-        ResultData<Licensee> TerminateLicensee(string licenseeName);
+        ResultData<Licensee> TerminateLicensee(TerminateLicenseeCriteria criteria);
 
         string EnablePullService(LicenseeProductCriteria criteria, string settingName);
 

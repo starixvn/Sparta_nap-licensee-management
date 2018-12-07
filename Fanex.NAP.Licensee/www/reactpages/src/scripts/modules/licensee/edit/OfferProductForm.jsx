@@ -18,14 +18,14 @@ export class OfferProductForm extends Component {
             selectedproduct: null,
             isShow: false,
             productList: [],
-            redMineId: ''
+            redmineId: ''
         };
     };
 
     get isValid() {
-        const selectedproduct = this.state.selectedproduct;
+        const { selectedproduct, redmineId } = this.state;
 
-        return selectedproduct !== null && selectedproduct.length > 0;
+        return redmineId && selectedproduct !== null && selectedproduct.length > 0;
     }
 
     onClose() {
@@ -35,7 +35,7 @@ export class OfferProductForm extends Component {
             selectedproduct: null,
             isShow: false,
             productList: [],
-            redMineId: ''
+            redmineId: ''
         });
     }
 
@@ -64,13 +64,13 @@ export class OfferProductForm extends Component {
             .then(response => {
                 if (!response.data.IsSuccess) {
                     Utility.showMessage(response.data.Error);
+                    this.props.toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
                     this.onClose();
-                }
-
-                this.props.getProductList(this.props.licensee.LicenseeID);
+                    this.props.getProductList(this.props.licensee.LicenseeID);
+                }   
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
@@ -79,13 +79,13 @@ export class OfferProductForm extends Component {
 
     _getParams()
     {
-        const { date, selectedproduct, redMineId } = this.state;
+        const { date, selectedproduct, redmineId } = this.state;
 
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             ProductCode: selectedproduct == null ? '' : selectedproduct.map(i => i.value).join(','),
             EffectiveDate: date,
-            RedMineId: redMineId
+            RedmineId: redmineId
         };
     }
 
@@ -111,13 +111,13 @@ export class OfferProductForm extends Component {
             });
     }
 
-    _buildContent(selectedproduct, productList, date, redMineId) {
+    _buildContent(selectedproduct, productList, date, redmineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Product</label>
                     <Select instanceId='ddlProduct'
-                        className={`full-width ${this.isValid ? '' : 'has-error'}`}
+                        className={`full-width ${selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'}`}
                         value={selectedproduct}
                         options={productList}
                         multi={true}
@@ -129,10 +129,10 @@ export class OfferProductForm extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
-                    <input className='full-width'
+                    <input className={`full-width ${redmineId ? '' : 'has-error'}`}
                         type='text'
-                        value={redMineId}
-                        onChange={(e) => this.setState({ redMineId: e.target.value })} />
+                        value={redmineId}
+                        onChange={(e) => this.setState({ redmineId: e.target.value })} />
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
@@ -148,7 +148,7 @@ export class OfferProductForm extends Component {
 
     render()
     {
-        const { date, isShowConfirmBox, selectedproduct, productList, isShow, redMineId } = this.state;
+        const { date, isShowConfirmBox, selectedproduct, productList, isShow, redmineId } = this.state;
 
         return (
         <div> 
@@ -160,7 +160,7 @@ export class OfferProductForm extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Offer New Product'
-                content={this._buildContent(selectedproduct, productList, date, redMineId)}
+                content={this._buildContent(selectedproduct, productList, date, redmineId)}
                 className='no-scroll'
                 style={{height: '320px', width: '600px'}}
                 onClose={() => this.onClose()} />

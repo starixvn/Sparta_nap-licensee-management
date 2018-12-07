@@ -8,7 +8,8 @@ const cssPaths = {
     demo: './www/reactpages/src/styles/modules/demo',
     editvendor: './www/reactpages/src/styles/modules/vendor/index.scss',
     operator: './www/reactpages/src/styles/modules/operator/index.scss',
-    licensee: './www/reactpages/src/styles/modules/licensee/index.scss'
+    licensee: './www/reactpages/src/styles/modules/licensee/licensee.scss',
+    licenseelist: './www/reactpages/src/styles/modules/licensee/licenseelist.scss'
 };
 
 const scriptPaths = {

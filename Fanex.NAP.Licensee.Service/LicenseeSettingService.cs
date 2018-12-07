@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Core;
     using Model.Criteria.LicenseeSetting;
@@ -123,20 +124,20 @@
             return result;
         }
 
-        public ResultData<Licensee> TerminateLicensee(string licenseeName)
+        public ResultData<Licensee> TerminateLicensee(TerminateLicenseeCriteria criteria)
         {
             var result = new ResultData<Licensee>();
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
             {
-                result.Error = db.QueryEntity<string>(new { LicenseeName = licenseeName });
+                result.Error = db.QueryEntity<string>(new { LicenseeName = criteria.LicenseeName });
                 result.IsSuccess = string.IsNullOrEmpty(result.Error);
             }
 
-            result.Data = GetLicensee(licenseeName);
+            result.Data = GetLicensee(criteria.LicenseeName);
 
             if (result.IsSuccess)
             {
-                WriteTerminateLicenseeActionLog(licenseeName);
+                WriteTerminateLicenseeActionLog(criteria);
             }
 
             return result;
@@ -186,11 +187,11 @@
             }
         }
 
-        private void WriteTerminateLicenseeActionLog(string licenseeName)
+        private void WriteTerminateLicenseeActionLog(TerminateLicenseeCriteria criteria)
         {
-            var doing = $"<Licensee>{licenseeName}</Licensee>";
+            var doing = $"<Licensee>{criteria.LicenseeName}</Licensee>";
 
-            WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing);
+            WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing, criteria.RedmineId);
         }
 
         private void WriteRemoveProductActionLog(LicenseeProductCriteria criteria, string pullServiceKey)
@@ -202,7 +203,7 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_RemoveProduct, "Nap_LM_Licensee_RemoveProduct", doing);
+            WriteLog(ActionLogType.Licensee_RemoveProduct, "Nap_LM_Licensee_RemoveProduct", doing, criteria.RedmineId);
         }
 
         private void WriteEnablePullServiceActionLog(LicenseeProductCriteria criteria, string settingName)
@@ -214,7 +215,7 @@
                         + criteria.ProductCode
                         + "</Product>";
 
-            WriteLog(ActionLogType.Licensee_AddPullService, "Nap_LM_Licensee_EnablePullService", doing);
+            WriteLog(ActionLogType.Licensee_AddPullService, "Nap_LM_Licensee_EnablePullService", doing, criteria.RedmineId);
         }
 
         private void WriteInsertLicenseeActionLog(SetUpNewLicenseeCriteria criteria)
@@ -226,7 +227,7 @@
                         + $" ProductCode=\"{criteria.ProductCode}\""
                         + $" SystemIsActive=\"{criteria.SystemIsActive}\""
                         + $" IsAllowMemberComm=\"{criteria.IsAllowMemberComm}\""
-                        + $" EffectiveDate=\"{criteria.EffectiveDate.ToString("MM/dd/yyyy")}\""
+                        + $" EffectiveDate=\"{criteria.EffectiveDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)}\""
                         + ">"
                         + criteria.LicenseeName
                         + "</Licensee>";
@@ -251,7 +252,7 @@
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
-                        + $" EffectiveDate=\"{criteria.EffectiveDate?.ToString("MM/dd/yyyy")}\""
+                        + $" EffectiveDate=\"{criteria.EffectiveDate?.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)}\""
                         + ">"
                         + criteria.ProductCode
                         + "</Product>";
@@ -259,7 +260,7 @@
             WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, criteria.RedmineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string licensee, string redmineId = "")
+        private void WriteLog(ActionLogType action, string sp, string licensee, string redmineId)
         {
             var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"

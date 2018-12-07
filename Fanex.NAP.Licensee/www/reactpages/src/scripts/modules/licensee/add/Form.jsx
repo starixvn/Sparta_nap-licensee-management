@@ -21,14 +21,14 @@ export default class Form extends Component {
             isLoading: false,
             isSuccess: false,
             date: Utility.getTodayString(),
-            redMineId: ''
+            redmineId: ''
         };
     }
 
     get isValid() {
-        const { licenseeName, selectedReseller, isSuccess } = this.state;
+        const { licenseeName, selectedReseller, isSuccess, redmineId, superWildCard } = this.state;
 
-        return licenseeName && selectedReseller && !isSuccess;
+        return licenseeName && selectedReseller && redmineId && !isSuccess && superWildCard;
     }
 
     _getParams() {
@@ -41,7 +41,7 @@ export default class Form extends Component {
             IsSpecial: this.state.isSpecial,
             IsAllowMemberComm: this.state.isAllowMemberComm,
             EffectiveDate: this.state.date,
-            RedMineId: this.state.redMineId
+            RedmineId: this.state.redmineId
         };
     }
 
@@ -89,7 +89,7 @@ export default class Form extends Component {
     render() {
         const { licenseeName, superWildCard, selectedReseller,
             selectedProduct, selectedSystem, isSpecial, date,
-            isAllowMemberComm, isLoading, isSuccess, redMineId } = this.state;
+            isAllowMemberComm, isLoading, isSuccess, redmineId } = this.state;
 
         return (
             <div className='add-form'>
@@ -110,7 +110,7 @@ export default class Form extends Component {
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
                                 value={superWildCard}
-                                className='full-width'
+                                className={`full-width ${superWildCard ? '' : 'has-error'}`}
                                 onChange={(e) => this.setState({ superWildCard: e.target.value })} />
                                 <i>(Manually changing <b>"Super Wild Card"</b> value will cause wrong setting for licensee agent. Please consider carefully)</i>
                             </div>
@@ -174,9 +174,9 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Redmine Id</label>
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
-                                value={redMineId}
-                                className='full-width'
-                                onChange={(e) => this.setState({ redMineId: e.target.value })} />
+                                value={redmineId}
+                                className={`full-width ${redmineId ? '' : 'has-error'}`}
+                                onChange={(e) => this.setState({ redmineId: e.target.value })} />
                             </div>
                         </div>
                         <div className='form-group row col-sm-12'>

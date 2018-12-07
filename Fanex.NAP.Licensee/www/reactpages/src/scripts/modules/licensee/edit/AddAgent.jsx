@@ -19,16 +19,16 @@ export class AddAgent extends Component {
             selectedCurrency: null,
             currencyList: [],
             isShow: false,
-            redMineId: ''
+            redmineId: ''
         };
 
         this.changeCurrencyList = Utility.debounce(this._getCurrencyList, 2000).bind(this);
     };
 
     get isValid() {
-        const superWildCard = this.state.superWildCard;
+        const { superWildCard, redmineId } = this.state;
 
-        return superWildCard !== null && superWildCard !== '';
+        return superWildCard && redmineId;
     }
 
     onClose = () => {
@@ -39,7 +39,7 @@ export class AddAgent extends Component {
             selectedCurrency: null,
             currencyList: [],
             isShow: false,
-            redMineId: ''
+            redmineId: ''
         });
     }
 
@@ -82,33 +82,37 @@ export class AddAgent extends Component {
 
     _getParams()
     {
-        const { superWildCard, selectedCurrency, isSpecial, redMineId } = this.state;
+        const { superWildCard, selectedCurrency, isSpecial, redmineId } = this.state;
 
         return {
             LicenseeName: this.props.licensee.LicenseeName,
             SuperWildCard: superWildCard,
             Currency: selectedCurrency == null ? 0 : selectedCurrency.value,
             IsSpecial: isSpecial,
-            RedMineId: redMineId
+            RedmineId: redmineId
         };
     }
 
     _getCurrencyList() {
-        this.props.toggleLoader(true);
-        const url = 'LicenseeSetting/GetSuperCurrencyList';
-        const param = { SuperWildCard: this.state.superWildCard };
+        const superWildCard = this.state.superWildCard;
+        
+        if (superWildCard) {
+            this.props.toggleLoader(true);
+            const url = 'LicenseeSetting/GetSuperCurrencyList';
+            const param = { SuperWildCard: superWildCard };
 
-        Site.fetchData(param, url)
-            .then(response => {
-                var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
+            Site.fetchData(param, url)
+                .then(response => {
+                    var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
 
-                this.setState({ currencyList: data, selectedCurrency: null });
+                    this.setState({ currencyList: data, selectedCurrency: null });
 
-                this.props.toggleLoader(false);
-            }).catch(err => {
-                Utility.showMessage('Please try later!');
-                this.props.toggleLoader(false);
-            });
+                    this.props.toggleLoader(false);
+                }).catch(err => {
+                    Utility.showMessage('Please try later!');
+                    this.props.toggleLoader(false);
+                });
+        }
     }
 
     _addAgent = () => {
@@ -124,12 +128,12 @@ export class AddAgent extends Component {
         this.changeCurrencyList();
     }
 
-    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId) {
+    _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redmineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Supper Wild Card</label>
-                    <input className={`full-width ${this.isValid ? '' : 'has-error'}`}
+                    <input className={`full-width ${superWildCard ? '' : 'has-error'}`}
                         type='text'
                         value={superWildCard}
                         onChange={this._onTextChange} />
@@ -153,10 +157,10 @@ export class AddAgent extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
-                    <input className='full-width'
+                    <input className={`full-width ${redmineId ? '' : 'has-error'}`}
                         type='text'
-                        value={redMineId}
-                        onChange={(e) => this.setState({ redMineId: e.target.value })} />
+                        value={redmineId}
+                        onChange={(e) => this.setState({ redmineId: e.target.value })} />
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
@@ -172,7 +176,7 @@ export class AddAgent extends Component {
 
     render()
     {
-        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency, currencyList, isShow, redMineId } = this.state;
+        const { superWildCard, isSpecial, isShowConfirmBox, selectedCurrency, currencyList, isShow, redmineId } = this.state;
 
         return (
         <div>
@@ -184,7 +188,7 @@ export class AddAgent extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='Add Agent/Currency'
-                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId)}
+                content={this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redmineId)}
                 className='no-scroll'
                 style={{height: '420px', width: '720px'}}
                 onClose={this.onClose} />

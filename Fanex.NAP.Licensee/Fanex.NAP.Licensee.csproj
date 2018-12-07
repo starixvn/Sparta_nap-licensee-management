@@ -288,6 +288,8 @@
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.css" />
+    <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.js" />
     <Content Include="www\reactpages\dist\css\dev\operator\operator.css" />
     <Content Include="www\reactpages\dist\css\dev\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.css" />
@@ -296,6 +298,8 @@
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\pro\licenseelist\licenseelist.css" />
+    <Content Include="www\reactpages\dist\css\pro\licenseelist\licenseelist.js" />
     <Content Include="www\reactpages\dist\css\pro\licensee\licensee.css" />
     <Content Include="www\reactpages\dist\css\pro\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\pro\operator\operator.css" />
@@ -759,7 +763,7 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\FormFilter.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\index.jsx" />
-    <Content Include="www\reactpages\src\styles\modules\licensee\index.scss" />
+    <Content Include="www\reactpages\src\styles\modules\licensee\licensee.scss" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\add\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\add\index.jsx" />
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.css.map" />
@@ -774,12 +778,17 @@
     <Content Include="www\reactpages\src\scripts\components\ConfirmBox.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\OfferProductForm.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AddAgent.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\EnablePullServiceForm.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\AppContainer.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LicenseeInfo.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ProductGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LAPExclusions.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\TerminateLicensee.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\RedmineConfirmForm.jsx" />
+    <Content Include="www\reactpages\src\styles\components\_variable.scss" />
+    <Content Include="www\reactpages\src\styles\components\common.scss" />
+    <Content Include="www\reactpages\src\styles\modules\licensee\licenseelist.scss" />
+    <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

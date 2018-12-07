@@ -185,6 +185,11 @@
                 return Json(new { IsSuccess = false, Error = "Supper Wild Card is empty!" });
             }
 
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+            }
+
             var result = _licenseeService.AddAgent(criteria);
 
             if (result <= 0)
@@ -208,14 +213,19 @@
         [HttpPost]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public JsonResult TerminateLicensee(string licenseeName)
+        public JsonResult TerminateLicensee(TerminateLicenseeCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(licenseeName))
+            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
             {
                 return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
             }
 
-            var result = _licenseeService.TerminateLicensee(licenseeName);
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+            }
+
+            var result = _licenseeService.TerminateLicensee(criteria);
 
             if (result.Data == null)
             {
@@ -272,10 +282,19 @@
 
         private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(criteria.LicenseeName)
-                || string.IsNullOrWhiteSpace(criteria.ProductCode))
+            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
             {
-                return "Invalid data!";
+                return "Licensee Name is empty!";
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.ProductCode))
+            {
+                return "Product is empty!";
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return "Redmine Id is empty!";
             }
 
             return null;
@@ -291,6 +310,11 @@
             if (string.IsNullOrWhiteSpace(criteria.LicenseeType))
             {
                 return "Licensee Type is empty!";
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return "Redmine Id is empty!";
             }
 
             var existedLicensees = _licenseeService.GetLicensee(criteria.LicenseeName);

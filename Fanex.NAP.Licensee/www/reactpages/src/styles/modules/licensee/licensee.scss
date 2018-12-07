@@ -1,9 +1,7 @@
 ﻿@import "../../components/react-select/react-select.main";
 @import "../../components/popup";
-
-$red: #a94442;
-$green: #729446;
-$yellow: #fecc35;
+@import "../../components/_variable";
+@import "../../components/common.scss";
 
 .Select {
     &.has-error {
