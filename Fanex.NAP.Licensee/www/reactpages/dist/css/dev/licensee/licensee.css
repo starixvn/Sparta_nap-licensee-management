@@ -436,6 +436,9 @@
 .popup .confirm-popup .btn {
   float: right !important; }
 
+.green {
+  color: #A1C46B; }
+
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 

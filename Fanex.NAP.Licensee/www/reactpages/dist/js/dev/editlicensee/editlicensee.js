@@ -3652,10 +3652,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(55);
+var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(57);
-var checkPropTypes = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(55);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -6477,7 +6477,9 @@ function createReducer(initialState, handlers) {
 /* 51 */,
 /* 52 */,
 /* 53 */,
-/* 54 */
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6541,8 +6543,6 @@ var Utility = function () {
 exports.default = Utility;
 
 /***/ }),
-/* 55 */,
-/* 56 */,
 /* 57 */,
 /* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -7953,7 +7953,108 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Popup = __webpack_require__(88);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Popup = function (_React$Component) {
+    _inherits(Popup, _React$Component);
+
+    function Popup(props) {
+        _classCallCheck(this, Popup);
+
+        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+        _this.zIndex = props.zIndex ? props.zIndex : 50;
+        return _this;
+    }
+
+    _createClass(Popup, [{
+        key: '_onClose',
+        value: function _onClose(callBack) {
+            callBack && callBack();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                title = _props.title,
+                style = _props.style,
+                content = _props.content,
+                onClose = _props.onClose,
+                noShowCloseButton = _props.noShowCloseButton,
+                isShow = _props.isShow,
+                className = _props.className;
+
+            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'popup ' + (isShow ? 'show' : '') },
+                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'popup-container ' + className, style: combinedStyle },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-title' },
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            title
+                        ),
+                        !noShowCloseButton && _react2.default.createElement(
+                            'a',
+                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
+                                    return _this2._onClose(onClose);
+                                } },
+                            '\xD7'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-content' },
+                        content
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Popup;
+}(_react2.default.Component);
+
+exports.default = Popup;
+;
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(5);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Popup = __webpack_require__(87);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
@@ -8045,107 +8146,6 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(5);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Popup = function (_React$Component) {
-    _inherits(Popup, _React$Component);
-
-    function Popup(props) {
-        _classCallCheck(this, Popup);
-
-        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
-
-        _this.zIndex = props.zIndex ? props.zIndex : 50;
-        return _this;
-    }
-
-    _createClass(Popup, [{
-        key: '_onClose',
-        value: function _onClose(callBack) {
-            callBack && callBack();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                title = _props.title,
-                style = _props.style,
-                content = _props.content,
-                onClose = _props.onClose,
-                noShowCloseButton = _props.noShowCloseButton,
-                isShow = _props.isShow,
-                className = _props.className;
-
-            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'popup ' + (isShow ? 'show' : '') },
-                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'popup-container ' + className, style: combinedStyle },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-title' },
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            title
-                        ),
-                        !noShowCloseButton && _react2.default.createElement(
-                            'a',
-                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
-                                    return _this2._onClose(onClose);
-                                } },
-                            '\xD7'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-content' },
-                        content
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Popup;
-}(_react2.default.Component);
-
-exports.default = Popup;
-;
-
-/***/ }),
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8165,7 +8165,7 @@ var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -8223,7 +8223,145 @@ var SET_PRODUCT_LIST = exports.SET_PRODUCT_LIST = "SET_PRODUCT_LIST";
 var SET_LICENSEE = exports.SET_LICENSEE = "SET_LICENSEE";
 
 /***/ }),
-/* 99 */,
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Popup = __webpack_require__(87);
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RedmineConfirmForm = function (_Component) {
+    _inherits(RedmineConfirmForm, _Component);
+
+    function RedmineConfirmForm(props) {
+        _classCallCheck(this, RedmineConfirmForm);
+
+        var _this = _possibleConstructorReturn(this, (RedmineConfirmForm.__proto__ || Object.getPrototypeOf(RedmineConfirmForm)).call(this, props));
+
+        _this.state = { redmineId: '' };
+        return _this;
+    }
+
+    _createClass(RedmineConfirmForm, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps !== this.props) {
+                this.setState({ redmineId: '' });
+            }
+        }
+    }, {
+        key: '_onConfirm',
+        value: function _onConfirm(value, onConfirm) {
+            var redmineId = value ? this.state.redmineId : null;
+
+            onConfirm && onConfirm(redmineId);
+        }
+    }, {
+        key: '_buildContent',
+        value: function _buildContent(msg, redmineId, onConfirm) {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'edit-form' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    msg
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-form-label' },
+                        'Redmine Id'
+                    ),
+                    _react2.default.createElement('input', { className: 'full-width ' + (redmineId ? '' : 'has-error'),
+                        type: 'text',
+                        value: redmineId,
+                        onChange: function onChange(e) {
+                            return _this2.setState({ redmineId: e.target.value });
+                        } })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group right' },
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this2._onConfirm(true, onConfirm);
+                            }, disabled: !this.isValid },
+                        'Yes'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-red', onClick: function onClick() {
+                                return _this2._onConfirm(false, onConfirm);
+                            } },
+                        'No'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var redmineId = this.state.redmineId;
+            var _props = this.props,
+                isShow = _props.isShow,
+                msg = _props.msg,
+                style = _props.style,
+                onConfirm = _props.onConfirm;
+
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_Popup2.default, { isShow: isShow,
+                    title: 'Confirmation',
+                    content: this._buildContent(msg, redmineId, onConfirm),
+                    className: 'no-scroll',
+                    noShowCloseButton: true,
+                    style: style })
+            );
+        }
+    }, {
+        key: 'isValid',
+        get: function get() {
+            var redmineId = this.state.redmineId;
+
+            return redmineId !== null && redmineId.length > 0;
+        }
+    }]);
+
+    return RedmineConfirmForm;
+}(_react.Component);
+
+exports.default = RedmineConfirmForm;
+
+/***/ }),
 /* 100 */,
 /* 101 */,
 /* 102 */,
@@ -8267,7 +8405,8 @@ var SET_LICENSEE = exports.SET_LICENSEE = "SET_LICENSEE";
 /* 140 */,
 /* 141 */,
 /* 142 */,
-/* 143 */
+/* 143 */,
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8287,7 +8426,7 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(144);
+var _AppContainer = __webpack_require__(145);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
@@ -8341,7 +8480,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8364,11 +8503,11 @@ var _Loader = __webpack_require__(17);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _LicenseeInfo = __webpack_require__(145);
+var _LicenseeInfo = __webpack_require__(146);
 
 var _LicenseeInfo2 = _interopRequireDefault(_LicenseeInfo);
 
-var _ProductGrid = __webpack_require__(146);
+var _ProductGrid = __webpack_require__(147);
 
 var _ProductGrid2 = _interopRequireDefault(_ProductGrid);
 
@@ -8452,7 +8591,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8656,7 +8795,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(LicenseeInfo);
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8683,17 +8822,17 @@ var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _ConfirmBox = __webpack_require__(87);
+var _ConfirmBox = __webpack_require__(88);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
-var _EnablePullServiceForm = __webpack_require__(147);
+var _RedmineConfirmForm = __webpack_require__(99);
 
-var _EnablePullServiceForm2 = _interopRequireDefault(_EnablePullServiceForm);
+var _RedmineConfirmForm2 = _interopRequireDefault(_RedmineConfirmForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8711,61 +8850,9 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (ProductGrid.__proto__ || Object.getPrototypeOf(ProductGrid)).call(this, props));
 
-        _this.onCloseEnablePullServicePopup = function (result) {
-            if (result) {
-                _this.props.getProductList(_this.props.licensee.LicenseeID);
-            }
-
-            var pullServicePopup = {
-                isShow: false,
-                productCode: '',
-                productName: '',
-                settingKey: ''
-            };
-
-            _this.setState({ pullServicePopup: pullServicePopup });
-        };
-
-        _this._onConfirmRemovePullService = function (value, product) {
-            if (value) {
-                _this._removeProduct(product, true);
-            } else {
-                _this._removeProduct(product, false);
-            }
-        };
-
-        _this.onCloseRemoveConfirmBox = function (value, productCode, isRemovePullService) {
-            if (value) {
-                _this.props.toggleLoader(true);
-                var url = 'LicenseeSetting/RemoveProduct';
-                var param = {
-                    LicenseeName: _this.props.licensee.LicenseeName,
-                    ProductCode: productCode,
-                    IsRemovePullService: isRemovePullService
-                };
-
-                _site2.default.fetchData(param, url).then(function (response) {
-                    if (!response.data.IsSuccess) {
-                        _utility2.default.showMessage(response.data.Error);
-                    } else {
-                        _utility2.default.showMessage('Success!');
-                    }
-
-                    _this.props.getProductList(_this.props.licensee.LicenseeID);
-                }).catch(function (err) {
-                    _utility2.default.showMessage('Please try later!');
-                    _this.props.toggleLoader(false);
-                });
-            }
-
-            var confirmPopup = { isShow: false, msg: '', onClose: null };
-
-            _this.setState({ confirmPopup: confirmPopup });
-        };
-
         _this.state = {
             confirmPopup: { isShow: false, msg: '', onClose: null },
-            pullServicePopup: { isShow: false, productCode: '', productName: '', settingKey: '' }
+            redmineConfirmPopup: { isShow: false, msg: '', onConfirm: null }
         };
         return _this;
     }
@@ -8780,25 +8867,66 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
     }, {
         key: '_enablePullService',
         value: function _enablePullService(product) {
-            var pullServicePopup = {
+            var _this2 = this;
+
+            var redmineConfirmPopup = {
                 isShow: true,
-                productCode: product.ProductCode,
-                productName: product.ProductName,
-                settingKey: product.PullServiceKey
+                msg: 'Do you want to enable ' + product.ProductCode + ' (setting name: "' + product.PullServiceKey + '") pull service?',
+                onConfirm: function onConfirm(redmineId) {
+                    return _this2.onEnablePullService(redmineId, product.ProductCode);
+                }
             };
 
-            this.setState({ pullServicePopup: pullServicePopup });
+            this.setState({ redmineConfirmPopup: redmineConfirmPopup });
+        }
+    }, {
+        key: 'onEnablePullService',
+        value: function onEnablePullService(redmineId, productCode) {
+            var _this3 = this;
+
+            if (redmineId) {
+                this.props.toggleLoader(true);
+                var url = 'LicenseeSetting/EnablePullService';
+                var params = {
+                    LicenseeName: this.props.licensee.LicenseeName,
+                    ProductCode: productCode,
+                    RedmineId: redmineId
+                };
+
+                _site2.default.fetchData(params, url).then(function (response) {
+                    if (!response.data.IsSuccess) {
+                        _utility2.default.showMessage(response.data.Error);
+                        _this3.props.toggleLoader(false);
+                    } else {
+                        _utility2.default.showMessage('Success!');
+                        _this3._onCloseRedmineConfirmPopup();
+                        _this3.props.getProductList(_this3.props.licensee.LicenseeID);
+                    }
+                }).catch(function (err) {
+                    _utility2.default.showMessage('Error!');
+                    _this3.props.toggleLoader(false);
+                });
+            } else {
+                this._onCloseRedmineConfirmPopup();
+            }
+        }
+    }, {
+        key: '_onCloseRedmineConfirmPopup',
+        value: function _onCloseRedmineConfirmPopup() {
+            var redmineConfirmPopup = { isShow: false, msg: '', onConfirm: null };
+
+            this.setState({ redmineConfirmPopup: redmineConfirmPopup });
         }
     }, {
         key: '_removePullService',
         value: function _removePullService(product) {
-            var _this2 = this;
+            var _this4 = this;
 
             var confirmPopup = {
                 isShow: true,
                 msg: 'Do you want to remove pull service with key "' + product.PullServiceKey + '"?',
                 onClose: function onClose(result) {
-                    return _this2._onConfirmRemovePullService(result, product);
+                    return _this4.removeProduct(product, result);
                 }
             };
 
@@ -8810,37 +8938,73 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
             if (product.EnablePullService) {
                 this._removePullService(product);
             } else {
-                this._removeProduct(product, false);
+                this.removeProduct(product, false);
             }
         }
     }, {
-        key: '_removeProduct',
-        value: function _removeProduct(product, isRemovePullService) {
-            var _this3 = this;
-
-            var msg = 'Do you want to remove ' + product.ProductName + (isRemovePullService ? ' and its pull service' : '') + '?';
+        key: 'removeProduct',
+        value: function removeProduct(product, isRemovePullService) {
+            var _this5 = this;
 
             var confirmPopup = {
+                isShow: false,
+                msg: '',
+                onClose: null
+            };
+
+            var redmineConfirmPopup = {
                 isShow: true,
-                msg: msg,
-                onClose: function onClose(result) {
-                    return _this3.onCloseRemoveConfirmBox(result, product.ProductCode, isRemovePullService);
+                msg: 'Do you want to remove ' + product.ProductName + (isRemovePullService ? ' and its pull service' : '') + '?',
+                onConfirm: function onConfirm(redmineId) {
+                    return _this5.onRemoveProduct(redmineId, product.ProductCode, isRemovePullService);
                 }
             };
 
-            this.setState({ confirmPopup: confirmPopup });
+            this.setState({ confirmPopup: confirmPopup, redmineConfirmPopup: redmineConfirmPopup });
+        }
+    }, {
+        key: 'onRemoveProduct',
+        value: function onRemoveProduct(redmineId, productCode, isRemovePullService) {
+            var _this6 = this;
+
+            if (redmineId) {
+                this.props.toggleLoader(true);
+                var url = 'LicenseeSetting/RemoveProduct';
+                var param = {
+                    LicenseeName: this.props.licensee.LicenseeName,
+                    ProductCode: productCode,
+                    IsRemovePullService: isRemovePullService,
+                    RedmineId: redmineId
+                };
+
+                _site2.default.fetchData(param, url).then(function (response) {
+                    if (!response.data.IsSuccess) {
+                        _utility2.default.showMessage(response.data.Error);
+                        _this6.props.toggleLoader(false);
+                    } else {
+                        _utility2.default.showMessage('Success!');
+                        _this6._onCloseRedmineConfirmPopup();
+                        _this6.props.getProductList(_this6.props.licensee.LicenseeID);
+                    }
+                }).catch(function (err) {
+                    _utility2.default.showMessage('Please try later!');
+                    _this6.props.toggleLoader(false);
+                });
+            } else {
+                this._onCloseRedmineConfirmPopup();
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this7 = this;
 
             var _props = this.props,
                 productList = _props.productList,
                 licensee = _props.licensee;
             var _state = this.state,
                 confirmPopup = _state.confirmPopup,
-                pullServicePopup = _state.pullServicePopup;
+                redmineConfirmPopup = _state.redmineConfirmPopup;
 
 
             return _react2.default.createElement(
@@ -8852,13 +9016,10 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                     message: confirmPopup.msg,
                     style: { height: '160px', width: '400px' },
                     onClose: confirmPopup.onClose }),
-                _react2.default.createElement(_EnablePullServiceForm2.default, {
-                    isShow: pullServicePopup.isShow,
-                    licenseeName: licensee.LicenseeName,
-                    productName: pullServicePopup.productName,
-                    productCode: pullServicePopup.productCode,
-                    settingKey: pullServicePopup.settingKey,
-                    onClose: this.onCloseEnablePullServicePopup }),
+                _react2.default.createElement(_RedmineConfirmForm2.default, { isShow: redmineConfirmPopup.isShow,
+                    msg: redmineConfirmPopup.msg,
+                    style: { height: '210px', width: '510px' },
+                    onConfirm: redmineConfirmPopup.onConfirm }),
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },
@@ -8945,17 +9106,17 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                                         _react2.default.createElement(
                                             'td',
                                             { className: 'text-center' },
-                                            _react2.default.createElement('span', { className: item.Comm ? 'glyphicon glyphicon-ok' : '' })
+                                            _react2.default.createElement('span', { className: item.Comm ? 'glyphicon glyphicon-ok green' : '' })
                                         ),
                                         _react2.default.createElement(
                                             'td',
                                             { className: 'text-center' },
-                                            _react2.default.createElement('span', { className: item.WinLoss ? 'glyphicon glyphicon-ok' : '' })
+                                            _react2.default.createElement('span', { className: item.WinLoss ? 'glyphicon glyphicon-ok green' : '' })
                                         ),
                                         _react2.default.createElement(
                                             'td',
                                             { className: 'text-center' },
-                                            _react2.default.createElement('span', { className: item.EnablePullService ? 'glyphicon glyphicon-ok' : '' })
+                                            _react2.default.createElement('span', { className: item.EnablePullService ? 'glyphicon glyphicon-ok green' : '' })
                                         ),
                                         licensee.IsActive && _react2.default.createElement(
                                             'td',
@@ -8963,14 +9124,14 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                                             item.PullServiceKey && !item.EnablePullService && _react2.default.createElement(
                                                 'span',
                                                 { className: 'btn btn-green', onClick: function onClick() {
-                                                        return _this4._enablePullService(item);
+                                                        return _this7._enablePullService(item);
                                                     } },
                                                 'Enable Pull Service'
                                             ),
                                             _react2.default.createElement(
                                                 'span',
                                                 { className: 'btn btn-red', onClick: function onClick() {
-                                                        return _this4._showRemoveProductPopup(item);
+                                                        return _this7._showRemoveProductPopup(item);
                                                     } },
                                                 'Remove'
                                             )
@@ -9001,227 +9162,6 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ProductGrid);
 
 /***/ }),
-/* 147 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Popup = __webpack_require__(88);
-
-var _Popup2 = _interopRequireDefault(_Popup);
-
-var _ConfirmBox = __webpack_require__(87);
-
-var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
-
-var _site = __webpack_require__(12);
-
-var _site2 = _interopRequireDefault(_site);
-
-var _utility = __webpack_require__(54);
-
-var _utility2 = _interopRequireDefault(_utility);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var EnablePullServiceForm = function (_Component) {
-    _inherits(EnablePullServiceForm, _Component);
-
-    function EnablePullServiceForm(props) {
-        _classCallCheck(this, EnablePullServiceForm);
-
-        var _this = _possibleConstructorReturn(this, (EnablePullServiceForm.__proto__ || Object.getPrototypeOf(EnablePullServiceForm)).call(this, props));
-
-        _this.state = {
-            isShowConfirmBox: false,
-            isLoading: false
-        };
-        return _this;
-    }
-
-    _createClass(EnablePullServiceForm, [{
-        key: '_onClose',
-        value: function _onClose(callBack) {
-            this.setState({
-                isShowConfirmBox: false,
-                isLoading: false
-            });
-            callBack && callBack(false);
-        }
-    }, {
-        key: '_onSubmit',
-        value: function _onSubmit() {
-            this._showConfirmBox(true);
-        }
-    }, {
-        key: '_showConfirmBox',
-        value: function _showConfirmBox(isShow) {
-            this.setState({ isShowConfirmBox: isShow });
-        }
-    }, {
-        key: '_onConfirm',
-        value: function _onConfirm(value, closeCallBack) {
-            this._showConfirmBox(false);
-
-            if (value) {
-                this._submit(closeCallBack);
-            }
-        }
-    }, {
-        key: '_submit',
-        value: function _submit(callBack) {
-            var _this2 = this;
-
-            this._toggleLoader(true);
-            var url = 'LicenseeSetting/EnablePullService';
-            var params = this._getParams();
-
-            _site2.default.fetchData(params, url).then(function (response) {
-                if (!response.data.IsSuccess) {
-                    _utility2.default.showMessage(response.data.Error);
-                    _this2._toggleLoader(false);
-                } else {
-                    _utility2.default.showMessage('Success!');
-                    _this2._onClose(function () {
-                        return callBack(true);
-                    });
-                }
-            }).catch(function (err) {
-                _utility2.default.showMessage('Error!');
-                _this2._toggleLoader(false);
-            });
-        }
-    }, {
-        key: '_toggleLoader',
-        value: function _toggleLoader(isLoading) {
-            this.setState({ isLoading: isLoading });
-        }
-    }, {
-        key: '_getParams',
-        value: function _getParams() {
-            var _props = this.props,
-                licenseeName = _props.licenseeName,
-                productCode = _props.productCode;
-
-
-            return {
-                LicenseeName: licenseeName,
-                ProductCode: productCode
-            };
-        }
-    }, {
-        key: '_buildContent',
-        value: function _buildContent(productName, settingKey, callBack) {
-            var _this3 = this;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'edit-form' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        { className: 'col-form-label' },
-                        'Product'
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        productName
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        { className: 'col-form-label' },
-                        'Setting Key'
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        settingKey
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group right' },
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-primary', onClick: function onClick() {
-                                return _this3._onSubmit();
-                            } },
-                        'Submit'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-red', onClick: function onClick() {
-                                return _this3._onClose(callBack);
-                            } },
-                        'Cancel'
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this4 = this;
-
-            var _props2 = this.props,
-                productName = _props2.productName,
-                settingKey = _props2.settingKey,
-                _onClose2 = _props2.onClose,
-                isShow = _props2.isShow;
-            var isShowConfirmBox = this.state.isShowConfirmBox;
-
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_ConfirmBox2.default, { isShow: isShowConfirmBox,
-                    title: 'Confirmation',
-                    message: 'Do you want to enable ' + productName + ' pull service?',
-                    style: { height: '150px', width: '400px' },
-                    onClose: function onClose(value) {
-                        return _this4._onConfirm(value, _onClose2);
-                    } }),
-                _react2.default.createElement(_Popup2.default, { isShow: isShow,
-                    title: 'Enable Pull Service',
-                    content: this._buildContent(productName, settingKey, _onClose2),
-                    style: { height: '240px', width: '600px' },
-                    onClose: function onClose() {
-                        return _this4._onClose(_onClose2);
-                    } })
-            );
-        }
-    }]);
-
-    return EnablePullServiceForm;
-}(_react.Component);
-
-exports.default = EnablePullServiceForm;
-
-/***/ }),
 /* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9245,11 +9185,11 @@ var _redux = __webpack_require__(2);
 
 var _action = __webpack_require__(89);
 
-var _Popup = __webpack_require__(88);
+var _Popup = __webpack_require__(87);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
-var _ConfirmBox = __webpack_require__(87);
+var _ConfirmBox = __webpack_require__(88);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
@@ -9261,7 +9201,7 @@ var _reactSelect = __webpack_require__(15);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -9289,7 +9229,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 selectedCurrency: null,
                 currencyList: [],
                 isShow: false,
-                redMineId: ''
+                redmineId: ''
             });
         };
 
@@ -9325,7 +9265,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
             selectedCurrency: null,
             currencyList: [],
             isShow: false,
-            redMineId: ''
+            redmineId: ''
         };
 
         _this.changeCurrencyList = _utility2.default.debounce(_this._getCurrencyList, 2000).bind(_this);
@@ -9366,7 +9306,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 superWildCard = _state.superWildCard,
                 selectedCurrency = _state.selectedCurrency,
                 isSpecial = _state.isSpecial,
-                redMineId = _state.redMineId;
+                redmineId = _state.redmineId;
 
 
             return {
@@ -9374,7 +9314,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 SuperWildCard: superWildCard,
                 Currency: selectedCurrency == null ? 0 : selectedCurrency.value,
                 IsSpecial: isSpecial,
-                RedMineId: redMineId
+                RedmineId: redmineId
             };
         }
     }, {
@@ -9382,26 +9322,30 @@ var AddAgent = exports.AddAgent = function (_Component) {
         value: function _getCurrencyList() {
             var _this3 = this;
 
-            this.props.toggleLoader(true);
-            var url = 'LicenseeSetting/GetSuperCurrencyList';
-            var param = { SuperWildCard: this.state.superWildCard };
+            var superWildCard = this.state.superWildCard;
 
-            _site2.default.fetchData(param, url).then(function (response) {
-                var data = response.data ? response.data.map(function (item) {
-                    return { label: item.Name, value: item.Id };
-                }) : [];
+            if (superWildCard) {
+                this.props.toggleLoader(true);
+                var url = 'LicenseeSetting/GetSuperCurrencyList';
+                var param = { SuperWildCard: superWildCard };
 
-                _this3.setState({ currencyList: data, selectedCurrency: null });
+                _site2.default.fetchData(param, url).then(function (response) {
+                    var data = response.data ? response.data.map(function (item) {
+                        return { label: item.Name, value: item.Id };
+                    }) : [];
 
-                _this3.props.toggleLoader(false);
-            }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
-                _this3.props.toggleLoader(false);
-            });
+                    _this3.setState({ currencyList: data, selectedCurrency: null });
+
+                    _this3.props.toggleLoader(false);
+                }).catch(function (err) {
+                    _utility2.default.showMessage('Please try later!');
+                    _this3.props.toggleLoader(false);
+                });
+            }
         }
     }, {
         key: '_buildContent',
-        value: function _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId) {
+        value: function _buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redmineId) {
             var _this4 = this;
 
             return _react2.default.createElement(
@@ -9415,7 +9359,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         { className: 'col-form-label' },
                         'Supper Wild Card'
                     ),
-                    _react2.default.createElement('input', { className: 'full-width ' + (this.isValid ? '' : 'has-error'),
+                    _react2.default.createElement('input', { className: 'full-width ' + (superWildCard ? '' : 'has-error'),
                         type: 'text',
                         value: superWildCard,
                         onChange: this._onTextChange }),
@@ -9487,11 +9431,11 @@ var AddAgent = exports.AddAgent = function (_Component) {
                         { className: 'col-form-label' },
                         'Redmine Id'
                     ),
-                    _react2.default.createElement('input', { className: 'full-width',
+                    _react2.default.createElement('input', { className: 'full-width ' + (redmineId ? '' : 'has-error'),
                         type: 'text',
-                        value: redMineId,
+                        value: redmineId,
                         onChange: function onChange(e) {
-                            return _this4.setState({ redMineId: e.target.value });
+                            return _this4.setState({ redmineId: e.target.value });
                         } })
                 ),
                 _react2.default.createElement(
@@ -9520,7 +9464,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                 selectedCurrency = _state2.selectedCurrency,
                 currencyList = _state2.currencyList,
                 isShow = _state2.isShow,
-                redMineId = _state2.redMineId;
+                redmineId = _state2.redmineId;
 
 
             return _react2.default.createElement(
@@ -9538,7 +9482,7 @@ var AddAgent = exports.AddAgent = function (_Component) {
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Add Agent/Currency',
-                    content: this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redMineId),
+                    content: this._buildContent(selectedCurrency, currencyList, superWildCard, isSpecial, redmineId),
                     className: 'no-scroll',
                     style: { height: '420px', width: '720px' },
                     onClose: this.onClose })
@@ -9547,9 +9491,12 @@ var AddAgent = exports.AddAgent = function (_Component) {
     }, {
         key: 'isValid',
         get: function get() {
-            var superWildCard = this.state.superWildCard;
+            var _state3 = this.state,
+                superWildCard = _state3.superWildCard,
+                redmineId = _state3.redmineId;
 
-            return superWildCard !== null && superWildCard !== '';
+
+            return superWildCard && redmineId;
         }
     }]);
 
@@ -9595,11 +9542,11 @@ var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _Popup = __webpack_require__(88);
+var _Popup = __webpack_require__(87);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
@@ -9724,15 +9671,15 @@ var _redux = __webpack_require__(2);
 
 var _action = __webpack_require__(89);
 
-var _ConfirmBox = __webpack_require__(87);
+var _RedmineConfirmForm = __webpack_require__(99);
 
-var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
+var _RedmineConfirmForm2 = _interopRequireDefault(_RedmineConfirmForm);
 
 var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -9756,20 +9703,25 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
             _this.setState({ isShow: true });
         };
 
-        _this.onConfirm = function (value) {
-            if (value) {
+        _this.onConfirm = function (redmineId) {
+            if (redmineId) {
                 _this.props.toggleLoader(true);
                 var url = 'LicenseeSetting/TerminateLicensee';
                 var param = {
-                    LicenseeName: _this.props.licensee.LicenseeName
+                    LicenseeName: _this.props.licensee.LicenseeName,
+                    RedmineId: redmineId
                 };
 
                 _site2.default.fetchData(param, url).then(function (response) {
                     if (!response.data.IsSuccess) {
                         _utility2.default.showMessage(response.data.Error);
+                    } else {
+                        _this.setState({ isShow: false });
+                        _utility2.default.showMessage('Success!');
                     }
 
                     if (response.data.Data) {
+                        _this.setState({ isShow: false });
                         _this.props.setLicensee(response.data.Data);
                         _this.props.getProductList(_this.props.licensee.LicenseeID);
                     } else {
@@ -9779,9 +9731,9 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
                     _utility2.default.showMessage('Please try later!');
                     _this.props.toggleLoader(false);
                 });
+            } else {
+                _this.setState({ isShow: false });
             }
-
-            _this.setState({ isShow: false });
         };
 
         _this.state = { isShow: false };
@@ -9802,11 +9754,10 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
                     { className: 'btn btn-red', onClick: this._terminateLicensee },
                     'Terminate Licensee'
                 ),
-                _react2.default.createElement(_ConfirmBox2.default, { isShow: isShow,
-                    title: 'Confirmation',
-                    message: 'Do you want to terminate this licensee?',
-                    style: { height: '150px', width: '400px' },
-                    onClose: this.onConfirm })
+                _react2.default.createElement(_RedmineConfirmForm2.default, { isShow: isShow,
+                    msg: 'Do you want to terminate this licensee?',
+                    style: { height: '210px', width: '400px' },
+                    onConfirm: this.onConfirm })
             );
         }
     }]);
@@ -9849,11 +9800,11 @@ var _redux = __webpack_require__(2);
 
 var _action = __webpack_require__(89);
 
-var _Popup = __webpack_require__(88);
+var _Popup = __webpack_require__(87);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
-var _ConfirmBox = __webpack_require__(87);
+var _ConfirmBox = __webpack_require__(88);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
@@ -9865,7 +9816,7 @@ var _reactSelect = __webpack_require__(15);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -9925,7 +9876,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             selectedproduct: null,
             isShow: false,
             productList: [],
-            redMineId: ''
+            redmineId: ''
         };
         return _this;
     }
@@ -9939,7 +9890,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 selectedproduct: null,
                 isShow: false,
                 productList: [],
-                redMineId: ''
+                redmineId: ''
             });
         }
     }, {
@@ -9959,12 +9910,12 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             _site2.default.fetchData(params, url).then(function (response) {
                 if (!response.data.IsSuccess) {
                     _utility2.default.showMessage(response.data.Error);
+                    _this2.props.toggleLoader(false);
                 } else {
                     _utility2.default.showMessage('Success!');
                     _this2.onClose();
+                    _this2.props.getProductList(_this2.props.licensee.LicenseeID);
                 }
-
-                _this2.props.getProductList(_this2.props.licensee.LicenseeID);
             }).catch(function (err) {
                 _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
@@ -9976,7 +9927,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             var _state = this.state,
                 date = _state.date,
                 selectedproduct = _state.selectedproduct,
-                redMineId = _state.redMineId;
+                redmineId = _state.redmineId;
 
 
             return {
@@ -9985,12 +9936,12 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                     return i.value;
                 }).join(','),
                 EffectiveDate: date,
-                RedMineId: redMineId
+                RedmineId: redmineId
             };
         }
     }, {
         key: '_buildContent',
-        value: function _buildContent(selectedproduct, productList, date, redMineId) {
+        value: function _buildContent(selectedproduct, productList, date, redmineId) {
             var _this3 = this;
 
             return _react2.default.createElement(
@@ -10005,7 +9956,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                         'Product'
                     ),
                     _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlProduct',
-                        className: 'full-width ' + (this.isValid ? '' : 'has-error'),
+                        className: 'full-width ' + (selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'),
                         value: selectedproduct,
                         options: productList,
                         multi: true,
@@ -10033,11 +9984,11 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                         { className: 'col-form-label' },
                         'Redmine Id'
                     ),
-                    _react2.default.createElement('input', { className: 'full-width',
+                    _react2.default.createElement('input', { className: 'full-width ' + (redmineId ? '' : 'has-error'),
                         type: 'text',
-                        value: redMineId,
+                        value: redmineId,
                         onChange: function onChange(e) {
-                            return _this3.setState({ redMineId: e.target.value });
+                            return _this3.setState({ redmineId: e.target.value });
                         } })
                 ),
                 _react2.default.createElement(
@@ -10069,7 +10020,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 selectedproduct = _state2.selectedproduct,
                 productList = _state2.productList,
                 isShow = _state2.isShow,
-                redMineId = _state2.redMineId;
+                redmineId = _state2.redmineId;
 
 
             return _react2.default.createElement(
@@ -10087,7 +10038,7 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'Offer New Product',
-                    content: this._buildContent(selectedproduct, productList, date, redMineId),
+                    content: this._buildContent(selectedproduct, productList, date, redmineId),
                     className: 'no-scroll',
                     style: { height: '320px', width: '600px' },
                     onClose: function onClose() {
@@ -10098,9 +10049,12 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
     }, {
         key: 'isValid',
         get: function get() {
-            var selectedproduct = this.state.selectedproduct;
+            var _state3 = this.state,
+                selectedproduct = _state3.selectedproduct,
+                redmineId = _state3.redmineId;
 
-            return selectedproduct !== null && selectedproduct.length > 0;
+
+            return redmineId && selectedproduct !== null && selectedproduct.length > 0;
         }
     }]);
 
@@ -10154,5 +10108,5 @@ var productList = (0, _createReducer4.default)({}, _defineProperty({}, _types.SE
 exports.default = (0, _redux.combineReducers)({ licensee: licensee, productList: productList, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[143]);
+],[144]);
 //# sourceMappingURL=editlicensee.js.map

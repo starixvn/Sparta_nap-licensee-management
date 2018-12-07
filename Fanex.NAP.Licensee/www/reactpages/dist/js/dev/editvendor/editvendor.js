@@ -3652,10 +3652,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(55);
+var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(57);
-var checkPropTypes = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(55);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -7922,7 +7922,8 @@ var LicenseeType = exports.LicenseeType = {
 /* 118 */,
 /* 119 */,
 /* 120 */,
-/* 121 */
+/* 121 */,
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7942,13 +7943,13 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _EditForm = __webpack_require__(122);
+var _EditForm = __webpack_require__(123);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
 
 var _reactRedux = __webpack_require__(6);
 
-var _reducer = __webpack_require__(125);
+var _reducer = __webpack_require__(126);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -7996,7 +7997,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8021,11 +8022,11 @@ var _Loader = __webpack_require__(17);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _IgnoredFunctionList = __webpack_require__(123);
+var _IgnoredFunctionList = __webpack_require__(124);
 
 var _IgnoredFunctionList2 = _interopRequireDefault(_IgnoredFunctionList);
 
-var _action = __webpack_require__(124);
+var _action = __webpack_require__(125);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8233,7 +8234,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(EditForm);
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8470,7 +8471,7 @@ var IgnoredFunctionList = function (_Component) {
 exports.default = IgnoredFunctionList;
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8499,7 +8500,7 @@ exports.updateVendor = updateVendor;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8517,7 +8518,7 @@ var _createReducer3 = __webpack_require__(50);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _actionTypes = __webpack_require__(126);
+var _actionTypes = __webpack_require__(127);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8534,7 +8535,7 @@ var functionKeyList = (0, _createReducer4.default)([], _defineProperty({}, _acti
 exports.default = (0, _redux.combineReducers)({ licenseeVendorInfo: licenseeVendorInfo, functionKeyList: functionKeyList, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8547,5 +8548,5 @@ var SET_VENDOR_INFO = exports.SET_VENDOR_INFO = "SET_VENDOR_INFO";
 var SET_FUNCTION_LIST = exports.SET_FUNCTION_LIST = "SET_FUNCTION_LIST";
 
 /***/ })
-],[121]);
+],[122]);
 //# sourceMappingURL=editvendor.js.map

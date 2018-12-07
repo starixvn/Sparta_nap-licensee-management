@@ -3652,10 +3652,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(55);
+var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(57);
-var checkPropTypes = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(55);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -7955,7 +7955,8 @@ var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 /* 133 */,
 /* 134 */,
 /* 135 */,
-/* 136 */
+/* 136 */,
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7975,13 +7976,13 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(137);
+var _AppContainer = __webpack_require__(138);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(6);
 
-var _reducer = __webpack_require__(140);
+var _reducer = __webpack_require__(141);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -8028,7 +8029,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8053,11 +8054,11 @@ var _Loader = __webpack_require__(17);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(138);
+var _FormFilter = __webpack_require__(139);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(139);
+var _DataGrid = __webpack_require__(140);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -8112,7 +8113,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8262,7 +8263,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8436,7 +8437,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.IsDeposit ? 'glyphicon glyphicon-ok' : '' })
+                                    _react2.default.createElement('span', { className: item.IsDeposit ? 'glyphicon glyphicon-ok green' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -8446,17 +8447,17 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.IsActive ? 'glyphicon glyphicon-ok' : '' })
+                                    _react2.default.createElement('span', { className: item.IsActive ? 'glyphicon glyphicon-ok green' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.IsKPIActive ? 'glyphicon glyphicon-ok' : '' })
+                                    _react2.default.createElement('span', { className: item.IsKPIActive ? 'glyphicon glyphicon-ok green' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.IsOneWorkActive ? 'glyphicon glyphicon-ok' : '' })
+                                    _react2.default.createElement('span', { className: item.IsOneWorkActive ? 'glyphicon glyphicon-ok green' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -8471,7 +8472,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('span', { className: item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : '' })
+                                    _react2.default.createElement('span', { className: item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok green' : '' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -8505,7 +8506,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8536,5 +8537,5 @@ var params = (0, _createReducer3.default)({}, _defineProperty({}, _types.SET_PAR
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[136]);
+],[137]);
 //# sourceMappingURL=licensee.js.map

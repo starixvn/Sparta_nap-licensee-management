@@ -3652,10 +3652,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(55);
+var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(57);
-var checkPropTypes = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(55);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -6477,7 +6477,9 @@ function createReducer(initialState, handlers) {
 /* 51 */,
 /* 52 */,
 /* 53 */,
-/* 54 */
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6541,8 +6543,6 @@ var Utility = function () {
 exports.default = Utility;
 
 /***/ }),
-/* 55 */,
-/* 56 */,
 /* 57 */,
 /* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -7953,7 +7953,108 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Popup = __webpack_require__(88);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Popup = function (_React$Component) {
+    _inherits(Popup, _React$Component);
+
+    function Popup(props) {
+        _classCallCheck(this, Popup);
+
+        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+        _this.zIndex = props.zIndex ? props.zIndex : 50;
+        return _this;
+    }
+
+    _createClass(Popup, [{
+        key: '_onClose',
+        value: function _onClose(callBack) {
+            callBack && callBack();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                title = _props.title,
+                style = _props.style,
+                content = _props.content,
+                onClose = _props.onClose,
+                noShowCloseButton = _props.noShowCloseButton,
+                isShow = _props.isShow,
+                className = _props.className;
+
+            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'popup ' + (isShow ? 'show' : '') },
+                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'popup-container ' + className, style: combinedStyle },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-title' },
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            title
+                        ),
+                        !noShowCloseButton && _react2.default.createElement(
+                            'a',
+                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
+                                    return _this2._onClose(onClose);
+                                } },
+                            '\xD7'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-content' },
+                        content
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Popup;
+}(_react2.default.Component);
+
+exports.default = Popup;
+;
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(5);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Popup = __webpack_require__(87);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
@@ -8045,107 +8146,6 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(5);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Popup = function (_React$Component) {
-    _inherits(Popup, _React$Component);
-
-    function Popup(props) {
-        _classCallCheck(this, Popup);
-
-        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
-
-        _this.zIndex = props.zIndex ? props.zIndex : 50;
-        return _this;
-    }
-
-    _createClass(Popup, [{
-        key: '_onClose',
-        value: function _onClose(callBack) {
-            callBack && callBack();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                title = _props.title,
-                style = _props.style,
-                content = _props.content,
-                onClose = _props.onClose,
-                noShowCloseButton = _props.noShowCloseButton,
-                isShow = _props.isShow,
-                className = _props.className;
-
-            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'popup ' + (isShow ? 'show' : '') },
-                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'popup-container ' + className, style: combinedStyle },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-title' },
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            title
-                        ),
-                        !noShowCloseButton && _react2.default.createElement(
-                            'a',
-                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
-                                    return _this2._onClose(onClose);
-                                } },
-                            '\xD7'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-content' },
-                        content
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Popup;
-}(_react2.default.Component);
-
-exports.default = Popup;
-;
-
-/***/ }),
 /* 89 */,
 /* 90 */,
 /* 91 */,
@@ -8220,7 +8220,8 @@ var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 /* 124 */,
 /* 125 */,
 /* 126 */,
-/* 127 */
+/* 127 */,
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8240,13 +8241,13 @@ var _reactDom = __webpack_require__(5);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(128);
+var _AppContainer = __webpack_require__(129);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(6);
 
-var _reducer = __webpack_require__(131);
+var _reducer = __webpack_require__(132);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -8293,7 +8294,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8318,11 +8319,11 @@ var _Loader = __webpack_require__(17);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(129);
+var _FormFilter = __webpack_require__(130);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(130);
+var _DataGrid = __webpack_require__(131);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -8383,7 +8384,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8592,7 +8593,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8619,11 +8620,11 @@ var _site = __webpack_require__(12);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _ConfirmBox = __webpack_require__(87);
+var _ConfirmBox = __webpack_require__(88);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
-var _utility = __webpack_require__(54);
+var _utility = __webpack_require__(56);
 
 var _utility2 = _interopRequireDefault(_utility);
 
@@ -8850,7 +8851,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8881,5 +8882,5 @@ var params = (0, _createReducer3.default)({}, _defineProperty({}, _types.SET_PAR
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[127]);
+],[128]);
 //# sourceMappingURL=operatorlist.js.map

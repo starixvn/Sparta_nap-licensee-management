@@ -1,5 +1,6 @@
-webpackJsonp([5],[
-/* 0 */
+webpackJsonp([5],{
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -309,375 +310,8 @@ module.exports = {
 
 
 /***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (true) {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(16)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
-}
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(8);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(8);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(26);
-var buildURL = __webpack_require__(28);
-var parseHeaders = __webpack_require__(29);
-var isURLSameOrigin = __webpack_require__(30);
-var createError = __webpack_require__(9);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ("development" !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(32);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(27);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 10 */
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -689,7 +323,8 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 11 */
+
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -715,7 +350,8 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 12 */
+
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -793,9 +429,457 @@ var Site = function () {
 exports.default = Site;
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */
+
+/***/ 142:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(5);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Form = __webpack_require__(143);
+
+var _Form2 = _interopRequireDefault(_Form);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    function App(props) {
+        _classCallCheck(this, App);
+
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    }
+
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_Form2.default, null);
+        }
+    }]);
+
+    return App;
+}(_react2.default.Component);
+
+exports.default = App;
+
+
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
+
+/***/ }),
+
+/***/ 143:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Loader = __webpack_require__(17);
+
+var _Loader2 = _interopRequireDefault(_Loader);
+
+var _site = __webpack_require__(12);
+
+var _site2 = _interopRequireDefault(_site);
+
+var _reactSelect = __webpack_require__(15);
+
+var _reactSelect2 = _interopRequireDefault(_reactSelect);
+
+var _utility = __webpack_require__(56);
+
+var _utility2 = _interopRequireDefault(_utility);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var defaultState = Object.assign({}, window.initialState);
+
+var Form = function (_Component) {
+    _inherits(Form, _Component);
+
+    function Form(props) {
+        _classCallCheck(this, Form);
+
+        var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+
+        _this._onChangeLicenseeName = function (e) {
+            var value = e.target.value;
+
+            _this.setState({ licenseeName: value, superWildCard: value + 'Super' });
+        };
+
+        _this._handleSubmit = function () {
+            if (_this.isValid) {
+                var param = _this._getParams();
+
+                _this._submit(param);
+            } else {
+                _utility2.default.showMessage('Invalid input!');
+            }
+        };
+
+        _this.state = {
+            licenseeName: '',
+            superWildCard: '',
+            selectedReseller: null,
+            selectedProduct: null,
+            selectedSystem: defaultState.selectedSystem,
+            isSpecial: false,
+            isAllowMemberComm: true,
+            isLoading: false,
+            isSuccess: false,
+            date: _utility2.default.getTodayString(),
+            redmineId: ''
+        };
+        return _this;
+    }
+
+    _createClass(Form, [{
+        key: '_getParams',
+        value: function _getParams() {
+            return {
+                LicenseeName: this.state.licenseeName,
+                SuperWildCard: this.state.superWildCard,
+                LicenseeType: this.state.selectedReseller.value,
+                ProductCode: this.state.selectedProduct == null ? '' : this.state.selectedProduct.map(function (i) {
+                    return i.value;
+                }).join(','),
+                SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(function (i) {
+                    return i.value;
+                }).join(','),
+                IsSpecial: this.state.isSpecial,
+                IsAllowMemberComm: this.state.isAllowMemberComm,
+                EffectiveDate: this.state.date,
+                RedmineId: this.state.redmineId
+            };
+        }
+    }, {
+        key: '_submit',
+        value: function _submit(params) {
+            var _this2 = this;
+
+            this._toggleLoader(true);
+            var url = 'LicenseeSetting/SetUpNewLicensee';
+            _site2.default.fetchData(params, url).then(function (response) {
+                if (response.data.IsSuccess) {
+                    _utility2.default.showMessage('Success!');
+                    _this2.setState({ isSuccess: true });
+                } else {
+                    _utility2.default.showMessage(response.data.Error);
+                }
+
+                _this2._toggleLoader(false);
+            }).catch(function (err) {
+                _utility2.default.showMessage('Please try again!');
+                _this2._toggleLoader(false);
+            });
+        }
+    }, {
+        key: '_toggleLoader',
+        value: function _toggleLoader(isLoading) {
+            this.setState({ isLoading: isLoading });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            var _state = this.state,
+                licenseeName = _state.licenseeName,
+                superWildCard = _state.superWildCard,
+                selectedReseller = _state.selectedReseller,
+                selectedProduct = _state.selectedProduct,
+                selectedSystem = _state.selectedSystem,
+                isSpecial = _state.isSpecial,
+                date = _state.date,
+                isAllowMemberComm = _state.isAllowMemberComm,
+                isLoading = _state.isLoading,
+                isSuccess = _state.isSuccess,
+                redmineId = _state.redmineId;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'add-form' },
+                _react2.default.createElement(_Loader2.default, { isLoading: isLoading }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Licensee Name'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    value: licenseeName,
+                                    className: 'full-width ' + (licenseeName ? '' : 'has-error'),
+                                    onChange: this._onChangeLicenseeName })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Super Wild Card'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    value: superWildCard,
+                                    className: 'full-width ' + (superWildCard ? '' : 'has-error'),
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ superWildCard: e.target.value });
+                                    } }),
+                                _react2.default.createElement(
+                                    'i',
+                                    null,
+                                    '(Manually changing ',
+                                    _react2.default.createElement(
+                                        'b',
+                                        null,
+                                        '"Super Wild Card"'
+                                    ),
+                                    ' value will cause wrong setting for licensee agent. Please consider carefully)'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Licensee Type'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlReseller',
+                                    className: 'full-width ' + (selectedReseller ? '' : 'has-error'),
+                                    value: selectedReseller,
+                                    options: defaultState.resellerList,
+                                    onChange: function onChange(item) {
+                                        return _this3.setState({ selectedReseller: item });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Product'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlProduct',
+                                    className: 'full-width',
+                                    value: selectedProduct,
+                                    options: defaultState.productList,
+                                    multi: true,
+                                    onChange: function onChange(item) {
+                                        return _this3.setState({ selectedProduct: item });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'System'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlProduct',
+                                    className: 'full-width',
+                                    value: selectedSystem,
+                                    options: defaultState.systemList,
+                                    multi: true,
+                                    onChange: function onChange(item) {
+                                        return _this3.setState({ selectedSystem: item });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Effective Date'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { className: 'full-width', type: 'date', value: date, onChange: function onChange(e) {
+                                        return _this3.setState({ date: e.target.value });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Is Special'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'checkbox',
+                                    checked: isSpecial,
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ isSpecial: e.target.checked });
+                                    } }),
+                                _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement(
+                                        'i',
+                                        null,
+                                        '(',
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Is Special'
+                                        ),
+                                        ' = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Allow Member Comm'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'checkbox',
+                                    checked: isAllowMemberComm,
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ isAllowMemberComm: e.target.checked });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Redmine Id'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    value: redmineId,
+                                    className: 'full-width ' + (redmineId ? '' : 'has-error'),
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ redmineId: e.target.value });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row col-sm-12' },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-primary ' + (isSuccess ? 'hide' : ''), onClick: this._handleSubmit, disabled: !this.isValid },
+                                'Submit'
+                            ),
+                            _react2.default.createElement(
+                                'a',
+                                { className: 'btn btn-green ' + (isSuccess ? '' : 'hide'), href: window.rootUrl + 'LicenseeSetting/Edit?licenseeName=' + licenseeName },
+                                'View New Licensee'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'isValid',
+        get: function get() {
+            var _state2 = this.state,
+                licenseeName = _state2.licenseeName,
+                selectedReseller = _state2.selectedReseller,
+                isSuccess = _state2.isSuccess,
+                redmineId = _state2.redmineId,
+                superWildCard = _state2.superWildCard;
+
+
+            return licenseeName && selectedReseller && redmineId && !isSuccess && superWildCard;
+        }
+    }]);
+
+    return Form;
+}(_react.Component);
+
+exports.default = Form;
+
+/***/ }),
+
+/***/ 15:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3485,7 +3569,8 @@ Select$1.Option = Option;
 
 
 /***/ }),
-/* 16 */
+
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3501,10 +3586,10 @@ Select$1.Option = Option;
 var emptyFunction = __webpack_require__(51);
 var invariant = __webpack_require__(52);
 var warning = __webpack_require__(53);
-var assign = __webpack_require__(55);
+var assign = __webpack_require__(54);
 
 var ReactPropTypesSecret = __webpack_require__(57);
-var checkPropTypes = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(55);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -4034,7 +4119,8 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 /***/ }),
-/* 17 */
+
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4090,7 +4176,8 @@ exports.default = Loader;
 ;
 
 /***/ }),
-/* 18 */
+
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4364,7 +4451,8 @@ AutosizeInput.defaultProps = {
 exports.default = AutosizeInput;
 
 /***/ }),
-/* 19 */
+
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4419,13 +4507,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 20 */
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(21);
 
 /***/ }),
-/* 21 */
+
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4484,7 +4574,8 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 22 */
+
+/***/ 22:
 /***/ (function(module, exports) {
 
 /*!
@@ -4511,7 +4602,8 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 23 */
+
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4597,7 +4689,8 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 24 */
+
+/***/ 24:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -4787,7 +4880,8 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 25 */
+
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4806,7 +4900,8 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 26 */
+
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4839,7 +4934,8 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 27 */
+
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4867,7 +4963,8 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 28 */
+
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4942,7 +5039,8 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 29 */
+
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5002,7 +5100,43 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 30 */
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(16)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = require('./factoryWithThrowingShims')();
+}
+
+
+/***/ }),
+
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5077,7 +5211,8 @@ module.exports = (
 
 
 /***/ }),
-/* 31 */
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5120,7 +5255,8 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 32 */
+
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5180,7 +5316,8 @@ module.exports = (
 
 
 /***/ }),
-/* 33 */
+
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5239,7 +5376,8 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 34 */
+
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5332,7 +5470,8 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 35 */
+
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5359,7 +5498,8 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 36 */
+
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5380,7 +5520,8 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 37 */
+
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5401,7 +5542,8 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 38 */
+
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5465,7 +5607,8 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 39 */
+
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5499,21 +5642,109 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(25);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(8);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(8);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
+
+/***/ }),
+
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5577,536 +5808,239 @@ var Utility = function () {
 exports.default = Utility;
 
 /***/ }),
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(5);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _Form = __webpack_require__(142);
-
-var _Form2 = _interopRequireDefault(_Form);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var App = function (_React$Component) {
-    _inherits(App, _React$Component);
-
-    function App(props) {
-        _classCallCheck(this, App);
-
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
     }
+    return fn.apply(thisArg, args);
+  };
+};
 
-    _createClass(App, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(_Form2.default, null);
-        }
-    }]);
-
-    return App;
-}(_react2.default.Component);
-
-exports.default = App;
-
-
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 142 */
+
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(26);
+var buildURL = __webpack_require__(28);
+var parseHeaders = __webpack_require__(29);
+var isURLSameOrigin = __webpack_require__(30);
+var createError = __webpack_require__(9);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Loader = __webpack_require__(17);
-
-var _Loader2 = _interopRequireDefault(_Loader);
-
-var _site = __webpack_require__(12);
-
-var _site2 = _interopRequireDefault(_site);
-
-var _reactSelect = __webpack_require__(15);
-
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
-
-var _utility = __webpack_require__(54);
-
-var _utility2 = _interopRequireDefault(_utility);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var defaultState = Object.assign({}, window.initialState);
-
-var Form = function (_Component) {
-    _inherits(Form, _Component);
-
-    function Form(props) {
-        _classCallCheck(this, Form);
-
-        var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
-
-        _this._onChangeLicenseeName = function (e) {
-            var value = e.target.value;
-
-            _this.setState({ licenseeName: value, superWildCard: value + 'Super' });
-        };
-
-        _this._handleSubmit = function () {
-            if (_this.isValid) {
-                var param = _this._getParams();
-
-                _this._submit(param);
-            } else {
-                _utility2.default.showMessage('Invalid input!');
-            }
-        };
-
-        _this.state = {
-            licenseeName: '',
-            superWildCard: '',
-            selectedReseller: null,
-            selectedProduct: null,
-            selectedSystem: defaultState.selectedSystem,
-            isSpecial: false,
-            isAllowMemberComm: true,
-            isLoading: false,
-            isSuccess: false,
-            date: _utility2.default.getTodayString(),
-            redMineId: ''
-        };
-        return _this;
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
-    _createClass(Form, [{
-        key: '_getParams',
-        value: function _getParams() {
-            return {
-                LicenseeName: this.state.licenseeName,
-                SuperWildCard: this.state.superWildCard,
-                LicenseeType: this.state.selectedReseller.value,
-                ProductCode: this.state.selectedProduct == null ? '' : this.state.selectedProduct.map(function (i) {
-                    return i.value;
-                }).join(','),
-                SystemisActive: this.state.selectedSystem == null ? '' : this.state.selectedSystem.map(function (i) {
-                    return i.value;
-                }).join(','),
-                IsSpecial: this.state.isSpecial,
-                IsAllowMemberComm: this.state.isAllowMemberComm,
-                EffectiveDate: this.state.date,
-                RedMineId: this.state.redMineId
-            };
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(32);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
         }
-    }, {
-        key: '_submit',
-        value: function _submit(params) {
-            var _this2 = this;
+      });
+    }
 
-            this._toggleLoader(true);
-            var url = 'LicenseeSetting/SetUpNewLicensee';
-            _site2.default.fetchData(params, url).then(function (response) {
-                if (response.data.IsSuccess) {
-                    _utility2.default.showMessage('Success!');
-                    _this2.setState({ isSuccess: true });
-                } else {
-                    _utility2.default.showMessage(response.data.Error);
-                }
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
 
-                _this2._toggleLoader(false);
-            }).catch(function (err) {
-                _utility2.default.showMessage('Please try again!');
-                _this2._toggleLoader(false);
-            });
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
         }
-    }, {
-        key: '_toggleLoader',
-        value: function _toggleLoader(isLoading) {
-            this.setState({ isLoading: isLoading });
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
         }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
 
-            var _state = this.state,
-                licenseeName = _state.licenseeName,
-                superWildCard = _state.superWildCard,
-                selectedReseller = _state.selectedReseller,
-                selectedProduct = _state.selectedProduct,
-                selectedSystem = _state.selectedSystem,
-                isSpecial = _state.isSpecial,
-                date = _state.date,
-                isAllowMemberComm = _state.isAllowMemberComm,
-                isLoading = _state.isLoading,
-                isSuccess = _state.isSuccess,
-                redMineId = _state.redMineId;
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
 
+    if (requestData === undefined) {
+      requestData = null;
+    }
 
-            return _react2.default.createElement(
-                'div',
-                { className: 'add-form' },
-                _react2.default.createElement(_Loader2.default, { isLoading: isLoading }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'row' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-xs-12' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Licensee Name'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { type: 'text',
-                                    value: licenseeName,
-                                    className: 'full-width ' + (licenseeName ? '' : 'has-error'),
-                                    onChange: this._onChangeLicenseeName })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Super Wild Card'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { type: 'text',
-                                    value: superWildCard,
-                                    className: 'full-width',
-                                    onChange: function onChange(e) {
-                                        return _this3.setState({ superWildCard: e.target.value });
-                                    } }),
-                                _react2.default.createElement(
-                                    'i',
-                                    null,
-                                    '(Manually changing ',
-                                    _react2.default.createElement(
-                                        'b',
-                                        null,
-                                        '"Super Wild Card"'
-                                    ),
-                                    ' value will cause wrong setting for licensee agent. Please consider carefully)'
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Licensee Type'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlReseller',
-                                    className: 'full-width ' + (selectedReseller ? '' : 'has-error'),
-                                    value: selectedReseller,
-                                    options: defaultState.resellerList,
-                                    onChange: function onChange(item) {
-                                        return _this3.setState({ selectedReseller: item });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Product'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlProduct',
-                                    className: 'full-width',
-                                    value: selectedProduct,
-                                    options: defaultState.productList,
-                                    multi: true,
-                                    onChange: function onChange(item) {
-                                        return _this3.setState({ selectedProduct: item });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'System'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlProduct',
-                                    className: 'full-width',
-                                    value: selectedSystem,
-                                    options: defaultState.systemList,
-                                    multi: true,
-                                    onChange: function onChange(item) {
-                                        return _this3.setState({ selectedSystem: item });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Effective Date'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { className: 'full-width', type: 'date', value: date, onChange: function onChange(e) {
-                                        return _this3.setState({ date: e.target.value });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Is Special'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { type: 'checkbox',
-                                    checked: isSpecial,
-                                    onChange: function onChange(e) {
-                                        return _this3.setState({ isSpecial: e.target.checked });
-                                    } }),
-                                _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    _react2.default.createElement(
-                                        'i',
-                                        null,
-                                        '(',
-                                        _react2.default.createElement(
-                                            'b',
-                                            null,
-                                            'Is Special'
-                                        ),
-                                        ' = true: Update [Description] of Agent with normal/affiliate/banner/income access)'
-                                    )
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Allow Member Comm'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { type: 'checkbox',
-                                    checked: isAllowMemberComm,
-                                    onChange: function onChange(e) {
-                                        return _this3.setState({ isAllowMemberComm: e.target.checked });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Redmine Id'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                _react2.default.createElement('input', { type: 'text',
-                                    value: redMineId,
-                                    className: 'full-width',
-                                    onChange: function onChange(e) {
-                                        return _this3.setState({ redMineId: e.target.value });
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row col-sm-12' },
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'btn btn-primary ' + (isSuccess ? 'hide' : ''), onClick: this._handleSubmit, disabled: !this.isValid },
-                                'Submit'
-                            ),
-                            _react2.default.createElement(
-                                'a',
-                                { className: 'btn btn-green ' + (isSuccess ? '' : 'hide'), href: window.rootUrl + 'LicenseeSetting/Edit?licenseeName=' + licenseeName },
-                                'View New Licensee'
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'isValid',
-        get: function get() {
-            var _state2 = this.state,
-                licenseeName = _state2.licenseeName,
-                selectedReseller = _state2.selectedReseller,
-                isSuccess = _state2.isSuccess;
+    // Send the request
+    request.send(requestData);
+  });
+};
 
 
-            return licenseeName && selectedReseller && !isSuccess;
-        }
-    }]);
+/***/ }),
 
-    return Form;
-}(_react.Component);
+/***/ 9:
+/***/ (function(module, exports, __webpack_require__) {
 
-exports.default = Form;
+"use strict";
+
+
+var enhanceError = __webpack_require__(27);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
 
 /***/ })
-],[141]);
+
+},[142]);
 //# sourceMappingURL=addlicensee.js.map
