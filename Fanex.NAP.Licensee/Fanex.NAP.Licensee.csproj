@@ -349,9 +349,9 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\list\types.js" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -649,6 +649,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Deployment.ignore" />
+    <Content Include="App_Data\FakeLicensee.json" />
     <None Include="Areas\UserLogin\scripts\Login.min.js.map" />
     <None Include="Areas\UserLogin\scripts\ReCheckIn.min.js.map" />
     <Content Include="Scripts\build\angular.min.js.map" />
@@ -799,13 +800,15 @@
     <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.css.map" />
     <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.js.map" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\AppContainer.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\DataGrid.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\FormFilter.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\index.jsx" />
     <Content Include="www\reactpages\src\styles\modules\sourcelicensee\index.scss" />
     <Content Include="www\reactpages\dist\css\dev\sourceLicensee\sourceLicensee.css.map" />
     <Content Include="www\reactpages\dist\css\dev\sourceLicensee\sourceLicensee.js.map" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicenseeList\sourceLicenseeList.js.map" />
+    <Content Include="www\reactpages\src\scripts\components\Pager.jsx" />
+    <Content Include="www\reactpages\src\styles\components\pager.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\DataGridBase.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\FormFilterBase.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

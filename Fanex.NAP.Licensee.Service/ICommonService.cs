@@ -38,5 +38,7 @@ namespace Fanex.NAP.Licensee.Service
         IDictionary<BSKeyPair, string> GetRacingGameTypeList { get; }
 
         IList<LicenseeItem> GetSuperLicenseeList(string siteName);
+
+        IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId);
     }
 }

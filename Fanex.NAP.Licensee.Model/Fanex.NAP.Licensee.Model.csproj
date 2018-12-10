@@ -137,6 +137,8 @@
     <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
+    <Compile Include="Criteria\PageModel.cs" />
+    <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
@@ -146,6 +148,7 @@
       <DependentUpon>NapLicenseeFunctionKeys.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DataDomain\RoleType.cs" />
     <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\Agent.cs" />
@@ -153,6 +156,8 @@
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\ImportOperatorResult.cs" />
+    <Compile Include="DTO\ResultGridData.cs" />
+    <Compile Include="DTO\SourceLicensee.cs" />
     <Compile Include="DTO\Licensee.cs" />
     <Compile Include="DTO\LicenseeItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\BetSettingBySport.cs" />

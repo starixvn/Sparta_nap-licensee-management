@@ -1,10 +1,10 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
-    using Model.Criteria.Operator;
+    using Model.Criteria.SourceLicenseeSetting;
     using Model.DTO;
 
     public interface ISourceLicenseeSettingService
     {
+        ResultGridData<SourceLicensee> Search(SearchSourceLicenseeCriteria criteria, string sp = "Nap_LM_SourceLicensee_Select");
     }
 }

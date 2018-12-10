@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 }
-@model Fanex.NAP.Licensee.Model.ViewModel.ManageOperator.SearchSourceLicenseeViewModel
+@model Fanex.NAP.Licensee.Model.ViewModel.SourceLicenseeSetting.SearchSourceLicenseeViewModel
 @{
     var serializer = new JavaScriptSerializer();
 
@@ -12,8 +12,9 @@
     currencyList.Insert(0, new { label = "All", value = 0 });
     var siteNameList = Model.SiteNameList.Select(x => new { label = x.Name, value = x.Id }).ToList();
     siteNameList.Insert(0, new { label = "All", value = 0 });
+    var sourceSiteNameList = Model.SourceSiteNameList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    sourceSiteNameList.Insert(0, new { label = "All", value = 0 });
     var roleList = Model.RoleList.Select(x => new { label = x.Value, value = x.Key }).ToList();
-    roleList.Insert(0, new { label = "All", value = 0 });
 }
 @section Headline {
 <ul class="breadcrumb title">
@@ -31,7 +32,8 @@
             selectedCurrency: @Html.Raw(serializer.Serialize(currencyList.First())),
             siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
             selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
-            selectedSourceSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
+            sourceSiteNameList: @Html.Raw(serializer.Serialize(sourceSiteNameList)),
+            selectedSourceSiteName: @Html.Raw(serializer.Serialize(sourceSiteNameList.FirstOrDefault())),
             roleList: @Html.Raw(serializer.Serialize(roleList)),
             selectedRole: @Html.Raw(serializer.Serialize(roleList.First())),
         }
