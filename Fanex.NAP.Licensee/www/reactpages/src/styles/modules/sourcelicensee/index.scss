@@ -28,8 +28,24 @@ $yellow: #fecc35;
     .Select-control {
         height: 25px;
     }
+
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
 }
 
-input[type=date] {
+input[type=date], input[type=text] {
     height: 25px;
+
+    &.has-error {
+        border: 1px solid $red;
+    }
+}
+
+tr {
+    &.disable {
+        color: #808080;
+    }
 }
