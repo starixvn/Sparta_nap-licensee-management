@@ -58,7 +58,7 @@
                         return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=TCP:10.2.98.3\\private$\\entlib\" defaultCategory=\"NAP-LM-UAT\" />";
 
 					case SiteEnvironment.PRO:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://10.40.40.22/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
+                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://10.40.40.127/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
                      case SiteEnvironment.SIT:
 					   
 					return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://172.16.4.107:9099/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
@@ -79,13 +79,13 @@
                     case SiteEnvironment.LOCAL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" stateConnectionString=\"tcpip=ha.nexdev.net:42424\" />";
                     case SiteEnvironment.UAT:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.22:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.127:42424\" />";
                     case SiteEnvironment.BACKUPMNL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.98.2:42424\" />";
 				    case SiteEnvironment.SIT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.22:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.127:42424\" />";
                     case SiteEnvironment.SANDBOX:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     default:
