@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using Fanex.NAP.Licensee.Model.Criteria.Vendor;
     using Fanex.NAP.Licensee.Model.DTO;
@@ -17,7 +16,7 @@
 
         private readonly Func<LicenseeVendor, string, LicenseeVendor> _mapLicenseeVendor = (vendor, exclusion) =>
         {
-            vendor.ExclusionList = exclusion?.Split('"', ',').Where(x => x != "]" && x != "[" && !string.IsNullOrEmpty(x));
+            vendor.ExclusionList = string.IsNullOrWhiteSpace(exclusion) ? null : JsonConvert.DeserializeObject<string[]>(exclusion);
 
             return vendor;
         };
