@@ -1,0 +1,175 @@
+/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
+
+ALTER PROCEDURE [dbo].[Nap_LM_SourceLicensee_Insert]
+	@FromDate			DATE		= '',
+	@ToDate				DATE		= '',
+	@LicenseeId			INT			= 0,
+	@SourceLicenseeId	INT			= 0,
+	@CurrencyId			INT			= 0,
+	@RoleId				INT			= 0,
+	@IsAddAll			BIT			= 0,
+	@SourceIdList		VARCHAR(MAX)= '',
+	@AffectedRow		INT			= 0 OUTPUT
+AS
+/*
+	 Created: Amanda
+	 Date: 2018-12-12
+	 Task: Implement "Source Licensee Setting" function
+	 DB: DBCUST.bodb_licensee
+	 
+	 Revisions:
+	  - 20181212@Amanda: Select Source Licensees [Redmine: #83584]
+*/
+BEGIN
+	SET NOCOUNT ON;
+	
+	CREATE TABLE #data (
+		SourceId	INT
+	)
+	
+	DECLARE @SiteName VARCHAR(50), @SourceSiteName VARCHAR(50)
+	
+	SELECT @SiteName = LicenseeName
+	FROM dbo.Licensees WITH (NOLOCK)
+	WHERE LicenseeID = @LicenseeId
+	
+	SELECT @SourceSiteName = LicenseeName
+	FROM dbo.Licensees WITH (NOLOCK)
+	WHERE LicenseeID = @SourceLicenseeId
+	
+	IF @IsAddAll = 1
+	BEGIN	
+		IF @RoleId = 1
+		BEGIN
+			;WITH Setting_CTE AS (
+				SELECT l.SourcedId
+				FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+				WHERE l.LicenseeID = @LicenseeId
+					AND l.SourcedLicenseeID = @SourceLicenseeId
+					AND l.Roleid = @Roleid
+					AND l.SourcedCurrencyID = @CurrencyId
+					AND @FromDate <= l.EndDate
+					AND @ToDate >= l.EffectiveDate
+			)
+			INSERT INTO #data (SourceId)
+			SELECT c.custid
+			FROM CustDB.dbo.custInfo c WITH (NOLOCK)
+			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+			LEFT JOIN Setting_CTE s ON c.custid = s.SourcedId
+			WHERE l.LicenseeID = @SourceLicenseeId 
+				AND l.Currency = @CurrencyId 
+				AND l.RoleID = 2 
+				AND c.roleid = 1
+				AND c.currency = @CurrencyId
+				AND s.SourcedId IS NULL
+			
+			;SET @AffectedRow = @@ROWCOUNT	
+		END
+		ELSE IF @RoleId = 2
+		BEGIN
+			;WITH Setting_CTE AS (
+				SELECT l.SourcedId
+				FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+				WHERE l.LicenseeID = @LicenseeId
+					AND l.SourcedLicenseeID = @SourceLicenseeId
+					AND l.Roleid = @Roleid
+					AND l.SourcedCurrencyID = @CurrencyId
+					AND @FromDate <= l.EndDate
+					AND @ToDate >= l.EffectiveDate
+			)
+			INSERT INTO #data (SourceId)
+			SELECT l.CustID
+			FROM dbo.LicenseeCust l WITH (NOLOCK)
+			LEFT JOIN Setting_CTE s ON l.custid = s.SourcedId
+			WHERE l.LicenseeID = @SourceLicenseeId 
+				AND l.Currency = @CurrencyId 
+				AND l.RoleID = 2
+				AND s.SourcedId IS NULL
+				
+			;SET @AffectedRow = @@ROWCOUNT
+		END
+	END
+	ELSE
+	BEGIN
+		DECLARE @sourceId AS TABLE (
+			Id			INT,
+			IsValid		BIT,
+			Existed		BIT)
+		
+		INSERT INTO @sourceId(Id, IsValid, Existed)
+		SELECT val, 0, 0
+		FROM CUSTDB.dbo.strSplit(@SourceIdList,',')
+		
+		IF @RoleId = 1
+		BEGIN
+			UPDATE s
+			SET IsValid = 1
+			FROM @sourceId s
+			INNER JOIN CustDB.dbo.custInfo c WITH (NOLOCK) ON c.custid = s.Id
+			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+			WHERE l.LicenseeID = @SourceLicenseeId
+				AND l.Currency = @CurrencyId
+				AND l.RoleID = 2
+				AND c.roleid = 1
+				AND c.currency = @CurrencyId
+		END
+		ELSE IF @RoleId = 2
+		BEGIN
+			UPDATE s
+			SET IsValid = 1
+			FROM @sourceId s
+			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = s.Id
+			WHERE l.LicenseeID = @SourceLicenseeId
+				AND l.Currency = @CurrencyId
+				AND l.RoleID = 2
+		END
+		
+		UPDATE s
+		SET Existed = 1
+		FROM @sourceId s
+		INNER JOIN dbo.LicenseeSourcedSetting l WITH(NOLOCK) ON l.SourcedId = s.Id
+		WHERE l.LicenseeID = @LicenseeId
+			AND l.SourcedLicenseeID = @SourceLicenseeId
+			AND l.Roleid = @Roleid
+			AND l.SourcedCurrencyID = @CurrencyId
+			AND @FromDate <= l.EndDate
+			AND @ToDate >= l.EffectiveDate
+			AND s.IsValid = 1
+			
+		IF EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
+		BEGIN
+			SELECT Id AS SourceId, IsValid, Existed
+			FROM @sourceId
+			WHERE IsValid = 0 OR Existed = 1
+		END
+		ELSE
+		BEGIN
+			INSERT INTO #data(SourceId)
+			SELECT Id
+			FROM @sourceId
+			WHERE IsValid = 1 AND Existed = 0
+			
+			;SET @AffectedRow = @@ROWCOUNT
+		END	
+	END
+	
+	INSERT INTO dbo.LicenseeSourcedSetting(	
+		SiteName,
+		LicenseeId,
+		SourcedLicenseeId,
+		SourcedId,
+		RoleId,
+		SourcedCurrencyId,
+		IsActive,
+		EffectiveDate,
+		EndDate,
+		SourcedSiteName)
+	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, SourceId, @RoleId, @CurrencyId, 1, @FromDate, @ToDate, @SourceSiteName
+	FROM #data
+	
+	SELECT TOP (0) 0 AS SourceId, 1 AS IsValid, 0 AS Existed
+	FROM #data
+	
+	DROP TABLE #data
+END
+GO

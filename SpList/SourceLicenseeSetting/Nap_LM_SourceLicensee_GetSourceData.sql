@@ -47,7 +47,7 @@ BEGIN
 				c.currency
 		FROM CustDB.dbo.custInfo c WITH (NOLOCK)
 		INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
-		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND c.roleid = 1 AND c.currency = @CurrencyId
+		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND l.currency = @CurrencyId AND c.roleid = 1 AND c.currency = @CurrencyId
 	END
 
 	SELECT @TotalItem = MAX(RowNum)
@@ -61,7 +61,7 @@ BEGIN
 		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
 		WHERE l.LicenseeID = @LicenseeId
 			AND l.SourcedLicenseeID = @SourceLicenseeId
-			AND l.Roleid = Roleid
+			AND l.Roleid = @Roleid
 			AND l.SourcedCurrencyID = @CurrencyId
 			AND @FromDate <= l.EndDate
 			AND @ToDate >= l.EffectiveDate
@@ -72,7 +72,7 @@ BEGIN
 			@RoleId			AS RoleId,
 			s.EffectiveDate,
 			s.EndDate,
-			CASE WHEN s.SourcedId IS NOT NULL THEN 1 ELSE 0 END AS IsActive		
+			CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive		
 	FROM #data d
 	INNER JOIN CustDB.dbo.Exchange e WITH (NOLOCK) ON e.exchangeid = d.CurrencyId
 	LEFT JOIN Setting_CTE s ON s.SourcedId = d.SourceId
