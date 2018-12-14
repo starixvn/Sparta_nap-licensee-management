@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from '../base/reducer'
 import Store from '../../../lib/store'
 
-const store = Store.createStore(reducer, { isLoading: false, params: {} });
+const store = Store.createStore(reducer, { isLoading: false, params: {}, checkedList: [] });
 
 export default class App extends React.Component {
     constructor(props) {

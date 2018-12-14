@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import Loader from '../../../components/Loader'
 import FormFilter from '../base/FormFilterBase'
 import DataGrid from '../base/DataGridBase'
+import Action from './Action'
 
 export class AppContainer extends Component {
     constructor(props) {
@@ -40,12 +41,10 @@ export class AppContainer extends Component {
             <div>
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
-                <div style={{ display: 'inline-block' }}>
-                    <a className='btn btn-green' href={window.rootUrl + 'SourceLicenseeSetting/Add'}>+ Add New Setting</a>
-                </div>
+                <Action />
                 <DataGrid 
                     url='SourceLicenseeSetting/Search'
-                    key='Id'
+                    keyValue='Id'
                     header={this._buildHeader}
                     body={this._buildBody} />
             </div>

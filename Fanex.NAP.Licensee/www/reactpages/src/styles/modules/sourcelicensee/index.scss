@@ -1,5 +1,6 @@
 ﻿@import "../../components/react-select/react-select.main";
 @import "../../components/pager";
+@import "../../components/popup";
 
 $red: #a94442;
 $green: #729446;
@@ -47,5 +48,11 @@ input[type=date], input[type=text] {
 tr {
     &.disable {
         color: #808080;
+    }
+}
+
+.edit-form {
+    .right {
+        float: right;
     }
 }

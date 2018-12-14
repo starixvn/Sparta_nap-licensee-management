@@ -33,7 +33,8 @@
             sourceSiteNameList: @Html.Raw(serializer.Serialize(sourceSiteNameList)),
             selectedSourceSiteName: null,
             roleList: @Html.Raw(serializer.Serialize(roleList)),
-            selectedRole: null,
+            selectedRole: @Html.Raw(serializer.Serialize(roleList.First())),
+            toDate: '2050-01-01'
         }
     </script>
 

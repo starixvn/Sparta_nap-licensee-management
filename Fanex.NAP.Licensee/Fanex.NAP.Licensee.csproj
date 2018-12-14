@@ -812,9 +812,10 @@
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\DataGridBase.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\FormFilterBase.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\add\AppContainer.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\add\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\add\Action.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\add\index.jsx" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicensee\sourceLicensee.js.map" />
+    <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\Action.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { isLoading } from '../../../reducers/loaderReducer'
 
 import createReducer from '../../../lib/createReducer'
-import { SET_PARAMS } from './types'
+import { SET_PARAMS, SET_CHECKED_LIST } from './types'
 
 const params = createReducer({}, {
     [SET_PARAMS](state, action) {
@@ -10,4 +10,10 @@ const params = createReducer({}, {
     }
 });
 
-export default combineReducers({ params, isLoading })
+const checkedList = createReducer({}, {
+    [SET_CHECKED_LIST](state, action) {
+        return action.data;
+    }
+});
+
+export default combineReducers({ params, checkedList, isLoading })

@@ -28,5 +28,19 @@
 
             return result;
         }
+
+        public ResultGridData<SourceLicenseeSettingResult> Add(NewSourceLicenseeCriteria criteria)
+        {
+            var result = new ResultGridData<SourceLicenseeSettingResult>();
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_SourceLicensee_Insert"))
+            {
+                result.Data = db.Query<SourceLicenseeSettingResult>(criteria);
+            }
+
+            result.TotalItem = criteria.AffectedRow;
+
+            return result;
+        }
     }
 }

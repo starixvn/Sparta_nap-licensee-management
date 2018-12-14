@@ -17,7 +17,7 @@ export class FormFilterBase extends Component {
             selectedSourceSiteName: defaultState.selectedSourceSiteName,
             selectedCurrency: defaultState.selectedCurrency,
             selectedRole: defaultState.selectedRole,
-            toDate: Utility.getTodayString(),
+            toDate: defaultState.toDate,
             fromDate: Utility.getTodayString(),
             currencyList: defaultState.currencyList
         };

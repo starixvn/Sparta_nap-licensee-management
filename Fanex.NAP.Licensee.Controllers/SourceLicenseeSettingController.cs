@@ -72,6 +72,44 @@
             return Json(result);
         }
 
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SourceLicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult Add(NewSourceLicenseeCriteria criteria)
+        {
+            if (criteria.FromDate > criteria.ToDate)
+            {
+                return Json(new { IsSuccess = false, Error = "Invalid date range!" });
+            }
+
+            if (criteria.LicenseeId <= 0 || criteria.SourceLicenseeId <= 0 || criteria.CurrencyId <= 0 || criteria.RoleId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "Invalid data!" });
+            }
+
+            if (!criteria.IsAddAll && string.IsNullOrWhiteSpace(criteria.SourceIdList))
+            {
+                return Json(new { IsSuccess = false, Error = "No source data is selected!" });
+            }
+
+            var result = _service.Add(criteria);
+            if (result.Data.Any() && result.TotalItem == 0)
+            {
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Error = "Some source Ids do not exists or overlap with existing setting!",
+                    Data = new
+                    {
+                        InvalidIds = result.Data.Where(x => !x.IsValid).ToList(),
+                        ExistedIds = result.Data.Where(x => x.IsValid && x.Existed).ToList()
+                    }
+                });
+            }
+
+            return Json(new { IsSuccess = true, Data = $"{result.TotalItem} {(result.TotalItem > 1 ? "rows have" : "row has")} been added!" });
+        }
+
         private SearchSourceLicenseeViewModel GetSearchViewModel()
         {
             var fakeLicensee = GetFakeLicensees();
