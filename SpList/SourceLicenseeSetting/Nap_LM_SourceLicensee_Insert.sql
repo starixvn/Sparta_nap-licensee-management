@@ -1,15 +1,15 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
-ALTER PROCEDURE [dbo].[Nap_LM_SourceLicensee_Insert]
-	@FromDate			DATE		= '',
-	@ToDate				DATE		= '',
-	@LicenseeId			INT			= 0,
-	@SourceLicenseeId	INT			= 0,
-	@CurrencyId			INT			= 0,
-	@RoleId				INT			= 0,
-	@IsAddAll			BIT			= 0,
-	@SourceIdList		VARCHAR(MAX)= '',
-	@AffectedRow		INT			= 0 OUTPUT
+CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Insert]
+	@FromDate			DATE,
+	@ToDate				DATE,
+	@LicenseeId			INT,
+	@SourceLicenseeId	INT,
+	@CurrencyId			INT,
+	@RoleId				INT,
+	@IsAddAll			BIT,
+	@SourceIdList		VARCHAR(MAX),
+	@AffectedRow		INT	= 0 OUTPUT
 AS
 /*
 	 Created: Amanda
@@ -18,7 +18,7 @@ AS
 	 DB: DBCUST.bodb_licensee
 	 
 	 Revisions:
-	  - 20181212@Amanda: Select Source Licensees [Redmine: #83584]
+	  - 20181212@Amanda: Add new Source Licensees [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -50,6 +50,8 @@ BEGIN
 					AND l.SourcedCurrencyID = @CurrencyId
 					AND @FromDate <= l.EndDate
 					AND @ToDate >= l.EffectiveDate
+					AND l.EffectiveDate <= l.EndDate
+					AND l.IsActive = 1
 			)
 			INSERT INTO #data (SourceId)
 			SELECT c.custid
@@ -76,6 +78,8 @@ BEGIN
 					AND l.SourcedCurrencyID = @CurrencyId
 					AND @FromDate <= l.EndDate
 					AND @ToDate >= l.EffectiveDate
+					AND l.EffectiveDate <= l.EndDate
+					AND l.IsActive = 1
 			)
 			INSERT INTO #data (SourceId)
 			SELECT l.CustID
@@ -97,7 +101,7 @@ BEGIN
 			Existed		BIT)
 		
 		INSERT INTO @sourceId(Id, IsValid, Existed)
-		SELECT val, 0, 0
+		SELECT DISTINCT val, 0, 0
 		FROM CUSTDB.dbo.strSplit(@SourceIdList,',')
 		
 		IF @RoleId = 1
@@ -134,6 +138,8 @@ BEGIN
 			AND l.SourcedCurrencyID = @CurrencyId
 			AND @FromDate <= l.EndDate
 			AND @ToDate >= l.EffectiveDate
+			AND l.EffectiveDate <= l.EndDate
+			AND l.IsActive = 1
 			AND s.IsValid = 1
 			
 		IF EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
@@ -157,14 +163,15 @@ BEGIN
 		SiteName,
 		LicenseeId,
 		SourcedLicenseeId,
-		SourcedId,
-		RoleId,
 		SourcedCurrencyId,
 		IsActive,
+		RoleId,
 		EffectiveDate,
-		EndDate,
-		SourcedSiteName)
-	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, SourceId, @RoleId, @CurrencyId, 1, @FromDate, @ToDate, @SourceSiteName
+		SourcedId,
+		SourcedSiteName,
+		EndDate
+	)
+	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, @CurrencyId, 1, @RoleId, @FromDate, SourceId, @SourceSiteName, @ToDate
 	FROM #data
 	
 	SELECT TOP (0) 0 AS SourceId, 1 AS IsValid, 0 AS Existed

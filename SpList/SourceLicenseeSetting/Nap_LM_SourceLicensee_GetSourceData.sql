@@ -65,6 +65,7 @@ BEGIN
 			AND l.SourcedCurrencyID = @CurrencyId
 			AND @FromDate <= l.EndDate
 			AND @ToDate >= l.EffectiveDate
+			AND l.EffectiveDate <= l.EndDate
 	)
 	SELECT	d.SourceId,
 			d.CurrencyId	AS CurrencyID,

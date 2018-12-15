@@ -39,6 +39,7 @@ BEGIN
 	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
 	WHERE (ISNULL(@FromDate, '') = '' OR l.EffectiveDate <= @FromDate)
 		AND (ISNULL(@ToDate, '') = '' OR l.EndDate >= @ToDate)
+		AND l.EffectiveDate <= l.EndDate
 		AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
 		AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)
 		AND (@CurrencyId = 0 OR l.SourcedCurrencyID = @CurrencyId)
@@ -60,7 +61,7 @@ BEGIN
 			l.SourcedSiteName	AS SourceSiteName,
 			l.EffectiveDate,
 			l.EndDate,
-			l.IsActive		
+			l.IsActive
 	FROM #data d 
 	INNER JOIN dbo.LicenseeSourcedSetting l WITH(NOLOCK) ON l.ID = d.ID
 	INNER JOIN CustDB.dbo.Exchange e WITH (NOLOCK) ON e.exchangeid = l.SourcedCurrencyID
