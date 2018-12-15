@@ -49,7 +49,7 @@
 		 case "LOCAL":
 		 case "SANDBOX":
 		 #>
-	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://ha.nexdev.net:7221/nap-sc-local3" ServiceUrls="http://ha.nexdev.net:1711/api" AccessKey="8VWXgdj1dqISn5o5cE/PT/YfjDUu3OCJObGKAeDw5SQ=">
+	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://ha.nexdev.net:7221/nap-sc-local3" ServiceUrls="http://ha.nexdev.net:1711/api" AccessKey="8VWXgdj1dqISn5o5cE/PT/YfjDUu3OCJObGKAeDw5SQ=">
 		<Domain>
 			<add Name="localhost:54840/" Path="/" />
 		</Domain>
@@ -62,7 +62,7 @@
 	 break;
 	  case "UAT":
 	  #>
-	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="false" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.40.40.248:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.40.40.248:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
 		<Domain>
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>

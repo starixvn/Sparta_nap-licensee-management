@@ -439,6 +439,9 @@
 .green {
   color: #A1C46B; }
 
+.right {
+  float: right; }
+
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
 
@@ -458,17 +461,14 @@
     .add-form input[type=date].has-error, .edit-form input[type=date].has-error {
       border: 1px solid #a94442; }
 
-.edit-form {
-  margin-top: 10px; }
-  .edit-form td .btn {
-    float: none;
-    font-size: 0.9em;
-    padding: 5px; }
-  .edit-form .button-group {
-    min-height: 25px;
-    overflow: hidden; }
-  .edit-form .right {
-    float: right; }
+.edit-form td .btn {
+  float: none;
+  font-size: 0.9em;
+  padding: 5px; }
+
+.edit-form .button-group {
+  min-height: 25px;
+  overflow: hidden; }
 
 .popup-content .Select-menu-outer {
   max-height: 150px; }
