@@ -91,5 +91,6 @@
     <Setting Key="Nap_LM_SourceLicensee_GetSourceData" SpName="Nap_LM_SourceLicensee_GetSourceData" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicenseeCurrency_Select" SpName="Nap_LM_LicenseeCurrency_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SourceLicensee_Insert" SpName="Nap_LM_SourceLicensee_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_SourceLicensee_Update" SpName="Nap_LM_SourceLicensee_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

@@ -5,7 +5,7 @@ import { toggleLoader, getProductList } from './action';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 import ConfirmBox from '../../../components/ConfirmBox';
-import RedmineConfirmForm from './RedmineConfirmForm';
+import RedmineConfirmForm from '../../../components/RedmineConfirmForm';
 
 export class ProductGrid extends Component {
     constructor(props) {

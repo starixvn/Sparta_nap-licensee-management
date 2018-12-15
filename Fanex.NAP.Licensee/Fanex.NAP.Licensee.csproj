@@ -795,7 +795,6 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ProductGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\LAPExclusions.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\TerminateLicensee.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\RedmineConfirmForm.jsx" />
     <Content Include="www\reactpages\src\styles\components\_variable.scss" />
     <Content Include="www\reactpages\src\styles\components\common.scss" />
     <Content Include="www\reactpages\src\styles\modules\licensee\licenseelist.scss" />
@@ -816,6 +815,7 @@
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\add\index.jsx" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicensee\sourceLicensee.js.map" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\Action.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\RedmineConfirmForm.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

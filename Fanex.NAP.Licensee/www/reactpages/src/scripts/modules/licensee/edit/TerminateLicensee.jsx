@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setLicensee, getProductList } from './action';
-import RedmineConfirmForm from './RedmineConfirmForm';
+import RedmineConfirmForm from '../../../components/RedmineConfirmForm';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 

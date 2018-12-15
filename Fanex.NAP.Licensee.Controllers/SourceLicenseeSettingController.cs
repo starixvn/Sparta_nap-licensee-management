@@ -10,7 +10,6 @@
     using Core.Web.Attribute;
     using Model.Criteria.SourceLicenseeSetting;
     using Model.DataDomain;
-    using Model.DTO;
     using Model.ViewModel.SourceLicenseeSetting;
     using Newtonsoft.Json;
     using ONEbook.UM.Filters;
@@ -92,22 +91,71 @@
                 return Json(new { IsSuccess = false, Error = "No source data is selected!" });
             }
 
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+            }
+
             var result = _service.Add(criteria);
             if (result.Data.Any() && result.TotalItem == 0)
             {
                 return Json(new
                 {
                     IsSuccess = false,
-                    Error = "Some source Ids do not exists or overlap with existing setting!",
+                    Error = "Some source items do not exists or overlap with existing setting!",
                     Data = new
                     {
-                        InvalidIds = result.Data.Where(x => !x.IsValid).ToList(),
-                        ExistedIds = result.Data.Where(x => x.IsValid && x.Existed).ToList()
+                        InvalidIds = string.Join(", ", result.Data.Where(x => !x.IsValid).Select(x => x.SourceId)),
+                        ExistedIds = string.Join(", ", result.Data.Where(x => x.IsValid && x.Existed).Select(x => x.SourceId))
                     }
                 });
             }
 
             return Json(new { IsSuccess = true, Data = $"{result.TotalItem} {(result.TotalItem > 1 ? "rows have" : "row has")} been added!" });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SourceLicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult Update(SuspendSourceLicenseeCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.SettingIdList))
+            {
+                return Json(new { IsSuccess = false, Error = "No source data is selected!" });
+            }
+
+            if (criteria.Restart && criteria.StopFrom > criteria.RestartFrom)
+            {
+                return Json(new { IsSuccess = false, Error = "Restart date must be equal or greater than stop date " });
+            }
+
+            if (criteria.Restart && criteria.RestartFrom > criteria.RestartTo)
+            {
+                return Json(new { IsSuccess = false, Error = "Invalid new date range!" });
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+            }
+
+            var result = _service.Update(criteria);
+            if (result.Data.Any())
+            {
+                var data = result.Data.Where(x => x.Existed).GroupBy(x => x.SiteName).Select(g => $"{g.Key}: {string.Join(",", g.Select(x => x.SourceId))}");
+
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Error = "Some restart source items overlap with existing setting!",
+                    Data = new
+                    {
+                        ExistedIds = string.Join("<br/>", data)
+                    }
+                });
+            }
+
+            return Json(new { IsSuccess = true });
         }
 
         private SearchSourceLicenseeViewModel GetSearchViewModel()

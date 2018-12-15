@@ -138,6 +138,7 @@
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
     <Compile Include="Criteria\PageModel.cs" />
+    <Compile Include="Criteria\SourceLicenseeSetting\SuspendSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\NewSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />

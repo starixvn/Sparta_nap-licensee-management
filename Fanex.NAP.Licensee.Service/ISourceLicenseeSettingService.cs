@@ -8,5 +8,7 @@
         ResultGridData<SourceLicensee> Search(SearchSourceLicenseeCriteria criteria, string sp = "Nap_LM_SourceLicensee_Select");
 
         ResultGridData<SourceLicenseeSettingResult> Add(NewSourceLicenseeCriteria criteria);
+
+        ResultGridData<SourceLicenseeSettingResult> Update(SuspendSourceLicenseeCriteria criteria);
     }
 }

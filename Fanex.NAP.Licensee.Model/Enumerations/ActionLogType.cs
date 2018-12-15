@@ -14,6 +14,9 @@
         Licensee_OfferProduct = 5528,
         Licensee_AddPullService = 5529,
         Licensee_RemoveProduct = 5530,
-        Licensee_Terminate = 5531
+        Licensee_Terminate = 5531,
+
+        SourceLicensee_Insert = 5532,
+        SourceLicensee_Update = 5533
     }
 }

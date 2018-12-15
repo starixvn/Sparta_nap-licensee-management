@@ -11,28 +11,28 @@ export class Action extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this._initialState();
-    }
-
-    _initialState() {
-        const today = new Date();
-        let tomorow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-
-        return {
-            stopDate: Utility.getDateString(today),
+        this.state = {
+            stopFrom: Utility.getTodayString(),
             restart: false,
-            newEffectiveDate: Utility.getDateString(tomorow),
-            newEndDate: Utility.getDateString(new Date(2050, 0, 1)),
+            restartFrom: Utility.getTodayString(),
+            restartTo: Utility.getDateString(new Date(2050, 0, 1)),
             redmineId: '',
+            result: null,
             isShowPopup: false,
             isShowConfirmation: false
         };
     }
 
-    get isValidPopup() {
-        const { stopDate, restart, newEndDate, newEffectiveDate, redmineId } = this.state;
+    componentDidUpdate(prevProps) {
+        if (prevProps.params.timeStamp !== this.props.params.timeStamp) {
+            this.setState({ result: null });
+        }
+    }
 
-        return stopDate && redmineId && (!restart || ( newEndDate && newEffectiveDate ));
+    get isValidPopup() {
+        const { stopFrom, restart, restartTo, restartFrom, redmineId } = this.state;
+
+        return stopFrom && redmineId && (!restart || ( restartTo && restartFrom ));
     }
 
     onClick = () => {
@@ -44,24 +44,31 @@ export class Action extends Component {
     }
 
     onPopupClose = () => {
-        this.setState(this._initialState());
+        this.setState({
+            stopFrom: Utility.getTodayString(),
+            restart: false,
+            restartFrom: Utility.getTodayString(),
+            restartTo: Utility.getDateString(new Date(2050, 0, 1)),
+            redmineId: '',
+            isShowPopup: false
+        });
     }
 
     onConfirm = (value) => {
         if (value) {
             this._submit();
         }
-        else {
-            this.onPopupClose();
-        }
+        this.setState({ isShowConfirmation: false });
     }
 
     _getParam() {
         return {
-            stopDate: this.state.stopDate,
+            stopFrom: this.state.stopFrom,
             restart: this.state.restart,
-            newEffectiveDate: this.state.newEffectiveDate,
-            newEndDate: this.state.newEndDate
+            restartFrom: this.state.restartFrom,
+            restartTo: this.state.restartTo,
+            settingIdList: this.props.checkedList.toString(),
+            redmineId: this.state.redmineId
         };
     }
 
@@ -73,13 +80,17 @@ export class Action extends Component {
         Site.fetchData(param, url)
             .then(response => {
                 if (response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Data);
+                    Utility.showMessage('Success!');
                     this._updateGrid();
                 }
                 else {
                     Utility.showMessage(response.data.Error);
                     if (response.data.Data) {
-                        
+                        this.setState({
+                            result: {
+                                existedItems: response.data.Data.ExistedIds
+                            }
+                        });
                     }
                     this.props.toggleLoader(false);
                 }
@@ -94,33 +105,35 @@ export class Action extends Component {
         this.props.setParams(filterParams);
     }
 
-    _buildPopupContent(stopDate, restart, newEndDate, newEffectiveDate, redmineId) {
+    _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Stop From</label>
-                    <input className={`full-width ${stopDate ? '' : 'has-error'}`}
+                    <input className={`full-width ${stopFrom ? '' : 'has-error'}`}
                         type='date'
-                        value={stopDate}
-                        onChange={(e) => this.setState({ stopDate: e.target.value })} />
+                        value={stopFrom}
+                        onChange={(e) => this.setState({ stopFrom: e.target.value })} />
                 </div>
                 <div className='form-group'>
                     <label className="checkbox-inline">           
-                        <input type="checkbox" name="restart" onChange={(e) => this.setState({ restart: e.target.checked })} checked={this.state.restart} />
+                        <input type="checkbox" name="restart" onChange={(e) => this.setState({ restart: e.target.checked })} checked={restart} />
                         Restart
                     </label>
                 </div>
                 <div className='form-group'>
-                    <label className='col-form-label'>New Effectived Date</label>
-                    <input className={`full-width ${!restart || newEffectiveDate ? '' : 'has-error'}`} 
-                        type='date' value={newEffectiveDate}
-                        onChange={(e) => this.setState({ newEffectiveDate: e.target.value })} />
+                    <label className='col-form-label'>Restart From</label>
+                    <input className={`full-width ${!restart || restartFrom ? '' : 'has-error'}`}
+                        disabled={!restart} 
+                        type='date' value={restartFrom}
+                        onChange={(e) => this.setState({ restartFrom: e.target.value })} />
                 </div>
                 <div className='form-group'>
-                    <label className='col-form-label'>New End Date</label>
-                    <input className={`full-width ${!restart || newEndDate ? '' : 'has-error'}`}
-                        type='date' value={newEndDate}
-                        onChange={(e) => this.setState({ newEndDate: e.target.value })} />
+                    <label className='col-form-label'>Restart To</label>
+                    <input className={`full-width ${!restart || restartTo ? '' : 'has-error'}`}
+                        disabled={!restart}
+                        type='date' value={restartTo}
+                        onChange={(e) => this.setState({ restartTo: e.target.value })} />
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
@@ -142,7 +155,7 @@ export class Action extends Component {
     }
 
     render() {
-        const { stopDate, restart, newEndDate, newEffectiveDate, redmineId, isShowPopup, isShowConfirmation } = this.state;
+        const { stopFrom, restart, restartTo, restartFrom, redmineId, result, isShowPopup, isShowConfirmation } = this.state;
         const countSelectedItem = this.props.checkedList.length;
 
         return(
@@ -153,15 +166,30 @@ export class Action extends Component {
             </div>
             <ConfirmBox isShow={isShowConfirmation}
                 title='Confirmation'
-                message={`Do you want to stop getting data on ${stopDate} and restart with date range ${newEffectiveDate}-${newEndDate}`}
+                message={`Do you want to stop getting data from ${Utility.formatDate(stopFrom)} and restart with date range ${Utility.formatDate(restartFrom)}-${Utility.formatDate(restartTo)}`}
                 style={{ height: '160px', width: '400px' }}
                 onClose={this.onConfirm} /> 
             <Popup isShow={isShowPopup}
-                title='Offer New Product'
-                content={this._buildPopupContent(stopDate, restart, newEndDate, newEffectiveDate, redmineId)}
+                title='Suspend Source Licensee'
+                content={this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId)}
                 className='no-scroll'
                 style={{height: '410px', width: '600px'}}
                 onClose={this.onPopupClose} />
+    {
+                result && result.existedItems &&
+                <table className='table table-bordered'>
+                    <thead>
+                        <tr><th colSpan={2}>Suspend Result</th></tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Source items overlap with an existing setting item</td>
+                            <td dangerouslySetInnerHTML={{__html: result.existedItems}}></td>
+                        </tr>
+                    </tbody>
+                </table>
+    }
         </div>);
     }
 }

@@ -7,5 +7,7 @@
         public bool IsValid { get; set; }
 
         public bool Existed { get; set; }
+
+        public string SiteName { get; set; }
     }
 }

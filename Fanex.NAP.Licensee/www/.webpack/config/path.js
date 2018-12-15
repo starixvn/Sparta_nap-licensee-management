@@ -10,7 +10,7 @@ const cssPaths = {
     operator: './www/reactpages/src/styles/modules/operator/index.scss',
     licensee: './www/reactpages/src/styles/modules/licensee/licensee.scss',
     licenseelist: './www/reactpages/src/styles/modules/licensee/licenseelist.scss',
-	sourceLicensee: './www/reactpages/src/styles/modules/sourcelicensee/index.scss
+	sourceLicensee: './www/reactpages/src/styles/modules/sourcelicensee/index.scss'
 };
 
 const scriptPaths = {

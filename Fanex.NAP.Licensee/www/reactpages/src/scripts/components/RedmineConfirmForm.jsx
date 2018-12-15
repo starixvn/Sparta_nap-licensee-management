@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import Popup from '../../../components/Popup';
+import Popup from './Popup';
 
 export default class RedmineConfirmForm extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class RedmineConfirmForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
+        if (prevProps.isShow !== this.props.isShow && !this.props.isShow) {
             this.setState({ redmineId: '' });
         }
     }
@@ -29,9 +29,9 @@ export default class RedmineConfirmForm extends Component {
     _buildContent(msg, redmineId, onConfirm) {
         return (
             <div className='edit-form'>
-                <p>
+                <div style={{marginBottom: '10px'}}>
                     {msg}
-                </p>
+                </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
                     <input className={`full-width ${redmineId ? '' : 'has-error'}`}
