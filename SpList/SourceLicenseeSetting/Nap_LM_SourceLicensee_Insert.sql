@@ -26,7 +26,11 @@ BEGIN
 	CREATE TABLE #data (
 		SourceId	INT
 	)
-	
+	DECLARE @sourceId AS TABLE (
+		Id			INT,
+		IsValid		BIT,
+		Existed		BIT
+	)
 	DECLARE @SiteName VARCHAR(50), @SourceSiteName VARCHAR(50)
 	
 	SELECT @SiteName = LicenseeName
@@ -38,7 +42,7 @@ BEGIN
 	WHERE LicenseeID = @SourceLicenseeId
 	
 	IF @IsAddAll = 1
-	BEGIN	
+	BEGIN
 		IF @RoleId = 1
 		BEGIN
 			;WITH Setting_CTE AS (
@@ -95,11 +99,6 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		DECLARE @sourceId AS TABLE (
-			Id			INT,
-			IsValid		BIT,
-			Existed		BIT)
-		
 		INSERT INTO @sourceId(Id, IsValid, Existed)
 		SELECT DISTINCT val, 0, 0
 		FROM CUSTDB.dbo.strSplit(@SourceIdList,',')
@@ -142,13 +141,7 @@ BEGIN
 			AND l.IsActive = 1
 			AND s.IsValid = 1
 			
-		IF EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
-		BEGIN
-			SELECT Id AS SourceId, IsValid, Existed
-			FROM @sourceId
-			WHERE IsValid = 0 OR Existed = 1
-		END
-		ELSE
+		IF NOT EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
 		BEGIN
 			INSERT INTO #data(SourceId)
 			SELECT Id
@@ -174,8 +167,9 @@ BEGIN
 	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, @CurrencyId, 1, @RoleId, @FromDate, SourceId, @SourceSiteName, @ToDate
 	FROM #data
 	
-	SELECT TOP (0) 0 AS SourceId, 1 AS IsValid, 0 AS Existed
-	FROM #data
+	SELECT Id AS SourceId, IsValid, Existed
+	FROM @sourceId
+	WHERE IsValid = 0 OR Existed = 1
 	
 	DROP TABLE #data
 END

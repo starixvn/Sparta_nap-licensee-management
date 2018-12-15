@@ -27,6 +27,7 @@ BEGIN
 	)
 	
 	DECLARE @result AS TABLE (
+			SiteName	VARCHAR(50),
 			SourceId	INT,
 			Existed		BIT
 	)
@@ -39,26 +40,26 @@ BEGIN
 	)
 	
 	INSERT INTO @settingId(Id)
-	SELECT val
+	SELECT DISTINCT val
 	FROM CUSTDB.dbo.strSplit(@SettingIdList,',')
 	
 	UPDATE s
 	SET s.SourceId = l.SourcedId, 
 		s.LicenseeId = l.LicenseeID,
-		s.IsUpdated = CASE WHEN l.EffectiveDate <= @EndDate AND l.EndDate < @EndDate THEN 1 ELSE 0 END
+		s.IsUpdated = CASE WHEN l.EffectiveDate <= @EndDate AND l.EndDate > @EndDate THEN 1 ELSE 0 END
 	FROM @settingId s
 	INNER JOIN dbo.LicenseeSourcedSetting l WITH (NOLOCK) ON s.Id = l.ID
 	WHERE l.IsActive = 1
 	
 	DELETE @settingId
-	WHERE SourceId IS NULL AND LicenseeId IS NULL
+	WHERE SourceId IS NULL OR LicenseeId IS NULL
 	
 	;WITH Source_CTE AS (
 		SELECT DISTINCT SourceId, LicenseeId
 		FROM @settingId
 	)
-	INSERT INTO @result (SourceId, Existed)
-	SELECT s.SourceId, 1
+	INSERT INTO @result (SourceId, Existed, SiteName)
+	SELECT s.SourceId, 1, l.SiteName
 	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
 	INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
 	WHERE l.IsActive = 1
@@ -76,34 +77,39 @@ BEGIN
 		INNER JOIN @settingId s ON l.ID = s.Id
 		WHERE s.IsUpdated = 1
 	
-		INSERT INTO @duplicateSource(SourceId, LicenseeId, DuplicatedRow)
-		SELECT SourceId, LicenseeId, COUNT(1) - 1
-		FROM @settingId
-		GROUP BY SourceId, LicenseeId
-		HAVING COUNT(1) > 1
-		
-		DECLARE @m INT, @i INT, @sourceId INT, @licenseeId INT, @duplicatedRow INT
-		SELECT @m = MAX(Id), @i = 1 FROM @duplicateSource
-		
-		WHILE (@i <= @m)
+		IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
 		BEGIN
-			SELECT @SourceId = SourceId, @licenseeId = LicenseeId, @duplicatedRow = DuplicatedRow
-			FROM @duplicateSource
-			WHERE Id = @i
-			
-			DELETE TOP (@duplicatedRow)  
+			INSERT INTO @duplicateSource(SourceId, LicenseeId, DuplicatedRow)
+			SELECT SourceId, LicenseeId, COUNT(1) - 1
 			FROM @settingId
-			WHERE SourceId = @sourceId AND LicenseeId = @licenseeId			
+			GROUP BY SourceId, LicenseeId
+			HAVING COUNT(1) > 1
+			
+			DECLARE @m INT, @i INT, @sourceId INT, @licenseeId INT, @duplicatedRow INT
+			SELECT @m = MAX(Id), @i = 1 FROM @duplicateSource
+			
+			WHILE (@i <= @m)
+			BEGIN
+				SELECT @SourceId = SourceId, @licenseeId = LicenseeId, @duplicatedRow = DuplicatedRow
+				FROM @duplicateSource
+				WHERE Id = @i
+				
+				DELETE TOP (@duplicatedRow)  
+				FROM @settingId
+				WHERE SourceId = @sourceId AND LicenseeId = @licenseeId
+				
+				SET @i = @i + 1	
+			END
+			
+			-- Restart
+			INSERT INTO dbo.LicenseeSourcedSetting (SiteName, LicenseeID, SourcedLicenseeID, SourcedCurrencyID, IsActive, Roleid, EffectiveDate, SourcedId, SourcedSiteName, EndDate)
+			SELECT l.SiteName, l.LicenseeID, l.SourcedLicenseeID, l.SourcedCurrencyID, 1, l.Roleid, @RestartFrom, l.SourcedId, l.SourcedSiteName, @RestartTo
+			FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
+			INNER JOIN @settingId s ON l.ID = s.Id
 		END
-		
-		-- Restart
-		INSERT INTO dbo.LicenseeSourcedSetting (SiteName, LicenseeID, SourcedLicenseeID, SourcedCurrencyID, IsActive, Roleid, EffectiveDate, SourcedId, SourcedSiteName, EndDate)
-		SELECT l.SiteName, l.LicenseeID, l.SourcedLicenseeID, l.SourcedCurrencyID, 1, l.Roleid, @RestartFrom, l.SourcedId, l.SourcedSiteName, @RestartTo
-		FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
-		INNER JOIN @settingId s ON l.ID = s.Id
 	END
 	
-	SELECT SourceId, Existed
+	SELECT SourceId, Existed, SiteName
 	FROM @result
 END
 GO
