@@ -8307,6 +8307,15 @@ var IgnoredFunctionList = function (_Component) {
             onEdit && onEdit(newFunctionList);
         };
 
+        _this.isValidNewOption = function (inputValue) {
+            if (inputValue.label) {
+                var regEx = /(^(\w|\d)+$|^\[(\w|\d)+\]$)/;
+                return regEx.test(inputValue.label) ? true : false;
+            }
+
+            return false;
+        };
+
         _this.handleChangeSelectedFunctionList = function (selectedFunction) {
             _this.handleChangeFunction(selectedFunction);
         };
@@ -8463,7 +8472,8 @@ var IgnoredFunctionList = function (_Component) {
                             removeSelected: true,
                             value: selectedFunctionList,
                             onChange: this.handleChangeSelectedFunctionList,
-                            options: functionKeyList
+                            options: functionKeyList,
+                            isValidNewOption: this.isValidNewOption
                         })
                     )
                 )
