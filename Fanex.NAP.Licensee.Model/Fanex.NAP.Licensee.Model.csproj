@@ -210,6 +210,7 @@
     <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
     <Compile Include="ViewModel\ManageOperator\OperatorViewModel.cs" />
     <Compile Include="ViewModel\ManageOperator\SearchOperatorViewModel.cs" />
+    <Compile Include="ViewModel\ManageProduct\SearchProductViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />

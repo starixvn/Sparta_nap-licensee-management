@@ -296,6 +296,8 @@
     <Content Include="www\reactpages\dist\css\dev\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.css" />
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
+    <Content Include="www\reactpages\dist\css\dev\product\product.css" />
+    <Content Include="www\reactpages\dist\css\dev\product\product.js" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
@@ -306,6 +308,8 @@
     <Content Include="www\reactpages\dist\css\pro\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\pro\operator\operator.css" />
     <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
+    <Content Include="www\reactpages\dist\css\pro\product\product.css" />
+    <Content Include="www\reactpages\dist\css\pro\product\product.js" />
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
@@ -318,6 +322,7 @@
     <Content Include="www\reactpages\dist\js\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicenseeList\sourceLicenseeList.js" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicensee\sourceLicensee.js" />
+    <Content Include="www\reactpages\dist\js\dev\product\product.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
@@ -330,6 +335,7 @@
     <Content Include="www\reactpages\dist\js\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\js\pro\sourceLicenseeList\sourceLicenseeList.js" />
     <Content Include="www\reactpages\dist\js\pro\sourceLicensee\sourceLicensee.js" />
+    <Content Include="www\reactpages\dist\js\pro\product\product.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
@@ -343,6 +349,9 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\product\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\product\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\product\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\operator\item\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\item\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\operator\list\action.js" />
@@ -354,6 +363,12 @@
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\base\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\product\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\product\FormFilter.jsx" />
+    <Content Include="www\reactpages\dist\js\dev\product\product.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\product\product.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\product\product.js.map" />
+    <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -816,6 +831,7 @@
     <Content Include="www\reactpages\dist\js\dev\sourceLicensee\sourceLicensee.js.map" />
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\Action.jsx" />
     <Content Include="www\reactpages\src\scripts\components\RedmineConfirmForm.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\product\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -860,6 +876,7 @@
     <Content Include="Views\LicenseeSetting\Edit.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Index.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
+    <Content Include="Views\ManageProduct\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
