@@ -82,6 +82,7 @@ export class Action extends Component {
                 if (response.data.IsSuccess) {
                     Utility.showMessage('Success!');
                     this._updateGrid();
+                    this.onPopupClose();
                 }
                 else {
                     Utility.showMessage(response.data.Error);
@@ -166,7 +167,7 @@ export class Action extends Component {
             </div>
             <ConfirmBox isShow={isShowConfirmation}
                 title='Confirmation'
-                message={`Do you want to stop getting data from ${Utility.formatDate(stopFrom)} and restart with date range ${Utility.formatDate(restartFrom)}-${Utility.formatDate(restartTo)}`}
+                message={`Do you want to stop getting data from ${Utility.formatDate(stopFrom)}${restart ? ' and restart with date range '+ Utility.formatDate(restartFrom) + ' - ' + Utility.formatDate(restartTo) : ''}?`}
                 style={{ height: '160px', width: '400px' }}
                 onClose={this.onConfirm} /> 
             <Popup isShow={isShowPopup}

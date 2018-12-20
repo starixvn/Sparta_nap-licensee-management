@@ -9391,6 +9391,7 @@ var Action = exports.Action = function (_Component) {
                 if (response.data.IsSuccess) {
                     _utility2.default.showMessage('Success!');
                     _this2._updateGrid();
+                    _this2.onPopupClose();
                 } else {
                     _utility2.default.showMessage(response.data.Error);
                     if (response.data.Data) {
@@ -9545,7 +9546,7 @@ var Action = exports.Action = function (_Component) {
                 ),
                 _react2.default.createElement(_ConfirmBox2.default, { isShow: isShowConfirmation,
                     title: 'Confirmation',
-                    message: 'Do you want to stop getting data from ' + _utility2.default.formatDate(stopFrom) + ' and restart with date range ' + _utility2.default.formatDate(restartFrom) + '-' + _utility2.default.formatDate(restartTo),
+                    message: 'Do you want to stop getting data from ' + _utility2.default.formatDate(stopFrom) + (restart ? ' and restart with date range ' + _utility2.default.formatDate(restartFrom) + ' - ' + _utility2.default.formatDate(restartTo) : '') + '?',
                     style: { height: '160px', width: '400px' },
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,

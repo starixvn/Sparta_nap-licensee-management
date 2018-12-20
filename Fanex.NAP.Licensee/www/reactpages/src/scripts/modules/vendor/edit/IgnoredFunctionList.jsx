@@ -66,13 +66,18 @@ export default class IgnoredFunctionList extends Component {
         this.setState(newState);
     }
 
-    isValidNewOption = (inputValue) => {
-        if (inputValue.label) {
+    checkValidNewOption = (inputValue) => {
+        if (!inputValue.label) {
+            this.newOption = '';
+            this.isValidNewOption = false;
+        }
+        else if (this.newOption !== inputValue.label) {
             const regEx = /(^(\w|\d)+$|^\[(\w|\d)+\]$)/;
-            return regEx.test(inputValue.label) ? true : false;
+            this.newOption = inputValue.label;
+            this.isValidNewOption = regEx.test(inputValue.label);
         }
 
-        return false;
+        return this.isValidNewOption;
     }
 
     handleChangeSelectedFunctionList = (selectedFunction) => {
@@ -128,7 +133,7 @@ export default class IgnoredFunctionList extends Component {
                             value={selectedFunctionList}
                             onChange={this.handleChangeSelectedFunctionList}
                             options={functionKeyList}
-                            isValidNewOption={this.isValidNewOption}
+                            isValidNewOption={this.checkValidNewOption}
                         />
                     </div>
                 </div>
