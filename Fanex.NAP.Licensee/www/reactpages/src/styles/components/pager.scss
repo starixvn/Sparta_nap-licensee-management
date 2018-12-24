@@ -1,0 +1,46 @@
+﻿.pager {
+    margin-top: -20px;
+    border: 1px solid #ddd;
+    background-color: #EDECEA;
+    margin-bottom: 20px;
+    padding: 3px 5px;
+    text-align: center;
+    font-size: 0.9em;
+
+    .page-container, .page-info, .page-input {
+        display: inline-block;
+    }
+
+    .page-info {
+        float: right;
+    }
+
+    .page-container {
+        input {
+            width: 30px;
+            height: 20px;
+            text-align: center;
+        }
+
+        select {
+            height: 20px;
+            margin-left: 3px;
+        }
+
+        .glyphicon {
+            color: inherit;
+            margin: 0 2px;
+        }
+
+        .disable {
+            color: #939090;
+            cursor: default;
+        }
+
+        a:hover {
+            &.disable {
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,73 @@
+/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
+
+CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Select]
+	@FromDate			DATE		= '',
+	@ToDate				DATE		= '',
+	@LicenseeId			INT			= 0,
+	@SourceLicenseeId	INT			= 0,
+	@CurrencyId			INT			= 0,
+	@RoleId				INT			= 0,
+	@PageIndex			INT			= 1,
+	@PageSize			INT			= 20,
+	@TotalItem			INT			= 0 OUTPUT
+AS
+/*
+	 Created: Amanda
+	 Date: 2018-12-07
+	 Task: Implement "Source Licensee Setting" function
+	 DB: DBCUST.bodb_licensee
+	 
+	 Revisions:
+	  - 20181207@Amanda: Select Source Licensees [Redmine: #83584]
+*/
+BEGIN
+	SET NOCOUNT ON;
+	
+	CREATE TABLE #data (
+		ID		INT,
+		RowNum	INT
+	)
+	
+	DECLARE @from INT, @to INT
+	
+	INSERT INTO #data (
+			RowNum,
+			ID
+	)
+	SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.EffectiveDate ASC),
+			l.ID	
+	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+	WHERE (ISNULL(@FromDate, '') = '' OR l.EffectiveDate <= @FromDate)
+		AND (ISNULL(@ToDate, '') = '' OR l.EndDate >= @ToDate)
+		AND l.EffectiveDate <= l.EndDate
+		AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+		AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)
+		AND (@CurrencyId = 0 OR l.SourcedCurrencyID = @CurrencyId)
+		AND l.Roleid = @RoleId
+		AND l.IsActive = 1
+
+	SELECT @TotalItem = MAX(RowNum)
+	FROM #data
+	
+	SET @from = ((@PageIndex - 1) * @PageSize) + 1
+	SET @to = @from + @PageSize - 1
+	
+	SELECT	l.ID,
+			l.SiteName,
+			l.SourcedId			AS SourceId,
+			l.SourcedCurrencyID AS CurrencyID,
+			e.currency			AS CurrencyName,
+			l.Roleid,
+			l.SourcedSiteName	AS SourceSiteName,
+			l.EffectiveDate,
+			l.EndDate,
+			l.IsActive
+	FROM #data d 
+	INNER JOIN dbo.LicenseeSourcedSetting l WITH(NOLOCK) ON l.ID = d.ID
+	INNER JOIN CustDB.dbo.Exchange e WITH (NOLOCK) ON e.exchangeid = l.SourcedCurrencyID
+	WHERE d.RowNum BETWEEN @from AND @to
+	
+	DROP TABLE #data
+	
+END
+GO

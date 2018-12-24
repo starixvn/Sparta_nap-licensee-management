@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Core.Business;
@@ -9,7 +8,6 @@
     using Model.DataDomain;
     using Model.DTO;
     using Model.ViewModel.LicenseeVendor;
-    using Newtonsoft.Json;
     using ONEbook.UM.Filters;
     using Service;
 
@@ -46,18 +44,13 @@
 
             if (vendor != null)
             {
-                var originalExclusionJson = vendor.Exclusions;
-                var originalExclusionList = string.IsNullOrEmpty(originalExclusionJson) ?
-                    new List<string>() :
-                    JsonConvert.DeserializeObject<List<string>>(originalExclusionJson.Replace(",,", ","));
-
                 var functionKeyList = _vendorService.GetFunctionKeyList();
-                var renderingFunctionKeyList = functionKeyList.Union(originalExclusionList);
+                var renderingFunctionKeyList = vendor.ExclusionList != null ? functionKeyList.Union(vendor.ExclusionList) : functionKeyList;
 
                 var viewModel = new EditVendorViewModel
                 {
                     VendorInfo = vendor,
-                    FunctionKeyList = JsonConvert.SerializeObject(renderingFunctionKeyList)
+                    FunctionKeyList = renderingFunctionKeyList
                 };
 
                 return View(viewModel);
@@ -66,7 +59,7 @@
             var emptyResult = new EditVendorViewModel
             {
                 VendorInfo = new LicenseeVendor(),
-                FunctionKeyList = JsonConvert.SerializeObject(new List<string>())
+                FunctionKeyList = Enumerable.Empty<string>()
             };
 
             return View(emptyResult);

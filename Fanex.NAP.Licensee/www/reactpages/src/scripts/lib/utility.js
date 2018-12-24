@@ -2,11 +2,22 @@
 
 export default class Utility {
     static getTodayString() {
-        const today = new Date();
-        const month = today.getMonth() + 1;
-        const day = today.getDate();
+        return this.getDateString(new Date());
+    }
 
-        return `${today.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`
+    static getDateString(date) {
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        return `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+    }
+
+    static formatDate(dateString) {
+        const date = new Date(dateString);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        return `${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}/${date.getFullYear()}`;
     }
 
     static showMessage(msg) {

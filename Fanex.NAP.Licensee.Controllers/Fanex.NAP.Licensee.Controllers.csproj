@@ -149,6 +149,7 @@
     <Compile Include="SettingConfigurationController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="SourceLicenseeSettingController.cs" />
     <Compile Include="UtilityController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

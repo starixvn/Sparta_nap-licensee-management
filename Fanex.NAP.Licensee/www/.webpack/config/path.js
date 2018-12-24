@@ -8,7 +8,9 @@ const cssPaths = {
     demo: './www/reactpages/src/styles/modules/demo',
     editvendor: './www/reactpages/src/styles/modules/vendor/index.scss',
     operator: './www/reactpages/src/styles/modules/operator/index.scss',
-    licensee: './www/reactpages/src/styles/modules/licensee/index.scss'
+    licensee: './www/reactpages/src/styles/modules/licensee/licensee.scss',
+    licenseelist: './www/reactpages/src/styles/modules/licensee/licenseelist.scss',
+	sourceLicensee: './www/reactpages/src/styles/modules/sourcelicensee/index.scss'
 };
 
 const scriptPaths = {
@@ -24,7 +26,9 @@ const scriptPaths = {
     importoperator: './www/reactpages/src/scripts/modules/operator/import',
     licensee: './www/reactpages/src/scripts/modules/licensee/list',
     addlicensee: './www/reactpages/src/scripts/modules/licensee/add',
-    editlicensee: './www/reactpages/src/scripts/modules/licensee/edit'
+    editlicensee: './www/reactpages/src/scripts/modules/licensee/edit',
+    sourceLicenseeList: './www/reactpages/src/scripts/modules/sourcelicensee/list',
+    sourceLicensee: './www/reactpages/src/scripts/modules/sourcelicensee/add'
 };
 
 module.exports = {

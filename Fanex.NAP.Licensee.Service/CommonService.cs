@@ -233,5 +233,13 @@ namespace Fanex.NAP.Licensee.Service
                 return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
             }
         }
+
+        public IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId)
+        {
+            using (var db = new ObjectDb("Nap_LM_LicenseeCurrency_Select"))
+            {
+                return db.Query<CurrencyItem>(new { LicenseeId = licenseeId }).ToList();
+            }
+        }
     }
 }

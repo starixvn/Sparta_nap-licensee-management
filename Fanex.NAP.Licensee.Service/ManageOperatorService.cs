@@ -35,7 +35,7 @@
             }
         }
 
-        public ResultData<Operator> UpdateOperator(int agentId, string operatorId, int userId)
+        public ResultData<Operator> UpdateOperator(int agentId, string operatorId)
         {
             var result = new ResultData<Operator>();
 
@@ -47,7 +47,7 @@
 
             if (result.IsSuccess)
             {
-                WriteUpdateActionLog(operatorId, result.Data, userId);
+                WriteUpdateActionLog(operatorId, result.Data);
             }
 
             return result;
@@ -61,7 +61,7 @@
             }
         }
 
-        public ResultData<Operator> AddOperator(OperatorCriteria criteria, int userId)
+        public ResultData<Operator> AddOperator(OperatorCriteria criteria)
         {
             var result = new ResultData<Operator>();
 
@@ -73,7 +73,7 @@
 
             if (result.IsSuccess)
             {
-                WriteInsertActionLog(result.Data, userId);
+                WriteInsertActionLog(result.Data);
             }
 
             return result;
@@ -87,7 +87,7 @@
             }
         }
 
-        public IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId)
+        public IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml)
         {
             IEnumerable<ImportOperatorResult> result;
 
@@ -96,12 +96,12 @@
                 result = db.Query<ImportOperatorResult>(new { OperatorXml = operatorXml });
             }
 
-            WriteImportActionLog(result, userId);
+            WriteImportActionLog(result);
 
             return result;
         }
 
-        public bool DeleteOperator(int agentId, int userId)
+        public bool DeleteOperator(int agentId)
         {
             var result = false;
 
@@ -112,39 +112,39 @@
 
             if (result)
             {
-                WriteDeleteActionLog(agentId, userId);
+                WriteDeleteActionLog(agentId);
             }
 
             return result;
         }
 
-        private void WriteInsertActionLog(Operator newOperator, int userId)
+        private void WriteInsertActionLog(Operator newOperator)
         {
             var doing = $"<Operator AgentId=\"{newOperator.AgentId}\">"
                     + $"<New SiteName=\"{newOperator.SiteName}\" CurrencyId=\"{newOperator.CurrencyId}\" OperatorId=\"{newOperator.OperatorId}\" />"
                     + "</Operator>";
 
-            WriteLog(ActionLogType.InsertOperator, "Nap_LM_Operator_Insert", doing, userId);
+            WriteLog(ActionLogType.InsertOperator, "Nap_LM_Operator_Insert", doing);
         }
 
-        private void WriteUpdateActionLog(string newOperatorId, Operator operatorInfo, int userId)
+        private void WriteUpdateActionLog(string newOperatorId, Operator operatorInfo)
         {
             var doing = $"<Operator AgentId=\"{operatorInfo.AgentId}\">"
                 + $"<New SiteName=\"{operatorInfo.SiteName}\" CurrencyId=\"{operatorInfo.CurrencyId}\" OperatorId=\"{newOperatorId}\" />"
                 + $"<Old SiteName=\"{operatorInfo.SiteName}\" CurrencyId=\"{operatorInfo.CurrencyId}\" OperatorId=\"\" />"
                 + "</Operator>";
 
-            WriteLog(ActionLogType.UpdateOperator, "Nap_LM_Operator_Update", doing, userId);
+            WriteLog(ActionLogType.UpdateOperator, "Nap_LM_Operator_Update", doing);
         }
 
-        private void WriteDeleteActionLog(int agentId, int userId)
+        private void WriteDeleteActionLog(int agentId)
         {
             var doing = $"<Operator AgentId=\"{agentId}\"></Operator>";
 
-            WriteLog(ActionLogType.DeleteOperator, "Nap_LM_Operator_Delete", doing, userId);
+            WriteLog(ActionLogType.DeleteOperator, "Nap_LM_Operator_Delete", doing);
         }
 
-        private void WriteImportActionLog(IEnumerable<ImportOperatorResult> importResult, int userId)
+        private void WriteImportActionLog(IEnumerable<ImportOperatorResult> importResult)
         {
             var doing = new StringBuilder();
 
@@ -165,23 +165,24 @@
 
             if (doing.Length > 0)
             {
-                WriteLog(ActionLogType.ImportOperator, "Nap_LM_Operator_Import", doing.ToString(), userId);
+                WriteLog(ActionLogType.ImportOperator, "Nap_LM_Operator_Import", doing.ToString());
             }
         }
 
-        private void WriteLog(ActionLogType action, string sp, string operators, int userId)
+        private void WriteLog(ActionLogType action, string sp, string operators)
         {
+            var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"
                 + $"<SpName>{sp}</SpName>"
-                + $"<User>{userId}</User>"
+                + $"<UpdatedBy UserId=\"{user.Id}\" UserName=\"{user.Username}\" />"
                 + operators
                 + "</Action>";
 
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)action,
-                CustId = userId,
-                UserId = userId,
+                CustId = user.Id,
+                UserId = user.Id,
                 Doing = doing
             };
 

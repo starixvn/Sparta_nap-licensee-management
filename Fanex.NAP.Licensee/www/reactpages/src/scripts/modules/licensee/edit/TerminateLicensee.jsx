@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setLicensee, getProductList } from './action';
-import ConfirmBox from '../../../components/ConfirmBox';
+import RedmineConfirmForm from '../../../components/RedmineConfirmForm';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 
@@ -17,12 +17,13 @@ export class TerminateLicensee extends Component {
         this.setState({ isShow: true });
     }
 
-    onConfirm = (value) => {
-        if (value) {
+    onConfirm = (redmineId) => {
+        if (redmineId) {
             this.props.toggleLoader(true);
             const url = 'LicenseeSetting/TerminateLicensee';
             const param = {
-                LicenseeName: this.props.licensee.LicenseeName
+                LicenseeName: this.props.licensee.LicenseeName,
+                RedmineId: redmineId
             };
 
             Site.fetchData(param, url)
@@ -30,8 +31,13 @@ export class TerminateLicensee extends Component {
                     if (!response.data.IsSuccess) {
                         Utility.showMessage(response.data.Error);
                     }
+                    else {
+                        this.setState({ isShow: false });
+                        Utility.showMessage('Success!');
+                    }
 
                     if (response.data.Data) {
+                        this.setState({ isShow: false });
                         this.props.setLicensee(response.data.Data);
                         this.props.getProductList(this.props.licensee.LicenseeID);
                     }
@@ -43,8 +49,9 @@ export class TerminateLicensee extends Component {
                     this.props.toggleLoader(false);
                 });
         }
-
-        this.setState({ isShow: false });
+        else {
+            this.setState({ isShow: false });
+        }
     }
 
     render()
@@ -54,11 +61,10 @@ export class TerminateLicensee extends Component {
         return (
         <div>
             <button className="btn btn-red" onClick={this._terminateLicensee}>Terminate Licensee</button>
-            <ConfirmBox isShow={isShow}
-                title='Confirmation'
-                message='Do you want to terminate this licensee?'
-                style={{ height: '150px', width: '400px' }}
-                onClose={this.onConfirm} />
+            <RedmineConfirmForm isShow={isShow}
+                msg='Do you want to terminate this licensee?'
+                style={{height: '210px', width: '400px'}}
+                onConfirm={this.onConfirm} />
         </div>
         );
     }

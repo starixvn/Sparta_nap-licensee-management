@@ -17,7 +17,7 @@ export default class IgnoredFunctionList extends Component {
         const { exclusionList } = this.props;
 
         this.state = {
-            selectedFunctionList: (exclusionList && JSON.parse(exclusionList.replace(",,",","))) || [],
+            selectedFunctionList: exclusionList || [],
             functionKeyList: this._buildFunctionKeyList()
         }
     }
@@ -66,14 +66,27 @@ export default class IgnoredFunctionList extends Component {
         this.setState(newState);
     }
 
+    checkValidNewOption = (inputValue) => {
+        if (!inputValue.label) {
+            this.newOption = '';
+            this.isValidNewOption = false;
+        }
+        else if (this.newOption !== inputValue.label) {
+            const regEx = /(^(\w|\d)+$|^\[(\w|\d)+\]$)/;
+            this.newOption = inputValue.label;
+            this.isValidNewOption = regEx.test(inputValue.label);
+        }
+
+        return this.isValidNewOption;
+    }
+
     handleChangeSelectedFunctionList = (selectedFunction) => {
         this.handleChangeFunction(selectedFunction);
     }
 
     render() {
         const { selectedFunctionList, functionKeyList } = this.state;
-
-        const originalExclusionList = (this.props.originalExclusionList && JSON.parse(this.props.originalExclusionList.replace(",,", ","))) || [];
+        const originalExclusionList = this.props.originalExclusionList || [];
 
         const originalFunctionText = originalExclusionList.join(",");
         const addingFunctionText = selectedFunctionList.filter(item => !originalExclusionList.includes(item)).join(",");
@@ -120,6 +133,7 @@ export default class IgnoredFunctionList extends Component {
                             value={selectedFunctionList}
                             onChange={this.handleChangeSelectedFunctionList}
                             options={functionKeyList}
+                            isValidNewOption={this.checkValidNewOption}
                         />
                     </div>
                 </div>

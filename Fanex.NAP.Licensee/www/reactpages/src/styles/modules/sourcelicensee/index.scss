@@ -1,0 +1,50 @@
+﻿@import "../../components/_variable";
+@import "../../components/react-select/react-select.main";
+@import "../../components/pager";
+@import "../../components/popup";
+@import "../../components/common.scss";
+
+.Select {
+    display: inline-block;
+    width: 150px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
+
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+}
+
+input[type=date], input[type=text] {
+    height: 25px;
+
+    &.has-error {
+        border: 1px solid $red;
+    }
+}
+
+tr {
+    &.disable {
+        color: #808080;
+    }
+}

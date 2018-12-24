@@ -6,8 +6,6 @@
     {
         public DateTime? EffectiveDate { get; set; }
 
-        public string RedMineId { get; set; }
-
         public dynamic SpParam => new
         {
             LicenseeName = LicenseeName,

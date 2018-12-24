@@ -59,14 +59,14 @@ export class DataGrid extends Component {
                                 <tr key={index}>
                                     <td>{item.LicenseeName}</td>
                                     <td>{item.Description}</td>
-                                    <td className="text-center"><span className={item.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span></td>
+                                    <td className="text-center"><span className={item.IsDeposit ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td className="text-right">{item.AffectedDateString}</td>
-                                    <td className="text-center"><span className={item.IsActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                    <td className="text-center"><span className={item.IsKPIActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                    <td className="text-center"><span className={item.IsOneWorkActive ? 'glyphicon glyphicon-ok' : ''}></span></td>
+                                    <td className="text-center"><span className={item.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                                    <td className="text-center"><span className={item.IsKPIActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                                    <td className="text-center"><span className={item.IsOneWorkActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td>{item.BrandName}</td>
                                     <td>{item.CompanyName}</td>
-                                    <td className="text-center"><span className={item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span></td>
+                                    <td className="text-center"><span className={item.IsAllowedMemberComm ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td className="text-center">
                                         <a href={window.rootUrl + `LicenseeSetting/Edit?licenseeName=${item.LicenseeName}`}>
                                             <i className="icon-edit"></i>

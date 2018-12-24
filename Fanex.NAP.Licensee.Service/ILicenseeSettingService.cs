@@ -12,23 +12,23 @@
 
         IEnumerable<SystemItem> GetSystemList();
 
-        ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria, int userId);
+        ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria);
 
         Licensee GetLicensee(string licenseeName);
 
         IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId);
 
-        string OfferProduct(OfferProductCriteria criteria, int userId);
+        string OfferProduct(OfferProductCriteria criteria);
 
-        string RemoveProduct(RemoveLicenseeProductCriteria criteria, string pullServiceKey, int userId);
+        string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
-        int AddAgent(LicenseeAgentCriteria criteria, int userId);
+        int AddAgent(LicenseeAgentCriteria criteria);
 
-        ResultData<Licensee> TerminateLicensee(string licenseeName, int userId);
+        ResultData<Licensee> TerminateLicensee(TerminateLicenseeCriteria criteria);
 
-        string EnablePullService(LicenseeProductCriteria criteria, string settingName, int userId);
+        string EnablePullService(LicenseeProductCriteria criteria, string settingName);
 
         IEnumerable<CurrencyItem> GetSuperCurrency(string superWildCard);
 

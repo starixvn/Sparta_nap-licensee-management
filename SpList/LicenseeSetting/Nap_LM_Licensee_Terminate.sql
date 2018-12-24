@@ -11,6 +11,7 @@ AS
 	 
 	 Revisions:
 	  - 20181121@Amanda: Terminate Licensee [Redmine: #83584]
+	  - 20181219@Amanda: Validate System data before deactivate [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -47,6 +48,9 @@ BEGIN
 							WHERE sl.LicenseeID = @LicenseeId AND sl.IsActive = 1
 						FOR XML PATH('')), 1, 1, '')  
 
-	EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
+	IF ISNULL(@SystemNames,'') <> ''
+	BEGIN
+		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
+	END
 END
 GO

@@ -5,7 +5,7 @@ import { toggleLoader, getProductList } from './action';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
 import ConfirmBox from '../../../components/ConfirmBox';
-import EnablePullServiceForm from './EnablePullServiceForm';
+import RedmineConfirmForm from '../../../components/RedmineConfirmForm';
 
 export class ProductGrid extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export class ProductGrid extends Component {
 
         this.state = {
             confirmPopup: { isShow: false, msg: '', onClose: null },
-            pullServicePopup: { isShow: false, productCode: '', productName: '', settingKey: '' }
+            redmineConfirmPopup: { isShow: false, msg: '', onConfirm: null },
         }
     }
 
@@ -24,48 +24,60 @@ export class ProductGrid extends Component {
     }
 
     _enablePullService(product) {
-        const pullServicePopup = {
+        const redmineConfirmPopup = {
             isShow: true,
-            productCode: product.ProductCode,
-            productName: product.ProductName,
-            settingKey: product.PullServiceKey
+            msg: `Do you want to enable ${product.ProductCode} (setting name: "${product.PullServiceKey}") pull service?`,
+            onConfirm: (redmineId) => this.onEnablePullService(redmineId, product.ProductCode)
         }
 
-        this.setState({ pullServicePopup: pullServicePopup });
+        this.setState({ redmineConfirmPopup: redmineConfirmPopup });
     }
 
-    onCloseEnablePullServicePopup = (result) => {
-        if (result) {
-            this.props.getProductList(this.props.licensee.LicenseeID);
-        }
+    onEnablePullService(redmineId, productCode) {
+        if (redmineId) {
+            this.props.toggleLoader(true);
+            const url = 'LicenseeSetting/EnablePullService';
+            const params = {
+                LicenseeName: this.props.licensee.LicenseeName,
+                ProductCode: productCode,
+                RedmineId: redmineId
+            };
 
-        const pullServicePopup = {
-            isShow: false,
-            productCode: '',
-            productName: '',
-            settingKey: ''
+            Site.fetchData(params, url)
+                .then(response => {
+                    if (!response.data.IsSuccess) {
+                        Utility.showMessage(response.data.Error);
+                        this.props.toggleLoader(false);
+                    }
+                    else {
+                        Utility.showMessage('Success!');
+                        this._onCloseRedmineConfirmPopup();
+                        this.props.getProductList(this.props.licensee.LicenseeID);
+                    }
+                }).catch(err => {
+                    Utility.showMessage('Error!');
+                    this.props.toggleLoader(false);
+                });
         }
+        else {
+            this._onCloseRedmineConfirmPopup();
+        }
+    }
 
-        this.setState({ pullServicePopup: pullServicePopup });
+    _onCloseRedmineConfirmPopup() {
+        const redmineConfirmPopup = { isShow: false, msg: '', onConfirm: null };
+
+        this.setState({ redmineConfirmPopup: redmineConfirmPopup });
     }
 
     _removePullService(product) {
         const confirmPopup = {
             isShow: true,
             msg: `Do you want to remove pull service with key "${product.PullServiceKey}"?`,
-            onClose: (result) => this._onConfirmRemovePullService(result, product)
+            onClose: (result) => this.removeProduct(product, result)
         }
 
         this.setState({ confirmPopup: confirmPopup });
-    }
-
-    _onConfirmRemovePullService = (value, product) => {
-        if (value) {
-            this._removeProduct(product, true);
-        }
-        else {
-            this._removeProduct(product, false);
-        }
     }
 
     _showRemoveProductPopup(product) {
@@ -73,56 +85,61 @@ export class ProductGrid extends Component {
             this._removePullService(product);
         }
         else {
-            this._removeProduct(product, false);
+            this.removeProduct(product, false);
         }
     }
 
-    _removeProduct(product, isRemovePullService) {
-        const msg = `Do you want to remove ${product.ProductName}${isRemovePullService ? ' and its pull service' : ''}?`
-
+    removeProduct(product, isRemovePullService) {
         const confirmPopup = {
-            isShow: true,
-            msg: msg,
-            onClose: (result) => this.onCloseRemoveConfirmBox(result, product.ProductCode, isRemovePullService)
+            isShow: false,
+            msg: '',
+            onClose: null
         }
 
-        this.setState({ confirmPopup: confirmPopup });
+        const redmineConfirmPopup = {
+            isShow: true,
+            msg: `Do you want to remove ${product.ProductName}${isRemovePullService ? ' and its pull service' : ''}?`,
+            onConfirm: (redmineId) => this.onRemoveProduct(redmineId, product.ProductCode, isRemovePullService)
+        }
+
+        this.setState({ confirmPopup: confirmPopup, redmineConfirmPopup: redmineConfirmPopup });
     }
 
-    onCloseRemoveConfirmBox = (value, productCode, isRemovePullService) => {
-        if (value) {
+    onRemoveProduct(redmineId, productCode, isRemovePullService) {
+        if (redmineId) {
             this.props.toggleLoader(true);
             const url = 'LicenseeSetting/RemoveProduct';
             const param = {
                 LicenseeName: this.props.licensee.LicenseeName,
                 ProductCode: productCode,
-                IsRemovePullService: isRemovePullService
+                IsRemovePullService: isRemovePullService,
+                RedmineId: redmineId
             };
 
             Site.fetchData(param, url)
                 .then(response => {
                     if (!response.data.IsSuccess) {
                         Utility.showMessage(response.data.Error);
+                        this.props.toggleLoader(false);
                     }
                     else {
                         Utility.showMessage('Success!');
+                        this._onCloseRedmineConfirmPopup();
+                        this.props.getProductList(this.props.licensee.LicenseeID);
                     }
-
-                    this.props.getProductList(this.props.licensee.LicenseeID);
                 }).catch(err => {
                     Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);
                 });
         }
-
-        const confirmPopup = { isShow: false, msg: '', onClose: null };
-
-        this.setState({ confirmPopup: confirmPopup });
+        else {
+            this._onCloseRedmineConfirmPopup();
+        }
     }
 
     render() {
         const { productList, licensee } = this.props;
-        const { confirmPopup, pullServicePopup } = this.state;
+        const { confirmPopup, redmineConfirmPopup } = this.state;
 
         return (
             <div>
@@ -132,13 +149,10 @@ export class ProductGrid extends Component {
                     message={confirmPopup.msg}
                     style={{ height: '160px', width: '400px' }}
                     onClose={confirmPopup.onClose} />
-                <EnablePullServiceForm 
-                    isShow={pullServicePopup.isShow}
-                    licenseeName={licensee.LicenseeName}
-                    productName={pullServicePopup.productName}
-                    productCode={pullServicePopup.productCode}
-                    settingKey={pullServicePopup.settingKey}
-                    onClose={this.onCloseEnablePullServicePopup} />
+                <RedmineConfirmForm isShow={redmineConfirmPopup.isShow}
+                    msg={redmineConfirmPopup.msg}
+                    style={{height: '210px', width: '510px'}}
+                    onConfirm={redmineConfirmPopup.onConfirm} />
                 <div className='row'>
                     <div className='col-xs-12 col-md-6'>
                         <table className="table table-bordered table-hover">
@@ -166,9 +180,9 @@ export class ProductGrid extends Component {
                                             <td className="text-center">{index + 1}</td>
                                             <td>{item.ProductName}</td>
                                             <td className="text-right">{item.EffectiveDateString}</td>
-                                            <td className="text-center"><span className={item.Comm ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                            <td className="text-center"><span className={item.WinLoss ? 'glyphicon glyphicon-ok' : ''}></span></td>
-                                            <td className="text-center"><span className={item.EnablePullService ? 'glyphicon glyphicon-ok' : ''}></span></td>
+                                            <td className="text-center"><span className={item.Comm ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                                            <td className="text-center"><span className={item.WinLoss ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                                            <td className="text-center"><span className={item.EnablePullService ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                             { licensee.IsActive && 
                                                 <td className="text-center">
                                                     {

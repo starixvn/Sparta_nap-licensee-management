@@ -10,16 +10,16 @@
 
         IEnumerable<Operator> GetOperators(SearchOperatorCriteria criteria);
 
-        ResultData<Operator> AddOperator(OperatorCriteria criteria, int userId);
+        ResultData<Operator> AddOperator(OperatorCriteria criteria);
 
-        ResultData<Operator> UpdateOperator(int agentId, string operatorId, int userId);
+        ResultData<Operator> UpdateOperator(int agentId, string operatorId);
 
         Operator GetOperator(int agentId);
 
         Agent GetAgent(int agentId);
 
-        IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml, int userId);
+        IEnumerable<ImportOperatorResult> ImportOperators(string operatorXml);
 
-        bool DeleteOperator(int agentId, int userId);
+        bool DeleteOperator(int agentId);
     }
 }
