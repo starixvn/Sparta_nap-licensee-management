@@ -1,11 +1,14 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Net.Mime;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
+    using Model.Criteria.Product;
     using Model.DataDomain;
     using Model.ViewModel.ManageProduct;
+    using Newtonsoft.Json;
     using ONEbook.UM.Filters;
     using Service;
 
@@ -36,6 +39,17 @@
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Read)]
+        public JsonResult Search(LicenseeProductMatrixCriteria criteria)
+        {
+            var result = _service.Search(criteria);
+            var jsonString = JsonConvert.SerializeObject(result);
+
+            return Json(jsonString);
         }
     }
 }

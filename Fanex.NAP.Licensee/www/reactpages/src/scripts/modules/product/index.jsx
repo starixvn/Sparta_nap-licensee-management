@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducer'
 import Store from '../../lib/store'
 
-const store = Store.createStore(reducer, { isLoading: false, params: {} });
+const store = Store.createStore(reducer, { isLoading: false, params: {}, productList: window.initialState.productList });
 
 export default class App extends React.Component {
     constructor(props) {

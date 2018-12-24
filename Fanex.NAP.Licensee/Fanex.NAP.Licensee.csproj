@@ -368,6 +368,7 @@
     <Content Include="www\reactpages\dist\js\dev\product\product.js.map" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css.map" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js.map" />
+    <Content Include="www\reactpages\src\scripts\modules\product\DataGrid.jsx" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import Select from 'react-select';
 import { setParams } from './action';
 
-const defaultState = Object.assign({}, window.initialState);
+const defaultState = Object.assign({}, { selectedLicensee: window.initialState.selectedLicensee, selectedProduct: window.initialState.selectedProduct, licenseeList: window.initialState.licenseeList });
 
 export class FormFilter extends Component {
     constructor(props) {
@@ -30,8 +30,8 @@ export class FormFilter extends Component {
 
     _submit() {
         const params = {
-            licenseeList: this.state.selectedProduct == null ? '' : this.state.selectedLicensee.map(i => i.value).join(','),
-            productList: this.state.selectedProduct == null ? '' : this.state.selectedProduct.map(i => i.value).join(','),
+            licenseeList: this.state.selectedLicensee == null ? '' : this.state.selectedLicensee.map(i => i.value).join(','),
+            productList: this.state.selectedProduct == null ? [] : this.state.selectedProduct,
             timeStamp: new Date().getTime()
         };
 
@@ -45,7 +45,7 @@ export class FormFilter extends Component {
             <div className="col-xs-12 filter-form">
                 <div className="row">
                     <div className="col-xs-12 form-group row">
-                        <label className="col-md-1 col-sm-2 col-xs-12">Site Name</label>
+                        <label className="col-md-1 col-sm-2 col-xs-12">Licensee</label>
                         <Select instanceId="ddlLicensee"
                             value={selectedLicensee}
                             className="col-md-5 col-sm-4 col-xs-12"  
@@ -55,11 +55,11 @@ export class FormFilter extends Component {
                     </div>
 
                     <div className="col-xs-12 form-group row">
-                        <label className="col-md-1 col-sm-2 col-xs-12">Currency</label>
+                        <label className="col-md-1 col-sm-2 col-xs-12">Product</label>
                         <Select instanceId="ddlProduct"
                             value={selectedProduct}
                             className="col-md-5 col-sm-4 col-xs-12"
-                            options={defaultState.productList}
+                            options={this.props.productList}
                             onChange={(item) => this.setState({ selectedProduct: item })}
                             multi={true} />
                     </div>
@@ -76,7 +76,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    return {};
+    const { productList } = state;
+    return { productList };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

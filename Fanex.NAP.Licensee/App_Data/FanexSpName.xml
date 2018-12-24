@@ -93,4 +93,8 @@
     <Setting Key="Nap_LM_SourceLicensee_Insert" SpName="Nap_LM_SourceLicensee_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SourceLicensee_Update" SpName="Nap_LM_SourceLicensee_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
+
+  <Function Name="Site.Nap.Licensee.ManageProduct">
+    <Setting Key="Nap_LM_LicenseeProduct_Select" SpName="Nap_LM_LicenseeProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+  </Function>
 </Functions>

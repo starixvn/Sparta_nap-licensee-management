@@ -2,7 +2,7 @@
 import { isLoading } from '../../reducers/loaderReducer'
 
 import createReducer from '../../lib/createReducer'
-import { SET_PARAMS } from './types'
+import { SET_PARAMS, GET_PRODUCT_LIST } from './types'
 
 const params = createReducer({}, {
     [SET_PARAMS](state, action) {
@@ -10,4 +10,11 @@ const params = createReducer({}, {
     }
 });
 
-export default combineReducers({ params, isLoading })
+const productList = createReducer({}, {
+    [GET_PRODUCT_LIST](state, action) {
+        return action.data;
+    }
+});
+
+
+export default combineReducers({ params, isLoading, productList })
