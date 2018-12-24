@@ -47,9 +47,9 @@
         public JsonResult Search(LicenseeProductMatrixCriteria criteria)
         {
             var result = _service.Search(criteria);
-            var jsonString = JsonConvert.SerializeObject(result);
+            var jsonString = JsonConvert.SerializeObject(result.Data);
 
-            return Json(jsonString);
+            return Json(new { Data = jsonString, TotalItem = result.TotalItem });
         }
     }
 }

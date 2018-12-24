@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.Product
 {
-    public class LicenseeProductMatrixCriteria
+    using SourceLicenseeSetting;
+
+    public class LicenseeProductMatrixCriteria : PageModel
     {
         public string LicenseeList { get; set; }
 

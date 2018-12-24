@@ -32,6 +32,8 @@ export class FormFilter extends Component {
         const params = {
             licenseeList: this.state.selectedLicensee == null ? '' : this.state.selectedLicensee.map(i => i.value).join(','),
             productList: this.state.selectedProduct == null ? [] : this.state.selectedProduct,
+            pageIndex: 1,
+            pageSize: this.props.params.pageSize || 20,
             timeStamp: new Date().getTime()
         };
 
@@ -76,8 +78,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    const { productList } = state;
-    return { productList };
+    const { productList, params } = state;
+    return { productList, params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

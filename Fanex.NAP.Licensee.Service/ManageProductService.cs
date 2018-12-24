@@ -1,10 +1,8 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
-    using System.Dynamic;
-    using System.Linq;
     using Core;
     using Model.Criteria.Product;
+    using Model.DTO;
 
     public class ManageProductService : IManageProductService
     {
@@ -17,12 +15,18 @@
             _logWriter = new LogWriterService();
         }
 
-        public IEnumerable<object> Search(LicenseeProductMatrixCriteria criteria)
+        public ResultGridData<dynamic> Search(LicenseeProductMatrixCriteria criteria)
         {
+            var result = new ResultGridData<dynamic>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_LicenseeProduct_Select"))
             {
-                return db.Query<object>(criteria);
+                result.Data = db.Query<dynamic>(criteria);
             }
+
+            result.TotalItem = criteria.TotalItem;
+
+            return result;
         }
     }
 }

@@ -30,7 +30,7 @@ const scriptPaths = {
     editlicensee: './www/reactpages/src/scripts/modules/licensee/edit',
     sourceLicenseeList: './www/reactpages/src/scripts/modules/sourcelicensee/list',
     sourceLicensee: './www/reactpages/src/scripts/modules/sourcelicensee/add',
-	product: './www/reactpages/src/scripts/modules/product
+	product: './www/reactpages/src/scripts/modules/product'
 };
 
 module.exports = {
