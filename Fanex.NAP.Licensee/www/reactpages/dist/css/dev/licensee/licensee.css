@@ -430,7 +430,7 @@
       float: right; }
   .popup .popup-container .popup-content {
     overflow-y: auto;
-    height: calc(100% - 38px);
+    height: calc(100% - 40px);
     padding: 20px; }
 
 .popup .confirm-popup .btn {
@@ -470,10 +470,7 @@
   min-height: 25px;
   overflow: hidden; }
 
-.popup-content .Select-menu-outer {
-  max-height: 150px; }
-
-.popup-content .Select-menu {
-  max-height: 148px; }
+.popup-content .big-box .Select-control {
+  height: 90px; }
 
 /*# sourceMappingURL=licensee.css.map*/
