@@ -1,4 +1,4 @@
-/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_LicenseeProduct_Select]
 	@LicenseeList		VARCHAR(MAX)= '',
@@ -12,7 +12,7 @@ AS
 	 Created: Amanda
 	 Date: 2018-12-21
 	 Task: Implement "Manage Product" function
-	 DB: DBCUST.SiteConfig
+	 DB: DBCUST.bodb_licensee
 	 
 	 Revisions:
 	  - 20181221@Amanda: Select licensee product [Redmine: #83584]
