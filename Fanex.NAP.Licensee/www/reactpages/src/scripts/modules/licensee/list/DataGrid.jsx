@@ -1,14 +1,15 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader } from './action';
-import Site from '../../../lib/site'
+import { toggleLoader, setParams } from './action';
+import Site from '../../../lib/site';
+import Pager from '../../../components/Pager';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [] };
+        this.state = { gridData: [], totalItem: 0 };
     }
 
     componentDidUpdate(prevProps) {
@@ -20,21 +21,30 @@ export class DataGrid extends Component {
     _getData() {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'LicenseeSetting/Search').then(response => {
-            this.setState({ gridData: response.data });
+            this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
             this.props.toggleLoader(false);
         });
     }
 
-    render() {
-        const gridData = this.state.gridData;
+    onPaging = (index, size) => {
+        let params = Object.assign({}, this.props.params, { pageIndex: index, pageSize: size, timeStamp: new Date().getTime() });
 
-        if (gridData.length === 0) {
+        this.props.setParams(params);
+    }
+
+    render() {
+        const { totalItem } = this.state;
+
+        if (totalItem === 0) {
             return false;
         }
 
+        const { gridData } = this.state;
+        const { pageIndex, pageSize } = this.props.params;
+
         return (
             <div>
-                <p>Search results: <b>{gridData.length}</b> item(s)</p>
+                <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -78,13 +88,19 @@ export class DataGrid extends Component {
                     }
                     </tbody>
             </table>
+            <Pager 
+                pageIndex={pageIndex}
+                pageSize={pageSize}
+                totalItem={totalItem}
+                pageList={[20,50,100,500]}
+                onPaging={this.onPaging} />
         </div>
         )
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader }, dispatch);
+    return bindActionCreators({ toggleLoader, setParams }, dispatch);
 }
 function mapStateToProps(state) {
     const { params } = state;

@@ -2,8 +2,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams, setCheckedList } from './action';
-import Site from '../../../lib/site'
-import Pager from '../../../components/Pager'
+import Site from '../../../lib/site';
+import Pager from '../../../components/Pager';
 
 export class DataGridBase extends Component {
     constructor(props) {
@@ -87,13 +87,15 @@ export class DataGridBase extends Component {
     }
 
     render() {
-        const { gridData, totalItem, activeItems } = this.state;
-        const { pageIndex, pageSize } = this.props.params;
-        const { header, body, keyValue, checkedList } = this.props;
+        const { totalItem } = this.state;
 
         if (totalItem === 0) {
             return false;
         }
+
+        const { gridData, activeItems } = this.state;
+        const { pageIndex, pageSize } = this.props.params;
+        const { header, body, keyValue, checkedList } = this.props;
 
         return (
             <div>
@@ -113,7 +115,7 @@ export class DataGridBase extends Component {
                     totalItem={totalItem}
                     pageList={[20,50,100,500]}
                     onPaging={this.onPaging} />
-                </div>
+            </div>
         )
     }
 }

@@ -67,18 +67,19 @@ export class DataGrid extends Component {
     }
 
     render() {
-        const { gridData, totalItem, confirmBox, licenseeIdList } = this.state;
-        const { params, productList, checkedList } = this.props;
+        const { totalItem } = this.state;
 
-        if (gridData.length === 0) {
+        if (totalItem === 0) {
             return false;
         }
 
+        const { gridData, confirmBox, licenseeIdList } = this.state;
+        const { params, productList, checkedList } = this.props;
         const header = params.productList.length > 0 ? params.productList : productList;
 
         return (
             <div>
-                <p>Search results: <b>{gridData.length}</b> item(s)</p>
+                <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
                         <tr>

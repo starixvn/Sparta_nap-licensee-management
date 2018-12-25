@@ -55,6 +55,8 @@ export class FormFilter extends Component {
         const params = {
             licenseeName: this.params.licenseeName,
             isActive: this.params.isActive,
+            pageIndex: 1,
+            pageSize: this.props.params.pageSize || 20,
             timeStamp: new Date().getTime()
         };
 
@@ -88,7 +90,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    return {};
+    const { params } = state;
+    return { params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

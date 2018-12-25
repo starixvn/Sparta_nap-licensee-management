@@ -8,7 +8,7 @@
     {
         IEnumerable<string> GetSiteNames();
 
-        IEnumerable<Operator> GetOperators(SearchOperatorCriteria criteria);
+        ResultGridData<Operator> GetOperators(SearchOperatorCriteria criteria);
 
         ResultData<Operator> AddOperator(OperatorCriteria criteria);
 

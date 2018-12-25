@@ -20,12 +20,18 @@
             _logWriter = new LogWriterService();
         }
 
-        public IEnumerable<Licensee> Search(LicenseeCriteria criteria)
+        public ResultGridData<Licensee> Search(LicenseeCriteria criteria)
         {
+            var result = new ResultGridData<Licensee>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Select"))
             {
-                return db.Query<Licensee>(criteria);
+                result.Data = db.Query<Licensee>(criteria);
             }
+
+            result.TotalItem = criteria.TotalItem;
+
+            return result;
         }
 
         public IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false)
@@ -70,7 +76,7 @@
 
         public Licensee GetLicensee(string licenseeName)
         {
-            return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).FirstOrDefault();
+            return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).Data.FirstOrDefault();
         }
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)

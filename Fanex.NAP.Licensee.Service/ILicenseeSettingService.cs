@@ -6,7 +6,7 @@
 
     public interface ILicenseeSettingService
     {
-        IEnumerable<Licensee> Search(LicenseeCriteria criteria);
+        ResultGridData<Licensee> Search(LicenseeCriteria criteria);
 
         IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false);
 

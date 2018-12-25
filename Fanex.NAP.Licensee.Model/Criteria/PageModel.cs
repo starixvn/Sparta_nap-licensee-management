@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.Criteria.SourceLicenseeSetting
+﻿namespace Fanex.NAP.Licensee.Model.Criteria
 {
     public class PageModel
     {

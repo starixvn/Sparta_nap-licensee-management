@@ -1,16 +1,17 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader } from './action';
+import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
 import ConfirmBox from '../../../components/ConfirmBox';
 import Utility from '../../../lib/utility';
+import Pager from '../../../components/Pager';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], confirmBox: { isShow: false, data: 0 } };
+        this.state = { gridData: [], totalItem: 0, confirmBox: { isShow: false, data: 0 } };
     }
 
     componentDidUpdate(prevProps) {
@@ -22,7 +23,7 @@ export class DataGrid extends Component {
     _getData() {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'ManageOperator/Search').then(response => {
-            this.setState({ gridData: response.data });
+            this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
             this.props.toggleLoader(false);
         });
     }
@@ -62,12 +63,21 @@ export class DataGrid extends Component {
             });
     }
 
-    render() {
-        const { gridData, confirmBox } = this.state;
+    onPaging = (index, size) => {
+        let params = Object.assign({}, this.props.params, { pageIndex: index, pageSize: size, timeStamp: new Date().getTime() });
 
-        if (gridData.length === 0) {
+        this.props.setParams(params);
+    }
+
+    render() {
+        const { totalItem } = this.state;
+
+        if (totalItem === 0) {
             return false;
         }
+
+        const { gridData, confirmBox } = this.state;
+        const { pageIndex, pageSize } = this.props.params;
 
         return (
             <div>
@@ -76,7 +86,7 @@ export class DataGrid extends Component {
                     message={`Do you want to delete operator ${confirmBox.data}?`}
                     style={{ height: '150px', width: '400px' }}
                     onClose={(value) => this._onConfirm(value, confirmBox.data)} /> 
-                <p>Search results: <b>{gridData.length}</b> item(s)</p>
+                <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -117,13 +127,19 @@ export class DataGrid extends Component {
                     }
                     </tbody>
                 </table>
+                <Pager 
+                    pageIndex={pageIndex}
+                    pageSize={pageSize}
+                    totalItem={totalItem}
+                    pageList={[20,50,100,500]}
+                    onPaging={this.onPaging} />
             </div>
         )
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader }, dispatch);
+    return bindActionCreators({ toggleLoader, setParams }, dispatch);
 }
 function mapStateToProps(state) {
     const { params } = state;
