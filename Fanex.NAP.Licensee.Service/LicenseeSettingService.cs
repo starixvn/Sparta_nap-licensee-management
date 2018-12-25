@@ -28,6 +28,14 @@
             }
         }
 
+        public IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LicenseeList_Select"))
+            {
+                return db.Query<LicenseeItem>(new { IsAll = isAll });
+            }
+        }
+
         public IEnumerable<Product> GetProductList()
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Product_Select"))

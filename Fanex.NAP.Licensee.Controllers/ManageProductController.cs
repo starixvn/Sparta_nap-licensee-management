@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System.Net.Mime;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
@@ -18,13 +17,11 @@
     public class ManageProductController : BaseController
     {
         private readonly IManageProductService _service;
-        private readonly ICommonService _commonService;
         private readonly ILicenseeSettingService _licenseeService;
 
         public ManageProductController()
         {
             _service = new ManageProductService();
-            _commonService = new CommonService();
             _licenseeService = new LicenseeSettingService();
         }
 
@@ -34,7 +31,7 @@
         {
             var viewModel = new SearchProductViewModel
             {
-                LicenseeList = _commonService.GetLicenseeList,
+                LicenseeList = _licenseeService.GetLicenseeList(),
                 ProductList = _licenseeService.GetProductList()
             };
 
@@ -50,6 +47,26 @@
             var jsonString = JsonConvert.SerializeObject(result.Data);
 
             return Json(new { Data = jsonString, TotalItem = result.TotalItem });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetNewProductList(string licenseeList)
+        {
+            var result = _service.GetNewProductList(licenseeList);
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetRemoveProductList(string licenseeList)
+        {
+            var result = _service.GetRemoveProductList(licenseeList);
+
+            return Json(result);
         }
     }
 }

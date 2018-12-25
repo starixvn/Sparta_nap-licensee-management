@@ -24,10 +24,13 @@
 
         private readonly ICommonService _commonService;
 
+        private readonly ILicenseeSettingService _licenseeService;
+
         public SourceLicenseeSettingController()
         {
             _service = new SourceLicenseeSettingService();
             _commonService = new CommonService();
+            _licenseeService = new LicenseeSettingService();
         }
 
         [HttpGet]
@@ -161,7 +164,7 @@
         private SearchSourceLicenseeViewModel GetSearchViewModel()
         {
             var fakeLicensee = GetFakeLicensees();
-            var siteNames = _commonService.GetLicenseeList;
+            var siteNames = _licenseeService.GetLicenseeList();
 
             return new SearchSourceLicenseeViewModel
             {

@@ -2,6 +2,7 @@
 @import "../../components/_variable";
 @import "../../components/common.scss";
 @import "../../components/pager";
+@import "../../components/popup";
 
 .Select {
     display: inline-block;
@@ -48,5 +49,27 @@
             padding-left: 0;
             padding-right: 0;
         }
+    }
+}
+
+.popup-content {
+    .big-box {
+        .Select-control {
+            height: 90px;
+        }
+    }
+
+    input[type=date] {
+        height: 25px;
+    }
+
+    input[type=text] {
+        &.has-error {
+            border: 1px solid $red;
+        }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
     }
 }

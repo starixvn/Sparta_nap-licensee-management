@@ -1,4 +1,4 @@
-﻿import { SET_PARAMS } from './types'
+﻿import { SET_PARAMS, SET_CHECKED_LIST } from './types'
 import { toggleLoader } from '../../actions/loaderAction'
 
 function setParams(data) {
@@ -8,4 +8,11 @@ function setParams(data) {
     };
 }
 
-export { setParams, toggleLoader }
+function setCheckedList(data) {
+    return {
+        type: SET_CHECKED_LIST,
+        data: data
+    };
+}
+
+export { setParams, toggleLoader, setCheckedList }

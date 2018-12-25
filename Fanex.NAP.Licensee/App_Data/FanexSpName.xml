@@ -84,6 +84,7 @@
     <Setting Key="Nap_LM_Licensee_GetIntegrationSetting" SpName="Nap_LM_Licensee_GetIntegrationSetting" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SuperCurrency_Select" SpName="Nap_LM_SuperCurrency_Select" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicenseeList_Select" SpName="Nap_LM_LicenseeList_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.SourceLicenseeSetting">
@@ -96,5 +97,7 @@
 
   <Function Name="Site.Nap.Licensee.ManageProduct">
     <Setting Key="Nap_LM_LicenseeProduct_Select" SpName="Nap_LM_LicenseeProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicenseeProduct_NewProduct_Select" SpName="Nap_LM_LicenseeProduct_NewProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LicenseeProduct_RemoveProduct_Select" SpName="Nap_LM_LicenseeProduct_RemoveProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

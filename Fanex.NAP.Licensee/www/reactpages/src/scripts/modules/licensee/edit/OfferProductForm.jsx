@@ -117,7 +117,7 @@ export class OfferProductForm extends Component {
                 <div className='form-group'>
                     <label className='col-form-label'>Product</label>
                     <Select instanceId='ddlProduct'
-                        className={`full-width ${selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'}`}
+                        className={`full-width big-box ${selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'}`}
                         value={selectedproduct}
                         options={productList}
                         multi={true}
@@ -161,8 +161,7 @@ export class OfferProductForm extends Component {
             <Popup isShow={isShow}
                 title='Offer New Product'
                 content={this._buildContent(selectedproduct, productList, date, redmineId)}
-                className='no-scroll'
-                style={{height: '320px', width: '600px'}}
+                style={{height: '385px', width: '600px'}}
                 onClose={() => this.onClose()} />
             </div>
         );

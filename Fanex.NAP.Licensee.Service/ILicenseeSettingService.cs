@@ -8,6 +8,8 @@
     {
         IEnumerable<Licensee> Search(LicenseeCriteria criteria);
 
+        IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false);
+
         IEnumerable<Product> GetProductList();
 
         IEnumerable<SystemItem> GetSystemList();

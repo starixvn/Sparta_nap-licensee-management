@@ -1,17 +1,15 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setParams } from './action';
+import { toggleLoader, setParams, setCheckedList } from './action';
 import Site from '../../lib/site';
-import ConfirmBox from '../../components/ConfirmBox';
-import Utility from '../../lib/utility';
 import Pager from '../../components/Pager';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], totalItem: 0, checkedList: [], licenseeIdList: [] };
+        this.state = { gridData: [], totalItem: 0, licenseeIdList: [] };
     }
 
     componentDidUpdate(prevProps) {
@@ -28,7 +26,8 @@ export class DataGrid extends Component {
 
     onItemChecked = (e) => {
         const value = parseInt(e.target.value);
-        const { checkedList, licenseeIdList } = this.state;
+        const { checkedList } = this.props;
+        const { licenseeIdList } = this.state;
         let newCheckedList = [];
 
         if (e.target.checked) {
@@ -48,17 +47,19 @@ export class DataGrid extends Component {
             }
         }
 
-        this.setState({ checkedList: newCheckedList });
+        this.props.setCheckedList(newCheckedList);
     }
 
     _getData() {
         this.props.toggleLoader(true);
         const params = {
             licenseeList: this.props.params.licenseeList,
-            productList: this.props.params.productList.map(i => i.value).join(',')
+            productList: this.props.params.productList.map(i => i.value).join(','),
+            pageIndex: this.props.params.pageIndex,
+            pageSize: this.props.params.pageSize
         }
 
-        Site.fetchData(this.props.params, 'ManageProduct/Search').then(response => {
+        Site.fetchData(params, 'ManageProduct/Search').then(response => {
             const data = response.data.Data ? JSON.parse(response.data.Data) : [];
             this.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(item => item.LicenseeId) });
             this.props.toggleLoader(false);
@@ -66,8 +67,8 @@ export class DataGrid extends Component {
     }
 
     render() {
-        const { gridData, totalItem, confirmBox, checkedList, licenseeIdList } = this.state;
-        const { params, productList } = this.props;
+        const { gridData, totalItem, confirmBox, licenseeIdList } = this.state;
+        const { params, productList, checkedList } = this.props;
 
         if (gridData.length === 0) {
             return false;
@@ -102,7 +103,7 @@ export class DataGrid extends Component {
                                         <td>{item.LicenseeName}</td>
                                         { 
                                             header.map(x => {
-                                                return <td key={x.value} className='text-center'><span className={item[x.value] ? 'glyphicon glyphicon-ok green' : ''}></span></td>;
+                                                return <td key={x.value} className='text-center'><span className={item[x.value] !== null ? 'glyphicon glyphicon-ok green' : ''}></span></td>;
                                             })
                                         }
                                     </tr>
@@ -123,11 +124,11 @@ export class DataGrid extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader, setParams }, dispatch);
+    return bindActionCreators({ toggleLoader, setParams, setCheckedList }, dispatch);
 }
 function mapStateToProps(state) {
-    const { params, productList } = state;
-    return { params, productList };
+    const { params, productList, checkedList } = state;
+    return { params, productList, checkedList };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

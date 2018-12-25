@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import Loader from '../../components/Loader'
 import FormFilter from './FormFilter'
 import DataGrid from './DataGrid'
+import Button from './Button'
 
 export class AppContainer extends Component {
     constructor(props) {
@@ -16,10 +17,7 @@ export class AppContainer extends Component {
             <div>
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
-                <div style={{ display: 'inline-block' }}>
-                    <a className="btn btn-green" href={window.rootUrl + 'ManageProduct/Add'}>Enable New Product</a>
-                    <a className="btn btn-red" href={window.rootUrl + 'ManageProduct/Remove'}>Remove Product</a>
-                </div>
+                <Button />
                 <DataGrid />
             </div>
         )
