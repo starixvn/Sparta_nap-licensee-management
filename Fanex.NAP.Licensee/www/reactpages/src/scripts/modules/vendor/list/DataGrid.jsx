@@ -2,24 +2,54 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getGridData } from './action'
+import { toggleLoader, setParams } from './action'
 import IgnoredFunctionToggleable from './IgnoredFunctionToggleable'
 import { LicenseeType } from '../constant'
+import Pager from '../../../components/Pager'
+import Utility from '../../../lib/utility';
+import Site from '../../../lib/site';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { gridData: [], totalItem: 0 };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.params.timeStamp !== this.props.params.timeStamp) {
+            this._getData();
+        }
+    }
+
+    _getData() {
+        this.props.toggleLoader(true);
+        Site.fetchData(this.props.params, 'LicenseeVendor/GetVendorInfoList').then(response => {
+            this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
+            this.props.toggleLoader(false);
+        });
+    }
+
+    onPaging = (index, size) => {
+        let params = Object.assign({}, this.props.params, { pageIndex: index, pageSize: size, timeStamp: new Date().getTime() });
+
+        this.props.setParams(params);
     }
 
     render() {
-        const { gridData } = this.props;
+        const { totalItem } = this.state;
 
-        if (!gridData || !gridData.length) {
-            return null;
+        if (totalItem === 0) {
+            return false;
         }
 
+        const { gridData } = this.state;
+        const { pageIndex, pageSize } = this.props.params;
+
         return (
-            <table className="table table-bordered">
+        <div>
+            <p>Search results: <b>{totalItem}</b> item(s)</p>
+            <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Vendor Id</th>
@@ -66,16 +96,22 @@ export class DataGrid extends Component {
                     }
                 </tbody>
             </table>
-        )
+            <Pager 
+                pageIndex={pageIndex}
+                pageSize={pageSize}
+                totalItem={totalItem}
+                pageList={[20,50,100,500]}
+                onPaging={this.onPaging} />
+        </div>)
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ getGridData }, dispatch);
+    return bindActionCreators({ toggleLoader, setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    const { gridData } = state;
-    return { gridData };
+    const { params } = state;
+    return { params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

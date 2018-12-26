@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducer'
 import Store from '../../../lib/store'
 
-const defaultState = Object.assign({}, window.initialState);
+const defaultState = Object.assign({}, window.initialState, { params: {} });
 const store = Store.createStore(reducer, defaultState);
 
 export default class App extends React.Component {

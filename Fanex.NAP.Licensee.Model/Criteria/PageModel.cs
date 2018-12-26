@@ -6,6 +6,6 @@
 
         public int PageSize { get; set; }
 
-        public int TotalItem { get; set; } = 0;
+        public int TotalItem { get; set; }
     }
 }

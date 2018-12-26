@@ -6,7 +6,7 @@
 
     public interface ILicenseeVendorService
     {
-        IEnumerable<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria);
+        ResultGridData<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria);
 
         LicenseeVendor GetVendorById(string vendorId);
 

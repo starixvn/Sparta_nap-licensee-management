@@ -1,3 +1,3 @@
-export const SET_GRID_DATA = "SET_GRID_DATA"
+export const SET_PARAMS = 'SET_PARAMS'
 
 export const GET_FUNCTION_KEY_LIST = "GET_FUNCTION_KEY_LIST";

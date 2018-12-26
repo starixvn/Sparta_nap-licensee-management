@@ -28,15 +28,21 @@
             _logWriter = new LogWriterService();
         }
 
-        public IEnumerable<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria)
+        public ResultGridData<LicenseeVendor> GetVendorList(VendorSearchingCriteria criteria)
         {
+            var result = new ResultGridData<LicenseeVendor>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_LicVendorInfo_Select"))
             {
-                return db.Query(
+                result.Data = db.Query(
                     _mapLicenseeVendor,
                     "Exclusions",
-                    criteria.GetSpParams());
+                    criteria);
             }
+
+            result.TotalItem = criteria.TotalItem;
+
+            return result;
         }
 
         public LicenseeVendor GetVendorById(string vendorId)
