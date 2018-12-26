@@ -26,10 +26,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	DECLARE @OperatorIdTbl AS TABLE (RowNum INT, Id INT)
+	CREATE TABLE #OperatorIdTbl (RowNum INT, Id INT)
 	DECLARE @from INT, @to INT
 
-	INSERT INTO @OperatorIdTbl(RowNum, Id)
+	INSERT INTO #OperatorIdTbl(RowNum, Id)
 	SELECT	ROW_NUMBER() OVER (ORDER BY o.SiteName ASC, o.Currency ASC, o.AgentID ASC),
 			o.AgentID
 	FROM dbo.Operator o WITH(NOLOCK)
@@ -48,13 +48,15 @@ BEGIN
 	
 	SELECT i.RowNum, o.AgentID, o.SiteName, o.Currency AS CurrencyId, e.currency AS CurrencyName, o.OperatorID, c.username
 	FROM dbo.Operator o WITH(NOLOCK)
-	INNER JOIN @OperatorIdTbl i ON o.AgentID = i.Id
+	INNER JOIN #OperatorIdTbl i ON o.AgentID = i.Id
 	INNER JOIN CustDB.dbo.exchange e WITH(NOLOCK) ON o.Currency = e.exchangeid
 	LEFT JOIN CustDB.dbo.Customer c WITH(NOLOCK) ON o.AgentID = c.custid
 	WHERE i.RowNum BETWEEN @from AND @to
 	ORDER BY i.RowNum
 	
 	SELECT @TotalItem = MAX(RowNum)
-	FROM @OperatorIdTbl
+	FROM #OperatorIdTbl
+	
+	DROP TABLE #OperatorIdTbl
 END
 GO
