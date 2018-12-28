@@ -1,4 +1,4 @@
-webpackJsonp([5],[
+webpackJsonp([4],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -346,7 +346,8 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -380,7 +381,6 @@ if (true) {
 
 
 /***/ }),
-/* 4 */,
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -952,7 +952,7 @@ exports.default = Site;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return subscriptionShape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return storeShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
@@ -1752,11 +1752,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 
 
@@ -5025,7 +5025,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -5083,7 +5083,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6474,7 +6474,83 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 51 */,
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DEFAULT_TIME_DELAY = 500;
+
+var Utility = function () {
+    function Utility() {
+        _classCallCheck(this, Utility);
+    }
+
+    _createClass(Utility, null, [{
+        key: 'getTodayString',
+        value: function getTodayString() {
+            return this.getDateString(new Date());
+        }
+    }, {
+        key: 'getDateString',
+        value: function getDateString(date) {
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+
+            return date.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+        }
+    }, {
+        key: 'formatDate',
+        value: function formatDate(dateString) {
+            var date = new Date(dateString);
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+
+            return (month < 10 ? '0' + month : month) + '/' + (day < 10 ? '0' + day : day) + '/' + date.getFullYear();
+        }
+    }, {
+        key: 'showMessage',
+        value: function showMessage(msg) {
+            window.alert(msg);
+        }
+    }, {
+        key: 'debounce',
+        value: function debounce(func, wait, immediate) {
+            var timeout = void 0;
+            return function () {
+                var context = this,
+                    args = arguments;
+                var later = function later() {
+                    timeout = null;
+                    if (!immediate) {
+                        func.apply(context, args);
+                    }
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait || DEFAULT_TIME_DELAY);
+                if (callNow) {
+                    func.apply(context, args);
+                }
+            };
+        }
+    }]);
+
+    return Utility;
+}();
+
+exports.default = Utility;
+
+/***/ }),
 /* 52 */,
 /* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -6483,7 +6559,7 @@ module.exports = function spread(callback) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = createProvider;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(12);
@@ -7871,7 +7947,222 @@ exports['default'] = thunk;
 /* 85 */,
 /* 86 */,
 /* 87 */,
-/* 88 */,
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Pager = function (_React$Component) {
+    _inherits(Pager, _React$Component);
+
+    function Pager(props) {
+        _classCallCheck(this, Pager);
+
+        var _this = _possibleConstructorReturn(this, (Pager.__proto__ || Object.getPrototypeOf(Pager)).call(this, props));
+
+        _this.onKeyUpHandle = function (e, totalPage) {
+            var code = e.keyCode ? e.keyCode : e.which;
+            if (code === 13) {
+                var value = parseInt(_this.state.pageInput);
+                if (value > 0 && value <= totalPage) {
+                    _this.goToPage(value, _this.props.pageSize);
+                }
+            }
+        };
+
+        _this.onInputChangeHandler = function (e) {
+            var pattern = /^\d*$/;
+            var value = e.target.value;
+
+            var isValidNumber = pattern.test(value);
+            if (isValidNumber) {
+                _this._updateState(value);
+            }
+        };
+
+        _this.state = {
+            pageInput: props.pageIndex
+        };
+        return _this;
+    }
+
+    _createClass(Pager, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            var pageIndex = this.props.pageIndex;
+            if (pageIndex !== prevProps.pageIndex) {
+                this._updateState(pageIndex);
+            }
+        }
+    }, {
+        key: '_updateState',
+        value: function _updateState(pageInput) {
+            this.setState({ pageInput: pageInput });
+        }
+    }, {
+        key: 'goToPage',
+        value: function goToPage(index, pageSize) {
+            this.props.onPaging && this.props.onPaging(index, pageSize);
+        }
+    }, {
+        key: 'onClickHandle',
+        value: function onClickHandle(isDisable, handleFunc) {
+            if (!isDisable) {
+                handleFunc();
+            }
+        }
+    }, {
+        key: '_renderPageIcon',
+        value: function _renderPageIcon(iconClass, isDisable, onClickFunc) {
+            var _this2 = this;
+
+            return _react2.default.createElement('a', { href: 'javascript:;', className: 'glyphicon ' + iconClass + ' ' + (isDisable ? 'disable' : ''), onClick: function onClick() {
+                    return _this2.onClickHandle(isDisable, onClickFunc);
+                } });
+        }
+    }, {
+        key: '_renderPageInput',
+        value: function _renderPageInput(index, totalPage) {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'page-input' },
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    '| Page '
+                ),
+                _react2.default.createElement('input', { type: 'text', value: index, maxLength: '4', size: '2',
+                    onChange: this.onInputChangeHandler,
+                    onKeyUp: function onKeyUp(e) {
+                        return _this3.onKeyUpHandle(e, totalPage);
+                    } }),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    ' of ',
+                    totalPage,
+                    ' |'
+                )
+            );
+        }
+    }, {
+        key: '_renderPageInfo',
+        value: function _renderPageInfo(index, pageSize, totalItem) {
+            var viewFrom = (index - 1) * pageSize + 1;
+            var viewTo = index * pageSize;
+            return _react2.default.createElement(
+                'div',
+                { className: 'page-info' },
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    'View ',
+                    viewFrom,
+                    '-',
+                    viewTo > totalItem ? totalItem : viewTo,
+                    ' of ',
+                    totalItem
+                )
+            );
+        }
+    }, {
+        key: '_renderPageSizeSelection',
+        value: function _renderPageSizeSelection(isDisable, pageIndex, pageSize) {
+            var _this4 = this;
+
+            return _react2.default.createElement(
+                'select',
+                { disabled: isDisable, value: pageSize, onChange: function onChange(e) {
+                        return _this4.goToPage(1, Number(e.target.value));
+                    } },
+                this._renderPageSizeOption(this.props.pageList)
+            );
+        }
+    }, {
+        key: '_renderPageSizeOption',
+        value: function _renderPageSizeOption(pageList) {
+            return pageList.map(function (item) {
+                return _react2.default.createElement(
+                    'option',
+                    { key: item, value: item },
+                    item
+                );
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this5 = this;
+
+            var pageInput = this.state.pageInput;
+            var _props = this.props,
+                pageIndex = _props.pageIndex,
+                pageSize = _props.pageSize,
+                totalItem = _props.totalItem,
+                pageList = _props.pageList;
+
+            var isDisable = isNaN(parseInt(pageInput));
+            var totalPage = Math.ceil(totalItem / pageSize);
+            var isShow = totalItem > pageList[0];
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'pager', style: { display: '' + (isShow ? 'block' : 'none') } },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'page-container' },
+                    this._renderPageIcon('glyphicon-fast-backward', pageIndex === 1, function () {
+                        return _this5.goToPage(1, pageSize);
+                    }),
+                    this._renderPageIcon('glyphicon-step-backward', isDisable || pageIndex <= 1 || pageIndex > totalPage, function () {
+                        return _this5.goToPage(pageIndex - 1, pageSize);
+                    }),
+                    this._renderPageInput(pageInput, totalPage),
+                    this._renderPageIcon('glyphicon-step-forward', isDisable || pageIndex >= totalPage || pageIndex < 1, function () {
+                        return _this5.goToPage(pageIndex + 1, pageSize);
+                    }),
+                    this._renderPageIcon('glyphicon-fast-forward', pageIndex === totalPage, function () {
+                        return _this5.goToPage(totalPage, pageSize);
+                    }),
+                    this._renderPageSizeSelection(isDisable, pageIndex, pageSize)
+                ),
+                this._renderPageInfo(pageIndex, pageSize, totalItem)
+            );
+        }
+    }]);
+
+    return Pager;
+}(_react2.default.Component);
+
+exports.default = Pager;
+;
+
+/***/ }),
 /* 89 */,
 /* 90 */,
 /* 91 */,
@@ -7910,36 +8201,21 @@ var LicenseeType = exports.LicenseeType = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getGridData = undefined;
+exports.toggleLoader = exports.setParams = undefined;
 
 var _actionTypes = __webpack_require__(101);
 
-var _site = __webpack_require__(14);
-
-var _site2 = _interopRequireDefault(_site);
-
 var _loaderAction = __webpack_require__(78);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function getGridData(param) {
-    return function (dispatch) {
-        dispatch((0, _loaderAction.toggleLoader)(true));
-        _site2.default.fetchData(param, 'LicenseeVendor/GetVendorInfoList').then(function (response) {
-            dispatch(setGridData(response.data));
-            dispatch((0, _loaderAction.toggleLoader)(false));
-        });
-    };
-}
-
-function setGridData(data) {
+function setParams(data) {
     return {
-        type: _actionTypes.SET_GRID_DATA,
+        type: _actionTypes.SET_PARAMS,
         data: data
     };
 }
 
-exports.getGridData = getGridData;
+exports.setParams = setParams;
+exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
 /* 101 */
@@ -7951,7 +8227,7 @@ exports.getGridData = getGridData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var SET_GRID_DATA = exports.SET_GRID_DATA = "SET_GRID_DATA";
+var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
 
 var GET_FUNCTION_KEY_LIST = exports.GET_FUNCTION_KEY_LIST = "GET_FUNCTION_KEY_LIST";
 
@@ -7994,7 +8270,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8020,7 +8296,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, window.initialState);
+var defaultState = Object.assign({}, window.initialState, { params: {} });
 var store = _store2.default.createStore(_reducer2.default, defaultState);
 
 var App = function (_React$Component) {
@@ -8180,7 +8456,7 @@ var FormFilter = exports.FormFilter = function (_Component) {
         _this.handleKeyPress = function (event) {
             if (event.charCode === 13) {
                 event.preventDefault();
-                _this.props.getGridData(_this.params);
+                _this._submit();
             }
         };
 
@@ -8189,10 +8465,10 @@ var FormFilter = exports.FormFilter = function (_Component) {
             _this.params.functionKey = item === null ? "" : item.value;
         };
 
-        _this.submit = function (event) {
+        _this.handleClick = function (event) {
             event.preventDefault();
 
-            _this.props.getGridData(_this.params);
+            _this._submit();
         };
 
         _this.params = {
@@ -8208,6 +8484,16 @@ var FormFilter = exports.FormFilter = function (_Component) {
     }
 
     _createClass(FormFilter, [{
+        key: '_submit',
+        value: function _submit() {
+            var params = Object.assign({}, this.params, {
+                pageIndex: 1,
+                pageSize: this.props.params.pageSize || 20,
+                timeStamp: new Date().getTime()
+            });
+            this.props.setParams(params);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -8251,7 +8537,7 @@ var FormFilter = exports.FormFilter = function (_Component) {
                     { className: 'form-group' },
                     _react2.default.createElement(
                         'button',
-                        { type: 'button', className: 'btn btn-primary', onClick: this.submit },
+                        { type: 'button', className: 'btn btn-primary', onClick: this.handleClick },
                         'Submit'
                     )
                 )
@@ -8263,12 +8549,13 @@ var FormFilter = exports.FormFilter = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ getGridData: _action.getGridData }, dispatch);
+    return (0, _redux.bindActionCreators)({ setParams: _action.setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    var functionKeyList = state.functionKeyList;
+    var functionKeyList = state.functionKeyList,
+        params = state.params;
 
-    return { functionKeyList: functionKeyList };
+    return { functionKeyList: functionKeyList, params: params };
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
@@ -8302,6 +8589,18 @@ var _IgnoredFunctionToggleable2 = _interopRequireDefault(_IgnoredFunctionTogglea
 
 var _constant = __webpack_require__(94);
 
+var _Pager = __webpack_require__(88);
+
+var _Pager2 = _interopRequireDefault(_Pager);
+
+var _utility = __webpack_require__(51);
+
+var _utility2 = _interopRequireDefault(_utility);
+
+var _site = __webpack_require__(14);
+
+var _site2 = _interopRequireDefault(_site);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8316,180 +8615,234 @@ var DataGrid = exports.DataGrid = function (_Component) {
     function DataGrid(props) {
         _classCallCheck(this, DataGrid);
 
-        return _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
+
+        _this.onPaging = function (index, size) {
+            var params = Object.assign({}, _this.props.params, { pageIndex: index, pageSize: size, timeStamp: new Date().getTime() });
+
+            _this.props.setParams(params);
+        };
+
+        _this.state = { gridData: [], totalItem: 0 };
+        return _this;
     }
 
     _createClass(DataGrid, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.params.timeStamp !== this.props.params.timeStamp) {
+                this._getData();
+            }
+        }
+    }, {
+        key: '_getData',
+        value: function _getData() {
+            var _this2 = this;
+
+            this.props.toggleLoader(true);
+            _site2.default.fetchData(this.props.params, 'LicenseeVendor/GetVendorInfoList').then(function (response) {
+                _this2.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
+                _this2.props.toggleLoader(false);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var gridData = this.props.gridData;
+            var totalItem = this.state.totalItem;
 
 
-            if (!gridData || !gridData.length) {
-                return null;
+            if (totalItem === 0) {
+                return false;
             }
 
+            var gridData = this.state.gridData;
+            var _props$params = this.props.params,
+                pageIndex = _props$params.pageIndex,
+                pageSize = _props$params.pageSize;
+
+
             return _react2.default.createElement(
-                'table',
-                { className: 'table table-bordered' },
+                'div',
+                null,
                 _react2.default.createElement(
-                    'thead',
+                    'p',
                     null,
+                    'Search results: ',
                     _react2.default.createElement(
-                        'tr',
+                        'b',
                         null,
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Vendor Id'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Site Name'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Licensee Type'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Portal Url'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Internal Url'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'LRF Url'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Affiliate Url'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Ignored Functions'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'IsTest'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Site Id'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Disable'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Action'
-                        )
-                    )
+                        totalItem
+                    ),
+                    ' item(s)'
                 ),
                 _react2.default.createElement(
-                    'tbody',
-                    null,
-                    gridData.map(function (item, index) {
-                        return _react2.default.createElement(
+                    'table',
+                    { className: 'table table-bordered table-hover' },
+                    _react2.default.createElement(
+                        'thead',
+                        null,
+                        _react2.default.createElement(
                             'tr',
-                            { key: index },
+                            null,
                             _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                item.VendorId
+                                'Vendor Id'
                             ),
                             _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                item.SiteName
+                                'Site Name'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { className: 'text-center' },
-                                _constant.LicenseeType[item.LicenseeType] || item.LicenseeType
-                            ),
-                            _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: item.PortalUrl, target: '_blank' },
-                                    item.PortalUrl
-                                )
+                                'Licensee Type'
                             ),
                             _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: item.InternalUrl, target: '_blank' },
-                                    item.InternalUrl
-                                )
+                                'Portal Url'
                             ),
                             _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: item.LrfUrl, target: '_blank' },
-                                    item.LrfUrl
-                                )
+                                'Internal Url'
                             ),
                             _react2.default.createElement(
-                                'td',
+                                'th',
                                 null,
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: item.AffiliateUrl, target: '_blank' },
-                                    item.AffiliateUrl
-                                )
+                                'LRF Url'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { style: { width: 240 } },
-                                item.ExclusionList && item.ExclusionList.length > 0 && _react2.default.createElement(_IgnoredFunctionToggleable2.default, { functionList: item.ExclusionList })
+                                'th',
+                                null,
+                                'Affiliate Url'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { className: 'text-center' },
-                                item.IsTest ? "Yes" : "No"
+                                'th',
+                                null,
+                                'Ignored Functions'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { className: 'text-center' },
-                                item.SiteId
+                                'th',
+                                null,
+                                'IsTest'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { className: 'text-center' },
-                                item.Disable ? "Yes" : "No"
+                                'th',
+                                null,
+                                'Site Id'
                             ),
                             _react2.default.createElement(
-                                'td',
-                                { className: 'text-center' },
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: window.rootUrl + ('LicenseeVendor/Edit?vendorId=' + item.VendorId), title: 'Edit' },
-                                    _react2.default.createElement('i', { className: 'icon-edit' })
-                                )
+                                'th',
+                                null,
+                                'Disable'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Action'
                             )
-                        );
-                    })
-                )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        gridData.map(function (item, index) {
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: index },
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    item.VendorId
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    item.SiteName
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'text-center' },
+                                    _constant.LicenseeType[item.LicenseeType] || item.LicenseeType
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: item.PortalUrl, target: '_blank' },
+                                        item.PortalUrl
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: item.InternalUrl, target: '_blank' },
+                                        item.InternalUrl
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: item.LrfUrl, target: '_blank' },
+                                        item.LrfUrl
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: item.AffiliateUrl, target: '_blank' },
+                                        item.AffiliateUrl
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { style: { width: 240 } },
+                                    item.ExclusionList && item.ExclusionList.length > 0 && _react2.default.createElement(_IgnoredFunctionToggleable2.default, { functionList: item.ExclusionList })
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'text-center' },
+                                    item.IsTest ? "Yes" : "No"
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'text-center' },
+                                    item.SiteId
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'text-center' },
+                                    item.Disable ? "Yes" : "No"
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: window.rootUrl + ('LicenseeVendor/Edit?vendorId=' + item.VendorId), title: 'Edit' },
+                                        _react2.default.createElement('i', { className: 'icon-edit' })
+                                    )
+                                )
+                            );
+                        })
+                    )
+                ),
+                _react2.default.createElement(_Pager2.default, {
+                    pageIndex: pageIndex,
+                    pageSize: pageSize,
+                    totalItem: totalItem,
+                    pageList: [20, 50, 100, 500],
+                    onPaging: this.onPaging })
             );
         }
     }]);
@@ -8498,12 +8851,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ getGridData: _action.getGridData }, dispatch);
+    return (0, _redux.bindActionCreators)({ toggleLoader: _action.toggleLoader, setParams: _action.setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    var gridData = state.gridData;
+    var params = state.params;
 
-    return { gridData: gridData };
+    return { params: params };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
@@ -8617,7 +8970,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var gridData = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_GRID_DATA, function (state, action) {
+var params = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_PARAMS, function (state, action) {
     return action.data;
 }));
 
@@ -8625,7 +8978,7 @@ var functionKeyList = (0, _createReducer4.default)({}, _defineProperty({}, _acti
     return action.data;
 }));
 
-exports.default = (0, _redux.combineReducers)({ gridData: gridData, isLoading: _loaderReducer.isLoading, functionKeyList: functionKeyList });
+exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading, functionKeyList: functionKeyList });
 
 /***/ })
 ],[124]);

@@ -4,4 +4,32 @@
 .right {
   float: right; }
 
+.pager {
+  margin-top: -20px;
+  border: 1px solid #ddd;
+  background-color: #EDECEA;
+  margin-bottom: 20px;
+  padding: 3px 5px;
+  text-align: center;
+  font-size: 0.9em; }
+  .pager .page-container, .pager .page-info, .pager .page-input {
+    display: inline-block; }
+  .pager .page-info {
+    float: right; }
+  .pager .page-container input {
+    width: 30px;
+    height: 20px;
+    text-align: center; }
+  .pager .page-container select {
+    height: 20px;
+    margin-left: 3px; }
+  .pager .page-container .glyphicon {
+    color: inherit;
+    margin: 0 2px; }
+  .pager .page-container .disable {
+    color: #939090;
+    cursor: default; }
+  .pager .page-container a:hover.disable {
+    text-decoration: none; }
+
 /*# sourceMappingURL=licenseelist.css.map*/

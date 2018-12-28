@@ -346,7 +346,8 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -380,7 +381,6 @@ if (true) {
 
 
 /***/ }),
-/* 4 */,
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -952,7 +952,7 @@ exports.default = Site;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return subscriptionShape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return storeShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
@@ -1752,11 +1752,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 
 
@@ -5025,7 +5025,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -5083,7 +5083,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6559,7 +6559,7 @@ exports.default = Utility;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createProvider;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(12);
@@ -7957,7 +7957,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8063,168 +8063,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _Popup = __webpack_require__(82);
-
-var _Popup2 = _interopRequireDefault(_Popup);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ConfirmBox = function (_React$Component) {
-    _inherits(ConfirmBox, _React$Component);
-
-    function ConfirmBox(props) {
-        _classCallCheck(this, ConfirmBox);
-
-        var _this = _possibleConstructorReturn(this, (ConfirmBox.__proto__ || Object.getPrototypeOf(ConfirmBox)).call(this, props));
-
-        _this.zIndex = props.zIndex ? props.zIndex : 60;
-        return _this;
-    }
-
-    _createClass(ConfirmBox, [{
-        key: '_onCick',
-        value: function _onCick(value, callBack) {
-            callBack && callBack(value);
-        }
-    }, {
-        key: '_buildContent',
-        value: function _buildContent(msg, onClose) {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'confirm-popup' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    msg
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-red', onClick: function onClick() {
-                                return _this2._onCick(false, onClose);
-                            } },
-                        'No'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-primary', onClick: function onClick() {
-                                return _this2._onCick(true, onClose);
-                            } },
-                        'Yes'
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                title = _props.title,
-                message = _props.message,
-                isShow = _props.isShow,
-                onClose = _props.onClose,
-                style = _props.style;
-
-
-            return _react2.default.createElement(_Popup2.default, _defineProperty({ isShow: isShow,
-                title: title,
-                content: this._buildContent(message, onClose),
-                style: { height: '300px', width: '600px' },
-                noShowCloseButton: true,
-                zIndex: this.zIndex
-            }, 'style', style));
-        }
-    }]);
-
-    return ConfirmBox;
-}(_react2.default.Component);
-
-exports.default = ConfirmBox;
-;
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
-
-var _types = __webpack_require__(91);
-
-var _loaderAction = __webpack_require__(78);
-
-function setParams(data) {
-    return {
-        type: _types.SET_PARAMS,
-        data: data
-    };
-}
-
-function setCheckedList(data) {
-    return {
-        type: _types.SET_CHECKED_LIST,
-        data: data
-    };
-}
-
-exports.setParams = setParams;
-exports.setCheckedList = setCheckedList;
-exports.toggleLoader = _loaderAction.toggleLoader;
-
-/***/ }),
-/* 90 */,
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
-
-var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8335,7 +8174,7 @@ var Pager = function (_React$Component) {
         key: '_renderPageInfo',
         value: function _renderPageInfo(index, pageSize, totalItem) {
             var viewFrom = (index - 1) * pageSize + 1;
-            var viewTo = index > totalItem ? index * pageSize : totalItem;
+            var viewTo = index * pageSize;
             return _react2.default.createElement(
                 'div',
                 { className: 'page-info' },
@@ -8345,7 +8184,7 @@ var Pager = function (_React$Component) {
                     'View ',
                     viewFrom,
                     '-',
-                    viewTo,
+                    viewTo > totalItem ? totalItem : viewTo,
                     ' of ',
                     totalItem
                 )
@@ -8424,6 +8263,167 @@ exports.default = Pager;
 ;
 
 /***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Popup = __webpack_require__(82);
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ConfirmBox = function (_React$Component) {
+    _inherits(ConfirmBox, _React$Component);
+
+    function ConfirmBox(props) {
+        _classCallCheck(this, ConfirmBox);
+
+        var _this = _possibleConstructorReturn(this, (ConfirmBox.__proto__ || Object.getPrototypeOf(ConfirmBox)).call(this, props));
+
+        _this.zIndex = props.zIndex ? props.zIndex : 60;
+        return _this;
+    }
+
+    _createClass(ConfirmBox, [{
+        key: '_onCick',
+        value: function _onCick(value, callBack) {
+            callBack && callBack(value);
+        }
+    }, {
+        key: '_buildContent',
+        value: function _buildContent(msg, onClose) {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'confirm-popup' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    msg
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-red', onClick: function onClick() {
+                                return _this2._onCick(false, onClose);
+                            } },
+                        'No'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this2._onCick(true, onClose);
+                            } },
+                        'Yes'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                title = _props.title,
+                message = _props.message,
+                isShow = _props.isShow,
+                onClose = _props.onClose,
+                style = _props.style;
+
+
+            return _react2.default.createElement(_Popup2.default, _defineProperty({ isShow: isShow,
+                title: title,
+                content: this._buildContent(message, onClose),
+                style: { height: '300px', width: '600px' },
+                noShowCloseButton: true,
+                zIndex: this.zIndex
+            }, 'style', style));
+        }
+    }]);
+
+    return ConfirmBox;
+}(_react2.default.Component);
+
+exports.default = ConfirmBox;
+;
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
+
+var _types = __webpack_require__(92);
+
+var _loaderAction = __webpack_require__(78);
+
+function setParams(data) {
+    return {
+        type: _types.SET_PARAMS,
+        data: data
+    };
+}
+
+function setCheckedList(data) {
+    return {
+        type: _types.SET_CHECKED_LIST,
+        data: data
+    };
+}
+
+exports.setParams = setParams;
+exports.setCheckedList = setCheckedList;
+exports.toggleLoader = _loaderAction.toggleLoader;
+
+/***/ }),
+/* 91 */,
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
+
+var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
+
+/***/ }),
 /* 93 */,
 /* 94 */,
 /* 95 */
@@ -8451,7 +8451,7 @@ var _reactSelect = __webpack_require__(24);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _utility = __webpack_require__(51);
 
@@ -8741,13 +8741,13 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _site = __webpack_require__(14);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _Pager = __webpack_require__(92);
+var _Pager = __webpack_require__(88);
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
@@ -8874,9 +8874,15 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var totalItem = this.state.totalItem;
+
+
+            if (totalItem === 0) {
+                return false;
+            }
+
             var _state = this.state,
                 gridData = _state.gridData,
-                totalItem = _state.totalItem,
                 activeItems = _state.activeItems;
             var _props$params = this.props.params,
                 pageIndex = _props$params.pageIndex,
@@ -8887,10 +8893,6 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
                 keyValue = _props2.keyValue,
                 checkedList = _props2.checkedList;
 
-
-            if (totalItem === 0) {
-                return false;
-            }
 
             return _react2.default.createElement(
                 'div',
@@ -8964,7 +8966,7 @@ var _createReducer3 = __webpack_require__(26);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _types = __webpack_require__(91);
+var _types = __webpack_require__(92);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9060,7 +9062,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -9288,7 +9290,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _utility = __webpack_require__(51);
 
@@ -9302,7 +9304,7 @@ var _Popup = __webpack_require__(82);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
-var _ConfirmBox = __webpack_require__(88);
+var _ConfirmBox = __webpack_require__(89);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 

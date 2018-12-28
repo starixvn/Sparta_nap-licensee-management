@@ -346,7 +346,8 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -380,7 +381,6 @@ if (true) {
 
 
 /***/ }),
-/* 4 */,
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -952,7 +952,7 @@ exports.default = Site;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return subscriptionShape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return storeShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
@@ -1752,11 +1752,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 
 
@@ -5025,7 +5025,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -5083,7 +5083,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6559,7 +6559,7 @@ exports.default = Utility;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createProvider;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(12);
@@ -7957,7 +7957,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8047,57 +8047,7 @@ exports.default = Popup;
 /* 85 */,
 /* 86 */,
 /* 87 */,
-/* 88 */,
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
-
-var _types = __webpack_require__(91);
-
-var _loaderAction = __webpack_require__(78);
-
-function setParams(data) {
-    return {
-        type: _types.SET_PARAMS,
-        data: data
-    };
-}
-
-function setCheckedList(data) {
-    return {
-        type: _types.SET_CHECKED_LIST,
-        data: data
-    };
-}
-
-exports.setParams = setParams;
-exports.setCheckedList = setCheckedList;
-exports.toggleLoader = _loaderAction.toggleLoader;
-
-/***/ }),
-/* 90 */,
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
-
-var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
-
-/***/ }),
-/* 92 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8113,7 +8063,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8224,7 +8174,7 @@ var Pager = function (_React$Component) {
         key: '_renderPageInfo',
         value: function _renderPageInfo(index, pageSize, totalItem) {
             var viewFrom = (index - 1) * pageSize + 1;
-            var viewTo = index > totalItem ? index * pageSize : totalItem;
+            var viewTo = index * pageSize;
             return _react2.default.createElement(
                 'div',
                 { className: 'page-info' },
@@ -8234,7 +8184,7 @@ var Pager = function (_React$Component) {
                     'View ',
                     viewFrom,
                     '-',
-                    viewTo,
+                    viewTo > totalItem ? totalItem : viewTo,
                     ' of ',
                     totalItem
                 )
@@ -8311,6 +8261,56 @@ var Pager = function (_React$Component) {
 
 exports.default = Pager;
 ;
+
+/***/ }),
+/* 89 */,
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
+
+var _types = __webpack_require__(92);
+
+var _loaderAction = __webpack_require__(78);
+
+function setParams(data) {
+    return {
+        type: _types.SET_PARAMS,
+        data: data
+    };
+}
+
+function setCheckedList(data) {
+    return {
+        type: _types.SET_CHECKED_LIST,
+        data: data
+    };
+}
+
+exports.setParams = setParams;
+exports.setCheckedList = setCheckedList;
+exports.toggleLoader = _loaderAction.toggleLoader;
+
+/***/ }),
+/* 91 */,
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
+
+var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 
 /***/ }),
 /* 93 */
@@ -8478,7 +8478,7 @@ var _reactSelect = __webpack_require__(24);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _utility = __webpack_require__(51);
 
@@ -8768,13 +8768,13 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _site = __webpack_require__(14);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _Pager = __webpack_require__(92);
+var _Pager = __webpack_require__(88);
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
@@ -8901,9 +8901,15 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var totalItem = this.state.totalItem;
+
+
+            if (totalItem === 0) {
+                return false;
+            }
+
             var _state = this.state,
                 gridData = _state.gridData,
-                totalItem = _state.totalItem,
                 activeItems = _state.activeItems;
             var _props$params = this.props.params,
                 pageIndex = _props$params.pageIndex,
@@ -8914,10 +8920,6 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
                 keyValue = _props2.keyValue,
                 checkedList = _props2.checkedList;
 
-
-            if (totalItem === 0) {
-                return false;
-            }
 
             return _react2.default.createElement(
                 'div',
@@ -8991,7 +8993,7 @@ var _createReducer3 = __webpack_require__(26);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _types = __webpack_require__(91);
+var _types = __webpack_require__(92);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9090,7 +9092,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -9310,7 +9312,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(89);
+var _action = __webpack_require__(90);
 
 var _utility = __webpack_require__(51);
 

@@ -1,4 +1,4 @@
-webpackJsonp([4],[
+webpackJsonp([5],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -346,7 +346,8 @@ if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCr
 
 
 /***/ }),
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -380,7 +381,6 @@ if (true) {
 
 
 /***/ }),
-/* 4 */,
 /* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -952,7 +952,7 @@ exports.default = Site;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return subscriptionShape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return storeShape; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
@@ -1752,11 +1752,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 
 
@@ -5025,7 +5025,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -5083,7 +5083,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -6559,7 +6559,7 @@ exports.default = Utility;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createProvider;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(12);
@@ -7957,7 +7957,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8063,7 +8063,223 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Pager = function (_React$Component) {
+    _inherits(Pager, _React$Component);
+
+    function Pager(props) {
+        _classCallCheck(this, Pager);
+
+        var _this = _possibleConstructorReturn(this, (Pager.__proto__ || Object.getPrototypeOf(Pager)).call(this, props));
+
+        _this.onKeyUpHandle = function (e, totalPage) {
+            var code = e.keyCode ? e.keyCode : e.which;
+            if (code === 13) {
+                var value = parseInt(_this.state.pageInput);
+                if (value > 0 && value <= totalPage) {
+                    _this.goToPage(value, _this.props.pageSize);
+                }
+            }
+        };
+
+        _this.onInputChangeHandler = function (e) {
+            var pattern = /^\d*$/;
+            var value = e.target.value;
+
+            var isValidNumber = pattern.test(value);
+            if (isValidNumber) {
+                _this._updateState(value);
+            }
+        };
+
+        _this.state = {
+            pageInput: props.pageIndex
+        };
+        return _this;
+    }
+
+    _createClass(Pager, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            var pageIndex = this.props.pageIndex;
+            if (pageIndex !== prevProps.pageIndex) {
+                this._updateState(pageIndex);
+            }
+        }
+    }, {
+        key: '_updateState',
+        value: function _updateState(pageInput) {
+            this.setState({ pageInput: pageInput });
+        }
+    }, {
+        key: 'goToPage',
+        value: function goToPage(index, pageSize) {
+            this.props.onPaging && this.props.onPaging(index, pageSize);
+        }
+    }, {
+        key: 'onClickHandle',
+        value: function onClickHandle(isDisable, handleFunc) {
+            if (!isDisable) {
+                handleFunc();
+            }
+        }
+    }, {
+        key: '_renderPageIcon',
+        value: function _renderPageIcon(iconClass, isDisable, onClickFunc) {
+            var _this2 = this;
+
+            return _react2.default.createElement('a', { href: 'javascript:;', className: 'glyphicon ' + iconClass + ' ' + (isDisable ? 'disable' : ''), onClick: function onClick() {
+                    return _this2.onClickHandle(isDisable, onClickFunc);
+                } });
+        }
+    }, {
+        key: '_renderPageInput',
+        value: function _renderPageInput(index, totalPage) {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'page-input' },
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    '| Page '
+                ),
+                _react2.default.createElement('input', { type: 'text', value: index, maxLength: '4', size: '2',
+                    onChange: this.onInputChangeHandler,
+                    onKeyUp: function onKeyUp(e) {
+                        return _this3.onKeyUpHandle(e, totalPage);
+                    } }),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    ' of ',
+                    totalPage,
+                    ' |'
+                )
+            );
+        }
+    }, {
+        key: '_renderPageInfo',
+        value: function _renderPageInfo(index, pageSize, totalItem) {
+            var viewFrom = (index - 1) * pageSize + 1;
+            var viewTo = index * pageSize;
+            return _react2.default.createElement(
+                'div',
+                { className: 'page-info' },
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    'View ',
+                    viewFrom,
+                    '-',
+                    viewTo > totalItem ? totalItem : viewTo,
+                    ' of ',
+                    totalItem
+                )
+            );
+        }
+    }, {
+        key: '_renderPageSizeSelection',
+        value: function _renderPageSizeSelection(isDisable, pageIndex, pageSize) {
+            var _this4 = this;
+
+            return _react2.default.createElement(
+                'select',
+                { disabled: isDisable, value: pageSize, onChange: function onChange(e) {
+                        return _this4.goToPage(1, Number(e.target.value));
+                    } },
+                this._renderPageSizeOption(this.props.pageList)
+            );
+        }
+    }, {
+        key: '_renderPageSizeOption',
+        value: function _renderPageSizeOption(pageList) {
+            return pageList.map(function (item) {
+                return _react2.default.createElement(
+                    'option',
+                    { key: item, value: item },
+                    item
+                );
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this5 = this;
+
+            var pageInput = this.state.pageInput;
+            var _props = this.props,
+                pageIndex = _props.pageIndex,
+                pageSize = _props.pageSize,
+                totalItem = _props.totalItem,
+                pageList = _props.pageList;
+
+            var isDisable = isNaN(parseInt(pageInput));
+            var totalPage = Math.ceil(totalItem / pageSize);
+            var isShow = totalItem > pageList[0];
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'pager', style: { display: '' + (isShow ? 'block' : 'none') } },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'page-container' },
+                    this._renderPageIcon('glyphicon-fast-backward', pageIndex === 1, function () {
+                        return _this5.goToPage(1, pageSize);
+                    }),
+                    this._renderPageIcon('glyphicon-step-backward', isDisable || pageIndex <= 1 || pageIndex > totalPage, function () {
+                        return _this5.goToPage(pageIndex - 1, pageSize);
+                    }),
+                    this._renderPageInput(pageInput, totalPage),
+                    this._renderPageIcon('glyphicon-step-forward', isDisable || pageIndex >= totalPage || pageIndex < 1, function () {
+                        return _this5.goToPage(pageIndex + 1, pageSize);
+                    }),
+                    this._renderPageIcon('glyphicon-fast-forward', pageIndex === totalPage, function () {
+                        return _this5.goToPage(totalPage, pageSize);
+                    }),
+                    this._renderPageSizeSelection(isDisable, pageIndex, pageSize)
+                ),
+                this._renderPageInfo(pageIndex, pageSize, totalItem)
+            );
+        }
+    }]);
+
+    return Pager;
+}(_react2.default.Component);
+
+exports.default = Pager;
+;
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8159,7 +8375,6 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
-/* 89 */,
 /* 90 */,
 /* 91 */,
 /* 92 */,
@@ -8258,7 +8473,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(4);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -8516,6 +8731,8 @@ var FormFilter = exports.FormFilter = function (_Component) {
                 siteName: this.state.selectedSiteName.value,
                 currencyId: this.state.selectedCurrency.value,
                 isEmptyOperatorId: this.params.isEmptyOperatorId,
+                pageIndex: 1,
+                pageSize: this.props.params.pageSize || 20,
                 timeStamp: new Date().getTime()
             };
 
@@ -8608,7 +8825,9 @@ function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ setParams: _action.setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    return {};
+    var params = state.params;
+
+    return { params: params };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
@@ -8641,13 +8860,17 @@ var _site = __webpack_require__(14);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _ConfirmBox = __webpack_require__(88);
+var _ConfirmBox = __webpack_require__(89);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
 var _utility = __webpack_require__(51);
 
 var _utility2 = _interopRequireDefault(_utility);
+
+var _Pager = __webpack_require__(88);
+
+var _Pager2 = _interopRequireDefault(_Pager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8665,7 +8888,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
 
-        _this.state = { gridData: [], confirmBox: { isShow: false, data: 0 } };
+        _this.onPaging = function (index, size) {
+            var params = Object.assign({}, _this.props.params, { pageIndex: index, pageSize: size, timeStamp: new Date().getTime() });
+
+            _this.props.setParams(params);
+        };
+
+        _this.state = { gridData: [], totalItem: 0, confirmBox: { isShow: false, data: 0 } };
         return _this;
     }
 
@@ -8683,7 +8912,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
             this.props.toggleLoader(true);
             _site2.default.fetchData(this.props.params, 'ManageOperator/Search').then(function (response) {
-                _this2.setState({ gridData: response.data });
+                _this2.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
                 _this2.props.toggleLoader(false);
             });
         }
@@ -8730,14 +8959,20 @@ var DataGrid = exports.DataGrid = function (_Component) {
         value: function render() {
             var _this4 = this;
 
+            var totalItem = this.state.totalItem;
+
+
+            if (totalItem === 0) {
+                return false;
+            }
+
             var _state = this.state,
                 gridData = _state.gridData,
                 confirmBox = _state.confirmBox;
+            var _props$params = this.props.params,
+                pageIndex = _props$params.pageIndex,
+                pageSize = _props$params.pageSize;
 
-
-            if (gridData.length === 0) {
-                return false;
-            }
 
             return _react2.default.createElement(
                 'div',
@@ -8756,7 +8991,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     _react2.default.createElement(
                         'b',
                         null,
-                        gridData.length
+                        totalItem
                     ),
                     ' item(s)'
                 ),
@@ -8852,7 +9087,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             );
                         })
                     )
-                )
+                ),
+                _react2.default.createElement(_Pager2.default, {
+                    pageIndex: pageIndex,
+                    pageSize: pageSize,
+                    totalItem: totalItem,
+                    pageList: [20, 50, 100, 500],
+                    onPaging: this.onPaging })
             );
         }
     }]);
@@ -8861,7 +9102,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ toggleLoader: _action.toggleLoader, setParams: _action.setParams }, dispatch);
 }
 function mapStateToProps(state) {
     var params = state.params;
