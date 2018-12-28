@@ -76,7 +76,8 @@
 
         public Licensee GetLicensee(string licenseeName)
         {
-            return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).Data.FirstOrDefault();
+            var result = Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false, PageIndex = 1, PageSize = 1 });
+            return result.Data.Any() ? result.Data.First() : null;
         }
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)

@@ -33,7 +33,7 @@
 
             using (var db = _objectDbGenerator.Create("Nap_LM_Operator_Search"))
             {
-                result.Data =  db.Query<Operator>(criteria);
+                result.Data = db.Query<Operator>(criteria);
             }
 
             result.TotalItem = criteria.TotalItem;
