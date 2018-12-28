@@ -20,22 +20,21 @@
 .add-form, .edit-form {
     margin-top: 10px;
 
-    input[type=text] {
+    input[type=text], input[type=date] {
         &.has-error {
             border: 1px solid $red;
         }
 
         border: 1px solid #CECCCD;
         height: 25px;
+    }
+
+    input[type=text] {
         padding: 2px;
     }
 
     input[type=date] {
-        height: 25px;
-
-        &.has-error {
-            border: 1px solid $red;
-        }
+        line-height: initial;
     }
 }
 

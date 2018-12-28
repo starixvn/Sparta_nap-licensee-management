@@ -132,7 +132,7 @@ export class AddAgent extends Component {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
-                    <label className='col-form-label'>Supper Wild Card</label>
+                    <label className='col-form-label'>Super Wild Card</label>
                     <input className={`full-width ${superWildCard ? '' : 'has-error'}`}
                         type='text'
                         value={superWildCard}

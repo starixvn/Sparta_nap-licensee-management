@@ -37,14 +37,25 @@
 
 input[type=date], input[type=text] {
     height: 25px;
+    border: 1px solid #CECCCD;
 
     &.has-error {
         border: 1px solid $red;
     }
 }
 
+input[type=date] {
+    line-height: initial !important;
+}
+
 tr {
     &.disable {
         color: #808080;
+    }
+}
+
+.filter-form {
+    input[type=date] {
+        width: 150px;
     }
 }
