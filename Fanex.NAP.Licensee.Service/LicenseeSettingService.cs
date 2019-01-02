@@ -105,22 +105,17 @@
             return result;
         }
 
-        public string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey)
+        public string RemoveProduct(RemoveLicenseeProductCriteria criteria)
         {
             string result = null;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
             {
-                result = db.QueryEntity<string>(new
-                {
-                    LicenseeName = criteria.LicenseeName,
-                    ProductCode = criteria.ProductCode,
-                    PullServiceKey = pullServiceKey
-                });
+                result = db.QueryEntity<string>(criteria.SpParam);
             }
 
             if (string.IsNullOrEmpty(result))
             {
-                WriteRemoveProductActionLog(criteria, pullServiceKey);
+                WriteRemoveProductActionLog(criteria);
             }
 
             return result;
@@ -209,11 +204,11 @@
             WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing, criteria.RedmineId);
         }
 
-        private void WriteRemoveProductActionLog(LicenseeProductCriteria criteria, string pullServiceKey)
+        private void WriteRemoveProductActionLog(RemoveLicenseeProductCriteria criteria)
         {
             var doing = "<Product"
-                        + $" LicenseeName=\"{criteria.LicenseeName}\""
-                        + $" RemovePullService=\"{pullServiceKey}\""
+                        + $" LicenseeNameList=\"{criteria.LicenseeName}\""
+                        + $" IsRemovePullService=\"{criteria.IsRemovePullService}\""
                         + ">"
                         + criteria.ProductCode
                         + "</Product>";

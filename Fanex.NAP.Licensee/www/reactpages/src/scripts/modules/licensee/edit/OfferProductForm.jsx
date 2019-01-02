@@ -62,15 +62,15 @@ export class OfferProductForm extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
-                if (!response.data.IsSuccess) {
+                if (response.data.Error) {
                     Utility.showMessage(response.data.Error);
-                    this.props.toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
-                    this.onClose();
-                    this.props.getProductList(this.props.licensee.LicenseeID);
-                }   
+                }
+                
+                this.onClose();
+                this.props.getProductList(this.props.licensee.LicenseeID);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);

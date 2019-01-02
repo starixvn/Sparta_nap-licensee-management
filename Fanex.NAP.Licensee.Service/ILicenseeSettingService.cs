@@ -22,7 +22,7 @@
 
         string OfferProduct(OfferProductCriteria criteria);
 
-        string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey);
+        string RemoveProduct(RemoveLicenseeProductCriteria criteria);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 

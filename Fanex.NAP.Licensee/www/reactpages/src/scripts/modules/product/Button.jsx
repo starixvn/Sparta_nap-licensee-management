@@ -20,7 +20,8 @@ export class Button extends Component {
             productList: [],
             selectedProduct: null,
             date: Utility.getTodayString(),
-            isAddNew: true
+            isAddNew: true,
+            isRemovePullService: true
         };
     }
 
@@ -45,7 +46,8 @@ export class Button extends Component {
             productList: [],
             selectedProduct: null,
             date: Utility.getTodayString(),
-            isAddNew: true
+            isAddNew: true,
+            isRemovePullService: true
         });
     }
 
@@ -57,12 +59,13 @@ export class Button extends Component {
     }
 
     _getParam() {
-        return {
-            licenseeList: this.props.checkedList.toString(),
-            redmineId: this.state.redmineId,
-            effectiveDate: this.state.isAddNew ? this.state.date : '',
-            productList : this.state.selectedProduct ? this.state.selectedProduct.map(i => i.value).join(',') : ''
-        };
+        let params = {};
+        params['licenseeName'] = this.props.checkedList.toString();
+        params['productCode'] = this.state.selectedProduct ? this.state.selectedProduct.map(i => i.value).join(',') : '';
+        params[this.state.isAddNew ? 'effectiveDate' : 'isRemovePullService'] = this.state.isAddNew ? this.state.date : this.state.isRemovePullService;
+        params['redmineId'] = this.state.redmineId;
+
+        return params;
     }
 
     _submit() {
@@ -72,11 +75,15 @@ export class Button extends Component {
 
         Site.fetchData(param, url)
             .then(response => {
-                if (response.data.IsSuccess) {
-                    Utility.showMessage('Success!');
-                    this._updateGrid();
-                    this.onPopupClose();
+                if (response.data.Error) {
+                    Utility.showMessage(response.data.Error);
                 }
+                else {
+                    Utility.showMessage('Success!');
+                }
+
+                this._updateGrid();
+                this.onPopupClose();
             }).catch(err => {
                 Utility.showMessage('Please try again!');
                 this.props.toggleLoader(false);
@@ -110,7 +117,7 @@ export class Button extends Component {
         this.props.setParams(filterParams);
     }
 
-    _buildPopupContent(isAddNew, productList, selectedProduct, date, redmineId) {
+    _buildPopupContent(isAddNew, productList, selectedProduct, date, isRemovePullService, redmineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -127,6 +134,18 @@ export class Button extends Component {
                     <div className='form-group'>
                         <label className='col-form-label'>Effective Date</label>
                         <input className='full-width' type='date' value={date} onChange={(e) => this.setState({ date: e.target.value })} />
+                    </div>
+                }
+                { 
+                   !isAddNew &&
+                    <div className='form-group'>
+                        <label className='col-form-label'>Remove Pull Service</label>
+                        <div>
+                            <input type='checkbox'
+                                checked={isRemovePullService}
+                                onChange={(e) => this.setState({ isRemovePullService: e.target.checked })} />
+                            <i>(Apply for "Gold Deluxe" and "AG Casino")</i>
+                        </div>
                     </div>
                 }
                 <div className='form-group'>
@@ -149,7 +168,7 @@ export class Button extends Component {
     }
 
     render() {
-        const { isAddNew, redmineId, isShowPopup, isShowConfirmation, msg, productList, selectedProduct, date, popupTitle } = this.state;
+        const { isAddNew, redmineId, isShowPopup, isShowConfirmation, msg, productList, selectedProduct, date, popupTitle, isRemovePullService } = this.state;
         const countSelectedItem = this.props.checkedList.length;
 
         return(
@@ -165,8 +184,8 @@ export class Button extends Component {
                 onClose={this.onConfirm} /> 
             <Popup isShow={isShowPopup}
                 title={popupTitle}
-                content={this._buildPopupContent(isAddNew, productList, selectedProduct, date, redmineId)}
-                style={{height: isAddNew ? '385px' : '315px', width: '600px'}}
+                content={this._buildPopupContent(isAddNew, productList, selectedProduct, date, isRemovePullService, redmineId)}
+                style={{height: '385px', width: '600px'}}
                 onClose={this.onPopupClose} />
         </div>);
     }

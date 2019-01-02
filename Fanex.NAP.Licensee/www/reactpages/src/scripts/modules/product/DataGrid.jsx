@@ -25,13 +25,13 @@ export class DataGrid extends Component {
     }
 
     onItemChecked = (e) => {
-        const value = parseInt(e.target.value);
+        const value = e.target.value;
         const { checkedList } = this.props;
         const { licenseeIdList } = this.state;
         let newCheckedList = [];
 
         if (e.target.checked) {
-            if (value === 0) {
+            if (value === '0') {
                 newCheckedList = [...licenseeIdList];
             }
             else {
@@ -39,7 +39,7 @@ export class DataGrid extends Component {
             }
         }
         else {
-            if (value === 0) {
+            if (value === '0') {
                 newCheckedList = [];
             }
             else {
@@ -61,8 +61,9 @@ export class DataGrid extends Component {
 
         Site.fetchData(params, 'ManageProduct/Search').then(response => {
             const data = response.data.Data ? JSON.parse(response.data.Data) : [];
-            this.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(item => item.LicenseeId) });
+            this.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(item => item.LicenseeName ) });
             this.props.toggleLoader(false);
+            this.props.setCheckedList([]);
         });
     }
 
@@ -96,11 +97,11 @@ export class DataGrid extends Component {
                     <tbody>
                         {
                             gridData.map((item, index) => {
-                                const checked = checkedList.indexOf(item.LicenseeId) > -1;
+                                const checked = checkedList.indexOf(item.LicenseeName) > -1;
 
                                 return (
                                     <tr key={item.LicenseeId}>
-                                        <td className='text-center'><input type='checkbox' value={item.LicenseeId} checked={checked} onChange={this.onItemChecked} /></td>
+                                        <td className='text-center'><input type='checkbox' value={item.LicenseeName} checked={checked} onChange={this.onItemChecked} /></td>
                                         <td>{item.LicenseeName}</td>
                                         { 
                                             header.map(x => {
