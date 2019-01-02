@@ -8868,20 +8868,20 @@ var DataGrid = exports.DataGrid = function (_Component) {
         };
 
         _this.onItemChecked = function (e) {
-            var value = parseInt(e.target.value);
+            var value = e.target.value;
             var checkedList = _this.props.checkedList;
             var licenseeIdList = _this.state.licenseeIdList;
 
             var newCheckedList = [];
 
             if (e.target.checked) {
-                if (value === 0) {
+                if (value === '0') {
                     newCheckedList = [].concat(_toConsumableArray(licenseeIdList));
                 } else {
                     newCheckedList = [].concat(_toConsumableArray(checkedList), [value]);
                 }
             } else {
-                if (value === 0) {
+                if (value === '0') {
                     newCheckedList = [];
                 } else {
                     newCheckedList = checkedList.filter(function (item) {
@@ -8922,9 +8922,10 @@ var DataGrid = exports.DataGrid = function (_Component) {
             _site2.default.fetchData(params, 'ManageProduct/Search').then(function (response) {
                 var data = response.data.Data ? JSON.parse(response.data.Data) : [];
                 _this2.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(function (item) {
-                        return item.LicenseeId;
+                        return item.LicenseeName;
                     }) });
                 _this2.props.toggleLoader(false);
+                _this2.props.setCheckedList([]);
             });
         }
     }, {
@@ -8996,7 +8997,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         'tbody',
                         null,
                         gridData.map(function (item, index) {
-                            var checked = checkedList.indexOf(item.LicenseeId) > -1;
+                            var checked = checkedList.indexOf(item.LicenseeName) > -1;
 
                             return _react2.default.createElement(
                                 'tr',
@@ -9004,7 +9005,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-center' },
-                                    _react2.default.createElement('input', { type: 'checkbox', value: item.LicenseeId, checked: checked, onChange: _this3.onItemChecked })
+                                    _react2.default.createElement('input', { type: 'checkbox', value: item.LicenseeName, checked: checked, onChange: _this3.onItemChecked })
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -9117,7 +9118,8 @@ var Button = exports.Button = function (_Component) {
                 productList: [],
                 selectedProduct: null,
                 date: _utility2.default.getTodayString(),
-                isAddNew: true
+                isAddNew: true,
+                isRemovePullService: true
             });
         };
 
@@ -9136,7 +9138,8 @@ var Button = exports.Button = function (_Component) {
             productList: [],
             selectedProduct: null,
             date: _utility2.default.getTodayString(),
-            isAddNew: true
+            isAddNew: true,
+            isRemovePullService: true
         };
         return _this;
     }
@@ -9150,14 +9153,15 @@ var Button = exports.Button = function (_Component) {
     }, {
         key: '_getParam',
         value: function _getParam() {
-            return {
-                licenseeList: this.props.checkedList.toString(),
-                redmineId: this.state.redmineId,
-                effectiveDate: this.state.isAddNew ? this.state.date : '',
-                productList: this.state.selectedProduct ? this.state.selectedProduct.map(function (i) {
-                    return i.value;
-                }).join(',') : ''
-            };
+            var params = {};
+            params['licenseeName'] = this.props.checkedList.toString();
+            params['productCode'] = this.state.selectedProduct ? this.state.selectedProduct.map(function (i) {
+                return i.value;
+            }).join(',') : '';
+            params[this.state.isAddNew ? 'effectiveDate' : 'isRemovePullService'] = this.state.isAddNew ? this.state.date : this.state.isRemovePullService;
+            params['redmineId'] = this.state.redmineId;
+
+            return params;
         }
     }, {
         key: '_submit',
@@ -9169,11 +9173,14 @@ var Button = exports.Button = function (_Component) {
             var param = this._getParam();
 
             _site2.default.fetchData(param, url).then(function (response) {
-                if (response.data.IsSuccess) {
+                if (response.data.Error) {
+                    _utility2.default.showMessage(response.data.Error);
+                } else {
                     _utility2.default.showMessage('Success!');
-                    _this2._updateGrid();
-                    _this2.onPopupClose();
                 }
+
+                _this2._updateGrid();
+                _this2.onPopupClose();
             }).catch(function (err) {
                 _utility2.default.showMessage('Please try again!');
                 _this2.props.toggleLoader(false);
@@ -9212,7 +9219,7 @@ var Button = exports.Button = function (_Component) {
         }
     }, {
         key: '_buildPopupContent',
-        value: function _buildPopupContent(isAddNew, productList, selectedProduct, date, redmineId) {
+        value: function _buildPopupContent(isAddNew, productList, selectedProduct, date, isRemovePullService, redmineId) {
             var _this4 = this;
 
             return _react2.default.createElement(
@@ -9246,6 +9253,29 @@ var Button = exports.Button = function (_Component) {
                     _react2.default.createElement('input', { className: 'full-width', type: 'date', value: date, onChange: function onChange(e) {
                             return _this4.setState({ date: e.target.value });
                         } })
+                ),
+                !isAddNew && _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'col-form-label' },
+                        'Remove Pull Service'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('input', { type: 'checkbox',
+                            checked: isRemovePullService,
+                            onChange: function onChange(e) {
+                                return _this4.setState({ isRemovePullService: e.target.checked });
+                            } }),
+                        _react2.default.createElement(
+                            'i',
+                            null,
+                            '(Apply for "Gold Deluxe" and "AG Casino")'
+                        )
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
@@ -9294,7 +9324,8 @@ var Button = exports.Button = function (_Component) {
                 productList = _state.productList,
                 selectedProduct = _state.selectedProduct,
                 date = _state.date,
-                popupTitle = _state.popupTitle;
+                popupTitle = _state.popupTitle,
+                isRemovePullService = _state.isRemovePullService;
 
             var countSelectedItem = this.props.checkedList.length;
 
@@ -9326,8 +9357,8 @@ var Button = exports.Button = function (_Component) {
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
                     title: popupTitle,
-                    content: this._buildPopupContent(isAddNew, productList, selectedProduct, date, redmineId),
-                    style: { height: isAddNew ? '385px' : '315px', width: '600px' },
+                    content: this._buildPopupContent(isAddNew, productList, selectedProduct, date, isRemovePullService, redmineId),
+                    style: { height: '385px', width: '600px' },
                     onClose: this.onPopupClose })
             );
         }

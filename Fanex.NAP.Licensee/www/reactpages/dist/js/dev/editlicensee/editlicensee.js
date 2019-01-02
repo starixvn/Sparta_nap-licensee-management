@@ -9929,14 +9929,14 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
             var params = this._getParams();
 
             _site2.default.fetchData(params, url).then(function (response) {
-                if (!response.data.IsSuccess) {
+                if (response.data.Error) {
                     _utility2.default.showMessage(response.data.Error);
-                    _this2.props.toggleLoader(false);
                 } else {
                     _utility2.default.showMessage('Success!');
-                    _this2.onClose();
-                    _this2.props.getProductList(_this2.props.licensee.LicenseeID);
                 }
+
+                _this2.onClose();
+                _this2.props.getProductList(_this2.props.licensee.LicenseeID);
             }).catch(function (err) {
                 _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
