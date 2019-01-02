@@ -22,8 +22,9 @@ BEGIN
 	IF ISNULL(@LicenseeList, '') <> ''
 	BEGIN
 		INSERT INTO @Licensee(Id)
-		SELECT val
-		FROM CUSTDB.dbo.strSplit(@LicenseeList,',')
+		SELECT l.LicenseeID
+		FROM CUSTDB.dbo.strSplit(@LicenseeList,',') s
+		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON s.val = l.LicenseeName
 	END
 
 	INSERT INTO @OfferedProduct(Id)

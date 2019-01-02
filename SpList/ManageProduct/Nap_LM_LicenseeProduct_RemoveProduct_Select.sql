@@ -23,8 +23,9 @@ BEGIN
 	IF ISNULL(@LicenseeList, '') <> ''
 	BEGIN
 		INSERT INTO @Licensee(Id)
-		SELECT val
+		SELECT l.LicenseeID
 		FROM CUSTDB.dbo.strSplit(@LicenseeList,',') s
+		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON s.val = l.LicenseeName
 	END
 
 	SELECT @Count = COUNT(1)

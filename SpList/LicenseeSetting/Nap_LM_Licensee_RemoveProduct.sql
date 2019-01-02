@@ -1,8 +1,9 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_RemoveProduct]
-	@LicenseeNameList	VARCHAR(MAX),
-	@ProductCode		VARCHAR(MAX)
+	@LicenseeNameList		VARCHAR(MAX),
+	@ProductCode			VARCHAR(MAX),
+	@IsRemovePullService	BIT = 0
 AS
 /*
 	 Created: Amanda
@@ -17,16 +18,17 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DECLARE @tblLicensee AS TABLE(ID INT IDENTITY(1,1), LicenseeId INT, LicenseeName VARCHAR(50), ResellerId INT)
+	DECLARE @tblLicensee AS TABLE(ID INT IDENTITY(1,1), LicenseeId INT, LicenseeName VARCHAR(50))
 	DECLARE @tblProductPrefix AS TABLE(ID INT IDENTITY(1,1), ProductId INT, ProductCode VARCHAR(10))
 	DECLARE @tblProductFunctions AS TABLE(ProductId INT, FunctionId INT, TypeId INT, IsParent BIT)
+	DECLARE @tblParentFunction TABLE (Id INT IDENTITY(1,1), FunctionId INT)	
 
 	DECLARE @LicenseeId		INT,
 			@LicenseeName	VARCHAR(50), 
 			@ProductName	VARCHAR(10),
 			@n				INT, 
 			@m				INT,
-			@Error			VARCHAR(MAX)
+			@Error			VARCHAR(MAX) = ''
 
 	--1-----------------------------------------* GET LICENSEE LIST *-------------------------------------
 	INSERT INTO @tblLicensee (LicenseeName)
@@ -37,12 +39,6 @@ BEGIN
 	SET tl.LicenseeId = l.LicenseeID
 	FROM @tblLicensee tl 
 	INNER JOIN dbo.Licensees l WITH (NOLOCK) ON tl.LicenseeName = l.LicenseeName
-
-	UPDATE l
-	SET l.ResellerId = r.ResellerID
-	FROM @tblLicensee l
-	INNER JOIN dbo.LicenseeReseller r WITH (NOLOCK) ON l.LicenseeID = r.LicenseeID
-	WHERE r.ResellerID <> 3
 
 	IF EXISTS (SELECT 1 FROM @tblLicensee WHERE LicenseeId IS NULL)
 	BEGIN
@@ -74,7 +70,7 @@ BEGIN
 	BEGIN
 		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n
     
-		INSERT INTO @tblProductFunctions
+		INSERT INTO @tblProductFunctions (ProductId, FunctionId, TypeId)
 		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductName
       
 		SET @n = @n +1
@@ -84,7 +80,12 @@ BEGIN
 	SET f.IsParent = 1 
 	FROM dbo.Functions af WITH (NOLOCK)
 	INNER JOIN @tblProductFunctions f ON af.FunctionId = f.FunctionId
-	WHERE f.TypeID = 1 AND af.ParentId = 0
+	WHERE f.TypeID IN (1, 3) AND af.ParentId = 0
+	
+	INSERT INTO @tblParentFunction(FunctionId)
+	SELECT DISTINCT FunctionId
+	FROM @tblProductFunctions
+	WHERE IsParent = 1
 	
 	IF EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductId IS NULL)
 	BEGIN
@@ -108,12 +109,12 @@ BEGIN
 		,@m = MAX(ID) FROM @tblLicensee
 	WHILE (@n <= @m)
 	BEGIN
+		SELECT @LicenseeId = LicenseeId, @LicenseeName = LicenseeName
+		FROM @tblLicensee
+		WHERE ID = @n
+	
 		IF @LicenseeId IS NOT NULL
 		BEGIN
-			SELECT @LicenseeId = LicenseeId, @LicenseeName = LicenseeName
-			FROM @tblLicensee
-			WHERE ID = @n
-		
 			-- delete setting
 			DELETE ld
 			FROM dbo.LicenseeProduct3rd ld WITH(ROWLOCK)
@@ -124,28 +125,22 @@ BEGIN
 			DELETE lf
 			FROM dbo.LicenseeFunctions lf WITH(ROWLOCK)
 			INNER JOIN @tblProductFunctions f ON f.FunctionId = lf.FunctionId
-			WHERE lf.LicenseeId = @LicenseeId AND f.IsParent IS NULL AND f.TypeID = 1 -- LRF
+			WHERE lf.LicenseeId = @LicenseeId AND f.IsParent IS NULL AND f.TypeID IN (1,3) -- LRF
 			
 			DELETE luf
 			FROM dbo.LicenseeUserFunctions luf WITH(ROWLOCK)
 			INNER JOIN @tblProductFunctions f ON f.FunctionId = luf.FunctionId
-			WHERE luf.LicenseeId = @LicenseeId AND f.IsParent IS NULL AND f.TypeID = 1 -- LRF
+			WHERE luf.LicenseeId = @LicenseeId AND f.IsParent IS NULL AND f.TypeID IN (1,3) -- LRF
 			
-			-- delete parent function
-			DECLARE @parentFunction TABLE (Id INT IDENTITY(1,1), FunctionId INT)
-			INSERT INTO @parentFunction(FunctionId)
-			SELECT FunctionId
-			FROM @tblProductFunctions
-			WHERE IsParent = 1
-			
+			-- delete parent function			
 			DECLARE @i INT, @j INT, @parentId INT
 			SELECT @i = 1, @j = MAX(Id)
-			FROM @parentFunction
+			FROM @tblParentFunction
 			
 			WHILE (@i <= @j)
 			BEGIN
 				SELECT @parentId = FunctionId
-				FROM @parentFunction
+				FROM @tblParentFunction
 				WHERE Id = @i
 				
 				IF NOT EXISTS (
@@ -167,7 +162,8 @@ BEGIN
 				SET @i = @i + 1
 			END
 
-			IF (EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'AGC')
+			IF (@IsRemovePullService = 1 
+				AND EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'AGC')
 				AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = 'AGCasino_VersionKey'))
 			BEGIN
 				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[DBA_Lrf_PullServiceSetting]
@@ -177,7 +173,8 @@ BEGIN
 					@IsDelete = 1
 			END
 			
-			IF (EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'GD')
+			IF (@IsRemovePullService = 1 
+				AND EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'GD')
 				AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = 'GoldDeluxe_VersionKey'))
 			BEGIN
 				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[DBA_Lrf_PullServiceSetting]
