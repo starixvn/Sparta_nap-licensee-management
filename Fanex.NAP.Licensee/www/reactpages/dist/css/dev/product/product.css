@@ -499,14 +499,16 @@
 .popup-content .big-box .Select-control {
   height: 90px; }
 
-.popup-content input[type=date] {
-  height: 25px; }
-
 .popup-content input[type=text] {
-  border: 1px solid #CECCCD;
-  height: 25px;
   padding: 2px; }
   .popup-content input[type=text].has-error {
     border: 1px solid #a94442; }
+
+.popup-content input[type=text], .popup-content input[type=date] {
+  border: 1px solid #CECCCD;
+  height: 25px; }
+
+.popup-content input[type=date] {
+  line-height: initial; }
 
 /*# sourceMappingURL=product.css.map*/

@@ -8263,8 +8263,92 @@ exports.default = Pager;
 ;
 
 /***/ }),
-/* 89 */,
-/* 90 */
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NumericInput = function (_React$Component) {
+    _inherits(NumericInput, _React$Component);
+
+    function NumericInput(props) {
+        _classCallCheck(this, NumericInput);
+
+        var _this = _possibleConstructorReturn(this, (NumericInput.__proto__ || Object.getPrototypeOf(NumericInput)).call(this, props));
+
+        _this.state = { value: props.value };
+        return _this;
+    }
+
+    _createClass(NumericInput, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.value !== this.props.value) {
+                this.setState({ value: this.props.value });
+            }
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e, callback) {
+            var value = e.target.value;
+
+            if (value.length <= 10 && /^\d+$/.test(value) || value === '') {
+                callback && callback(e.target.value);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                className = _props.className,
+                _onChange = _props.onChange;
+            var value = this.state.value;
+
+
+            return _react2.default.createElement('input', { className: className,
+                type: 'text',
+                maxLength: '10',
+                value: value,
+                onChange: function onChange(e) {
+                    return _this2.onChange(e, _onChange);
+                } });
+        }
+    }]);
+
+    return NumericInput;
+}(_react2.default.Component);
+
+exports.default = NumericInput;
+;
+
+/***/ }),
+/* 90 */,
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8275,7 +8359,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
 
-var _types = __webpack_require__(92);
+var _types = __webpack_require__(93);
 
 var _loaderAction = __webpack_require__(78);
 
@@ -8298,8 +8382,8 @@ exports.setCheckedList = setCheckedList;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 91 */,
-/* 92 */
+/* 92 */,
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8313,7 +8397,7 @@ var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
 var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8332,6 +8416,10 @@ var _react2 = _interopRequireDefault(_react);
 var _Popup = __webpack_require__(82);
 
 var _Popup2 = _interopRequireDefault(_Popup);
+
+var _NumericInput = __webpack_require__(89);
+
+var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8388,11 +8476,10 @@ var RedmineConfirmForm = function (_Component) {
                         { className: 'col-form-label' },
                         'Redmine Id'
                     ),
-                    _react2.default.createElement('input', { className: 'full-width ' + (redmineId ? '' : 'has-error'),
-                        type: 'text',
+                    _react2.default.createElement(_NumericInput2.default, { className: 'full-width ' + (redmineId ? '' : 'has-error'),
                         value: redmineId,
-                        onChange: function onChange(e) {
-                            return _this2.setState({ redmineId: e.target.value });
+                        onChange: function onChange(value) {
+                            return _this2.setState({ redmineId: value });
                         } })
                 ),
                 _react2.default.createElement(
@@ -8452,8 +8539,8 @@ var RedmineConfirmForm = function (_Component) {
 exports.default = RedmineConfirmForm;
 
 /***/ }),
-/* 94 */,
-/* 95 */
+/* 95 */,
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8478,7 +8565,7 @@ var _reactSelect = __webpack_require__(24);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(90);
+var _action = __webpack_require__(91);
 
 var _utility = __webpack_require__(51);
 
@@ -8747,7 +8834,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilterBase);
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8768,7 +8855,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(90);
+var _action = __webpack_require__(91);
 
 var _site = __webpack_require__(14);
 
@@ -8975,7 +9062,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGridBase);
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8993,7 +9080,7 @@ var _createReducer3 = __webpack_require__(26);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _types = __webpack_require__(92);
+var _types = __webpack_require__(93);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9010,7 +9097,6 @@ var checkedList = (0, _createReducer4.default)({}, _defineProperty({}, _types.SE
 exports.default = (0, _redux.combineReducers)({ params: params, checkedList: checkedList, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
-/* 98 */,
 /* 99 */,
 /* 100 */,
 /* 101 */,
@@ -9076,7 +9162,8 @@ exports.default = (0, _redux.combineReducers)({ params: params, checkedList: che
 /* 161 */,
 /* 162 */,
 /* 163 */,
-/* 164 */
+/* 164 */,
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9096,13 +9183,13 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(165);
+var _AppContainer = __webpack_require__(166);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(5);
 
-var _reducer = __webpack_require__(97);
+var _reducer = __webpack_require__(98);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -9149,7 +9236,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9174,15 +9261,15 @@ var _Loader = __webpack_require__(28);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilterBase = __webpack_require__(95);
+var _FormFilterBase = __webpack_require__(96);
 
 var _FormFilterBase2 = _interopRequireDefault(_FormFilterBase);
 
-var _DataGridBase = __webpack_require__(96);
+var _DataGridBase = __webpack_require__(97);
 
 var _DataGridBase2 = _interopRequireDefault(_DataGridBase);
 
-var _Action = __webpack_require__(166);
+var _Action = __webpack_require__(167);
 
 var _Action2 = _interopRequireDefault(_Action);
 
@@ -9291,7 +9378,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9312,7 +9399,7 @@ var _reactRedux = __webpack_require__(5);
 
 var _redux = __webpack_require__(2);
 
-var _action = __webpack_require__(90);
+var _action = __webpack_require__(91);
 
 var _utility = __webpack_require__(51);
 
@@ -9322,7 +9409,7 @@ var _site = __webpack_require__(14);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _RedmineConfirmForm = __webpack_require__(93);
+var _RedmineConfirmForm = __webpack_require__(94);
 
 var _RedmineConfirmForm2 = _interopRequireDefault(_RedmineConfirmForm);
 
@@ -9665,5 +9752,5 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Action);
 
 /***/ })
-],[164]);
+],[165]);
 //# sourceMappingURL=sourceLicensee.js.map
