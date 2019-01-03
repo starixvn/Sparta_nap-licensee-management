@@ -6,6 +6,7 @@ import Utility from '../../../lib/utility';
 import Site from '../../../lib/site';
 import Popup from '../../../components/Popup';
 import ConfirmBox from '../../../components/ConfirmBox';
+import NumericInput from '../../../components/NumericInput';
 
 export class Action extends Component {
     constructor(props) {
@@ -138,10 +139,9 @@ export class Action extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
-                    <input className={`full-width ${redmineId ? '' : 'has-error'}`}
-                        type='text'
+                    <NumericInput className={`full-width ${redmineId ? '' : 'has-error'}`}
                         value={redmineId}
-                        onChange={(e) => this.setState({ redmineId: e.target.value })} />
+                        onChange={(value) => this.setState({ redmineId: value })} />
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this.onSubmit} disabled={!this.isValidPopup}>

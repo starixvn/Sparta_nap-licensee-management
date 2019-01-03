@@ -59,17 +59,20 @@
         }
     }
 
-    input[type=date] {
-        height: 25px;
-    }
-
     input[type=text] {
         &.has-error {
             border: 1px solid $red;
         }
 
+        padding: 2px;
+    }
+
+    input[type=text], input[type=date] {
         border: 1px solid #CECCCD;
         height: 25px;
-        padding: 2px;
+    }
+
+    input[type=date] {
+        line-height: initial;
     }
 }

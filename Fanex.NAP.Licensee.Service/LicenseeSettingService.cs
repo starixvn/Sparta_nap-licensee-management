@@ -270,7 +270,7 @@
             WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, criteria.RedmineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string licensee, string redmineId)
+        private void WriteLog(ActionLogType action, string sp, string licensee, int redmineId)
         {
             var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"

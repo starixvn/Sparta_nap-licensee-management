@@ -6,6 +6,6 @@
 
         public string ProductCode { get; set; }
 
-        public string RedmineId { get; set; }
+        public int RedmineId { get; set; }
     }
 }

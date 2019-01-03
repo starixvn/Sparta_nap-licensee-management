@@ -94,9 +94,9 @@
                 return Json(new { IsSuccess = false, Error = "No source data is selected!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _service.Add(criteria);
@@ -137,9 +137,9 @@
                 return Json(new { IsSuccess = false, Error = "Invalid new date range!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _service.Update(criteria);

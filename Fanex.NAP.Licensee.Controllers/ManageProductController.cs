@@ -114,9 +114,9 @@
                 return "Product is empty!";
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is empty!";
+                return "Redmine Id is invalid!";
             }
 
             return null;

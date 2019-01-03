@@ -3,6 +3,7 @@ import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 import Utility from '../../../lib/utility';
+import NumericInput from '../../../components/NumericInput';
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -173,10 +174,9 @@ export default class Form extends Component {
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Redmine Id</label>
                             <div className='col-sm-12 col-md-5'>
-                                <input type='text'
-                                value={redmineId}
-                                className={`full-width ${redmineId ? '' : 'has-error'}`}
-                                onChange={(e) => this.setState({ redmineId: e.target.value })} />
+                                <NumericInput value={redmineId}
+                                    className={`full-width ${redmineId ? '' : 'has-error'}`}
+                                    onChange={(value) => this.setState({ redmineId: value })} />
                             </div>
                         </div>
                         <div className='form-group row col-sm-12'>

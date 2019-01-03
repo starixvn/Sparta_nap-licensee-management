@@ -179,9 +179,9 @@
                 return Json(new { IsSuccess = false, Error = "Supper Wild Card is empty!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _licenseeService.AddAgent(criteria);
@@ -214,9 +214,9 @@
                 return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _licenseeService.TerminateLicensee(criteria);
@@ -286,9 +286,9 @@
                 return "Product is empty!";
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is empty!";
+                return "Redmine Id is invalid!";
             }
 
             return null;
@@ -306,9 +306,9 @@
                 return "Licensee Type is empty!";
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is empty!";
+                return "Redmine Id is invalid!";
             }
 
             var existedLicensees = _licenseeService.GetLicensee(criteria.LicenseeName);
