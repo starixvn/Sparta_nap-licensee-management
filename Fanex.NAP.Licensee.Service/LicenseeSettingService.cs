@@ -207,7 +207,7 @@
         private void WriteRemoveProductActionLog(RemoveLicenseeProductCriteria criteria)
         {
             var doing = "<Product"
-                        + $" LicenseeNameList=\"{criteria.LicenseeName}\""
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
                         + $" IsRemovePullService=\"{criteria.IsRemovePullService}\""
                         + ">"
                         + criteria.ProductCode
