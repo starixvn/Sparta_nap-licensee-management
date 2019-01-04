@@ -39,7 +39,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
 		public const string LicenseeSetting = "LicenseeSetting";
 
-		public const string ManageFunction = "ManageFunction";
+		public const string ManageLRFFunction = "ManageLRFFunctions";
 
 		public const string ManageGroup = "ManageGroup";
 

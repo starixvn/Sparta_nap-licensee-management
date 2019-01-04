@@ -11,7 +11,8 @@ const cssPaths = {
     licensee: './www/reactpages/src/styles/modules/licensee/licensee.scss',
     licenseelist: './www/reactpages/src/styles/modules/licensee/licenseelist.scss',
 	sourceLicensee: './www/reactpages/src/styles/modules/sourcelicensee/index.scss',
-	product: './www/reactpages/src/styles/modules/product/index.scss'
+	product: './www/reactpages/src/styles/modules/product/index.scss',
+    'function': './www/reactpages/src/styles/modules/function/index.scss'
 };
 
 const scriptPaths = {
@@ -30,7 +31,8 @@ const scriptPaths = {
     editlicensee: './www/reactpages/src/scripts/modules/licensee/edit',
     sourceLicenseeList: './www/reactpages/src/scripts/modules/sourcelicensee/list',
     sourceLicensee: './www/reactpages/src/scripts/modules/sourcelicensee/add',
-	product: './www/reactpages/src/scripts/modules/product'
+	product: './www/reactpages/src/scripts/modules/product',
+    'function': './www/reactpages/src/scripts/modules/function/list'
 };
 
 module.exports = {

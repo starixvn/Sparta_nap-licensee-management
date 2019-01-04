@@ -138,6 +138,7 @@
     <Compile Include="Core\IObjectDbGenerator.cs" />
     <Compile Include="ILicenseeSettingService.cs" />
     <Compile Include="ILogWriterService.cs" />
+    <Compile Include="IManageLrfFunctionService.cs" />
     <Compile Include="ISourceLicenseeSettingService.cs" />
     <Compile Include="IManageOperatorService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="IManageProductService.cs" />
     <Compile Include="ManageProductService.cs" />
     <Compile Include="LicenseeSettingService.cs" />
+    <Compile Include="ManageLrfFunctionService.cs" />
     <Compile Include="SourceLicenseeSettingService.cs" />
     <Compile Include="LogWriterService.cs" />
     <Compile Include="ManageOperatorService.cs" />

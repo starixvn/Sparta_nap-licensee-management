@@ -145,6 +145,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
     <Compile Include="ManageProductController.cs" />
+    <Compile Include="ManageLrfFunctionController.cs" />
     <Compile Include="ManageOperatorController.cs" />
     <Compile Include="LicenseeSettingController.cs" />
     <Compile Include="SettingConfigurationController.cs">
