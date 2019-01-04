@@ -92,8 +92,7 @@ BEGIN
 			   + ' FOR ProductCode IN (' + @ProductList + ')'
 			   + ' ) AS p'
 			   + ' ORDER BY RowId'
-	
-	print @sql
+
 	EXEC (@sql)
 
 	SELECT @TotalItem = COUNT(1)
