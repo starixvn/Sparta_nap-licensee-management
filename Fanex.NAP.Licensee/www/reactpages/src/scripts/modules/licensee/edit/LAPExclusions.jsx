@@ -57,7 +57,7 @@ export class LAPExclusions extends Component {
             <Popup isShow={isShow}
                 title='LAP EXCLUSIONS'
                 content={this._buildContent(content)}
-                style={{maxHeight: '50%', width: '300px'}}
+                style={{width: '300px', height: `${content ? (content.length * 28 + 80) : '80'}px`}}
                 onClose={this.onClose} />
         </div>  
         );

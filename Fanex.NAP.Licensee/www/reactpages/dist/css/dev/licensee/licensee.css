@@ -430,7 +430,7 @@
       float: right; }
   .popup .popup-container .popup-content {
     overflow-y: auto;
-    height: calc(100% - 38px);
+    height: calc(100% - 40px);
     padding: 20px; }
 
 .popup .confirm-popup .btn {
@@ -450,16 +450,15 @@
 
 .add-form, .edit-form {
   margin-top: 10px; }
-  .add-form input[type=text], .edit-form input[type=text] {
+  .add-form input[type=text], .add-form input[type=date], .edit-form input[type=text], .edit-form input[type=date] {
     border: 1px solid #CECCCD;
-    height: 25px;
-    padding: 2px; }
-    .add-form input[type=text].has-error, .edit-form input[type=text].has-error {
-      border: 1px solid #a94442; }
-  .add-form input[type=date], .edit-form input[type=date] {
     height: 25px; }
-    .add-form input[type=date].has-error, .edit-form input[type=date].has-error {
+    .add-form input[type=text].has-error, .add-form input[type=date].has-error, .edit-form input[type=text].has-error, .edit-form input[type=date].has-error {
       border: 1px solid #a94442; }
+  .add-form input[type=text], .edit-form input[type=text] {
+    padding: 2px; }
+  .add-form input[type=date], .edit-form input[type=date] {
+    line-height: initial; }
 
 .edit-form td .btn {
   float: none;
@@ -470,10 +469,7 @@
   min-height: 25px;
   overflow: hidden; }
 
-.popup-content .Select-menu-outer {
-  max-height: 150px; }
-
-.popup-content .Select-menu {
-  max-height: 148px; }
+.popup-content .big-box .Select-control {
+  height: 90px; }
 
 /*# sourceMappingURL=licensee.css.map*/

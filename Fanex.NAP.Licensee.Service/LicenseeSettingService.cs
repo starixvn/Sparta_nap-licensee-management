@@ -20,11 +20,25 @@
             _logWriter = new LogWriterService();
         }
 
-        public IEnumerable<Licensee> Search(LicenseeCriteria criteria)
+        public ResultGridData<Licensee> Search(LicenseeCriteria criteria)
         {
+            var result = new ResultGridData<Licensee>();
+
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Select"))
             {
-                return db.Query<Licensee>(criteria);
+                result.Data = db.Query<Licensee>(criteria);
+            }
+
+            result.TotalItem = criteria.TotalItem;
+
+            return result;
+        }
+
+        public IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LicenseeList_Select"))
+            {
+                return db.Query<LicenseeItem>(new { IsAll = isAll });
             }
         }
 
@@ -62,7 +76,8 @@
 
         public Licensee GetLicensee(string licenseeName)
         {
-            return Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false }).FirstOrDefault();
+            var result = Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false, PageIndex = 1, PageSize = 1 });
+            return result.Data.Any() ? result.Data.First() : null;
         }
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)
@@ -90,22 +105,17 @@
             return result;
         }
 
-        public string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey)
+        public string RemoveProduct(RemoveLicenseeProductCriteria criteria)
         {
             string result = null;
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_RemoveProduct"))
             {
-                result = db.QueryEntity<string>(new
-                {
-                    LicenseeName = criteria.LicenseeName,
-                    ProductCode = criteria.ProductCode,
-                    PullServiceKey = pullServiceKey
-                });
+                result = db.QueryEntity<string>(criteria.SpParam);
             }
 
             if (string.IsNullOrEmpty(result))
             {
-                WriteRemoveProductActionLog(criteria, pullServiceKey);
+                WriteRemoveProductActionLog(criteria);
             }
 
             return result;
@@ -194,11 +204,11 @@
             WriteLog(ActionLogType.Licensee_Terminate, "Nap_LM_Licensee_Terminate", doing, criteria.RedmineId);
         }
 
-        private void WriteRemoveProductActionLog(LicenseeProductCriteria criteria, string pullServiceKey)
+        private void WriteRemoveProductActionLog(RemoveLicenseeProductCriteria criteria)
         {
             var doing = "<Product"
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
-                        + $" RemovePullService=\"{pullServiceKey}\""
+                        + $" IsRemovePullService=\"{criteria.IsRemovePullService}\""
                         + ">"
                         + criteria.ProductCode
                         + "</Product>";
@@ -260,7 +270,7 @@
             WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, criteria.RedmineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string licensee, string redmineId)
+        private void WriteLog(ActionLogType action, string sp, string licensee, int redmineId)
         {
             var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"

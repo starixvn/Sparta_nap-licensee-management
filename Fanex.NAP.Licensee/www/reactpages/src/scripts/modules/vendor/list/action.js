@@ -1,22 +1,11 @@
-import { SET_GRID_DATA } from './actionTypes'
-import Site from '../../../lib/site'
+import { SET_PARAMS } from './actionTypes'
 import { toggleLoader } from '../../../actions/loaderAction'
 
-function getGridData(param) {
-    return (dispatch) => {
-        dispatch(toggleLoader(true));
-        Site.fetchData(param, 'LicenseeVendor/GetVendorInfoList').then(response => {
-            dispatch(setGridData(response.data));
-            dispatch(toggleLoader(false));
-        });
-    };
-}
-
-function setGridData(data) {
+function setParams(data) {
     return {
-        type: SET_GRID_DATA,
+        type: SET_PARAMS,
         data: data
     };
 }
 
-export { getGridData }
+export { setParams, toggleLoader }

@@ -105,7 +105,7 @@
             WriteLog(ActionLogType.SourceLicensee_Update, "Nap_LM_SourceLicensee_Update", doing, criteria.RedmineId);
         }
 
-        private void WriteLog(ActionLogType action, string sp, string setting, string redmineId)
+        private void WriteLog(ActionLogType action, string sp, string setting, int redmineId)
         {
             var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"

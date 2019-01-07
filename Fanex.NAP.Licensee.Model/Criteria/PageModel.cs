@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.Criteria.SourceLicenseeSetting
+﻿namespace Fanex.NAP.Licensee.Model.Criteria
 {
     public class PageModel
     {
@@ -6,6 +6,6 @@
 
         public int PageSize { get; set; }
 
-        public int TotalItem { get; set; } = 0;
+        public int TotalItem { get; set; }
     }
 }

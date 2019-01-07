@@ -2,10 +2,10 @@ import { combineReducers } from 'redux'
 import { isLoading } from '../../../reducers/loaderReducer'
 
 import createReducer from '../../../lib/createReducer'
-import { SET_GRID_DATA, GET_FUNCTION_KEY_LIST } from './actionTypes'
+import { SET_PARAMS, GET_FUNCTION_KEY_LIST } from './actionTypes'
 
-const gridData = createReducer({}, {
-    [SET_GRID_DATA](state, action) {
+const params = createReducer({}, {
+    [SET_PARAMS](state, action) {
         return action.data;
     }
 });
@@ -16,4 +16,4 @@ const functionKeyList = createReducer({}, {
     }
 });
 
-export default combineReducers({ gridData, isLoading, functionKeyList })
+export default combineReducers({ params, isLoading, functionKeyList })

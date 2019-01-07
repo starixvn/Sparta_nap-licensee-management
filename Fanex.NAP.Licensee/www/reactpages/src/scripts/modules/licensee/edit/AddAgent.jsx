@@ -7,6 +7,7 @@ import ConfirmBox from '../../../components/ConfirmBox';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 import Utility from '../../../lib/utility';
+import NumericInput from '../../../components/NumericInput';
 
 export class AddAgent extends Component {
     constructor(props) {
@@ -132,7 +133,7 @@ export class AddAgent extends Component {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
-                    <label className='col-form-label'>Supper Wild Card</label>
+                    <label className='col-form-label'>Super Wild Card</label>
                     <input className={`full-width ${superWildCard ? '' : 'has-error'}`}
                         type='text'
                         value={superWildCard}
@@ -157,10 +158,9 @@ export class AddAgent extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
-                    <input className={`full-width ${redmineId ? '' : 'has-error'}`}
-                        type='text'
+                    <NumericInput className={`full-width ${redmineId ? '' : 'has-error'}`}
                         value={redmineId}
-                        onChange={(e) => this.setState({ redmineId: e.target.value })} />
+                        onChange={(value) => this.setState({ redmineId: value })} />
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>

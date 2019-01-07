@@ -1,0 +1,33 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+@model Fanex.NAP.Licensee.Model.ViewModel.ManageProduct.SearchProductViewModel
+@{
+    var serializer = new JavaScriptSerializer();
+
+    var licenseeList = Model.LicenseeList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    var productList = Model.ProductList.Select(x => new { label = x.ProductName, value = x.ProductCode }).ToList();
+}
+@section Headline {
+<ul class="breadcrumb title">
+    <li class="current">Manage Product</li>
+</ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/product/product.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            licenseeList: @Html.Raw(serializer.Serialize(licenseeList)),
+            productList: @Html.Raw(serializer.Serialize(productList))
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/product/product.js")
+}
+
+<div id="app-container"></div>

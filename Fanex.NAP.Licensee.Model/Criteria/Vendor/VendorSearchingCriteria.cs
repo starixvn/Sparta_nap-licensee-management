@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class VendorSearchingCriteria : CriteriaBase
+    public class VendorSearchingCriteria : PageModel
     {
         public string VendorId { get; set; }
 

@@ -111,7 +111,7 @@
 
             var result = _licenseeService.OfferProduct(criteria);
 
-            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+            return Json(new { IsSuccess = true, Error = result?.Replace(";", "<br/>") });
         }
 
         [HttpPost]
@@ -125,15 +125,9 @@
                 return Json(new { IsSuccess = false, Error = error });
             }
 
-            var pullServiceKey = string.Empty;
-            if (criteria.IsRemovePullService)
-            {
-                _pullServiceSetting.TryGetValue(criteria.ProductCode, out pullServiceKey);
-            }
+            var result = _licenseeService.RemoveProduct(criteria);
 
-            var result = _licenseeService.RemoveProduct(criteria, pullServiceKey);
-
-            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+            return Json(new { IsSuccess = true, Error = result?.Replace(";", "<br/>") });
         }
 
         [HttpPost]
@@ -185,9 +179,9 @@
                 return Json(new { IsSuccess = false, Error = "Supper Wild Card is empty!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _licenseeService.AddAgent(criteria);
@@ -220,9 +214,9 @@
                 return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _licenseeService.TerminateLicensee(criteria);
@@ -292,9 +286,9 @@
                 return "Product is empty!";
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is empty!";
+                return "Redmine Id is invalid!";
             }
 
             return null;
@@ -312,9 +306,9 @@
                 return "Licensee Type is empty!";
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is empty!";
+                return "Redmine Id is invalid!";
             }
 
             var existedLicensees = _licenseeService.GetLicensee(criteria.LicenseeName);

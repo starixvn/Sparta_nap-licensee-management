@@ -2,8 +2,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams, setCheckedList } from './action';
-import Site from '../../../lib/site'
-import Pager from '../../../components/Pager'
+import Site from '../../../lib/site';
+import Pager from '../../../components/Pager';
 
 export class DataGridBase extends Component {
     constructor(props) {
@@ -60,7 +60,7 @@ export class DataGridBase extends Component {
     _buildHeader(checkedList, activeItems, header) {
         return (
             <tr>
-                <th>{activeItems.length > 0 && <input type='checkbox' value={0} checked={activeItems.length === checkedList.length} onChange={this.onItemChecked} />}</th>
+                <th style={{width: '40px'}}>{activeItems.length > 0 && <input type='checkbox' value={0} checked={activeItems.length === checkedList.length} onChange={this.onItemChecked} />}</th>
                 {header()}
             </tr>
         );
@@ -68,12 +68,12 @@ export class DataGridBase extends Component {
 
     _buildBody(checkedList, gridData, body, key) {
         return gridData.map((item, index) => {
-            const checked = checkedList.indexOf(item[key]);
+            const checked = checkedList.indexOf(item[key]) > -1;
             const active = item.IsActive;
 
             return (
             <tr key={index} className={active ? '' : 'disable'}>
-                <td className="text-center">{ active && <input type='checkbox' value={item[key]} checked={checked > -1} onChange={this.onItemChecked} /> }</td>
+                <td className="text-center">{ active && <input type='checkbox' value={item[key]} checked={checked} onChange={this.onItemChecked} /> }</td>
                 {body(item, index)}
             </tr>
            );
@@ -87,13 +87,15 @@ export class DataGridBase extends Component {
     }
 
     render() {
-        const { gridData, totalItem, activeItems } = this.state;
-        const { pageIndex, pageSize } = this.props.params;
-        const { header, body, keyValue, checkedList } = this.props;
+        const { totalItem } = this.state;
 
         if (totalItem === 0) {
             return false;
         }
+
+        const { gridData, activeItems } = this.state;
+        const { pageIndex, pageSize } = this.props.params;
+        const { header, body, keyValue, checkedList } = this.props;
 
         return (
             <div>
@@ -113,7 +115,7 @@ export class DataGridBase extends Component {
                     totalItem={totalItem}
                     pageList={[20,50,100,500]}
                     onPaging={this.onPaging} />
-                </div>
+            </div>
         )
     }
 }

@@ -20,22 +20,21 @@
 .add-form, .edit-form {
     margin-top: 10px;
 
-    input[type=text] {
+    input[type=text], input[type=date] {
         &.has-error {
             border: 1px solid $red;
         }
 
         border: 1px solid #CECCCD;
         height: 25px;
+    }
+
+    input[type=text] {
         padding: 2px;
     }
 
     input[type=date] {
-        height: 25px;
-
-        &.has-error {
-            border: 1px solid $red;
-        }
+        line-height: initial;
     }
 }
 
@@ -55,11 +54,9 @@
 }
 
 .popup-content {
-    .Select-menu-outer {
-        max-height: 150px;
-    }
-
-    .Select-menu {
-            max-height: 148px;
+    .big-box {
+        .Select-control{
+            height: 90px;
         }
+    }
 }

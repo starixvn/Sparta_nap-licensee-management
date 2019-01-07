@@ -67,10 +67,10 @@ export default class Pager extends React.Component {
 
     _renderPageInfo(index, pageSize, totalItem) {
         const viewFrom = ((index - 1) * pageSize) + 1;
-        const viewTo = index > totalItem ? index * pageSize : totalItem;
+        const viewTo = index * pageSize;
         return (
             <div className='page-info'>
-                <span>View {viewFrom}-{viewTo} of {totalItem}</span>
+                <span>View {viewFrom}-{viewTo > totalItem ? totalItem : viewTo} of {totalItem}</span>
             </div>);
     }
 

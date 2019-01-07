@@ -141,6 +141,7 @@
     <Compile Include="Criteria\SourceLicenseeSetting\SuspendSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\NewSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
+    <Compile Include="Criteria\Product\LicenseeProductMatrixCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="ViewModel\DefaultBetSetting\SettingItemHelper.cs" />
     <Compile Include="ViewModel\ManageOperator\OperatorViewModel.cs" />
     <Compile Include="ViewModel\ManageOperator\SearchOperatorViewModel.cs" />
+    <Compile Include="ViewModel\ManageProduct\SearchProductViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />

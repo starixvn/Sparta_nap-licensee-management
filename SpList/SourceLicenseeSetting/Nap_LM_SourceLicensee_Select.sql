@@ -19,6 +19,7 @@ AS
 	 
 	 Revisions:
 	  - 20181207@Amanda: Select Source Licensees [Redmine: #83584]
+	  - 20181225@Amanda: Add 'order by' [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -34,7 +35,7 @@ BEGIN
 			RowNum,
 			ID
 	)
-	SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.EffectiveDate ASC),
+	SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.SourcedId ASC, l.EffectiveDate ASC),
 			l.ID	
 	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
 	WHERE (ISNULL(@FromDate, '') = '' OR l.EffectiveDate <= @FromDate)
@@ -66,6 +67,7 @@ BEGIN
 	INNER JOIN dbo.LicenseeSourcedSetting l WITH(NOLOCK) ON l.ID = d.ID
 	INNER JOIN CustDB.dbo.Exchange e WITH (NOLOCK) ON e.exchangeid = l.SourcedCurrencyID
 	WHERE d.RowNum BETWEEN @from AND @to
+	ORDER BY d.RowNum
 	
 	DROP TABLE #data
 	

@@ -24,10 +24,13 @@
 
         private readonly ICommonService _commonService;
 
+        private readonly ILicenseeSettingService _licenseeService;
+
         public SourceLicenseeSettingController()
         {
             _service = new SourceLicenseeSettingService();
             _commonService = new CommonService();
+            _licenseeService = new LicenseeSettingService();
         }
 
         [HttpGet]
@@ -91,9 +94,9 @@
                 return Json(new { IsSuccess = false, Error = "No source data is selected!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _service.Add(criteria);
@@ -134,9 +137,9 @@
                 return Json(new { IsSuccess = false, Error = "Invalid new date range!" });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.RedmineId))
+            if (criteria.RedmineId <= 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is empty!" });
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
             }
 
             var result = _service.Update(criteria);
@@ -161,7 +164,7 @@
         private SearchSourceLicenseeViewModel GetSearchViewModel()
         {
             var fakeLicensee = GetFakeLicensees();
-            var siteNames = _commonService.GetLicenseeList;
+            var siteNames = _licenseeService.GetLicenseeList();
 
             return new SearchSourceLicenseeViewModel
             {

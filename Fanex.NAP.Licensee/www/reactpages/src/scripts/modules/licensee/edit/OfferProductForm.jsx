@@ -7,6 +7,7 @@ import ConfirmBox from '../../../components/ConfirmBox';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 import Utility from '../../../lib/utility';
+import NumericInput from '../../../components/NumericInput';
 
 export class OfferProductForm extends Component {
     constructor(props) {
@@ -62,15 +63,15 @@ export class OfferProductForm extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
-                if (!response.data.IsSuccess) {
+                if (response.data.Error) {
                     Utility.showMessage(response.data.Error);
-                    this.props.toggleLoader(false);
                 }
                 else {
                     Utility.showMessage('Success!');
-                    this.onClose();
-                    this.props.getProductList(this.props.licensee.LicenseeID);
-                }   
+                }
+                
+                this.onClose();
+                this.props.getProductList(this.props.licensee.LicenseeID);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
@@ -117,7 +118,7 @@ export class OfferProductForm extends Component {
                 <div className='form-group'>
                     <label className='col-form-label'>Product</label>
                     <Select instanceId='ddlProduct'
-                        className={`full-width ${selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'}`}
+                        className={`full-width big-box ${selectedproduct !== null && selectedproduct.length > 0 ? '' : 'has-error'}`}
                         value={selectedproduct}
                         options={productList}
                         multi={true}
@@ -129,10 +130,9 @@ export class OfferProductForm extends Component {
                 </div>
                 <div className='form-group'>
                     <label className='col-form-label'>Redmine Id</label>
-                    <input className={`full-width ${redmineId ? '' : 'has-error'}`}
-                        type='text'
+                    <NumericInput className={`full-width ${redmineId ? '' : 'has-error'}`}
                         value={redmineId}
-                        onChange={(e) => this.setState({ redmineId: e.target.value })} />
+                        onChange={(value) => this.setState({ redmineId: value })} />
                 </div>
                 <div className='form-group right'>
                     <button className='btn btn-primary' onClick={this._onSubmit} disabled={!this.isValid}>
@@ -161,8 +161,7 @@ export class OfferProductForm extends Component {
             <Popup isShow={isShow}
                 title='Offer New Product'
                 content={this._buildContent(selectedproduct, productList, date, redmineId)}
-                className='no-scroll'
-                style={{height: '320px', width: '600px'}}
+                style={{height: '385px', width: '600px'}}
                 onClose={() => this.onClose()} />
             </div>
         );

@@ -1,0 +1,5 @@
+﻿export const SET_PARAMS = "SET_PARAMS";
+
+export const GET_PRODUCT_LIST = "GET_PRODUCT_LIST";
+
+export const SET_CHECKED_LIST = 'SET_CHECKED_LIST'

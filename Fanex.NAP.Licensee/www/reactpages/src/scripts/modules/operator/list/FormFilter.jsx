@@ -75,6 +75,8 @@ export class FormFilter extends Component {
             siteName: this.state.selectedSiteName.value,
             currencyId: this.state.selectedCurrency.value,
             isEmptyOperatorId: this.params.isEmptyOperatorId,
+            pageIndex: 1,
+            pageSize: this.props.params.pageSize || 20,
             timeStamp: new Date().getTime()
         };
 
@@ -131,7 +133,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    return {};
+    const { params } = state;
+    return { params };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

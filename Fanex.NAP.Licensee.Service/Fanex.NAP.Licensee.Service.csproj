@@ -142,6 +142,8 @@
     <Compile Include="IManageOperatorService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />
     <Compile Include="ILicenseeVendorService.cs" />
+    <Compile Include="IManageProductService.cs" />
+    <Compile Include="ManageProductService.cs" />
     <Compile Include="LicenseeSettingService.cs" />
     <Compile Include="SourceLicenseeSettingService.cs" />
     <Compile Include="LogWriterService.cs" />

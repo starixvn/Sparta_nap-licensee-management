@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Select from 'react-select'
-import { getGridData } from './action'
+import { setParams } from './action'
 
 export class FormFilter extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ export class FormFilter extends Component {
     handleKeyPress = (event) => {
         if (event.charCode === 13) {
             event.preventDefault();
-            this.props.getGridData(this.params);
+            this._submit();
         }
     }
 
@@ -38,10 +38,22 @@ export class FormFilter extends Component {
         this.params.functionKey = item === null ? "" : item.value;
     }
 
-    submit = (event) => {
+    handleClick = (event) => {
         event.preventDefault();
 
-        this.props.getGridData(this.params);
+        this._submit();
+    }
+
+    _submit() {
+        const params = Object.assign(
+            {},
+            this.params,
+            { 
+                pageIndex: 1,
+                pageSize: this.props.params.pageSize || 20,
+                timeStamp: new Date().getTime()
+            });
+        this.props.setParams(params);
     }
 
     render() {
@@ -66,7 +78,7 @@ export class FormFilter extends Component {
                 </div>
 
                 <div className="form-group">
-                    <button type="button" className="btn btn-primary" onClick={this.submit}>Submit</button>
+                    <button type="button" className="btn btn-primary" onClick={this.handleClick}>Submit</button>
                 </div>
             </div>
         )
@@ -74,10 +86,10 @@ export class FormFilter extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ getGridData }, dispatch);
+    return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    const { functionKeyList } = state;
-    return { functionKeyList };
+    const { functionKeyList, params } = state;
+    return { functionKeyList, params };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

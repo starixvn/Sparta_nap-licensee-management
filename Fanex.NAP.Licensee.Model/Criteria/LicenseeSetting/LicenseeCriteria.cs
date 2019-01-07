@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 {
-    public class LicenseeCriteria
+    public class LicenseeCriteria : PageModel
     {
         public LicenseeCriteria()
         {

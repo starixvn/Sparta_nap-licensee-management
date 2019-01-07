@@ -6,7 +6,9 @@
 
     public interface ILicenseeSettingService
     {
-        IEnumerable<Licensee> Search(LicenseeCriteria criteria);
+        ResultGridData<Licensee> Search(LicenseeCriteria criteria);
+
+        IEnumerable<LicenseeItem> GetLicenseeList(bool isAll = false);
 
         IEnumerable<Product> GetProductList();
 
@@ -20,7 +22,7 @@
 
         string OfferProduct(OfferProductCriteria criteria);
 
-        string RemoveProduct(LicenseeProductCriteria criteria, string pullServiceKey);
+        string RemoveProduct(RemoveLicenseeProductCriteria criteria);
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
