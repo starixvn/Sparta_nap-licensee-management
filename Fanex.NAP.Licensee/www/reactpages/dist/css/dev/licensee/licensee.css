@@ -439,8 +439,14 @@
 .green {
   color: #A1C46B; }
 
+.orange {
+  color: #fe8a38; }
+
 .right {
   float: right; }
+
+tr.disable {
+  color: #808080; }
 
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }

@@ -1,8 +1,14 @@
 .green {
   color: #A1C46B; }
 
+.orange {
+  color: #fe8a38; }
+
 .right {
   float: right; }
+
+tr.disable {
+  color: #808080; }
 
 .pager {
   margin-top: -20px;

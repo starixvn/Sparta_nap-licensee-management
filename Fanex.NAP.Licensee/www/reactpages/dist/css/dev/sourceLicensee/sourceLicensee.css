@@ -467,8 +467,14 @@
 .green {
   color: #A1C46B; }
 
+.orange {
+  color: #fe8a38; }
+
 .right {
   float: right; }
+
+tr.disable {
+  color: #808080; }
 
 .Select {
   display: inline-block;
@@ -494,9 +500,6 @@ input[type=date], input[type=text] {
 
 input[type=date] {
   line-height: initial !important; }
-
-tr.disable {
-  color: #808080; }
 
 .filter-form input[type=date] {
   width: 150px; }
