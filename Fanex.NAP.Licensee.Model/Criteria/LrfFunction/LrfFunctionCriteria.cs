@@ -4,8 +4,8 @@
     {
         public int ParentFunctionId { get; set; }
 
-        public string Environment { get; set; }
-
         public int Type { get; set; }
+
+        public string Environment { get; set; }  
     }
 }
