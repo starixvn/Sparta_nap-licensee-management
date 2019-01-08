@@ -1,7 +1,6 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Select from 'react-select';
 import { setParams } from './action';
 
 export class FormFilter extends Component {

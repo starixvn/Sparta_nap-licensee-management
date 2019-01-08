@@ -898,7 +898,7 @@
     <Content Include="Views\SourceLicenseeSetting\Index.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
     <Content Include="Views\ManageProduct\Index.cshtml" />
-    <Content Include="Views\ManageFunction\Index.cshtml" />
+    <Content Include="Views\ManageLrfFunction\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

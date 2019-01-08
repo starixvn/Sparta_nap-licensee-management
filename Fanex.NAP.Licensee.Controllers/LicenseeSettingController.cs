@@ -91,7 +91,7 @@
             }
 
             var result = _licenseeService.SetUpNewLicensee(criteria);
-            result.Error = result.IsSuccess 
+            result.Error = result.IsSuccess
                 ? null
                 : (string.IsNullOrEmpty(result.Error) ? "Can not create this licensee. Please try later!" : result.Error);
 

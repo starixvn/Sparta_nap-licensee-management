@@ -1,0 +1,42 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "Manage LRF Function";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+@model Fanex.NAP.Licensee.Model.ViewModel.LrfFunction.SearchLrfFunctionViewModel
+@{
+    var serializer = new JavaScriptSerializer();
+    var groupFunctionList = Model.GroupFunctionList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    groupFunctionList.Insert(0, new { label = "All", value = 0 });
+    var typeList = Model.TypeList.Select(x => new { label = x.Value, value = x.Key }).ToList();
+    typeList.Insert(0, new { label = "All", value = 0 });
+    var environmentList = Model.EnvironmentList.Select(x => new { label = x, value = x }).ToList();
+    environmentList.Insert(0, new { label = "All", value = "" });
+}
+
+@section Headline {
+<ul class="breadcrumb title">
+    <li>Manage LRF Function</li>
+    <li class="current">LRF Function</li>
+</ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/function/function.css")
+}
+@section FooterJs{
+<script>
+    var initialState = {
+        groupFunctionList: @Html.Raw(serializer.Serialize(groupFunctionList)),
+        selectedGroupFunction: @Html.Raw(serializer.Serialize(groupFunctionList.First())),
+        typeList: @Html.Raw(serializer.Serialize(typeList)),
+        selectedType: @Html.Raw(serializer.Serialize(typeList.First())),
+        environmentList: @Html.Raw(serializer.Serialize(environmentList)),
+        selectedEnvironment: @Html.Raw(serializer.Serialize(environmentList.First()))
+    }
+</script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/function/function.js")
+}
+
+<div id="app-container"></div>

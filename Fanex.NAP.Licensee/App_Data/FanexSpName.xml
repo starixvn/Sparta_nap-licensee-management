@@ -48,7 +48,6 @@
     </Setting>.
     <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
-
   </Function>
 
   <Function Name="Site.Nap.Licensee.VendorInfoManagement">
@@ -99,5 +98,10 @@
     <Setting Key="Nap_LM_LicenseeProduct_Select" SpName="Nap_LM_LicenseeProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicenseeProduct_NewProduct_Select" SpName="Nap_LM_LicenseeProduct_NewProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicenseeProduct_RemoveProduct_Select" SpName="Nap_LM_LicenseeProduct_RemoveProduct_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+  </Function>
+
+  <Function Name="Site.Nap.Licensee.ManageLrfFunction">
+    <Setting Key="Nap_LM_LrfFunction_Select" SpName="Nap_LM_LrfFunction_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_GetTopParentFunction" SpName="Nap_LM_LrfFunction_GetTopParentFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

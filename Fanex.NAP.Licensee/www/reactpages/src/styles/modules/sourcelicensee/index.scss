@@ -48,12 +48,6 @@ input[type=date] {
     line-height: initial !important;
 }
 
-tr {
-    &.disable {
-        color: #808080;
-    }
-}
-
 .filter-form {
     input[type=date] {
         width: 150px;

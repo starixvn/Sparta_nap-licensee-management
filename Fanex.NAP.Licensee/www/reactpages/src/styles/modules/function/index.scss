@@ -1,0 +1,34 @@
+﻿@import "../../components/react-select/react-select.main";
+@import "../../components/_variable";
+@import "../../components/common";
+
+.Select {
+    display: inline-block;
+    width: 150px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
+}
