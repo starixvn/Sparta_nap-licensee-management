@@ -10,7 +10,7 @@ AS
 	 
 	 Revisions:
 	  - 20180924@Amanda: Select Lrf Site Name which enable subsidiary  [Redmine: #83584]
-	  - 20180103@Amanda: Add more condition  [Redmine: #83584]
+	  - 20190103@Amanda: Add more condition  [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
