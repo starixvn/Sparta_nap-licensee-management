@@ -2,8 +2,7 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_LrfFunction_Select]
 	@ParentFunctionId	INT
-	, @IsFunction		INT
-	, @IsMenu			INT
+	, @Type				INT
 	, @Environment		VARCHAR(10)
 AS
 /*
@@ -11,6 +10,11 @@ AS
 	 Date: 2019-01-04
 	 Task: Implement "Manage LRF Function" function
 	 DB: DBCUST.bodb_licensee
+	 
+	 Developer's Note:
+		- Type: 0 -- All
+				1 -- Menu
+				2 -- Function
 	 
 	 Revisions:
 	  - 20190104@Amanda: Get LRF function [Redmine: #83584]
@@ -31,7 +35,9 @@ BEGIN
 				Environment,
 				IsFunction
 		FROM dbo.Functions WITH (NOLOCK)
-		WHERE FunctionId = @ParentFunctionId AND IsFunction = @IsFunction AND IsMenu = @IsMenu AND (ISNULL(@Environment,'') = '' OR Environment = @Environment)
+		WHERE ((@ParentFunctionId = 0 AND ParentId = 0) OR FunctionId = @ParentFunctionId)
+			AND (@Type = 0 OR (@Type = 1 AND IsMenu = 1) OR (@Type = 2 AND IsFunction = 1))
+			AND (ISNULL(@Environment,'') = '' OR Environment = @Environment)
 		UNION ALL 
 		SELECT	f.FunctionId,
 				f.Name,
@@ -46,7 +52,8 @@ BEGIN
 				f.IsFunction
 		FROM Functions f WITH (NOLOCK)
 		INNER JOIN Parent_CTE p on f.ParentId = p.FunctionId
-		WHERE f.IsFunction = @IsFunction AND f.IsMenu = @IsMenu AND (ISNULL(@Environment,'') = '' OR f.Environment = @Environment)
+		WHERE (@Type = 0 OR (@Type = 1 AND f.IsMenu = 1) OR (@Type = 2 AND f.IsFunction = 1))
+			AND (ISNULL(@Environment,'') = '' OR f.Environment = @Environment)
 	)
 	SELECT FunctionId,
 			Name,
