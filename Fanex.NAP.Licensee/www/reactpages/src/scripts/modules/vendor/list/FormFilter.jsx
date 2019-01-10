@@ -11,7 +11,8 @@ export class FormFilter extends Component {
         this.params = {
             vendorId: "",
             siteName: "",
-            functionKey: ""
+            functionKey: "",
+            disable: false
         };
 
         this.state = {
@@ -24,6 +25,13 @@ export class FormFilter extends Component {
         const name = target.name;
 
         this.params[name] = target.value;
+    }
+
+    handleCheck = (event) => {
+        const target = event.target;
+        const name = target.name;
+
+        this.params[name] = target.checked;
     }
 
     handleKeyPress = (event) => {
@@ -75,6 +83,13 @@ export class FormFilter extends Component {
                     value={this.state.selectedFunctionKey}
                     options={this.props.functionKeyList}
                     onChange={this.handleFunctionKeyChange} />
+                </div>
+
+                <div className="form-group">
+                    <label className="checkbox-inline">           
+                        <input type="checkbox" name="disable" onChange={this.handleCheck} checked={this.state.disable} />
+                        Disable
+                    </label>
                 </div>
 
                 <div className="form-group">
