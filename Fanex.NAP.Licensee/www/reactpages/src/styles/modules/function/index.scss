@@ -4,7 +4,7 @@
 
 .Select {
     display: inline-block;
-    width: 150px;
+    width: 250px;
 
     .Select-value {
         line-height: 23px !important;
@@ -30,5 +30,30 @@
 
     .Select-control {
         height: 25px;
+    }
+}
+
+.edit-form {
+    margin-top: 10px;
+
+    input[type=text] {
+        &.has-error {
+            border: 1px solid $red;
+        }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
+    }
+
+    input[type=radio], input[type=checkbox] {
+        vertical-align: text-bottom;
+    }
+
+    .optional-label {
+        font-weight: normal;
+        margin: 0 5px;
+        line-height: 25px;
+        vertical-align: baseline;
     }
 }

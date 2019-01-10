@@ -193,6 +193,7 @@ export default class Form extends Component {
                             {
                                 hasEmptyOperator
                                 ? (<input type="text" value={operator.OperatorId ? operator.OperatorId : ''}
+                                    maxLength='50'
                                     className="full-width"
                                     onChange={this._handleOperatorIdChanged} />)
                                 : operator.OperatorId

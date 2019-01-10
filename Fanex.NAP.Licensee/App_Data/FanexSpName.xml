@@ -103,5 +103,9 @@
   <Function Name="Site.Nap.Licensee.ManageLrfFunction">
     <Setting Key="Nap_LM_LrfFunction_Select" SpName="Nap_LM_LrfFunction_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LrfFunction_GetTopParentFunction" SpName="Nap_LM_LrfFunction_GetTopParentFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_GetParentFunctions" SpName="Nap_LM_LrfFunction_GetParentFunctions" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_Get" SpName="Nap_LM_LrfFunction_Get" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_Insert" SpName="Nap_LM_LrfFunction_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_Update" SpName="Nap_LM_LrfFunction_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

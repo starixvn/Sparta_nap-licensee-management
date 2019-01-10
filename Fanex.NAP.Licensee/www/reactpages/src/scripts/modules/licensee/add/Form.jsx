@@ -101,6 +101,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Licensee Name</label>
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
+                                maxLength='50'
                                 value={licenseeName}
                                 className={`full-width ${licenseeName ? '' : 'has-error'}`}
                                 onChange={this._onChangeLicenseeName} />
@@ -110,6 +111,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Super Wild Card</label>
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
+                                maxLength='50'
                                 value={superWildCard}
                                 className={`full-width ${superWildCard ? '' : 'has-error'}`}
                                 onChange={(e) => this.setState({ superWildCard: e.target.value })} />
@@ -184,7 +186,7 @@ export default class Form extends Component {
                                 Submit
                             </button>
                             <a className={`btn btn-green ${isSuccess ? '' : 'hide'}`} href={window.rootUrl + 'LicenseeSetting/Edit?licenseeName=' + licenseeName}>
-                                View New Licensee
+                                View Detail
                             </a>
                         </div>
                     </div>

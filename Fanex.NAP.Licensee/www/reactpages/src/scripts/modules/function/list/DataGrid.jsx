@@ -43,7 +43,7 @@ export class DataGrid extends Component {
                 <td>
                     <span style={{display: 'inline-block', width: `${30*level}px`}}></span>
                     { level > 0 && <span style={{display: 'inline-block', width: '30px'}} className='hierarchy-node'>&#9492;&#9472;&#9472;</span> }
-                    {node.Name} {node.IsNew ? <sup className='green'>NEW</sup> : ''} {node.Environment === 'UAT' ? <sup className='orange'>UAT</sup> : ''}
+                    {node.Name} {node.IsNew ? <sup className='green'>NEW</sup> : ''} {node.Environment !== 'LIVE' ? <sup className='orange'>NON-LIVE</sup> : ''}
                 </td>
                 <td>{node.FunctionKey}</td>
                 <td>{node.Url}</td>
@@ -53,12 +53,9 @@ export class DataGrid extends Component {
                 <td className='text-center'><span className={node.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                 <td className='text-center'>{node.Environment}</td>
                 <td className="text-center">
-                {
-                    node.IsActive &&
-                    <a href={window.rootUrl + `ManageLrfFunction/Edit?id=${node.FunctionId}`}>
+                    <a href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>
                         <i className="icon-edit"></i>
                     </a>
-                }
                 </td>
             </tr>
         );

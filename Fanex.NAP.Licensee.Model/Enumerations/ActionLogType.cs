@@ -17,6 +17,9 @@
         Licensee_Terminate = 5531,
 
         SourceLicensee_Insert = 5532,
-        SourceLicensee_Update = 5533
+        SourceLicensee_Update = 5533,
+
+        LrfFunction_Insert = 5536,
+        LrfFunction_Update = 5537
     }
 }

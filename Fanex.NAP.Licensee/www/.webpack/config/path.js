@@ -31,8 +31,9 @@ const scriptPaths = {
     editlicensee: './www/reactpages/src/scripts/modules/licensee/edit',
     sourceLicenseeList: './www/reactpages/src/scripts/modules/sourcelicensee/list',
     sourceLicensee: './www/reactpages/src/scripts/modules/sourcelicensee/add',
-	product: './www/reactpages/src/scripts/modules/product',
-    'function': './www/reactpages/src/scripts/modules/function/list'
+    product: './www/reactpages/src/scripts/modules/product',
+    functionList: './www/reactpages/src/scripts/modules/function/list',
+    'function': './www/reactpages/src/scripts/modules/function/item'
 };
 
 module.exports = {

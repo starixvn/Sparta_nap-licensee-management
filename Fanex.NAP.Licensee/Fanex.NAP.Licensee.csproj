@@ -320,6 +320,7 @@
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js" />
     <Content Include="www\reactpages\dist\js\dev\function\function.js" />
     <Content Include="www\reactpages\dist\js\dev\importoperator\importoperator.js" />
     <Content Include="www\reactpages\dist\js\dev\operatorlist\operatorlist.js" />
@@ -380,6 +381,10 @@
     <Content Include="www\reactpages\src\scripts\modules\product\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\product\Button.jsx" />
     <Content Include="www\reactpages\src\scripts\components\NumericInput.jsx" />
+    <Content Include="Views\ManageLrfFunction\Get.cshtml" />
+    <Content Include="www\reactpages\src\scripts\modules\function\item\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\function\item\index.jsx" />
+    <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
@@ -855,7 +860,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
-    <Folder Include="www\reactpages\src\scripts\modules\function\item\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

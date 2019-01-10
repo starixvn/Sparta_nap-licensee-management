@@ -145,9 +145,7 @@
     <Compile Include="Criteria\Product\LicenseeProductMatrixCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
-    <Compile Include="DataDomain\EnvironmentType.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
-    <Compile Include="DataDomain\LrfFunctionType.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +159,7 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\LrfFunctionHierarchy.cs" />
     <Compile Include="DTO\LrfFunction.cs" />
     <Compile Include="DTO\OptionItem.cs" />
     <Compile Include="DTO\SourceLicenseeSettingResult.cs" />
@@ -203,6 +202,7 @@
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />
+    <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>

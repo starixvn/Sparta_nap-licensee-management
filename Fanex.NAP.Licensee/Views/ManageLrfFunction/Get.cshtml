@@ -1,0 +1,37 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@{
+    ViewBag.Title = "LRF Function";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+@model Fanex.NAP.Licensee.Model.ViewModel.LrfFunction.LrfFunctionViewModel
+@{
+    var serializer = new JavaScriptSerializer();
+    var parentFunctionList = Model.ParentFunctionList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    var selectedParent = parentFunctionList.FirstOrDefault(x => x.value == Model.Function.ParentId);
+}
+
+@section Headline {
+<ul class="breadcrumb title">
+    <li>Manage LRF Function</li>
+    <li class="current">LRF Function</li>
+</ul>
+
+<a class="btn-back" href="@Url.Content("~/ManageLrfFunction/Index")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/function/function.css")
+}
+@section FooterJs{
+<script>
+    var initialState = {
+        'function': @Html.Raw(serializer.Serialize(Model.Function)),
+        parentFunctionList: @Html.Raw(serializer.Serialize(parentFunctionList)),
+        selectedParent: @Html.Raw(serializer.Serialize(selectedParent))
+    }
+</script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/function/function.js")
+}
+
+<div id="app-container"></div>

@@ -67,7 +67,7 @@ export class FormFilter extends Component {
             <div className="col-xs-12 form-inline filter-form">
                 <div className="form-group">
                     <label>Licensee Name</label>
-                    <input type="text" name="licenseeName" onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
+                    <input type="text" name="licenseeName" maxLength='50' onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
                 </div>
 
             <div className="form-group">

@@ -3,12 +3,19 @@
     using System.Collections.Generic;
     using Model.Criteria.LrfFunction;
     using Model.DTO;
-    using NAP.Core.Models;
 
     public interface IManageLrfFunctionService
     {
         IEnumerable<OptionItem> GetGroupFunctionList();
 
-        ResultGridData<LrfFunction> GetFunctionList(LrfFunctionCriteria criteria);
+        ResultGridData<LrfFunctionHierarchy> GetFunctionList(int parentFunctionId);
+
+        IEnumerable<OptionItem> GetParentFunctionList(int functionId);
+
+        LrfFunction GetFunction(int id);
+
+        ResultData<LrfFunction> Insert(LrfFunctionCriteria criteria);
+
+        ResultData<LrfFunction> Update(LrfFunctionCriteria criteria);
     }
 }

@@ -17,7 +17,7 @@ export class AppContainer extends Component {
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
                 <div style={{ display: 'inline-block' }}>
-                    <a className="btn btn-green" href={window.rootUrl + 'ManageLrfFunction/Add'}>+ Add New Function</a>
+                    <a className="btn btn-green" href={window.rootUrl + 'ManageLrfFunction/Get'}>+ Add New Function</a>
                 </div>
                 <DataGrid />
             </div>

@@ -1,12 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO
 {
-    using System.Collections.Generic;
-
     public class LrfFunction
     {
         public int FunctionId { get; set; }
 
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public int ParentId { get; set; }
 
@@ -25,7 +25,5 @@
         public string Environment { get; set; }
 
         public bool IsFunction { get; set; }
-
-        public IEnumerable<LrfFunction> Children { get; set; }
     }
 }

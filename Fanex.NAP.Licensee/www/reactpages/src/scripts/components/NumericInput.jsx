@@ -5,7 +5,7 @@ export default class NumericInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { value: props.value };
+        this.state = { value: props.value === null ? '' : props.value };
     };
 
     componentDidUpdate(prevProps) {
