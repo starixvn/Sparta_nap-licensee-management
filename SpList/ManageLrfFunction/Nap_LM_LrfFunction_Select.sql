@@ -1,9 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_LrfFunction_Select]
-	@ParentFunctionId	INT
-	, @Type				INT
-	, @Environment		VARCHAR(10)
+	@ParentFunctionId	INT = 0
 AS
 /*
 	 Created: Amanda
@@ -11,17 +9,91 @@ AS
 	 Task: Implement "Manage LRF Function" function
 	 DB: DBCUST.bodb_licensee
 	 
-	 Developer's Note:
-		- Type: 0 -- All
-				1 -- Menu
-				2 -- Function
-	 
 	 Revisions:
 	  - 20190104@Amanda: Get LRF function [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
+
+	DECLARE @parent AS TABLE (
+		FunctionId		INT,
+		Name			NVARCHAR(100),
+		ParentId		INT,
+		Url				VARCHAR(200),
+		IsMenu			BIT,
+		IsActive		BIT,
+		DisplayOrder	INT,
+		IsNew			BIT,
+		FunctionKey		NVARCHAR(100),
+		Environment		VARCHAR(10),
+		IsFunction		BIT,
+		[Root]			BIT
+	)
 	
+	IF (@ParentFunctionId = 0)
+	BEGIN
+		INSERT INTO @parent (
+			FunctionId,
+			Name,
+			ParentId,
+			Url,
+			IsMenu,
+			IsActive,
+			DisplayOrder,
+			IsNew,
+			FunctionKey,
+			Environment,
+			IsFunction,
+			[Root]
+		)
+		SELECT	f.FunctionId,
+				f.Name,
+				f.ParentId,
+				f.Url,
+				f.IsMenu,
+				f.IsActive,
+				f.DisplayOrder,
+				f.IsNew,
+				f.FunctionKey,
+				f.Environment,
+				f.IsFunction,
+				1 AS [Root]
+		FROM dbo.Functions f WITH (NOLOCK)
+		LEFT JOIN dbo.Functions p WITH (NOLOCK) ON f.ParentId = p.FunctionId
+		WHERE p.FunctionId IS NULL
+	END
+	ELSE
+	BEGIN
+		INSERT INTO @parent (
+			FunctionId,
+			Name,
+			ParentId,
+			Url,
+			IsMenu,
+			IsActive,
+			DisplayOrder,
+			IsNew,
+			FunctionKey,
+			Environment,
+			IsFunction,
+			[Root]
+		)
+		SELECT	f.FunctionId,
+				f.Name,
+				f.ParentId,
+				f.Url,
+				f.IsMenu,
+				f.IsActive,
+				f.DisplayOrder,
+				f.IsNew,
+				f.FunctionKey,
+				f.Environment,
+				f.IsFunction,
+				1 AS [Root]
+		FROM dbo.Functions f WITH (NOLOCK)
+		WHERE f.FunctionId = @ParentFunctionId
+	END
+
 	;WITH Parent_CTE as (
 		SELECT	FunctionId,
 				Name,
@@ -33,11 +105,9 @@ BEGIN
 				IsNew,
 				FunctionKey,
 				Environment,
-				IsFunction
-		FROM dbo.Functions WITH (NOLOCK)
-		WHERE ((@ParentFunctionId = 0 AND ParentId = 0) OR FunctionId = @ParentFunctionId)
-			AND (@Type = 0 OR (@Type = 1 AND IsMenu = 1) OR (@Type = 2 AND IsFunction = 1))
-			AND (ISNULL(@Environment,'') = '' OR Environment = @Environment)
+				IsFunction,
+				1 AS [Root]
+		FROM @parent
 		UNION ALL 
 		SELECT	f.FunctionId,
 				f.Name,
@@ -49,11 +119,10 @@ BEGIN
 				f.IsNew,
 				f.FunctionKey,
 				f.Environment,
-				f.IsFunction
+				f.IsFunction,
+				0 AS [Root]
 		FROM Functions f WITH (NOLOCK)
 		INNER JOIN Parent_CTE p on f.ParentId = p.FunctionId
-		WHERE (@Type = 0 OR (@Type = 1 AND f.IsMenu = 1) OR (@Type = 2 AND f.IsFunction = 1))
-			AND (ISNULL(@Environment,'') = '' OR f.Environment = @Environment)
 	)
 	SELECT FunctionId,
 			Name,
@@ -65,7 +134,8 @@ BEGIN
 			IsNew,
 			FunctionKey,
 			Environment,
-			IsFunction
+			IsFunction,
+			[Root]
 	FROM Parent_CTE
 	ORDER BY ParentId, DisplayOrder
 	OPTION (maxrecursion 20)

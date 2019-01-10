@@ -13,10 +13,11 @@ AS
 */
 BEGIN
 	SET NOCOUNT ON;
-	
-	SELECT FunctionId AS Id, Name AS Name
-	FROM dbo.Functions WITH (NOLOCK)
-	WHERE ParentId = 0
-	ORDER BY DisplayOrder
+
+	SELECT f.FunctionId AS Id, f.Name AS Name
+	FROM dbo.Functions f WITH (NOLOCK)
+	LEFT JOIN dbo.Functions p WITH (NOLOCK) ON f.ParentId = p.FunctionId
+	WHERE p.FunctionId IS NULL
+	ORDER BY f.DisplayOrder
 END
 GO
