@@ -335,6 +335,7 @@
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\functionList\functionList.js" />
     <Content Include="www\reactpages\dist\js\pro\function\function.js" />
     <Content Include="www\reactpages\dist\js\pro\importoperator\importoperator.js" />
     <Content Include="www\reactpages\dist\js\pro\licensee\licensee.js" />
