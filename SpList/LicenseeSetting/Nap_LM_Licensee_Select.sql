@@ -17,6 +17,7 @@ AS
 	 Revisions:
 	  - 20181101@Amanda: Select Licensees [Redmine: #83584]
 	  - 20181225@Amanda: Implement paging [Redmine: #83584]
+	  - 20180111@Amanda: Remove [Description] column from returned data [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -40,7 +41,6 @@ BEGIN
 	
 	SELECT 	l.LicenseeID,
 			l.LicenseeName,
-			l.[Description],
 			l.IsDeposit,
 			l.AffectedDate,
 			l.IsActive,
