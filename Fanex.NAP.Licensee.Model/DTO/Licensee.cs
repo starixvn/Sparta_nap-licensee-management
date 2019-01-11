@@ -29,5 +29,7 @@
         public bool EditBetSetting { get; set; }
 
         public string AffectedDateString => AffectedDate?.ToString("MM/dd/yyyy");
+
+        public string Reseller { get; set; }
     }
 }

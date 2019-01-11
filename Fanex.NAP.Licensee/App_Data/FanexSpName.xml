@@ -84,6 +84,7 @@
     <Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SuperCurrency_Select" SpName="Nap_LM_SuperCurrency_Select" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicenseeList_Select" SpName="Nap_LM_LicenseeList_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_GetByName" SpName="Nap_LM_Licensee_GetByName" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.SourceLicenseeSetting">

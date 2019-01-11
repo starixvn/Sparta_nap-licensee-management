@@ -25,6 +25,12 @@ export class LicenseeInfo extends Component {
                     </div>
                 </div>
                 <div className='form-group row'>
+                    <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Reseller</label>
+                    <div className='col-sx-12 col-sm-9'>
+                        {licensee.Reseller}
+                    </div>
+                </div>
+                <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Deposit</label>
                     <div className='col-sx-12 col-sm-9'>
                         <span className={licensee.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span>

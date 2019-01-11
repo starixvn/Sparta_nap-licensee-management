@@ -76,8 +76,10 @@
 
         public Licensee GetLicensee(string licenseeName)
         {
-            var result = Search(new LicenseeCriteria { LicenseeName = licenseeName, IsAll = false, PageIndex = 1, PageSize = 1 });
-            return result.Data.Any() ? result.Data.First() : null;
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetByName"))
+            {
+                return db.QueryEntity<Licensee>(new { LicenseeName = licenseeName });
+            }
         }
 
         public IEnumerable<LicenseeProduct> GetLicenseeProducts(int licenseeId)
