@@ -404,7 +404,7 @@ tr.disable {
 
 .Select {
   display: inline-block;
-  width: 150px; }
+  width: 250px; }
   .Select .Select-value {
     line-height: 23px !important; }
   .Select .Select-placeholder {
@@ -417,5 +417,21 @@ tr.disable {
     border: 1px solid #a94442; }
   .Select .Select-control {
     height: 25px; }
+
+.edit-form {
+  margin-top: 10px; }
+  .edit-form input[type=text] {
+    border: 1px solid #CECCCD;
+    height: 25px;
+    padding: 2px; }
+    .edit-form input[type=text].has-error {
+      border: 1px solid #a94442; }
+  .edit-form input[type=radio], .edit-form input[type=checkbox] {
+    vertical-align: text-bottom; }
+  .edit-form .optional-label {
+    font-weight: normal;
+    margin: 0 5px;
+    line-height: 25px;
+    vertical-align: baseline; }
 
 /*# sourceMappingURL=function.css.map*/
