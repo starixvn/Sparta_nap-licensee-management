@@ -8,7 +8,9 @@
     using Fanex.Data.Configuration;
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
-
+    using Logging;
+    using Logging.RabbitMQ;    
+    
     /// <summary>
     /// MVC application.
     /// </summary>
@@ -16,6 +18,10 @@
     {
         protected void Application_Start()
         {
+            LogManager
+             .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
+             .Use(new RabbitMQLogging(ConfigurationManager.AppSettings["RabbitMQConnectionString"]));
+
             DbSettingProviderManager.Current.Start();
 
             AreaRegistration.RegisterAllAreas();
@@ -24,7 +30,7 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
-                .FromApplication("Fanex.NAP.LicenseeManagement");
+                .FromApplication("Fanex.NAP.LicenseeManagement"); 
         }
 
         protected void Session_End(object sender, EventArgs e)
