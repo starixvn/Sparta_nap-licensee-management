@@ -569,7 +569,10 @@ var Form = function (_Component) {
             isLoading: false,
             isSuccess: false,
             date: _utility2.default.getTodayString(),
-            redmineId: ''
+            redmineId: '',
+            description: '',
+            brandName: '',
+            companyName: ''
         };
         return _this;
     }
@@ -590,7 +593,10 @@ var Form = function (_Component) {
                 IsSpecial: this.state.isSpecial,
                 IsAllowMemberComm: this.state.isAllowMemberComm,
                 EffectiveDate: this.state.date,
-                RedmineId: this.state.redmineId
+                RedmineId: this.state.redmineId,
+                Description: this.state.description,
+                BrandName: this.state.brandName,
+                CompanyName: this.state.companyName
             };
         }
     }, {
@@ -635,7 +641,10 @@ var Form = function (_Component) {
                 isAllowMemberComm = _state.isAllowMemberComm,
                 isLoading = _state.isLoading,
                 isSuccess = _state.isSuccess,
-                redmineId = _state.redmineId;
+                redmineId = _state.redmineId,
+                description = _state.description,
+                brandName = _state.brandName,
+                companyName = _state.companyName;
 
 
             return _react2.default.createElement(
@@ -664,6 +673,66 @@ var Form = function (_Component) {
                                     value: licenseeName,
                                     className: 'full-width ' + (licenseeName ? '' : 'has-error'),
                                     onChange: this._onChangeLicenseeName })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Description'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    maxLength: '100',
+                                    value: description,
+                                    className: 'full-width',
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ description: e.target.value });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Brand Name'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    maxLength: '100',
+                                    value: brandName,
+                                    className: 'full-width',
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ brandName: e.target.value });
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group row' },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
+                                'Company Name'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12 col-md-5' },
+                                _react2.default.createElement('input', { type: 'text',
+                                    maxLength: '100',
+                                    value: companyName,
+                                    className: 'full-width',
+                                    onChange: function onChange(e) {
+                                        return _this3.setState({ companyName: e.target.value });
+                                    } })
                             )
                         ),
                         _react2.default.createElement(

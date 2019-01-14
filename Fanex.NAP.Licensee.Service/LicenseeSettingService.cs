@@ -233,6 +233,9 @@
         private void WriteInsertLicenseeActionLog(SetUpNewLicenseeCriteria criteria)
         {
             var doing = "<Licensee"
+                        + $" Description=\"{criteria.Description}\""
+                        + $" BrandName=\"{criteria.BrandName}\""
+                        + $" CompanyName=\"{criteria.CompanyName}\""
                         + $" SuperWildCard=\"{criteria.SuperWildCard}\""
                         + $" LicenseeType=\"{criteria.LicenseeType}\""
                         + $" IsSpecial=\"{criteria.IsSpecial}\""

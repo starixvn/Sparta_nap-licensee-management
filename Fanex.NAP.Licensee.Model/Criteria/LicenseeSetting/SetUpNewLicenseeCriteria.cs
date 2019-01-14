@@ -22,6 +22,12 @@
 
         public int RedmineId { get; set; }
 
+        public string Description { get; set; }
+
+        public string BrandName { get; set; }
+
+        public string CompanyName { get; set; }
+
         public dynamic SpParam => new
         {
             LicenseeName = LicenseeName,
@@ -31,7 +37,10 @@
             ProductCode = ProductCode,
             SystemIsActive = SystemIsActive,
             IsAllowMemberComm = IsAllowMemberComm,
-            EffectiveDate = EffectiveDate
+            EffectiveDate = EffectiveDate,
+            Description = Description,
+            BrandName = BrandName ?? string.Empty,
+            CompanyName = CompanyName ?? string.Empty
         };
     }
 }
