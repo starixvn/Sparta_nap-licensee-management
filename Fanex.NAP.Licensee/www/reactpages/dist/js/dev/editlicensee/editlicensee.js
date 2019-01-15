@@ -8957,15 +8957,15 @@ var CollapsiblePanel = function (_React$Component) {
                                 return { collapsed: !state.collapsed };
                             });
                         } },
-                    this.props.children.map(function (x) {
-                        if (x.type.name === _Title2.default.name) return x;
+                    this.props.children.find(function (x) {
+                        return x.type === _Title2.default;
                     })
                 ),
                 _react2.default.createElement(
                     'div',
                     { className: 'collapsible-panel-content' },
-                    this.props.children.map(function (x) {
-                        if (x.type.name === _Content2.default.name) return x;
+                    this.props.children.find(function (x) {
+                        return x.type === _Content2.default;
                     })
                 )
             );
