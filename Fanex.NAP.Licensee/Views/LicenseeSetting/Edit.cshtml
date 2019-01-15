@@ -23,7 +23,8 @@
     <script>
         var initialState = {
             licensee: @Html.Raw(serializer.Serialize(Model.Licensee)),
-            productList: @Html.Raw(serializer.Serialize(Model.ProductList))
+            productList: @Html.Raw(serializer.Serialize(Model.ProductList)),
+            systemList: @Html.Raw(serializer.Serialize(Model.SystemList))
         }
     </script>
 

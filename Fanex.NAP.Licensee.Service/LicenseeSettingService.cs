@@ -58,6 +58,14 @@
             }
         }
 
+        public IEnumerable<SystemItem> GetLicenseeSystemList(int licenseeId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetActiveSystem"))
+            {
+                return db.Query<SystemItem>(new { licenseeId = licenseeId });
+            }
+        }
+
         public ResultData<Licensee> SetUpNewLicensee(SetUpNewLicenseeCriteria criteria)
         {
             var result = new ResultData<Licensee>();
@@ -199,6 +207,22 @@
             }
         }
 
+        public string ActivateSystem(ActivateSystemCriteria criteria)
+        {
+            string result = null;
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_ActivateSystem"))
+            {
+                result = db.QueryEntity<string>(criteria.SpParam);
+            }
+
+            if (string.IsNullOrEmpty(result))
+            {
+                WriteActivateLicenseeActionLog(criteria);
+            }
+
+            return result;
+        }
+
         private void WriteTerminateLicenseeActionLog(TerminateLicenseeCriteria criteria)
         {
             var doing = $"<Licensee>{criteria.LicenseeName}</Licensee>";
@@ -273,6 +297,17 @@
                         + "</Product>";
 
             WriteLog(ActionLogType.Licensee_OfferProduct, "Nap_LM_Licensee_OfferProduct", doing, criteria.RedmineId);
+        }
+
+        private void WriteActivateLicenseeActionLog(ActivateSystemCriteria criteria)
+        {
+            var doing = "<System"
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + ">"
+                        + criteria.SystemName
+                        + "</System>";
+
+            WriteLog(ActionLogType.Licensee_ActivateSystem, "Nap_LM_Licensee_ActivateSystem", doing, criteria.RedmineId);
         }
 
         private void WriteLog(ActionLogType action, string sp, string licensee, int redmineId)

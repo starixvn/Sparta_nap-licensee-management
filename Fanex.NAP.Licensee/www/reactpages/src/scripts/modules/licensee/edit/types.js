@@ -1,3 +1,5 @@
 ﻿export const SET_PRODUCT_LIST = "SET_PRODUCT_LIST";
 
+export const SET_SYSTEM_LIST = "SET_SYSTEM_LIST";
+
 export const SET_LICENSEE = "SET_LICENSEE";

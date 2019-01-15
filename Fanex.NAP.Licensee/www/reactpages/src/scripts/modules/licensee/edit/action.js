@@ -1,4 +1,4 @@
-﻿import { SET_LICENSEE, SET_PRODUCT_LIST } from './types';
+﻿import { SET_LICENSEE, SET_PRODUCT_LIST, SET_SYSTEM_LIST } from './types';
 import { toggleLoader } from '../../../actions/loaderAction';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
@@ -21,6 +21,17 @@ function getProductList(licenseeID) {
     };
 }
 
+function getSystemList(licenseeID) {
+    const url = 'LicenseeSetting/GetLicenseeSystemList';
+
+    return (dispatch) => {
+        Site.fetchData({ LicenseeId: licenseeID }, url)
+        .then(response => {
+            dispatch(setSystemList(response.data));
+        });
+    };
+}
+
 function setProductList(data) {
     return {
         type: SET_PRODUCT_LIST,
@@ -28,4 +39,11 @@ function setProductList(data) {
     };
 }
 
-export { setLicensee, getProductList, setProductList, toggleLoader }
+function setSystemList(data) {
+    return {
+        type: SET_SYSTEM_LIST,
+        data: data
+    };
+}
+
+export { setLicensee, getProductList, setProductList, toggleLoader, setSystemList, getSystemList }

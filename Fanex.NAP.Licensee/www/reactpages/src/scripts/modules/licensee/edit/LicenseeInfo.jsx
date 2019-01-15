@@ -11,7 +11,7 @@ export class LicenseeInfo extends Component {
 
         return (
         <div className='row'>
-            <div className='col-xs-12 col-md-6'>
+            <div className='col-xs-12'>
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Licensee Name</label>
                     <div className='col-sx-12 col-sm-9'>

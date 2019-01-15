@@ -318,6 +318,7 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\css\image\sprites.png" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
@@ -404,6 +405,12 @@
     <Content Include="www\reactpages\src\scripts\modules\function\item\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\function\item\index.jsx" />
     <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js.map" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Panel.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Title.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Content.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\SystemGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ActivateNewSystemForm.jsx" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
@@ -876,6 +883,7 @@
     <Content Include="www\reactpages\dist\js\dev\function\function.js.map" />
     <Content Include="www\reactpages\dist\css\dev\function\function.css.map" />
     <Content Include="www\reactpages\dist\css\dev\function\function.js.map" />
+    <Content Include="www\reactpages\src\styles\components\collapsible-panel.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

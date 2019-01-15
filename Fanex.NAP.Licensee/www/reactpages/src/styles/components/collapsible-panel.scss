@@ -1,0 +1,40 @@
+﻿@import "../../components/_variable";
+
+.collapsible-panel-title {
+    background-color: #EDECEA;
+    border: 1px solid #CECCCD;
+    color: $blue;
+    padding: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &::before {
+        content: '';
+        background: url(../../image/sprites.png) -101px -52px no-repeat;
+        height: 15px;
+        width: 15px;
+        display: inline-block;
+        float: left;
+        margin: 2px 5px 0 0;
+    }
+}
+
+.collapsible-panel-content {
+    padding: 0 10px;
+    display: block;
+}
+
+.collapsible-panel {
+    &.collapsed {
+        .collapsible-panel-content {
+            display: none;
+        }
+
+        .collapsible-panel-title {
+            &::before {
+                background: url(../../image/sprites.png) -76px -53px no-repeat;
+            }
+        }
+    }
+}
