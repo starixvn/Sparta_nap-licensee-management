@@ -109,7 +109,7 @@ export class ActivateNewSystemForm extends Component {
             });
     }
 
-    _buildContent(selectedSystem, systemList, date, redmineId) {
+    _buildContent(selectedSystem, systemList, redmineId) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
@@ -141,7 +141,7 @@ export class ActivateNewSystemForm extends Component {
 
     render()
     {
-        const { date, isShowConfirmBox, selectedSystem, systemList, isShow, redmineId } = this.state;
+        const { isShowConfirmBox, selectedSystem, systemList, isShow, redmineId } = this.state;
 
         return (
         <div> 
@@ -153,7 +153,7 @@ export class ActivateNewSystemForm extends Component {
                         onClose={this.onConfirm} /> 
             <Popup isShow={isShow}
                 title='New System'
-                content={this._buildContent(selectedSystem, systemList, date, redmineId)}
+                content={this._buildContent(selectedSystem, systemList, redmineId)}
                 style={{height: '325px', width: '600px'}}
                 onClose={() => this.onClose()} />
             </div>

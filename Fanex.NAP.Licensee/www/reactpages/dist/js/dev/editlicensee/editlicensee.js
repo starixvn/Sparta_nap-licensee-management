@@ -10774,7 +10774,7 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
         }
     }, {
         key: '_buildContent',
-        value: function _buildContent(selectedSystem, systemList, date, redmineId) {
+        value: function _buildContent(selectedSystem, systemList, redmineId) {
             var _this3 = this;
 
             return _react2.default.createElement(
@@ -10835,7 +10835,6 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
             var _this4 = this;
 
             var _state2 = this.state,
-                date = _state2.date,
                 isShowConfirmBox = _state2.isShowConfirmBox,
                 selectedSystem = _state2.selectedSystem,
                 systemList = _state2.systemList,
@@ -10858,7 +10857,7 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShow,
                     title: 'New System',
-                    content: this._buildContent(selectedSystem, systemList, date, redmineId),
+                    content: this._buildContent(selectedSystem, systemList, redmineId),
                     style: { height: '325px', width: '600px' },
                     onClose: function onClose() {
                         return _this4.onClose();
