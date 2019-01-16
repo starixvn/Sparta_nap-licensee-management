@@ -24,13 +24,7 @@ BEGIN
 
 	IF ISNULL(@SystemName,'') <> ''
 	BEGIN
-		BEGIN TRY
-			EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemisActive = @SystemName
-		END TRY
-		BEGIN CATCH
-			SELECT ERROR_MESSAGE()
-			RETURN
-		END CATCH
+		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemisActive = @SystemName
 	END
 	
 	SELECT NULL
