@@ -138,7 +138,7 @@
                 newValue.Append($" Name=\"{criteria.Name}\"");
             }
 
-            if (oldData.Description != criteria.Description)
+            if (oldData.Description != (criteria.Description ?? string.Empty))
             {
                 oldValue.Append($" Description=\"{oldData.Description}\"");
                 newValue.Append($" Description=\"{criteria.Description}\"");
@@ -150,7 +150,7 @@
                 newValue.Append($" ParentId=\"{criteria.ParentId}\"");
             }
 
-            if (oldData.Url != criteria.Url)
+            if (oldData.Url != (criteria.Url ?? string.Empty))
             {
                 oldValue.Append($" Url=\"{oldData.Url}\"");
                 newValue.Append($" Url=\"{criteria.Url}\"");
