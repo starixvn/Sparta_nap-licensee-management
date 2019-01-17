@@ -8648,6 +8648,10 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
+            if (defaultState.licensee === null) {
+                return false;
+            }
+
             return _react2.default.createElement(
                 _reactRedux.Provider,
                 { store: store },

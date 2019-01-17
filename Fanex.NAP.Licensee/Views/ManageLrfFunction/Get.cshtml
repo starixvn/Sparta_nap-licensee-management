@@ -8,7 +8,7 @@
 @{
     var serializer = new JavaScriptSerializer();
     var parentFunctionList = Model.ParentFunctionList.Select(x => new { label = x.Name, value = x.Id }).ToList();
-    var selectedParent = parentFunctionList.FirstOrDefault(x => x.value == Model.Function.ParentId);
+    var selectedParent = Model.Function == null ? null : parentFunctionList.FirstOrDefault(x => x.value == Model.Function.ParentId);
 }
 
 @section Headline {

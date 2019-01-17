@@ -3,23 +3,23 @@ import Loader from '../../../components/Loader';
 import Site from '../../../lib/site';
 import Select from 'react-select';
 
-const defaultState = Object.assign({}, window.initialState);
-
 export default class Form extends Component {
     constructor(props) {
         super(props);
 
-        this.originalAgentId = defaultState.operator.AgentId;
-        this.originalOperatorId = defaultState.operator.OperatorId;
+        const { operator, selectedSiteName } = props;
+
+        this.originalAgentId = operator.AgentId;
+        this.originalOperatorId = operator.OperatorId;
 
         this.state = {
             isLoading: false,
-            operator: Object.assign({}, defaultState.operator),
+            operator: Object.assign({}, operator),
             error: this.originalAgentId ? '' : 'Agent ID is empty',
             agentId: this.originalAgentId === 0 ? '' : this.originalAgentId,
             selectedSiteName: this.originalAgentId === 0 
-                ? defaultState.selectedSiteName 
-                : { label: defaultState.operator.SiteName, value: defaultState.operator.SiteName }
+                ? selectedSiteName 
+                : { label: operator.SiteName, value: operator.SiteName }
         };
     }
 
@@ -99,14 +99,14 @@ export default class Form extends Component {
                     this.setState({
                         error: response.data.Error,
                         isLoading: false,
-                        operator: Object.assign({}, defaultState.operator)
+                        operator: Object.assign({}, this.props.operator)
                     });
                 }
             }).catch(err => {
                 this.setState({
                     error: "Error",
                     isLoading: false,
-                    operator: Object.assign({}, defaultState.operator)
+                    operator: Object.assign({}, this.props.operator)
                 });
             });
     }
@@ -131,6 +131,7 @@ export default class Form extends Component {
 
     render() {
         const { isLoading, operator, error, agentId, selectedSiteName } = this.state;
+        const { siteNameList } = this.props;
         const isNew = this.originalAgentId === 0;
         const hasEmptyOperator = this.originalOperatorId === null || this.originalOperatorId === '';
 
@@ -173,7 +174,7 @@ export default class Form extends Component {
                                 ? (<Select instanceId="ddlSiteName"
                                     className={`full-width ${selectedSiteName ? '' : 'has-error'}`}
                                     value={selectedSiteName}
-                                    options={defaultState.siteNameList}
+                                    options={siteNameList}
                                     onChange={(item) => this.setState({ selectedSiteName: item })} />)
                                 : operator.SiteName
                             }

@@ -5,25 +5,25 @@ import Select from 'react-select';
 import Utility from '../../../lib/utility';
 import NumericInput from '../../../components/NumericInput';
 
-const defaultState = Object.assign({}, window.initialState);
-
 export default class Form extends Component {
     constructor(props) {
         super(props);
 
+        const func = props.function;
+
         this.state = {
-            SelectedParent: defaultState.selectedParent ? Object.assign({}, defaultState.selectedParent) : null,
-            FunctionId: defaultState.function.FunctionId,
-            Name: defaultState.function.Name || '',           
-            FunctionKey: defaultState.function.FunctionKey || '',
-            Description: defaultState.function.Description || '',
-            Url: defaultState.function.Url || '',
-            IsMenu: defaultState.function.IsMenu,
-            IsActive: defaultState.function.IsActive,
-            DisplayOrder: defaultState.function.DisplayOrder,
-            IsNew: defaultState.function.IsNew,
-            IsFunction: defaultState.function.IsFunction,
-            Environment: defaultState.function.Environment || '',
+            SelectedParent: props.selectedParent ? Object.assign({}, props.selectedParent) : null,
+            FunctionId: func.FunctionId,
+            Name: func.Name || '',           
+            FunctionKey: func.FunctionKey || '',
+            Description: func.Description || '',
+            Url: func.Url || '',
+            IsMenu: func.IsMenu,
+            IsActive: func.IsActive,
+            DisplayOrder: func.DisplayOrder,
+            IsNew: func.IsNew,
+            IsFunction: func.IsFunction,
+            Environment: func.Environment || '',
             RedmineId: '',
             IsLoading: false
         };
@@ -99,6 +99,7 @@ export default class Form extends Component {
     render() {
         const { SelectedParent, FunctionId, Name, FunctionKey, IsMenu, IsFunction, Description, 
             Url, IsNew, IsActive, DisplayOrder, Environment, RedmineId, IsLoading } = this.state;
+        const { parentFunctionList } = this.props;
 
         return (
             <div className='edit-form'>
@@ -189,7 +190,7 @@ export default class Form extends Component {
                                 <Select instanceId='ddlParent'
                                     className='full-width'
                                     value={SelectedParent}
-                                    options={defaultState.parentFunctionList}
+                                    options={parentFunctionList}
                                     onChange={(item) => this.setState({ SelectedParent: item })} />
                             </div>
                         </div>

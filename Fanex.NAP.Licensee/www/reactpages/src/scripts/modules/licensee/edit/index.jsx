@@ -14,6 +14,10 @@ export default class App extends React.Component {
     }
 
     render() {
+        if (defaultState.licensee === null) {
+            return false;
+        }
+
         return (
           <Provider store={store}>
             <AppContainer />

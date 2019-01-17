@@ -462,6 +462,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var defaultState = Object.assign({}, window.initialState);
+
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -474,7 +476,14 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_Form2.default, null);
+            if (defaultState.operator === null) {
+                return false;
+            }
+
+            return _react2.default.createElement(_Form2.default, {
+                operator: defaultState.operator,
+                siteNameList: defaultState.siteNameList,
+                selectedSiteName: defaultState.selectedSiteName });
         }
     }]);
 
@@ -524,8 +533,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, window.initialState);
-
 var Form = function (_Component) {
     _inherits(Form, _Component);
 
@@ -534,88 +541,21 @@ var Form = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
-        _this._handleSubmit = function (e) {
-            e.preventDefault();
+        _initialiseProps.call(_this);
 
-            var _this$state = _this.state,
-                operator = _this$state.operator,
-                error = _this$state.error,
-                agentId = _this$state.agentId,
-                selectedSiteName = _this$state.selectedSiteName;
+        var operator = props.operator,
+            selectedSiteName = props.selectedSiteName;
 
 
-            if (!error && selectedSiteName) {
-                var param = Object.assign({}, operator, { AgentId: agentId, SiteName: selectedSiteName.value });
-
-                _this._submit(param);
-            } else {
-                _this._alert('Invalid input!');
-            }
-        };
-
-        _this._handleOperatorIdChanged = function (e) {
-            var operator = Object.assign({}, _this.state.operator);
-            operator.OperatorId = e.target.value;
-
-            _this.setState({ operator: operator });
-        };
-
-        _this._validateAgent = function () {
-            var agentId = _this.state.agentId.trim();
-
-            if (!agentId) {
-                _this.setState({ error: 'Agent ID is empty' });
-                return;
-            }
-
-            _site2.default.fetchData({ agentId: agentId }, 'ManageOperator/Validate').then(function (response) {
-                if (response.data.IsValid) {
-                    _this.setState({
-                        operator: response.data.Agent,
-                        error: '',
-                        isLoading: false
-                    });
-                } else {
-                    _this.setState({
-                        error: response.data.Error,
-                        isLoading: false,
-                        operator: Object.assign({}, defaultState.operator)
-                    });
-                }
-            }).catch(function (err) {
-                _this.setState({
-                    error: "Error",
-                    isLoading: false,
-                    operator: Object.assign({}, defaultState.operator)
-                });
-            });
-        };
-
-        _this._handleKeyPress = function (e) {
-            var code = e.charCode;
-
-            if (code === 13) {
-                e.preventDefault();
-
-                _this._validateAgent();
-            } else {
-                if (code >= 48 && code <= 57) {
-                    return;
-                }
-
-                e.preventDefault();
-            }
-        };
-
-        _this.originalAgentId = defaultState.operator.AgentId;
-        _this.originalOperatorId = defaultState.operator.OperatorId;
+        _this.originalAgentId = operator.AgentId;
+        _this.originalOperatorId = operator.OperatorId;
 
         _this.state = {
             isLoading: false,
-            operator: Object.assign({}, defaultState.operator),
+            operator: Object.assign({}, operator),
             error: _this.originalAgentId ? '' : 'Agent ID is empty',
             agentId: _this.originalAgentId === 0 ? '' : _this.originalAgentId,
-            selectedSiteName: _this.originalAgentId === 0 ? defaultState.selectedSiteName : { label: defaultState.operator.SiteName, value: defaultState.operator.SiteName }
+            selectedSiteName: _this.originalAgentId === 0 ? selectedSiteName : { label: operator.SiteName, value: operator.SiteName }
         };
         return _this;
     }
@@ -666,6 +606,7 @@ var Form = function (_Component) {
                 error = _state.error,
                 agentId = _state.agentId,
                 selectedSiteName = _state.selectedSiteName;
+            var siteNameList = this.props.siteNameList;
 
             var isNew = this.originalAgentId === 0;
             var hasEmptyOperator = this.originalOperatorId === null || this.originalOperatorId === '';
@@ -746,7 +687,7 @@ var Form = function (_Component) {
                                 isNew ? _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSiteName',
                                     className: 'full-width ' + (selectedSiteName ? '' : 'has-error'),
                                     value: selectedSiteName,
-                                    options: defaultState.siteNameList,
+                                    options: siteNameList,
                                     onChange: function onChange(item) {
                                         return _this3.setState({ selectedSiteName: item });
                                     } }) : operator.SiteName
@@ -800,6 +741,83 @@ var Form = function (_Component) {
 
     return Form;
 }(_react.Component);
+
+var _initialiseProps = function _initialiseProps() {
+    var _this4 = this;
+
+    this._handleSubmit = function (e) {
+        e.preventDefault();
+
+        var _state2 = _this4.state,
+            operator = _state2.operator,
+            error = _state2.error,
+            agentId = _state2.agentId,
+            selectedSiteName = _state2.selectedSiteName;
+
+
+        if (!error && selectedSiteName) {
+            var param = Object.assign({}, operator, { AgentId: agentId, SiteName: selectedSiteName.value });
+
+            _this4._submit(param);
+        } else {
+            _this4._alert('Invalid input!');
+        }
+    };
+
+    this._handleOperatorIdChanged = function (e) {
+        var operator = Object.assign({}, _this4.state.operator);
+        operator.OperatorId = e.target.value;
+
+        _this4.setState({ operator: operator });
+    };
+
+    this._validateAgent = function () {
+        var agentId = _this4.state.agentId.trim();
+
+        if (!agentId) {
+            _this4.setState({ error: 'Agent ID is empty' });
+            return;
+        }
+
+        _site2.default.fetchData({ agentId: agentId }, 'ManageOperator/Validate').then(function (response) {
+            if (response.data.IsValid) {
+                _this4.setState({
+                    operator: response.data.Agent,
+                    error: '',
+                    isLoading: false
+                });
+            } else {
+                _this4.setState({
+                    error: response.data.Error,
+                    isLoading: false,
+                    operator: Object.assign({}, _this4.props.operator)
+                });
+            }
+        }).catch(function (err) {
+            _this4.setState({
+                error: "Error",
+                isLoading: false,
+                operator: Object.assign({}, _this4.props.operator)
+            });
+        });
+    };
+
+    this._handleKeyPress = function (e) {
+        var code = e.charCode;
+
+        if (code === 13) {
+            e.preventDefault();
+
+            _this4._validateAgent();
+        } else {
+            if (code >= 48 && code <= 57) {
+                return;
+            }
+
+            e.preventDefault();
+        }
+    };
+};
 
 exports.default = Form;
 

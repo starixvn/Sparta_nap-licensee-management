@@ -462,6 +462,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var defaultState = Object.assign({}, window.initialState);
+
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
@@ -474,7 +476,14 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_Form2.default, null);
+            if (defaultState.function === null) {
+                return false;
+            }
+
+            return _react2.default.createElement(_Form2.default, {
+                'function': defaultState.function,
+                parentFunctionList: defaultState.parentFunctionList,
+                selectedParent: defaultState.selectedParent });
         }
     }]);
 
@@ -534,8 +543,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, window.initialState);
-
 var Form = function (_Component) {
     _inherits(Form, _Component);
 
@@ -554,19 +561,21 @@ var Form = function (_Component) {
             }
         };
 
+        var func = props.function;
+
         _this.state = {
-            SelectedParent: defaultState.selectedParent ? Object.assign({}, defaultState.selectedParent) : null,
-            FunctionId: defaultState.function.FunctionId,
-            Name: defaultState.function.Name || '',
-            FunctionKey: defaultState.function.FunctionKey || '',
-            Description: defaultState.function.Description || '',
-            Url: defaultState.function.Url || '',
-            IsMenu: defaultState.function.IsMenu,
-            IsActive: defaultState.function.IsActive,
-            DisplayOrder: defaultState.function.DisplayOrder,
-            IsNew: defaultState.function.IsNew,
-            IsFunction: defaultState.function.IsFunction,
-            Environment: defaultState.function.Environment || '',
+            SelectedParent: props.selectedParent ? Object.assign({}, props.selectedParent) : null,
+            FunctionId: func.FunctionId,
+            Name: func.Name || '',
+            FunctionKey: func.FunctionKey || '',
+            Description: func.Description || '',
+            Url: func.Url || '',
+            IsMenu: func.IsMenu,
+            IsActive: func.IsActive,
+            DisplayOrder: func.DisplayOrder,
+            IsNew: func.IsNew,
+            IsFunction: func.IsFunction,
+            Environment: func.Environment || '',
             RedmineId: '',
             IsLoading: false
         };
@@ -645,6 +654,7 @@ var Form = function (_Component) {
                 Environment = _state.Environment,
                 RedmineId = _state.RedmineId,
                 IsLoading = _state.IsLoading;
+            var parentFunctionList = this.props.parentFunctionList;
 
 
             return _react2.default.createElement(
@@ -834,7 +844,7 @@ var Form = function (_Component) {
                                 _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlParent',
                                     className: 'full-width',
                                     value: SelectedParent,
-                                    options: defaultState.parentFunctionList,
+                                    options: parentFunctionList,
                                     onChange: function onChange(item) {
                                         return _this3.setState({ SelectedParent: item });
                                     } })

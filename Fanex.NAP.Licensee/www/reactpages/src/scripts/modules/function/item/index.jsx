@@ -2,14 +2,23 @@
 import ReactDOM from 'react-dom';
 import Form from './Form';
 
+const defaultState = Object.assign({}, window.initialState);
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
+        if (defaultState.function === null) {
+            return false;
+        }
+
         return (
-          <Form />
+          <Form 
+            function={defaultState.function} 
+            parentFunctionList={defaultState.parentFunctionList}
+            selectedParent={defaultState.selectedParent} />
         );
     }
 }

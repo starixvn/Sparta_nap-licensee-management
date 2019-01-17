@@ -73,8 +73,8 @@
             var viewModel = new LicenseeViewModel
             {
                 Licensee = licensee,
-                ProductList = GetLicenseeProductsWithPullService(licensee.LicenseeID),
-                SystemList  = _licenseeService.GetLicenseeSystemList(licensee.LicenseeID)
+                ProductList = licensee == null ? Enumerable.Empty<LicenseeProduct>() : GetLicenseeProductsWithPullService(licensee.LicenseeID),
+                SystemList  = licensee == null ? Enumerable.Empty<SystemItem>() : _licenseeService.GetLicenseeSystemList(licensee.LicenseeID)
             };
 
             return View(viewModel);

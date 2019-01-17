@@ -48,11 +48,11 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public ActionResult Get(int id = 0)
         {
-            var func = _service.GetFunction(id) ?? new LrfFunction();
+            var func = id == 0 ? new LrfFunction() : _service.GetFunction(id);
             var viewModel = new LrfFunctionViewModel
             {
                 Function = func,
-                ParentFunctionList = GetParentFunctionList(func)
+                ParentFunctionList = func == null ? new List<OptionItem>() : GetParentFunctionList(func)
             };
 
             return View(viewModel);

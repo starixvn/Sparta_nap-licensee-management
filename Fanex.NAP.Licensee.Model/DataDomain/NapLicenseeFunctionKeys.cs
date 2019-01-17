@@ -3,7 +3,7 @@
 // </summary>
 //
 // <history>
-//  <change date="2019-01-07 1:29:48 PM">Created and Implement</change>
+//  <change date="2019-01-17 8:59:52 AM">Created and Implement</change>
 // </history>
 namespace Fanex.NAP.Licensee.Model.DataDomain
 {
@@ -39,13 +39,13 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
 		public const string LicenseeSetting = "LicenseeSetting";
 
+		public const string ManageFunction = "ManageFunction";
+
 		public const string ManageGroup = "ManageGroup";
 
 		public const string ManageLicenseeVendor = "ManageLicenseeVendor";
 
 		public const string ManageLRFFunction = "ManageLRFFunction";
-
-		public const string Management = "Management";
 
 		public const string ManageMenu = "ManageMenu";
 
