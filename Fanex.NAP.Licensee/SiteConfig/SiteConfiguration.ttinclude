@@ -44,32 +44,6 @@
         //Web config value.
         public SiteEnvironment SiteEnvironment { get; set; }
 
-         public string LoggingServer
-        {
-            get
-            {
-                switch (SiteEnvironment)
-                {
-                    case SiteEnvironment.LOCAL:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.35.35.254\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
-                    case SiteEnvironment.UAT:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.40.40.73\\private$\\entlib\" defaultCategory=\"NAP-LM-UAT\" />";
-                    case SiteEnvironment.BACKUPMNL:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=TCP:10.2.98.3\\private$\\entlib\" defaultCategory=\"NAP-LM-UAT\" />";
-
-					case SiteEnvironment.PRO:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://10.40.40.127/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
-                     case SiteEnvironment.SIT:
-					   
-					return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=http://172.16.4.107:9099/msmq/Private$/entlib\" defaultCategory=\"NAP-LM\" />";
-
-				    case SiteEnvironment.SANDBOX:
-                        return "<Fanex.Logging msmqPath=\"FormatName:DIRECT=tcp:10.35.35.254\\private$\\entlib\" defaultCategory=\"NAP-LM-LOCAL\" />";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
 		public string SessionState
         {
             get

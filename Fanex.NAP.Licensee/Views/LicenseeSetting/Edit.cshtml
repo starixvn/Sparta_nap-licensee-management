@@ -2,7 +2,7 @@
 @using System.Web.Script.Serialization
 @model Fanex.NAP.Licensee.Model.ViewModel.LicenseeSetting.LicenseeViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Edit Licensee";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
     var serializer = new JavaScriptSerializer();
@@ -23,7 +23,8 @@
     <script>
         var initialState = {
             licensee: @Html.Raw(serializer.Serialize(Model.Licensee)),
-            productList: @Html.Raw(serializer.Serialize(Model.ProductList))
+            productList: @Html.Raw(serializer.Serialize(Model.ProductList)),
+            systemList: @Html.Raw(serializer.Serialize(Model.SystemList))
         }
     </script>
 

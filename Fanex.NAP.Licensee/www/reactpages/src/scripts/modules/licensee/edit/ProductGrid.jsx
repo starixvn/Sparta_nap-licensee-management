@@ -154,14 +154,9 @@ export class ProductGrid extends Component {
                     style={{height: '210px', width: '510px'}}
                     onConfirm={redmineConfirmPopup.onConfirm} />
                 <div className='row'>
-                    <div className='col-xs-12 col-md-6'>
+                    <div className='col-xs-12'>
                         <table className="table table-bordered table-hover">
                             <thead>
-                                <tr>
-                                    <th colSpan={licensee.IsActive ? '7' : '6'}>
-                                        Offered Products 
-                                    </th>
-                                </tr>
                                 <tr>
                                     <th>No</th>
                                     <th>Product</th>

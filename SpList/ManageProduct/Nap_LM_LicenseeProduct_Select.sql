@@ -6,7 +6,6 @@ CREATE PROCEDURE [dbo].[Nap_LM_LicenseeProduct_Select]
 	@PageIndex			INT			= 1,
 	@PageSize			INT			= 20,
 	@TotalItem			INT			= 0 OUTPUT
-
 AS
 /*
 	 Created: Amanda
@@ -16,6 +15,7 @@ AS
 	 
 	 Revisions:
 	  - 20181221@Amanda: Select licensee product [Redmine: #83584]
+	  - 20180111@Amanda: Add more filter when calling SP with all licensee [Redmine: #83584]
 	  
 	 Developer's note:
 	  - @LicenseeList = '' : get all
@@ -57,24 +57,42 @@ BEGIN
 		FROM dbo.Product3rd p WITH (NOLOCK)
 	END
 
-	SELECT @ProductList = STUFF((
-						SELECT ',[' + ProductCode + ']'
-						FROM #Product
-						FOR XML PATH('')), 1, 1, '')
-
 	IF ISNULL(@LicenseeList, '') <> ''
 	BEGIN
 		INSERT INTO #Licensee(Id, LicenseeName)
 		SELECT l.LicenseeID, l.LicenseeName
 		FROM CUSTDB.dbo.strSplit(@LicenseeList,',') s
 		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON s.val = l.LicenseeID
+		WHERE l.IsActive = 1
 	END
 	ELSE
 	BEGIN
-		INSERT INTO #Licensee(Id, LicenseeName)
-		SELECT LicenseeID, LicenseeName
-		FROM dbo.Licensees l WITH (NOLOCK)
+		IF ISNULL(@ProductList, '') = ''
+		BEGIN
+			INSERT INTO #Licensee(Id, LicenseeName)
+			SELECT l.LicenseeID, l.LicenseeName
+			FROM dbo.Licensees l WITH (NOLOCK)
+			WHERE l.IsActive = 1
+		END
+		ELSE
+		BEGIN
+			;WITH LicPro_CTE AS(
+				SELECT DISTINCT lp.LicenseeID
+				FROM dbo.LicenseeProduct3rd lp WITH (NOLOCK)
+				INNER JOIN #Product p ON lp.ProductID = p.Id
+			)		
+			INSERT INTO #Licensee(Id, LicenseeName)
+			SELECT l.LicenseeID, l.LicenseeName
+			FROM dbo.Licensees l WITH (NOLOCK)
+			INNER JOIN LicPro_CTE cte ON l.LicenseeID = cte.LicenseeID
+			WHERE l.IsActive = 1
+		END
 	END
+
+	SELECT @ProductList = STUFF((
+					SELECT ',[' + ProductCode + ']'
+					FROM #Product
+					FOR XML PATH('')), 1, 1, '')
 
 	SET @from = ((@PageIndex - 1) * @PageSize) + 1
 	SET @to = @from + @PageSize - 1

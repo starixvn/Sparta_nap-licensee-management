@@ -22,7 +22,10 @@ export default class Form extends Component {
             isLoading: false,
             isSuccess: false,
             date: Utility.getTodayString(),
-            redmineId: ''
+            redmineId: '',
+            description: '',
+            brandName: '',
+            companyName: ''
         };
     }
 
@@ -42,7 +45,10 @@ export default class Form extends Component {
             IsSpecial: this.state.isSpecial,
             IsAllowMemberComm: this.state.isAllowMemberComm,
             EffectiveDate: this.state.date,
-            RedmineId: this.state.redmineId
+            RedmineId: this.state.redmineId,
+            Description: this.state.description,
+            BrandName: this.state.brandName,
+            CompanyName: this.state.companyName
         };
     }
 
@@ -90,7 +96,8 @@ export default class Form extends Component {
     render() {
         const { licenseeName, superWildCard, selectedReseller,
             selectedProduct, selectedSystem, isSpecial, date,
-            isAllowMemberComm, isLoading, isSuccess, redmineId } = this.state;
+            isAllowMemberComm, isLoading, isSuccess, redmineId,
+            description, brandName, companyName } = this.state;
 
         return (
             <div className='add-form'>
@@ -101,15 +108,47 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Licensee Name</label>
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
+                                maxLength='50'
                                 value={licenseeName}
                                 className={`full-width ${licenseeName ? '' : 'has-error'}`}
                                 onChange={this._onChangeLicenseeName} />
                             </div>
                         </div>
                         <div className='form-group row'>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Description</label>
+                            <div className='col-sm-12 col-md-5'>
+                                <input type='text'
+                                maxLength='100'
+                                value={description}
+                                className='full-width'
+                                onChange={(e) => this.setState({ description: e.target.value })} />
+                            </div>
+                        </div>
+                        <div className='form-group row'>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Brand Name</label>
+                            <div className='col-sm-12 col-md-5'>
+                                <input type='text'
+                                maxLength='100'
+                                value={brandName}
+                                className='full-width'
+                                onChange={(e) => this.setState({ brandName: e.target.value })} />
+                            </div>
+                        </div>
+                        <div className='form-group row'>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Company Name</label>
+                            <div className='col-sm-12 col-md-5'>
+                                <input type='text'
+                                maxLength='100'
+                                value={companyName}
+                                className='full-width'
+                                onChange={(e) => this.setState({ companyName: e.target.value })} />
+                            </div>
+                        </div>
+                        <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Super Wild Card</label>
                             <div className='col-sm-12 col-md-5'>
                                 <input type='text'
+                                maxLength='50'
                                 value={superWildCard}
                                 className={`full-width ${superWildCard ? '' : 'has-error'}`}
                                 onChange={(e) => this.setState({ superWildCard: e.target.value })} />
@@ -184,7 +223,7 @@ export default class Form extends Component {
                                 Submit
                             </button>
                             <a className={`btn btn-green ${isSuccess ? '' : 'hide'}`} href={window.rootUrl + 'LicenseeSetting/Edit?licenseeName=' + licenseeName}>
-                                View New Licensee
+                                View Detail
                             </a>
                         </div>
                     </div>

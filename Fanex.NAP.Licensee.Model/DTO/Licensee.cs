@@ -8,7 +8,7 @@
 
         public string LicenseeName { get; set; }
 
-        public string Desciption { get; set; }
+        public string Description { get; set; }
 
         public bool IsDeposit { get; set; }
 
@@ -29,5 +29,7 @@
         public bool EditBetSetting { get; set; }
 
         public string AffectedDateString => AffectedDate?.ToString("MM/dd/yyyy");
+
+        public string Reseller { get; set; }
     }
 }

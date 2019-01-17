@@ -1,4 +1,4 @@
-/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="vnteam" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-SiteConfig" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_SubsidiarySiteName_Select]
 AS
@@ -10,7 +10,7 @@ AS
 	 
 	 Revisions:
 	  - 20180924@Amanda: Select Lrf Site Name which enable subsidiary  [Redmine: #83584]
-	  - 20180103@Amanda: Add more condition  [Redmine: #83584]
+	  - 20190103@Amanda: Add more condition  [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;

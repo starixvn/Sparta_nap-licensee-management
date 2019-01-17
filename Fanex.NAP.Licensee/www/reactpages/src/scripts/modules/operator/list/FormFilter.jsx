@@ -106,12 +106,12 @@ export class FormFilter extends Component {
 
                 <div className="form-group">
                     <label>Operator ID</label>
-                    <input type="text" name="operatorId" onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
+                    <input type="text" name="operatorId" maxLength='50' onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
                 </div>
 
                 <div className="form-group">
                     <label>Agent ID</label>
-                    <input type="text" name="agentId" onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
+                    <input type="text" name="agentId" maxLength='10' onChange={this._handleInputChange} onKeyPress={this._handleKeyPress} />
                 </div>
 
                 <div className="form-group">

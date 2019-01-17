@@ -4,6 +4,7 @@ ALTER PROCEDURE [dbo].[Nap_LM_LicVendorInfo_Select]
 	@VendorId		VARCHAR(50) = NULL,
 	@SiteName		VARCHAR(50) = NULL,
 	@FunctionKey	VARCHAR(50) = NULL,
+	@Disable		BIT			= 0,
 	@PageIndex		INT			= 1,
 	@PageSize		INT			= 20,
 	@TotalItem		INT			= 0 OUTPUT
@@ -18,6 +19,7 @@ AS
 	  - 20180212@Walter: Select Vendor Info [Redmine: #83584]
 	  - 20181205@Amanda: Re-order returned column [Redmine: #83584]
 	  - 20181226@Amanda: Implement paging [Redmine: #83584]
+	  - 20190110@Amanda: Add more filter [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -31,6 +33,7 @@ BEGIN
 	FROM dbo.LicVendorProfile WITH(NOLOCK)
 	WHERE	(ISNULL(@VendorId,'') = '' OR VendorId = @VendorId) AND 
 			(ISNULL(@SiteName, '') = '' OR  SiteName LIKE '%' + @SiteName + '%') AND
+			[Disable] = @Disable AND
 			(ISNULL(@FunctionKey,'') = '' OR ISNULL(Exclusions,'') = '' OR Exclusions NOT LIKE '%' + @FunctionKey + '%')
 	
 	SET @from = ((@PageIndex - 1) * @PageSize) + 1
@@ -45,7 +48,7 @@ BEGIN
 		  ,AffiliateUrl
 		  ,IsTest
 		  ,SiteId
-		  ,Disable
+		  ,[Disable]
 		  ,Exclusions
 	FROM LicVendorProfile l WITH(NOLOCK)
 	INNER JOIN @VendorIdTbl v ON l.VendorID = v.Id

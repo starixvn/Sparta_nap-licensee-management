@@ -49,7 +49,6 @@ export class DataGrid extends Component {
                     <thead>
                         <tr>
                             <th>Licensee Name</th>
-                            <th>Description</th>
                             <th>Deposit</th>
                             <th>Affected Date</th>
                             <th>Active</th>
@@ -68,7 +67,6 @@ export class DataGrid extends Component {
                             return (
                                 <tr key={index}>
                                     <td>{item.LicenseeName}</td>
-                                    <td>{item.Description}</td>
                                     <td className="text-center"><span className={item.IsDeposit ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td className="text-right">{item.AffectedDateString}</td>
                                     <td className="text-center"><span className={item.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>

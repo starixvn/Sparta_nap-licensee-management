@@ -9,5 +9,7 @@
         public string SiteName { get; set; }
 
         public string FunctionKey { get; set; }
+
+        public bool Disable { get; set; }
     }
 }

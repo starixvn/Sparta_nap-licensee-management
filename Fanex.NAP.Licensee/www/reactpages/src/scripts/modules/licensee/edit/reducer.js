@@ -2,7 +2,7 @@
 import { isLoading } from '../../../reducers/loaderReducer';
 
 import createReducer from '../../../lib/createReducer';
-import { SET_LICENSEE, SET_PRODUCT_LIST } from './types';
+import { SET_LICENSEE, SET_PRODUCT_LIST, SET_SYSTEM_LIST } from './types';
 
 const licensee = createReducer({}, {
     [SET_LICENSEE](state, action) {
@@ -16,4 +16,10 @@ const productList = createReducer({}, {
     }
 });
 
-export default combineReducers({ licensee, productList, isLoading })
+const systemList = createReducer({}, {
+    [SET_SYSTEM_LIST](state, action) {
+        return action.data;
+    }
+});
+
+export default combineReducers({ licensee, productList, isLoading, systemList })

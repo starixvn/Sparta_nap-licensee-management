@@ -46,9 +46,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
@@ -128,11 +125,13 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\RemoveLicenseeProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\OfferProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeAgentCriteria.cs" />
+    <Compile Include="Criteria\LrfFunction\LrfFunctionCriteria.cs" />
     <Compile Include="Criteria\Operator\SearchOperatorCriteria.cs" />
     <Compile Include="Criteria\Operator\OperatorCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
@@ -158,6 +157,9 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\LrfFunctionHierarchy.cs" />
+    <Compile Include="DTO\LrfFunction.cs" />
+    <Compile Include="DTO\OptionItem.cs" />
     <Compile Include="DTO\SourceLicenseeSettingResult.cs" />
     <Compile Include="DTO\ImportOperatorResult.cs" />
     <Compile Include="DTO\ResultGridData.cs" />
@@ -198,6 +200,8 @@
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />
+    <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
+    <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -73,7 +73,8 @@
             var viewModel = new LicenseeViewModel
             {
                 Licensee = licensee,
-                ProductList = GetLicenseeProductsWithPullService(licensee.LicenseeID)
+                ProductList = licensee == null ? Enumerable.Empty<LicenseeProduct>() : GetLicenseeProductsWithPullService(licensee.LicenseeID),
+                SystemList  = licensee == null ? Enumerable.Empty<SystemItem>() : _licenseeService.GetLicenseeSystemList(licensee.LicenseeID)
             };
 
             return View(viewModel);
@@ -91,7 +92,7 @@
             }
 
             var result = _licenseeService.SetUpNewLicensee(criteria);
-            result.Error = result.IsSuccess 
+            result.Error = result.IsSuccess
                 ? null
                 : (string.IsNullOrEmpty(result.Error) ? "Can not create this licensee. Please try later!" : result.Error);
 
@@ -248,6 +249,51 @@
             var result = _licenseeService.EnablePullService(criteria, _pullServiceSetting[criteria.ProductCode]);
 
             return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetDeactiveSystemList(int licenseeId)
+        {
+            var allSystems = _licenseeService.GetSystemList();
+            var licenseeSystems = _licenseeService.GetLicenseeSystemList(licenseeId);
+            var result = allSystems.Where(x => !licenseeSystems.Any(y => y.Id == x.Id)).ToList();
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult ActivateSystem(ActivateSystemCriteria criteria)
+        {
+            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
+            {
+                return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.SystemName))
+            {
+                return Json(new { IsSuccess = false, Error = "System is empty!" });
+            }
+
+            if (criteria.RedmineId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+            }
+
+            var result = _licenseeService.ActivateSystem(criteria);
+
+            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
+        public JsonResult GetLicenseeSystemList(int licenseeId)
+        {
+            return Json(_licenseeService.GetLicenseeSystemList(licenseeId));
         }
 
         private IEnumerable<LicenseeProduct> GetLicenseeProductsWithPullService(int licenseeId)

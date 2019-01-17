@@ -13,7 +13,7 @@ AS
 	 
 	 Revisions:
 	  - 20181112@Amanda: Offer Product from Licensee [Redmine: #83584]
-	  - 20180102@Amanda: Modify to support offer multi products for multi licensees [Redmine: #83584]
+	  - 20190102@Amanda: Modify to support offer multi products for multi licensees [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;

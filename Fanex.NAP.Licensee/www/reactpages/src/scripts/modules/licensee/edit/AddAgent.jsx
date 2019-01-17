@@ -136,6 +136,7 @@ export class AddAgent extends Component {
                     <label className='col-form-label'>Super Wild Card</label>
                     <input className={`full-width ${superWildCard ? '' : 'has-error'}`}
                         type='text'
+                        maxLength='50'
                         value={superWildCard}
                         onChange={this._onTextChange} />
                     <i>(Manually changing <b>"Super Wild Card"</b> value will cause wrong setting for licensee agent. Please consider carefully)</i>

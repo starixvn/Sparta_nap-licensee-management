@@ -35,5 +35,9 @@
         IEnumerable<CurrencyItem> GetSuperCurrency(string superWildCard);
 
         IEnumerable<string> GetIntegrateSetting(int licenseeId);
+
+        IEnumerable<SystemItem> GetLicenseeSystemList(int licenseeId);
+
+        string ActivateSystem(ActivateSystemCriteria criteria);
     }
 }

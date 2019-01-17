@@ -57,6 +57,10 @@
       <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EasyNetQ, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyNetQ.2.3.3\lib\net451\EasyNetQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Enyim.Caching.dll</HintPath>
       <Private>True</Private>
@@ -77,8 +81,13 @@
       <HintPath>..\packages\Fanex.Data.DbSettingProviderExtension.1.0.0.1\lib\net40\Fanex.Data.DbSettingProviderExtension.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.0\lib\net461\Fanex.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.RabbitMQ.1.0.1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
@@ -93,6 +102,10 @@
       <HintPath>..\packages\MessagePack.1.7.3.4\lib\net45\MessagePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
       <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
@@ -123,6 +136,10 @@
     <Reference Include="ONEbook.UM, Version=2.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.9\lib\net40\ONEbook.UM.dll</HintPath>
     </Reference>
+    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -131,6 +148,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
@@ -288,6 +306,8 @@
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\dev\function\function.css" />
+    <Content Include="www\reactpages\dist\css\dev\function\function.js" />
     <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.css" />
     <Content Include="www\reactpages\dist\css\dev\licenseelist\licenseelist.js" />
     <Content Include="www\reactpages\dist\css\dev\operator\operator.css" />
@@ -298,10 +318,13 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\css\image\sprites.png" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\css\pro\function\function.css" />
+    <Content Include="www\reactpages\dist\css\pro\function\function.js" />
     <Content Include="www\reactpages\dist\css\pro\licenseelist\licenseelist.css" />
     <Content Include="www\reactpages\dist\css\pro\licenseelist\licenseelist.js" />
     <Content Include="www\reactpages\dist\css\pro\licensee\licensee.css" />
@@ -316,6 +339,8 @@
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js" />
+    <Content Include="www\reactpages\dist\js\dev\function\function.js" />
     <Content Include="www\reactpages\dist\js\dev\importoperator\importoperator.js" />
     <Content Include="www\reactpages\dist\js\dev\operatorlist\operatorlist.js" />
     <Content Include="www\reactpages\dist\js\dev\operator\operator.js" />
@@ -329,6 +354,8 @@
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\functionList\functionList.js" />
+    <Content Include="www\reactpages\dist\js\pro\function\function.js" />
     <Content Include="www\reactpages\dist\js\pro\importoperator\importoperator.js" />
     <Content Include="www\reactpages\dist\js\pro\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\js\pro\operatorlist\operatorlist.js" />
@@ -346,6 +373,9 @@
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
     <Content Include="www\reactpages\src\scripts\lib\utility.js" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\types.js" />
@@ -371,6 +401,16 @@
     <Content Include="www\reactpages\src\scripts\modules\product\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\product\Button.jsx" />
     <Content Include="www\reactpages\src\scripts\components\NumericInput.jsx" />
+    <Content Include="Views\ManageLrfFunction\Get.cshtml" />
+    <Content Include="www\reactpages\src\scripts\modules\function\item\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\function\item\index.jsx" />
+    <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js.map" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Panel.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Title.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Content.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\SystemGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ActivateNewSystemForm.jsx" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
@@ -835,6 +875,15 @@
     <Content Include="www\reactpages\src\scripts\modules\sourcelicensee\list\Action.jsx" />
     <Content Include="www\reactpages\src\scripts\components\RedmineConfirmForm.jsx" />
     <Content Include="www\reactpages\src\styles\modules\product\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\function\list\index.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\function\index.scss" />
+    <Content Include="www\reactpages\dist\js\dev\function\function.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\function\function.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\function\function.js.map" />
+    <Content Include="www\reactpages\src\styles\components\collapsible-panel.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
@@ -880,6 +929,7 @@
     <Content Include="Views\SourceLicenseeSetting\Index.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
     <Content Include="Views\ManageProduct\Index.cshtml" />
+    <Content Include="Views\ManageLrfFunction\Index.cshtml" />
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>

@@ -31,7 +31,6 @@
 <configuration>
     <configSections>
         <section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data" />
-        <section name="Fanex.Logging" type="Fanex.Logging.Configuration.LoggingSettings, Fanex.Logging" />
         <section name="NapSettings" type="Fanex.NAP.Core.Configuration.NapSettings, Fanex.NAP.Core" />
 		<section name="ONEbook.UM" type="ONEbook.UM.Configurations.UMClientConfiguration, ONEbook.UM" />
     </configSections>
@@ -43,7 +42,6 @@
             <add name="XmlDbSettingProvider" type="Fanex.Data.Configuration.XmlDbSettingProvider, Fanex.Data" resourcePath="~/App_Data/" enableWatching="0" />
         </providers>
     </Fanex.Data.DbSettingProvider>
-     <#=site.LoggingServer#>
    <# switch(siteName)
 		{
 		 case "LOCAL":

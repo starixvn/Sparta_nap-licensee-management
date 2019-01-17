@@ -8,5 +8,7 @@
         public Licensee Licensee { get; set; }
 
         public IEnumerable<LicenseeProduct> ProductList { get; set; }
+
+        public IEnumerable<SystemItem> SystemList { get; set; }
     }
 }

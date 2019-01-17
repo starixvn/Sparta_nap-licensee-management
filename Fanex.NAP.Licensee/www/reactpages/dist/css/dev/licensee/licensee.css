@@ -439,8 +439,41 @@
 .green {
   color: #A1C46B; }
 
+.orange {
+  color: #fe8a38; }
+
 .right {
   float: right; }
+
+tr.disable {
+  color: #808080; }
+
+.collapsible-panel-title {
+  background-color: #EDECEA;
+  border: 1px solid #CECCCD;
+  color: #3C5EA5;
+  padding: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-transform: uppercase; }
+  .collapsible-panel-title::before {
+    content: '';
+    background: url(../../image/sprites.png) -101px -52px no-repeat;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    float: left;
+    margin: 2px 5px 0 0; }
+
+.collapsible-panel-content {
+  padding: 0 10px;
+  display: block; }
+
+.collapsible-panel.collapsed .collapsible-panel-content {
+  display: none; }
+
+.collapsible-panel.collapsed .collapsible-panel-title::before {
+  background: url(../../image/sprites.png) -76px -53px no-repeat; }
 
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }

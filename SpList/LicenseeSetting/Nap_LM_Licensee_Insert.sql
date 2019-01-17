@@ -9,6 +9,9 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Insert]
 	, @SystemisActive		VARCHAR(100) = ''
 	, @IsAllowMemberComm	BIT = 0
 	, @EffectiveDate		DATE = ''
+	, @Description			VARCHAR(100) = NULL
+	, @BrandName			VARCHAR(100) = ''
+	, @CompanyName			VARCHAR(100) = ''
 AS
 /*
 	 Created: Amanda
@@ -18,6 +21,7 @@ AS
 	 
 	 Revisions:
 	  - 20181112@Amanda: Set up new licensee [Redmine: #83584]
+	  - 20190114@Amanda: add more info for new licensee [redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -64,5 +68,8 @@ BEGIN
 		,@IsAllowMemberComm     = @IsAllowMemberComm
 		,@IsPullService			= 1
 		,@EffectiveDate			= @EffectiveDate
+		,@Description			= @Description
+		,@BrandName				= @BrandName
+		,@CompanyName			= @CompanyName
 END
 GO

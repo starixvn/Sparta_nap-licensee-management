@@ -15,8 +15,12 @@
         Licensee_AddPullService = 5529,
         Licensee_RemoveProduct = 5530,
         Licensee_Terminate = 5531,
+        Licensee_ActivateSystem = 5538,
 
         SourceLicensee_Insert = 5532,
-        SourceLicensee_Update = 5533
+        SourceLicensee_Update = 5533,
+
+        LrfFunction_Insert = 5536,
+        LrfFunction_Update = 5537
     }
 }
