@@ -1,6 +1,7 @@
 ﻿@import "../../components/react-select/react-select.main";
 @import "../../components/_variable";
 @import "../../components/common";
+@import "../../components/popup";
 
 .Select {
     display: inline-block;
@@ -34,8 +35,6 @@
 }
 
 .edit-form {
-    margin-top: 10px;
-
     input[type=text] {
         &.has-error {
             border: 1px solid $red;
@@ -55,5 +54,22 @@
         margin: 0 5px;
         line-height: 25px;
         vertical-align: baseline;
+    }
+}
+
+.licensee-form {
+    height: 100%;
+
+    .licensee-selection-container {
+        overflow: hidden;
+        height: calc(100% - 80px);
+        margin-top: 15px;
+    }
+
+    .licensee-selection {
+        overflow: auto;
+        height: calc(100% - 50px);
+        border: 1px solid #CECCCD;
+        padding: 5px;
     }
 }

@@ -2,19 +2,32 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
-import Site from '../../../lib/site'
+import Site from '../../../lib/site';
+import AssignFunctionForm from './AssignFunctionForm';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], totalItem: 0 };
+        this.state = { 
+            gridData: [],
+            totalItem: 0,
+            assignMenu: { isShow: false, functionId: 0 } 
+        };
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.params.TimeStamp !== this.props.params.TimeStamp) {
             this._getData();
         }
+    }
+
+    onAssignAction(id) {
+        this.setState({ assignMenu: {functionId: id, isShow: true} });
+    }
+
+    onCloseAssignMenu = () => {
+        this.setState({ assignMenu: {functionId: 0, isShow: false} });
     }
 
     _getData() {
@@ -53,9 +66,16 @@ export class DataGrid extends Component {
                 <td className='text-center'><span className={node.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                 <td className='text-center'>{node.Environment}</td>
                 <td className="text-center">
-                    <a href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>
+                    <a title={`Edit "${node.Name}"`} href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>
                         <i className="icon-edit"></i>
                     </a>
+                    {
+                        node.IsActive &&
+                        <i title={`Assign "${node.Name}" to licensee`} 
+                            className="icon-list"
+                            style={{marginLeft: '15px'}}
+                            onClick={() => this.onAssignAction(node.FunctionId)}></i>
+                    }
                 </td>
             </tr>
         );
@@ -73,10 +93,13 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const gridData = this.state.gridData;
+        const { gridData, assignMenu } = this.state;
 
         return (
             <div>
+                <AssignFunctionForm isShow={assignMenu.isShow}
+                    functionId={assignMenu.functionId}
+                    onClose={this.onCloseAssignMenu} />
                 <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className='table table-bordered table-hover'>
                     <thead>

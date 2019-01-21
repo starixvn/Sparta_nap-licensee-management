@@ -1,8 +1,8 @@
 ﻿.popup {
-    .popup-container, .popup-block-body{
+    .popup-container, .popup-block-body {
         display: none;
-    } 
-    
+    }
+
     &.show {
         .popup-block-body, .popup-container {
             display: block;
@@ -62,4 +62,9 @@
         }
     }
 
+    .no-scroll {
+        .popup-content {
+            overflow-y: hidden !important;
+        }
+    }
 }

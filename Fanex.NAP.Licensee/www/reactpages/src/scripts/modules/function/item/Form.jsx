@@ -102,7 +102,7 @@ export default class Form extends Component {
         const { parentFunctionList } = this.props;
 
         return (
-            <div className='edit-form'>
+            <div className='edit-form' style={{marginTop: '20px'}}>
                 <Loader isLoading={IsLoading} />
                 <div className='row'>
                     <div className='col-xs-12'>

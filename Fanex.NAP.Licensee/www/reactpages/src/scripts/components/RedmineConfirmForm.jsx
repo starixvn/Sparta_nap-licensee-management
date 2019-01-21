@@ -7,6 +7,7 @@ export default class RedmineConfirmForm extends Component {
         super(props);
 
         this.state = { redmineId: '' };
+        this.zIndex = props.zIndex ? props.zIndex : 60;
     };
 
     get isValid() {
@@ -63,6 +64,7 @@ export default class RedmineConfirmForm extends Component {
                 content={this._buildContent(msg, redmineId, onConfirm)}
                 className='no-scroll'
                 noShowCloseButton={true}
+                zIndex={this.zIndex}
                 style={style} />
         </div>
         );

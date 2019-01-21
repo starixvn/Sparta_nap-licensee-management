@@ -102,6 +102,14 @@
             return result;
         }
 
+        public IEnumerable<OptionItem> GetLicenseeFunctionList(int functionId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LrfFunction_GetLicensee"))
+            {
+                return db.Query<OptionItem>(new { FunctionId = functionId });
+            }
+        }
+
         private IList<LrfFunctionHierarchy> BuildFunctionHierarchy(IEnumerable<LrfFunctionHierarchy> functionList)
         {
             var hierarchy = functionList.Where(x => x.Root).ToList();

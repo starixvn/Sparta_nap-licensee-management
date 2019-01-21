@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
@@ -91,6 +92,11 @@
             return Json(data);
         }
 
+        public JsonResult GetLicenseeFunctionList(int functionId)
+        {
+            return Json(_service.GetLicenseeFunctionList(functionId));
+        }
+
         private IList<OptionItem> GetParentFunctionList(LrfFunction function)
         {
             var result = new List<OptionItem>();
@@ -109,22 +115,24 @@
 
         private string ValidateFunction(LrfFunctionCriteria criteria)
         {
+            var error = new StringBuilder();
+
             if (string.IsNullOrWhiteSpace(criteria.Name))
             {
-                return "Function Name is empty!";
+                error.Append("Function Name is empty!<br>");
             }
 
             if (string.IsNullOrWhiteSpace(criteria.FunctionKey))
             {
-                return "Function Key is empty!";
+                error.Append("Function Key is empty!<br>");
             }
 
             if (criteria.RedmineId <= 0)
             {
-                return "Redmine Id is invalid!";
+                error.Append("Redmine Id is invalid!<br>");
             }
 
-            return null;
+            return error.Length > 0 ? error.ToString() : null;
         }
     }
 }
