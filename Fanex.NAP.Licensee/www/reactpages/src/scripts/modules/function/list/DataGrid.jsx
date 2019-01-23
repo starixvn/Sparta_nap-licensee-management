@@ -12,7 +12,7 @@ export class DataGrid extends Component {
         this.state = { 
             gridData: [],
             totalItem: 0,
-            assignMenu: { isShow: false, functionId: 0 } 
+            assignMenu: { isShow: false, functionId: 0, functionName: '' } 
         };
     }
 
@@ -22,12 +22,12 @@ export class DataGrid extends Component {
         }
     }
 
-    onAssignAction(id) {
-        this.setState({ assignMenu: {functionId: id, isShow: true} });
+    onAssignAction(id, name) {
+        this.setState({ assignMenu: {functionId: id, isShow: true, functionName: name} });
     }
 
     onCloseAssignMenu = () => {
-        this.setState({ assignMenu: {functionId: 0, isShow: false} });
+        this.setState({ assignMenu: {functionId: 0, isShow: false, functionName: ''} });
     }
 
     _getData() {
@@ -74,7 +74,7 @@ export class DataGrid extends Component {
                         <i title={`Assign "${node.Name}" to licensee`} 
                             className="icon-list"
                             style={{marginLeft: '15px'}}
-                            onClick={() => this.onAssignAction(node.FunctionId)}></i>
+                            onClick={() => this.onAssignAction(node.FunctionId, node.Name)}></i>
                     }
                 </td>
             </tr>
@@ -99,6 +99,7 @@ export class DataGrid extends Component {
             <div>
                 <AssignFunctionForm isShow={assignMenu.isShow}
                     functionId={assignMenu.functionId}
+                    functionName={assignMenu.functionName}
                     onClose={this.onCloseAssignMenu} />
                 <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className='table table-bordered table-hover'>

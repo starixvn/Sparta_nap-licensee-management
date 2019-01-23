@@ -4,12 +4,16 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
 import Pager from '../../../components/Pager';
+import LicenseeForm from './LicenseeForm';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], totalItem: 0 };
+        this.state = { 
+            gridData: [], 
+            totalItem: 0,
+            assignMenu: { isShow: false, userId: 0, userName: '' } };
     }
 
     componentDidUpdate(prevProps) {
@@ -26,6 +30,14 @@ export class DataGrid extends Component {
         });
     }
 
+    onAssignAction(id, name) {
+        this.setState({ assignMenu: {userId: id, isShow: true, userName: name} });
+    }
+
+    onCloseAssignForm = () => {
+        this.setState({ assignMenu: {userId: 0, isShow: false, userName: ''} });
+    }
+
     onPaging = (index, size) => {
         let params = Object.assign({}, this.props.params, { PageIndex: index, PageSize: size, TimeStamp: new Date().getTime() });
 
@@ -39,11 +51,15 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { gridData } = this.state;
+        const { gridData, assignMenu } = this.state;
         const { PageIndex, PageSize } = this.props.params;
 
         return (
             <div>
+                <LicenseeForm isShow={assignMenu.isShow}
+                    userId={assignMenu.userId}
+                    userName={assignMenu.userName}
+                    onClose={this.onCloseAssignForm} />
                 <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
                     <thead>
@@ -56,7 +72,8 @@ export class DataGrid extends Component {
                             <th>Status</th>
                             <th>Internal</th>
                             <th>Created Date</th>
-                            <th>Licensee</th>
+                            <th>Licensee Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -64,7 +81,7 @@ export class DataGrid extends Component {
                     {
                         gridData.map((item, index) => {
                             return (
-                                <tr key={index}>
+                                <tr key={item.UserId}>
                                     <td>{item.UserName}</td>
                                     <td>{item.FirstName}</td>
                                     <td>{item.LastName}</td>
@@ -74,6 +91,14 @@ export class DataGrid extends Component {
                                     <td className="text-center"><span className={item.IsInternal ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td className="text-right">{item.CreateDateString}</td>
                                     <td>{item.LicenseeName}</td>
+                                    <td className="text-center">
+                                    {
+                                        item.IsActive &&
+                                        <i title={`Assign "${item.UserName}" to licensee`} 
+                                            className="icon-list"
+                                            onClick={() => this.onAssignAction(item.UserId, item.UserName)}></i>
+                                    }
+                                    </td>
                                 </tr>
                             )
                         })

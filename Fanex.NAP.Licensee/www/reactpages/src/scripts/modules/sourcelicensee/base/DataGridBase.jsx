@@ -67,14 +67,15 @@ export class DataGridBase extends Component {
     }
 
     _buildBody(checkedList, gridData, body, key) {
-        return gridData.map((item, index) => {
-            const checked = checkedList.indexOf(item[key]) > -1;
+        return gridData.map(item => {
+            const key = item[key];
+            const checked = checkedList.indexOf(key) > -1;
             const active = item.IsActive;
 
             return (
-            <tr key={index} className={active ? '' : 'disable'}>
-                <td className="text-center">{ active && <input type='checkbox' value={item[key]} checked={checked} onChange={this.onItemChecked} /> }</td>
-                {body(item, index)}
+            <tr key={key} className={active ? '' : 'disable'}>
+                <td className="text-center">{ active && <input type='checkbox' value={key} checked={checked} onChange={this.onItemChecked} /> }</td>
+                {body(item, key)}
             </tr>
            );
         })

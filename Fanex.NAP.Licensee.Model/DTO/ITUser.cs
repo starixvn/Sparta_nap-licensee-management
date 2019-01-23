@@ -27,5 +27,7 @@
         public string LicenseeName { get; set; }
 
         public bool IsInternal { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

@@ -24,15 +24,15 @@ export class AppContainer extends Component {
             ];
     }
 
-    _buildBody = (item, index) => {
+    _buildBody = (item, key) => {
         return [
-                <td key={`${index}-1`}>{item.SiteName}</td>,
-                <td key={`${index}-2`}>{item.SourceId}</td>,
-                <td key={`${index}-3`}>{item.CurrencyName}</td>,
-                <td key={`${index}-4`}>{item.Roleid}</td>,
-                <td key={`${index}-5`}>{item.SourceSiteName}</td>,
-                <td key={`${index}-6`}>{item.EffectiveDateString}</td>,
-                <td key={`${index}-7`}>{item.EndDateString}</td>
+                <td key={`${key}-1`}>{item.SiteName}</td>,
+                <td key={`${key}-2`}>{item.SourceId}</td>,
+                <td key={`${key}-3`}>{item.CurrencyName}</td>,
+                <td key={`${key}-4`}>{item.Roleid}</td>,
+                <td key={`${key}-5`}>{item.SourceSiteName}</td>,
+                <td key={`${key}-6`}>{item.EffectiveDateString}</td>,
+                <td key={`${key}-7`}>{item.EndDateString}</td>
         ];
     }
 

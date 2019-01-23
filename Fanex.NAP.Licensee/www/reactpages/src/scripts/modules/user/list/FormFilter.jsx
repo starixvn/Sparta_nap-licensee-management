@@ -1,14 +1,13 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Select from 'react-select';
 import { setParams } from './action';
 
 export class FormFilter extends Component {
     constructor(props) {
         super(props);
 
-        this.param = {
+        this.params = {
             userName: '',
             isClosed: ''
         }
@@ -44,8 +43,8 @@ export class FormFilter extends Component {
 
     _submit() {
         const params = {
-            UserName: this.param.userName,
-            IsClosed: this.param.isClosed,
+            UserName: this.params.userName,
+            IsClosed: this.params.isClosed,
             PageIndex: 1,
             PageSize: this.props.params.PageSize || 20,
             TimeStamp: new Date().getTime()

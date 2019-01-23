@@ -237,7 +237,6 @@ export class AssignFunctionForm extends Component {
                 </div>
             </div>
         );
-
     }
 
     _buildContent() {
@@ -363,7 +362,7 @@ export class AssignFunctionForm extends Component {
 
     render() {
         const { isShowConfirmBox, isShowOptionBox } =  this.state;
-        const { isShow, onClose } =  this.props;
+        const { isShow, onClose, functionName } =  this.props;
 
         return (
             <div>
@@ -376,9 +375,9 @@ export class AssignFunctionForm extends Component {
                     this._buildOptionPopup(isShowOptionBox)
                 }
                 <Popup isShow={isShow}
-                    title='Assign Function'
+                    title={`Assign Function "${functionName}"`}
                     content={this._buildContent()}
-                    style={{height: '70%', width: '350px'}}
+                    style={{height: '70%', width: '445px'}}
                     className='no-scroll'
                     onClose={() => this.onClose(onClose)} />
             </div>

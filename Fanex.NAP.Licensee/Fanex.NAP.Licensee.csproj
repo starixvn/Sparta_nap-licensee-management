@@ -904,6 +904,8 @@
     <Content Include="www\reactpages\src\scripts\modules\user\list\FormFilter.jsx" />
     <Content Include="www\reactpages\src\styles\modules\user\index.scss" />
     <Content Include="www\reactpages\src\scripts\modules\user\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\LicenseeForm.jsx" />
+    <Content Include="www\reactpages\src\styles\components\form.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

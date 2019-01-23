@@ -34,5 +34,12 @@
         {
             return Json(_service.GetUserList(criteria));
         }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeUserList(int userId)
+        {
+            return Json(_service.GetLicenseeUserList(userId));
+        }
     }
 }

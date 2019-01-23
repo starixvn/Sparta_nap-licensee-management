@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System.Collections.Generic;
     using Core;
     using Model.Criteria.ITUser;
     using Model.DTO;
@@ -27,6 +28,14 @@
             result.TotalItem = criteria.TotalItem;
 
             return result;
+        }
+
+        public IEnumerable<OptionItem> GetLicenseeUserList(int userId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_GetLicensee"))
+            {
+                return db.Query<OptionItem>(new { UserId = userId });
+            }
         }
     }
 }

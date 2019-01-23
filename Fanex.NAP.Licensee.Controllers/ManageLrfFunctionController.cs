@@ -92,6 +92,8 @@
             return Json(data);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetLicenseeFunctionList(int functionId)
         {
             return Json(_service.GetLicenseeFunctionList(functionId));

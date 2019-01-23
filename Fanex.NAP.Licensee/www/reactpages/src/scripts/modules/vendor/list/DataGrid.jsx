@@ -69,9 +69,9 @@ export class DataGrid extends Component {
 
                 <tbody>
                     {
-                        gridData.map((item, index) => {
+                        gridData.map(item => {
                             return (
-                                <tr key={index}>
+                                <tr key={item.VendorId}>
                                     <td>{item.VendorId}</td>
                                     <td>{item.SiteName}</td>
                                     <td className="text-center">{LicenseeType[item.LicenseeType] || item.LicenseeType}</td>
