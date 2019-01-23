@@ -436,6 +436,9 @@
 .popup .confirm-popup .btn {
   float: right !important; }
 
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
+
 .green {
   color: #A1C46B; }
 
@@ -477,9 +480,6 @@ tr.disable {
 
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
-
-.no-scroll .popup-content {
-  overflow-y: hidden !important; }
 
 .add-form, .edit-form {
   margin-top: 10px; }

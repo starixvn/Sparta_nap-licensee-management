@@ -464,6 +464,9 @@
 .popup .confirm-popup .btn {
   float: right !important; }
 
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
+
 .green {
   color: #A1C46B; }
 

@@ -476,6 +476,9 @@ tr.disable {
 .popup .confirm-popup .btn {
   float: right !important; }
 
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
+
 .Select {
   display: inline-block;
   width: 150px; }

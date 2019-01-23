@@ -436,6 +436,9 @@
 .popup .confirm-popup .btn {
   float: right !important; }
 
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
+
 .pager {
   margin-top: -20px;
   border: 1px solid #ddd;
