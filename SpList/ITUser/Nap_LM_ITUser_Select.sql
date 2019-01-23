@@ -52,7 +52,8 @@ BEGIN
 			Creator,
 			CreateDate,
 			LicenseeName,
-			isInternal
+			isInternal,
+			CASE WHEN [Status] = 'Open' THEN 1 ELSE 0 END AS IsActive
 	FROM User_CTE
 	WHERE RowId BETWEEN @from AND @to
 	
