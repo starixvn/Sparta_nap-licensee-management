@@ -320,6 +320,8 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\css\dev\user\user.css" />
+    <Content Include="www\reactpages\dist\css\dev\user\user.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
@@ -335,6 +337,8 @@
     <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\pro\product\product.css" />
     <Content Include="www\reactpages\dist\css\pro\product\product.js" />
+    <Content Include="www\reactpages\dist\css\pro\user\user.css" />
+    <Content Include="www\reactpages\dist\css\pro\user\user.js" />
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
@@ -350,6 +354,7 @@
     <Content Include="www\reactpages\dist\js\dev\sourceLicenseeList\sourceLicenseeList.js" />
     <Content Include="www\reactpages\dist\js\dev\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\js\dev\userList\userList.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
@@ -365,6 +370,7 @@
     <Content Include="www\reactpages\dist\js\pro\sourceLicenseeList\sourceLicenseeList.js" />
     <Content Include="www\reactpages\dist\js\pro\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\product\product.js" />
+    <Content Include="www\reactpages\dist\js\pro\userList\userList.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
@@ -414,7 +420,14 @@
     <Content Include="www\reactpages\src\scripts\components\collapsible-panel\Content.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\SystemGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ActivateNewSystemForm.jsx" />
+    <Content Include="Views\ITUserManagement\Index.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\userList\userList.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\user\user.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -886,6 +899,11 @@
     <Content Include="www\reactpages\dist\css\dev\function\function.css.map" />
     <Content Include="www\reactpages\dist\css\dev\function\function.js.map" />
     <Content Include="www\reactpages\src\styles\components\collapsible-panel.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\user\index.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\user\list\DataGrid.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

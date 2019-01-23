@@ -137,6 +137,7 @@
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />
     <Compile Include="Core\IObjectDbGenerator.cs" />
+    <Compile Include="IITUserManagementService.cs" />
     <Compile Include="ILicenseeSettingService.cs" />
     <Compile Include="ILogWriterService.cs" />
     <Compile Include="IManageLrfFunctionService.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ISettingConfigurationService.cs" />
     <Compile Include="ILicenseeVendorService.cs" />
     <Compile Include="IManageProductService.cs" />
+    <Compile Include="ITUserManagementService.cs" />
     <Compile Include="ManageProductService.cs" />
     <Compile Include="LicenseeSettingService.cs" />
     <Compile Include="ManageLrfFunctionService.cs" />

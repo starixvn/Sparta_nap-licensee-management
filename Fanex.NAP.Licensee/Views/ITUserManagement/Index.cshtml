@@ -1,0 +1,20 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@{
+    ViewBag.Title = "IT User Management";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+<ul class="breadcrumb title">
+    <li>IT User Management</li>
+    <li class="current">IT Users</li>
+</ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/user/user.css")
+}
+@section FooterJs{
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/userList/userList.js")
+}
+
+<div id="app-container"></div>

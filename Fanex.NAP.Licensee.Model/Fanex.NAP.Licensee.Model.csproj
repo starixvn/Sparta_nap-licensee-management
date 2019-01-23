@@ -125,6 +125,7 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\ITUser\SearchUserCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\RemoveLicenseeProductCriteria.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\ITUser.cs" />
     <Compile Include="DTO\LrfFunctionHierarchy.cs" />
     <Compile Include="DTO\LrfFunction.cs" />
     <Compile Include="DTO\OptionItem.cs" />
