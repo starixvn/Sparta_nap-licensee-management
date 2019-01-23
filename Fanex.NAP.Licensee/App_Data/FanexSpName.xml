@@ -113,5 +113,6 @@
     <Setting Key="Nap_LM_LrfFunction_GetLicensee" SpName="Nap_LM_LrfFunction_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
       <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
     </Setting>
+    <Setting Key="Nap_LM_LrfFunction_AssignToLicensee" SpName="Nap_LM_LrfFunction_AssignToLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

@@ -131,6 +131,7 @@
     <Compile Include="Criteria\LicenseeSetting\LicenseeProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\OfferProductCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\LicenseeAgentCriteria.cs" />
+    <Compile Include="Criteria\LrfFunction\AssignLrfFunctionCriteria.cs" />
     <Compile Include="Criteria\LrfFunction\LicenseeLrfFunctionCriteria.cs" />
     <Compile Include="Criteria\LrfFunction\LrfFunctionCriteria.cs" />
     <Compile Include="Criteria\Operator\SearchOperatorCriteria.cs" />

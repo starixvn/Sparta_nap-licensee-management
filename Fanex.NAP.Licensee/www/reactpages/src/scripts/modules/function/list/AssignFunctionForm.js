@@ -81,10 +81,12 @@ export class AssignFunctionForm extends Component {
         const { isAssigned } = this.state;
 
         if ((item === null && isAssigned) || (item !== null && item.Checked)) {
-            this._getUnassignedCheckedItems(item, e.target.checked);
+            const newUnassignedItems = this._getUnassignedCheckedItems(item, e.target.checked);
+            this.setState({ unassignedItems: newUnassignedItems });
         }
         else {
-            this._getAssignedCheckedItems(item, e.target.checked);
+            const newAssignedItems = this._getAssignedCheckedItems(item, e.target.checked);
+            this.setState({ assignedItems: newAssignedItems });
         }
 
     }
@@ -122,64 +124,42 @@ export class AssignFunctionForm extends Component {
 
     _getAssignedCheckedItems(item, checked) {
         const { assignedItems, licenseeList, searchText } = this.state;
-        let newCheckedItems = [];
 
-        if (checked) {
-            if (item === null) {
-                if (searchText === '') {
-                    newCheckedItems = licenseeList.filter(x => !x.Checked);
-                }
-                else {
-                    const checkedList = licenseeList.filter(x => !x.Checked && x.Name.indexOf(searchText) > -1);
-                    const removedDuplicatedList = assignedItems.filter(x => x.Name.indexOf(searchText) === -1);
-                    newCheckedItems = checkedList.concat(removedDuplicatedList);
-                }
-            }
-            else {
-                newCheckedItems = [...assignedItems, item];
-            }
-        }
-        else {
-            if (item === null) {
-                newCheckedItems = assignedItems.filter(x => x.Name.indexOf(searchText) === -1);
-            }
-            else {
-                newCheckedItems = assignedItems.filter(x => x !== item);
-            }
+        if (!checked) {
+            return item === null ? assignedItems.filter(x => x.Name.indexOf(searchText) === -1) : assignedItems.filter(x => x !== item);
         }
 
-        this.setState({ assignedItems: newCheckedItems });
+        if (item !== null) {
+            return [...assignedItems, item];
+        }
+
+        if (searchText === '') {
+            return licenseeList.filter(x => !x.Checked);
+        }
+
+        const checkedList = licenseeList.filter(x => !x.Checked && x.Name.indexOf(searchText) > -1);
+        const removedDuplicatedList = assignedItems.filter(x => x.Name.indexOf(searchText) === -1);
+        return checkedList.concat(removedDuplicatedList);
     }
 
     _getUnassignedCheckedItems(item, checked) {
         const { unassignedItems, licenseeList, searchText } = this.state;
-        let newUncheckedItems = [];
 
         if (checked) {
             if (item === null) {
-                if (searchText === '') {
-                    newUncheckedItems = [];
-                }
-                else {
-                    newUncheckedItems = unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
-                }
+                return searchText === '' ? [] : unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
             }
-            else {
-                newUncheckedItems = unassignedItems.filter(x => x !== item);
-            }
-        }
-        else {
-            if (item === null) {
-                const uncheckedList = licenseeList.filter(x => x.Checked && x.Name.indexOf(searchText) > -1);
-                const removedDuplicatedList = unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
-                newUncheckedItems = uncheckedList.concat(removedDuplicatedList);
-            }
-            else {
-                newUncheckedItems = [...unassignedItems, item];
-            }
+
+            return unassignedItems.filter(x => x !== item);
         }
 
-        this.setState({ unassignedItems: newUncheckedItems });
+        if (item !== null) {
+            return [...unassignedItems, item];           
+        }
+        
+        const uncheckedList = licenseeList.filter(x => x.Checked && x.Name.indexOf(searchText) > -1);
+        const removedDuplicatedList = unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
+        return uncheckedList.concat(removedDuplicatedList);
     }
 
     _showOptionBox(isShow) {
@@ -192,7 +172,7 @@ export class AssignFunctionForm extends Component {
 
     _submit(redmineId) {
         this.props.toggleLoader(true);
-        const url = 'LicenseeSetting/OfferProduct';
+        const url = 'ManageLrfFunction/AssignFunction';
         const params = this._getParams(redmineId);
 
         Site.fetchData(params, url)
@@ -371,10 +351,10 @@ export class AssignFunctionForm extends Component {
         return (
             <div>
                 {
-                    totalaAssignedItems ? '' : <p>- Assign this function to {totalaAssignedItems} more licensee(s).({this.assignFunctionOption[assignOption].label})</p>
+                    totalaAssignedItems ? <p>- <b>Assign</b> this function to <b>{totalaAssignedItems}</b> more licensee(s).({this.assignFunctionOption[assignOption].label})</p> : ''
                 }
                 {
-                    totalUnassignedItems ? '' : <p>- Remove this function from {totalUnassignedItems} licensee(s).({this.removeFunctionOption[assignOption].label})</p>
+                    totalUnassignedItems ? <p>- <b>Remove</b> this function from <b>{totalUnassignedItems}</b> licensee(s).({this.removeFunctionOption[assignOption].label})</p> : ''
                 }
                 <p>Do you want to perform this action?</p>
             </div>

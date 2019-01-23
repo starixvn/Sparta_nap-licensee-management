@@ -21,6 +21,7 @@
         SourceLicensee_Update = 5533,
 
         LrfFunction_Insert = 5536,
-        LrfFunction_Update = 5537
+        LrfFunction_Update = 5537,
+        LrfFunction_AssignToLicensee = 5539
     }
 }

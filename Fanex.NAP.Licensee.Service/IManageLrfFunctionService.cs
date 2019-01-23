@@ -19,5 +19,7 @@
         ResultData<LrfFunction> Update(LrfFunctionCriteria criteria);
 
         IEnumerable<OptionItem> GetLicenseeFunctionList(int functionId);
+
+        IEnumerable<ResultInfo> Assign(AssignLrfFunctionCriteria criteria);
     }
 }

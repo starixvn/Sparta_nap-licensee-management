@@ -110,6 +110,23 @@
             }
         }
 
+        public IEnumerable<ResultInfo> Assign(AssignLrfFunctionCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_LrfFunction_AssignToLicensee"))
+            {
+                result = db.Query<ResultInfo>(criteria.SpParam);
+            }
+
+            if (!result.Any(x => !x.IsOk))
+            {
+                WriteAssignFunctionActionLog(criteria, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+            }
+
+            return result;
+        }
+
         private IList<LrfFunctionHierarchy> BuildFunctionHierarchy(IEnumerable<LrfFunctionHierarchy> functionList)
         {
             var hierarchy = functionList.Where(x => x.Root).ToList();
@@ -233,6 +250,17 @@
                         + "</Function>";
 
             WriteLog(ActionLogType.LrfFunction_Insert, "Nap_LM_LrfFunction_Insert", doing, criteria.RedmineId);
+        }
+
+        private void WriteAssignFunctionActionLog(AssignLrfFunctionCriteria criteria, string result = null)
+        {
+            var doing = $"<Function FunctionId=\"{criteria.FunctionId}\">"
+                        + $"<AssignedLicensees AssignOption=\"{criteria.AssignOption}\">{criteria.AssignedLicensees}</AssignedLicensees>"
+                        + $"<UnassignedLicensees RemoveOption=\"{criteria.RemoveOption}\">{criteria.UnassignedLicensees}</UnassignedLicensees>"
+                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + "</Function>";
+
+            WriteLog(ActionLogType.LrfFunction_AssignToLicensee, "Nap_LM_LrfFunction_AssignToLicensee", doing, criteria.RedmineId);
         }
 
         private void WriteLog(ActionLogType action, string sp, string function, int redmineId)

@@ -97,6 +97,32 @@
             return Json(_service.GetLicenseeFunctionList(functionId));
         }
 
+        public JsonResult AssignFunction(AssignLrfFunctionCriteria criteria)
+        {
+            var errorBuilder = new StringBuilder();
+            if (criteria.FunctionId <= 0)
+            {
+                errorBuilder.Append("Function is invalid!<br>");
+            }
+
+            errorBuilder.Append(
+                CheckEmptyParameter(
+                    "Licensee",
+                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.AssignedLicensees : criteria.UnassignedLicensees,
+                    "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+            }
+
+            var result = _service.Assign(criteria);
+            var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
+
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
+        }
+
         private IList<OptionItem> GetParentFunctionList(LrfFunction function)
         {
             var result = new List<OptionItem>();
@@ -117,20 +143,9 @@
         {
             var error = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(criteria.Name))
-            {
-                error.Append("Function Name is empty!<br>");
-            }
-
-            if (string.IsNullOrWhiteSpace(criteria.FunctionKey))
-            {
-                error.Append("Function Key is empty!<br>");
-            }
-
-            if (criteria.RedmineId <= 0)
-            {
-                error.Append("Redmine Id is invalid!<br>");
-            }
+            error.Append(CheckEmptyParameter("Function Name", criteria.Name, "<br>"));
+            error.Append(CheckEmptyParameter("Function Key", criteria.FunctionKey, "<br>"));
+            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
             return error.Length > 0 ? error.ToString() : null;
         }
