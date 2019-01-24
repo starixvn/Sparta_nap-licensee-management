@@ -1,7 +1,7 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setParams } from './action';
+import { toggleLoader, setParams } from '../common/action';
 import Site from '../../../lib/site';
 import Pager from '../../../components/Pager';
 import LicenseeForm from './LicenseeForm';
@@ -70,7 +70,6 @@ export class DataGrid extends Component {
                             <th>Role</th>
                             <th>Email</th>
                             <th>Status</th>
-                            <th>Internal</th>
                             <th>Created Date</th>
                             <th>Licensee Name</th>
                             <th>Action</th>
@@ -88,14 +87,20 @@ export class DataGrid extends Component {
                                     <td className="text-center">{item.UserRole}</td>
                                     <td>{item.Email}</td>
                                     <td className="text-center">{item.Status}</td>
-                                    <td className="text-center"><span className={item.IsInternal ? 'glyphicon glyphicon-ok green' : ''}></span></td>
                                     <td className="text-right">{item.CreateDateString}</td>
                                     <td>{item.LicenseeName}</td>
                                     <td className="text-center">
                                     {
                                         item.IsActive &&
-                                        <i title={`Assign "${item.UserName}" to licensee`} 
+                                        <a title={`Edit function for "${item.UserName}"`} href={window.rootUrl + `ITUserManagement/EditFunction?UserName=${item.UserName}`}>
+                                            <i className="icon-edit"></i>
+                                        </a>
+                                    }
+                                    {
+                                        item.IsActive &&
+                                        <i title={`Edit licensee for "${item.UserName}"`} 
                                             className="icon-list"
+                                            style={{marginLeft: '15px'}}
                                             onClick={() => this.onAssignAction(item.UserId, item.UserName)}></i>
                                     }
                                     </td>

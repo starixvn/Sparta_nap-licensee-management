@@ -88,7 +88,6 @@ export class AssignFunctionForm extends Component {
             const newAssignedItems = this._getAssignedCheckedItems(item, e.target.checked);
             this.setState({ assignedItems: newAssignedItems });
         }
-
     }
 
     onKeyPress = (e) => {
@@ -195,7 +194,7 @@ export class AssignFunctionForm extends Component {
         const { assignedItems, unassignedItems } = this.state;
 
         return {
-            FunctionId: this.props.function.FunctionId,
+            FunctionId: this.props.functionId,
             AssignedLicensees: assignedItems.map(x => x.LicenseeName).join(','),
             UnassignedLicensees: unassignedItems.map(x => x.LicenseeName).join(','),
             RedmineId: redmineId
@@ -339,10 +338,11 @@ export class AssignFunctionForm extends Component {
         const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
         const totalaAssignedItems = assignedItems.length;
         const totalUnassignedItems = unassignedItems.length;
+        const height = (totalaAssignedItems && totalUnassignedItems) ? '255px' : '230px';
 
         return <RedmineConfirmForm isShow={isShow}
                 msg={this._getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
-                style={{height: '255px', width: '510px'}}
+                style={{height: height, width: '510px'}}
                 onConfirm={this.onConfirm} />
     }
 

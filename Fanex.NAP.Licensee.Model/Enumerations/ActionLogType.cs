@@ -22,6 +22,9 @@
 
         LrfFunction_Insert = 5536,
         LrfFunction_Update = 5537,
-        LrfFunction_AssignToLicensee = 5539
+        LrfFunction_AssignToLicensee = 5539,
+
+        ITUser_Insert = 5539,
+        ITUser_AssignToLicensee = 5540
     }
 }

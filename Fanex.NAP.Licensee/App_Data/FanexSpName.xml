@@ -121,5 +121,6 @@
     <Setting Key="Nap_LM_ITUser_GetLicensee" SpName="Nap_LM_ITUser_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
       <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
     </Setting>
+    <Setting Key="Nap_LM_ITUser_AssignToLicensee" SpName="Nap_LM_ITUser_AssignToLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

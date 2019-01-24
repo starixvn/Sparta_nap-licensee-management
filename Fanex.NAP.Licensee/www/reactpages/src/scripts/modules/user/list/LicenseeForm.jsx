@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader } from './action';
+import { toggleLoader } from '../common/action';
 import Popup from '../../../components/Popup';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
@@ -12,13 +12,27 @@ export class LicenseeForm extends Component {
         super(props);
 
         this.state = {
+            isShowConfirmBox: false,
+            isShowOptionBox: false,
             licenseeList: [],
             licensee: '',
             searchText: '',
             assignedItems: [],
             unassignedItems: [],
-            isAssigned: true
+            isAssigned: true,
+            assignOption: '0',
+            removeOption: '0'
         };
+
+        this.assignUserOption = [
+            { value: '0', label: 'Only add licensee'},
+            { value: '1', label: 'Assign all currencies and functions(excluding "Account Management" and "Notification")' },
+            { value: '2', label: 'Assign all currencies and functions(including "Account Management" and "Notification")' }
+        ];
+        this.removeUserOption = [
+           { value: '0', label: 'Only remove licensee' },
+           { value: '1', label: 'Remove all currencies and functions'}
+        ];
     }
 
     componentDidUpdate(prevProps) {
@@ -38,7 +52,27 @@ export class LicenseeForm extends Component {
             const newAssignedItems = this._getAssignedCheckedItems(item, e.target.checked);
             this.setState({ assignedItems: newAssignedItems });
         }
+    }
 
+    onCloseOptionBox = () => {
+        this._showOptionBox(false);
+        this._showConfirmBox(true);
+    }
+
+    onSubmit = () => {
+        this._showOptionBox(true);
+    }
+
+    onConfirm = (redmineId) => {
+        this._showConfirmBox(false);
+
+        if (redmineId) {
+            this._submit(redmineId);
+        }
+    }
+
+    onCheckedOption(name, e) {
+        this.setState({ [name]: e.target.value });
     }
 
     onKeyPress = (e) => {
@@ -50,16 +84,60 @@ export class LicenseeForm extends Component {
     }
 
     onClose(callback) {
-        this.setState({ 
+        this.setState({
+            isShowConfirmBox: false,
+            isShowOptionBox: false,
             licenseeList: [],
             licensee: '',
             searchText: '',
             assignedItems: [],
             unassignedItems: [],
-            isAssigned: true
+            isAssigned: true,
+            assignOption: '0',
+            removeOption: '0'
         });
 
         callback && callback();
+    }
+
+    _showOptionBox(isShow) {
+        this.setState({ isShowOptionBox: isShow});
+    }
+
+    _showConfirmBox(isShow) {
+        this.setState({ isShowConfirmBox: isShow });
+    }
+
+    _getParams(redmineId)
+    {
+        const { assignedItems, unassignedItems, pageAccess } = this.state;
+
+        return {
+            UserId: this.props.userId,
+            AssignedLicensees: assignedItems.map(x => x.LicenseeName).join(','),
+            UnassignedLicensees: unassignedItems.map(x => x.LicenseeName).join(','),
+            RedmineId: redmineId
+        };
+    }
+
+    _submit(redmineId) {
+        this.props.toggleLoader(true);
+        const url = 'ITUserManagement/AssignUser';
+        const params = this._getParams(redmineId);
+
+        Site.fetchData(params, url)
+            .then(response => {
+                if (response.data.Error) {
+                    Utility.showMessage(response.data.Error);
+                }
+                else {
+                    Utility.showMessage('Success!');
+                }
+                this._getLicenseeList(params.UserId);
+            }).catch(err => {
+                Utility.showMessage('Error!');
+                this.props.toggleLoader(false);
+        });
     }
 
     _getLicenseeList(userId) {
@@ -82,7 +160,7 @@ export class LicenseeForm extends Component {
             }).catch(err => {
                 Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
-            });
+        });
     }
 
     _getAssignedCheckedItems(item, checked) {
@@ -196,11 +274,108 @@ export class LicenseeForm extends Component {
         );
     }
 
+    _buildOption(optionName, message, options, checkedValue) {
+        return (
+            <div key={optionName} className='form-group'>
+                {message}
+                {
+                    options.map(x => {
+                        const key = optionName + x.value;
+                        return (
+                            <div key={key}>
+                                <input id={key} type='radio' value={x.value} name={optionName} checked={checkedValue === x.value} onChange={(e) => this.onCheckedOption(optionName, e)} />
+                                <label htmlFor={key} className='optional-label'>{x.label}</label>
+                            </div>
+                        );
+                    })
+                }
+            </div>);
+    }
+
+    _buildOptionContent(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption) {
+        let content = [];
+
+        if (totalaAssignedItems) {
+            const msg = `${totalaAssignedItems} more licensee(s) will be added. Do you want to assgin these(this) licensee's currencies and functions to user?`
+            content.push(this._buildOption('assignOption', msg, this.assignUserOption, assignOption));
+        }
+
+        if (totalUnassignedItems) {
+            const msg = `${totalUnassignedItems} licensee(s) will be removed. Do you want to remove all these(this) licensee's currencies and functions from user?`
+            content.push(this._buildOption('removeOption', msg, this.removeUserOption, removeOption));
+        }
+
+        return (
+            content.length > 0 &&
+            <div className='edit-form'>
+                { content }
+                <div className='form-group right'>
+                    <button className='btn btn-primary' onClick={this.onCloseOptionBox}>
+                        Submit
+                    </button>
+                    <button className='btn btn-red' onClick={() => this._showOptionBox(false)}>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    _buildOptionPopup(isShow) {
+        const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
+        const totalaAssignedItems = assignedItems.length;
+        const totalUnassignedItems = unassignedItems.length;
+        const height = (totalaAssignedItems && totalUnassignedItems) ? '340px' : (totalaAssignedItems > 0 ? '240px' : '215px');
+
+        return <Popup isShow={isShow}
+            title='Confirmation'
+            content={this._buildOptionContent(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
+            className='no-scroll'
+            style={{ height: height, width: '520px' }}
+            zIndex={52}
+            onClose={() => this._showOptionBox(false)} />
+    }
+
+    _buildConfirmationPopup(isShow) {
+        const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
+        const totalaAssignedItems = assignedItems.length;
+        const totalUnassignedItems = unassignedItems.length;
+        const height = (totalaAssignedItems && totalUnassignedItems) ? '275px' : (totalaAssignedItems > 0 ? '20px' : '230px');
+
+        return <RedmineConfirmForm isShow={isShow}
+                msg={this._getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
+                style={{height: height, width: '510px'}}
+                onConfirm={this.onConfirm} />
+    }
+
+    _getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption) {
+        return (
+            <div>
+                {
+                    totalaAssignedItems ? <p>- <b>Add</b> <b>{totalaAssignedItems}</b> more licensee(s) for user.({this.assignUserOption[assignOption].label})</p> : ''
+                }
+                {
+                    totalUnassignedItems ? <p>- <b>Remove</b> <b>{totalUnassignedItems}</b> licensee(s) from user.({this.removeUserOption[assignOption].label})</p> : ''
+                }
+                <p>Do you want to perform this action?</p>
+            </div>
+        );
+    }
+
     render() {
+        const { isShowConfirmBox, isShowOptionBox } =  this.state;
         const { isShow, onClose, userName } =  this.props;
 
         return (
             <div>
+                {
+                     isShowConfirmBox &&
+                     this._buildConfirmationPopup(isShowConfirmBox)
+                }
+                {
+                    isShowOptionBox &&
+                    this._buildOptionPopup(isShowOptionBox)
+                }
                 <Popup isShow={isShow}
                     title={`Edit Licensee of "${userName}"`}
                     content={this._buildContent()}

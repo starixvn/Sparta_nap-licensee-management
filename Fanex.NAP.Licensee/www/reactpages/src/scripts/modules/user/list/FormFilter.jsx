@@ -1,7 +1,7 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setParams } from './action';
+import { setParams } from '../common/action';
 
 export class FormFilter extends Component {
     constructor(props) {

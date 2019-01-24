@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setParams } from './action';
+import Select from 'react-select';
 
 const defaultState = Object.assign({}, window.initialState);
 export class FormFilter extends Component {
