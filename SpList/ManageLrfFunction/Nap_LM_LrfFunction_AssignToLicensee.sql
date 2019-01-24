@@ -110,18 +110,21 @@ BEGIN
 				INNER JOIN dbo.Users u WITH (NOLOCK) ON u.UserID = lu.UserID
 				WHERE lu.isActive = 1 
 					AND u.Username IN ( 'administration', 'admin')
+					AND u.[Status] = 'Open'
 					AND NOT EXISTS (
 						SELECT 1 
 						FROM dbo.LicenseeUserFunctions luf WITH (NOLOCK) 
 						WHERE luf.LicenseeId = l.Id AND luf.UserId = lu.UserID AND luf.FunctionId = @FunctionID)
 			END
-			ELSE
+			ELSE IF (@AssignOption = 2) -- Add for all licensee users
 			BEGIN
 				INSERT INTO dbo.LicenseeUserFunctions (FunctionId, LicenseeId, UserId)
 				SELECT @FunctionId, l.Id, lu.UserID
 				FROM #AssignedLicensee l
 				INNER JOIN dbo.LicenseeUser lu WITH (NOLOCK) ON l.Id = lu.LicenseeID
+				INNER JOIN dbo.Users u WITH (NOLOCK) ON u.UserID = lu.UserID
 				WHERE lu.isActive = 1 
+					AND u.[Status] = 'Open'
 					AND NOT EXISTS (
 						SELECT 1 
 						FROM dbo.LicenseeUserFunctions luf WITH (NOLOCK) 
@@ -172,7 +175,7 @@ BEGIN
 			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedLicensee WHERE Id IS NOT NULL AND IsActive = 1 AND IsAssigned IS NULL)
 			BEGIN
 				INSERT INTO @Result([Message], IsOk, Id)
-				SELECT '- This function is not in licensees function list.(' + STUFF((
+				SELECT '- This function is not in licensee function list.(' + STUFF((
 								SELECT ', ' + Name
 								FROM #AssignedLicensee
 								WHERE Id IS NOT NULL AND IsActive = 1 AND IsAssigned IS NULL

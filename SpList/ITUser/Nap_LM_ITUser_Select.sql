@@ -41,6 +41,7 @@ BEGIN
 		FROM dbo.Users WITH (NOLOCK)
 		WHERE (@tmpUserName = '' OR Username LIKE @tmpUserName)
 			AND ((@IsClosed = 0 AND [Status] = 'Open') OR (@IsClosed = 1 AND [Status] <> 'Open'))
+			AND isInternal = 0
 	)
 	SELECT	UserID,
 			Username,
@@ -61,5 +62,6 @@ BEGIN
 	FROM dbo.Users WITH (NOLOCK)
 	WHERE (@tmpUserName = '' OR Username LIKE @tmpUserName)
 		AND ((@IsClosed = 0 AND [Status] = 'Open') OR (@IsClosed = 1 AND [Status] <> 'Open'))
+		AND isInternal = 0
 END
 GO
