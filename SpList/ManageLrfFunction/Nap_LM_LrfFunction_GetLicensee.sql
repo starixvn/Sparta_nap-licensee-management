@@ -22,7 +22,7 @@ BEGIN
 		)
 	SELECT l.LicenseeName AS Name, CASE WHEN cte.LicenseeId IS NULL THEN 0 ELSE 1 END AS IsAssigned
 	FROM dbo.Licensees l WITH (NOLOCK)
-	LEFT JOIN Licensee_CTE cte WITH (NOLOCK) ON cte.LicenseeId = l.LicenseeID
+	LEFT JOIN Licensee_CTE cte ON cte.LicenseeId = l.LicenseeID
 	WHERE l.IsActive = 1
 	ORDER BY l.LicenseeName
 END
