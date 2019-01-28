@@ -306,6 +306,8 @@
     <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\css\dev\function\function.css" />
@@ -325,6 +327,8 @@
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
+    <Content Include="www\reactpages\dist\css\pro\editUser\editUser.css" />
+    <Content Include="www\reactpages\dist\css\pro\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\pro\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\css\pro\function\function.css" />
@@ -344,6 +348,7 @@
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
+    <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\js\dev\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\js\dev\functionList\functionList.js" />
     <Content Include="www\reactpages\dist\js\dev\function\function.js" />
@@ -360,6 +365,7 @@
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
+    <Content Include="www\reactpages\dist\js\pro\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\js\pro\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\js\pro\functionList\functionList.js" />
     <Content Include="www\reactpages\dist\js\pro\function\function.js" />
@@ -425,6 +431,9 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.css.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
     <Content Include="Views\ITUserManagement\EditFunction.cshtml" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\common\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\common\reducer.js" />
