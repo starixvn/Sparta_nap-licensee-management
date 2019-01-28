@@ -436,10 +436,17 @@ tr.disable {
       color: #fff;
       text-transform: uppercase;
       display: inline-block;
-      margin: 0; }
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      padding-right: 15px; }
     .popup .popup-container .popup-title .popup-close {
       color: #fff;
-      float: right; }
+      float: right;
+      position: absolute;
+      right: 10px; }
   .popup .popup-container .popup-content {
     overflow-y: auto;
     height: calc(100% - 40px);
@@ -450,22 +457,6 @@ tr.disable {
 
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
-
-.Select {
-  display: inline-block;
-  width: 250px; }
-  .Select .Select-value {
-    line-height: 23px !important; }
-  .Select .Select-placeholder {
-    line-height: 27px !important; }
-  .Select .Select-input {
-    height: 23px; }
-    .Select .Select-input input {
-      padding: 0; }
-  .Select.has-error .Select-control {
-    border: 1px solid #a94442; }
-  .Select .Select-control {
-    height: 25px; }
 
 .edit-form input[type=text] {
   border: 1px solid #CECCCD;
@@ -483,16 +474,38 @@ tr.disable {
   line-height: 25px;
   vertical-align: baseline; }
 
+.Select {
+  display: inline-block;
+  width: 250px; }
+  .Select .Select-value {
+    line-height: 23px !important; }
+  .Select .Select-placeholder {
+    line-height: 27px !important; }
+  .Select .Select-input {
+    height: 23px; }
+    .Select .Select-input input {
+      padding: 0; }
+  .Select.has-error .Select-control {
+    border: 1px solid #a94442; }
+  .Select .Select-control {
+    height: 25px; }
+
 .licensee-form {
   height: 100%; }
   .licensee-form .licensee-selection-container {
     overflow: hidden;
-    height: calc(100% - 80px);
+    height: calc(100% - 85px);
     margin-top: 15px; }
   .licensee-form .licensee-selection {
     overflow: auto;
     height: calc(100% - 50px);
     border: 1px solid #CECCCD;
     padding: 5px; }
+
+.hierarchy-node {
+  display: inline-block;
+  width: 30px; }
+  .hierarchy-node::before {
+    content: "\2514\2500\2500"; }
 
 /*# sourceMappingURL=function.css.map*/
