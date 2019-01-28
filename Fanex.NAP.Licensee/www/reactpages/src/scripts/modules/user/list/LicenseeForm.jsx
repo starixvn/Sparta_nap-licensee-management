@@ -37,7 +37,7 @@ export class LicenseeForm extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props && this.props.isShow) {
-            this._getLicenseeList(this.props.userId);
+            this._getLicenseeList(this.props.userName);
         }
     }
 
@@ -133,18 +133,18 @@ export class LicenseeForm extends Component {
                 else {
                     Utility.showMessage('Success!');
                 }
-                this._getLicenseeList(params.UserId);
+                this._getLicenseeList(this.props.userName);
             }).catch(err => {
                 Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
         });
     }
 
-    _getLicenseeList(userId) {
+    _getLicenseeList(userName) {
         this.props.toggleLoader(true);
         const url = 'ITUserManagement/GetLicenseeUserList';
         const params = {
-            UserId: userId
+            UserName: userName
         };
 
         Site.fetchData(params, url)

@@ -55,15 +55,15 @@ export class DataGrid extends Component {
                 <td className='text-center'>{node.FunctionId}</td>
                 <td>
                     <span style={{display: 'inline-block', width: `${30*level}px`}}></span>
-                    { level > 0 && <span style={{display: 'inline-block', width: '30px'}} className='hierarchy-node'>&#9492;&#9472;&#9472;</span> }
-                    {node.Name} {node.IsNew ? <sup className='green'>NEW</sup> : ''} {node.Environment !== 'LIVE' ? <sup className='orange'>NON-LIVE</sup> : ''}
+                    { level > 0 && <span className='hierarchy-node'></span> }
+                    {node.Name} {node.IsNew && <sup className='green'>NEW</sup>} {node.Environment !== 'LIVE' && <sup className='orange'>NON-LIVE</sup>}
                 </td>
                 <td>{node.FunctionKey}</td>
                 <td>{node.Url}</td>
                 <td className='text-center'>{node.DisplayOrder}</td>
-                <td className='text-center'><span className={node.IsMenu ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                <td className='text-center'><span className={node.IsFunction ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                <td className='text-center'><span className={node.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                <td className='text-center'>{node.IsMenu && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                <td className='text-center'>{node.IsFunction && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                <td className='text-center'>{node.IsActive && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 <td className='text-center'>{node.Environment}</td>
                 <td className="text-center">
                     <a title={`Edit "${node.Name}"`} href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>

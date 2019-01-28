@@ -28,7 +28,7 @@ export class AppContainer extends Component {
                 <td key={`${key}-1`}>{item.SourceId}</td>,
                 <td key={`${key}-2`}>{item.CurrencyName}</td>,
                 <td key={`${key}-3`}>{item.Role}</td>,
-                <td key={`${key}-4`} className="text-center"><span className={!item.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>,
+                <td key={`${key}-4`} className="text-center">{!item.IsActive && <span className='glyphicon glyphicon-ok green'></span>}</td>,
                 <td key={`${key}-5`}>{item.EffectiveDateString}</td>,
                 <td key={`${key}-6`}>{item.EndDateString}</td>,
             ];

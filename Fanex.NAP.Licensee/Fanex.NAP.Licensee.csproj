@@ -424,10 +424,11 @@
     <Content Include="www\reactpages\dist\js\dev\userList\userList.js.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
+    <Content Include="Views\ITUserManagement\EditFunction.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\user\list\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\user\list\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\modules\user\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\common\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\common\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\common\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\constant.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\vendor\edit\actionTypes.js" />
@@ -906,6 +907,11 @@
     <Content Include="www\reactpages\src\scripts\modules\user\list\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\list\LicenseeForm.jsx" />
     <Content Include="www\reactpages\src\styles\components\form.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\styles\modules\user\edit.scss" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\DataGrid.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

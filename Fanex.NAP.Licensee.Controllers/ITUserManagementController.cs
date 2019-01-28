@@ -8,6 +8,7 @@
     using Core.Web.Attribute;
     using Model.Criteria.ITUser;
     using Model.DataDomain;
+    using Model.ViewModel.ITUser;
     using ONEbook.UM.Filters;
     using Service;
 
@@ -17,10 +18,12 @@
     public class ITUserManagementController : BaseController
     {
         private readonly IITUserManagementService _service;
+        private readonly IManageLrfFunctionService _functionService;
 
         public ITUserManagementController()
         {
             _service = new ITUserManagementService();
+            _functionService = new ManageLrfFunctionService();
         }
 
         [HttpGet]
@@ -34,7 +37,21 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public ActionResult EditFunction(string userName)
         {
-            return View();
+            var viewModel = new EditFunctionViewModel
+            {
+                UserName = userName,
+                FunctionList = _functionService.GetFunctionList(),
+                LicenseeList = _service.GetLicenseeUserList(userName, true)
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria)
+        {
+            return Json(_service.GetLicenseeUserFunction(criteria));
         }
 
         [HttpPost]
@@ -46,9 +63,9 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetLicenseeUserList(int userId)
+        public JsonResult GetLicenseeUserList(string userName)
         {
-            return Json(_service.GetLicenseeUserList(userId));
+            return Json(_service.GetLicenseeUserList(userName));
         }
 
         public JsonResult AssignFunction(AssignUserCriteria criteria)

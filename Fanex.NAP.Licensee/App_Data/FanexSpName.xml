@@ -114,13 +114,17 @@
       <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
     </Setting>
     <Setting Key="Nap_LM_LrfFunction_AssignToLicensee" SpName="Nap_LM_LrfFunction_AssignToLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LrfFunction_SelectAll" SpName="Nap_LM_LrfFunction_SelectAll" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.ITUserManagement">
     <Setting Key="Nap_LM_ITUser_Select" SpName="Nap_LM_ITUser_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_GetLicensee" SpName="Nap_LM_ITUser_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
-      <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
+      <Mapping DataField="isActive" ObjectProperty="Checked" />
     </Setting>
     <Setting Key="Nap_LM_ITUser_AssignToLicensee" SpName="Nap_LM_ITUser_AssignToLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_GetLicenseeFunction" SpName="Nap_LM_ITUser_GetLicenseeFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
+      <Mapping DataField="isActive" ObjectProperty="Checked" />
+    </Setting>
   </Function>
 </Functions>

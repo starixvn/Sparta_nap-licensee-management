@@ -1,0 +1,34 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.ViewModel.ITUser.EditFunctionViewModel
+@{
+    ViewBag.Title = "IT User Function";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var serializer = new JavaScriptSerializer();
+    var licenseeList = Model.LicenseeList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    var functionList = Model.FunctionList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>IT User Management</li>
+        <li class="current">Function of "@Model.UserName"</li>
+    </ul>
+    <a class="btn-back" href="@Url.Content("~/ITUserManagement/Index")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/editUser/editUser.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            userName: "@Model.UserName",
+            licenseeList: @Html.Raw(serializer.Serialize(licenseeList)),
+            functionList: @Html.Raw(serializer.Serialize(functionList))
+        }
+    </script>
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editUser/editUser.js")
+}
+
+<div id="app-container"></div>

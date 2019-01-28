@@ -33,11 +33,11 @@
             return result;
         }
 
-        public IEnumerable<OptionItem> GetLicenseeUserList(int userId)
+        public IEnumerable<OptionItem> GetLicenseeUserList(string userName, bool? isAssigned = null)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_GetLicensee"))
             {
-                return db.Query<OptionItem>(new { UserId = userId });
+                return db.Query<OptionItem>(new { UserName = userName, IsAssigned = isAssigned });
             }
         }
 
@@ -56,6 +56,61 @@
             }
 
             return result;
+        }
+
+        public IEnumerable<ITUserLicenseeFunction> GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria)
+        {
+            IEnumerable<OptionItem> licensees;
+            IEnumerable<ITUserFunctionHierarchy> functions;
+            var result = new List<ITUserLicenseeFunction>();
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_GetLicenseeFunction"))
+            {
+                using (var multi = db.QueryMultiple(criteria))
+                {
+                    licensees = multi.Read<OptionItem>();
+                    functions = multi.Read<ITUserFunctionHierarchy>();
+                }
+            }
+
+            foreach (var licensee in licensees)
+            {
+                var hierarchy = BuildFunctionHierarchy(licensee.Id, functions);
+
+                if (hierarchy.Any())
+                {
+                    result.Add(new ITUserLicenseeFunction
+                    {
+                        Licensee = licensee,
+                        Functions = hierarchy
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        private IEnumerable<ITUserFunctionHierarchy> BuildFunctionHierarchy(int licenseeId, IEnumerable<ITUserFunctionHierarchy> functionList)
+        {
+            var hierarchy = functionList.Where(x => x.ParentId == null && x.LicenseeId == licenseeId).ToList();
+            foreach (var func in hierarchy)
+            {
+                func.Children = GetChildrenFunctionList(func.FunctionId, functionList);
+            }
+
+            return hierarchy;
+        }
+
+        private IEnumerable<ITUserFunctionHierarchy> GetChildrenFunctionList(int parentId, IEnumerable<ITUserFunctionHierarchy> functionList)
+        {
+            var children = functionList.Where(x => x.ParentId == parentId).ToList();
+
+            foreach (var func in children)
+            {
+                func.Children = GetChildrenFunctionList(func.FunctionId, functionList);
+            }
+
+            return children;
         }
 
         private void WriteAssignUseActionLog(AssignUserCriteria criteria, string result = null)

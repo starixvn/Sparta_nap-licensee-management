@@ -175,9 +175,9 @@ export class ProductGrid extends Component {
                                             <td className="text-center">{index + 1}</td>
                                             <td>{item.ProductName}</td>
                                             <td className="text-right">{item.EffectiveDateString}</td>
-                                            <td className="text-center"><span className={item.Comm ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                                            <td className="text-center"><span className={item.WinLoss ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                                            <td className="text-center"><span className={item.EnablePullService ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                                            <td className="text-center">{item.Comm && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                                            <td className="text-center">{item.WinLoss && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                                            <td className="text-center">{item.EnablePullService && <span className='glyphicon glyphicon-ok green'></span>}</td>
                                             { licensee.IsActive && 
                                                 <td className="text-center">
                                                     {

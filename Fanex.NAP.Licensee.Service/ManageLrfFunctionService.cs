@@ -43,6 +43,14 @@
             return result;
         }
 
+        public IEnumerable<OptionItem> GetFunctionList()
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LrfFunction_SelectAll"))
+            {
+                return db.Query<OptionItem>();
+            }
+        }
+
         public IEnumerable<OptionItem> GetParentFunctionList(int functionId)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_LrfFunction_GetParentFunctions"))

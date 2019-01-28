@@ -127,6 +127,7 @@
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\ITUser\AssignUserCriteria.cs" />
     <Compile Include="Criteria\ITUser\SearchUserCriteria.cs" />
+    <Compile Include="Criteria\ITUser\UserLicenseeFunctionCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\RemoveLicenseeProductCriteria.cs" />
@@ -161,6 +162,9 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\ITUserLicenseeFunction.cs" />
+    <Compile Include="DTO\ITUserFunctionHierarchy.cs" />
+    <Compile Include="DTO\ITUserFunction.cs" />
     <Compile Include="DTO\ITUser.cs" />
     <Compile Include="DTO\LrfFunctionHierarchy.cs" />
     <Compile Include="DTO\LrfFunction.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Enumerations\NapLoginStatus.cs" />
     <Compile Include="Enumerations\ProductType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ITUser\EditFunctionViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />

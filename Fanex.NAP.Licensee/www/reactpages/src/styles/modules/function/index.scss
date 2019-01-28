@@ -51,3 +51,12 @@
         padding: 5px;
     }
 }
+
+.hierarchy-node {
+    display: inline-block;
+    width: 30px;
+
+    &::before{
+        content: "\2514\2500\2500";
+    }
+}

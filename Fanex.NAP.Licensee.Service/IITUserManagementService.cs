@@ -8,8 +8,10 @@
     {
         ResultGridData<ITUser> GetUserList(SearchUserCriteria criteria);
 
-        IEnumerable<OptionItem> GetLicenseeUserList(int userId);
+        IEnumerable<OptionItem> GetLicenseeUserList(string userName, bool? isAssigned = null);
 
         IEnumerable<ResultInfo> Assign(AssignUserCriteria criteria);
+
+        IEnumerable<ITUserLicenseeFunction> GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria);
     }
 }
