@@ -126,9 +126,10 @@
     <Setting Key="Nap_LM_ITUser_GetLicenseeFunction" SpName="Nap_LM_ITUser_GetLicenseeFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
       <Mapping DataField="isActive" ObjectProperty="Checked" />
     </Setting>
-    <Setting Key="Nap_LM_ITUser_AssignFunction" SpName="Nap_LM_ITUser_AssignFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_EditFunction" SpName="Nap_LM_ITUser_EditFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_GetLicenseeCurrency" SpName="Nap_LM_ITUser_GetLicenseeCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
       <Mapping DataField="isActive" ObjectProperty="Checked" />
     </Setting>
+    <Setting Key="Nap_LM_ITUser_EditCurrency" SpName="Nap_LM_ITUser_EditCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

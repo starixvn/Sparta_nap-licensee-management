@@ -436,6 +436,9 @@
     <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\EditCurrency.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\list\action.js" />

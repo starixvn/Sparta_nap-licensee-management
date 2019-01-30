@@ -14,6 +14,10 @@
 
         IEnumerable<ITUserLicenseeFunction> GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria);
 
-        IEnumerable<ResultInfo> AssignFunction(AssignFunctionCriteria criteria);
+        IEnumerable<ResultInfo> EditFunction(EditFunctionCriteria criteria);
+
+        IEnumerable<ITUserLicenseeCurrency> GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria);
+
+        IEnumerable<ResultInfo> EditCurrency(EditCurrencyCriteria criteria);
     }
 }

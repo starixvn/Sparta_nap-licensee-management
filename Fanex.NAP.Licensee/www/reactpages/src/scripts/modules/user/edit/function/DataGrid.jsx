@@ -73,7 +73,7 @@ export class DataGrid extends Component {
 
     _submit(redmineId) {
         this.props.toggleLoader(true);
-        const url = 'ITUserManagement/AssignFunction';
+        const url = 'ITUserManagement/EditFunction';
         const params = this._getParams(redmineId);
 
         Site.fetchData(params, url)
@@ -152,7 +152,7 @@ export class DataGrid extends Component {
             const hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
-                    <td className='middle' rowSpan={hierachy.length + 1}>{item.Licensee.Name}</td>
+                    <td className='middle' rowSpan={hierachy.length + 1}><b>{item.Licensee.Name}</b></td>
                     <td className='middle text-center' rowSpan={hierachy.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );

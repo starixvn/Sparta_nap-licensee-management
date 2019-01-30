@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
 import EditFunction from './EditFunction'
+import EditCurrency from './EditCurrency'
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -30,6 +31,9 @@ export class AppContainer extends Component {
                     userName={defaultState.userName}
                     licenseeList={defaultState.licenseeList}
                     functionList={defaultState.functionList} />
+                <EditCurrency isActive={tabId === 1}
+                    userName={defaultState.userName}
+                    licenseeList={defaultState.licenseeList} />
             </div>
         )
     }

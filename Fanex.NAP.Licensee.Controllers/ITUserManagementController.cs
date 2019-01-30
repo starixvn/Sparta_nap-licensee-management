@@ -19,11 +19,13 @@
     {
         private readonly IITUserManagementService _service;
         private readonly IManageLrfFunctionService _functionService;
+        private readonly ICommonService _commonService;
 
         public ITUserManagementController()
         {
             _service = new ITUserManagementService();
             _functionService = new ManageLrfFunctionService();
+            _commonService = new CommonService();
         }
 
         [HttpGet]
@@ -52,6 +54,13 @@
         public JsonResult GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria)
         {
             return Json(_service.GetLicenseeUserFunction(criteria));
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria)
+        {
+            return Json(_service.GetLicenseeUserCurrency(criteria));
         }
 
         [HttpPost]
@@ -94,6 +103,65 @@
             var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
 
             return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult EditFunction(EditFunctionCriteria criteria)
+        {
+            var errorBuilder = new StringBuilder();
+ 
+            errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
+
+            if (!criteria.NewFunctions.Any() && !criteria.RemoveFunctions.Any())
+            {
+                errorBuilder.Append("Function is empty!<br>");
+            }
+
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+            }
+
+            var result = _service.EditFunction(criteria);
+            var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
+
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult EditCurrency(EditCurrencyCriteria criteria)
+        {
+            var errorBuilder = new StringBuilder();
+
+            errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
+
+            if (!criteria.ActiveCurrencies.Any() && !criteria.DeactiveCurrencies.Any())
+            {
+                errorBuilder.Append("Currency is empty!<br>");
+            }
+
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+            }
+
+            var result = _service.EditCurrency(criteria);
+            var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
+
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetCurrencyList()
+        {
+            return Json(_commonService.GetCurrencyList);
         }
     }
 }

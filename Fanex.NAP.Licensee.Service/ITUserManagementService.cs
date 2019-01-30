@@ -59,24 +59,51 @@
             return result;
         }
 
-        public IEnumerable<ResultInfo> AssignFunction(AssignFunctionCriteria criteria)
+        public IEnumerable<ResultInfo> EditFunction(EditFunctionCriteria criteria)
         {
             IEnumerable<ResultInfo> result;
 
             var param = new
             {
                 UserName = criteria.UserName,
-                NewFunctions = BuildXMLParameter(criteria.NewFunctions),
-                RemovedFunction = BuildXMLParameter(criteria.RemoveFunctions)
+                NewFunctions = BuildFunctionXMLParameter(criteria.NewFunctions),
+                RemovedFunction = BuildFunctionXMLParameter(criteria.RemoveFunctions)
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_AssignFunction"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_EditFunction"))
             {
                 result = db.Query<ResultInfo>(param);
             }
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteAssignFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+                WriteEditFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ResultInfo> EditCurrency(EditCurrencyCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            var param = new
+            {
+                UserName = criteria.UserName,
+                ActiveCurrencies = BuildCurrencyXMLParameter(criteria.ActiveCurrencies),
+                DeactiveCurrencies = BuildCurrencyXMLParameter(criteria.DeactiveCurrencies)
+            };
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_EditCurrency"))
+            {
+                result = db.Query<ResultInfo>(param);
+            }
+
+            if (!result.Any(x => !x.IsOk))
+            {
+                WriteEditCurrencyActionLog(
+                    criteria,
+                    param.ActiveCurrencies,
+                    param.DeactiveCurrencies,
+                    result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -114,7 +141,39 @@
             return result;
         }
 
-        private string BuildXMLParameter(IEnumerable<LicenseeFunctionCriteria> criteria)
+        public IEnumerable<ITUserLicenseeCurrency> GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria)
+        {
+            IEnumerable<OptionItem> licensees;
+            IEnumerable<ITUserCurrency> currencies;
+            var result = new List<ITUserLicenseeCurrency>();
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_GetLicenseeCurrency"))
+            {
+                using (var multi = db.QueryMultiple(criteria))
+                {
+                    licensees = multi.Read<OptionItem>();
+                    currencies = multi.Read<ITUserCurrency>();
+                }
+            }
+
+            foreach (var licensee in licensees)
+            {
+                var currencieList = currencies.Where(x => x.LicenseeId == licensee.Id).ToList();
+
+                if (currencieList.Any())
+                {
+                    result.Add(new ITUserLicenseeCurrency
+                    {
+                        Licensee = licensee,
+                        Currencies = currencieList
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        private string BuildFunctionXMLParameter(IEnumerable<LicenseeFunctionCriteria> criteria)
         {
             if (!criteria.Any())
             {
@@ -124,9 +183,29 @@
             var builder = new StringBuilder();
             builder.Append("<ROOT>");
 
-            foreach(var item in criteria)
+            foreach (var item in criteria)
             {
                 builder.Append($"<LicenseeFunction LicenseeName=\"{item.LicenseeName}\" FunctionId=\"{item.FunctionId}\"/>");
+            }
+
+            builder.Append("</ROOT>");
+
+            return builder.ToString();
+        }
+
+        private string BuildCurrencyXMLParameter(IEnumerable<LicenseeCurrencyCriteria> criteria)
+        {
+            if (!criteria.Any())
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append("<ROOT>");
+
+            foreach (var item in criteria)
+            {
+                builder.Append($"<LicenseeCurrency LicenseeName=\"{item.LicenseeName}\" CurrencyId=\"{item.CurrencyId}\"/>");
             }
 
             builder.Append("</ROOT>");
@@ -168,15 +247,26 @@
             WriteLog(ActionLogType.ITUser_AssignToLicensee, "Nap_LM_ITUser_AssignToLicensee", doing, criteria.RedmineId);
         }
 
-        private void WriteAssignFunctionActionLog(AssignFunctionCriteria criteria, string newFunctions, string removedFunctions, string result = null)
+        private void WriteEditFunctionActionLog(EditFunctionCriteria criteria, string newFunctions, string removedFunctions, string result = null)
         {
             var doing = $"<User UserName=\"{criteria.UserName}\">"
-                        + $"<NewFunctions>{newFunctions}</NewFunctionIds>"
-                        + $"<RemoveFunctions>{removedFunctions}</RemoveFunctionIds>"
+                        + $"<NewFunctions>{newFunctions}</NewFunctions>"
+                        + $"<RemoveFunctions>{removedFunctions}</RemoveFunctions>"
                         + result == null ? string.Empty : $"<Result>{result}</Result>"
                         + "</User>";
 
-            WriteLog(ActionLogType.ITUser_AssignToLicensee, "Nap_LM_ITUser_AssignToLicensee", doing, criteria.RedmineId);
+            WriteLog(ActionLogType.ITUser_EditLRFFunction, "Nap_LM_ITUser_EditFunction", doing, criteria.RedmineId);
+        }
+
+        private void WriteEditCurrencyActionLog(EditCurrencyCriteria criteria, string activeCurrencies, string deactiveCurrencies, string result = null)
+        {
+            var doing = $"<User UserName=\"{criteria.UserName}\">"
+                        + $"<ActiveCurrencies>{activeCurrencies}</ActiveCurrencies>"
+                        + $"<DeactiveCurrencies>{deactiveCurrencies}</DeactiveCurrencies>"
+                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + "</User>";
+
+            WriteLog(ActionLogType.ITUser_EditCurrency, "Nap_LM_ITUser_EditCurrency", doing, criteria.RedmineId);
         }
 
         private void WriteLog(ActionLogType action, string sp, string user, int redmineId)

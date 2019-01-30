@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class AssignFunctionCriteria
+    public class EditFunctionCriteria
     {
         public string UserName { get; set; }
 

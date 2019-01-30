@@ -125,10 +125,13 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
-    <Compile Include="Criteria\ITUser\AssignFunctionCriteria.cs" />
+    <Compile Include="Criteria\ITUser\EditCurrencyCriteria.cs" />
+    <Compile Include="Criteria\ITUser\EditFunctionCriteria.cs" />
     <Compile Include="Criteria\ITUser\AssignUserCriteria.cs" />
+    <Compile Include="Criteria\ITUser\LicenseeCurrencyCriteria.cs" />
     <Compile Include="Criteria\ITUser\LicenseeFunctionCriteria.cs" />
     <Compile Include="Criteria\ITUser\SearchUserCriteria.cs" />
+    <Compile Include="Criteria\ITUser\UserLicenseeCurrencyCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeFunctionCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
@@ -164,6 +167,8 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\ITUserCurrency.cs" />
+    <Compile Include="DTO\ITUserLicenseeCurrency.cs" />
     <Compile Include="DTO\ITUserLicenseeFunction.cs" />
     <Compile Include="DTO\ITUserFunctionHierarchy.cs" />
     <Compile Include="DTO\ITUserFunction.cs" />
