@@ -1,10 +1,8 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setParams } from '../common/action';
+import { setFunctionParams } from '../action';
 import Select from 'react-select';
-
-const defaultState = Object.assign({}, window.initialState);
 
 export class FormFilter extends Component {
     constructor(props) {
@@ -32,17 +30,18 @@ export class FormFilter extends Component {
         const { selectedLicensee, selectedFunction } = this.state;
 
         const params = {
-            UserName: defaultState.userName,
+            UserName: this.props.userName,
             LicenseeId: selectedLicensee ? selectedLicensee.value : 0,
             FunctionId: selectedFunction ? selectedFunction.value : 0,
             TimeStamp: new Date().getTime()
         };
 
-        this.props.setParams(params);
+        this.props.setFunctionParams(params);
     }
 
     render() {
         const { selectedLicensee, selectedFunction } = this.state;
+        const { licenseeList, functionList } = this.props
         const isValid = this.isValid;
 
         return (
@@ -51,16 +50,16 @@ export class FormFilter extends Component {
                     <label>Licensee</label>
                     <Select instanceId="ddlLicensee"
                         value={selectedLicensee}
-                        options={defaultState.licenseeList}
+                        options={licenseeList}
                         className={isValid ? '' : 'has-error'}
                         onChange={(item) => this.setState({ selectedLicensee: item })} />
                 </div>
 
                 <div className="form-group">
-                    <label>Currency</label>
+                    <label>Function</label>
                     <Select instanceId="ddlFunction"
                         value={selectedFunction}
-                        options={defaultState.functionList}
+                        options={functionList}
                         className={isValid ? '' : 'has-error'}
                         onChange={(item) => this.setState({ selectedFunction: item })} />
                 </div>
@@ -74,11 +73,10 @@ export class FormFilter extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setParams }, dispatch);
+    return bindActionCreators({ setFunctionParams }, dispatch);
 }
 function mapStateToProps(state) {
-    const { params } = state;
-    return { params };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

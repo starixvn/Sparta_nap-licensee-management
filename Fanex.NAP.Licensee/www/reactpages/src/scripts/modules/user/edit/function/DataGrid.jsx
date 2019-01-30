@@ -1,66 +1,115 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setParams } from '../common/action';
-import Site from '../../../lib/site';
+import { toggleLoader } from '../action';
+import Site from '../../../../lib/site';
+import RedmineConfirmForm from '../../../../components/RedmineConfirmForm';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], checkedList: [] };
+        this.state = {
+            gridData: [],
+            assignedFunctions: [],
+            unassignedFunctions: [],
+            isShowConfirmBox: false
+        };
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.params.TimeStamp !== this.props.params.TimeStamp) {
+        if (prevProps.functionParams.TimeStamp !== this.props.functionParams.TimeStamp) {
             this._getData();
         }
     }
 
-    onCheck(e, item) {
-        const checkedList = this.state.checkedList;
-        let newList = [];
-        
-        if (e.target.checked) {
-            newList = [...checkedList, item];
-        }
-        else {
-            newList = checkedList.filter(x => x !== item);
-        }
+    get isValid() {
+        const { assignedFunctions, unassignedFunctions} = this.state;
 
-        this.setState({ checkedList: newList });
+        return assignedFunctions.length > 0 || unassignedFunctions.length > 0;
     }
 
-    _getCheckedList(data, checkedList) {
-        const total = data.length;
-        for(let j = 0; j < total; j++) {
-            const item = data[j];
-            if (item.UserFunctionId > 0) {
-                checkedList.push(item);
-            }
-
-            this._getCheckedList(item.Children, checkedList);
+    onCheck(e, item) {
+        const checked = e.target.checked;
+        let newList = [];
+        
+        if (item.UserFunctionId > 0) {
+            const newRemovedFunctions = this._getNewCheckedFunctionList(!checked, item, this.state.unassignedFunctions);
+            this.setState({ unassignedFunctions: newRemovedFunctions });
         }
+        else {
+            const newAssignedFunctions = this._getNewCheckedFunctionList(checked, item, this.state.assignedFunctions);
+            this.setState({ assignedFunctions: newAssignedFunctions });
+        }
+    }
+
+    onSubmit = () => {
+        this._showConfirmBox(true);
+    }
+
+    onConfirm = (redmineId) => {
+        this._showConfirmBox(false);
+        
+        if (redmineId) {
+            this._submit(redmineId);
+        }
+    }
+
+    _showConfirmBox(isShow) {
+        this.setState({ isShowConfirmBox: isShow });
+    }
+
+    _getParams(redmineId)
+    {
+        const { assignedFunctions, unassignedFunctions } = this.state;
+
+        return {
+            UserName: this.props.functionParams.UserName,
+            NewFunctions: assignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
+            RemovedFunctions: unassignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
+            RedmineId: redmineId
+        };
+    }
+
+    _submit(redmineId) {
+        this.props.toggleLoader(true);
+        const url = 'ITUserManagement/AssignFunction';
+        const params = this._getParams(redmineId);
+
+        Site.fetchData(params, url)
+            .then(response => {
+                if (response.data.Error) {
+                    Utility.showMessage(response.data.Error);
+                }
+                else {
+                    Utility.showMessage('Success!');
+                }
+                this._getData();
+            }).catch(err => {
+                Utility.showMessage('Error!');
+                this.props.toggleLoader(false);
+            });
+    }
+
+    _getNewCheckedFunctionList(isCheck, item, oldList) {
+        if (isCheck) {
+            return [...oldList, item];
+        }
+
+        return oldList.filter(x => x !== item);
     }
 
     _getData() {
         this.props.toggleLoader(true);
-        Site.fetchData(this.props.params, 'ITUserManagement/GetLicenseeUserFunction').then(response => {
-            const checkedList = [];
-            const gridData = response.data;
-
-            const total = gridData.length;
-            for(let i = 0; i < total; i++) {
-                this._getCheckedList(gridData[i].Functions, checkedList);
-            }
-            
-            this.setState({ gridData: gridData, checkedList: checkedList });
+        Site.fetchData(this.props.functionParams, 'ITUserManagement/GetLicenseeUserFunction').then(response => {
+            this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: []});
             this.props.toggleLoader(false);
         });
     }
 
     _buildFunctionNode(licensee, node, level, hierachy) {
-        const checked = licensee.Checked && this.state.checkedList.indexOf(node) > -1;
+        const checked = licensee.Checked 
+            && (node.UserFunctionId > 0 ? this.state.unassignedFunctions.indexOf(node) === -1 : this.state.assignedFunctions.indexOf(node) > -1 );
 
         hierachy.push(
             <tr key={`${licensee.Id}-${node.FunctionId}`} className={licensee.Checked ? '' : 'disable'}>
@@ -140,7 +189,7 @@ export class DataGrid extends Component {
     }
 
     render() {
-        const { gridData } = this.state;
+        const { gridData, isShowConfirmBox } = this.state;
 
         if (gridData.length === 0) {
             return false;
@@ -148,18 +197,25 @@ export class DataGrid extends Component {
 
         return (
             <div>
-                {this._buildTable(gridData)}
+                 <div style={{ display: 'inline-block' }}>
+                    <button className='btn btn-green' onClick={this.onSubmit} disabled={!this.isValid}>Update</button>
+                </div>
+                <RedmineConfirmForm isShow={isShowConfirmBox}
+                    msg='Do you want to update functions of user?'
+                    style={{height: '210px', width: '400px'}}
+                    onConfirm={this.onConfirm} />
+                {this._buildTable(gridData)}       
             </div>
         )
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader, setParams }, dispatch);
+    return bindActionCreators({ toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { params } = state;
-    return { params };
+    const { functionParams } = state;
+    return { functionParams };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

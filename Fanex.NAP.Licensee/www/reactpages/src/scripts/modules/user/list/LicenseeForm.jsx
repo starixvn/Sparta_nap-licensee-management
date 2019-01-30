@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader } from '../common/action';
+import { toggleLoader } from './action';
 import Popup from '../../../components/Popup';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
@@ -263,7 +263,7 @@ export class LicenseeForm extends Component {
                 </div>
                 {this._buildLicenseeCheckList()}
                 <div className='form-group right'>
-                    <button className='btn btn-primary' onClick={this.onSubmit} disabled={assignedItems.length === 0 && unassignedItems.length ===0} >
+                    <button className='btn btn-primary' onClick={this.onSubmit} disabled={assignedItems.length === 0 && unassignedItems.length === 0} >
                         Submit
                     </button>
                     <button className='btn btn-red' onClick={() => this.onClose(onClose)}>

@@ -1,7 +1,7 @@
 ﻿﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setParams } from '../common/action';
+import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
 import Pager from '../../../components/Pager';
 import LicenseeForm from './LicenseeForm';
@@ -92,7 +92,7 @@ export class DataGrid extends Component {
                                     <td className="text-center">
                                     {
                                         item.IsActive &&
-                                        <a title={`Edit function for "${item.UserName}"`} href={window.rootUrl + `ITUserManagement/EditFunction?UserName=${item.UserName}`}>
+                                        <a title={`Edit permission of "${item.UserName}"`} href={window.rootUrl + `ITUserManagement/Edit?UserName=${item.UserName}`}>
                                             <i className="icon-edit"></i>
                                         </a>
                                     }

@@ -1,6 +1,8 @@
 ﻿@import "../../components/_variable";
 @import "../../components/react-select/react-select.main";
 @import "../../components/common";
+@import "../../components/popup";
+@import "../../components/form";
 
 .Select {
     display: inline-block;
@@ -44,6 +46,30 @@
 
         &::before {
             content: "\2514\2500\2500";
+        }
+    }
+}
+
+.tab {
+    background-color: $background-panel-color;
+    border: $border;
+    margin-bottom: 10px;
+
+    .tab-item {
+        padding: 5px 10px;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: inline-block;
+        color: $gray;
+
+        &:hover {
+            color: $blue;
+        }
+
+        &.active {
+            font-weight: bold;
+            color: $blue;
+            border-bottom: 1px solid $blue;
         }
     }
 }

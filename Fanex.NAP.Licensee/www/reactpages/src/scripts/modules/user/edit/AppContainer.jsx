@@ -3,20 +3,33 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
-import FormFilter from './FormFilter'
-import DataGrid from './DataGrid'
+import EditFunction from './EditFunction'
+
+const defaultState = Object.assign({}, window.initialState);
 
 export class AppContainer extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { tabId: 0 };
     }
 
     render() {
+        const { tabId } = this.state;
+        const activeClass = 'tab-item active';
+        const unactiveClass = 'tab-item';
+
         return (
             <div>
-                <Loader isLoading={this.props.isLoading} />
-                <FormFilter />
-                <DataGrid />
+                <div className='tab'>
+                    <span className={tabId === 0 ? activeClass : unactiveClass} onClick={() => this.setState({tabId: 0})}>LRF Function</span>
+                    <span className={tabId === 1 ? activeClass : unactiveClass} onClick={() => this.setState({tabId: 1})}>Currency</span>
+                </div>
+                <Loader isLoading={this.props.isLoading} />              
+                <EditFunction isActive={tabId === 0}
+                    userName={defaultState.userName}
+                    licenseeList={defaultState.licenseeList}
+                    functionList={defaultState.functionList} />
             </div>
         )
     }
