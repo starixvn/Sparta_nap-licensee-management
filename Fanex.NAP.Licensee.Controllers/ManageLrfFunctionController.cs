@@ -99,6 +99,8 @@
             return Json(_service.GetLicenseeFunctionList(functionId));
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult AssignFunction(AssignLrfFunctionCriteria criteria)
         {
             var errorBuilder = new StringBuilder();

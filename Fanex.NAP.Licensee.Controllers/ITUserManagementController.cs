@@ -35,7 +35,7 @@
 
         [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
-        public ActionResult EditFunction(string userName)
+        public ActionResult Edit(string userName)
         {
             var viewModel = new EditFunctionViewModel
             {
@@ -68,7 +68,9 @@
             return Json(_service.GetLicenseeUserList(userName));
         }
 
-        public JsonResult AssignFunction(AssignUserCriteria criteria)
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult AssignUser(AssignUserCriteria criteria)
         {
             var errorBuilder = new StringBuilder();
             if (criteria.UserId <= 0)
@@ -88,7 +90,7 @@
                 return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
             }
 
-            var result = _service.Assign(criteria);
+            var result = _service.AssignUser(criteria);
             var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
 
             return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });

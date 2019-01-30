@@ -6,6 +6,8 @@
 
         public int LicenseeId { get; set; }
 
+        public string LicenseeName { get; set; }
+
         public int FunctionId { get; set; }
 
         public string FunctionName { get; set; }

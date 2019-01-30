@@ -10,8 +10,10 @@
 
         IEnumerable<OptionItem> GetLicenseeUserList(string userName, bool? isAssigned = null);
 
-        IEnumerable<ResultInfo> Assign(AssignUserCriteria criteria);
+        IEnumerable<ResultInfo> AssignUser(AssignUserCriteria criteria);
 
         IEnumerable<ITUserLicenseeFunction> GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria);
+
+        IEnumerable<ResultInfo> AssignFunction(AssignFunctionCriteria criteria);
     }
 }

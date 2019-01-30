@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Core;
     using Model.Criteria.ITUser;
     using Model.Criteria.Vendor;
@@ -41,7 +42,7 @@
             }
         }
 
-        public IEnumerable<ResultInfo> Assign(AssignUserCriteria criteria)
+        public IEnumerable<ResultInfo> AssignUser(AssignUserCriteria criteria)
         {
             IEnumerable<ResultInfo> result;
 
@@ -53,6 +54,29 @@
             if (!result.Any(x => !x.IsOk))
             {
                 WriteAssignUseActionLog(criteria, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ResultInfo> AssignFunction(AssignFunctionCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            var param = new
+            {
+                UserName = criteria.UserName,
+                NewFunctions = BuildXMLParameter(criteria.NewFunctions),
+                RemovedFunction = BuildXMLParameter(criteria.RemoveFunctions)
+            };
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_AssignFunction"))
+            {
+                result = db.Query<ResultInfo>(param);
+            }
+
+            if (!result.Any(x => !x.IsOk))
+            {
+                WriteAssignFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -90,6 +114,26 @@
             return result;
         }
 
+        private string BuildXMLParameter(IEnumerable<LicenseeFunctionCriteria> criteria)
+        {
+            if (!criteria.Any())
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append("<ROOT>");
+
+            foreach(var item in criteria)
+            {
+                builder.Append($"<LicenseeFunction LicenseeName=\"{item.LicenseeName}\" FunctionId=\"{item.FunctionId}\"/>");
+            }
+
+            builder.Append("</ROOT>");
+
+            return builder.ToString();
+        }
+
         private IEnumerable<ITUserFunctionHierarchy> BuildFunctionHierarchy(int licenseeId, IEnumerable<ITUserFunctionHierarchy> functionList)
         {
             var hierarchy = functionList.Where(x => x.ParentId == null && x.LicenseeId == licenseeId).ToList();
@@ -118,6 +162,17 @@
             var doing = $"<User UserId=\"{criteria.UserId}\">"
                         + $"<AssignedLicensees AssignOption=\"{criteria.AssignOption}\">{criteria.AssignedLicensees}</AssignedLicensees>"
                         + $"<UnassignedLicensees RemoveOption=\"{criteria.RemoveOption}\">{criteria.UnassignedLicensees}</UnassignedLicensees>"
+                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + "</User>";
+
+            WriteLog(ActionLogType.ITUser_AssignToLicensee, "Nap_LM_ITUser_AssignToLicensee", doing, criteria.RedmineId);
+        }
+
+        private void WriteAssignFunctionActionLog(AssignFunctionCriteria criteria, string newFunctions, string removedFunctions, string result = null)
+        {
+            var doing = $"<User UserName=\"{criteria.UserName}\">"
+                        + $"<NewFunctions>{newFunctions}</NewFunctionIds>"
+                        + $"<RemoveFunctions>{removedFunctions}</RemoveFunctionIds>"
                         + result == null ? string.Empty : $"<Result>{result}</Result>"
                         + "</User>";
 

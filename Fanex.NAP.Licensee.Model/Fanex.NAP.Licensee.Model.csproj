@@ -125,7 +125,9 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\ITUser\AssignFunctionCriteria.cs" />
     <Compile Include="Criteria\ITUser\AssignUserCriteria.cs" />
+    <Compile Include="Criteria\ITUser\LicenseeFunctionCriteria.cs" />
     <Compile Include="Criteria\ITUser\SearchUserCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeFunctionCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
