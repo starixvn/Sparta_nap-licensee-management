@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import Utility from './utility';
 
 axios.interceptors.response.use(response => Promise.resolve(response),
     error => {
@@ -13,6 +14,7 @@ axios.interceptors.response.use(response => Promise.resolve(response),
                     location.reload(true);
                     break;
                 default:
+                    Utility.showErrorMessage('Sorry, an error occurred while processing your request!');
                     break;
             }
         }

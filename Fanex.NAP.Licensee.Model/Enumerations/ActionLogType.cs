@@ -24,9 +24,9 @@
         LrfFunction_Update = 5537,
         LrfFunction_AssignToLicensee = 5539,
 
-        ITUser_Insert = 5539,
-        ITUser_AssignToLicensee = 5540,
-        ITUser_EditLRFFunction = 5541,
-        ITUser_EditCurrency = 5542
+        ITUser_Insert = 5540,
+        ITUser_AssignToLicensee = 5541,
+        ITUser_EditLRFFunction = 5542,
+        ITUser_EditCurrency = 5543
     }
 }

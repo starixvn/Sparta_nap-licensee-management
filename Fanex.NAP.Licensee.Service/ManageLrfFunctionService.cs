@@ -129,7 +129,7 @@
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteAssignFunctionActionLog(criteria, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+                WriteAssignFunctionActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -265,7 +265,7 @@
             var doing = $"<Function FunctionId=\"{criteria.FunctionId}\">"
                         + $"<AssignedLicensees AssignOption=\"{criteria.AssignOption}\">{criteria.AssignedLicensees}</AssignedLicensees>"
                         + $"<UnassignedLicensees RemoveOption=\"{criteria.RemoveOption}\">{criteria.UnassignedLicensees}</UnassignedLicensees>"
-                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</Function>";
 
             WriteLog(ActionLogType.LrfFunction_AssignToLicensee, "Nap_LM_LrfFunction_AssignToLicensee", doing, criteria.RedmineId);

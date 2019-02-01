@@ -1,7 +1,7 @@
 ﻿@import "../../components/_variable";
 
 .edit-form {
-    input[type=text] {
+    input[type=text], input[type=password] {
         &.has-error {
             border: 1px solid $red;
         }
@@ -11,7 +11,7 @@
         padding: 2px;
     }
 
-    input[type=radio], input[type=checkbox] {
+    input[type=radio], input[type=checkbox], input[type=password] {
         vertical-align: text-bottom;
     }
 

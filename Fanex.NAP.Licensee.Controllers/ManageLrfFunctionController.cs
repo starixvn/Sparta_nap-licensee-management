@@ -46,7 +46,7 @@
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public ActionResult Get(int id = 0)
         {
             var func = id == 0 ? new LrfFunction() : _service.GetFunction(id);
@@ -112,7 +112,7 @@
             errorBuilder.Append(
                 CheckEmptyParameter(
                     "Licensee",
-                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.AssignedLicensees : criteria.UnassignedLicensees,
+                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.UnassignedLicensees : criteria.AssignedLicensees,
                     "<br>"));
             errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
 

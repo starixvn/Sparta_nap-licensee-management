@@ -35,6 +35,8 @@ export class DataGrid extends Component {
         Site.fetchData(this.props.params, 'ManageLrfFunction/Search').then(response => {
             this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
             this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 
