@@ -43,6 +43,25 @@
             }
         }
 
+        public IEnumerable<ResultInfo> AddUser(AddUserCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            var param = criteria.SpParam;
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_Insert"))
+            {
+                result = db.Query<ResultInfo>(param);
+            }
+
+            int userId = param.GetType().GetProperty("UserId").GetValue(param, null);
+            if (userId > 0)
+            {
+                WriteAddUseActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
+            }
+
+            return result;
+        }
+
         public IEnumerable<ResultInfo> AssignUser(AssignUserCriteria criteria)
         {
             IEnumerable<ResultInfo> result;
@@ -244,6 +263,27 @@
             }
 
             return children;
+        }
+
+        private void WriteAddUseActionLog(AddUserCriteria criteria, string result = null)
+        {
+            var doing = $"<User UserName=\"{criteria.UserName}\""
+                        + $" FirstName=\"{criteria.FirstName}\""
+                        + $" LastName=\"{criteria.LastName}\""
+                        + $" Email=\"{criteria.Email}\""
+                        + $" IsAdmin=\"{criteria.IsAdmin}\""
+                        + $" LicenseeName=\"{criteria.LicenseeName}\""
+                        + $" IsOpen=\"{criteria.IsOpen}\""
+                        + $" UserSalt=\"{criteria.Token}\""
+                        + $" UserPwd=\"{criteria.Password}\""
+                        + " IsInternal=\"false\""
+                        + " SystemId=\"1\""
+                        + $" Option=\"{criteria.Option}\""
+                        + ">"
+                        + (result == null ? string.Empty : $"<Result>{result}</Result>")
+                        + "</User>";
+
+            WriteLog(ActionLogType.ITUser_Insert, "Nap_LM_ITUser_Insert", doing, criteria.RedmineId);
         }
 
         private void WriteAssignUseActionLog(AssignUserCriteria criteria, string result = null)

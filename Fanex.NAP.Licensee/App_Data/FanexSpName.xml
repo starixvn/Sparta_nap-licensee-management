@@ -131,6 +131,6 @@
       <Mapping DataField="isActive" ObjectProperty="Checked" />
     </Setting>
     <Setting Key="Nap_LM_ITUser_EditCurrency" SpName="Nap_LM_ITUser_EditCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_Insert" SpName="Nap_LM_ITUser_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
-  <Setting Key="Nap_LM_ITUser_Insert" SpName="Nap_LM_ITUser_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
 </Functions>

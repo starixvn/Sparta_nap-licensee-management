@@ -19,5 +19,7 @@
         IEnumerable<ITUserLicenseeCurrency> GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria);
 
         IEnumerable<ResultInfo> EditCurrency(EditCurrencyCriteria criteria);
+
+        IEnumerable<ResultInfo> AddUser(AddUserCriteria criteria);
     }
 }

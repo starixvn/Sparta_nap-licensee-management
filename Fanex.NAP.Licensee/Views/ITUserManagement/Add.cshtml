@@ -1,0 +1,33 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.ViewModel.ITUser.AddUserViewModel
+@{
+    ViewBag.Title = "Add New IT User";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var serializer = new JavaScriptSerializer();
+    var licenseeList = Model.LicenseeList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>IT User Management</li>
+        <li class="current">Add New User</li>
+    </ul>
+    <a class="btn-back" href="@Url.Content("~/ITUserManagement/Index")">← Back To List</a>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/user/user.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            token: "@Model.Token",
+            licenseeList: @Html.Raw(serializer.Serialize(licenseeList))
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/addUser/addUser.js")
+}
+
+<div id="app-container"></div>

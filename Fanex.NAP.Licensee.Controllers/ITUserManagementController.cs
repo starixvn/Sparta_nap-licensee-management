@@ -37,6 +37,19 @@
         }
 
         [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public ActionResult Add()
+        {
+            var viewModel = new AddUserViewModel
+            {
+                Token = Cryptography.CreateSalt(),
+                LicenseeList = _service.GetLicenseeUserList(string.Empty)
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public ActionResult Edit(string userName)
         {
@@ -76,6 +89,27 @@
         public JsonResult GetLicenseeUserList(string userName)
         {
             return Json(_service.GetLicenseeUserList(userName));
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult AddUser(AddUserCriteria criteria)
+        {
+            var errorBuilder = new StringBuilder();
+
+            errorBuilder.Append(CheckEmptyParameter("User Name", criteria.UserName, "<br>"));
+            errorBuilder.Append(CheckEmptyParameter("Password", criteria.Password, "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+            }
+
+            var result = _service.AddUser(criteria);
+            var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
+
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
         }
 
         [HttpPost]

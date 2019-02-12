@@ -2,7 +2,7 @@
 @using System.Web.Script.Serialization
 @model Fanex.NAP.Licensee.Model.ViewModel.ITUser.EditFunctionViewModel
 @{
-    ViewBag.Title = "IT User Function";
+    ViewBag.Title = "Edit IT User";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
     var serializer = new JavaScriptSerializer();
@@ -18,7 +18,7 @@
     <a class="btn-back" href="@Url.Content("~/ITUserManagement/Index")">← Back To List</a>
 }
 @section HeadCss{
-    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/editUser/editUser.css")
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/user/user.css")
 }
 @section FooterJs{
     <script>

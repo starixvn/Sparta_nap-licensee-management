@@ -306,8 +306,6 @@
     <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
-    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css" />
-    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\css\dev\function\function.css" />
@@ -322,6 +320,8 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\css\dev\userList\userList.css" />
+    <Content Include="www\reactpages\dist\css\dev\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
@@ -346,6 +346,7 @@
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
+    <Content Include="www\reactpages\dist\js\dev\addUser\addUser.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js" />
@@ -428,12 +429,14 @@
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\ActivateNewSystemForm.jsx" />
     <Content Include="Views\ITUserManagement\Index.cshtml" />
     <Content Include="www\reactpages\dist\js\dev\userList\userList.js.map" />
+    <Content Include="Views\ITUserManagement\Edit.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js.map" />
+    <Content Include="Views\ITUserManagement\Add.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\addUser\addUser.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\userList\userList.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\userList\userList.js.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
-    <Content Include="Views\ITUserManagement\Edit.cshtml" />
-    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
-    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
-    <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
@@ -925,9 +928,11 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\AppContainer.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\FormFilter.jsx" />
-    <Content Include="www\reactpages\src\styles\modules\user\edit.scss" />
+    <Content Include="www\reactpages\src\styles\modules\user\item.scss" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\EditFunction.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\add\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\add\index.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

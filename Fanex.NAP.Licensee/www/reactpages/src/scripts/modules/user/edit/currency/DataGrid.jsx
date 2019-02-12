@@ -86,7 +86,6 @@ export class DataGrid extends Component {
                 }
                 this._getData();
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
             });
     }

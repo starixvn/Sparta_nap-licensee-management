@@ -86,7 +86,6 @@ export class DataGrid extends Component {
                 }
                 this._getData();
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
             });
     }
@@ -118,11 +117,11 @@ export class DataGrid extends Component {
                     { level > 0 && <span className='hierarchy-node'></span> }
                     {node.FunctionName}
                         </td>
-                    {
-                        licensee.Checked
-                        ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
-                        : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
-                    }
+                        {
+                            licensee.Checked && node.IsActive
+                            ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
+                            : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                        }
             </tr>
         );
 
