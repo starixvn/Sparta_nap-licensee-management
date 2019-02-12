@@ -54,7 +54,8 @@ BEGIN
 			CreateDate,
 			LicenseeName,
 			isInternal,
-			CASE WHEN [Status] = 'Open' THEN 1 ELSE 0 END AS IsActive
+			CASE WHEN [Status] = 'Open' THEN 1 ELSE 0 END AS IsActive,
+			CASE WHEN UserRole = 'Admin' THEN 1 ELSE 0 END AS IsAdmin
 	FROM User_CTE
 	WHERE RowId BETWEEN @from AND @to
 	
