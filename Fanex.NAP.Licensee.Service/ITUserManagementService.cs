@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -53,7 +54,7 @@
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteAssignUseActionLog(criteria, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+                WriteAssignUseActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -76,7 +77,7 @@
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteEditFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+                WriteEditFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -103,7 +104,7 @@
                     criteria,
                     param.ActiveCurrencies,
                     param.DeactiveCurrencies,
-                    result.Any() ? string.Join("\r\n", result.Select(x => x.Message)) : null);
+                    result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -215,7 +216,16 @@
 
         private IEnumerable<ITUserFunctionHierarchy> BuildFunctionHierarchy(int licenseeId, IEnumerable<ITUserFunctionHierarchy> functionList)
         {
-            var hierarchy = functionList.Where(x => x.ParentId == null && x.LicenseeId == licenseeId).ToList();
+            var hierarchy = functionList
+                .GroupJoin(
+                    functionList,
+                    func => func.ParentId,
+                    parent => parent.FunctionId,
+                    (func, parent) => new { Function = func, Parents = parent })
+                .Where(x => !x.Parents.Any())
+                .Select(y => y.Function)
+                .ToList();
+
             foreach (var func in hierarchy)
             {
                 func.Children = GetChildrenFunctionList(func.FunctionId, functionList);
@@ -241,7 +251,7 @@
             var doing = $"<User UserId=\"{criteria.UserId}\">"
                         + $"<AssignedLicensees AssignOption=\"{criteria.AssignOption}\">{criteria.AssignedLicensees}</AssignedLicensees>"
                         + $"<UnassignedLicensees RemoveOption=\"{criteria.RemoveOption}\">{criteria.UnassignedLicensees}</UnassignedLicensees>"
-                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</User>";
 
             WriteLog(ActionLogType.ITUser_AssignToLicensee, "Nap_LM_ITUser_AssignToLicensee", doing, criteria.RedmineId);
@@ -252,7 +262,7 @@
             var doing = $"<User UserName=\"{criteria.UserName}\">"
                         + $"<NewFunctions>{newFunctions}</NewFunctions>"
                         + $"<RemoveFunctions>{removedFunctions}</RemoveFunctions>"
-                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</User>";
 
             WriteLog(ActionLogType.ITUser_EditLRFFunction, "Nap_LM_ITUser_EditFunction", doing, criteria.RedmineId);
@@ -263,7 +273,7 @@
             var doing = $"<User UserName=\"{criteria.UserName}\">"
                         + $"<ActiveCurrencies>{activeCurrencies}</ActiveCurrencies>"
                         + $"<DeactiveCurrencies>{deactiveCurrencies}</DeactiveCurrencies>"
-                        + result == null ? string.Empty : $"<Result>{result}</Result>"
+                        + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</User>";
 
             WriteLog(ActionLogType.ITUser_EditCurrency, "Nap_LM_ITUser_EditCurrency", doing, criteria.RedmineId);

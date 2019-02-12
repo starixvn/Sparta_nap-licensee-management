@@ -13,5 +13,7 @@
         public string FunctionName { get; set; }
 
         public int UserFunctionId { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

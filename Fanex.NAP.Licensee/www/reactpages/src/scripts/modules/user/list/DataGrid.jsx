@@ -13,7 +13,8 @@ export class DataGrid extends Component {
         this.state = { 
             gridData: [], 
             totalItem: 0,
-            assignMenu: { isShow: false, userId: 0, userName: '' } };
+            assignMenu: { isShow: false, userId: 0, userName: '', isAdmin: false }
+        };
     }
 
     componentDidUpdate(prevProps) {
@@ -27,15 +28,17 @@ export class DataGrid extends Component {
         Site.fetchData(this.props.params, 'ITUserManagement/Search').then(response => {
             this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
             this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 
-    onAssignAction(id, name) {
-        this.setState({ assignMenu: {userId: id, isShow: true, userName: name} });
+    onAssignAction(id, name, isAdmin) {
+        this.setState({ assignMenu: {userId: id, isShow: true, userName: name, isAdmin: isAdmin} });
     }
 
     onCloseAssignForm = () => {
-        this.setState({ assignMenu: {userId: 0, isShow: false, userName: ''} });
+        this.setState({ assignMenu: {userId: 0, isShow: false, userName: '', isAdmin: false} });
     }
 
     onPaging = (index, size) => {
@@ -59,6 +62,7 @@ export class DataGrid extends Component {
                 <LicenseeForm isShow={assignMenu.isShow}
                     userId={assignMenu.userId}
                     userName={assignMenu.userName}
+                    isAdmin={assignMenu.isAdmin}
                     onClose={this.onCloseAssignForm} />
                 <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className="table table-bordered table-hover">
@@ -101,7 +105,7 @@ export class DataGrid extends Component {
                                         <i title={`Edit licensee for "${item.UserName}"`} 
                                             className="icon-list"
                                             style={{marginLeft: '15px'}}
-                                            onClick={() => this.onAssignAction(item.UserId, item.UserName)}></i>
+                                            onClick={() => this.onAssignAction(item.UserId, item.UserName, item.IsAdmin)}></i>
                                     }
                                     </td>
                                 </tr>

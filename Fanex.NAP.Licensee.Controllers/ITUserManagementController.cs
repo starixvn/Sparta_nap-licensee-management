@@ -4,6 +4,7 @@
     using System.Text;
     using System.Web.Mvc;
     using Attributes;
+    using Common;
     using Core.Business;
     using Core.Web.Attribute;
     using Model.Criteria.ITUser;
@@ -90,7 +91,7 @@
             errorBuilder.Append(
                 CheckEmptyParameter(
                     "Licensee",
-                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.AssignedLicensees : criteria.UnassignedLicensees,
+                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.UnassignedLicensees : criteria.AssignedLicensees,
                     "<br>"));
             errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
@@ -110,7 +111,7 @@
         public JsonResult EditFunction(EditFunctionCriteria criteria)
         {
             var errorBuilder = new StringBuilder();
- 
+
             errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
 
             if (!criteria.NewFunctions.Any() && !criteria.RemoveFunctions.Any())

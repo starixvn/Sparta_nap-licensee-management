@@ -10,6 +10,6 @@
 
         public string CurrencyName { get; set; }
 
-        public int IsAssigned { get; set; }
+        public bool IsAssigned { get; set; }
     }
 }

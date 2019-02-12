@@ -26,30 +26,38 @@ export class LicenseeForm extends Component {
 
         this.assignUserOption = [
             { value: '0', label: 'Only add licensee'},
-            { value: '1', label: 'Assign all currencies and functions(excluding "Account Management" and "Notification")' },
-            { value: '2', label: 'Assign all currencies and functions(including "Account Management" and "Notification")' }
+            { value: '1', label: 'Assign all currencies and functions, excluding "Account Management" and "Notification"' },
+            { value: '2', label: 'Assign all currencies and functions, including "Account Management" and "Notification"' }
         ];
         this.removeUserOption = [
            { value: '0', label: 'Only remove licensee' },
            { value: '1', label: 'Remove all currencies and functions'}
         ];
+
+        this.totalOriginalCheckedItems = 0;
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props && this.props.isShow) {
-            this._getLicenseeList(this.props.userName);
+            this._getLicenseeList();
         }
     }
 
     onItemChecked(e, item) {
-        const { isAssigned } = this.state;
+        const { isAssigned, unassignedItems } = this.state;
+        const checked = e.target.checked;
 
         if ((item === null && isAssigned) || (item !== null && item.Checked)) {
-            const newUnassignedItems = this._getUnassignedCheckedItems(item, e.target.checked);
+            const newUnassignedItems = this._getUnassignedCheckedItems(item, checked);
             this.setState({ unassignedItems: newUnassignedItems });
         }
         else {
-            const newAssignedItems = this._getAssignedCheckedItems(item, e.target.checked);
+            const newAssignedItems = this._getAssignedCheckedItems(item, checked);
+            const totalCheckedItems = this.totalOriginalCheckedItems + newAssignedItems.length - unassignedItems.length;
+            if (checked && !this.props.isAdmin && totalCheckedItems > 1)
+            {
+                return;
+            }
             this.setState({ assignedItems: newAssignedItems });
         }
     }
@@ -79,7 +87,7 @@ export class LicenseeForm extends Component {
         if (e.charCode === 13) {
             e.preventDefault();
             
-            this.setState({searchText: e.target.value});
+            this.setState({searchText: e.target.value.toLowerCase()});
         }
     }
 
@@ -87,21 +95,21 @@ export class LicenseeForm extends Component {
         this.setState({
             isShowConfirmBox: false,
             isShowOptionBox: false,
-            licenseeList: [],
             licensee: '',
             searchText: '',
-            assignedItems: [],
-            unassignedItems: [],
-            isAssigned: true,
-            assignOption: '0',
-            removeOption: '0'
+            isAssigned: true
         });
 
         callback && callback();
     }
 
     _showOptionBox(isShow) {
-        this.setState({ isShowOptionBox: isShow});
+        if (isShow) {
+            this.setState({ isShowOptionBox: isShow, assignOption: '0', removeOption: '0' });
+        }
+        else {
+            this.setState({ isShowOptionBox: isShow });
+        }
     }
 
     _showConfirmBox(isShow) {
@@ -110,12 +118,14 @@ export class LicenseeForm extends Component {
 
     _getParams(redmineId)
     {
-        const { assignedItems, unassignedItems, pageAccess } = this.state;
+        const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
 
         return {
             UserId: this.props.userId,
-            AssignedLicensees: assignedItems.map(x => x.LicenseeName).join(','),
-            UnassignedLicensees: unassignedItems.map(x => x.LicenseeName).join(','),
+            AssignedLicensees: assignedItems.map(x => x.Name).join(','),
+            UnassignedLicensees: unassignedItems.map(x => x.Name).join(','),
+            AssignOption: assignOption,
+            RemoveOption: removeOption,
             RedmineId: redmineId
         };
     }
@@ -127,24 +137,28 @@ export class LicenseeForm extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
-                if (response.data.Error) {
-                    Utility.showMessage(response.data.Error);
+                if (!response.data.IsSuccess) {
+                    Utility.showErrorMessage(response.data.Error);
                 }
                 else {
-                    Utility.showMessage('Success!');
+                    if (response.data.Error) {
+                        Utility.showWarningMessage(response.data.Error);
+                    }
+                    else {
+                        Utility.showMessage('Success!');
+                    }
                 }
-                this._getLicenseeList(this.props.userName);
+                this._getLicenseeList();
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
         });
     }
 
-    _getLicenseeList(userName) {
+    _getLicenseeList() {
         this.props.toggleLoader(true);
         const url = 'ITUserManagement/GetLicenseeUserList';
         const params = {
-            UserName: userName
+            UserName: this.props.userName
         };
 
         Site.fetchData(params, url)
@@ -153,12 +167,13 @@ export class LicenseeForm extends Component {
                     Utility.showMessage('No Licensees found.');
                 }
                 else {
-                    this.setState({ licenseeList: response.data });
+                    this.totalOriginalCheckedItems = response.data.filter(x => x.Checked).length;
+
+                    this.setState({ licenseeList: response.data, assignedItems: [], unassignedItems: [] });
                 }
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
         });
     }
@@ -167,7 +182,7 @@ export class LicenseeForm extends Component {
         const { assignedItems, licenseeList, searchText } = this.state;
 
         if (!checked) {
-            return item === null ? assignedItems.filter(x => x.Name.indexOf(searchText) === -1) : assignedItems.filter(x => x !== item);
+            return item === null ? assignedItems.filter(x => x.Name.toLowerCase().indexOf(searchText) === -1) : assignedItems.filter(x => x !== item);
         }
 
         if (item !== null) {
@@ -178,8 +193,8 @@ export class LicenseeForm extends Component {
             return licenseeList.filter(x => !x.Checked);
         }
 
-        const checkedList = licenseeList.filter(x => !x.Checked && x.Name.indexOf(searchText) > -1);
-        const removedDuplicatedList = assignedItems.filter(x => x.Name.indexOf(searchText) === -1);
+        const checkedList = licenseeList.filter(x => !x.Checked && x.Name.toLowerCase().indexOf(searchText) > -1);
+        const removedDuplicatedList = assignedItems.filter(x => x.Name.toLowerCase().indexOf(searchText) === -1);
         return checkedList.concat(removedDuplicatedList);
     }
 
@@ -188,7 +203,7 @@ export class LicenseeForm extends Component {
 
         if (checked) {
             if (item === null) {
-                return searchText === '' ? [] : unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
+                return searchText === '' ? [] : unassignedItems.filter(x => x.Name.toLowerCase().indexOf(searchText) === -1);
             }
 
             return unassignedItems.filter(x => x !== item);
@@ -198,8 +213,8 @@ export class LicenseeForm extends Component {
             return [...unassignedItems, item];           
         }
         
-        const uncheckedList = licenseeList.filter(x => x.Checked && x.Name.indexOf(searchText) > -1);
-        const removedDuplicatedList = unassignedItems.filter(x => x.Name.indexOf(searchText) === -1);
+        const uncheckedList = licenseeList.filter(x => x.Checked && x.Name.toLowerCase().indexOf(searchText) > -1);
+        const removedDuplicatedList = unassignedItems.filter(x => x.Name.toLowerCase().indexOf(searchText) === -1);
         return uncheckedList.concat(removedDuplicatedList);
     }
 
@@ -213,14 +228,14 @@ export class LicenseeForm extends Component {
         for (let i = 0; i < licenseeList.length; i++) {
             const item = licenseeList[i];
             const checked = item.Checked ? unassignedItems.indexOf(item) === -1 : assignedItems.indexOf(item) > -1;
-            const isShow = (searchText === '' || item.Name.indexOf(searchText) > -1) && item.Checked === isAssigned;
+            const isShow = (searchText === '' || item.Name.toLowerCase().indexOf(searchText) > -1) && item.Checked === isAssigned;
 
             checkingItems = checked && isShow ? checkingItems + 1 : checkingItems;
             showingItems = isShow ? showingItems + 1 : showingItems;
             totalSelectedItems = checked ? totalSelectedItems + 1 : totalSelectedItems;
 
             checkList.push(
-                <div key={item.Name} style={{display: isShow ? 'block' : 'none'}}>
+                <div key={i} style={{display: isShow ? 'block' : 'none'}}>
                     <input id={item.Name} type='checkbox' checked={checked} onChange={(e) => this.onItemChecked(e, item)} />
                     <label htmlFor={item.Name} className='optional-label'>{item.Name}</label>
                 </div>
@@ -229,10 +244,10 @@ export class LicenseeForm extends Component {
 
         return (
             <div className='form-group licensee-selection-container'>
-                <div><b>{totalSelectedItems}</b> selected item(s)</div>
+                <div><b>{totalSelectedItems}</b> selected item(s) { this.props.isAdmin ? '' : <span>- <b className='red'>Only add 1 Licensee for this user!</b></span> }</div>
                 <input id='0' type='checkbox' value='0' checked={showingItems > 0 && checkingItems === showingItems} onChange={(e) => this.onItemChecked(e, null)} />
                 <label htmlFor='0' className='optional-label'>All</label>
-              
+
                 <div className='licensee-selection'>
                     {checkList}
                 </div>
@@ -242,7 +257,7 @@ export class LicenseeForm extends Component {
 
     _buildContent() {
         const { licensee, isAssigned, assignedItems, unassignedItems } = this.state;
-        const { onClose } = this.props;
+        const { onClose, isAdmin } = this.props;
 
         return (
             <div className='licensee-form edit-form'>
@@ -331,7 +346,7 @@ export class LicenseeForm extends Component {
             title='Confirmation'
             content={this._buildOptionContent(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
             className='no-scroll'
-            style={{ height: height, width: '520px' }}
+            style={{ height: height, width: '580px' }}
             zIndex={52}
             onClose={() => this._showOptionBox(false)} />
     }
@@ -340,7 +355,7 @@ export class LicenseeForm extends Component {
         const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
         const totalaAssignedItems = assignedItems.length;
         const totalUnassignedItems = unassignedItems.length;
-        const height = (totalaAssignedItems && totalUnassignedItems) ? '275px' : (totalaAssignedItems > 0 ? '20px' : '230px');
+        const height = (totalaAssignedItems && totalUnassignedItems) ? '275px' : (totalaAssignedItems > 0 ? '245px' : '230px');
 
         return <RedmineConfirmForm isShow={isShow}
                 msg={this._getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
@@ -355,7 +370,7 @@ export class LicenseeForm extends Component {
                     totalaAssignedItems ? <p>- <b>Add</b> <b>{totalaAssignedItems}</b> more licensee(s) for user.({this.assignUserOption[assignOption].label})</p> : ''
                 }
                 {
-                    totalUnassignedItems ? <p>- <b>Remove</b> <b>{totalUnassignedItems}</b> licensee(s) from user.({this.removeUserOption[assignOption].label})</p> : ''
+                    totalUnassignedItems ? <p>- <b>Remove</b> <b>{totalUnassignedItems}</b> licensee(s) from user.({this.removeUserOption[removeOption].label})</p> : ''
                 }
                 <p>Do you want to perform this action?</p>
             </div>
