@@ -1,9 +1,10 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_ITUser_GetLicenseeFunction]
-	@UserName	VARCHAR(50),
+	@UserId	VARCHAR(50),
 	@FunctionId INT = 0,
-	@LicenseeId INT = 0
+	@LicenseeId INT = 0,
+	@SystemId INT = 1 -- LRF
 AS
 /*
 	 Created: Amanda
@@ -17,16 +18,26 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	DECLARE @UserId INT
-	SELECT @UserId = UserId FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName
-	
-	SELECT l.LicenseeID AS Id, l.LicenseeName AS Name, lu.isActive AS isActive
-	FROM dbo.LicenseeUser lu WITH (NOLOCK)
-	INNER JOIN dbo.Licensees l WITH (NOLOCK) ON lu.LicenseeID = l.LicenseeID
-	WHERE lu.UserID = @UserId AND l.IsActive = 1 AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+	;WITH LRF_Licencee AS (
+			SELECT sl.LicenseeID
+			FROM SystemLicensee sl WITH (NOLOCK)
+			INNER JOIN LicenseeReseller lr WITH (NOLOCK) ON sl.LicenseeID = lr.LicenseeID
+			INNER JOIN Resellers r WITH (NOLOCK) ON r.ResellerID = lr.ResellerID
+			WHERE sl.SystemID = @SystemId AND sl.isActive = 1 AND lr.ResellerID <> 3 AND (@LicenseeId = 0 OR sl.LicenseeID = @LicenseeId)
+			GROUP BY sl.LicenseeID
+	)
+	SELECT	l.LicenseeID AS Id,
+			l.LicenseeName AS Name,
+			lu.isActive AS Checked,
+			CASE WHEN ll.LicenseeID IS NOT NULL AND l.IsActive = 1 THEN 1 ELSE 0 END AS IsValid
+	FROM dbo.Licensees l WITH (NOLOCK)
+	INNER JOIN dbo.LicenseeUser lu WITH (NOLOCK) ON lu.LicenseeId = l.LicenseeID
+	LEFT JOIN LRF_Licencee ll WITH (NOLOCK) ON l.LicenseeID = ll.LicenseeID
+	WHERE lu.UserID = @UserId AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+	ORDER BY l.LicenseeName
 	
 	;WITH CTE_LicenseeFunc AS (
-		SELECT DISTINCT l.LicenseeID, lf.FunctionId
+		SELECT DISTINCT l.LicenseeID, l.LicenseeName, lf.FunctionId
 		FROM dbo.Licensees l WITH (NOLOCK)
 		INNER JOIN dbo.LicenseeFunctions lf WITH (NOLOCK) ON l.LicenseeID = lf.LicenseeId
 		WHERE l.IsActive = 1
@@ -37,7 +48,9 @@ BEGIN
 			f.FunctionId,
 			f.Name AS FunctionName,
 			luf.UserFuncionId AS UserFunctionId,
-			pf.FunctionId AS ParentId
+			pf.FunctionId AS ParentId,
+			cte.LicenseeName,
+			f.IsActive
 	FROM dbo.LicenseeUser lu WITH (NOLOCK)
 	INNER JOIN CTE_LicenseeFunc cte WITH (NOLOCK) ON lu.LicenseeID = cte.LicenseeID
 	INNER JOIN dbo.Functions f WITH (NOLOCK) ON cte.FunctionId = f.FunctionId
