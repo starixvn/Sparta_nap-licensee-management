@@ -49,7 +49,7 @@ BEGIN
 	DECLARE @Result AS TABLE ([Message] VARCHAR(MAX))
 	CREATE TABLE #AssignedLicensee (Id INT, Name VARCHAR(50), IsActive BIT, IsAssigned BIT, IsActiveUser BIT)
 		
-	IF @Role <> 'Admin' AND ISNULL(@AssignedLicensees, '') <> '' AND ( CHARINDEX(',', @AssignedLicensees) > 0 OR @AssignedLicensees = 'ALL')
+	IF @Role <> 'Admin' AND ISNULL(@AssignedLicensees, '') <> '' AND (CHARINDEX(',', @AssignedLicensees) > 0 OR @AssignedLicensees = 'ALL')
 	BEGIN
 		SELECT 'Can not add multiple Licensees for a Licensee user!' AS [Message], 1 AS IsOk
 	END
@@ -57,7 +57,7 @@ BEGIN
 		SELECT 1 FROM dbo.Users u WITH (NOLOCK) 
 		INNER JOIN dbo.LicenseeUser lu WITH (NOLOCK) ON u.UserID = lu.UserID
 		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON lu.LicenseeID = l.LicenseeID
-		WHERE u.UserID <> @UserId AND u.Username = @UserName AND lu.isActive = 1 AND l.LicenseeName = @AssignedLicensees
+		WHERE u.UserID <> @UserId AND u.Username = @UserName AND u.UserRole = 'Licensee' AND u.isInternal = 0 AND lu.isActive = 1 AND l.LicenseeName = @AssignedLicensees
 	)
 	BEGIN
 		SELECT 'Can not add licensee for this user. There is already an user named "' + @UserName + '" for licensee "' + @AssignedLicensees + '"' AS [Message], 1 AS IsOk
@@ -73,8 +73,8 @@ BEGIN
 				FROM dbo.LicenseeUser lu WITH (NOLOCK)
 				WHERE lu.UserID = @UserId
 			)
-			INSERT INTO #AssignedLicensee(Id, Name, IsAssigned, IsActiveUser)
-			SELECT DISTINCT l.LicenseeID, l.LicenseeName, CASE WHEN cte.LicenseeID IS NULL THEN 0 ELSE 1 END AS IsAssigned, cte.isActive
+			INSERT INTO #AssignedLicensee(Id, IsAssigned, IsActiveUser)
+			SELECT DISTINCT l.LicenseeID, CASE WHEN cte.LicenseeID IS NULL THEN 0 ELSE 1 END AS IsAssigned, cte.isActive
 			FROM dbo.Licensees l WITH (NOLOCK)
 			INNER JOIN dbo.SystemLicensee ls WITH (NOLOCK) ON l.LicenseeID = ls.LicenseeID
 			INNER JOIN dbo.LicenseeReseller lr WITH (NOLOCK) ON l.LicenseeID = lr.LicenseeID
@@ -143,7 +143,14 @@ BEGIN
 		END
 		
 		IF EXISTS (SELECT TOP(1) 1 FROM #AssignedLicensee)
-		BEGIN	
+		BEGIN
+			IF @Role = 'Licensee'
+			BEGIN
+				UPDATE dbo.Users WITH (ROWLOCK, UPDLOCK)
+				SET LicenseeName = @AssignedLicensees
+				WHERE UserID = @UserId
+			END
+		
 			-- Update licensee users that were closed
 			UPDATE lu
 			SET lu.isActive = 1, ModifyBy = NULL, ModifyDate = @Date

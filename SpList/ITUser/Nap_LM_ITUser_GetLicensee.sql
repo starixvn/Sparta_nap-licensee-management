@@ -30,6 +30,7 @@ BEGIN
 		INNER JOIN LicenseeReseller lr WITH (NOLOCK) ON l.LicenseeID = lr.LicenseeID
 		INNER JOIN Resellers r WITH (NOLOCK) ON r.ResellerID = lr.ResellerID
 		WHERE l.isActive = 1 AND sl.SystemID = @SystemId AND sl.isActive = 1 AND lr.ResellerID <> 3
+		GROUP BY l.LicenseeID, l.LicenseeName
 		ORDER BY l.LicenseeName
 		
 		RETURN
@@ -54,6 +55,7 @@ BEGIN
 		INNER JOIN Resellers r WITH (NOLOCK) ON r.ResellerID = lr.ResellerID
 		LEFT JOIN Licensee_CTE cte ON cte.LicenseeId = l.LicenseeID
 		WHERE l.isActive = 1 AND sl.SystemID = @SystemId AND sl.isActive = 1 AND lr.ResellerID <> 3
+		GROUP BY l.LicenseeID, l.LicenseeName, cte.LicenseeId, cte.isActive
 		ORDER BY l.LicenseeName
 		
 		RETURN
@@ -68,6 +70,7 @@ BEGIN
 		INNER JOIN LicenseeReseller lr WITH (NOLOCK) ON l.LicenseeID = lr.LicenseeID
 		INNER JOIN Resellers r WITH (NOLOCK) ON r.ResellerID = lr.ResellerID
 		WHERE l.IsActive = 1 AND lu.UserID = @UserId AND sl.SystemID = @SystemId AND sl.isActive = 1 AND lr.ResellerID <> 3
+		GROUP BY l.LicenseeID, l.LicenseeName, lu.isActive
 		ORDER BY l.LicenseeName
 		
 		RETURN
@@ -85,6 +88,7 @@ BEGIN
 			FROM dbo.LicenseeUser lu WITH (NOLOCK)
 			WHERE lu.UserID = @UserId AND lu.LicenseeID = l.LicenseeID
 		)
+	GROUP BY l.LicenseeID, l.LicenseeName
 	ORDER BY l.LicenseeName
 END
 GO
