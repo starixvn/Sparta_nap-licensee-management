@@ -281,7 +281,7 @@ export class LicenseeForm extends Component {
                     </div>
                 </div>
                 {this._buildLicenseeCheckList(isAdmin, isActive)}
-                { isActive &&
+                { isActive && isAdmin &&
                     <div className='form-group right'>
                         <button className='btn btn-primary' onClick={this.onSubmit} disabled={assignedItems.length === 0 && unassignedItems.length === 0} >
                             Submit

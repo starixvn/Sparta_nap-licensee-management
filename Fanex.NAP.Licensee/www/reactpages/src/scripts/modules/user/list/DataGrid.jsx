@@ -98,7 +98,7 @@ export class DataGrid extends Component {
                                     <a title={`${item.IsActive ? 'Edit' : 'View'} permission of "${item.UserName}"`} href={window.rootUrl + `ITUserManagement/Edit?UserId=${item.UserId}`}>
                                             <i className="icon-edit"></i>
                                     </a>
-                                    <i title={`${item.IsActive ? 'Edit' : 'View'} licensee for "${item.UserName}"`} 
+                                    <i title={`${item.IsActive && assignMenu.isAdmin ? 'Edit' : 'View'} licensee for "${item.UserName}"`} 
                                         className="icon-list"
                                         style={{marginLeft: '15px'}}
                                         onClick={() => this.onAssignAction(item.UserId, item.UserName, item.IsAdmin, item.IsActive)}></i>
