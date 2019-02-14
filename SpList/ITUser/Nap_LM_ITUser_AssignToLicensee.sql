@@ -32,7 +32,7 @@ BEGIN
 	SET NOCOUNT ON;
 		
 	DECLARE @Status VARCHAR(30), @Role VARCHAR(50), @UserName VARCHAR(50)
-	SELECT @Status = [Status], @Role = UserRole, @UserName = Username FROM dbo.Users WITH (NOLOCK) WHERE UserID = @UserId	
+	SELECT @Status = [Status], @Role = UserRole, @UserName = Username FROM dbo.Users WITH (NOLOCK) WHERE UserID = @UserId AND isInternal = 0
 
 	IF @Status IS NULL
 	BEGIN
@@ -52,15 +52,6 @@ BEGIN
 	IF @Role <> 'Admin' AND ISNULL(@AssignedLicensees, '') <> '' AND (CHARINDEX(',', @AssignedLicensees) > 0 OR @AssignedLicensees = 'ALL')
 	BEGIN
 		SELECT 'Can not add multiple Licensees for a Licensee user!' AS [Message], 1 AS IsOk
-	END
-	ELSE IF @Role <> 'Admin' AND EXISTS (
-		SELECT 1 FROM dbo.Users u WITH (NOLOCK) 
-		INNER JOIN dbo.LicenseeUser lu WITH (NOLOCK) ON u.UserID = lu.UserID
-		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON lu.LicenseeID = l.LicenseeID
-		WHERE u.UserID <> @UserId AND u.Username = @UserName AND u.UserRole = 'Licensee' AND u.isInternal = 0 AND lu.isActive = 1 AND l.LicenseeName = @AssignedLicensees
-	)
-	BEGIN
-		SELECT 'Can not add licensee for this user. There is already an user named "' + @UserName + '" for licensee "' + @AssignedLicensees + '"' AS [Message], 1 AS IsOk
 	END
 	ELSE
 	BEGIN
@@ -87,7 +78,7 @@ BEGIN
 				AND (cte.LicenseeID IS NULL OR cte.isActive = 0) 
 		END
 		
-		IF (ISNULL(@AssignedLicensees,'') <> '')
+		IF (ISNULL(@AssignedLicensees,'') <> '') AND @AssignedLicensees <> 'All'
 		BEGIN
 			INSERT INTO #AssignedLicensee(Name)
 			SELECT DISTINCT val

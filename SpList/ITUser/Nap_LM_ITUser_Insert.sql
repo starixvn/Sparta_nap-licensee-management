@@ -22,6 +22,14 @@ AS
 
 	 Revisions:
 	  - 20190131@Amanda: Add New User [Redmine: #83584]
+	  
+	 Developer's Note:
+	  - @LicenseeName: a Licensee Name or 'All'
+	  - @Option:
+		+ 0: Only add licensee
+		+ 1: Assign all currencies and functions, excluding "Account Management" and "Notification"
+		+ 2: Assign all currencies and functions, including "Account Management" and "Notification"
+
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -37,8 +45,7 @@ BEGIN
 		SET @UserRole = 'Licensee'
 	END
 
-	IF (@UserRole = 'Admin' AND EXISTS (SELECT TOP(1) 1 FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName)) OR
-		(@UserRole = 'Licensee' AND EXISTS (SELECT 1 FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName AND UserRole = 'Admin'))
+	IF EXISTS (SELECT  1 FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName AND isInternal = 0)
 	BEGIN
 		SELECT 'This user name already exists!' AS [Message], 0 AS IsOk	
 		RETURN
@@ -68,22 +75,10 @@ BEGIN
 		SET @tmpLicenseeName = @LicenseeName
 	END
 	
-	IF  @UserRole = 'Licensee'
+	IF  @UserRole = 'Licensee' AND @LicenseeName = 'All'
 	BEGIN
-		IF EXISTS (SELECT TOP(1) 1 
-					FROM dbo.Users u WITH (NOLOCK)
-					INNER JOIN dbo.LicenseeUser lu WITH (NOLOCK) ON u.UserID = lu.UserID
-					WHERE u.Username = @UserName AND u.UserRole = 'Licensee' AND u.isInternal = 0 AND lu.LicenseeID = @LicenseeId AND lu.isActive = 1)
-		BEGIN
-			SELECT 'This user name already exists for licensee "' + @tmpLicenseeName + '"!' AS [Message], 0 AS IsOk		
-			RETURN
-		END
-		
-		IF @LicenseeName = 'All'
-		BEGIN
-			SELECT 'Can not add multiple Licensees for a Licensee user!' AS [Message], 0 AS IsOk		
-			RETURN
-		END
+		SELECT 'Can not add multiple Licensees for a Licensee user!' AS [Message], 0 AS IsOk		
+		RETURN
 	END
 	
 	DECLARE @Status VARCHAR(30)

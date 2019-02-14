@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
-ALTER PROCEDURE [dbo].[Nap_LM_ITUser_Get]
+CREATE PROCEDURE [dbo].[Nap_LM_ITUser_Get]
 	@UserId INT,
 	@SystemId INT = 1 -- LRF
 AS
