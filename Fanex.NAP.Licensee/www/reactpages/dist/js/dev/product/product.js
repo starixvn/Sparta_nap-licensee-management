@@ -9049,6 +9049,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     }) });
                 _this2.props.toggleLoader(false);
                 _this2.props.setCheckedList([]);
+            }).catch(function (err) {
+                _this2.props.toggleLoader(false);
             });
         }
     }, {
@@ -9309,7 +9311,6 @@ var Button = exports.Button = function (_Component) {
                 _this2._updateGrid();
                 _this2.onPopupClose();
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try again!');
                 _this2.props.toggleLoader(false);
             });
         }
@@ -9334,7 +9335,6 @@ var Button = exports.Button = function (_Component) {
 
                 _this3.props.toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
                 _this3.props.toggleLoader(false);
             });
         }

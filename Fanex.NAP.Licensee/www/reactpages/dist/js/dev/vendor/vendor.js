@@ -8647,10 +8647,6 @@ var _Pager = __webpack_require__(91);
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
-var _utility = __webpack_require__(7);
-
-var _utility2 = _interopRequireDefault(_utility);
-
 var _site = __webpack_require__(13);
 
 var _site2 = _interopRequireDefault(_site);
@@ -8696,6 +8692,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
             this.props.toggleLoader(true);
             _site2.default.fetchData(this.props.params, 'LicenseeVendor/GetVendorInfoList').then(function (response) {
                 _this2.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
+                _this2.props.toggleLoader(false);
+            }).catch(function (err) {
                 _this2.props.toggleLoader(false);
             });
         }

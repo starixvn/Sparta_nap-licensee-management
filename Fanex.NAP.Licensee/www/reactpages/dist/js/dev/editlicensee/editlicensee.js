@@ -9342,7 +9342,6 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                         _this3.props.getProductList(_this3.props.licensee.LicenseeID);
                     }
                 }).catch(function (err) {
-                    _utility2.default.showMessage('Error!');
                     _this3.props.toggleLoader(false);
                 });
             } else {
@@ -9426,7 +9425,6 @@ var ProductGrid = exports.ProductGrid = function (_Component) {
                         _this6.props.getProductList(_this6.props.licensee.LicenseeID);
                     }
                 }).catch(function (err) {
-                    _utility2.default.showMessage('Please try later!');
                     _this6.props.toggleLoader(false);
                 });
             } else {
@@ -9729,7 +9727,6 @@ var AddAgent = exports.AddAgent = function (_Component) {
 
                 _this2.props.toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
             });
         }
@@ -9772,7 +9769,6 @@ var AddAgent = exports.AddAgent = function (_Component) {
 
                     _this3.props.toggleLoader(false);
                 }).catch(function (err) {
-                    _utility2.default.showMessage('Please try later!');
                     _this3.props.toggleLoader(false);
                 });
             }
@@ -9976,10 +9972,6 @@ var _site = __webpack_require__(13);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _utility = __webpack_require__(7);
-
-var _utility2 = _interopRequireDefault(_utility);
-
 var _Popup = __webpack_require__(53);
 
 var _Popup2 = _interopRequireDefault(_Popup);
@@ -10019,7 +10011,6 @@ var LAPExclusions = exports.LAPExclusions = function (_Component) {
 
                 _this.props.toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
                 _this.props.toggleLoader(false);
             });
         };
@@ -10163,7 +10154,6 @@ var TerminateLicensee = exports.TerminateLicensee = function (_Component) {
                         _this.props.toggleLoader(false);
                     }
                 }).catch(function (err) {
-                    _utility2.default.showMessage('Please try later!');
                     _this.props.toggleLoader(false);
                 });
             } else {
@@ -10304,7 +10294,6 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
 
                 _this.props.toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
                 _this.props.toggleLoader(false);
             });
         };
@@ -10356,7 +10345,6 @@ var OfferProductForm = exports.OfferProductForm = function (_Component) {
                 _this2.onClose();
                 _this2.props.getProductList(_this2.props.licensee.LicenseeID);
             }).catch(function (err) {
-                _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
             });
         }
@@ -10740,7 +10728,6 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
 
                 _this.props.toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try later!');
                 _this.props.toggleLoader(false);
             });
         };
@@ -10790,7 +10777,6 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
                 _this2.onClose();
                 _this2.props.getSystemList(_this2.props.licensee.LicenseeID);
             }).catch(function (err) {
-                _utility2.default.showMessage('Error!');
                 _this2.props.toggleLoader(false);
             });
         }

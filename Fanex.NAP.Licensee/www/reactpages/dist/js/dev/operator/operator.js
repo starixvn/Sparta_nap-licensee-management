@@ -612,7 +612,6 @@ var Form = function (_Component) {
                     isLoading: false
                 });
             }).catch(function (err) {
-                _this2._alert('Please try again!');
                 _this2._toggleLoader(false);
             });
         }

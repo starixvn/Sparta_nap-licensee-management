@@ -8950,6 +8950,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
             _site2.default.fetchData(this.props.params, 'ManageOperator/Search').then(function (response) {
                 _this2.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
                 _this2.props.toggleLoader(false);
+            }).catch(function (err) {
+                _this2.props.toggleLoader(false);
             });
         }
     }, {
@@ -8986,7 +8988,6 @@ var DataGrid = exports.DataGrid = function (_Component) {
                 _this3.props.toggleLoader(false);
                 _this3._getData();
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try again!');
                 _this3.props.toggleLoader(false);
             });
         }

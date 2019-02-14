@@ -647,7 +647,6 @@ var Form = function (_Component) {
 
                 _this2._toggleLoader(false);
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try again!');
                 _this2._toggleLoader(false);
             });
         }

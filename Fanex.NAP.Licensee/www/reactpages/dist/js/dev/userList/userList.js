@@ -6184,7 +6184,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         { title: (item.IsActive ? 'Edit' : 'View') + ' permission of "' + item.UserName + '"', href: window.rootUrl + ('ITUserManagement/Edit?UserId=' + item.UserId) },
                                         _react2.default.createElement('i', { className: 'icon-edit' })
                                     ),
-                                    _react2.default.createElement('i', { title: (item.IsActive ? 'Edit' : 'View') + ' licensee for "' + item.UserName + '"',
+                                    _react2.default.createElement('i', { title: (item.IsActive && assignMenu.isAdmin ? 'Edit' : 'View') + ' licensee for "' + item.UserName + '"',
                                         className: 'icon-list',
                                         style: { marginLeft: '15px' },
                                         onClick: function onClick() {
@@ -6672,7 +6672,7 @@ var LicenseeForm = exports.LicenseeForm = function (_Component) {
                     )
                 ),
                 this._buildLicenseeCheckList(isAdmin, isActive),
-                isActive && _react2.default.createElement(
+                isActive && isAdmin && _react2.default.createElement(
                     'div',
                     { className: 'form-group right' },
                     _react2.default.createElement(

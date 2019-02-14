@@ -5646,6 +5646,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
             _site2.default.fetchData(this.props.params, 'LicenseeSetting/Search').then(function (response) {
                 _this2.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
                 _this2.props.toggleLoader(false);
+            }).catch(function (err) {
+                _this2.props.toggleLoader(false);
             });
         }
     }, {

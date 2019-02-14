@@ -8974,6 +8974,8 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
 
                 _this2.props.toggleLoader(false);
                 _this2.props.setCheckedList([]);
+            }).catch(function (err) {
+                _this2.props.toggleLoader(false);
             });
         }
     }, {
@@ -9640,7 +9642,6 @@ var Action = exports.Action = function (_Component) {
                     _this3.props.toggleLoader(false);
                 }
             }).catch(function (err) {
-                _utility2.default.showMessage('Please try again!');
                 _this3.props.toggleLoader(false);
             });
         }

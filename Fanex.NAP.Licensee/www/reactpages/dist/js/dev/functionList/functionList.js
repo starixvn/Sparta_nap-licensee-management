@@ -9114,7 +9114,7 @@ var AssignFunctionForm = exports.AssignFunctionForm = function (_Component) {
             isAssigned: true
         };
 
-        _this.assignFunctionOption = [{ value: '0', label: 'Only assign function to licensee' }, { value: '1', label: 'Assign function to admin users' }, { value: '2', label: 'Assign function to all users' }];
+        _this.assignFunctionOption = [{ value: '0', label: 'Only assign function to licensee' }, { value: '1', label: 'Assign function to admin users (User Name: Admin or Administrator)' }, { value: '2', label: 'Assign function to all users' }];
         _this.removeFunctionOption = [{ value: '0', label: 'Only remove function from licensee' }, { value: '1', label: 'Remove function from all users' }];
         return _this;
     }
@@ -9528,7 +9528,7 @@ var AssignFunctionForm = exports.AssignFunctionForm = function (_Component) {
                 title: 'Confirmation',
                 content: this._buildOptionContent(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption),
                 className: 'no-scroll',
-                style: { height: height, width: '400px' },
+                style: { height: height, width: '460px' },
                 zIndex: 52,
                 onClose: function onClose() {
                     return _this8._showOptionBox(false);
@@ -9545,7 +9545,7 @@ var AssignFunctionForm = exports.AssignFunctionForm = function (_Component) {
 
             var totalaAssignedItems = assignedItems.length;
             var totalUnassignedItems = unassignedItems.length;
-            var height = totalaAssignedItems && totalUnassignedItems ? '255px' : '230px';
+            var height = totalaAssignedItems && totalUnassignedItems ? '280px' : '250px';
 
             return _react2.default.createElement(_RedmineConfirmForm2.default, { isShow: isShow,
                 msg: this._getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption),
