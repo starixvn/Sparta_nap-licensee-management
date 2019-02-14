@@ -8,7 +8,7 @@
     {
         ResultGridData<ITUser> GetUserList(SearchUserCriteria criteria);
 
-        IEnumerable<OptionItem> GetLicenseeUserList(string userName, bool? isAssigned = null);
+        IEnumerable<ITUserLicensee> GetLicenseeUserList(int userId, bool? isAssigned = null);
 
         IEnumerable<ResultInfo> AssignUser(AssignUserCriteria criteria);
 
@@ -21,5 +21,7 @@
         IEnumerable<ResultInfo> EditCurrency(EditCurrencyCriteria criteria);
 
         IEnumerable<ResultInfo> AddUser(AddUserCriteria criteria);
+
+        ITUser Get(int userId);
     }
 }

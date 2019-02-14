@@ -26,7 +26,7 @@
 
         ITUser_Insert = 5540,
         ITUser_AssignToLicensee = 5541,
-        ITUser_EditLRFFunction = 5542,
-        ITUser_EditCurrency = 5543
+        ITUser_UpdateLRFFunction = 5542,
+        ITUser_UpdateCurrency = 5543
     }
 }

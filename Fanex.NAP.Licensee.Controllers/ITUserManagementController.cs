@@ -43,7 +43,7 @@
             var viewModel = new AddUserViewModel
             {
                 Token = Cryptography.CreateSalt(),
-                LicenseeList = _service.GetLicenseeUserList(string.Empty)
+                LicenseeList = _service.GetLicenseeUserList(0)
             };
 
             return View(viewModel);
@@ -51,13 +51,13 @@
 
         [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
-        public ActionResult Edit(string userName)
+        public ActionResult Edit(int userId)
         {
             var viewModel = new EditFunctionViewModel
             {
-                UserName = userName,
+                User = _service.Get(userId),
                 FunctionList = _functionService.GetFunctionList(),
-                LicenseeList = _service.GetLicenseeUserList(userName, true)
+                LicenseeList = _service.GetLicenseeUserList(userId, true)
             };
 
             return View(viewModel);
@@ -86,9 +86,9 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetLicenseeUserList(string userName)
+        public JsonResult GetLicenseeUserList(int userId)
         {
-            return Json(_service.GetLicenseeUserList(userName));
+            return Json(_service.GetLicenseeUserList(userId));
         }
 
         [HttpPost]
@@ -148,7 +148,8 @@
 
             errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
 
-            if (!criteria.NewFunctions.Any() && !criteria.RemoveFunctions.Any())
+            if ((criteria.NewFunctions == null && criteria.RemovedFunctions == null)
+                || (!criteria.NewFunctions.Any() && !criteria.RemovedFunctions.Any()))
             {
                 errorBuilder.Append("Function is empty!<br>");
             }

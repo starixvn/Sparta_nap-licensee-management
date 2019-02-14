@@ -4,7 +4,7 @@
 
     public class ITUserLicenseeFunction
     {
-        public OptionItem Licensee { get; set; }
+        public ITUserLicensee Licensee { get; set; }
 
         public IEnumerable<ITUserFunctionHierarchy> Functions { get; set; }
     }

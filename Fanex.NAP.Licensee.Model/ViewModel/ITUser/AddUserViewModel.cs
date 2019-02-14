@@ -7,6 +7,6 @@
     {
         public string Token { get; set; }
 
-        public IEnumerable<OptionItem> LicenseeList { get; set; }
+        public IEnumerable<ITUserLicensee> LicenseeList { get; set; }
     }
 }

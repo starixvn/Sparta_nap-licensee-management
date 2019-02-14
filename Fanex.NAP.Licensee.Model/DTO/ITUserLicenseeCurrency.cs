@@ -4,7 +4,7 @@
 
     public class ITUserLicenseeCurrency
     {
-        public OptionItem Licensee { get; set; }
+        public ITUserLicensee Licensee { get; set; }
 
         public IEnumerable<ITUserCurrency> Currencies { get; set; }
     }

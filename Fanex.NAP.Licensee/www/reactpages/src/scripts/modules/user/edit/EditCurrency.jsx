@@ -36,15 +36,15 @@ export class EditCurrency extends Component {
     }
 
     render() {
-        const { isActive, userName, licenseeList } = this.props
+        const { isActive, user, licenseeList } = this.props
         const { currencyList } = this.state;
 
         return (
             <div style={{display: isActive ? 'block' : 'none'}}>
-                <FormFilter userName={userName}
+                <FormFilter user={user}
                     licenseeList={licenseeList}
                     currencyList={currencyList} />
-                <DataGrid />
+                <DataGrid isActiveUser={user.IsActive} />
             </div>
         )
     }

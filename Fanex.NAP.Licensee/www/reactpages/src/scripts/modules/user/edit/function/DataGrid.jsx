@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader } from '../action';
 import Site from '../../../../lib/site';
 import RedmineConfirmForm from '../../../../components/RedmineConfirmForm';
+import Utility from '../../../../lib/utility';
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -64,7 +65,7 @@ export class DataGrid extends Component {
         const { assignedFunctions, unassignedFunctions } = this.state;
 
         return {
-            UserName: this.props.functionParams.UserName,
+            UserId: this.props.functionParams.UserId,
             NewFunctions: assignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
             RemovedFunctions: unassignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
             RedmineId: redmineId
@@ -78,11 +79,16 @@ export class DataGrid extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
-                if (response.data.Error) {
-                    Utility.showMessage(response.data.Error);
+                if (!response.data.IsSuccess) {
+                    Utility.showErrorMessage(response.data.Error);
                 }
                 else {
-                    Utility.showMessage('Success!');
+                    if (response.data.Error) {
+                        Utility.showWarningMessage(response.data.Error);
+                    }
+                    else {
+                        Utility.showMessage('Success!');
+                    }
                 }
                 this._getData();
             }).catch(err => {
@@ -103,10 +109,12 @@ export class DataGrid extends Component {
         Site.fetchData(this.props.functionParams, 'ITUserManagement/GetLicenseeUserFunction').then(response => {
             this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: []});
             this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 
-    _buildFunctionNode(licensee, node, level, hierachy) {
+    _buildFunctionNode(licensee, node, level, hierachy, isActiveUser) {
         const checked = licensee.Checked 
             && (node.UserFunctionId > 0 ? this.state.unassignedFunctions.indexOf(node) === -1 : this.state.assignedFunctions.indexOf(node) > -1 );
 
@@ -118,7 +126,7 @@ export class DataGrid extends Component {
                     {node.FunctionName}
                         </td>
                         {
-                            licensee.Checked && node.IsActive
+                            licensee.Checked && isActiveUser && ((node.IsActive && licensee.IsValid) || checked)
                             ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
                             : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
                         }
@@ -127,31 +135,31 @@ export class DataGrid extends Component {
 
         const total = node.Children.length;
         for(let k = 0; k < total; k++) {
-            this._buildFunctionNode(licensee, node.Children[k], level + 1, hierachy);
+            this._buildFunctionNode(licensee, node.Children[k], level + 1, hierachy, isActiveUser);
         }
     }
 
-    _buildFunctionHierachy(licensee, functions) {
+    _buildFunctionHierachy(licensee, functions, isActiveUser) {
         let hierachy = [];
 
         const total = functions.length;
         for(let j = 0; j < total; j++) {
-            this._buildFunctionNode(licensee, functions[j], 0, hierachy);
+            this._buildFunctionNode(licensee, functions[j], 0, hierachy, isActiveUser);
         }
 
         return hierachy;
     }
 
-    _buildTableBody(gridData) {
+    _buildTableBody(gridData, isActiveUser) {
         let grid = [];
 
         const total = gridData.length;
         for(let i = 0; i < total; i++) {
             const item = gridData[i];
-            const hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions);
+            const hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions, isActiveUser);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
-                    <td className='middle' rowSpan={hierachy.length + 1}><b>{item.Licensee.Name}</b></td>
+                    <td className='middle' rowSpan={hierachy.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
                     <td className='middle text-center' rowSpan={hierachy.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );
@@ -163,7 +171,7 @@ export class DataGrid extends Component {
         return grid;
     }
 
-    _buildTable(gridData) {
+    _buildTable(gridData, isActiveUser) {
         return (
           <table className="table table-bordered table-hover">
                     <thead>
@@ -180,7 +188,7 @@ export class DataGrid extends Component {
 
                     <tbody>
                     {
-                        this._buildTableBody(gridData)
+                        this._buildTableBody(gridData, isActiveUser)
                     }
                     </tbody>
             </table>  
@@ -194,16 +202,21 @@ export class DataGrid extends Component {
             return false;
         }
 
+        const { isActiveUser } = this.props;    
+
         return (
             <div>
-                 <div style={{ display: 'inline-block' }}>
-                    <button className='btn btn-green' onClick={this.onSubmit} disabled={!this.isValid}>Update</button>
-                </div>
+                {
+                    isActiveUser &&
+                    <div style={{ display: 'inline-block' }}>
+                        <button className='btn btn-green' onClick={this.onSubmit} disabled={!this.isValid}>Update</button>
+                    </div>
+                }
                 <RedmineConfirmForm isShow={isShowConfirmBox}
                     msg='Do you want to update functions of user?'
                     style={{height: '210px', width: '400px'}}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData)}       
+                {this._buildTable(gridData, isActiveUser)}       
             </div>
         )
     }

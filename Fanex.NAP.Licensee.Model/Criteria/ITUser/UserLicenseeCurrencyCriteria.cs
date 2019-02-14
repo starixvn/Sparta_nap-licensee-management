@@ -2,7 +2,7 @@
 {
     public class UserLicenseeCurrencyCriteria
     {
-        public string UserName { get; set; }
+        public int UserId { get; set; }
 
         public int LicenseeId { get; set; }
 

@@ -16,6 +16,10 @@ export class AppContainer extends Component {
     }
 
     render() {
+        if (!defaultState.user) {
+            return <b className='red'>User does not exist!</b>;
+        }
+        
         const { tabId } = this.state;
         const activeClass = 'tab-item active';
         const unactiveClass = 'tab-item';
@@ -28,11 +32,11 @@ export class AppContainer extends Component {
                 </div>
                 <Loader isLoading={this.props.isLoading} />              
                 <EditFunction isActive={tabId === 0}
-                    userName={defaultState.userName}
+                    user={defaultState.user}
                     licenseeList={defaultState.licenseeList}
                     functionList={defaultState.functionList} />
                 <EditCurrency isActive={tabId === 1}
-                    userName={defaultState.userName}
+                    user={defaultState.user}
                     licenseeList={defaultState.licenseeList} />
             </div>
         )

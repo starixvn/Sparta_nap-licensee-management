@@ -168,6 +168,7 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\ITUserLicensee.cs" />
     <Compile Include="DTO\ITUserCurrency.cs" />
     <Compile Include="DTO\ITUserLicenseeCurrency.cs" />
     <Compile Include="DTO\ITUserLicenseeFunction.cs" />

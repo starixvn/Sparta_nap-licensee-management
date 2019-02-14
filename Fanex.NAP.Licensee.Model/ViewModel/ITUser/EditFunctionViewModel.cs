@@ -5,9 +5,9 @@
 
     public class EditFunctionViewModel
     {
-        public string UserName { get; set; }
+        public ITUser User { get; set; }
 
-        public IEnumerable<OptionItem> LicenseeList { get; set; }
+        public IEnumerable<ITUserLicensee> LicenseeList { get; set; }
 
         public IEnumerable<OptionItem> FunctionList { get; set; }
     }

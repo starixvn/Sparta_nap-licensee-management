@@ -8,7 +8,7 @@
 
         public IEnumerable<LicenseeFunctionCriteria> NewFunctions { get; set; }
 
-        public IEnumerable<LicenseeFunctionCriteria> RemoveFunctions { get; set; }
+        public IEnumerable<LicenseeFunctionCriteria> RemovedFunctions { get; set; }
 
         public int RedmineId { get; set; }
     }

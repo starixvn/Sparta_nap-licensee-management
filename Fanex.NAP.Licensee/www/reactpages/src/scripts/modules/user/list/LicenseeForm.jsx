@@ -158,7 +158,7 @@ export class LicenseeForm extends Component {
         this.props.toggleLoader(true);
         const url = 'ITUserManagement/GetLicenseeUserList';
         const params = {
-            UserName: this.props.userName
+            UserId: this.props.userId
         };
 
         Site.fetchData(params, url)
@@ -218,7 +218,7 @@ export class LicenseeForm extends Component {
         return uncheckedList.concat(removedDuplicatedList);
     }
 
-    _buildLicenseeCheckList() {
+    _buildLicenseeCheckList(isAdmin, isActive) {
         const { licenseeList, assignedItems, unassignedItems, searchText, isAssigned } = this.state;
         let checkList = [];
         let checkingItems = 0;
@@ -237,19 +237,23 @@ export class LicenseeForm extends Component {
             checkList.push(
                 <div key={i} style={{display: isShow ? 'block' : 'none'}}>
                     <input id={item.Name} type='checkbox' checked={checked} onChange={(e) => this.onItemChecked(e, item)} />
-                    <label htmlFor={item.Name} className='optional-label'>{item.Name}</label>
+                    <label htmlFor={item.Name} className='optional-label'>{item.Name}{!item.IsValid && <sup className='red'>*</sup>}</label>
                 </div>
             );
         }
 
         return (
             <div className='form-group licensee-selection-container'>
-                <div><b>{totalSelectedItems}</b> selected item(s) { this.props.isAdmin ? '' : <span>- <b className='red'>Only add 1 Licensee for this user!</b></span> }</div>
+                <div><b>{totalSelectedItems}</b> selected item(s) { isAdmin || !isActive ? '' : <span>- <b className='red'>Only add 1 Licensee for this user!</b></span> }</div>
                 <input id='0' type='checkbox' value='0' checked={showingItems > 0 && checkingItems === showingItems} onChange={(e) => this.onItemChecked(e, null)} />
                 <label htmlFor='0' className='optional-label'>All</label>
 
                 <div className='licensee-selection'>
                     {checkList}
+                </div>
+
+                <div>
+                    <sup className='red'>*</sup>: Licensee is inactive or not active for LRF.
                 </div>
             </div>
         );
@@ -257,7 +261,7 @@ export class LicenseeForm extends Component {
 
     _buildContent() {
         const { licensee, isAssigned, assignedItems, unassignedItems } = this.state;
-        const { onClose, isAdmin } = this.props;
+        const { onClose, isAdmin, isActive } = this.props;
 
         return (
             <div className='licensee-form edit-form'>
@@ -276,15 +280,17 @@ export class LicenseeForm extends Component {
                         <label htmlFor='isAssigned' className='optional-label'>Assigned</label>
                     </div>
                 </div>
-                {this._buildLicenseeCheckList()}
-                <div className='form-group right'>
-                    <button className='btn btn-primary' onClick={this.onSubmit} disabled={assignedItems.length === 0 && unassignedItems.length === 0} >
-                        Submit
-                    </button>
-                    <button className='btn btn-red' onClick={() => this.onClose(onClose)}>
-                        Cancel
-                    </button>
-                </div>
+                {this._buildLicenseeCheckList(isAdmin, isActive)}
+                { isActive &&
+                    <div className='form-group right'>
+                        <button className='btn btn-primary' onClick={this.onSubmit} disabled={assignedItems.length === 0 && unassignedItems.length === 0} >
+                            Submit
+                        </button>
+                        <button className='btn btn-red' onClick={() => this.onClose(onClose)}>
+                            Cancel
+                        </button>
+                    </div>
+                }
             </div>
         );
     }

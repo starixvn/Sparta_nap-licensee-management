@@ -119,18 +119,13 @@
 
   <Function Name="Site.Nap.Licensee.ITUserManagement">
     <Setting Key="Nap_LM_ITUser_Select" SpName="Nap_LM_ITUser_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_ITUser_GetLicensee" SpName="Nap_LM_ITUser_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
-      <Mapping DataField="isActive" ObjectProperty="Checked" />
-    </Setting>
+    <Setting Key="Nap_LM_ITUser_GetLicensee" SpName="Nap_LM_ITUser_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_AssignToLicensee" SpName="Nap_LM_ITUser_AssignToLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_ITUser_GetLicenseeFunction" SpName="Nap_LM_ITUser_GetLicenseeFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
-      <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
-    </Setting>
-    <Setting Key="Nap_LM_ITUser_EditFunction" SpName="Nap_LM_ITUser_EditFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_ITUser_GetLicenseeCurrency" SpName="Nap_LM_ITUser_GetLicenseeCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
-      <Mapping DataField="isActive" ObjectProperty="Checked" />
-    </Setting>
-    <Setting Key="Nap_LM_ITUser_EditCurrency" SpName="Nap_LM_ITUser_EditCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_GetLicenseeFunction" SpName="Nap_LM_ITUser_GetLicenseeFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_UpdateFunction" SpName="Nap_LM_ITUser_UpdateFunction" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_GetLicenseeCurrency" SpName="Nap_LM_ITUser_GetLicenseeCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_UpdateCurrency" SpName="Nap_LM_ITUser_UpdateCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_Insert" SpName="Nap_LM_ITUser_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_Get" SpName="Nap_LM_ITUser_Get" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

@@ -30,7 +30,7 @@ export class FormFilter extends Component {
         const { selectedLicensee, selectedFunction } = this.state;
 
         const params = {
-            UserName: this.props.userName,
+            UserId: this.props.user.UserId,
             LicenseeId: selectedLicensee ? selectedLicensee.value : 0,
             FunctionId: selectedFunction ? selectedFunction.value : 0,
             TimeStamp: new Date().getTime()
@@ -45,7 +45,7 @@ export class FormFilter extends Component {
         const isValid = this.isValid;
 
         return (
-        <div className="col-xs-12 form-inline filter-form">
+            <div className="col-xs-12 form-inline filter-form">
                 <div className="form-group">
                     <label>Licensee</label>
                     <Select instanceId="ddlLicensee"
@@ -66,6 +66,10 @@ export class FormFilter extends Component {
 
                 <div className="form-group">
                     <button type="button" className="btn btn-primary" onClick={this.onSubmit} disabled={!isValid}>Submit</button>
+                </div>
+
+                <div className='form-group full-width'>
+                    <sup className='red'>*</sup>: Licensee is inactive or not active for LRF.
                 </div>
             </div>
         )

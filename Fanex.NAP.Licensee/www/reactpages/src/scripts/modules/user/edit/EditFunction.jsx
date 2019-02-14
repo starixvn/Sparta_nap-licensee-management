@@ -9,14 +9,14 @@ export default class EditFunction extends Component {
     }
 
     render() {
-        const { isActive, userName, licenseeList, functionList } = this.props
+        const { isActive, user, licenseeList, functionList } = this.props
 
         return (
             <div style={{display: isActive ? 'block' : 'none'}}>
-                <FormFilter userName={userName}
+                <FormFilter user={user}
                     licenseeList={licenseeList}
                     functionList={functionList} />
-                <DataGrid />
+                <DataGrid isActiveUser={user.IsActive} />
             </div>
         )
     }

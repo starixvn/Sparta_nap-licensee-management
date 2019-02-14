@@ -35,11 +35,11 @@
             return result;
         }
 
-        public IEnumerable<OptionItem> GetLicenseeUserList(string userName, bool? isAssigned = null)
+        public IEnumerable<ITUserLicensee> GetLicenseeUserList(int userId, bool? isAssigned = null)
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_GetLicensee"))
             {
-                return db.Query<OptionItem>(new { UserName = userName, IsAssigned = isAssigned });
+                return db.Query<ITUserLicensee>(new { UserId = userId, IsAssigned = isAssigned });
             }
         }
 
@@ -87,16 +87,16 @@
             {
                 UserName = criteria.UserName,
                 NewFunctions = BuildFunctionXMLParameter(criteria.NewFunctions),
-                RemovedFunction = BuildFunctionXMLParameter(criteria.RemoveFunctions)
+                RemovedFunctions = BuildFunctionXMLParameter(criteria.RemovedFunctions)
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_EditFunction"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_UpdateFunction"))
             {
                 result = db.Query<ResultInfo>(param);
             }
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteEditFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunction, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
+                WriteEditFunctionActionLog(criteria, param.NewFunctions, param.RemovedFunctions, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -112,7 +112,7 @@
                 ActiveCurrencies = BuildCurrencyXMLParameter(criteria.ActiveCurrencies),
                 DeactiveCurrencies = BuildCurrencyXMLParameter(criteria.DeactiveCurrencies)
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_EditCurrency"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_UpdateCurrency"))
             {
                 result = db.Query<ResultInfo>(param);
             }
@@ -131,7 +131,7 @@
 
         public IEnumerable<ITUserLicenseeFunction> GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria)
         {
-            IEnumerable<OptionItem> licensees;
+            IEnumerable<ITUserLicensee> licensees;
             IEnumerable<ITUserFunctionHierarchy> functions;
             var result = new List<ITUserLicenseeFunction>();
 
@@ -139,14 +139,14 @@
             {
                 using (var multi = db.QueryMultiple(criteria))
                 {
-                    licensees = multi.Read<OptionItem>();
+                    licensees = multi.Read<ITUserLicensee>();
                     functions = multi.Read<ITUserFunctionHierarchy>();
                 }
             }
 
             foreach (var licensee in licensees)
             {
-                var hierarchy = BuildFunctionHierarchy(licensee.Id, functions);
+                var hierarchy = BuildFunctionHierarchy(functions.Where(x => x.LicenseeId == licensee.Id));
 
                 if (hierarchy.Any())
                 {
@@ -163,7 +163,7 @@
 
         public IEnumerable<ITUserLicenseeCurrency> GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria)
         {
-            IEnumerable<OptionItem> licensees;
+            IEnumerable<ITUserLicensee> licensees;
             IEnumerable<ITUserCurrency> currencies;
             var result = new List<ITUserLicenseeCurrency>();
 
@@ -171,7 +171,7 @@
             {
                 using (var multi = db.QueryMultiple(criteria))
                 {
-                    licensees = multi.Read<OptionItem>();
+                    licensees = multi.Read<ITUserLicensee>();
                     currencies = multi.Read<ITUserCurrency>();
                 }
             }
@@ -193,9 +193,17 @@
             return result;
         }
 
+        public ITUser Get(int userId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_Get"))
+            {
+                return db.QueryEntity<ITUser>(new { UserId = userId });
+            }
+        }
+
         private string BuildFunctionXMLParameter(IEnumerable<LicenseeFunctionCriteria> criteria)
         {
-            if (!criteria.Any())
+            if (criteria == null || !criteria.Any())
             {
                 return string.Empty;
             }
@@ -233,7 +241,7 @@
             return builder.ToString();
         }
 
-        private IEnumerable<ITUserFunctionHierarchy> BuildFunctionHierarchy(int licenseeId, IEnumerable<ITUserFunctionHierarchy> functionList)
+        private IEnumerable<ITUserFunctionHierarchy> BuildFunctionHierarchy(IEnumerable<ITUserFunctionHierarchy> functionList)
         {
             var hierarchy = functionList
                 .GroupJoin(
@@ -276,7 +284,6 @@
                         + $" IsOpen=\"{criteria.IsOpen}\""
                         + $" UserSalt=\"{criteria.Token}\""
                         + $" UserPwd=\"{criteria.Password}\""
-                        + " IsInternal=\"false\""
                         + " SystemId=\"1\""
                         + $" Option=\"{criteria.Option}\""
                         + ">"
@@ -305,7 +312,7 @@
                         + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</User>";
 
-            WriteLog(ActionLogType.ITUser_EditLRFFunction, "Nap_LM_ITUser_EditFunction", doing, criteria.RedmineId);
+            WriteLog(ActionLogType.ITUser_UpdateLRFFunction, "Nap_LM_ITUser_UpdateFunction", doing, criteria.RedmineId);
         }
 
         private void WriteEditCurrencyActionLog(EditCurrencyCriteria criteria, string activeCurrencies, string deactiveCurrencies, string result = null)
@@ -316,7 +323,7 @@
                         + (result == null ? string.Empty : $"<Result>{result}</Result>")
                         + "</User>";
 
-            WriteLog(ActionLogType.ITUser_EditCurrency, "Nap_LM_ITUser_EditCurrency", doing, criteria.RedmineId);
+            WriteLog(ActionLogType.ITUser_UpdateCurrency, "Nap_LM_ITUser_UpdateCurrency", doing, criteria.RedmineId);
         }
 
         private void WriteLog(ActionLogType action, string sp, string user, int redmineId)
