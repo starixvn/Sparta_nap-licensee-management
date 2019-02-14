@@ -40,8 +40,7 @@ BEGIN
 		SELECT DISTINCT l.LicenseeID, l.LicenseeName, lf.FunctionId
 		FROM dbo.Licensees l WITH (NOLOCK)
 		INNER JOIN dbo.LicenseeFunctions lf WITH (NOLOCK) ON l.LicenseeID = lf.LicenseeId
-		WHERE l.IsActive = 1
-			AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+		WHERE (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
 			AND (@FunctionId = 0 OR lf.FunctionId = @FunctionId) 
 	)
 	SELECT lu.LicenseeID, 

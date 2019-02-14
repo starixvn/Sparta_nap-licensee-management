@@ -37,13 +37,13 @@ BEGIN
 	
 	IF @IsActive IS NULL
 	BEGIN
-		SELECT 'Function does not exist!' AS [Message], 0 AS IsOk
+		SELECT 'Function does not exist!' AS [Message]
 		RETURN
 	END
 	
 	IF @IsActive = 0
 	BEGIN
-		SELECT 'Function is not active!' AS [Message], 0 AS IsOk
+		SELECT 'Function is not active!' AS [Message]
 		RETURN
 	END
 	

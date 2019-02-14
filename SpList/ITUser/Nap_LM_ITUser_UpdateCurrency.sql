@@ -1,7 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_ITUser_UpdateCurrency]
-	@UserName VARCHAR(50),
+	@UserId INT,
 	@ActiveCurrencies VARCHAR(MAX) = '',
 	@DeactiveCurrencies VARCHAR(MAX) = '',
 	@SystemId INT = 1
@@ -29,24 +29,24 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	
-	IF (ISNULL(@ActiveCurrencies, '') = '' OR ISNULL(@DeactiveCurrencies, '') = '')
+	IF (ISNULL(@ActiveCurrencies, '') = '' AND ISNULL(@DeactiveCurrencies, '') = '')
 	BEGIN
-		SELECT 'Invalid parameters!' AS [Message] , 0 AS IsOk	
+		SELECT 'Invalid parameters!' AS [Message]
 		RETURN
 	END
 
-	DECLARE @Status VARCHAR(30), @UserId INT
-	SELECT @Status = [Status], @UserId = UserID FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName	
+	DECLARE @Status VARCHAR(30)
+	SELECT @Status = [Status] FROM dbo.Users WITH (NOLOCK) WHERE UserID = @UserId AND isInternal = 0
 	
-	IF @UserId IS NULL
+	IF @Status IS NULL
 	BEGIN
-		SELECT 'User does not exist!' AS [Message] , 0 AS IsOk
+		SELECT 'User does not exist!' AS [Message]
 		RETURN
 	END
 
 	IF @Status <> 'Open'
 	BEGIN
-		SELECT 'User is not active!' AS [Message] , 0 AS IsOk
+		SELECT 'User is not active!' AS [Message]
 		RETURN
 	END
 	
@@ -61,9 +61,9 @@ BEGIN
 		BEGIN TRY
 			EXEC sp_xml_preparedocument @ActiveCurrencyDoc OUTPUT
 					,@ActiveCurrencies
-			INSERT INTO #AssignedCurrencies (LicenseeName, FunctionId)
+			INSERT INTO #AssignedCurrencies (LicenseeName, CurrencyId)
 			SELECT LicenseeName, CurrencyId
-			FROM OPENXML(@ActiveCurrencyDoc, '/ROOT/LicenseeFunction', 1) WITH (LicenseeName VARCHAR(50), CurrencyId INT) AS Data
+			FROM OPENXML(@ActiveCurrencyDoc, '/ROOT/LicenseeCurrency', 1) WITH (LicenseeName VARCHAR(50), CurrencyId INT) AS Data
 
 			EXEC sp_xml_removedocument @ActiveCurrencyDoc
 		END TRY
@@ -71,7 +71,6 @@ BEGIN
 		BEGIN CATCH
 			INSERT INTO @Result([Message], IsOk)
 			SELECT 'Invalid parameter!' AS [Message] , 0
-			RETURN
 		END CATCH;
 	END
 	
@@ -84,7 +83,7 @@ BEGIN
 					,@DeactiveCurrencies
 			INSERT INTO #RemovedCurrencies (LicenseeName, CurrencyId)
 			SELECT LicenseeName, CurrencyId
-			FROM OPENXML(@DeactiveCurrencyDoc, '/ROOT/LicenseeFunction', 1) WITH (LicenseeName VARCHAR(50), CurrencyId INT) AS Data
+			FROM OPENXML(@DeactiveCurrencyDoc, '/ROOT/LicenseeCurrency', 1) WITH (LicenseeName VARCHAR(50), CurrencyId INT) AS Data
 
 			EXEC sp_xml_removedocument @DeactiveCurrencyDoc
 		END TRY
@@ -92,7 +91,6 @@ BEGIN
 		BEGIN CATCH
 			INSERT INTO @Result([Message], IsOk)
 			SELECT 'Invalid parameter!' AS [Message] , 0
-			RETURN
 		END CATCH;
 	END
 	
@@ -114,20 +112,20 @@ BEGIN
 			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedCurrencies WHERE LicenseeId IS NULL)
 			BEGIN
 				INSERT INTO @Result([Message], IsOk)
-				SELECT '- Licensees do not exist or are not active for LRF function or User does not belong to.(' + STUFF((
+				SELECT '- Licensees do not exist or are not active for LRF system or User does not belong to.(' + STUFF((
 								SELECT ', ' + LicenseeName
 								FROM #AssignedCurrencies
 								WHERE LicenseeId IS NULL
 				FOR XML PATH('')), 1, 2, '') + ')', 1
 			END
 			
-			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedCurrencies WHERE LicenseeId IS NOT NULL AND IsLicenseeActive IS NULL)
+			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedCurrencies WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 0)
 			BEGIN
 			INSERT INTO @Result([Message], IsOk)
 			SELECT '- Licensees are not active.(' + STUFF((
 							SELECT ', ' + LicenseeName
 							FROM #AssignedCurrencies
-							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive IS NULL
+							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 0
 			FOR XML PATH('')), 1, 2, '') + ')', 1
 			END
 
@@ -139,17 +137,17 @@ BEGIN
 				AND a.IsLicenseeActive = 1
 				AND EXISTS (SELECT TOP(1) 1 FROM dbo.LicenseeCust lu WITH (NOLOCK) WHERE lu.LicenseeID = a.LicenseeId AND lu.Currency = a.CurrencyId AND lu.RoleID = 2)
 			
-			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedCurrencies WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 1 AND IsCurrencyExist IS NULL)
+			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedCurrencies WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 1 AND ( IsCurrencyExist IS NULL OR IsLimited = 1 ))
 			BEGIN
-			INSERT INTO @Result([Message], IsOk)
-			SELECT '- Licensees do not offer the following currencies.(' + STUFF((
-							SELECT ', ' + LicenseeName + '(ID: ' + CurrencyId + ')'
-							FROM #AssignedCurrencies
-							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 1 AND ( IsCurrencyExist IS NULL OR IsLimited = 1 )
-			FOR XML PATH('')), 1, 2, '') + ')', 1
+				INSERT INTO @Result([Message], IsOk)
+				SELECT '- Licensees do not offer the following currencies.(' + STUFF((
+								SELECT ', ' + LicenseeName + '(ID: ' + CAST(CurrencyId AS VARCHAR(10)) + ')'
+								FROM #AssignedCurrencies
+								WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 1 AND ( IsCurrencyExist IS NULL OR IsLimited = 1 )
+				FOR XML PATH('')), 1, 2, '') + ')', 1
 			END
 			
-			DELETE #AssignedCurrencies WHERE LicenseeId IS NULL OR IsLicenseeActive IS NULL OR IsCurrencyExist IS NULL OR IsLimited = 1
+			DELETE #AssignedCurrencies WHERE LicenseeId IS NULL OR IsLicenseeActive = 0 OR IsCurrencyExist IS NULL OR IsLimited = 1
 			
 			UPDATE cu
 			SET cu.isActive = 1

@@ -63,6 +63,5 @@ BEGIN
 												AND cu.CurrencyID = cte.Currency
 												AND cu.SystemID = @SystemId
 												AND cu.isActive = 1
-	WHERE l.IsActive = 1
 END
 GO

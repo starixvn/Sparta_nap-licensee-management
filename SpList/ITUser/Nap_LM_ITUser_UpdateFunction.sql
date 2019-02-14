@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
-ALTER PROCEDURE [dbo].[Nap_LM_ITUser_UpdateFunction]
+CREATE PROCEDURE [dbo].[Nap_LM_ITUser_UpdateFunction]
 	@UserId INT,
 	@NewFunctions VARCHAR(MAX) = '',
 	@RemovedFunctions VARCHAR(MAX) = '',
@@ -31,22 +31,22 @@ BEGIN
 	
 	IF (ISNULL(@NewFunctions, '') = '' AND ISNULL(@RemovedFunctions, '') = '')
 	BEGIN
-		SELECT 'Invalid parameters!' AS [Message] , 0 AS IsOk	
+		SELECT 'Invalid parameters!' AS [Message]
 		RETURN
 	END
 
 	DECLARE @Status VARCHAR(30)
 	SELECT @Status = [Status] FROM dbo.Users WITH (NOLOCK) WHERE UserID = @UserId AND isInternal = 0
 	
-	IF @UserId IS NULL
+	IF @Status IS NULL
 	BEGIN
-		SELECT 'User does not exist!' AS [Message] , 0 AS IsOk
+		SELECT 'User does not exist!' AS [Message]
 		RETURN
 	END
 
 	IF @Status <> 'Open'
 	BEGIN
-		SELECT 'User is not active!' AS [Message] , 0 AS IsOk
+		SELECT 'User is not active!' AS [Message]
 		RETURN
 	END
 	
@@ -112,7 +112,7 @@ BEGIN
 			IF EXISTS (SELECT TOP(1) 1 FROM #AssignedFunctions WHERE LicenseeId IS NULL)
 			BEGIN
 				INSERT INTO @Result([Message], IsOk)
-				SELECT '- Licensees do not exist or are not active for LRF function or User does not belong to.(' + STUFF((
+				SELECT '- Licensees do not exist or are not active for LRF system or User does not belong to.(' + STUFF((
 								SELECT ', ' + LicenseeName
 								FROM #AssignedFunctions
 								WHERE LicenseeId IS NULL
@@ -125,7 +125,7 @@ BEGIN
 			SELECT '- Licensees are not active.(' + STUFF((
 							SELECT ', ' + LicenseeName
 							FROM #AssignedFunctions
-							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive IS NULL
+							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 0
 			FOR XML PATH('')), 1, 2, '') + ')', 1
 			END
 			
@@ -140,17 +140,11 @@ BEGIN
 			BEGIN
 			INSERT INTO @Result([Message], IsOk)
 			SELECT '- Functions do not exist or are not in Licensee function list.(' + STUFF((
-							SELECT ', ' + LicenseeName + '(' + FunctionId + ')'
+							SELECT ', ' + LicenseeName + '(ID: ' + CAST(FunctionId AS VARCHAR(10)) + ')'
 							FROM #AssignedFunctions
 							WHERE LicenseeId IS NOT NULL AND IsLicenseeActive = 1 AND IsFunctionExist IS NULL
 			FOR XML PATH('')), 1, 2, '') + ')', 1
 			END
-
-			--IF EXISTS (SELECT TOP(1) 1 FROM @Result WHERE IsOk = 1)
-			--BEGIN
-			--	INSERT INTO @Result([Message], Id, IsOk)
-			--	VALUES('Functions are not assigned to the following licensees:')
-			--END
 
 			DELETE #AssignedFunctions WHERE LicenseeId IS NULL OR IsLicenseeActive = 0 OR IsFunctionExist IS NULL
 			

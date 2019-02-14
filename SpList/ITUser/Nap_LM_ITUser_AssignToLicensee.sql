@@ -36,13 +36,13 @@ BEGIN
 
 	IF @Status IS NULL
 	BEGIN
-		SELECT 'User does not exist!' AS [Message], 0 AS IsOk	
+		SELECT 'User does not exist!' AS [Message]
 		RETURN
 	END
 	
 	IF @Status <> 'Open'
 	BEGIN
-		SELECT 'User is not active!' AS [Message], 0 AS IsOk	
+		SELECT 'User is not active!' AS [Message]
 		RETURN
 	END
 	
