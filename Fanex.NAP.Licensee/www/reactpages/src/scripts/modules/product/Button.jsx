@@ -86,7 +86,6 @@ export class Button extends Component {
                 this._updateGrid();
                 this.onPopupClose();
             }).catch(err => {
-                Utility.showMessage('Please try again!');
                 this.props.toggleLoader(false);
             });
     }
@@ -108,7 +107,6 @@ export class Button extends Component {
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
             });
     }

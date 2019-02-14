@@ -26,7 +26,7 @@ export class AssignFunctionForm extends Component {
 
         this.assignFunctionOption = [
             { value: '0', label: 'Only assign function to licensee'},
-            { value: '1', label: 'Assign function to admin users' },
+            { value: '1', label: 'Assign function to admin users (User Name: Admin or Administrator)' },
             { value: '2', label: 'Assign function to all users' }
         ];
         this.removeFunctionOption = [
@@ -334,7 +334,7 @@ export class AssignFunctionForm extends Component {
             title='Confirmation'
             content={this._buildOptionContent(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}
             className='no-scroll'
-            style={{ height: height, width: '400px' }}
+            style={{ height: height, width: '460px' }}
             zIndex={52}
             onClose={() => this._showOptionBox(false)} />
     }
@@ -343,7 +343,7 @@ export class AssignFunctionForm extends Component {
         const { assignedItems, unassignedItems, assignOption, removeOption } = this.state;
         const totalaAssignedItems = assignedItems.length;
         const totalUnassignedItems = unassignedItems.length;
-        const height = (totalaAssignedItems && totalUnassignedItems) ? '255px' : '230px';
+        const height = (totalaAssignedItems && totalUnassignedItems) ? '280px' : '250px';
 
         return <RedmineConfirmForm isShow={isShow}
                 msg={this._getConfirmationMsg(totalaAssignedItems, totalUnassignedItems, assignOption, removeOption)}

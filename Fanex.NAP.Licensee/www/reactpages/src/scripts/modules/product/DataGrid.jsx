@@ -64,6 +64,8 @@ export class DataGrid extends Component {
             this.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(item => item.LicenseeName ) });
             this.props.toggleLoader(false);
             this.props.setCheckedList([]);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 

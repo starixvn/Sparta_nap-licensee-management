@@ -64,7 +64,6 @@ export default class Form extends Component {
                     isLoading: false 
                 });
             }).catch(err => {
-                this._alert('Please try again!');
                 this._toggleLoader(false);
             });
     }

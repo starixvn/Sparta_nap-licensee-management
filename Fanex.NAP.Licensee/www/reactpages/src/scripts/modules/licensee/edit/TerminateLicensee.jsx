@@ -46,7 +46,6 @@ export class TerminateLicensee extends Component {
                         this.props.toggleLoader(false);
                     }
                 }).catch(err => {
-                    Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);
                 });
         }

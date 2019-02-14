@@ -55,7 +55,6 @@ export class ProductGrid extends Component {
                         this.props.getProductList(this.props.licensee.LicenseeID);
                     }
                 }).catch(err => {
-                    Utility.showMessage('Error!');
                     this.props.toggleLoader(false);
                 });
         }
@@ -128,7 +127,6 @@ export class ProductGrid extends Component {
                         this.props.getProductList(this.props.licensee.LicenseeID);
                     }
                 }).catch(err => {
-                    Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);
                 });
         }

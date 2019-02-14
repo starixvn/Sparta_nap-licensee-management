@@ -25,6 +25,8 @@ export class DataGrid extends Component {
         Site.fetchData(this.props.params, 'ManageOperator/Search').then(response => {
             this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
             this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 
@@ -58,7 +60,6 @@ export class DataGrid extends Component {
                 this.props.toggleLoader(false);
                 this._getData();
             }).catch(err => {
-                Utility.showMessage('Please try again!');
                 this.props.toggleLoader(false);
             });
     }
