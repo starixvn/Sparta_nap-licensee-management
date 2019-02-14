@@ -402,6 +402,9 @@
 tr.disable {
   color: #808080; }
 
+.red {
+  color: #a94442; }
+
 .popup .popup-container, .popup .popup-block-body {
   display: none; }
 
@@ -458,14 +461,14 @@ tr.disable {
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
 
-.edit-form input[type=text] {
+.edit-form input[type=text], .edit-form input[type=password] {
   border: 1px solid #CECCCD;
   height: 25px;
   padding: 2px; }
-  .edit-form input[type=text].has-error {
+  .edit-form input[type=text].has-error, .edit-form input[type=password].has-error {
     border: 1px solid #a94442; }
 
-.edit-form input[type=radio], .edit-form input[type=checkbox] {
+.edit-form input[type=radio], .edit-form input[type=checkbox], .edit-form input[type=password] {
   vertical-align: text-bottom; }
 
 .edit-form .optional-label {

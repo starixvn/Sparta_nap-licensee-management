@@ -402,6 +402,9 @@
 tr.disable {
   color: #808080; }
 
+.red {
+  color: #a94442; }
+
 .pager {
   margin-top: -20px;
   border: 1px solid #ddd;

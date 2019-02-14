@@ -458,6 +458,9 @@
 tr.disable {
   color: #808080; }
 
+.red {
+  color: #a94442; }
+
 .collapsible-panel-title {
   background-color: #EDECEA;
   border: 1px solid #CECCCD;
