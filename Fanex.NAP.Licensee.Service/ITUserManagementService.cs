@@ -85,7 +85,7 @@
 
             var param = new
             {
-                UserName = criteria.UserName,
+                UserId = criteria.UserId,
                 NewFunctions = BuildFunctionXMLParameter(criteria.NewFunctions),
                 RemovedFunctions = BuildFunctionXMLParameter(criteria.RemovedFunctions)
             };
@@ -108,7 +108,7 @@
 
             var param = new
             {
-                UserName = criteria.UserName,
+                UserId = criteria.UserId,
                 ActiveCurrencies = BuildCurrencyXMLParameter(criteria.ActiveCurrencies),
                 DeactiveCurrencies = BuildCurrencyXMLParameter(criteria.DeactiveCurrencies)
             };
@@ -223,7 +223,7 @@
 
         private string BuildCurrencyXMLParameter(IEnumerable<LicenseeCurrencyCriteria> criteria)
         {
-            if (!criteria.Any())
+            if (criteria == null || !criteria.Any())
             {
                 return string.Empty;
             }
@@ -306,7 +306,7 @@
 
         private void WriteEditFunctionActionLog(EditFunctionCriteria criteria, string newFunctions, string removedFunctions, string result = null)
         {
-            var doing = $"<User UserName=\"{criteria.UserName}\">"
+            var doing = $"<User UserId=\"{criteria.UserId}\">"
                         + $"<NewFunctions>{newFunctions}</NewFunctions>"
                         + $"<RemoveFunctions>{removedFunctions}</RemoveFunctions>"
                         + (result == null ? string.Empty : $"<Result>{result}</Result>")
@@ -317,7 +317,7 @@
 
         private void WriteEditCurrencyActionLog(EditCurrencyCriteria criteria, string activeCurrencies, string deactiveCurrencies, string result = null)
         {
-            var doing = $"<User UserName=\"{criteria.UserName}\">"
+            var doing = $"<User UserId=\"{criteria.UserId}\">"
                         + $"<ActiveCurrencies>{activeCurrencies}</ActiveCurrencies>"
                         + $"<DeactiveCurrencies>{deactiveCurrencies}</DeactiveCurrencies>"
                         + (result == null ? string.Empty : $"<Result>{result}</Result>")

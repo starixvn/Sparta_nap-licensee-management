@@ -146,10 +146,12 @@
         {
             var errorBuilder = new StringBuilder();
 
-            errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
+            if (criteria.UserId <= 0)
+            {
+                errorBuilder.Append("User is empty!<br>");
+            }
 
-            if ((criteria.NewFunctions == null && criteria.RemovedFunctions == null)
-                || (!criteria.NewFunctions.Any() && !criteria.RemovedFunctions.Any()))
+            if (criteria.NewFunctions == null && criteria.RemovedFunctions == null)
             {
                 errorBuilder.Append("Function is empty!<br>");
             }
@@ -173,9 +175,12 @@
         {
             var errorBuilder = new StringBuilder();
 
-            errorBuilder.Append(CheckEmptyParameter("User", criteria.UserName, "<br>"));
+            if (criteria.UserId <= 0)
+            {
+                errorBuilder.Append("User is empty!<br>");
+            }
 
-            if (!criteria.ActiveCurrencies.Any() && !criteria.DeactiveCurrencies.Any())
+            if (criteria.ActiveCurrencies == null && criteria.DeactiveCurrencies == null)
             {
                 errorBuilder.Append("Currency is empty!<br>");
             }

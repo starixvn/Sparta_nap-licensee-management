@@ -4,7 +4,7 @@
 
     public class EditCurrencyCriteria
     {
-        public string UserName { get; set; }
+        public int UserId { get; set; }
 
         public IEnumerable<LicenseeCurrencyCriteria> ActiveCurrencies { get; set; }
 

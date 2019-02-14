@@ -306,6 +306,8 @@
     <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.css" />
     <Content Include="www\reactpages\dist\css\dev\editvendor\editvendor.js" />
     <Content Include="www\reactpages\dist\css\dev\function\function.css" />
@@ -341,6 +343,8 @@
     <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\pro\product\product.css" />
     <Content Include="www\reactpages\dist\css\pro\product\product.js" />
+    <Content Include="www\reactpages\dist\css\pro\userList\userList.css" />
+    <Content Include="www\reactpages\dist\css\pro\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\pro\user\user.css" />
     <Content Include="www\reactpages\dist\css\pro\user\user.js" />
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js" />
@@ -364,6 +368,7 @@
     <Content Include="www\reactpages\dist\js\dev\vendor.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
+    <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\editUser\editUser.js" />
@@ -437,6 +442,8 @@
     <Content Include="www\reactpages\dist\css\dev\userList\userList.js.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css.map" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />

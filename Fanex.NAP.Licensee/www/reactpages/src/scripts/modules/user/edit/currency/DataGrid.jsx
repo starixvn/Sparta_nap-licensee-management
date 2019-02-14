@@ -129,7 +129,7 @@ export class DataGrid extends Component {
                     {currency.CurrencyName}
                     </td>
                     {
-                        licensee.Checked && isActiveUser && (licensee.IsValid || checked)
+                        licensee.Checked && isActiveUser && (licensee.IsValid || currency.IsAssigned)
                         ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, currency)} /></td>
                         : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
                     }
@@ -149,7 +149,7 @@ export class DataGrid extends Component {
             const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, isActiveUser);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
-                    <td className='middle' rowSpan={currencyRows.length + 1}><b>{item.Licensee.Name}</b></td>
+                    <td className='middle' rowSpan={currencyRows.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
                     <td className='middle text-center' rowSpan={currencyRows.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );

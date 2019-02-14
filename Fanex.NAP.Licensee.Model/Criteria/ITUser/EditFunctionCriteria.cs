@@ -4,7 +4,7 @@
 
     public class EditFunctionCriteria
     {
-        public string UserName { get; set; }
+        public int UserId { get; set; }
 
         public IEnumerable<LicenseeFunctionCriteria> NewFunctions { get; set; }
 

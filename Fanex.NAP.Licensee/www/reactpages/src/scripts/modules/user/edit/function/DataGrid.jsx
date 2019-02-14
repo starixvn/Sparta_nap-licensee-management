@@ -126,7 +126,7 @@ export class DataGrid extends Component {
                     {node.FunctionName}
                         </td>
                         {
-                            licensee.Checked && isActiveUser && ((node.IsActive && licensee.IsValid) || checked)
+                            licensee.Checked && isActiveUser && ((node.IsActive && licensee.IsValid) || node.UserFunctionId > 0)
                             ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
                             : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
                         }
