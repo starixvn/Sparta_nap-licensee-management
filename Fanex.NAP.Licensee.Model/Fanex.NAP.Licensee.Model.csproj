@@ -226,7 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="DataDomain\NapLicenseeFunctionKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NapLicenseeFunctionKeys.cs</LastGenOutput>

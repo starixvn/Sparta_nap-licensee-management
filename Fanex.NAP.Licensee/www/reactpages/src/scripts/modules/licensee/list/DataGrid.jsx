@@ -67,7 +67,7 @@ export class DataGrid extends Component {
                     {
                         gridData.map(item => {
                             return (
-                                <tr key={item.LicenseeId}>
+                                <tr key={item.LicenseeID}>
                                     <td>{item.LicenseeName}</td>
                                     <td className="text-center">{item.IsDeposit && <span className='glyphicon glyphicon-ok green'></span>}</td>
                                     <td className="text-right">{item.AffectedDateString}</td>

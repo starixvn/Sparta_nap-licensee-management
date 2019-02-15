@@ -56,7 +56,7 @@
             int userId = param.GetType().GetProperty("UserId").GetValue(param, null);
             if (userId > 0)
             {
-                WriteAddUseActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
+                WriteAddUserActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -73,7 +73,7 @@
 
             if (!result.Any(x => !x.IsOk))
             {
-                WriteAssignUseActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
+                WriteAssignUserActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
             }
 
             return result;
@@ -273,7 +273,7 @@
             return children;
         }
 
-        private void WriteAddUseActionLog(AddUserCriteria criteria, string result = null)
+        private void WriteAddUserActionLog(AddUserCriteria criteria, string result = null)
         {
             var doing = $"<User UserName=\"{criteria.UserName}\""
                         + $" FirstName=\"{criteria.FirstName}\""
@@ -293,7 +293,7 @@
             WriteLog(ActionLogType.ITUser_Insert, "Nap_LM_ITUser_Insert", doing, criteria.RedmineId);
         }
 
-        private void WriteAssignUseActionLog(AssignUserCriteria criteria, string result = null)
+        private void WriteAssignUserActionLog(AssignUserCriteria criteria, string result = null)
         {
             var doing = $"<User UserId=\"{criteria.UserId}\">"
                         + $"<AssignedLicensees AssignOption=\"{criteria.AssignOption}\">{criteria.AssignedLicensees}</AssignedLicensees>"
