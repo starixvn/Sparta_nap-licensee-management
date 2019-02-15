@@ -1,7 +1,8 @@
-﻿﻿import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from '../action';
+
 import Site from '../../../../lib/site';
 import RedmineConfirmForm from '../../../../components/RedmineConfirmForm';
 import Utility from '../../../../lib/utility';
@@ -65,7 +66,7 @@ export class DataGrid extends Component {
         const { assignedCurrencies, unassignedCurrencies } = this.state;
 
         return {
-            UserId: this.props.currencyParams.UserId,
+            UserId: this.props.user.UserId,
             ActiveCurrencies: assignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
             DeactiveCurrencies: unassignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
             RedmineId: redmineId
@@ -106,12 +107,18 @@ export class DataGrid extends Component {
 
     _getData() {
         this.props.toggleLoader(true);
-        Site.fetchData(this.props.currencyParams, 'ITUserManagement/GetLicenseeUserCurrency').then(response => {
-            this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: []});
-            this.props.toggleLoader(false);
-        }).catch(err => {
-            this.props.toggleLoader(false);
-        });
+        const params = {
+            UserId: this.props.user.UserId,
+            LicenseeId: this.props.currencyParams.LicenseeId,
+            CurrencyId: this.props.currencyParams.CurrencyId
+        };
+        Site.fetchData(params, 'ITUserManagement/GetLicenseeUserCurrency')
+            .then(response => {
+                this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: []});
+                this.props.toggleLoader(false);
+            }).catch(err => {
+                this.props.toggleLoader(false);
+            });
     }
 
     _buildCurrencyRow(licensee, currencies, isActiveUser) {
@@ -192,12 +199,12 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { isActiveUser } = this.props;
+        const { user } = this.props;
 
         return (
             <div>
                 {
-                    isActiveUser &&
+                    user.IsActive &&
                     <div style={{ display: 'inline-block' }}>
                         <button className='btn btn-green' onClick={this.onSubmit} disabled={!this.isValid}>Update</button>
                     </div>
@@ -206,7 +213,7 @@ export class DataGrid extends Component {
                     msg='Do you want to update currencies of user?'
                     style={{height: '210px', width: '400px'}}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, isActiveUser)}       
+                {this._buildTable(gridData, user.IsActive)}       
             </div>
         )
     }
@@ -216,8 +223,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { currencyParams } = state;
-    return { currencyParams };
+    const { currencyParams, user } = state;
+    return { currencyParams, user };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

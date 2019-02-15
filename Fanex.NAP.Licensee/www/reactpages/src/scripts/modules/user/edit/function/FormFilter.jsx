@@ -1,7 +1,8 @@
-﻿﻿import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setFunctionParams } from '../action';
+
 import Select from 'react-select';
 
 export class FormFilter extends Component {
@@ -30,7 +31,6 @@ export class FormFilter extends Component {
         const { selectedLicensee, selectedFunction } = this.state;
 
         const params = {
-            UserId: this.props.user.UserId,
             LicenseeId: selectedLicensee ? selectedLicensee.value : 0,
             FunctionId: selectedFunction ? selectedFunction.value : 0,
             TimeStamp: new Date().getTime()
@@ -80,7 +80,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setFunctionParams }, dispatch);
 }
 function mapStateToProps(state) {
-    return {};
+    const { licenseeList } = state;
+    return { licenseeList };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

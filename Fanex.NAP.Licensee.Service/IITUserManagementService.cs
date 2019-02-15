@@ -23,5 +23,9 @@
         IEnumerable<ResultInfo> AddUser(AddUserCriteria criteria);
 
         ITUser Get(int userId);
+
+        IEnumerable<ResultInfo> EditUser(EditUserCriteria criteria);
+
+        IEnumerable<ResultInfo> ResetPassword(ResetUserPasswordCriteria criteria);
     }
 }

@@ -448,7 +448,6 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\FormFilter.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\user\edit\EditCurrency.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\list\action.js" />
@@ -937,9 +936,12 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\FormFilter.jsx" />
     <Content Include="www\reactpages\src\styles\modules\user\item.scss" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\DataGrid.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\user\edit\EditFunction.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\add\Form.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\add\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\function\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\ResetPasswordForm.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />

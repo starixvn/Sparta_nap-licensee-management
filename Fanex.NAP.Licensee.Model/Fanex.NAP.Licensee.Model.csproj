@@ -125,6 +125,8 @@
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\InsertOrUpdateDefaultBetSetting.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAllDefaultBetSettingCriteria.cs" />
+    <Compile Include="Criteria\ITUser\ResetUserPasswordCriteria.cs" />
+    <Compile Include="Criteria\ITUser\EditUserCriteria.cs" />
     <Compile Include="Criteria\ITUser\EditCurrencyCriteria.cs" />
     <Compile Include="Criteria\ITUser\EditFunctionCriteria.cs" />
     <Compile Include="Criteria\ITUser\AssignUserCriteria.cs" />
@@ -213,10 +215,10 @@
     <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />
+    <Compile Include="Enumerations\ITUserStatus.cs" />
     <Compile Include="Enumerations\ProductType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ITUser\AddUserViewModel.cs" />
-    <Compile Include="ViewModel\ITUser\EditFunctionViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />

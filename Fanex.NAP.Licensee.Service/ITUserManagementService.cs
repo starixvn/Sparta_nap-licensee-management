@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -56,7 +55,43 @@
             int userId = param.GetType().GetProperty("UserId").GetValue(param, null);
             if (userId > 0)
             {
+                criteria.UserId = userId;
                 WriteAddUserActionLog(criteria, result.Any() ? string.Join("\\r\\n", result.Select(x => x.Message)) : null);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ResultInfo> EditUser(EditUserCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            var oldUser = Get(criteria.UserId);
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_Update"))
+            {
+                result = db.Query<ResultInfo>(criteria.SpParam);
+            }
+
+            if (!result.Any(x => !x.IsOk))
+            {
+                WriteEditUserActionLog(criteria, oldUser);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<ResultInfo> ResetPassword(ResetUserPasswordCriteria criteria)
+        {
+            IEnumerable<ResultInfo> result;
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_ITUser_ResetPassword"))
+            {
+                result = db.Query<ResultInfo>(criteria.SpParam);
+            }
+
+            if (!result.Any(x => !x.IsOk))
+            {
+                WriteResetPasswordActionLog(criteria);
             }
 
             return result;
@@ -282,8 +317,6 @@
                         + $" IsAdmin=\"{criteria.IsAdmin}\""
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
                         + $" IsOpen=\"{criteria.IsOpen}\""
-                        + $" UserSalt=\"{criteria.Token}\""
-                        + $" UserPwd=\"{criteria.Password}\""
                         + " SystemId=\"1\""
                         + $" Option=\"{criteria.Option}\""
                         + ">"
@@ -291,6 +324,44 @@
                         + "</User>";
 
             WriteLog(ActionLogType.ITUser_Insert, "Nap_LM_ITUser_Insert", doing, criteria.RedmineId);
+        }
+
+        private void WriteEditUserActionLog(EditUserCriteria criteria, ITUser oldUser)
+        {
+            var newValue = new StringBuilder(string.Empty);
+            var oldValue = new StringBuilder(string.Empty); 
+
+            if (criteria.FirstName != oldUser.FirstName)
+            {
+                newValue.Append($" FirstName=\"{criteria.FirstName}\"");
+                oldValue.Append($" FirstName=\"{oldUser.FirstName}\"");            
+            }
+
+            if (criteria.LastName != oldUser.LastName)
+            {
+                newValue.Append($" LastName=\"{criteria.LastName}\"");
+                oldValue.Append($" LastName=\"{oldUser.LastName}\"");           
+            }
+
+            if (criteria.IsActive != oldUser.IsActive)
+            {
+                newValue.Append($" Status=\"{(criteria.IsActive ? ITUserStatus.Open : ITUserStatus.Closed)}\"");
+                oldValue.Append($" Status=\"{(oldUser.IsActive ? ITUserStatus.Open : ITUserStatus.Closed)}\"");               
+            }
+
+            var doing = $"<User UserId=\"{criteria.UserId}\">"
+                        + (newValue.Length > 0 ? "<New" + newValue.ToString() + " />" : string.Empty)
+                        + (oldValue.Length > 0 ? "<Old" + oldValue.ToString() + " />" : string.Empty)
+                        + "</User>";
+
+            WriteLog(ActionLogType.ITUser_Update, "Nap_LM_ITUser_Update", doing, criteria.RedmineId);
+        }
+
+        private void WriteResetPasswordActionLog(ResetUserPasswordCriteria criteria)
+        {
+            var doing = $"<User UserId=\"{criteria.UserId}\" />";
+
+            WriteLog(ActionLogType.ITUser_ResetPassword, "Nap_LM_ITUser_ResetPassword", doing, criteria.RedmineId);
         }
 
         private void WriteAssignUserActionLog(AssignUserCriteria criteria, string result = null)

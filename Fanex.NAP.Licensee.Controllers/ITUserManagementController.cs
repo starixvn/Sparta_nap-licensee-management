@@ -53,14 +53,7 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public ActionResult Edit(int userId)
         {
-            var viewModel = new EditFunctionViewModel
-            {
-                User = _service.Get(userId),
-                FunctionList = _functionService.GetFunctionList(),
-                LicenseeList = _service.GetLicenseeUserList(userId, true)
-            };
-
-            return View(viewModel);
+            return View(_service.Get(userId));
         }
 
         [HttpPost]
@@ -95,8 +88,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult AddUser(AddUserCriteria criteria)
         {
-            var errorBuilder = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(criteria.Token))
+            {
+                return Json(new { IsSuccess = false, Error = "Invalid password token. Please refresh and try again!" });
+            }
 
+            var errorBuilder = new StringBuilder();
             errorBuilder.Append(CheckEmptyParameter("User Name", criteria.UserName, "<br>"));
             errorBuilder.Append(CheckEmptyParameter("Password", criteria.Password, "<br>"));
             errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
@@ -109,19 +106,19 @@
             var result = _service.AddUser(criteria);
             var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
 
-            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error, Data = criteria.UserId });
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult AssignUser(AssignUserCriteria criteria)
         {
-            var errorBuilder = new StringBuilder();
             if (criteria.UserId <= 0)
             {
-                errorBuilder.Append("User is invalid!<br>");
+                return Json(new { IsSuccess = false, Error = "User is invalid!" });
             }
 
+            var errorBuilder = new StringBuilder();
             errorBuilder.Append(
                 CheckEmptyParameter(
                     "Licensee",
@@ -144,13 +141,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult EditFunction(EditFunctionCriteria criteria)
         {
-            var errorBuilder = new StringBuilder();
-
             if (criteria.UserId <= 0)
             {
-                errorBuilder.Append("User is empty!<br>");
+                return Json(new { IsSuccess = false, Error = "User is invalid!" });
             }
 
+            var errorBuilder = new StringBuilder();
             if (criteria.NewFunctions == null && criteria.RemovedFunctions == null)
             {
                 errorBuilder.Append("Function is empty!<br>");
@@ -173,13 +169,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult EditCurrency(EditCurrencyCriteria criteria)
         {
-            var errorBuilder = new StringBuilder();
-
             if (criteria.UserId <= 0)
             {
-                errorBuilder.Append("User is empty!<br>");
+                return Json(new { IsSuccess = false, Error = "User is invalid!" });
             }
 
+            var errorBuilder = new StringBuilder();
             if (criteria.ActiveCurrencies == null && criteria.DeactiveCurrencies == null)
             {
                 errorBuilder.Append("Currency is empty!<br>");
@@ -203,6 +198,82 @@
         public JsonResult GetCurrencyList()
         {
             return Json(_commonService.GetCurrencyList);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetFunctionList()
+        {
+            return Json(_functionService.GetFunctionList());
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetAssignedLicenseeUserList(int userId)
+        {
+            return Json(_service.GetLicenseeUserList(userId, true));
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult EditUser(EditUserCriteria criteria)
+        {
+            if (criteria.UserId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "User is invalid!" });
+            }
+
+            if (criteria.RedmineId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+            }
+
+            var result = _service.EditUser(criteria);
+            var isFailed = result.Any(x => !x.IsOk);
+
+            if (isFailed)
+            {
+                return Json(new { IsSuccess = false, Error = string.Join("<br>", result.Select(x => x.Message)) });
+            }
+
+            return Json(new { IsSuccess = true, Data = _service.Get(criteria.UserId) });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public JsonResult ResetPassword(ResetUserPasswordCriteria criteria)
+        {
+            if (criteria.UserId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "User is invalid!" });
+            }
+
+            if (string.IsNullOrWhiteSpace(criteria.Token) || string.IsNullOrWhiteSpace(criteria.Password))
+            {
+                return Json(new { IsSuccess = false, Error = "Invalid password!" });
+            }
+
+            if (criteria.RedmineId <= 0)
+            {
+                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+            }
+
+            var result = _service.ResetPassword(criteria);
+            var isFailed = result.Any(x => !x.IsOk);
+
+            if (isFailed)
+            {
+                return Json(new { IsSuccess = false, Error = string.Join("<br>", result.Select(x => x.Message)) });
+            }
+
+            return Json(new { IsSuccess = true });
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
+        public string GetToken()
+        {
+            return Cryptography.CreateSalt();
         }
     }
 }

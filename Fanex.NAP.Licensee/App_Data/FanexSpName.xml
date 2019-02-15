@@ -127,5 +127,7 @@
     <Setting Key="Nap_LM_ITUser_UpdateCurrency" SpName="Nap_LM_ITUser_UpdateCurrency" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_Insert" SpName="Nap_LM_ITUser_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_Get" SpName="Nap_LM_ITUser_Get" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_Update" SpName="Nap_LM_ITUser_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_ITUser_ResetPassword" SpName="Nap_LM_ITUser_ResetPassword" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
 </Functions>

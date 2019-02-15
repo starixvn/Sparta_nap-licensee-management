@@ -1,7 +1,8 @@
-﻿﻿import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from '../action';
+
 import Site from '../../../../lib/site';
 import RedmineConfirmForm from '../../../../components/RedmineConfirmForm';
 import Utility from '../../../../lib/utility';
@@ -65,7 +66,7 @@ export class DataGrid extends Component {
         const { assignedFunctions, unassignedFunctions } = this.state;
 
         return {
-            UserId: this.props.functionParams.UserId,
+            UserId: this.props.user.UserId,
             NewFunctions: assignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
             RemovedFunctions: unassignedFunctions.map(x => { return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId }; }),
             RedmineId: redmineId
@@ -106,12 +107,18 @@ export class DataGrid extends Component {
 
     _getData() {
         this.props.toggleLoader(true);
-        Site.fetchData(this.props.functionParams, 'ITUserManagement/GetLicenseeUserFunction').then(response => {
-            this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: []});
-            this.props.toggleLoader(false);
-        }).catch(err => {
-            this.props.toggleLoader(false);
-        });
+        const params = {
+            UserId: this.props.user.UserId,
+            LicenseeId: this.props.functionParams.LicenseeId,
+            FunctionId: this.props.functionParams.FunctionId
+        };
+        Site.fetchData(params, 'ITUserManagement/GetLicenseeUserFunction')
+            .then(response => {
+                this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: []});
+                this.props.toggleLoader(false);
+            }).catch(err => {
+                this.props.toggleLoader(false);
+            });
     }
 
     _buildFunctionNode(licensee, node, level, hierachy, isActiveUser) {
@@ -202,12 +209,12 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { isActiveUser } = this.props;    
+        const { user } = this.props;    
 
         return (
             <div>
                 {
-                    isActiveUser &&
+                    user.IsActive &&
                     <div style={{ display: 'inline-block' }}>
                         <button className='btn btn-green' onClick={this.onSubmit} disabled={!this.isValid}>Update</button>
                     </div>
@@ -216,7 +223,7 @@ export class DataGrid extends Component {
                     msg='Do you want to update functions of user?'
                     style={{height: '210px', width: '400px'}}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, isActiveUser)}       
+                {this._buildTable(gridData, user.IsActive)}       
             </div>
         )
     }
@@ -226,8 +233,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { functionParams } = state;
-    return { functionParams };
+    const { functionParams, user } = state;
+    return { functionParams, user };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

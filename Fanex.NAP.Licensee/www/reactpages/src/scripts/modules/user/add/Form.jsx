@@ -25,7 +25,7 @@ export default class Form extends Component {
             password: '',
             licenseeList: defaultState.licenseeList,
             isValidPass: false,
-            isSuccess: false,
+            userId: 0,
             isShowOption: false,
             option: '0'
         };
@@ -38,9 +38,9 @@ export default class Form extends Component {
     }
 
     get isValid() {
-        const { redmineId, userName, isValidPass, isSuccess, isAdmin, selectedLicensee } = this.state;
+        const { redmineId, userName, isValidPass, userId, isAdmin, selectedLicensee } = this.state;
 
-        return redmineId && userName && isValidPass && !isSuccess && (isAdmin || selectedLicensee);
+        return redmineId && userName && isValidPass && userId <= 0 && (isAdmin || selectedLicensee);
     }
 
     onAdminCheck = (e) => {
@@ -67,7 +67,7 @@ export default class Form extends Component {
 
     onPasswordChange = (e) => {
         const pass = e.target.value;
-        const isValidPass = /^(?=.*[A-z].*[A-z])(?=.*\d.*\d).{6,}$/.test(pass);
+        const isValidPass = Utility.validatePassword(pass);
 
         this.setState({ password: pass, isValidPass: isValidPass })
     }
@@ -112,7 +112,7 @@ export default class Form extends Component {
                         Utility.showMessage('Success!');
                     }
 
-                    this.setState({ isSuccess : true });
+                    this.setState({ userId : response.data.Data });
                 }
 
                 this._toggleLoader(false);
@@ -127,7 +127,7 @@ export default class Form extends Component {
 
     render() {
         const { redmineId, userName, firstName, lastName, email, isAdmin, selectedLicensee,
-            isOpen, password, isLoading, licenseeList, isValidPass, isSuccess, isShowOption, option } = this.state;
+            isOpen, password, isLoading, licenseeList, isValidPass, userId, isShowOption, option } = this.state;
 
         return (
             <div className='edit-form' style={{ marginTop: '10px' }}>
@@ -138,7 +138,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>User Name</label>
                             <div className='col-sm-12 col-md-5'>
                             { 
-                                isSuccess 
+                                userId > 0 
                                 ? userName
                                 : <input type='text'
                                     maxLength='50'
@@ -152,7 +152,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>First Name</label>
                             <div className='col-sm-12 col-md-5'>
                             { 
-                                isSuccess 
+                                userId > 0 
                                 ? firstName
                                 : <input type='text'
                                     maxLength='50'
@@ -166,7 +166,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Last Name</label>
                             <div className='col-sm-12 col-md-5'>
                             {
-                                isSuccess 
+                                userId > 0 
                                 ? lastName
                                 : <input type='text'
                                     maxLength='50'
@@ -179,8 +179,8 @@ export default class Form extends Component {
                         <div className='form-group row'>
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Email</label>
                             <div className='col-sm-12 col-md-5'>
-                             {
-                                isSuccess 
+                            {
+                                userId > 0 
                                 ? email
                                 : <input type='text'
                                     maxLength='50'
@@ -191,14 +191,27 @@ export default class Form extends Component {
                             </div>
                         </div>
                         <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Is Admin</label>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Role</label>
                             <div className='col-sm-12 col-md-5'>
                             {
-                                isSuccess 
+                                userId > 0  
                                 ? ( isAdmin && <span className='glyphicon glyphicon-ok'></span> )
-                                : <input type='checkbox'
-                                    checked={isAdmin}
-                                    onChange={this.onAdminCheck} />
+                                : <div>
+                                    <input type='radio'
+                                        id='Admin'
+                                        value='Admin'
+                                        name='Role'
+                                        checked={isAdmin}
+                                        onChange={(e) => this.setState({ isAdmin: true })} />
+                                    <label htmlFor='Admin' className='optional-label'>Admin</label>
+                                    <input type='radio'
+                                        id='Licensee'
+                                        value='Licensee'
+                                        name='Role'
+                                        checked={!isAdmin}
+                                        onChange={(e) => this.setState({ isAdmin: false })} />
+                                    <label htmlFor='Licensee' className='optional-label'>Licensee</label>
+                                </div>
                             }
                             </div>
                         </div>
@@ -206,9 +219,9 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Licensee</label>
                             <div className='col-sm-12 col-md-5'>
                             {
-                                isSuccess 
+                                userId > 0  
                                 ? ( selectedLicensee ? selectedLicensee.label + '(' + this.options[option].label + ')': '' )
-                                : <div>                        
+                                : <div>
                                     <Select instanceId='ddlLicensee'
                                         className={`full-width ${!isAdmin && selectedLicensee === null ? 'has-error' : ''}`}
                                         value={selectedLicensee}
@@ -226,29 +239,41 @@ export default class Form extends Component {
                                             );
                                         })
                                     }
-                                    </div> 
+                                    </div>
                                 </div>
                             }
                             </div>
                         </div>
                         <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Is Open</label>
+                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Status</label>
                             <div className='col-sm-12 col-md-5'>
                             {
-                                isSuccess 
+                                userId > 0  
                                 ? ( isOpen && <span className='glyphicon glyphicon-ok'></span> )
-                                : <input type='checkbox'
-                                    checked={isOpen}
-                                    onChange={(e) => this.setState({ isOpen: e.target.checked })} />
+                                : <div>
+                                    <input type='radio'
+                                        id='Open'
+                                        value='Open'
+                                        name='Status'
+                                        checked={isOpen}
+                                        onChange={(e) => this.setState({ isOpen: true })} />
+                                    <label htmlFor='Open' className='optional-label'>Open</label>
+                                    <input type='radio'
+                                        id='Closed'
+                                        value='Closed'
+                                        name='Status'
+                                        checked={!isOpen}
+                                        onChange={(e) => this.setState({ isOpen: false })} />
+                                    <label htmlFor='Closed' className='optional-label'>Closed</label>
+                                </div>
                             }
                             </div>
                         </div>
                         {
-                            !isSuccess &&
+                            userId <= 0 &&
                             <div className='form-group row'>
                                 <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Password</label>
                                 <div className='col-sm-12 col-md-5'>
-                            
                                     <input type='password'
                                         maxLength='50'
                                         value={password}
@@ -262,7 +287,7 @@ export default class Form extends Component {
                             <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Redmine Id</label>
                             <div className='col-sm-12 col-md-5'>
                             {
-                                isSuccess 
+                                userId > 0 
                                 ? redmineId
                                 : <NumericInput value={redmineId}
                                     className={`full-width ${redmineId ? '' : 'has-error'}`}
@@ -270,14 +295,17 @@ export default class Form extends Component {
                             }
                             </div>
                         </div>
+                        <div className='form-group row col-sm-12'>
                         {
-                            !isSuccess &&
-                            <div className='form-group row col-sm-12'>
-                                <button className='btn btn-primary' onClick={this.onSubmit} disabled={!this.isValid}>
-                                    Submit
-                                </button>
-                            </div>
+                            userId <= 0
+                            ? <button className='btn btn-primary' onClick={this.onSubmit} disabled={!this.isValid}>
+                                Submit
+                            </button>
+                            : <a className='btn btn-green' href={window.rootUrl + 'ITUserManagement/Edit?userId=' + userId}>
+                                View Detail
+                            </a>
                         }
+                        </div>
                     </div>
                 </div>
             </div>

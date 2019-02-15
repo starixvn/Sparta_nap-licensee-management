@@ -1,19 +1,17 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
 @using System.Web.Script.Serialization
-@model Fanex.NAP.Licensee.Model.ViewModel.ITUser.EditFunctionViewModel
+@model Fanex.NAP.Licensee.Model.DTO.ITUser
 @{
     ViewBag.Title = "Edit IT User";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
     var serializer = new JavaScriptSerializer();
-    var licenseeList = Model.LicenseeList.Select(x => new { label = x.Name, value = x.Id }).ToList();
-    var functionList = Model.FunctionList.Select(x => new { label = x.Name, value = x.Id }).ToList();
 }
 
 @section Headline {
     <ul class="breadcrumb title">
         <li>IT User Management</li>
-        <li class="current">@(Model.User != null ? ("Edit permission of " + Model.User.UserName + "(User Role: " + Model.User.UserRole + ")") : "Invalid User")</li>
+        <li class="current">@(Model != null ? ("Edit " + Model.UserName) : "Invalid User")</li>
     </ul>
     <a class="btn-back" href="@Url.Content("~/ITUserManagement/Index")">← Back To List</a>
 }
@@ -23,9 +21,7 @@
 @section FooterJs{
     <script>
         var initialState = {
-            user: @Html.Raw(serializer.Serialize(Model.User)),
-            licenseeList: @Html.Raw(serializer.Serialize(licenseeList)),
-            functionList: @Html.Raw(serializer.Serialize(functionList))
+            user: @Html.Raw(serializer.Serialize(Model))
         }
     </script>
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/editUser/editUser.js")

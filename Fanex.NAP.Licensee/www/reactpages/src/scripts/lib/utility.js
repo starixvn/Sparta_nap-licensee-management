@@ -53,4 +53,8 @@ export default class Utility {
             }
         };
     }
+
+    static validatePassword(password) {
+        return /^(?=.*[A-z].*[A-z])(?=.*\d.*\d).{6,}$/.test(password);
+    }
 }

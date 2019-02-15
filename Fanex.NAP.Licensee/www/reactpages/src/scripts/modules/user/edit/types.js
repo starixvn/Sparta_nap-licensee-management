@@ -1,3 +1,7 @@
 ﻿export const SET_FUNCTION_PARAMS = "SET_FUNCTION_PARAMS";
 
 export const SET_CURRENCY_PARAMS = "SET_CURRENCY_PARAMS";
+
+export const SET_USER = "SET_USER";
+
+export const SET_LICENSEE_LIST = "SET_LICENSEE_LIST";
