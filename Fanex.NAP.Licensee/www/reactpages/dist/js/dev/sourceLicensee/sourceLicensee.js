@@ -8997,20 +8997,19 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
         value: function _buildBody(checkedList, gridData, body, key) {
             var _this3 = this;
 
-            return gridData.map(function (item) {
-                var key = item[key];
-                var checked = checkedList.indexOf(key) > -1;
+            return gridData.map(function (item, index) {
+                var checked = checkedList.indexOf(item[key]) > -1;
                 var active = item.IsActive;
 
                 return _react2.default.createElement(
                     'tr',
-                    { key: key, className: active ? '' : 'disable' },
+                    { key: index, className: active ? '' : 'disable' },
                     _react2.default.createElement(
                         'td',
                         { className: 'text-center' },
-                        active && _react2.default.createElement('input', { type: 'checkbox', value: key, checked: checked, onChange: _this3.onItemChecked })
+                        active && _react2.default.createElement('input', { type: 'checkbox', value: item[key], checked: checked, onChange: _this3.onItemChecked })
                     ),
-                    body(item, key)
+                    body(item, index)
                 );
             });
         }
@@ -9361,30 +9360,30 @@ var AppContainer = exports.AppContainer = function (_Component) {
             )];
         };
 
-        _this._buildBody = function (item, key) {
+        _this._buildBody = function (item, index) {
             return [_react2.default.createElement(
                 'td',
-                { key: key + '-1' },
+                { key: index + '-1' },
                 item.SourceId
             ), _react2.default.createElement(
                 'td',
-                { key: key + '-2' },
+                { key: index + '-2' },
                 item.CurrencyName
             ), _react2.default.createElement(
                 'td',
-                { key: key + '-3' },
+                { key: index + '-3' },
                 item.Role
             ), _react2.default.createElement(
                 'td',
-                { key: key + '-4', className: 'text-center' },
+                { key: index + '-4', className: 'text-center' },
                 !item.IsActive && _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok green' })
             ), _react2.default.createElement(
                 'td',
-                { key: key + '-5' },
+                { key: index + '-5' },
                 item.EffectiveDateString
             ), _react2.default.createElement(
                 'td',
-                { key: key + '-6' },
+                { key: index + '-6' },
                 item.EndDateString
             )];
         };

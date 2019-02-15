@@ -5747,7 +5747,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         gridData.map(function (item) {
                             return _react2.default.createElement(
                                 'tr',
-                                { key: item.LicenseeId },
+                                { key: item.LicenseeID },
                                 _react2.default.createElement(
                                     'td',
                                     null,
