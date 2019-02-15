@@ -2,8 +2,8 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_ITUser_Insert]
 	@UserName VARCHAR(50),
-	@FirstName VARCHAR(50) = '',
-	@LastName VARCHAR(50) = '',
+	@FirstName NVARCHAR(50) = '',
+	@LastName NVARCHAR(50) = '',
 	@Email VARCHAR(50) = '',
 	@IsAdmin BIT = 0,
 	@LicenseeName VARCHAR(50) = '',
@@ -33,8 +33,21 @@ AS
 */
 BEGIN
 	SET NOCOUNT ON;
+
+	IF EXISTS (SELECT  1 FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName AND isInternal = 0)
+	BEGIN
+		SELECT 'This user name already exists!' AS [Message]
+		RETURN
+	END	
+	
+	IF ISNULL(@UserSalt, '') = '' OR ISNULL(@UserPwd, '') = ''
+	BEGIN
+		SELECT 'Invalid password!' AS [Message]
+		RETURN
+	END
 	
 	DECLARE @UserRole VARCHAR(50)
+	DECLARE @LicenseeId INT, @tmpLicenseeName VARCHAR(50)
 	
 	IF @IsAdmin = 1
 	BEGIN
@@ -44,14 +57,6 @@ BEGIN
 	BEGIN
 		SET @UserRole = 'Licensee'
 	END
-
-	IF EXISTS (SELECT  1 FROM dbo.Users WITH (NOLOCK) WHERE Username = @UserName AND isInternal = 0)
-	BEGIN
-		SELECT 'This user name already exists!' AS [Message], 0 AS IsOk	
-		RETURN
-	END	
-	
-	DECLARE @LicenseeId INT, @tmpLicenseeName VARCHAR(50)
 	
 	IF ISNULL(@LicenseeName, '') <> '' AND @LicenseeName <> 'All'
 	BEGIN
