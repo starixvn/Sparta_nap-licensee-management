@@ -264,7 +264,7 @@ export default class Form extends Component {
                                         name='Status'
                                         checked={!isOpen}
                                         onChange={(e) => this.setState({ isOpen: false })} />
-                                    <label htmlFor='Closed' className='optional-label'>Closed</label>
+                                    <label htmlFor='Closed' className='optional-label'>Close</label>
                                 </div>
                             }
                             </div>

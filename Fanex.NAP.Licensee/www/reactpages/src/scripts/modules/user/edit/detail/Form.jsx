@@ -136,7 +136,7 @@ export class Form extends Component {
                                     name='Status'
                                     checked={!isActive}
                                     onChange={(e) => this.setState({ isActive: false })} />
-                                <label htmlFor='Closed' className='optional-label'>Closed</label>
+                                <label htmlFor='Closed' className='optional-label'>Close</label>
                             </div>
                         </div>
                         <div className='form-group row'>

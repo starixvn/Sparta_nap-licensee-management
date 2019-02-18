@@ -64,7 +64,7 @@ export class FormFilter extends Component {
             <div className="form-group">
                 <label className="checkbox-inline">           
                     <input type="checkbox" name='isClosed' onChange={this.onCheck} />
-                    Closed
+                    Close
                 </label>
             </div>
 
