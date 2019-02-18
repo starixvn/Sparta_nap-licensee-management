@@ -27,7 +27,7 @@ BEGIN
 	UPDATE dbo.Users WITH (ROWLOCK, UPDLOCK)
 	SET FirstName = @FirstName,
 		LastName = @LastName,
-		[Status] = CASE WHEN @IsActive = 1 THEN 'Open' ELSE 'Closed' END
+		[Status] = CASE WHEN @IsActive = 1 THEN 'Open' ELSE 'Close' END
 	WHERE UserID = @UserId
 	
 	SELECT TOP(0) '' AS [Message], CAST(1 AS BIT) AS IsOk

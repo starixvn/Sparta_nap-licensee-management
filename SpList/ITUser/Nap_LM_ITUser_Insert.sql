@@ -94,14 +94,14 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		SET @Status = 'Closed'
+		SET @Status = 'Close'
 	END
 	
 	INSERT INTO dbo.Users (Username, UserPwd, UserSalt, UserRole, FirstName, LastName, Email, [Status], LicenseeName, isInternal, CreateDate)
 	VALUES (@Username, @UserPwd, @UserSalt, @UserRole, @FirstName, @LastName, @Email, @Status, @tmpLicenseeName, 0, GETDATE())
 	SET @UserID = @@identity
 	
-	IF @Status = 'Closed'
+	IF @Status <> 'Open'
 	BEGIN
 		SELECT 'Can not assign functions and currencies for closed user!' AS [Message], 1 AS IsOk		
 		RETURN
