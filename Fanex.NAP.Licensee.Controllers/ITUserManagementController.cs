@@ -57,6 +57,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetLicenseeUserFunction(UserLicenseeFunctionCriteria criteria)
         {
@@ -64,6 +65,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetLicenseeUserCurrency(UserLicenseeCurrencyCriteria criteria)
         {
@@ -71,6 +73,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult Search(SearchUserCriteria criteria)
         {
@@ -78,6 +81,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetLicenseeUserList(int userId)
         {
@@ -85,6 +89,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult AddUser(AddUserCriteria criteria)
         {
@@ -110,6 +115,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult AssignUser(AssignUserCriteria criteria)
         {
@@ -138,6 +144,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult EditFunction(EditFunctionCriteria criteria)
         {
@@ -166,6 +173,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult EditCurrency(EditCurrencyCriteria criteria)
         {
@@ -194,6 +202,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetCurrencyList()
         {
@@ -201,6 +210,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetFunctionList()
         {
@@ -208,6 +218,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetAssignedLicenseeUserList(int userId)
         {
@@ -215,6 +226,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult EditUser(EditUserCriteria criteria)
         {
@@ -240,6 +252,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public JsonResult ResetPassword(ResetUserPasswordCriteria criteria)
         {
@@ -270,6 +283,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ITUsersManagement, Policy = Constant.Policy.Host)]
         public string GetToken()
         {

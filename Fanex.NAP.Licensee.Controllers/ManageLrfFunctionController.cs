@@ -39,6 +39,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public JsonResult Search(int parentFunctionId)
         {
@@ -60,6 +61,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult Add(LrfFunctionCriteria criteria)
         {
@@ -78,6 +80,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult Edit(LrfFunctionCriteria criteria)
         {
@@ -93,6 +96,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public JsonResult GetLicenseeFunctionList(int functionId)
         {
@@ -100,6 +104,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult AssignFunction(AssignLrfFunctionCriteria criteria)
         {
