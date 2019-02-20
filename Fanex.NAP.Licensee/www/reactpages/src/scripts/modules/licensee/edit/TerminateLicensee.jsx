@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { toggleLoader, setLicensee, getProductList } from './action';
+import { toggleLoader, setLicensee, getProductList, getSystemList } from './action';
 import RedmineConfirmForm from '../../../components/RedmineConfirmForm';
 import Site from '../../../lib/site';
 import Utility from '../../../lib/utility';
@@ -40,12 +40,12 @@ export class TerminateLicensee extends Component {
                         this.setState({ isShow: false });
                         this.props.setLicensee(response.data.Data);
                         this.props.getProductList(this.props.licensee.LicenseeID);
+                        this.props.getSystemList(this.props.licensee.LicenseeID);
                     }
                     else {
                         this.props.toggleLoader(false);
                     }
                 }).catch(err => {
-                    Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);
                 });
         }
@@ -71,7 +71,7 @@ export class TerminateLicensee extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ toggleLoader, setLicensee, getProductList }, dispatch);
+    return bindActionCreators({ toggleLoader, setLicensee, getProductList, getSystemList }, dispatch);
 }
 function mapStateToProps(state) {
     const { licensee } = state;

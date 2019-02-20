@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Web.Mvc;
+    using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
     using Model.Criteria.Vendor;
@@ -31,6 +32,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         public ActionResult GetVendorInfoList(VendorSearchingCriteria criteria)
         {
             return Json(_vendorService.GetVendorList(criteria));
@@ -66,6 +68,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditLicenseeVendor, Policy = Constant.Policy.Host)]
         public ActionResult Edit(LicenseeVendor vendor)
         {

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
 import Site from '../../../lib/site';
-import Utility from '../../../lib/utility';
 import Popup from '../../../components/Popup';
 
 export class LAPExclusions extends Component {
@@ -36,7 +35,6 @@ export class LAPExclusions extends Component {
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
             });
     }

@@ -21,7 +21,7 @@ export default class Popup extends React.Component {
                 { isShow && <div className='popup-block-body' style={{zIndex: this.zIndex}}></div> }         
                 <div className={`popup-container ${className}`} style={combinedStyle}>
                     <div className='popup-title'>
-                        <p>{title}</p>
+                        <p title={title}>{title}</p>
                         { 
                             !noShowCloseButton 
                             && <a className="popup-close" href="javascript:;" onClick={() => this._onClose(onClose)}>&times;</a>

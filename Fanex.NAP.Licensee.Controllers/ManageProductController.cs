@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Text;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
@@ -104,22 +105,13 @@
 
         private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
-            {
-                return "Licensee Name is empty!";
-            }
+            var error = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(criteria.ProductCode))
-            {
-                return "Product is empty!";
-            }
+            error.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
+            error.Append(CheckEmptyParameter("Product", criteria.ProductCode, "<br>"));
+            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
-            if (criteria.RedmineId <= 0)
-            {
-                return "Redmine Id is invalid!";
-            }
-
-            return null;
+            return error.Length > 0 ? error.ToString() : null;
         }
     }
 }

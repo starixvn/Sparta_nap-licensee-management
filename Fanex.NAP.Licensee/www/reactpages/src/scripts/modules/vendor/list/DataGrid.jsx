@@ -6,7 +6,6 @@ import { toggleLoader, setParams } from './action'
 import IgnoredFunctionToggleable from './IgnoredFunctionToggleable'
 import { LicenseeType } from '../constant'
 import Pager from '../../../components/Pager'
-import Utility from '../../../lib/utility';
 import Site from '../../../lib/site';
 
 export class DataGrid extends Component {
@@ -26,6 +25,8 @@ export class DataGrid extends Component {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'LicenseeVendor/GetVendorInfoList').then(response => {
             this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
+            this.props.toggleLoader(false);
+        }).catch(err => {
             this.props.toggleLoader(false);
         });
     }
@@ -69,9 +70,9 @@ export class DataGrid extends Component {
 
                 <tbody>
                     {
-                        gridData.map((item, index) => {
+                        gridData.map(item => {
                             return (
-                                <tr key={index}>
+                                <tr key={item.VendorId}>
                                     <td>{item.VendorId}</td>
                                     <td>{item.SiteName}</td>
                                     <td className="text-center">{LicenseeType[item.LicenseeType] || item.LicenseeType}</td>

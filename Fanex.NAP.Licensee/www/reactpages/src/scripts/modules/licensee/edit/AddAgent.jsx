@@ -76,7 +76,6 @@ export class AddAgent extends Component {
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
             });
     }
@@ -110,7 +109,6 @@ export class AddAgent extends Component {
 
                     this.props.toggleLoader(false);
                 }).catch(err => {
-                    Utility.showMessage('Please try later!');
                     this.props.toggleLoader(false);
                 });
         }

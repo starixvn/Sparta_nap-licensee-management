@@ -1,0 +1,75 @@
+﻿@import "../../components/_variable";
+@import "../../components/react-select/react-select.main";
+@import "../../components/common";
+@import "../../components/popup";
+@import "../../components/form";
+
+.Select {
+    display: inline-block;
+    width: 250px;
+
+    .Select-value {
+        line-height: 23px !important;
+    }
+
+    .Select-placeholder {
+        line-height: 27px !important;
+    }
+
+    .Select-input {
+        height: 23px;
+
+        input {
+            padding: 0;
+        }
+    }
+
+    .Select-control {
+        height: 25px;
+    }
+
+    &.has-error {
+        .Select-control {
+            border: 1px solid $red;
+        }
+    }
+}
+
+.table {
+    .middle {
+        vertical-align: middle !important;
+    }
+
+    .hierarchy-node {
+        display: inline-block;
+        width: 30px;
+
+        &::before {
+            content: "\2514\2500\2500";
+        }
+    }
+}
+
+.tab {
+    background-color: $background-panel-color;
+    border: $border;
+    margin-bottom: 10px;
+
+    .tab-item {
+        padding: 5px 10px;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: inline-block;
+        color: $gray;
+
+        &:hover {
+            color: $blue;
+        }
+
+        &.active {
+            font-weight: bold;
+            color: $blue;
+            border-bottom: 1px solid $blue;
+        }
+    }
+}

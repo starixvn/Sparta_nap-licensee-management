@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /********************************************************/
 /*					      Common                        */
 /********************************************************/
@@ -899,6 +899,16 @@ input[type="submit"].btn-ok,
 .icon-edit:hover {
   background-position: -55px -1px;
 }
+.icon-list {
+  background: url(images/sprites.png) no-repeat scroll -63px -103px;
+  cursor: pointer;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+}
+.icon-list:hover {
+  background-position: -87px -103px;
+}
 .icon-delete {
   background: url(images/sprites.png) no-repeat scroll -96px -26px;
   cursor: pointer;
@@ -924,9 +934,12 @@ input[type="submit"].btn-ok,
   background: url(images/loading.gif) no-repeat;
   height: 32px;
   width: 32px;
-  position: absolute;
-  top: 45%;
-  left: 45%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 /********************************************************/
 /*					    Table                           */

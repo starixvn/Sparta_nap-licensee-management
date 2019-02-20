@@ -84,7 +84,6 @@ export default class Form extends Component {
 
                 this._toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try again!');
                 this._toggleLoader(false);
             });
     }

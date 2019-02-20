@@ -97,7 +97,6 @@ export class Action extends Component {
                     this.props.toggleLoader(false);
                 }
             }).catch(err => {
-                Utility.showMessage('Please try again!');
                 this.props.toggleLoader(false);
             });
     }

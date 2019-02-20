@@ -1,4 +1,6 @@
-﻿.green {
+﻿@import "../../components/_variable";
+
+.green {
     color: #A1C46B;
 }
 
@@ -12,6 +14,10 @@
 
 tr {
     &.disable {
-        color: #808080;
+        color: $gray;
     }
+}
+
+.red {
+    color: $red;
 }

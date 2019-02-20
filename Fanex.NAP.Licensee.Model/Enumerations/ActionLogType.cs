@@ -21,6 +21,14 @@
         SourceLicensee_Update = 5533,
 
         LrfFunction_Insert = 5536,
-        LrfFunction_Update = 5537
+        LrfFunction_Update = 5537,
+        LrfFunction_AssignToLicensee = 5539,
+
+        ITUser_Insert = 5540,
+        ITUser_AssignToLicensee = 5541,
+        ITUser_UpdateLRFFunction = 5542,
+        ITUser_UpdateCurrency = 5543,
+        ITUser_Update = 5544,
+        ITUser_ResetPassword = 5545
     }
 }

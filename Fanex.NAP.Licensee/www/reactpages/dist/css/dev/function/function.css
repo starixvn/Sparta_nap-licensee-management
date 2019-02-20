@@ -402,6 +402,81 @@
 tr.disable {
   color: #808080; }
 
+.red {
+  color: #a94442; }
+
+.popup .popup-container, .popup .popup-block-body {
+  display: none; }
+
+.popup.show .popup-block-body, .popup.show .popup-container {
+  display: block; }
+
+.popup .popup-block-body {
+  border: none;
+  background: rgba(0, 0, 0, 0.7) no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.popup .popup-container {
+  background: #fff;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  max-height: 80%;
+  max-width: 95%;
+  margin: auto; }
+  .popup .popup-container .popup-title {
+    background-color: #486cb8;
+    border: 1px solid #3c5b9b;
+    padding: 10px;
+    position: relative; }
+    .popup .popup-container .popup-title p {
+      color: #fff;
+      text-transform: uppercase;
+      display: inline-block;
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      padding-right: 15px; }
+    .popup .popup-container .popup-title .popup-close {
+      color: #fff;
+      float: right;
+      position: absolute;
+      right: 10px; }
+  .popup .popup-container .popup-content {
+    overflow-y: auto;
+    height: calc(100% - 40px);
+    padding: 20px; }
+
+.popup .confirm-popup .btn {
+  float: right !important; }
+
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
+
+.edit-form input[type=text], .edit-form input[type=password] {
+  border: 1px solid #CECCCD;
+  height: 25px;
+  padding: 2px; }
+  .edit-form input[type=text].has-error, .edit-form input[type=password].has-error {
+    border: 1px solid #a94442; }
+
+.edit-form input[type=radio], .edit-form input[type=checkbox], .edit-form input[type=password] {
+  vertical-align: text-bottom; }
+
+.edit-form .optional-label {
+  font-weight: normal;
+  margin: 0 5px;
+  line-height: 25px;
+  vertical-align: baseline; }
+
 .Select {
   display: inline-block;
   width: 250px; }
@@ -418,20 +493,22 @@ tr.disable {
   .Select .Select-control {
     height: 25px; }
 
-.edit-form {
-  margin-top: 10px; }
-  .edit-form input[type=text] {
+.licensee-form {
+  height: 100%; }
+  .licensee-form .licensee-selection-container {
+    overflow: hidden;
+    height: calc(100% - 85px);
+    margin-top: 15px; }
+  .licensee-form .licensee-selection {
+    overflow: auto;
+    height: calc(100% - 50px);
     border: 1px solid #CECCCD;
-    height: 25px;
-    padding: 2px; }
-    .edit-form input[type=text].has-error {
-      border: 1px solid #a94442; }
-  .edit-form input[type=radio], .edit-form input[type=checkbox] {
-    vertical-align: text-bottom; }
-  .edit-form .optional-label {
-    font-weight: normal;
-    margin: 0 5px;
-    line-height: 25px;
-    vertical-align: baseline; }
+    padding: 5px; }
+
+.hierarchy-node {
+  display: inline-block;
+  width: 30px; }
+  .hierarchy-node::before {
+    content: "\2514\2500\2500"; }
 
 /*# sourceMappingURL=function.css.map*/

@@ -424,10 +424,17 @@
       color: #fff;
       text-transform: uppercase;
       display: inline-block;
-      margin: 0; }
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      padding-right: 15px; }
     .popup .popup-container .popup-title .popup-close {
       color: #fff;
-      float: right; }
+      float: right;
+      position: absolute;
+      right: 10px; }
   .popup .popup-container .popup-content {
     overflow-y: auto;
     height: calc(100% - 40px);
@@ -435,6 +442,9 @@
 
 .popup .confirm-popup .btn {
   float: right !important; }
+
+.popup .no-scroll .popup-content {
+  overflow-y: hidden !important; }
 
 .green {
   color: #A1C46B; }
@@ -447,6 +457,9 @@
 
 tr.disable {
   color: #808080; }
+
+.red {
+  color: #a94442; }
 
 .collapsible-panel-title {
   background-color: #EDECEA;
@@ -477,9 +490,6 @@ tr.disable {
 
 .Select.has-error .Select-control {
   border: 1px solid #a94442; }
-
-.no-scroll .popup-content {
-  overflow-y: hidden !important; }
 
 .add-form, .edit-form {
   margin-top: 10px; }

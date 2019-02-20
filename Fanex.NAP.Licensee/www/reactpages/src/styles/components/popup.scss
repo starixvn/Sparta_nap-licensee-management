@@ -1,8 +1,8 @@
 ﻿.popup {
-    .popup-container, .popup-block-body{
+    .popup-container, .popup-block-body {
         display: none;
-    } 
-    
+    }
+
     &.show {
         .popup-block-body, .popup-container {
             display: block;
@@ -41,11 +41,18 @@
                 text-transform: uppercase;
                 display: inline-block;
                 margin: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+                padding-right: 15px;
             }
 
             .popup-close {
                 color: #fff;
                 float: right;
+                position:absolute;
+                right: 10px;
             }
         }
 
@@ -62,4 +69,9 @@
         }
     }
 
+    .no-scroll {
+        .popup-content {
+            overflow-y: hidden !important;
+        }
+    }
 }

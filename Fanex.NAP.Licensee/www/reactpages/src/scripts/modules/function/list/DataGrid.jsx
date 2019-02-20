@@ -2,13 +2,18 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader } from './action';
-import Site from '../../../lib/site'
+import Site from '../../../lib/site';
+import AssignFunctionForm from './AssignFunctionForm';
 
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { gridData: [], totalItem: 0 };
+        this.state = { 
+            gridData: [],
+            totalItem: 0,
+            assignMenu: { isShow: false, functionId: 0, functionName: '' } 
+        };
     }
 
     componentDidUpdate(prevProps) {
@@ -17,10 +22,20 @@ export class DataGrid extends Component {
         }
     }
 
+    onAssignAction(id, name) {
+        this.setState({ assignMenu: {functionId: id, isShow: true, functionName: name} });
+    }
+
+    onCloseAssignMenu = () => {
+        this.setState({ assignMenu: {functionId: 0, isShow: false, functionName: ''} });
+    }
+
     _getData() {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'ManageLrfFunction/Search').then(response => {
             this.setState({ gridData: response.data.Data, totalItem: response.data.TotalItem });
+            this.props.toggleLoader(false);
+        }).catch(err => {
             this.props.toggleLoader(false);
         });
     }
@@ -42,20 +57,27 @@ export class DataGrid extends Component {
                 <td className='text-center'>{node.FunctionId}</td>
                 <td>
                     <span style={{display: 'inline-block', width: `${30*level}px`}}></span>
-                    { level > 0 && <span style={{display: 'inline-block', width: '30px'}} className='hierarchy-node'>&#9492;&#9472;&#9472;</span> }
-                    {node.Name} {node.IsNew ? <sup className='green'>NEW</sup> : ''} {node.Environment !== 'LIVE' ? <sup className='orange'>NON-LIVE</sup> : ''}
+                    { level > 0 && <span className='hierarchy-node'></span> }
+                    {node.Name} {node.IsNew && <sup className='green'>NEW</sup>} {node.Environment !== 'LIVE' && <sup className='orange'>NON-LIVE</sup>}
                 </td>
                 <td>{node.FunctionKey}</td>
                 <td>{node.Url}</td>
                 <td className='text-center'>{node.DisplayOrder}</td>
-                <td className='text-center'><span className={node.IsMenu ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                <td className='text-center'><span className={node.IsFunction ? 'glyphicon glyphicon-ok green' : ''}></span></td>
-                <td className='text-center'><span className={node.IsActive ? 'glyphicon glyphicon-ok green' : ''}></span></td>
+                <td className='text-center'>{node.IsMenu && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                <td className='text-center'>{node.IsFunction && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                <td className='text-center'>{node.IsActive && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 <td className='text-center'>{node.Environment}</td>
                 <td className="text-center">
-                    <a href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>
+                    <a title={`Edit "${node.Name}"`} href={window.rootUrl + `ManageLrfFunction/Get?id=${node.FunctionId}`}>
                         <i className="icon-edit"></i>
                     </a>
+                    {
+                        node.IsActive &&
+                        <i title={`Assign "${node.Name}" to licensee`} 
+                            className="icon-list"
+                            style={{marginLeft: '15px'}}
+                            onClick={() => this.onAssignAction(node.FunctionId, node.Name)}></i>
+                    }
                 </td>
             </tr>
         );
@@ -73,10 +95,14 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const gridData = this.state.gridData;
+        const { gridData, assignMenu } = this.state;
 
         return (
             <div>
+                <AssignFunctionForm isShow={assignMenu.isShow}
+                    functionId={assignMenu.functionId}
+                    functionName={assignMenu.functionName}
+                    onClose={this.onCloseAssignMenu} />
                 <p>Search results: <b>{totalItem}</b> item(s)</p>
                 <table className='table table-bordered table-hover'>
                     <thead>

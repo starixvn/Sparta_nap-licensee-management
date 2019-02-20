@@ -24,6 +24,16 @@ export default class Utility {
         window.alert(msg);
     }
 
+    static showErrorMessage(msg) {
+        const content = '<p class="red"><b>Error:</b></p>' + msg;
+        window.alert(content);
+    }
+
+    static showWarningMessage(msg) {
+        const content = '<p class="orange"><b>Warning:</b></p>' + msg;
+        window.alert(content);
+    }
+
     static debounce(func, wait, immediate) {
         let timeout;
         return function () {
@@ -42,5 +52,9 @@ export default class Utility {
                 func.apply(context, args);
             }
         };
+    }
+
+    static validatePassword(password) {
+        return /^(?=.*[A-z].*[A-z])(?=.*\d.*\d).{6,}$/.test(password);
     }
 }

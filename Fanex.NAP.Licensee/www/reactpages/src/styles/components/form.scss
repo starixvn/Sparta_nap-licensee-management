@@ -1,0 +1,24 @@
+﻿@import "../../components/_variable";
+
+.edit-form {
+    input[type=text], input[type=password] {
+        &.has-error {
+            border: 1px solid $red;
+        }
+
+        border: 1px solid #CECCCD;
+        height: 25px;
+        padding: 2px;
+    }
+
+    input[type=radio], input[type=checkbox], input[type=password] {
+        vertical-align: text-bottom;
+    }
+
+    .optional-label {
+        font-weight: normal;
+        margin: 0 5px;
+        line-height: 25px;
+        vertical-align: baseline;
+    }
+}

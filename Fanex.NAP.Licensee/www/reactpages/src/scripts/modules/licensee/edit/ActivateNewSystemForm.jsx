@@ -71,7 +71,6 @@ export class ActivateNewSystemForm extends Component {
                 this.onClose();
                 this.props.getSystemList(this.props.licensee.LicenseeID);
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
             });
     }
@@ -104,7 +103,6 @@ export class ActivateNewSystemForm extends Component {
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
             });
     }

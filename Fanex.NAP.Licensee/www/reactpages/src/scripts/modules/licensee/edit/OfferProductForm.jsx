@@ -73,7 +73,6 @@ export class OfferProductForm extends Component {
                 this.onClose();
                 this.props.getProductList(this.props.licensee.LicenseeID);
             }).catch(err => {
-                Utility.showMessage('Error!');
                 this.props.toggleLoader(false);
             });
     }
@@ -97,7 +96,7 @@ export class OfferProductForm extends Component {
         Site.fetchData({ ExcludeLicenseeId: this.props.licensee.LicenseeID }, url)
             .then(response => {
                 if (!response.data || response.data.length === 0) {
-                    Utility.showMessage('There is no product to offer!');
+                    Utility.showMessage('No Products found.!');
                 }
                 else {
                     const productList = response.data.map((item) => { return { label: item.ProductName, value: item.ProductCode }; });
@@ -107,7 +106,6 @@ export class OfferProductForm extends Component {
 
                 this.props.toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try later!');
                 this.props.toggleLoader(false);
             });
     }
@@ -146,8 +144,7 @@ export class OfferProductForm extends Component {
         );
     }
 
-    render()
-    {
+    render() {
         const { date, isShowConfirmBox, selectedproduct, productList, isShow, redmineId } = this.state;
 
         return (

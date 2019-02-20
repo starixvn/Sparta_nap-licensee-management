@@ -20,6 +20,7 @@ AS
 	 Revisions:
 	  - 20181207@Amanda: Select Source Licensees [Redmine: #83584]
 	  - 20181225@Amanda: Add 'order by' [Redmine: #83584]
+	  - 20190215@Amanda: Correct where condition for date [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -38,8 +39,8 @@ BEGIN
 	SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.SourcedId ASC, l.EffectiveDate ASC),
 			l.ID	
 	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
-	WHERE (ISNULL(@FromDate, '') = '' OR l.EffectiveDate <= @FromDate)
-		AND (ISNULL(@ToDate, '') = '' OR l.EndDate >= @ToDate)
+	WHERE (ISNULL(@ToDate, '') = '' OR l.EffectiveDate <= @ToDate)
+		AND (ISNULL(@FromDate, '') = '' OR l.EndDate >= @FromDate)
 		AND l.EffectiveDate <= l.EndDate
 		AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
 		AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)

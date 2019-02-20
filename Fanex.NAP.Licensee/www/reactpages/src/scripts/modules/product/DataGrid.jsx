@@ -64,6 +64,8 @@ export class DataGrid extends Component {
             this.setState({ gridData: data, totalItem: response.data.TotalItem, licenseeIdList: data.map(item => item.LicenseeName ) });
             this.props.toggleLoader(false);
             this.props.setCheckedList([]);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 
@@ -105,7 +107,7 @@ export class DataGrid extends Component {
                                         <td>{item.LicenseeName}</td>
                                         { 
                                             header.map(x => {
-                                                return <td key={x.value} className='text-center'><span className={item[x.value] !== null ? 'glyphicon glyphicon-ok green' : ''}></span></td>;
+                                                return <td key={x.value} className='text-center'>{item[x.value] !== null && <span className='glyphicon glyphicon-ok green'></span>}</td>;
                                             })
                                         }
                                     </tr>

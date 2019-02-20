@@ -33,7 +33,7 @@ export class LicenseeInfo extends Component {
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Deposit</label>
                     <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.IsDeposit ? 'glyphicon glyphicon-ok' : ''}></span>
+                        { licensee.IsDeposit && <span className='glyphicon glyphicon-ok'></span> }
                     </div>
                 </div>
                 <div className='form-group row'>
@@ -45,7 +45,7 @@ export class LicenseeInfo extends Component {
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Active</label>
                     <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.IsActive ? 'glyphicon glyphicon-ok' : ''}></span>
+                        { licensee.IsActive && <span className='glyphicon glyphicon-ok'></span> }
                     </div>
                 </div>
                 <div className='form-group row'>
@@ -64,21 +64,21 @@ export class LicenseeInfo extends Component {
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>KPI Active</label>
                     <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.IsKPIActive ? 'glyphicon glyphicon-ok' : ''}></span>
+                        { licensee.IsKPIActive && <span className='glyphicon glyphicon-ok'></span> }
                     </div>
                 </div>
 
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>OneWork Active</label>
                     <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.IsOneWorkActive ? 'glyphicon glyphicon-ok' : ''}></span>
+                        { licensee.IsOneWorkActive && <span className='glyphicon glyphicon-ok'></span> }
                     </div>
                 </div>
 
                 <div className='form-group row'>
                     <label className='col-sx-12 col-lg-3 col-sm-3 col-form-label'>Allow Member Comm</label>
                     <div className='col-sx-12 col-sm-9'>
-                        <span className={licensee.IsAllowedMemberComm ? 'glyphicon glyphicon-ok' : ''}></span>
+                        { licensee.IsAllowedMemberComm && <span className='glyphicon glyphicon-ok'></span> }
                     </div>
                 </div>
             </div>

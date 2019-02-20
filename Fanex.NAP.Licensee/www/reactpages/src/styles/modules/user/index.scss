@@ -1,0 +1,21 @@
+﻿@import "../../components/pager";
+@import "../../components/common";
+@import "../../components/popup";
+@import "../../components/form";
+
+.licensee-form {
+    height: 100%;
+
+    .licensee-selection-container {
+        overflow: hidden;
+        height: calc(100% - 85px);
+        margin-top: 15px;
+    }
+
+    .licensee-selection {
+        overflow: auto;
+        height: calc(100% - 60px);
+        border: 1px solid #CECCCD;
+        padding: 5px;
+    }
+}

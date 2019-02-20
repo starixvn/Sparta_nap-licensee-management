@@ -1,8 +1,8 @@
 ﻿@import "../../components/_variable";
 
 .collapsible-panel-title {
-    background-color: #EDECEA;
-    border: 1px solid #CECCCD;
+    background-color: $background-panel-color;
+    border: $border;
     color: $blue;
     padding: 4px;
     margin-bottom: 10px;

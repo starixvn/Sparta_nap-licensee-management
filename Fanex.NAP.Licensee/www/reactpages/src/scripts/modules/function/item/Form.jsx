@@ -60,7 +60,7 @@ export default class Form extends Component {
             this._submit(param);
         }
         else {
-            Utility.showMessage('Invalid input!');
+            Utility.showErrorMessage('Invalid input!');
         }
     }
 
@@ -78,7 +78,7 @@ export default class Form extends Component {
                     }
                 }
                 else {
-                    Utility.showMessage(response.data.Error);
+                    Utility.showErrorMessage(response.data.Error);
                 }
 
                 if (response.data.Data) {
@@ -87,7 +87,6 @@ export default class Form extends Component {
 
                 this._toggleLoader(false);
             }).catch(err => {
-                Utility.showMessage('Please try again!');
                 this._toggleLoader(false);
             });
     }
@@ -102,7 +101,7 @@ export default class Form extends Component {
         const { parentFunctionList } = this.props;
 
         return (
-            <div className='edit-form'>
+            <div className='edit-form' style={{marginTop: '20px'}}>
                 <Loader isLoading={IsLoading} />
                 <div className='row'>
                     <div className='col-xs-12'>
@@ -239,5 +238,5 @@ export default class Form extends Component {
                 </div>
             </div>
         )
-}
+    }
 }

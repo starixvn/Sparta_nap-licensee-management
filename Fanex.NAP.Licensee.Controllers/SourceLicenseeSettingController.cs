@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Web.Hosting;
     using System.Web.Mvc;
     using Attributes;
@@ -79,24 +80,10 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SourceLicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult Add(NewSourceLicenseeCriteria criteria)
         {
-            if (criteria.FromDate > criteria.ToDate)
+            var error = ValidateNewSetting(criteria);
+            if (error != null)
             {
-                return Json(new { IsSuccess = false, Error = "Invalid date range!" });
-            }
-
-            if (criteria.LicenseeId <= 0 || criteria.SourceLicenseeId <= 0 || criteria.CurrencyId <= 0 || criteria.RoleId <= 0)
-            {
-                return Json(new { IsSuccess = false, Error = "Invalid data!" });
-            }
-
-            if (!criteria.IsAddAll && string.IsNullOrWhiteSpace(criteria.SourceIdList))
-            {
-                return Json(new { IsSuccess = false, Error = "No source data is selected!" });
-            }
-
-            if (criteria.RedmineId <= 0)
-            {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+                return Json(new { IsSuccess = false, Error = error.ToString() });
             }
 
             var result = _service.Add(criteria);
@@ -122,24 +109,10 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SourceLicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult Update(SuspendSourceLicenseeCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(criteria.SettingIdList))
+            var error = ValidateSuspendedSetting(criteria);
+            if (error != null)
             {
-                return Json(new { IsSuccess = false, Error = "No source data is selected!" });
-            }
-
-            if (criteria.Restart && criteria.StopFrom > criteria.RestartFrom)
-            {
-                return Json(new { IsSuccess = false, Error = "Restart date must be equal or greater than stop date " });
-            }
-
-            if (criteria.Restart && criteria.RestartFrom > criteria.RestartTo)
-            {
-                return Json(new { IsSuccess = false, Error = "Invalid new date range!" });
-            }
-
-            if (criteria.RedmineId <= 0)
-            {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+                return Json(new { IsSuccess = false, Error = error.ToString() });
             }
 
             var result = _service.Update(criteria);
@@ -159,6 +132,54 @@
             }
 
             return Json(new { IsSuccess = true });
+        }
+
+        private string ValidateNewSetting(NewSourceLicenseeCriteria criteria)
+        {
+            var error = new StringBuilder();
+
+            if (criteria.FromDate > criteria.ToDate)
+            {
+                error.Append("Invalid date range!<br>");
+            }
+
+            if (criteria.LicenseeId <= 0 || criteria.SourceLicenseeId <= 0 || criteria.CurrencyId <= 0 || criteria.RoleId <= 0)
+            {
+                error.Append("Invalid data!<br>");
+            }
+
+            if (!criteria.IsAddAll && string.IsNullOrWhiteSpace(criteria.SourceIdList))
+            {
+                error.Append("No source data is selected!<br>");
+            }
+
+            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            return error.Length > 0 ? error.ToString() : null;
+        }
+
+        private string ValidateSuspendedSetting(SuspendSourceLicenseeCriteria criteria)
+        {
+            var error = new StringBuilder();
+
+            if (string.IsNullOrWhiteSpace(criteria.SettingIdList))
+            {
+                error.Append("No source data is selected!<br>");
+            }
+
+            if (criteria.Restart && criteria.StopFrom > criteria.RestartFrom)
+            {
+                error.Append("Restart date must be equal or greater than stop date!<br>");
+            }
+
+            if (criteria.Restart && criteria.RestartFrom > criteria.RestartTo)
+            {
+                error.Append("Invalid new date range!<br>");
+            }
+
+            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            return error.Length > 0 ? error.ToString() : null;
         }
 
         private SearchSourceLicenseeViewModel GetSearchViewModel()

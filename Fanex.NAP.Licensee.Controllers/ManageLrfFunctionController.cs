@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
@@ -38,6 +39,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public JsonResult Search(int parentFunctionId)
         {
@@ -45,7 +47,7 @@
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
         public ActionResult Get(int id = 0)
         {
             var func = id == 0 ? new LrfFunction() : _service.GetFunction(id);
@@ -59,6 +61,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult Add(LrfFunctionCriteria criteria)
         {
@@ -77,6 +80,7 @@
         }
 
         [HttpPost]
+        [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
         public JsonResult Edit(LrfFunctionCriteria criteria)
         {
@@ -89,6 +93,43 @@
             var data = _service.Update(criteria);
 
             return Json(data);
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Read)]
+        public JsonResult GetLicenseeFunctionList(int functionId)
+        {
+            return Json(_service.GetLicenseeFunctionList(functionId));
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLRFFunction, Policy = Constant.Policy.Host)]
+        public JsonResult AssignFunction(AssignLrfFunctionCriteria criteria)
+        {
+            var errorBuilder = new StringBuilder();
+            if (criteria.FunctionId <= 0)
+            {
+                errorBuilder.Append("Function is invalid!<br>");
+            }
+
+            errorBuilder.Append(
+                CheckEmptyParameter(
+                    "Licensee",
+                    string.IsNullOrWhiteSpace(criteria.AssignedLicensees) ? criteria.UnassignedLicensees : criteria.AssignedLicensees,
+                    "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+            }
+
+            var result = _service.Assign(criteria);
+            var error = result.Any() ? string.Join("<br>", result.Select(x => x.Message)) : null;
+
+            return Json(new { IsSuccess = !result.Any(x => !x.IsOk), Error = error });
         }
 
         private IList<OptionItem> GetParentFunctionList(LrfFunction function)
@@ -109,22 +150,13 @@
 
         private string ValidateFunction(LrfFunctionCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(criteria.Name))
-            {
-                return "Function Name is empty!";
-            }
+            var error = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(criteria.FunctionKey))
-            {
-                return "Function Key is empty!";
-            }
+            error.Append(CheckEmptyParameter("Function Name", criteria.Name, "<br>"));
+            error.Append(CheckEmptyParameter("Function Key", criteria.FunctionKey, "<br>"));
+            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
-            if (criteria.RedmineId <= 0)
-            {
-                return "Redmine Id is invalid!";
-            }
-
-            return null;
+            return error.Length > 0 ? error.ToString() : null;
         }
     }
 }

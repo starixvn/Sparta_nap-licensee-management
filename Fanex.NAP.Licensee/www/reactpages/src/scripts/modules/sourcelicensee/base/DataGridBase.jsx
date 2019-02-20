@@ -28,6 +28,8 @@ export class DataGridBase extends Component {
             
             this.props.toggleLoader(false);
             this.props.setCheckedList([]);
+        }).catch(err => {
+            this.props.toggleLoader(false);
         });
     }
 

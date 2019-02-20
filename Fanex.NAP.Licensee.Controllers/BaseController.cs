@@ -76,5 +76,25 @@
 
             return error;
         }
+
+        protected string CheckEmptyParameter(string name, string value, string breakLine = "")
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return name + " is empty!" + breakLine;
+            }
+
+            return string.Empty;
+        }
+
+        protected string CheckInvalidRedmineId(int value, string breakLine = "")
+        {
+            if (value <= 0)
+            {
+                return "Redmine Id is invalid!" + breakLine;
+            }
+
+            return string.Empty;
+        }
     }
 }
