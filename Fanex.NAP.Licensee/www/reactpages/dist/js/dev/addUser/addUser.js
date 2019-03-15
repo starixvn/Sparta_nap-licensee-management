@@ -1355,12 +1355,23 @@ _axios2.default.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+var _xsrfToken = null;
+
 var Site = function () {
     function Site() {
         _classCallCheck(this, Site);
     }
 
     _createClass(Site, null, [{
+        key: 'getXsrfToken',
+        value: function getXsrfToken() {
+            if (!_xsrfToken) {
+                _xsrfToken = document.querySelector("input[name=__RequestVerificationToken]").value;
+            }
+
+            return _xsrfToken;
+        }
+    }, {
         key: 'getUrlParameter',
         value: function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -1375,7 +1386,8 @@ var Site = function () {
 
             var url = window.rootUrl + actionLink;
             var requestHeaders = Object.assign({
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                '__RequestVerificationToken': Site.getXsrfToken()
             }, headers);
 
             return _axios2.default.post(url, param, {
@@ -12757,7 +12769,6 @@ var Form = function (_Component) {
             lastName: '',
             email: '',
             isAdmin: false,
-            isOpen: true,
             selectedLicensee: null,
             isLoading: false,
             password: '',
@@ -12787,7 +12798,6 @@ var Form = function (_Component) {
                 IsAdmin: this.state.isAdmin,
                 LicenseeName: this.state.selectedLicensee ? this.state.selectedLicensee.label : '',
                 Option: this.state.option,
-                IsOpen: this.state.isOpen,
                 Password: hashPass,
                 Token: defaultState.token,
                 RedmineId: this.state.redmineId
@@ -12836,7 +12846,6 @@ var Form = function (_Component) {
                 email = _state.email,
                 isAdmin = _state.isAdmin,
                 selectedLicensee = _state.selectedLicensee,
-                isOpen = _state.isOpen,
                 password = _state.password,
                 isLoading = _state.isLoading,
                 licenseeList = _state.licenseeList,
@@ -12947,7 +12956,7 @@ var Form = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'col-sm-12 col-md-5' },
-                                userId > 0 ? isAdmin && _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }) : _react2.default.createElement(
+                                userId > 0 ? isAdmin ? 'Admin' : 'Licensee' : _react2.default.createElement(
                                     'div',
                                     null,
                                     _react2.default.createElement('input', { type: 'radio',
@@ -12955,9 +12964,7 @@ var Form = function (_Component) {
                                         value: 'Admin',
                                         name: 'Role',
                                         checked: isAdmin,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isAdmin: true });
-                                        } }),
+                                        onChange: this.onAdminCheck }),
                                     _react2.default.createElement(
                                         'label',
                                         { htmlFor: 'Admin', className: 'optional-label' },
@@ -13016,49 +13023,6 @@ var Form = function (_Component) {
                                                 )
                                             );
                                         })
-                                    )
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group row' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'col-sm-12 col-lg-2 col-md-3 col-form-label' },
-                                'Status'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-sm-12 col-md-5' },
-                                userId > 0 ? isOpen && _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }) : _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    _react2.default.createElement('input', { type: 'radio',
-                                        id: 'Open',
-                                        value: 'Open',
-                                        name: 'Status',
-                                        checked: isOpen,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isOpen: true });
-                                        } }),
-                                    _react2.default.createElement(
-                                        'label',
-                                        { htmlFor: 'Open', className: 'optional-label' },
-                                        'Open'
-                                    ),
-                                    _react2.default.createElement('input', { type: 'radio',
-                                        id: 'Closed',
-                                        value: 'Closed',
-                                        name: 'Status',
-                                        checked: !isOpen,
-                                        onChange: function onChange(e) {
-                                            return _this3.setState({ isOpen: false });
-                                        } }),
-                                    _react2.default.createElement(
-                                        'label',
-                                        { htmlFor: 'Closed', className: 'optional-label' },
-                                        'Close'
                                     )
                                 )
                             )
