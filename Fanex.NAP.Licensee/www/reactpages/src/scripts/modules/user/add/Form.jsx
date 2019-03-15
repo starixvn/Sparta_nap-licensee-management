@@ -195,14 +195,14 @@ export default class Form extends Component {
                             <div className='col-sm-12 col-md-5'>
                             {
                                 userId > 0  
-                                ? ( isAdmin && <span className='glyphicon glyphicon-ok'></span> )
+                                ? ( isAdmin ? 'Admin' : 'Licensee' )
                                 : <div>
                                     <input type='radio'
                                         id='Admin'
                                         value='Admin'
                                         name='Role'
                                         checked={isAdmin}
-                                        onChange={(e) => this.setState({ isAdmin: true })} />
+                                        onChange={this.onAdminCheck} />
                                     <label htmlFor='Admin' className='optional-label'>Admin</label>
                                     <input type='radio'
                                         id='Licensee'
@@ -249,7 +249,7 @@ export default class Form extends Component {
                             <div className='col-sm-12 col-md-5'>
                             {
                                 userId > 0  
-                                ? ( isOpen && <span className='glyphicon glyphicon-ok'></span> )
+                                ? ( isOpen ? 'Open' : 'Closed' )
                                 : <div>
                                     <input type='radio'
                                         id='Open'
