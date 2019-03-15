@@ -76,7 +76,7 @@
             {
                 Licensee = licensee,
                 ProductList = licensee == null ? Enumerable.Empty<LicenseeProduct>() : GetLicenseeProductsWithPullService(licensee.LicenseeID),
-                SystemList  = licensee == null ? Enumerable.Empty<SystemItem>() : _licenseeService.GetLicenseeSystemList(licensee.LicenseeID)
+                SystemList = licensee == null ? Enumerable.Empty<SystemItem>() : _licenseeService.GetLicenseeSystemList(licensee.LicenseeID)
             };
 
             return View(viewModel);
@@ -177,14 +177,20 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult AddAgent(LicenseeAgentCriteria criteria)
         {
-            var error = new StringBuilder();
-
-            error.Append(CheckEmptyParameter("Supper Wild Card", criteria.SuperWildCard, "<br>"));
-            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
-
-            if (error.Length > 0)
+            var error = CheckActiveLicensee(criteria.LicenseeName);
+            if (error != null)
             {
-                return Json(new { IsSuccess = false, Error = error.ToString() });
+                return Json(new { IsSuccess = false, Error = error });
+            }
+
+            var errorBuilder = new StringBuilder();
+
+            errorBuilder.Append(CheckEmptyParameter("Supper Wild Card", criteria.SuperWildCard, "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
+            {
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
             }
 
             var result = _licenseeService.AddAgent(criteria);
@@ -270,19 +276,21 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
         public JsonResult ActivateSystem(ActivateSystemCriteria criteria)
         {
-            if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
+            var error = CheckActiveLicensee(criteria.LicenseeName);
+            if (error != null)
             {
-                return Json(new { IsSuccess = false, Error = "Licensee name is empty!" });
+                return Json(new { IsSuccess = false, Error = error });
             }
 
-            if (string.IsNullOrWhiteSpace(criteria.SystemName))
-            {
-                return Json(new { IsSuccess = false, Error = "System is empty!" });
-            }
+            var errorBuilder = new StringBuilder();
 
-            if (criteria.RedmineId <= 0)
+            errorBuilder.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
+            errorBuilder.Append(CheckEmptyParameter("System", criteria.SystemName, "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            if (errorBuilder.Length > 0)
             {
-                return Json(new { IsSuccess = false, Error = "Redmine Id is invalid!" });
+                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
             }
 
             var result = _licenseeService.ActivateSystem(criteria);
@@ -324,13 +332,19 @@
 
         private string CheckValidLicenseeProduct(LicenseeProductCriteria criteria)
         {
-            var error = new StringBuilder();
+            var error = CheckActiveLicensee(criteria.LicenseeName);
+            if (error != null)
+            {
+                return error;
+            }
 
-            error.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
-            error.Append(CheckEmptyParameter("Product", criteria.ProductCode, "<br>"));
-            error.Append(CheckInvalidRedmineId(criteria.RedmineId));
+            var errorBuilder = new StringBuilder();
 
-            return error.Length > 0 ? error.ToString() : null;
+            errorBuilder.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
+            errorBuilder.Append(CheckEmptyParameter("Product", criteria.ProductCode, "<br>"));
+            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
+
+            return errorBuilder.Length > 0 ? errorBuilder.ToString() : null;
         }
 
         private string CheckValidNewLicensee(SetUpNewLicenseeCriteria criteria)
@@ -353,6 +367,15 @@
             }
 
             return null;
+        }
+
+        private string CheckActiveLicensee(string licenseeName)
+        {
+            var licensee = _licenseeService.GetLicensee(licenseeName);
+
+            return licensee == null || !licensee.IsActive
+                ? "Licensee does not exist or is not active!"
+                : null;
         }
     }
 }
