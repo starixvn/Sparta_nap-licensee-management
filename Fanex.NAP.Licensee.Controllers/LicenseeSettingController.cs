@@ -284,7 +284,6 @@
 
             var errorBuilder = new StringBuilder();
 
-            errorBuilder.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
             errorBuilder.Append(CheckEmptyParameter("System", criteria.SystemName, "<br>"));
             errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
@@ -340,7 +339,6 @@
 
             var errorBuilder = new StringBuilder();
 
-            errorBuilder.Append(CheckEmptyParameter("Licensee Name", criteria.LicenseeName, "<br>"));
             errorBuilder.Append(CheckEmptyParameter("Product", criteria.ProductCode, "<br>"));
             errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
