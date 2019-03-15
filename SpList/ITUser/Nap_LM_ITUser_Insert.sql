@@ -7,7 +7,6 @@ CREATE PROCEDURE [dbo].[Nap_LM_ITUser_Insert]
 	@Email VARCHAR(50) = '',
 	@IsAdmin BIT = 0,
 	@LicenseeName VARCHAR(50) = '',
-	@IsOpen BIT = 1,
 	@UserSalt VARCHAR(50),
 	@UserPwd VARCHAR(50),
 	@SystemId INT = 1, -- LRF
@@ -22,6 +21,7 @@ AS
 
 	 Revisions:
 	  - 20190131@Amanda: Add New User [Redmine: #83584]
+	  - 20190315@Amanda: Remove unnecessary code [Redmine: #83584]
 	  
 	 Developer's Note:
 	  - @LicenseeName: a Licensee Name or 'All'
@@ -86,26 +86,9 @@ BEGIN
 		RETURN
 	END
 	
-	DECLARE @Status VARCHAR(30)
-	
-	IF @IsOpen = 1
-	BEGIN
-		SET @Status = 'Open'
-	END
-	ELSE
-	BEGIN
-		SET @Status = 'Close'
-	END
-	
 	INSERT INTO dbo.Users (Username, UserPwd, UserSalt, UserRole, FirstName, LastName, Email, [Status], LicenseeName, isInternal, CreateDate)
-	VALUES (@Username, @UserPwd, @UserSalt, @UserRole, @FirstName, @LastName, @Email, @Status, @tmpLicenseeName, 0, GETDATE())
+	VALUES (@Username, @UserPwd, @UserSalt, @UserRole, @FirstName, @LastName, @Email, 'Open', @tmpLicenseeName, 0, GETDATE())
 	SET @UserID = @@identity
-	
-	IF @Status <> 'Open'
-	BEGIN
-		SELECT 'Can not assign functions and currencies for closed user!' AS [Message], 1 AS IsOk		
-		RETURN
-	END
 
 	EXEC dbo.Nap_LM_ITUser_AssignToLicensee
 		@UserId = @UserID,
