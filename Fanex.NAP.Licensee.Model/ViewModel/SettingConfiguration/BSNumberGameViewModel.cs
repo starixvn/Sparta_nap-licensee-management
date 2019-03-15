@@ -34,7 +34,7 @@
                         item.MinBet.ToString("0"),
                         item.MaxBet.ToString("0"),
                         item.MaxPerMatch.ToString("0"),
-                        item.MaxPerBall.ToString("0"))
+                        item.MaxPerBall.ToString("0"));
                 }
                 else
                 {

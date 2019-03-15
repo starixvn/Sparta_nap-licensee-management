@@ -17,6 +17,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class ManageLrfFunctionController : BaseController
     {
         private readonly IManageLrfFunctionService _service;

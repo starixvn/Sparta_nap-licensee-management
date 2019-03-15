@@ -18,6 +18,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class LicenseeSettingController : BaseController
     {
         private readonly ILicenseeSettingService _licenseeService;
