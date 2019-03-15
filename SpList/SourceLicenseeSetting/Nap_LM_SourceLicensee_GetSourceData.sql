@@ -19,6 +19,7 @@ AS
 	 
 	 Revisions:
 	  - 20181211@Amanda: Select Source Licensees [Redmine: #83584]
+	  - 20180315@Amanda: Fix paging issue [Redmine: #83584]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -26,27 +27,60 @@ BEGIN
 	CREATE TABLE #data (
 		RowNum		INT,
 		SourceId	INT,
-		CurrencyId	INT
+		CurrencyId	INT,
+		EffectiveDate SMALLDATETIME,
+		EndDate		SMALLDATETIME,
+		IsActive	BIT
 	)
 	DECLARE @from INT, @to INT
 	
 	IF @RoleId = 2 -- Agent
 	BEGIN
-		INSERT INTO #data (RowNum, SourceId, CurrencyId)
-		SELECT	ROW_NUMBER() OVER (ORDER BY l.Currency ASC),
+		;WITH Setting_CTE AS (
+			SELECT l.SourcedId, l.EffectiveDate, l.EndDate 
+			FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+			WHERE l.LicenseeID = @LicenseeId
+				AND l.SourcedLicenseeID = @SourceLicenseeId
+				AND l.Roleid = @Roleid
+				AND l.SourcedCurrencyID = @CurrencyId
+				AND @FromDate <= l.EndDate
+				AND @ToDate >= l.EffectiveDate
+				AND l.EffectiveDate <= l.EndDate
+		)
+		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
+		SELECT	ROW_NUMBER() OVER (ORDER BY l.CustID ASC, l.Currency ASC, s.EffectiveDate ASC),
 				l.CustID,
-				l.Currency
+				l.Currency,
+				s.EffectiveDate,
+				s.EndDate,
+				CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive
 		FROM dbo.LicenseeCust l WITH (NOLOCK)
+		LEFT JOIN Setting_CTE s ON s.SourcedId = l.CustID
 		WHERE l.LicenseeID = @SourceLicenseeId AND l.Currency = @CurrencyId AND l.RoleID = 2
 	END
 	IF @RoleId = 1 -- Member
 	BEGIN
-		INSERT INTO #data (RowNum, SourceId, CurrencyId)
-		SELECT	ROW_NUMBER() OVER (ORDER BY l.Currency ASC),
+		;WITH Setting_CTE AS (
+			SELECT l.SourcedId, l.EffectiveDate, l.EndDate 
+			FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+			WHERE l.LicenseeID = @LicenseeId
+				AND l.SourcedLicenseeID = @SourceLicenseeId
+				AND l.Roleid = @Roleid
+				AND l.SourcedCurrencyID = @CurrencyId
+				AND @FromDate <= l.EndDate
+				AND @ToDate >= l.EffectiveDate
+				AND l.EffectiveDate <= l.EndDate
+		)
+		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
+		SELECT	ROW_NUMBER() OVER (ORDER BY c.custid ASC, c.currency ASC, s.EffectiveDate ASC),
 				c.custid,
-				c.currency
+				c.currency,
+				s.EffectiveDate,
+				s.EndDate,
+				CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive
 		FROM CustDB.dbo.custInfo c WITH (NOLOCK)
 		INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+		LEFT JOIN Setting_CTE s ON s.SourcedId = c.custid
 		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND l.currency = @CurrencyId AND c.roleid = 1 AND c.currency = @CurrencyId
 	END
 
@@ -56,28 +90,17 @@ BEGIN
 	SET @from = ((@PageIndex - 1) * @PageSize) + 1
 	SET @to = @from + @PageSize - 1
 	
-	;WITH Setting_CTE AS (
-		SELECT l.SourcedId, l.EffectiveDate, l.EndDate 
-		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
-		WHERE l.LicenseeID = @LicenseeId
-			AND l.SourcedLicenseeID = @SourceLicenseeId
-			AND l.Roleid = @Roleid
-			AND l.SourcedCurrencyID = @CurrencyId
-			AND @FromDate <= l.EndDate
-			AND @ToDate >= l.EffectiveDate
-			AND l.EffectiveDate <= l.EndDate
-	)
 	SELECT	d.SourceId,
 			d.CurrencyId	AS CurrencyID,
 			e.currency		AS CurrencyName,
 			@RoleId			AS RoleId,
-			s.EffectiveDate,
-			s.EndDate,
-			CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive		
+			d.EffectiveDate,
+			d.EndDate,
+			d.IsActive		
 	FROM #data d
 	INNER JOIN CustDB.dbo.Exchange e WITH (NOLOCK) ON e.exchangeid = d.CurrencyId
-	LEFT JOIN Setting_CTE s ON s.SourcedId = d.SourceId
 	WHERE d.RowNum BETWEEN @from AND @to
+	ORDER BY d.RowNum
 	
 	DROP TABLE #data
 	
