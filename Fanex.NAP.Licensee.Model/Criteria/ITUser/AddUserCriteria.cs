@@ -18,8 +18,6 @@
 
         public int Option { get; set; }
 
-        public bool IsOpen { get; set; }
-
         public string Password { get; set; }
 
         public string Token { get; set; }
@@ -34,7 +32,6 @@
             Email = Email,
             IsAdmin = IsAdmin ? 1 : 0,
             LicenseeName = LicenseeName,
-            IsOpen = IsOpen ? 1 : 0,
             UserSalt = Token,
             UserPwd = Password,
             Option = Option,

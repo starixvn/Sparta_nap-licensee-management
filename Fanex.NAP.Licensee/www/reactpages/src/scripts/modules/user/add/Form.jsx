@@ -19,7 +19,6 @@ export default class Form extends Component {
             lastName: '',
             email: '',
             isAdmin: false,
-            isOpen: true,
             selectedLicensee: null,
             isLoading: false,
             password: '',
@@ -89,7 +88,6 @@ export default class Form extends Component {
             IsAdmin: this.state.isAdmin,
             LicenseeName: this.state.selectedLicensee ? this.state.selectedLicensee.label : '',
             Option: this.state.option,
-            IsOpen: this.state.isOpen,
             Password: hashPass,
             Token: defaultState.token,
             RedmineId: this.state.redmineId
@@ -127,7 +125,7 @@ export default class Form extends Component {
 
     render() {
         const { redmineId, userName, firstName, lastName, email, isAdmin, selectedLicensee,
-            isOpen, password, isLoading, licenseeList, isValidPass, userId, isShowOption, option } = this.state;
+            password, isLoading, licenseeList, isValidPass, userId, isShowOption, option } = this.state;
 
         return (
             <div className='edit-form' style={{ marginTop: '10px' }}>
@@ -240,31 +238,6 @@ export default class Form extends Component {
                                         })
                                     }
                                     </div>
-                                </div>
-                            }
-                            </div>
-                        </div>
-                        <div className='form-group row'>
-                            <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>Status</label>
-                            <div className='col-sm-12 col-md-5'>
-                            {
-                                userId > 0  
-                                ? ( isOpen ? 'Open' : 'Closed' )
-                                : <div>
-                                    <input type='radio'
-                                        id='Open'
-                                        value='Open'
-                                        name='Status'
-                                        checked={isOpen}
-                                        onChange={(e) => this.setState({ isOpen: true })} />
-                                    <label htmlFor='Open' className='optional-label'>Open</label>
-                                    <input type='radio'
-                                        id='Closed'
-                                        value='Closed'
-                                        name='Status'
-                                        checked={!isOpen}
-                                        onChange={(e) => this.setState({ isOpen: false })} />
-                                    <label htmlFor='Closed' className='optional-label'>Close</label>
                                 </div>
                             }
                             </div>
