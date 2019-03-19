@@ -6200,12 +6200,23 @@ _axios2.default.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+var _xsrfToken = null;
+
 var Site = function () {
     function Site() {
         _classCallCheck(this, Site);
     }
 
     _createClass(Site, null, [{
+        key: 'getXsrfToken',
+        value: function getXsrfToken() {
+            if (!_xsrfToken) {
+                _xsrfToken = document.querySelector("input[name=__RequestVerificationToken]").value;
+            }
+
+            return _xsrfToken;
+        }
+    }, {
         key: 'getUrlParameter',
         value: function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -6220,7 +6231,8 @@ var Site = function () {
 
             var url = window.rootUrl + actionLink;
             var requestHeaders = Object.assign({
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                '__RequestVerificationToken': Site.getXsrfToken()
             }, headers);
 
             return _axios2.default.post(url, param, {

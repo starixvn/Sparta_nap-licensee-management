@@ -22,7 +22,17 @@ axios.interceptors.response.use(response => Promise.resolve(response),
         return Promise.reject(error);
     });
 
+let _xsrfToken = null;
+
 export default class Site {
+    static getXsrfToken() {
+        if (!_xsrfToken) {
+            _xsrfToken = document.querySelector("input[name=__RequestVerificationToken]").value;
+        }
+
+        return _xsrfToken;
+    }
+
     static getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -33,7 +43,8 @@ export default class Site {
     static fetchData(param, actionLink, headers = {}) {
         const url = window.rootUrl + actionLink;
         const requestHeaders = Object.assign({
-            'X-Requested-With': 'XMLHttpRequest'
+            'X-Requested-With': 'XMLHttpRequest',
+            '__RequestVerificationToken': Site.getXsrfToken()
         }, headers);
 
         return axios.post(url, param, {

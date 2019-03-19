@@ -19,6 +19,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class SourceLicenseeSettingController : BaseController
     {
         private readonly ISourceLicenseeSettingService _service;

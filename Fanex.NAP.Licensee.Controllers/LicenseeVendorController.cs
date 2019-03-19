@@ -15,6 +15,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLicenseeVendor, Policy = Constant.Policy.Read)]
+    [CustomValidateAntiForgery]
     public class LicenseeVendorController : BaseController
     {
         private readonly ILicenseeVendorService _vendorService;

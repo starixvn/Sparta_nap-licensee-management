@@ -18,6 +18,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class ManageOperatorController : BaseController
     {
         private const string ImportTemplatePath = @"~/App_Data/Template/OperatorImportTemplate.csv";

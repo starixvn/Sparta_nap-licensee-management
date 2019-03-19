@@ -16,6 +16,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class ITUserManagementController : BaseController
     {
         private readonly IITUserManagementService _service;

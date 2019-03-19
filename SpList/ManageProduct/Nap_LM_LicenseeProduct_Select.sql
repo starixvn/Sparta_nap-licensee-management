@@ -16,6 +16,7 @@ AS
 	 Revisions:
 	  - 20181221@Amanda: Select licensee product [Redmine: #83584]
 	  - 20180111@Amanda: Add more filter when calling SP with all licensee [Redmine: #83584]
+	  - 20180315@Amanda: Add order by [Redmine: #83584]
 	  
 	 Developer's note:
 	  - @LicenseeList = '' : get all
@@ -59,11 +60,17 @@ BEGIN
 
 	IF ISNULL(@LicenseeList, '') <> ''
 	BEGIN
+		;WITH LicenseeName_CTE AS
+		(
+			SELECT s.val AS LicenseeId, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowID
+			FROM CUSTDB.dbo.strSplit(@LicenseeList,',') s
+		)
 		INSERT INTO #Licensee(Id, LicenseeName)
 		SELECT l.LicenseeID, l.LicenseeName
-		FROM CUSTDB.dbo.strSplit(@LicenseeList,',') s
-		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON s.val = l.LicenseeID
+		FROM LicenseeName_CTE c
+		INNER JOIN dbo.Licensees l WITH (NOLOCK) ON c.LicenseeId = l.LicenseeID
 		WHERE l.IsActive = 1
+		ORDER BY c.RowID
 	END
 	ELSE
 	BEGIN
@@ -73,6 +80,7 @@ BEGIN
 			SELECT l.LicenseeID, l.LicenseeName
 			FROM dbo.Licensees l WITH (NOLOCK)
 			WHERE l.IsActive = 1
+			ORDER BY l.LicenseeID
 		END
 		ELSE
 		BEGIN
@@ -86,6 +94,7 @@ BEGIN
 			FROM dbo.Licensees l WITH (NOLOCK)
 			INNER JOIN LicPro_CTE cte ON l.LicenseeID = cte.LicenseeID
 			WHERE l.IsActive = 1
+			ORDER BY l.LicenseeID
 		END
 	END
 

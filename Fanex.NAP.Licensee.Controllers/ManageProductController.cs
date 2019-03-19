@@ -16,6 +16,7 @@
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
+    [CustomValidateAntiForgery]
     public class ManageProductController : BaseController
     {
         private readonly IManageProductService _service;

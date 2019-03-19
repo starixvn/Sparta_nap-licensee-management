@@ -316,7 +316,6 @@
                         + $" Email=\"{criteria.Email}\""
                         + $" IsAdmin=\"{criteria.IsAdmin}\""
                         + $" LicenseeName=\"{criteria.LicenseeName}\""
-                        + $" IsOpen=\"{criteria.IsOpen}\""
                         + " SystemId=\"1\""
                         + $" Option=\"{criteria.Option}\""
                         + ">"
