@@ -2,7 +2,7 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_ActivateSystem]
 	@LicenseeName	VARCHAR(50),
-	@SystemNames	VARCHAR(100)
+	@SystemName		VARCHAR(100)
 AS
 /*
 	 Created: Amanda
@@ -24,7 +24,7 @@ BEGIN
 	FROM dbo.Licensees WITH (NOLOCK)
 	WHERE LicenseeName = @LicenseeName
 
-	IF ISNULL(@SystemNames,'') <> '' AND ISNULL(@LicenseeId, 0) <> 0
+	IF ISNULL(@SystemName,'') <> '' AND ISNULL(@LicenseeId, 0) <> 0
 	BEGIN
 		DECLARE @tblSystem AS TABLE (
 				SystemId	INT
@@ -33,7 +33,7 @@ BEGIN
 
 		INSERT INTO @tblSystem (SystemId, SystemCode)
 		SELECT 0, val
-		FROM CUSTDB.dbo.strSplit(@SystemNames, ',')
+		FROM CUSTDB.dbo.strSplit(@SystemName, ',')
 		
 		UPDATE a
 		SET a.SystemId = b.id

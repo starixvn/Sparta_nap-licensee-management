@@ -159,7 +159,7 @@ BEGIN
 			INSERT INTO @Error (Msg)
 			EXEC Nap_LM_Licensee_ActivateSystem
 					@LicenseeName	= @LicenseeName
-				,	@SystemNames	= @SystemisActive
+				,	@SystemName		= @SystemisActive
 		END
 	END TRY
 	BEGIN CATCH

@@ -1,7 +1,7 @@
 /*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
-	@LicenseeNameList	VARCHAR(MAX),
+	@LicenseeName		VARCHAR(MAX),
 	@ProductCode		VARCHAR(MAX),
 	@EffectiveDate		DATE ='',
 	@IsPullService		BIT = 1
@@ -36,7 +36,7 @@ BEGIN
 			,@n				INT  
 			,@m				INT
 			,@tmpEffectiveDate	SMALLDATETIME = NULL
-			,@LicenseeName	VARCHAR(50) 
+			,@Licensee		VARCHAR(50) 
 			,@LicenseeId	INT
 			,@ResellerId	INT
 			,@Error			VARCHAR(MAX) = ''
@@ -135,7 +135,7 @@ BEGIN
 		,@m = MAX(ID) FROM @tblLicensee
 	WHILE (@n <= @m)
 	BEGIN
-		SELECT @LicenseeId = LicenseeId, @LicenseeName = LicenseeName, @ResellerId = ResellerId
+		SELECT @LicenseeId = LicenseeId, @Licensee = LicenseeName, @ResellerId = ResellerId
 		FROM @tblLicensee
 		WHERE ID = @n
 		
@@ -222,18 +222,18 @@ BEGIN
 			ELSE
 			BEGIN
 				INSERT INTO @tblNoReseller(LicenseeName)
-				VALUES (@LicenseeName)
+				VALUES (@Licensee)
 			END
 
 			-- 3.5 PULL DATA INTO SERVICE
 			IF EXISTS (SELECT 1 FROM #tblLicenseeProduct WHERE ProductCode = 'AGC') AND @IsPullService =1
 			BEGIN   
-				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @LicenseeName, @SettingName ='AGCasino_VersionKey'
+				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @Licensee, @SettingName ='AGCasino_VersionKey'
 			END  
 
 			IF EXISTS (SELECT 1 FROM #tblLicenseeProduct WHERE ProductCode = 'GD') AND @IsPullService =1  
 			BEGIN   
-				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @LicenseeName, @SettingName ='GoldDeluxe_VersionKey'
+				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @Licensee, @SettingName ='GoldDeluxe_VersionKey'
 			END
 
 			-- 3.6 Config BA
