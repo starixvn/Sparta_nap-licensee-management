@@ -85,8 +85,12 @@ BEGIN
 			SET @EditBetSetting =1 
 		END
 	
+		SELECT @LicenseeID = MAX(LicenseeID) + 1
+		FROM dbo.Licensees WITH (NOLOCK)
+	
 		INSERT INTO dbo.Licensees
 		(
+			LicenseeID,
 			LicenseeName,
 			IsDeposit,
 			[Description],
@@ -97,6 +101,7 @@ BEGIN
 		)
 		VALUES
 		(
+			@LicenseeId,
 			@LicenseeName,
 			1,
 			@Description,
@@ -105,13 +110,10 @@ BEGIN
 			@AffectedDate,
 			@EditBetSetting
 		)
-		
-		SELECT @LicenseeId = licenseeid
-		FROM dbo.licensees WITH (NOLOCK)
-		WHERE licenseename = @LicenseeName
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50101, @ErrMsg = 'Fail to create licensee. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50101
+			, @ErrMsg = 'Fail to create licensee. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -128,7 +130,8 @@ BEGIN
 			, @IsSpecial		= @IsSpecial
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50102, @ErrMsg = 'Fail to create licensee agents. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50102
+			, @ErrMsg = 'Fail to create licensee agents. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -163,7 +166,8 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50103, @ErrMsg = 'Fail to create licensee systems. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50103
+			, @ErrMsg = 'Fail to create licensee systems. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -240,7 +244,8 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50104, @ErrMsg = 'Fail to create licensee reseller. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50104
+			, @ErrMsg = 'Fail to create licensee reseller. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -254,7 +259,8 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50105, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50105
+			, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH	
@@ -367,7 +373,8 @@ BEGIN
 	--- END: GRANT CURRENCY PERMISSION
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50106, @ErrMsg = 'Fail to create licensee admin users. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50106
+			, @ErrMsg = 'Fail to create licensee admin users. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -383,7 +390,8 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50107, @ErrMsg = 'Fail to enable products. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50107
+			, @ErrMsg = 'Fail to enable products. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -405,7 +413,8 @@ BEGIN
 		, @UserID = 862400 --pgmViet
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50108, @ErrMsg = 'Fail to add BA configuration. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50108
+			, @ErrMsg = 'Fail to add BA configuration. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
