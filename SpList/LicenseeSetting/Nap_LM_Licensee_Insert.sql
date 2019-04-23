@@ -377,7 +377,7 @@ BEGIN
 		IF ISNULL(@ProductCode, '') <> ''
 		BEGIN
 			EXEC Nap_LM_Licensee_OfferProduct
-				@LicenseeNameList	= @LicenseeName
+				@LicenseeName		= @LicenseeName
 				, @ProductCode		= @ProductCode
 				, @EffectiveDate	= @EffectiveDate
 		END

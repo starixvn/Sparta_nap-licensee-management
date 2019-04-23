@@ -50,7 +50,7 @@ BEGIN
 
 	INSERT INTO @tblLicensee (LicenseeName)
 	SELECT DISTINCT val
-	FROM CUSTDB.dbo.strSplit(@LicenseeNameList,',')
+	FROM CUSTDB.dbo.strSplit(@LicenseeName,',')
 
 	UPDATE tl  
 	SET tl.LicenseeId = l.LicenseeID
