@@ -1,6 +1,6 @@
 /*<info serverAlias="DBCUST-bodb_Licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
 
-CREATE PROCEDURE [dbo].[NAP_LM_Function_GetByProduct]
+CREATE PROCEDURE [dbo].[Nap_LM_Function_GetByProduct]
 (
 	@ProductCode VARCHAR(10) = ''
 )

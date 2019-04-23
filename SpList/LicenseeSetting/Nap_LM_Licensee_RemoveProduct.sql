@@ -71,7 +71,7 @@ BEGIN
 		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n
     
 		INSERT INTO @tblProductFunctions (ProductId, FunctionId, TypeId)
-		EXEC NAP_LM_Function_GetByProduct @ProductCode = @ProductName
+		EXEC Nap_LM_Function_GetByProduct @ProductCode = @ProductName
       
 		SET @n = @n +1
 	END

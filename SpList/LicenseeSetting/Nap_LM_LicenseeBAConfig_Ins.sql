@@ -1,5 +1,5 @@
  /*<info serverAlias="DBCUST-bodb_Licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
-CREATE PROCEDURE [dbo].[NAP_LM_LicenseeBAConfig_Ins]
+CREATE PROCEDURE [dbo].[Nap_LM_LicenseeBAConfig_Ins]
 (
 	@LicenseeID		INT,
 	@groupa		DECIMAL(9,8) = 0,

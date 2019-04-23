@@ -1,5 +1,5 @@
 /*<info serverAlias="DBCUST-bodb_Licensee" executers="bodbLicenseeNet" viewers="" isFunction="0"></info>*/
-CREATE PROCEDURE [dbo].[NAP_LM_Licensee_EnablePlayerComm] (@LicenseeName VARCHAR(500))
+CREATE PROCEDURE [dbo].[Nap_LM_Licensee_EnablePlayerComm] (@LicenseeName VARCHAR(500))
 AS
 /*  
 	Created: Amanda

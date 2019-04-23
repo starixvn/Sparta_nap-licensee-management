@@ -111,7 +111,7 @@ BEGIN
 		WHERE licenseename = @LicenseeName
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50101, @ErrMsg = 'Fail to create licensee. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50101, @ErrMsg = 'Fail to create licensee. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -128,7 +128,7 @@ BEGIN
 			, @IsSpecial		= @IsSpecial
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50102, @ErrMsg = 'Fail to create licensee agents. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50102, @ErrMsg = 'Fail to create licensee agents. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -163,7 +163,7 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50103, @ErrMsg = 'Fail to create licensee systems. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50103, @ErrMsg = 'Fail to create licensee systems. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -240,7 +240,7 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50104, @ErrMsg = 'Fail to create licensee reseller. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50104, @ErrMsg = 'Fail to create licensee reseller. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -250,11 +250,11 @@ BEGIN
 	BEGIN TRY
 		IF @IsAllowMemberComm = 1
 		BEGIN
-			EXEC NAP_LM_Licensee_EnablePlayerComm @LicenseeName = @LicenseeName
+			EXEC Nap_LM_Licensee_EnablePlayerComm @LicenseeName = @LicenseeName
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50105, @ErrMsg = 'Fail to enable player commission. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50105, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH	
@@ -367,7 +367,7 @@ BEGIN
 	--- END: GRANT CURRENCY PERMISSION
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50106, @ErrMsg = 'Fail to create licensee admin users. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50106, @ErrMsg = 'Fail to create licensee admin users. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -383,7 +383,7 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50107, @ErrMsg = 'Fail to enable products. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50107, @ErrMsg = 'Fail to enable products. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -394,7 +394,7 @@ BEGIN
 	------------------------------------------------------  
 	BEGIN TRY
 	INSERT INTO @Error
-	EXEC NAP_LM_LicenseeBAConfig_Ins @LicenseeID = @licenseeid
+	EXEC Nap_LM_LicenseeBAConfig_Ins @LicenseeID = @licenseeid
 		, @groupa = 0.0025
 		, @groupb = 0.005
 		, @groupc = 0.0075
@@ -405,7 +405,7 @@ BEGIN
 		, @UserID = 862400 --pgmViet
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50108, @ErrMsg = 'Fail to add BA configuration. Error: ' +  ERROR_MESSAGE() + '-' + ERROR_MESSAGE()
+		SELECT @ErrCode = 50108, @ErrMsg = 'Fail to add BA configuration. Process has stopped. Error: ' +  ERROR_NUMBER() + '-' + ERROR_MESSAGE()
 		
 		RETURN
 	END CATCH
@@ -413,7 +413,7 @@ BEGIN
 	IF EXISTS (SELECT 1 FROM @Error WHERE ISNULL(Msg, '') <> '')
 	BEGIN
 		SELECT	@ErrCode = 50109,
-				@ErrMsg = STUFF((
+				@ErrMsg = 'Process has completed. Warning: ' + STUFF((
 							SELECT ';' + Msg
 							FROM @Error
 							WHERE ISNULL(Msg, '') <> ''
