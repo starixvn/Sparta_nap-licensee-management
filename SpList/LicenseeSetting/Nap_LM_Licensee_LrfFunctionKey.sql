@@ -30,7 +30,7 @@ BEGIN
 		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n  
     
 		INSERT INTO @tblFunctions  
-		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductName  
+		EXEC NAP_LM_Function_GetByProduct @ProductCode = @ProductName  
       
 		SET @n = @n +1   
 	END 

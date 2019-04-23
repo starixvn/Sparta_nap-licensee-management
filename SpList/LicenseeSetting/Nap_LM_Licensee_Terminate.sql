@@ -50,7 +50,7 @@ BEGIN
 
 	IF ISNULL(@SystemNames,'') <> ''
 	BEGIN
-		EXEC [dbo].[DBA_Lrf_ActiveLicenseeSystem] @LicenseeName = @LicenseeName, @SystemDeactivate = @SystemNames
+		EXEC [dbo].[Nap_LM_Licensee_DeactivateSystem] @LicenseeName = @LicenseeName, @SystemNames = @SystemNames
 	END
 END
 GO
