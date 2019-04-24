@@ -11,7 +11,8 @@ CREATE PROCEDURE [dbo].[Nap_LM_LicenseeBAConfig_Ins]
 	@ugroup		VARCHAR(3)  = 'a',
 	@EnableBA	BIT = 0,
 	@UserID		INT,
-	@IP			VARCHAR(50)=''
+	@IP			VARCHAR(50)='',
+	@ErrMsg		NVARCHAR(4000) = '' OUTPUT
 )
 AS
 /*
@@ -30,14 +31,14 @@ BEGIN
 	--Check exist in Licensees
 	IF NOT EXISTS (SELECT 1 FROM dbo.Licensees WITH (NOLOCK) WHERE LicenseeID = @LicenseeID)
 	BEGIN
-		SELECT 'Invalid Licensee' AS Error
+		SET @ErrMsg = 'Invalid Licensee'
 		RETURN
 	END
 	
 	--Check exist in LicenseeBAConfig
 	IF EXISTS (SELECT 1 FROM dbo.LicenseeBAConfig WITH (NOLOCK) WHERE LicenseeID = @LicenseeID)
 	BEGIN
-		SELECT 'BA congiguration has been inserted before' AS Error
+		SET @ErrMsg =  'BA congiguration has been inserted before'
 		RETURN
 	END
 	
@@ -56,8 +57,6 @@ BEGIN
 		@Groupb = @groupb,
 		@Groupc = @groupc,
 		@Groupd = @groupd
-
-	SELECT '' AS Error
 END
 GO
 

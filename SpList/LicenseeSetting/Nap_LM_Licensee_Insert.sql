@@ -51,6 +51,7 @@ BEGIN
 			, @tmpSuperWildCard	VARCHAR(100)
 			, @LicenseeId		INT
 			, @ResellerID		INT
+			, @SPErrMsg			NVARCHAR(4000)
 	DECLARE @Error AS TABLE (Msg NVARCHAR(4000))
 
 	IF (@LicenseeType = 'Zelianta')
@@ -121,9 +122,6 @@ BEGIN
 	
 	--- CREATE AGENT
 	BEGIN TRY
-		DECLARE @Result AS TABLE (AffectedRows INT)
-		
-		INSERT INTO @Result (AffectedRows)
 		EXEC Nap_LM_Licensee_AddAgent 
 			@LicenseeName		= @LicenseeName
 			, @SuperWildCard	= @tmpSuperWildCard
@@ -159,10 +157,14 @@ BEGIN
 	 
 		IF ISNULL(@SystemisActive, '') <> ''
 		BEGIN
-			INSERT INTO @Error (Msg)
+			SET @SPErrMsg = ''
 			EXEC Nap_LM_Licensee_ActivateSystem
 					@LicenseeName	= @LicenseeName
 				,	@SystemName		= @SystemisActive
+				,	@ErrMsg			= @SPErrMsg
+				
+			INSERT INTO @Error (Msg)
+			VALUES (@SPErrMsg)
 		END
 	END TRY
 	BEGIN CATCH
@@ -383,10 +385,15 @@ BEGIN
 	BEGIN TRY
 		IF ISNULL(@ProductCode, '') <> ''
 		BEGIN
+			SET @SPErrMsg = ''
 			EXEC Nap_LM_Licensee_OfferProduct
 				@LicenseeName		= @LicenseeName
 				, @ProductCode		= @ProductCode
 				, @EffectiveDate	= @EffectiveDate
+				, @ErrMsg			= @SPErrMsg
+				
+			INSERT INTO @Error (Msg)
+			VALUES (@SPErrMsg)
 		END
 	END TRY
 	BEGIN CATCH
@@ -401,16 +408,20 @@ BEGIN
 	-- Map Licencee to LicenseeBAConfig  
 	------------------------------------------------------  
 	BEGIN TRY
-	INSERT INTO @Error
-	EXEC Nap_LM_LicenseeBAConfig_Ins @LicenseeID = @licenseeid
-		, @groupa = 0.0025
-		, @groupb = 0.005
-		, @groupc = 0.0075
-		, @groupd = 0.01
-		, @1x2Comm = 0.005
-		, @OtherComm = 0.005
-		, @EnableBA = 0
-		, @UserID = 862400 --pgmViet
+		SET @SPErrMsg = ''
+		EXEC Nap_LM_LicenseeBAConfig_Ins @LicenseeID = @licenseeid
+			, @groupa		= 0.0025
+			, @groupb		= 0.005
+			, @groupc		= 0.0075
+			, @groupd		= 0.01
+			, @1x2Comm		= 0.005
+			, @OtherComm	= 0.005
+			, @EnableBA		= 0
+			, @UserID		= 862400 --pgmViet
+			, @ErrMsg		= @SPErrMsg
+			
+		INSERT INTO @Error (Msg)
+		VALUES (@SPErrMsg)
 	END TRY
 	BEGIN CATCH
 		SELECT @ErrCode = 50108

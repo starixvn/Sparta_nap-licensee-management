@@ -4,7 +4,8 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
 	@LicenseeName		VARCHAR(MAX),
 	@ProductCode		VARCHAR(MAX),
 	@EffectiveDate		DATE ='',
-	@IsPullService		BIT = 1
+	@IsPullService		BIT = 1,
+	@ErrMsg				NVARCHAR(4000) = '' OUTPUT
 AS
 /*
 	 Created: Amanda
@@ -39,7 +40,6 @@ BEGIN
 			,@Licensee		VARCHAR(50) 
 			,@LicenseeId	INT
 			,@ResellerId	INT
-			,@Error			VARCHAR(MAX) = ''
 	
 	IF ISNULL(@EffectiveDate,'') <> ''
 	BEGIN
@@ -65,7 +65,7 @@ BEGIN
 
 	IF EXISTS (SELECT 1 FROM @tblLicensee WHERE LicenseeId IS NULL)
 	BEGIN
-		SELECT @Error = 'Invalid licensee(s): ' + STUFF((
+		SELECT @ErrMsg = 'Invalid licensee(s): ' + STUFF((
 							SELECT ',' + LicenseeName
 							FROM @tblLicensee
 							WHERE LicenseeId IS NULL
@@ -106,12 +106,12 @@ BEGIN
 	
 	IF EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductId IS NULL)
 	BEGIN
-		IF ISNULL(@Error, '') <> ''
+		IF ISNULL(@ErrMsg, '') <> ''
 		BEGIN
-			SET @Error = @Error + ';';
+			SET @ErrMsg = @ErrMsg + ';';
 		END
 	
-		SELECT @Error = @Error + 'Invalid product(s): ' + STUFF((
+		SELECT @ErrMsg = @ErrMsg + 'Invalid product(s): ' + STUFF((
 							SELECT ',' + ProductCode
 							FROM @tblProductPrefix
 							WHERE ProductId IS NULL
@@ -306,18 +306,16 @@ BEGIN
 
 	IF EXISTS (SELECT 1 FROM @tblNoReseller)
 	BEGIN
-		IF ISNULL(@Error, '') <> ''
+		IF ISNULL(@ErrMsg, '') <> ''
 		BEGIN
-			SET @Error = @Error + ';';
+			SET @ErrMsg = @ErrMsg + ';';
 		END
 	
-		SELECT @Error = @Error + 'Licensee(s) do(es) not have reseller: ' + STUFF((
+		SELECT @ErrMsg = @ErrMsg + 'Licensee(s) do(es) not have reseller: ' + STUFF((
 							SELECT ',' + LicenseeName
 							FROM @tblNoReseller
 						FOR XML PATH('')), 1, 1, '')
 	END
-
-	SELECT @Error AS Error
 	
 	DROP TABLE #tblLicenseeProduct
 	DROP TABLE #tblLicenseeFunction

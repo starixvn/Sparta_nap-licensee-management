@@ -2,7 +2,8 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_ActivateSystem]
 	@LicenseeName	VARCHAR(50),
-	@SystemName		VARCHAR(100)
+	@SystemName		VARCHAR(100),
+	@ErrMsg			NVARCHAR(4000) = '' OUTPUT
 AS
 /*
 	 Created: Amanda
@@ -17,7 +18,6 @@ AS
 */
 BEGIN
 	SET NOCOUNT ON;
-	DECLARE @Error NVARCHAR(4000) = ''
 	DECLARE @LicenseeId INT
 	
 	SELECT @LicenseeId = LicenseeId
@@ -60,7 +60,7 @@ BEGIN
 	
 		IF EXISTS (SELECT 1 FROM @tblSystem WHERE SystemId = 0)
 		BEGIN
-			SELECT @Error = 'Invalid systems(s): ' + STUFF((
+			SELECT @ErrMsg = 'Invalid systems(s): ' + STUFF((
 							SELECT ',' + SystemCode
 							FROM @tblSystem
 							WHERE SystemId = 0
@@ -69,9 +69,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		SET @Error = 'Licensee is invalid or active system list is empty'
+		SET @ErrMsg = 'Licensee is invalid or active system list is empty'
 	END
-	
-	SELECT @Error AS Error
 END
 GO

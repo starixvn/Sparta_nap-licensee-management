@@ -5,6 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_AddAgent]
 	, @SuperWildCard	VARCHAR(50)
 	, @Currency			INT = 0
 	, @IsSpecial		BIT = 0
+	, @AffectedRows		INT = 0 OUTPUT
 AS
 /*
 	 Created: Amanda
@@ -28,7 +29,7 @@ BEGIN
 
 	IF(ISNULL(@LicenseeID, 0) = 0)
 	BEGIN
-		SELECT 0 AS AffectedRows
+		SET @AffectedRows = 0
 		RETURN
 	END
 	
@@ -199,6 +200,6 @@ BEGIN
 	-- RETURN RESULT
 	SELECT @SumCust2 = COUNT(1) FROM dbo.LicenseeCust WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND RoleID = 2
 	
-	SELECT @SumCust2 - @SumCust1 AS AffectedRows
+	SET @AffectedRows = @SumCust2 - @SumCust1
 END
 GO
