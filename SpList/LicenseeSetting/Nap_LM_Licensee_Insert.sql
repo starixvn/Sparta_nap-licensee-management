@@ -253,21 +253,6 @@ BEGIN
 	END CATCH
 	--- END: ADD RESELLER LICENSEE
 	
-	--- ENABLE PLAYER COMM
-	BEGIN TRY
-		IF @IsAllowMemberComm = 1
-		BEGIN
-			EXEC Nap_LM_Licensee_EnablePlayerComm @LicenseeName = @LicenseeName
-		END
-	END TRY
-	BEGIN CATCH
-		SELECT @ErrCode = 50105
-			, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
-		
-		RETURN
-	END CATCH	
-	--- END: ENABLE PLAYER COMM
-	
 	BEGIN TRY
 	--- ADD ADMIN USER INTO NEW LICENSEE
 		INSERT INTO @AdminUser (UserID, Username)
@@ -403,6 +388,21 @@ BEGIN
 		RETURN
 	END CATCH
 	--- END: OFFER PRODUCT3rd
+
+	--- ENABLE PLAYER COMM
+	BEGIN TRY
+		IF @IsAllowMemberComm = 1
+		BEGIN
+			EXEC Nap_LM_Licensee_EnablePlayerComm @LicenseeName = @LicenseeName
+		END
+	END TRY
+	BEGIN CATCH
+		SELECT @ErrCode = 50105
+			, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
+		
+		RETURN
+	END CATCH	
+	--- END: ENABLE PLAYER COMM
 
 	------------------------------------------------------  
 	-- Map Licencee to LicenseeBAConfig  

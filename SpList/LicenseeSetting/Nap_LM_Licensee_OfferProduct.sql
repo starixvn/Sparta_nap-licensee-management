@@ -129,6 +129,7 @@ BEGIN
 		WHERE username IN ('justin','martin','anthony')
 			AND UserRole = 'admin'
 			AND isInternal = 0
+			AND [Status] = 'Open'
 	END
 
 	SELECT @n = 1
@@ -272,6 +273,17 @@ BEGIN
 					FROM #tblOAUserId
 				END
 			
+				-- Insert BA permission
+				INSERT INTO dbo.LicenseeFunctions (FunctionId, licenseeID)  
+				SELECT f.FunctionId, @LicenseeId
+				FROM #tblLicenseeFunction f
+				WHERE f.TypeId = 3
+				AND NOT EXISTS (
+					SELECT 1
+					FROM dbo.LicenseeFunctions lf WITH (NOLOCK)
+					WHERE lf.LicenseeId = @LicenseeId AND lf.FunctionId = f.FunctionId 
+					)
+			
 				-- Insert SpecialBA for justin,martin,anthony
 				DECLARE @j		INT, 
 						@k		INT,
@@ -284,7 +296,8 @@ BEGIN
 				BEGIN			
 					SELECT @UserID = UserID FROM @tblAdminUserID WHERE id = @j
 
-					IF NOT EXISTS (SELECT 1 FROM dbo.LicenseeUserFunctions WITH (NOLOCK) WHERE licenseeid=@LicenseeId AND Userid=@UserId AND Functionid = 54)
+					IF EXISTS (SELECT 1 FROM dbo.LicenseeUser WITH (NOLOCK) WHERE licenseeid=@LicenseeId AND Userid=@UserId AND isActive = 1)
+						AND NOT EXISTS (SELECT 1 FROM dbo.LicenseeUserFunctions WITH (NOLOCK) WHERE licenseeid=@LicenseeId AND Userid=@UserId AND Functionid = 54)
 					BEGIN  
 						INSERT INTO dbo.LicenseeUserFunctions(LicenseeId, UserId, FunctionId)
 						SELECT @LicenseeId, @UserId, 54
