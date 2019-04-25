@@ -14,7 +14,7 @@ AS
 	 Original: DBA_Lrf_PullServiceSetting
 	 
 	 Revisions:
-	  - 20190418@Amanda: Copy from SP DBA_Lrf_PullServiceSetting
+	  - 20190418@Amanda: Copy from SP DBA_Lrf_PullServiceSetting [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON

@@ -12,6 +12,7 @@ AS
 	 
 	 Revisions:
 	  - 20181122@Amanda: Add licensee into pull service [Redmine: #83584]
+	  - 20190418@Amanda: Use LM's SP instead of DBA [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;

@@ -12,6 +12,7 @@ AS
 	 Revisions:
 	  - 20181121@Amanda: Terminate Licensee [Redmine: #83584]
 	  - 20181219@Amanda: Validate System data before deactivate [Redmine: #83584]
+	  - 20190418@Amanda: Use LM's SP instead of DBA [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;

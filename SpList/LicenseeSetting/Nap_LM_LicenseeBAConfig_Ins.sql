@@ -23,7 +23,7 @@ AS
 	Original: DBA_LicenseeBAConfig_Ins
 
 	Revisions:
-		- 20190419@Amanda: Copy code from DBA_LicenseeBAConfig_Ins
+		- 20190419@Amanda: Copy code from DBA_LicenseeBAConfig_Ins [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON

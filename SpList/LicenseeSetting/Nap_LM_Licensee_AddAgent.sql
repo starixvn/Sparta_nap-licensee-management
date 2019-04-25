@@ -16,7 +16,7 @@ AS
 	 
 	 Revisions:
 	  - 20181120@Amanda: Add Agent/Currency of Licensee [Redmine: #83584]
-	  - 20190418@Amanda: Move code from DBA_CreateLicenseeAgent to this
+	  - 20190418@Amanda: Move code from DBA_CreateLicenseeAgent to this [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;

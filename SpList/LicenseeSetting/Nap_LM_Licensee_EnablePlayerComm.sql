@@ -9,7 +9,7 @@ AS
 	Original: DBA_Lrf_EnablePlayerComm
 	   
 	Revisions:  
-	   - 20190418@Amanda: Move code from DBA_Lrf_EnablePlayerComm to this and refactor code
+	   - 20190418@Amanda: Move code from DBA_Lrf_EnablePlayerComm to this and refactor code [Redmine: #111321]
 */
 BEGIN
 	DECLARE @tblLicensee AS TABLE (
@@ -38,7 +38,7 @@ BEGIN
 	INSERT INTO @tblFunctionComm (FunctionId)
 	SELECT FunctionId
 	FROM dbo.Functions WITH (NOLOCK)
-	WHERE ParentId = 4 -- CUSTOMER INFORMATION
+	WHERE ParentId = 4 OR FunctionId = 4 -- CUSTOMER INFORMATION
 
 	SELECT @i = 1
 		, @maxID = MAX(ID)

@@ -25,7 +25,7 @@ AS
 	 Revisions:
 	  - 20181112@Amanda: Set up new licensee [Redmine: #83584]
 	  - 20190114@Amanda: add more info for new licensee [redmine: #83584]
-	  - 20190418@Amanda: Move code from DBA_Lrf_CreateNewLicensee to this
+	  - 20190418@Amanda: Move code from DBA_Lrf_CreateNewLicensee to this and use LM's SPs instead of DBA's SPs [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -161,7 +161,7 @@ BEGIN
 			EXEC Nap_LM_Licensee_ActivateSystem
 					@LicenseeName	= @LicenseeName
 				,	@SystemName		= @SystemisActive
-				,	@ErrMsg			= @SPErrMsg
+				,	@ErrMsg			= @SPErrMsg OUTPUT
 				
 			INSERT INTO @Error (Msg)
 			VALUES (@SPErrMsg)
@@ -360,7 +360,7 @@ BEGIN
 	--- END: GRANT CURRENCY PERMISSION
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50106
+		SELECT @ErrCode = 50105
 			, @ErrMsg = 'Fail to create licensee admin users. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
@@ -375,14 +375,14 @@ BEGIN
 				@LicenseeName		= @LicenseeName
 				, @ProductCode		= @ProductCode
 				, @EffectiveDate	= @EffectiveDate
-				, @ErrMsg			= @SPErrMsg
+				, @ErrMsg			= @SPErrMsg OUTPUT
 				
 			INSERT INTO @Error (Msg)
 			VALUES (@SPErrMsg)
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50107
+		SELECT @ErrCode = 50106
 			, @ErrMsg = 'Fail to enable products. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
@@ -397,7 +397,7 @@ BEGIN
 		END
 	END TRY
 	BEGIN CATCH
-		SELECT @ErrCode = 50105
+		SELECT @ErrCode = 50107
 			, @ErrMsg = 'Fail to enable player commission. Process has stopped. Error: ' + CAST(ERROR_NUMBER() AS NVARCHAR(10)) + ' - ' + ERROR_MESSAGE()
 		
 		RETURN
@@ -418,7 +418,7 @@ BEGIN
 			, @OtherComm	= 0.005
 			, @EnableBA		= 0
 			, @UserID		= 862400 --pgmViet
-			, @ErrMsg		= @SPErrMsg
+			, @ErrMsg		= @SPErrMsg OUTPUT
 			
 		INSERT INTO @Error (Msg)
 		VALUES (@SPErrMsg)

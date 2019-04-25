@@ -12,7 +12,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_Function_GetByProduct]
 	Original : DBA_Lrf_FunctionProduct
 	
 	Revisions:
-		- 20190419@Amanda: Copy code from DBA_Lrf_FunctionProduct
+		- 20190419@Amanda: Copy code from DBA_Lrf_FunctionProduct [Redmine: #111321]
 		- 20190422@Amanda: Remove Racing from LRF [Redmine: #99378]
 		- 20190422@Amanda: Remove MicroGaming [Redmine: #107704]
 */
@@ -42,12 +42,6 @@ BEGIN
 			OR FunctionId BETWEEN 51 AND 56
 			OR FunctionId BETWEEN 36 AND 43
 			OR FunctionId BETWEEN 7 AND 33
-		UNION ALL 
-		SELECT	0 AS ProductId -- SB
-				,FunctionID  
-				,2 AS TypeId	 -- Lrf Special Function
-		FROM dbo.Functions WITH (NOLOCK)	
-		WHERE FunctionId = 6 OR  ParentId = 6
 	END
 
 	IF @ProductCode = 'RB'
@@ -85,8 +79,7 @@ BEGIN
 				,3 AS TypeId	 -- Lrf special Function
 		FROM dbo.Functions WITH (NOLOCK)
 		WHERE FunctionId    IN (
-								3 -- REPORTS						
-								,54  -- SpecialBA
+								54  -- SpecialBA
 								)
 	END
 	

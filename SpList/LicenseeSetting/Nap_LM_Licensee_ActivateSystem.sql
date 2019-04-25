@@ -14,7 +14,7 @@ AS
 	 
 	 Revisions:
 	  - 20190115@Amanda: Activate Systems for Licensee [Redmine: #83584]
-	  - 20190418@Amanda: Move code from DBA_Lrf_ActiveLicenseeSystem to this
+	  - 20190418@Amanda: Move code from DBA_Lrf_ActiveLicenseeSystem to this [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;

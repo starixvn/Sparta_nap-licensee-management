@@ -17,7 +17,7 @@ AS
 	 Revisions:
 	  - 20181112@Amanda: Offer Product from Licensee [Redmine: #83584]
 	  - 20190102@Amanda: Modify to support offer multi products for multi licensees [Redmine: #83584]
-	  - 20190419@Amanda: Move code from DBA_Lrf_OfferProduct to this
+	  - 20190419@Amanda: Move code from DBA_Lrf_OfferProduct to this [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -102,7 +102,7 @@ BEGIN
 	DELETE pf
 	FROM @tblProductFunctions pf
 	INNER JOIN dbo.Functions fs WITH (NOLOCK) ON pf.FunctionId = fs.FunctionId
-	WHERE pf.TypeId = 1 AND fs.IsActive = 0
+	WHERE (pf.TypeId = 1 OR pf.TypeId = 3) AND fs.IsActive = 0
 	
 	IF EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductId IS NULL)
 	BEGIN
@@ -162,7 +162,7 @@ BEGIN
 			SELECT DISTINCT f.FunctionId, f.TypeId
 			FROM @tblProductFunctions f
 			INNER JOIN #tblLicenseeProduct p ON f.ProductId = p.ProductId
-			WHERE f.TypeId = 1 OR f.TypeId = 2
+			WHERE f.TypeId = 1 OR f.TypeId = 2 OR f.TypeId = 3
 
 			INSERT INTO dbo.LicenseeFunctions (FunctionId, licenseeID)  
 			SELECT f.FunctionId, @LicenseeId
