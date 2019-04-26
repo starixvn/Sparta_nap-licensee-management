@@ -1,11 +1,11 @@
-/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet,Dot_Member" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_OfferProduct]
 	@LicenseeName		VARCHAR(MAX),
 	@ProductCode		VARCHAR(MAX),
 	@EffectiveDate		DATE ='',
 	@IsPullService		BIT = 1,
-	@ErrMsg				NVARCHAR(4000) = '' OUTPUT
+	@ErrMsg				NVARCHAR(MAX) = '' OUTPUT
 AS
 /*
 	 Created: Amanda

@@ -1,9 +1,9 @@
-/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-bodb_licensee" executers="bodbLicenseeNet,Dot_Member" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Insert]
 	@LicenseeName			VARCHAR(50)
 	, @SuperWildCard		VARCHAR(100) = ''
-	, @LicenseeType			VARCHAR(50) = ''
+	, @LicenseeType			VARCHAR(50)
 	, @IsSpecial			BIT = 0
 	, @ProductCode			VARCHAR(100) = ''
 	, @SystemisActive		VARCHAR(100) = ''
@@ -13,7 +13,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_Licensee_Insert]
 	, @BrandName			VARCHAR(100) = ''
 	, @CompanyName			VARCHAR(100) = ''
 	, @ErrCode				INT = 0 OUTPUT
-	, @ErrMsg				NVARCHAR(4000) = '' OUTPUT
+	, @ErrMsg				NVARCHAR(MAX) = '' OUTPUT
 AS
 /*
 	 Created: Amanda
@@ -51,8 +51,8 @@ BEGIN
 			, @tmpSuperWildCard	VARCHAR(100)
 			, @LicenseeId		INT
 			, @ResellerID		INT
-			, @SPErrMsg			NVARCHAR(4000)
-	DECLARE @Error AS TABLE (Msg NVARCHAR(4000))
+			, @SPErrMsg			NVARCHAR(MAX)
+	DECLARE @Error AS TABLE (Msg NVARCHAR(MAX))
 
 	IF (@LicenseeType = 'Zelianta')
 	BEGIN

@@ -1,12 +1,12 @@
-/*<info serverAlias="DBCUST-bodb_licensee" executers="" viewers="" isFunction="0" isNested="0"></info>*/
+/*<info serverAlias="DBCUST-bodb_licensee" executers="Dot_Member" viewers="" isFunction="0" isNested="0"></info>*/
 
 CREATE PROCEDURE [dbo].[Dot_Dep_LM_CreateNewLicensee]
 	@LicenseeName			VARCHAR(50)
-	, @LicenseeType			VARCHAR(50) = ''
+	, @LicenseeType			VARCHAR(50)
 	, @ProductCode			VARCHAR(100) = ''
 	, @SystemisActive		VARCHAR(100) = 'LRF,OA,Accounting'
 	, @ErrCode				INT = 0 OUTPUT
-	, @ErrMsg				NVARCHAR(4000) = '' OUTPUT
+	, @ErrMsg				NVARCHAR(MAX) = '' OUTPUT
 AS
 /*
 	 Created: Amanda

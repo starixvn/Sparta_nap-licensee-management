@@ -1,4 +1,4 @@
- /*<info serverAlias="DBCUST-bodb_Licensee" executers="bodbLicenseeNet" viewers="" isFunction="0" isNested="0"></info>*/
+ /*<info serverAlias="DBCUST-bodb_Licensee" executers="bodbLicenseeNet,Dot_Member" viewers="" isFunction="0" isNested="0"></info>*/
 CREATE PROCEDURE [dbo].[Nap_LM_LicenseeBAConfig_Ins]
 (
 	@LicenseeID		INT,
@@ -12,7 +12,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_LicenseeBAConfig_Ins]
 	@EnableBA	BIT = 0,
 	@UserID		INT,
 	@IP			VARCHAR(50)='',
-	@ErrMsg		NVARCHAR(4000) = '' OUTPUT
+	@ErrMsg		NVARCHAR(100) = '' OUTPUT
 )
 AS
 /*
