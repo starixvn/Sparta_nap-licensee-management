@@ -122,10 +122,15 @@ BEGIN
 	
 	--- CREATE AGENT
 	BEGIN TRY
+		SET @SPErrMsg = ''
 		EXEC Nap_LM_Licensee_AddAgent 
 			@LicenseeName		= @LicenseeName
 			, @SuperWildCard	= @tmpSuperWildCard
 			, @IsSpecial		= @IsSpecial
+			, @ErrMsg			= @SPErrMsg OUTPUT
+
+		INSERT INTO @Error (Msg)
+		VALUES (@SPErrMsg)
 	END TRY
 	BEGIN CATCH
 		SELECT @ErrCode = 50102
