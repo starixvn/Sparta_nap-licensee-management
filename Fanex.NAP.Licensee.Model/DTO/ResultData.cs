@@ -9,7 +9,7 @@ namespace Fanex.NAP.Licensee.Model.DTO
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ResultData<T> where T : class
+    public class ResultData<T>
     {
         public bool IsSuccess { get; set; }
 

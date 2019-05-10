@@ -67,8 +67,8 @@ export class AddAgent extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
-                if (!response.data.IsSuccess) {
-                    Utility.showMessage(response.data.Error);
+                if (response.data.Error) {
+                    Utility.showWarningMessage(response.data.Data + '.<br>' + response.data.Error);
                 }
                 else {
                     Utility.showMessage(response.data.Data);

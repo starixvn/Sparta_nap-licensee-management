@@ -72,16 +72,16 @@
     <Setting Key="Nap_LM_Licensee_Select" SpName="Nap_LM_Licensee_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_System_Select" SpName="Nap_LM_System_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Product_Select" SpName="Nap_LM_Product_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_Insert" SpName="Nap_LM_Licensee_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_Insert" SpName="Nap_LM_Licensee_Insert_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_GetOfferedProduct" SpName="Nap_LM_Licensee_GetOfferedProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_LaunchProduct" SpName="Nap_LM_Licensee_LaunchProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_OfferProduct" SpName="Nap_LM_Licensee_OfferProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_RemoveProduct" SpName="Nap_LM_Licensee_RemoveProduct" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_AddAgent" SpName="Nap_LM_Licensee_AddAgent" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_Terminate" SpName="Nap_LM_Licensee_Terminate" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_OfferProduct" SpName="Nap_LM_Licensee_OfferProduct_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_RemoveProduct" SpName="Nap_LM_Licensee_RemoveProduct_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_AddAgent" SpName="Nap_LM_Licensee_AddAgent_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_Terminate" SpName="Nap_LM_Licensee_Terminate_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_GetIntegrationSetting" SpName="Nap_LM_Licensee_GetIntegrationSetting" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService_xtest" DbName="DBPTCS.bodb_PlaytechCS.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SuperCurrency_Select" SpName="Nap_LM_SuperCurrency_Select" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LicenseeList_Select" SpName="Nap_LM_LicenseeList_Select" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_GetByName" SpName="Nap_LM_Licensee_GetByName" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
@@ -109,7 +109,7 @@
     <Setting Key="Nap_LM_LrfFunction_Insert" SpName="Nap_LM_LrfFunction_Insert" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LrfFunction_Update" SpName="Nap_LM_LrfFunction_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_Licensee_GetActiveSystem" SpName="Nap_LM_Licensee_GetActiveSystem" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_Licensee_ActivateSystem" SpName="Nap_LM_Licensee_ActivateSystem" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_Licensee_ActivateSystem" SpName="Nap_LM_Licensee_ActivateSystem_xtest" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LrfFunction_GetLicensee" SpName="Nap_LM_LrfFunction_GetLicensee" DbName="DBCUST.bodb_licensee.bodbLicenseeNet">
       <Mapping DataField="IsAssigned" ObjectProperty="Checked" />
     </Setting>

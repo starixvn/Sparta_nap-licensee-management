@@ -11,13 +11,5 @@
         public int Currency { get; set; }
 
         public int RedmineId { get; set; }
-
-        public dynamic SpParam => new
-        {
-            LicenseeName = LicenseeName,
-            SuperWildCard = SuperWildCard,
-            IsSpecial = IsSpecial,
-            Currency = Currency
-        };
     }
 }

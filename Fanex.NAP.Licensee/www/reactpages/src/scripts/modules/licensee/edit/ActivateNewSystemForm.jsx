@@ -62,7 +62,7 @@ export class ActivateNewSystemForm extends Component {
         Site.fetchData(params, url)
             .then(response => {
                 if (response.data.Error) {
-                    Utility.showMessage(response.data.Error);
+                    Utility.showWarningMessage(response.data.Error);
                 }
                 else {
                     Utility.showMessage('Success!');
