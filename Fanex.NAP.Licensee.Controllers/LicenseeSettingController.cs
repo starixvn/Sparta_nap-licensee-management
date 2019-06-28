@@ -94,9 +94,6 @@
             }
 
             var result = _licenseeService.SetUpNewLicensee(criteria);
-            result.Error = result.IsSuccess
-                ? null
-                : (string.IsNullOrEmpty(result.Error) ? "Can not create this licensee. Please try later!" : result.Error);
 
             return Json(result);
         }
@@ -195,12 +192,7 @@
 
             var result = _licenseeService.AddAgent(criteria);
 
-            if (result <= 0)
-            {
-                return Json(new { IsSuccess = false, Error = "There is no new agent to added!" });
-            }
-
-            return Json(new { IsSuccess = true, Data = $"{result} {(result > 1 ? "agents have" : "agent has")} been added!" });
+            return Json(new { IsSuccess = result.IsSuccess, Data = $"{result.Data} {(result.Data > 1 ? "agents have" : "agent has")} been added", Error = result.Error });
         }
 
         [HttpPost]
@@ -289,12 +281,12 @@
 
             if (errorBuilder.Length > 0)
             {
-                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
+                return Json(new { Error = errorBuilder.ToString() });
             }
 
             var result = _licenseeService.ActivateSystem(criteria);
 
-            return Json(new { IsSuccess = string.IsNullOrEmpty(result), Error = result });
+            return Json(new { Error = result });
         }
 
         [HttpPost]

@@ -11,6 +11,7 @@ AS
 	 
 	 Revisions:
 	  - 20181113@Amanda: Get lrf function keys by product code [Redmine: #83584]
+	  - 20190425@Amanda: Add BA function [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -30,7 +31,7 @@ BEGIN
 		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n  
     
 		INSERT INTO @tblFunctions  
-		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductName  
+		EXEC Nap_LM_Function_GetByProduct @ProductCode = @ProductName  
       
 		SET @n = @n +1   
 	END 
@@ -38,6 +39,6 @@ BEGIN
 	SELECT af.FunctionKey
 	FROM dbo.Functions af WITH (NOLOCK)
 	INNER JOIN @tblFunctions f ON af.FunctionId = f.FunctionId
-	WHERE f.TypeID = 1 -- LRF
+	WHERE f.TypeID = 1 AND f.TypeID = 3 -- LRF
 END
 GO

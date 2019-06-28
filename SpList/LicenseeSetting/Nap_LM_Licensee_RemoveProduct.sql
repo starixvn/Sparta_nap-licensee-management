@@ -71,7 +71,7 @@ BEGIN
 		SELECT @ProductName = ProductCode FROM @tblProductPrefix WHERE ID = @n
     
 		INSERT INTO @tblProductFunctions (ProductId, FunctionId, TypeId)
-		EXEC DBA_Lrf_FunctionProduct @ProductCode = @ProductName
+		EXEC Nap_LM_Function_GetByProduct @ProductCode = @ProductName
       
 		SET @n = @n +1
 	END
@@ -166,7 +166,7 @@ BEGIN
 				AND EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'AGC')
 				AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = 'AGCasino_VersionKey'))
 			BEGIN
-				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[DBA_Lrf_PullServiceSetting]
+				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[Nap_LM_PullServiceSetting]
 					@LicenseeID = @LicenseeId, 
 					@LicenseeName = @LicenseeName, 
 					@SettingName = 'AGCasino_VersionKey',
@@ -177,7 +177,7 @@ BEGIN
 				AND EXISTS (SELECT 1 FROM @tblProductPrefix WHERE ProductCode = 'GD')
 				AND EXISTS (SELECT 1 FROM DBPTCS.bodb_PlaytechCS.dbo.LicIntegrationSetting WITH (NOLOCK) WHERE LicenseeID = @LicenseeId AND SettingName = 'GoldDeluxe_VersionKey'))
 			BEGIN
-				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[DBA_Lrf_PullServiceSetting]
+				EXEC [DBPTCS].[bodb_PlaytechCS].[dbo].[Nap_LM_PullServiceSetting]
 					@LicenseeID = @LicenseeId, 
 					@LicenseeName = @LicenseeName, 
 					@SettingName = 'GoldDeluxe_VersionKey',

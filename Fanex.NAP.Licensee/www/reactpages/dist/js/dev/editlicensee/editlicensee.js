@@ -9761,8 +9761,8 @@ var AddAgent = exports.AddAgent = function (_Component) {
             var params = this._getParams();
 
             _site2.default.fetchData(params, url).then(function (response) {
-                if (!response.data.IsSuccess) {
-                    _utility2.default.showMessage(response.data.Error);
+                if (response.data.Error) {
+                    _utility2.default.showWarningMessage(response.data.Data + '.<br>' + response.data.Error);
                 } else {
                     _utility2.default.showMessage(response.data.Data);
                 }
@@ -10811,7 +10811,7 @@ var ActivateNewSystemForm = exports.ActivateNewSystemForm = function (_Component
 
             _site2.default.fetchData(params, url).then(function (response) {
                 if (response.data.Error) {
-                    _utility2.default.showMessage(response.data.Error);
+                    _utility2.default.showWarningMessage(response.data.Error);
                 } else {
                     _utility2.default.showMessage('Success!');
                 }

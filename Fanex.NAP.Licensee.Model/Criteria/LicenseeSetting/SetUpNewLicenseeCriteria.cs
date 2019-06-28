@@ -27,20 +27,5 @@
         public string BrandName { get; set; }
 
         public string CompanyName { get; set; }
-
-        public dynamic SpParam => new
-        {
-            LicenseeName = LicenseeName,
-            SuperWildCard = SuperWildCard,
-            LicenseeType = LicenseeType,
-            IsSpecial = IsSpecial,
-            ProductCode = ProductCode,
-            SystemIsActive = SystemIsActive,
-            IsAllowMemberComm = IsAllowMemberComm,
-            EffectiveDate = EffectiveDate,
-            Description = Description,
-            BrandName = BrandName ?? string.Empty,
-            CompanyName = CompanyName ?? string.Empty
-        };
     }
 }

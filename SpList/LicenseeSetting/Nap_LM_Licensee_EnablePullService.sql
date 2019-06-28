@@ -12,6 +12,7 @@ AS
 	 
 	 Revisions:
 	  - 20181122@Amanda: Add licensee into pull service [Redmine: #83584]
+	  - 20190418@Amanda: Use LM's SP instead of DBA [Redmine: #111321]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -25,7 +26,7 @@ BEGIN
 		RETURN
 	END
 	
-	EXEC [dbo].[DBA_Lrf_PullServiceSetting]
+	EXEC [dbo].[Nap_LM_PullServiceSetting]
 		@LicenseeId		= @LicenseeID,
 		@LicenseeName	= @LicenseeName,
 		@SettingName	= @SettingName

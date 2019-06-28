@@ -75,11 +75,16 @@ export default class Form extends Component {
         Site.fetchData(params, url)
             .then(response => {                
                 if (response.data.IsSuccess) {     
-                    Utility.showMessage('Success!');
                     this.setState({ isSuccess: true });
+                    if (response.data.Error) {
+                        Utility.showWarningMessage(response.data.Error);
+                    }
+                    else {
+                        Utility.showMessage('Success!');
+                    }
                 }
                 else {
-                    Utility.showMessage(response.data.Error);
+                    Utility.showErrorMessage(response.data.Error);
                 }
 
                 this._toggleLoader(false);

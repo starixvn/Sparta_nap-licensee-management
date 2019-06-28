@@ -762,10 +762,14 @@ var Form = function (_Component) {
             var url = 'LicenseeSetting/SetUpNewLicensee';
             _site2.default.fetchData(params, url).then(function (response) {
                 if (response.data.IsSuccess) {
-                    _utility2.default.showMessage('Success!');
                     _this2.setState({ isSuccess: true });
+                    if (response.data.Error) {
+                        _utility2.default.showWarningMessage(response.data.Error);
+                    } else {
+                        _utility2.default.showMessage('Success!');
+                    }
                 } else {
-                    _utility2.default.showMessage(response.data.Error);
+                    _utility2.default.showErrorMessage(response.data.Error);
                 }
 
                 _this2._toggleLoader(false);

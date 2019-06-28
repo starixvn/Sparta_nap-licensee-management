@@ -7,11 +7,5 @@
         public string SystemName { get; set; }
 
         public int RedmineId { get; set; }
-
-        public dynamic SpParam => new
-        {
-            LicenseeName = LicenseeName,
-            SystemName = SystemName
-        };
     }
 }
