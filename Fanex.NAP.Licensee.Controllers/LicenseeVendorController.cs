@@ -81,6 +81,8 @@
         [HttpGet]
         public ActionResult CreateToken()
         {
+           // string UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
+            //UserPWD = IBCCrypt.IBCCrypt.GenMD5Key(UserPWD, UserPasswordKey);
             return View();
         }
     }
