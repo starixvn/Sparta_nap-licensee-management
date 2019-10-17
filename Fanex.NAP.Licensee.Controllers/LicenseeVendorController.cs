@@ -77,5 +77,12 @@
 
             return Json(result);
         }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SourceLicenseeSetting, Policy = Constant.Policy.Host)]
+        public ActionResult CreateToken()
+        {
+            return View();
+        }
     }
 }

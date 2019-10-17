@@ -1,0 +1,27 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@{
+    ViewBag.Title = "Create token";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Vendor Info</li>
+        <li>Licensee Site</li>
+        <li class="current">Create Token</li>
+    </ul>
+}
+<div class="container">
+    <div class="panel-back">
+        <a class="btn-go-back" href="@Url.Content("~/LicenseeVendor")">← Back to licensee site</a>
+    </div>
+    <div id="app-container"></div>
+</div>
+
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createtoken/createtoken.css")
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/function/function.css")
+}
+@section FooterJs{
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/createToken/createToken.js")
+}

@@ -1,0 +1,112 @@
+@import "../../components/card";
+
+.add-form, .panel-back {
+    margin: auto;
+    max-width: 540px;
+}
+
+.add-form {
+    input[type=text] {
+        color: #545454;
+        font-size: 15px;
+    }
+
+    .btn-extend, .btn-submit, .btn-copy {
+        box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        width: 100px;
+    }
+
+    .btn-extend {
+        background: #89aa5c;
+        border: 1px solid #729446;
+        height: 26px;
+    }
+    
+    .btn-submit {
+        background: #4e71bb;
+        border: 1px solid #3C5B9B;
+        height: 26px;
+    }
+
+    .title-name {
+        font-weight: 700;
+    }
+}
+
+.confirm-popup, .add-form, .panel-back {
+    input[type=text] {
+        border-radius: 3px;
+        border: 1px solid #9d9d9d;
+        height: 25px;
+        padding: 2px;
+    }
+
+    label {
+        color: #545454;
+        font-weight: 400;
+        font-size: 13px;
+    }
+}
+
+.pop-content {
+    display: flex;
+    justify-content: center;
+
+    label {
+        font-size: 16px;
+    }
+
+    input[type=text] {
+        padding-left: 45%;
+    }
+
+    .icon-plus {
+        left: 20%;
+        font-size: 17px;
+    }
+}
+
+.btn-go-back {
+    font-size: 14px;
+    color: #0136ac;
+}
+
+.group-input {
+    position: relative;
+
+    .input-group-prepend {
+        position: absolute;
+    }
+}
+
+.group-prepend {
+    input[type=text] {
+        background: #ecf8ff;
+        border: 1px solid #6faccf;
+        padding-right: 102px;
+    }
+
+    input[disabled], button[disabled] {
+        background: #f7f7f7;
+        border: 1px solid #cbcbcb;
+    }
+
+    button[disabled] {
+        background: #d0d4d6;
+    }
+
+    .input-group-prepend {
+        bottom: 2px;
+        right: 2px;
+        top: 2px;
+    }
+
+    .btn-copy {
+        background: #6faccf;
+        border-radius: 3px;
+        border: 1px solid #5b9cc1;
+    }
+}

@@ -351,6 +351,7 @@
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\addUser\addUser.js" />
+    <Content Include="www\reactpages\dist\js\dev\createToken\createToken.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js" />
@@ -444,6 +445,9 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\LicenseeVendor\CreateToken.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\createToken\createToken.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
