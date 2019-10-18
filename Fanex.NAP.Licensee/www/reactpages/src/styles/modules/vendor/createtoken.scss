@@ -1,11 +1,8 @@
 @import "../../components/card";
 
-.add-form, .panel-back {
-    margin: auto;
-    max-width: 540px;
-}
-
 .add-form {
+    max-width: 540px;
+
     input[type=text] {
         color: #545454;
         font-size: 15px;
@@ -36,7 +33,7 @@
     }
 }
 
-.confirm-popup, .add-form, .panel-back {
+.confirm-popup, .add-form{
     input[type=text] {
         border-radius: 3px;
         border: 1px solid #9d9d9d;
@@ -47,7 +44,7 @@
     label {
         color: #545454;
         font-weight: 400;
-        font-size: 13px;
+        font-size: 14px;
     }
 }
 
@@ -67,11 +64,6 @@
         left: 20%;
         font-size: 17px;
     }
-}
-
-.btn-go-back {
-    font-size: 14px;
-    color: #0136ac;
 }
 
 .group-input {

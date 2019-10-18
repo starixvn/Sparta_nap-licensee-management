@@ -10,13 +10,9 @@
         <li>Licensee Site</li>
         <li class="current">Create Token</li>
     </ul>
+
+    <a class="btn-back" href="@Url.Content("~/LicenseeVendor")">← Back To List</a>
 }
-<div class="container">
-    <div class="panel-back">
-        <a class="btn-go-back" href="@Url.Content("~/LicenseeVendor")">← Back to licensee site</a>
-    </div>
-    <div id="app-container"></div>
-</div>
 
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createtoken/createtoken.css")
@@ -25,3 +21,5 @@
 @section FooterJs{
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/createToken/createToken.js")
 }
+
+<div id="app-container"></div>

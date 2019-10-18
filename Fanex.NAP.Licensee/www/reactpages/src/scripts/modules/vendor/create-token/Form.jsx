@@ -9,6 +9,7 @@ export default class Form extends Component {
             timeControl: '',
             seconds: 3600,
             extraTime: 0,
+            token: '',
             isDisable: true,
             isShowMessage: false,
             isShowPopup: false,
@@ -17,7 +18,11 @@ export default class Form extends Component {
 
     onGenerate = (event) => {
         event.preventDefault();
-        this.setState({ isDisable: false, isShowMessage: true });
+        this.setState({ 
+            isDisable: false, 
+            isShowMessage: true,
+            token: this._generateToken(16)
+        });
     }
 
     onSubmit = () => {
@@ -29,6 +34,32 @@ export default class Form extends Component {
         if (!this.timerID) {
             this.timerID = setInterval(() => this._tick(), 1000);
         }
+    }
+
+    _generateToken(length) {
+        var symbols = "@#$%";
+        var numbers = "1234567890";
+        var lowercaseCharacter = "abcdefghijklmnopqrstuvwxyz";
+        var upcaseCharacter = "ABCDEFGHIJKLMNOQPRSTUVWXYZ";
+
+        var radomString = symbols + numbers + lowercaseCharacter + upcaseCharacter;
+        var token = "";
+        for (let i = 0; i < length; i++) {
+            token += radomString[Math.floor(Math.random() * radomString.length)];
+        }
+
+        return token;
+    }
+
+    _renderCardInput(label) {
+        return (
+            <div className='form-group row'>
+                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
+                <div className='col-lg-9 col-sm-9'>
+                    <input type='text' className='full-width' />
+                </div>
+            </div>
+        )
     }
 
     _tick() {
@@ -91,8 +122,7 @@ export default class Form extends Component {
     }
 
     render() {
-        const { timeControl, isDisable, isShowMessage, isShowPopup } = this.state;
-
+        const { timeControl, token, isDisable, isShowMessage, isShowPopup } = this.state;
         return (
             <div>
                 <div className="add-form">
@@ -113,24 +143,9 @@ export default class Form extends Component {
                             <div className="card-body">
                                 <div className="card-title">Create new token for <span className="title-name">ITsupport1</span></div>
                                 <div className="card-body-content">
-                                    <div className='form-group row'>
-                                        <label className='col-lg-3 col-sm-3 col-md-3'>Request by</label>
-                                        <div className='col-lg-9 col-sm-9'>
-                                            <input type='text' className='full-width' />
-                                        </div>
-                                    </div>
-                                    <div className='form-group row'>
-                                        <label className='col-lg-3 col-sm-3 col-md-3'>Redmine ID</label>
-                                        <div className='col-lg-9 col-sm-9'>
-                                            <input type='text' className='full-width' />
-                                        </div>
-                                    </div>
-                                    <div className='form-group row'>
-                                        <label className='col-sm-3 col-lg-3 col-md-3'>Exprired in</label>
-                                        <div className='col-lg-9 col-sm-9'>
-                                            <input type='text' className='full-width' />
-                                        </div>
-                                    </div>
+                                    {this._renderCardInput('Request by')}
+                                    {this._renderCardInput('Redmine ID')}
+                                    {this._renderCardInput('Exprired in')}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
                                             <button className="btn-submit" onClick={this.onGenerate}>Generate</button>
@@ -141,7 +156,7 @@ export default class Form extends Component {
                                         <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
                                         <div className='col-lg-9 col-sm-9'>
                                             <div className="group-input group-prepend">
-                                                <input type="text" className='full-width' disabled={isDisable} />
+                                                <input type="text" className='full-width' disabled={isDisable} value={token} />
                                                 <div className="input-group-prepend">
                                                     <button className="btn-copy" disabled={isDisable}>Copy</button>
                                                 </div>
