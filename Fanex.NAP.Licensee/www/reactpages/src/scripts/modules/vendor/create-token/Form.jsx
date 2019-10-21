@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import Popup from '../../../components/Popup';
+import Site from '../../../lib/site';
+import Loader from '../../../components/Loader';
+import Utility from '../../../lib/utility';
+
+const defaultState = Object.assign({}, window.initialState);
 
 export default class Form extends Component {
     constructor(props) {
@@ -8,24 +13,54 @@ export default class Form extends Component {
         this.state = {
             timeControl: '',
             seconds: 3600,
-            extraTime: 0,
+            extraTime: 2,
             token: '',
+            isCopy: false,
             isDisable: true,
+            isLoading: false,
             isShowMessage: false,
-            isShowPopup: false,
+            isShowPopup: false
         };
     }
 
-    onGenerate = (event) => {
-        event.preventDefault();
-        this.setState({ 
-            isDisable: false, 
-            isShowMessage: true,
-            token: this._generateToken(16)
+    _getParams() {
+        return {
+            criteria: {
+                SiteName: defaultState.siteName,
+                UserID: defaultState.userID,
+            },
+            extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime 
+        };
+    }
+
+    _onGenerate = () => {
+        this._toggleLoader(true);
+        const url = 'LicenseeVendor/CreateToken';
+        var param = this._getParams();
+
+        Site.fetchData(param, url)
+        .then(response => {                
+            if (response.data.IsSuccess) {     
+                this.setState({
+                    isDisable: false,
+                    isShowMessage: true,
+                    token: response.data.Data
+                });
+                if (response.data.Error) {
+                    Utility.showWarningMessage(response.data.Error);
+                }
+            }
+            else {
+                Utility.showErrorMessage(response.data.Error);
+            }
+
+            this._toggleLoader(false);
+        }).catch(err => {
+            this._toggleLoader(false);
         });
     }
 
-    onSubmit = () => {
+    _onSubmit = () => {
         this.setState({
             isShowPopup: false,
             seconds: this.state.seconds + this._convertHoursToSecond(this.state.extraTime)
@@ -36,19 +71,23 @@ export default class Form extends Component {
         }
     }
 
-    _generateToken(length) {
-        var symbols = "@#$%";
-        var numbers = "1234567890";
-        var lowercaseCharacter = "abcdefghijklmnopqrstuvwxyz";
-        var upcaseCharacter = "ABCDEFGHIJKLMNOQPRSTUVWXYZ";
+    _onCopy = (event) => {
+        this.txtToken.select();
+        document.execCommand('copy');
+        event.target.focus();
 
-        var radomString = symbols + numbers + lowercaseCharacter + upcaseCharacter;
-        var token = "";
-        for (let i = 0; i < length; i++) {
-            token += radomString[Math.floor(Math.random() * radomString.length)];
-        }
+        this.setState({
+            isCopy: true
+        })
+        setTimeout(() => {
+            this.setState({ isCopy:false });
+        }, 500);
+    }
 
-        return token;
+    _onExtraTimeChange = (event) => {
+        const extraTime = (event.target.validity.valid) ? event.target.value : this.state.extraTime;
+
+        this.setState({ extraTime: extraTime })
     }
 
     _renderCardInput(label) {
@@ -62,6 +101,15 @@ export default class Form extends Component {
         )
     }
 
+    _renderTootlip(label, position) {
+        return (
+            <div className={`tooltip in ${position}`}>
+                <div className="tooltip-arrow"></div>
+                <div className="tooltip-inner">{label}</div>
+            </div>
+        ) 
+    }
+
     _tick() {
         if (this.state.seconds == 0) {
             clearInterval(this.timerID);
@@ -71,7 +119,7 @@ export default class Form extends Component {
             var curentSeconds = this.state.seconds - 1;
             this.setState({
                 seconds: curentSeconds,
-                timeControl: this._secondsToTimeString(curentSeconds)
+                timeControl: this._formatSecondsToTimeString(curentSeconds)
             });
         }
     }
@@ -80,7 +128,7 @@ export default class Form extends Component {
         return hours * 60 * 60;
     }
 
-    _secondsToTimeString(secs) {
+    _formatSecondsToTimeString(secs) {
         var hours = Math.floor(secs / 3600);
         var minutes = Math.floor(secs % 3600 / 60);
         var seconds = Math.floor(secs % 3600 % 60);
@@ -88,9 +136,13 @@ export default class Form extends Component {
         return ('0' + hours).slice(-2) + " : " + ('0' + minutes).slice(-2) + " : " + ('0' + seconds).slice(-2);
     }
 
+    _toggleLoader(isLoading) {
+        this.setState({ isLoading: isLoading });
+    }
+
     componentWillMount() {
         this.setState({
-            timeControl: this._secondsToTimeString(this.state.seconds)
+            timeControl: this._formatSecondsToTimeString(this.state.seconds)
         });
     }
 
@@ -108,11 +160,11 @@ export default class Form extends Component {
                             <div className="input-group-prepend icon-plus">
                                 <label>+</label>
                             </div>
-                            <input type='text' className='form-control' onChange={(e) => this.setState({ extraTime: e.target.value })} />
+                            <input type='text' className='form-control' pattern="[0-9]*" value={this.state.extraTime} onChange={this._onExtraTimeChange} />
                         </div>
                     </div>
                     <div className='col-lg-3 col-md-3 col-sm-3'>
-                        <button className='btn btn-primary full-width' onClick={() => this.onSubmit()}>
+                        <button className='btn btn-primary full-width' onClick={() => this._onSubmit()}>
                             Submit
                         </button>
                     </div>
@@ -122,10 +174,12 @@ export default class Form extends Component {
     }
 
     render() {
-        const { timeControl, token, isDisable, isShowMessage, isShowPopup } = this.state;
+        const { isCopy, timeControl, token, isDisable, isLoading, isShowMessage, isShowPopup } = this.state;
+        
         return (
             <div>
                 <div className="add-form">
+                    <Loader isLoading={isLoading} />
                     <div className="row">
                         <div className="card">
                             <div className="card-header">
@@ -148,7 +202,7 @@ export default class Form extends Component {
                                     {this._renderCardInput('Exprired in')}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
-                                            <button className="btn-submit" onClick={this.onGenerate}>Generate</button>
+                                            <button className="btn-submit" onClick={this._onGenerate}>Generate</button>
                                         </div>
                                     </div>
                                     <div className="clearfix"></div>
@@ -156,30 +210,38 @@ export default class Form extends Component {
                                         <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
                                         <div className='col-lg-9 col-sm-9'>
                                             <div className="group-input group-prepend">
-                                                <input type="text" className='full-width' disabled={isDisable} value={token} />
+                                                <input type="text" className='full-width' disabled={isDisable} value={token} ref={(txtToken) => this.txtToken = txtToken} />
+                                                    {
+                                                        isCopy && this._renderTootlip('Copied', 'bottom')
+                                                    }
                                                 <div className="input-group-prepend">
-                                                    <button className="btn-copy" disabled={isDisable}>Copy</button>
+                                                    <button className="btn-copy" disabled={isDisable} onClick={this._onCopy} >Copy</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {isShowMessage == true ?
-                                        (
-                                            <div className='form-group row'>
-                                                <label className='col-lg-12 col-sm-12 col-md-12'>New token "czxcx" has been created. Make sure you copy it now, you won't be able to see it again</label>
-                                            </div>
-                                        ) : null}
+                                    <div className='form-group row'>
+                                        <div className="col-lg-12">
+                                            {isShowMessage &&
+                                                (
+                                                    <div className='form-group row'>
+                                                        <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Popup isShow={isShowPopup}
+                        title='Extend Time'
+                        content={this._buildContent()}
+                        className='no-scroll'
+                        style={{ top: '100px', bottom: 'auto', width: '540px' }}
+                        onClose={() => this.setState(() => ({ isShowPopup: false }))} />
                 </div>
-                <Popup isShow={isShowPopup}
-                    title='Extend Time'
-                    content={this._buildContent()}
-                    className='no-scroll'
-                    style={{ top: '100px', bottom: 'auto', width: '540px' }}
-                    onClose={() => this.setState(() => ({ isShowPopup: false }))} />
             </div>
         )
     }

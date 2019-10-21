@@ -1,4 +1,4 @@
-webpackJsonp([16],{
+webpackJsonp([17],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -6,8 +6,8 @@ webpackJsonp([16],{
 "use strict";
 
 
-var bind = __webpack_require__(10);
-var isBuffer = __webpack_require__(22);
+var bind = __webpack_require__(11);
+var isBuffer = __webpack_require__(36);
 
 /*global toString:true*/
 
@@ -311,7 +311,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -330,19 +330,19 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 11:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(26);
-var buildURL = __webpack_require__(28);
-var parseHeaders = __webpack_require__(29);
-var isURLSameOrigin = __webpack_require__(30);
-var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
+var settle = __webpack_require__(40);
+var buildURL = __webpack_require__(42);
+var parseHeaders = __webpack_require__(43);
+var isURLSameOrigin = __webpack_require__(44);
+var createError = __webpack_require__(13);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(45);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -439,7 +439,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(32);
+      var cookies = __webpack_require__(46);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -518,13 +518,13 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(27);
+var enhanceError = __webpack_require__(41);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -544,7 +544,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -557,7 +557,7 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -658,7 +658,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Popup = __webpack_require__(54);
+var _Popup = __webpack_require__(56);
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
@@ -666,9 +666,13 @@ var _site = __webpack_require__(9);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _Loader = __webpack_require__(19);
+var _Loader = __webpack_require__(32);
 
 var _Loader2 = _interopRequireDefault(_Loader);
+
+var _utility = __webpack_require__(8);
+
+var _utility2 = _interopRequireDefault(_utility);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -678,6 +682,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var defaultState = Object.assign({}, window.initialState);
+
 var Form = function (_Component) {
     _inherits(Form, _Component);
 
@@ -686,16 +692,32 @@ var Form = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
-        _this.onGenerate = function (event) {
-            event.preventDefault();
-            _this.setState({
-                isDisable: false,
-                isShowMessage: true,
-                token: _this._generateToken(16)
+        _this._onGenerate = function () {
+            _this._toggleLoader(true);
+            var url = 'LicenseeVendor/CreateToken';
+            var param = _this._getParams();
+
+            _site2.default.fetchData(param, url).then(function (response) {
+                if (response.data.IsSuccess) {
+                    _this.setState({
+                        isDisable: false,
+                        isShowMessage: true,
+                        token: response.data.Data
+                    });
+                    if (response.data.Error) {
+                        _utility2.default.showWarningMessage(response.data.Error);
+                    }
+                } else {
+                    _utility2.default.showErrorMessage(response.data.Error);
+                }
+
+                _this._toggleLoader(false);
+            }).catch(function (err) {
+                _this._toggleLoader(false);
             });
         };
 
-        _this.onSubmit = function () {
+        _this._onSubmit = function () {
             _this.setState({
                 isShowPopup: false,
                 seconds: _this.state.seconds + _this._convertHoursToSecond(_this.state.extraTime)
@@ -708,13 +730,33 @@ var Form = function (_Component) {
             }
         };
 
+        _this._onCopy = function (event) {
+            _this.txtToken.select();
+            document.execCommand('copy');
+            event.target.focus();
+
+            _this.setState({
+                isCopy: true
+            });
+            setTimeout(function () {
+                _this.setState({ isCopy: false });
+            }, 500);
+        };
+
+        _this._onExtraTimeChange = function (event) {
+            var extraTime = event.target.validity.valid ? event.target.value : _this.state.extraTime;
+
+            _this.setState({ extraTime: extraTime });
+        };
+
         _this.state = {
             timeControl: '',
             seconds: 3600,
-            extraTime: 0,
+            extraTime: 2,
             token: '',
-            isLoading: false,
+            isCopy: false,
             isDisable: true,
+            isLoading: false,
             isShowMessage: false,
             isShowPopup: false
         };
@@ -722,20 +764,15 @@ var Form = function (_Component) {
     }
 
     _createClass(Form, [{
-        key: '_generateToken',
-        value: function _generateToken(length) {
-            var symbols = "@#$%";
-            var numbers = "1234567890";
-            var lowercaseCharacter = "abcdefghijklmnopqrstuvwxyz";
-            var upcaseCharacter = "ABCDEFGHIJKLMNOQPRSTUVWXYZ";
-
-            var radomString = symbols + numbers + lowercaseCharacter + upcaseCharacter;
-            var token = "";
-            for (var i = 0; i < length; i++) {
-                token += radomString[Math.floor(Math.random() * radomString.length)];
-            }
-
-            return token;
+        key: '_getParams',
+        value: function _getParams() {
+            return {
+                criteria: {
+                    SiteName: defaultState.siteName,
+                    UserID: defaultState.userID
+                },
+                extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime
+            };
         }
     }, {
         key: '_renderCardInput',
@@ -756,9 +793,18 @@ var Form = function (_Component) {
             );
         }
     }, {
-        key: '_toggleLoader',
-        value: function _toggleLoader(isLoading) {
-            this.setState({ isLoading: isLoading });
+        key: '_renderTootlip',
+        value: function _renderTootlip(label, position) {
+            return _react2.default.createElement(
+                'div',
+                { className: 'tooltip in ' + position },
+                _react2.default.createElement('div', { className: 'tooltip-arrow' }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'tooltip-inner' },
+                    label
+                )
+            );
         }
     }, {
         key: '_tick',
@@ -770,7 +816,7 @@ var Form = function (_Component) {
                 var curentSeconds = this.state.seconds - 1;
                 this.setState({
                     seconds: curentSeconds,
-                    timeControl: this._secondsToTimeString(curentSeconds)
+                    timeControl: this._formatSecondsToTimeString(curentSeconds)
                 });
             }
         }
@@ -780,8 +826,8 @@ var Form = function (_Component) {
             return hours * 60 * 60;
         }
     }, {
-        key: '_secondsToTimeString',
-        value: function _secondsToTimeString(secs) {
+        key: '_formatSecondsToTimeString',
+        value: function _formatSecondsToTimeString(secs) {
             var hours = Math.floor(secs / 3600);
             var minutes = Math.floor(secs % 3600 / 60);
             var seconds = Math.floor(secs % 3600 % 60);
@@ -789,10 +835,15 @@ var Form = function (_Component) {
             return ('0' + hours).slice(-2) + " : " + ('0' + minutes).slice(-2) + " : " + ('0' + seconds).slice(-2);
         }
     }, {
+        key: '_toggleLoader',
+        value: function _toggleLoader(isLoading) {
+            this.setState({ isLoading: isLoading });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.setState({
-                timeControl: this._secondsToTimeString(this.state.seconds)
+                timeControl: this._formatSecondsToTimeString(this.state.seconds)
             });
         }
     }, {
@@ -835,9 +886,7 @@ var Form = function (_Component) {
                                     '+'
                                 )
                             ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: function onChange(e) {
-                                    return _this3.setState({ extraTime: e.target.value });
-                                } })
+                            _react2.default.createElement('input', { type: 'text', className: 'form-control', pattern: '[0-9]*', value: this.state.extraTime, onChange: this._onExtraTimeChange })
                         )
                     ),
                     _react2.default.createElement(
@@ -846,7 +895,7 @@ var Form = function (_Component) {
                         _react2.default.createElement(
                             'button',
                             { className: 'btn btn-primary full-width', onClick: function onClick() {
-                                    return _this3.onSubmit();
+                                    return _this3._onSubmit();
                                 } },
                             'Submit'
                         )
@@ -860,12 +909,14 @@ var Form = function (_Component) {
             var _this4 = this;
 
             var _state = this.state,
+                isCopy = _state.isCopy,
                 timeControl = _state.timeControl,
                 token = _state.token,
                 isDisable = _state.isDisable,
                 isLoading = _state.isLoading,
                 isShowMessage = _state.isShowMessage,
                 isShowPopup = _state.isShowPopup;
+
 
             return _react2.default.createElement(
                 'div',
@@ -938,7 +989,7 @@ var Form = function (_Component) {
                                             { className: 'col-lg-12' },
                                             _react2.default.createElement(
                                                 'button',
-                                                { className: 'btn-submit', onClick: this.onGenerate },
+                                                { className: 'btn-submit', onClick: this._onGenerate },
                                                 'Generate'
                                             )
                                         )
@@ -958,43 +1009,56 @@ var Form = function (_Component) {
                                             _react2.default.createElement(
                                                 'div',
                                                 { className: 'group-input group-prepend' },
-                                                _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token }),
+                                                _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
+                                                        return _this4.txtToken = txtToken;
+                                                    } }),
+                                                isCopy && this._renderTootlip('Copied', 'bottom'),
                                                 _react2.default.createElement(
                                                     'div',
                                                     { className: 'input-group-prepend' },
                                                     _react2.default.createElement(
                                                         'button',
-                                                        { className: 'btn-copy', disabled: isDisable },
+                                                        { className: 'btn-copy', disabled: isDisable, onClick: this._onCopy },
                                                         'Copy'
                                                     )
                                                 )
                                             )
                                         )
                                     ),
-                                    isShowMessage == true ? _react2.default.createElement(
+                                    _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row' },
                                         _react2.default.createElement(
-                                            'label',
-                                            { className: 'col-lg-12 col-sm-12 col-md-12' },
-                                            'New token "czxcx" has been created. Make sure you copy it now, you won\'t be able to see it again'
+                                            'div',
+                                            { className: 'col-lg-12' },
+                                            isShowMessage && _react2.default.createElement(
+                                                'div',
+                                                { className: 'form-group row' },
+                                                _react2.default.createElement(
+                                                    'label',
+                                                    { className: 'col-lg-12 col-sm-12 col-md-12' },
+                                                    'New token "',
+                                                    token,
+                                                    '" has been created. Make sure you copy it now, you won\'t be able to see it again'
+                                                )
+                                            )
                                         )
-                                    ) : null
+                                    )
                                 )
                             )
                         )
-                    )
-                ),
-                _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
-                    title: 'Extend Time',
-                    content: this._buildContent(),
-                    className: 'no-scroll',
-                    style: { top: '100px', bottom: 'auto', width: '540px' },
-                    onClose: function onClose() {
-                        return _this4.setState(function () {
-                            return { isShowPopup: false };
-                        });
-                    } })
+                    ),
+                    _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
+                        title: 'Extend Time',
+                        content: this._buildContent(),
+                        className: 'no-scroll',
+                        style: { top: '100px', bottom: 'auto', width: '540px' },
+                        onClose: function onClose() {
+                            return _this4.setState(function () {
+                                return { isShowPopup: false };
+                            });
+                        } })
+                )
             );
         }
     }]);
@@ -1006,7 +1070,7 @@ exports.default = Form;
 
 /***/ }),
 
-/***/ 19:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1063,23 +1127,23 @@ exports.default = Loader;
 
 /***/ }),
 
-/***/ 20:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(21);
+module.exports = __webpack_require__(35);
 
 /***/ }),
 
-/***/ 21:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(10);
-var Axios = __webpack_require__(23);
-var defaults = __webpack_require__(5);
+var bind = __webpack_require__(11);
+var Axios = __webpack_require__(37);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -1112,15 +1176,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(14);
-axios.CancelToken = __webpack_require__(38);
-axios.isCancel = __webpack_require__(13);
+axios.Cancel = __webpack_require__(15);
+axios.CancelToken = __webpack_require__(52);
+axios.isCancel = __webpack_require__(14);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(39);
+axios.spread = __webpack_require__(53);
 
 module.exports = axios;
 
@@ -1130,7 +1194,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 22:
+/***/ 36:
 /***/ (function(module, exports) {
 
 /*!
@@ -1158,16 +1222,16 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(33);
-var dispatchRequest = __webpack_require__(34);
+var InterceptorManager = __webpack_require__(47);
+var dispatchRequest = __webpack_require__(48);
 
 /**
  * Create a new instance of Axios
@@ -1245,7 +1309,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 24:
+/***/ 38:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1436,7 +1500,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 25:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1456,13 +1520,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(12);
+var createError = __webpack_require__(13);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1490,7 +1554,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1519,7 +1583,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 28:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1595,7 +1659,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 29:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1656,7 +1720,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 30:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1732,7 +1796,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 31:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1776,7 +1840,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 32:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1837,7 +1901,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 33:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1897,18 +1961,18 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 34:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(35);
-var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(5);
-var isAbsoluteURL = __webpack_require__(36);
-var combineURLs = __webpack_require__(37);
+var transformData = __webpack_require__(49);
+var isCancel = __webpack_require__(14);
+var defaults = __webpack_require__(7);
+var isAbsoluteURL = __webpack_require__(50);
+var combineURLs = __webpack_require__(51);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1991,7 +2055,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2019,7 +2083,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 36:
+/***/ 50:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2041,7 +2105,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2063,13 +2127,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 38:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(14);
+var Cancel = __webpack_require__(15);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -2128,7 +2192,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 39:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2163,108 +2227,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
-
-/***/ }),
-
-/***/ 54:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2363,6 +2326,107 @@ var Popup = function (_React$Component) {
 
 exports.default = Popup;
 ;
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(39);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(12);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(12);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38)))
 
 /***/ }),
 
@@ -2474,7 +2538,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _axios = __webpack_require__(20);
+var _axios = __webpack_require__(34);
 
 var _axios2 = _interopRequireDefault(_axios);
 

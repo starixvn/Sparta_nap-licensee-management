@@ -1,10 +1,13 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
+    using System.Configuration;
     using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
+    using IBCCrypt;
     using Model.Criteria.Vendor;
     using Model.DataDomain;
     using Model.DTO;
@@ -79,11 +82,42 @@
         }
 
         [HttpGet]
-        public ActionResult CreateToken()
+        public ActionResult CreateToken(string siteName, string userID)
         {
-           // string UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
-            //UserPWD = IBCCrypt.IBCCrypt.GenMD5Key(UserPWD, UserPasswordKey);
+            ViewBag.SiteName = siteName;
+            ViewBag.UserID = userID;
+
             return View();
+        }
+        
+        [HttpPost]
+        [AjaxRequest]
+        public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime)
+        {
+            var UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
+            criteria.UserPWD = GeneratePass(extendTime);
+            var temp = criteria.UserPWD;
+            criteria.UserPWD = IBCCrypt.GenMD5Key(criteria.UserPWD, UserPasswordKey);
+
+            var result = _vendorService.UpdateUserPWA(criteria);
+            if (result.IsSuccess)
+            {
+                result.Data = temp;
+            }
+
+            return Json(result);
+        }
+
+        private string GeneratePass(int extendTime)
+        {
+            Random random = new Random();
+            var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";
+
+            var UserPWD = new string(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+            UserPWD += DateTime.Now.ToString("ddMM");
+            UserPWD += extendTime.ToString("00");
+
+            return UserPWD;
         }
     }
 }

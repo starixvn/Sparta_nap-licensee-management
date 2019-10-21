@@ -13,5 +13,9 @@
         bool UpdateVendor(LicenseeVendor vendor);
 
         IEnumerable<string> GetFunctionKeyList();
+
+        ResultData<string> UpdateUserPWA(VendorUserCriteria user);
+
+        UserInfo GetUserBySiteNameAndUserID(string siteName, string userID);
     }
 }

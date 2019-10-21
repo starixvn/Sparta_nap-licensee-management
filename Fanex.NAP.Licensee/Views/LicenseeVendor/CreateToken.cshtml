@@ -1,24 +1,33 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
 @{
     ViewBag.Title = "Create token";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+
+    var serializer = new JavaScriptSerializer();
 }
 
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>Licensee Site</li>
+        <li>@ViewBag.SiteName</li>
         <li class="current">Create Token</li>
     </ul>
 
     <a class="btn-back" href="@Url.Content("~/LicenseeVendor")">← Back To List</a>
 }
-
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createtoken/createtoken.css")
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/function/function.css")
 }
 @section FooterJs{
+    <script>
+        var initialState = {
+            siteName: @Html.Raw(serializer.Serialize(ViewBag.SiteName)),
+            userID: @Html.Raw(serializer.Serialize(ViewBag.UserID))
+        }
+    </script>
+
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/createToken/createToken.js")
 }
 

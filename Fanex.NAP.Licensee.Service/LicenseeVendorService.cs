@@ -94,6 +94,50 @@
             }
         }
 
+        public ResultData<string> UpdateUserPWA(VendorUserCriteria user)
+        {
+            var result = new ResultData<string>
+            {
+                IsSuccess = true
+            };
+            try
+            {
+                var oldValue = GetUserBySiteNameAndUserID(user.SiteName, user.UserID);
+                var parameter = new
+                {
+                    UserSEQ = oldValue.UserSEQ,
+                    UserPWD = user.UserPWD
+                };
+
+                using (var db = _objectDbGenerator.Create("Nap_LM_User_UpdateUserPWA"))
+                {
+                    db.ExecuteNonQuery(parameter);
+                }
+
+                // WriteActionLog(oldValue, user);
+            }
+            catch (Exception exception)
+            {
+                result.Error = exception.Message;
+                result.IsSuccess = false;
+            }
+
+            return result;
+        }
+
+        public UserInfo GetUserBySiteNameAndUserID(string siteName, string userID)
+        {
+            var parameter = new
+            {
+                UserID = userID,
+                SiteName = siteName
+            };
+            using (var db = _objectDbGenerator.Create("Nap_LM_User_SelectSingle"))
+            {
+                return db.QueryEntity<UserInfo>(parameter);
+            }
+        }
+
         private void WriteActionLog(LicenseeVendor oldValue, LicenseeVendor newValue)
         {
             var userId = AppSession.CurrentUser.Id;
