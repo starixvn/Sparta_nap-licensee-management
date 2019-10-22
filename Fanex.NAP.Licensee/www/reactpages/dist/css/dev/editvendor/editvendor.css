@@ -448,4 +448,9 @@
   .Select .Select-control {
     height: 25px; }
 
+.table .btn-account {
+  float: none;
+  margin: 0 5px;
+  padding-top: 3px; }
+
 /*# sourceMappingURL=editvendor.css.map*/

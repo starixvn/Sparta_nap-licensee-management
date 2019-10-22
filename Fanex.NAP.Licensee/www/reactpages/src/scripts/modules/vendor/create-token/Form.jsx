@@ -27,9 +27,9 @@ export default class Form extends Component {
         return {
             criteria: {
                 SiteName: defaultState.siteName,
-                UserID: defaultState.userID,
+                UserID: defaultState.userID
             },
-            extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime 
+            extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime
         };
     }
 
@@ -39,25 +39,25 @@ export default class Form extends Component {
         var param = this._getParams();
 
         Site.fetchData(param, url)
-        .then(response => {                
-            if (response.data.IsSuccess) {     
-                this.setState({
-                    isDisable: false,
-                    isShowMessage: true,
-                    token: response.data.Data
-                });
-                if (response.data.Error) {
-                    Utility.showWarningMessage(response.data.Error);
+            .then(response => {
+                if (response.data.IsSuccess) {
+                    this.setState({
+                        isDisable: false,
+                        isShowMessage: true,
+                        token: response.data.Data
+                    });
+                    if (response.data.Error) {
+                        Utility.showWarningMessage(response.data.Error);
+                    }
                 }
-            }
-            else {
-                Utility.showErrorMessage(response.data.Error);
-            }
+                else {
+                    Utility.showErrorMessage(response.data.Error);
+                }
 
-            this._toggleLoader(false);
-        }).catch(err => {
-            this._toggleLoader(false);
-        });
+                this._toggleLoader(false);
+            }).catch(err => {
+                this._toggleLoader(false);
+            });
     }
 
     _onSubmit = () => {
@@ -80,7 +80,7 @@ export default class Form extends Component {
             isCopy: true
         })
         setTimeout(() => {
-            this.setState({ isCopy:false });
+            this.setState({ isCopy: false });
         }, 500);
     }
 
@@ -90,12 +90,12 @@ export default class Form extends Component {
         this.setState({ extraTime: extraTime })
     }
 
-    _renderCardInput(label) {
+    _renderCardInput(label, value) {
         return (
             <div className='form-group row'>
                 <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
                 <div className='col-lg-9 col-sm-9'>
-                    <input type='text' className='full-width' />
+                    <input type='text' className={`full-width ${value ? '' : 'has-error'}`} value={value} />
                 </div>
             </div>
         )
@@ -107,7 +107,7 @@ export default class Form extends Component {
                 <div className="tooltip-arrow"></div>
                 <div className="tooltip-inner">{label}</div>
             </div>
-        ) 
+        )
     }
 
     _tick() {
@@ -175,7 +175,7 @@ export default class Form extends Component {
 
     render() {
         const { isCopy, timeControl, token, isDisable, isLoading, isShowMessage, isShowPopup } = this.state;
-        
+
         return (
             <div>
                 <div className="add-form">
@@ -211,9 +211,9 @@ export default class Form extends Component {
                                         <div className='col-lg-9 col-sm-9'>
                                             <div className="group-input group-prepend">
                                                 <input type="text" className='full-width' disabled={isDisable} value={token} ref={(txtToken) => this.txtToken = txtToken} />
-                                                    {
-                                                        isCopy && this._renderTootlip('Copied', 'bottom')
-                                                    }
+                                                {
+                                                    isCopy && this._renderTootlip('Copied', 'bottom')
+                                                }
                                                 <div className="input-group-prepend">
                                                     <button className="btn-copy" disabled={isDisable} onClick={this._onCopy} >Copy</button>
                                                 </div>

@@ -14,8 +14,10 @@
 
         IEnumerable<string> GetFunctionKeyList();
 
-        ResultData<string> UpdateUserPWA(VendorUserCriteria user);
+        ResultData<string> UpdateUserPWA(VendorUserCriteria criteria);
 
         UserInfo GetUserBySiteNameAndUserID(string siteName, string userID);
+
+        ResultData<int> AddUser(VendorUserCriteria criteria);
     }
 }

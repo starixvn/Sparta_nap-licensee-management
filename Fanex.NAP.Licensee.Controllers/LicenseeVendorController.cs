@@ -84,22 +84,44 @@
         [HttpGet]
         public ActionResult CreateToken(string siteName, string userID)
         {
+            var result = _vendorService.GetUserBySiteNameAndUserID(siteName, userID);
+            if(result == null)
+            {
+                return RedirectToAction("AddNewUser", "LicenseeVendor", new { siteName, userID });
+            }
+
+            return View(result);
+        }
+
+        [HttpGet]
+        public ActionResult AddNewUser(string siteName, string userID)
+        {
             ViewBag.SiteName = siteName;
             ViewBag.UserID = userID;
+            ViewBag.UserPWD = GeneratePass(8);
 
             return View();
         }
-        
+
+        [HttpPost]
+        [AjaxRequest]
+        public ActionResult AddNewUser(VendorUserCriteria criteria)
+        {
+            criteria.UserPWD = EncryptPass(criteria.UserPWD);
+            var result = _vendorService.AddUser(criteria); 
+
+            return Json(result);
+        }
+
         [HttpPost]
         [AjaxRequest]
         public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime)
         {
-            var UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
-            criteria.UserPWD = GeneratePass(extendTime);
-            var temp = criteria.UserPWD;
-            criteria.UserPWD = IBCCrypt.GenMD5Key(criteria.UserPWD, UserPasswordKey);
+            var temp = criteria.UserPWD = GeneratePass(extendTime);
+            criteria.UserPWD = EncryptPass(criteria.UserPWD);
 
             var result = _vendorService.UpdateUserPWA(criteria);
+
             if (result.IsSuccess)
             {
                 result.Data = temp;
@@ -113,11 +135,19 @@
             Random random = new Random();
             var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";
 
-            var UserPWD = new string(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
-            UserPWD += DateTime.Now.ToString("ddMM");
-            UserPWD += extendTime.ToString("00");
+            var UserPWD = extendTime.ToString("00");
+            UserPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+            UserPWD += DateTime.Now.ToString("ddMMyyhh");
 
             return UserPWD;
+        }
+
+        private string EncryptPass(string pass)
+        {
+            var UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
+            var encryptPass = IBCCrypt.GenMD5Key(pass, UserPasswordKey);
+
+            return encryptPass;
         }
     }
 }

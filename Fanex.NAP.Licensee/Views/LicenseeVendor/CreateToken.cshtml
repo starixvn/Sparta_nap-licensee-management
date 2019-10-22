@@ -1,5 +1,6 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
 @using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.DTO.UserInfo
 @{
     ViewBag.Title = "Create token";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
@@ -10,7 +11,7 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>@ViewBag.SiteName</li>
+        <li>@Model.SiteName</li>
         <li class="current">Create Token</li>
     </ul>
 
@@ -23,8 +24,9 @@
 @section FooterJs{
     <script>
         var initialState = {
-            siteName: @Html.Raw(serializer.Serialize(ViewBag.SiteName)),
-            userID: @Html.Raw(serializer.Serialize(ViewBag.UserID))
+            siteName: @Html.Raw(serializer.Serialize(Model.SiteName)),
+            userID: @Html.Raw(serializer.Serialize(Model.UserID)),
+            userPWD: @Html.Raw(serializer.Serialize(Model.UserPWD))
         }
     </script>
 

@@ -94,24 +94,21 @@
             }
         }
 
-        public ResultData<string> UpdateUserPWA(VendorUserCriteria user)
+        public ResultData<string> UpdateUserPWA(VendorUserCriteria criteria)
         {
-            var result = new ResultData<string>
-            {
-                IsSuccess = true
-            };
+            var result = new ResultData<string>();
             try
             {
-                var oldValue = GetUserBySiteNameAndUserID(user.SiteName, user.UserID);
+                var oldValue = GetUserBySiteNameAndUserID(criteria.SiteName, criteria.UserID);
                 var parameter = new
                 {
                     UserSEQ = oldValue.UserSEQ,
-                    UserPWD = user.UserPWD
+                    UserPWD = criteria.UserPWD
                 };
 
                 using (var db = _objectDbGenerator.Create("Nap_LM_User_UpdateUserPWA"))
                 {
-                    db.ExecuteNonQuery(parameter);
+                    result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
                 }
 
                 // WriteActionLog(oldValue, user);
@@ -136,6 +133,38 @@
             {
                 return db.QueryEntity<UserInfo>(parameter);
             }
+        }
+
+        public ResultData<int> AddUser(VendorUserCriteria criteria)
+        {
+            var result = new ResultData<int>();
+            try
+            {
+                var parameter = new
+                {
+                    UserID = criteria.UserID,
+                    SiteName = criteria.SiteName,
+                    UserPWD = criteria.UserPWD,
+                    UserName = "test",
+                    Email = string.Empty,
+                    isEnabled = 1,
+                    isAdmin = 0
+                };
+
+                using (var db = _objectDbGenerator.Create("Nap_LM_User_Insert"))
+                {
+                    result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
+                }
+
+                // WriteActionLog(oldValue, user);
+            }
+            catch (Exception exception)
+            {
+                result.Error = exception.Message;
+                result.IsSuccess = false;
+            }
+
+            return result;
         }
 
         private void WriteActionLog(LicenseeVendor oldValue, LicenseeVendor newValue)

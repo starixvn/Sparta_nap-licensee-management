@@ -64,6 +64,7 @@ export class DataGrid extends Component {
                         <th>IsTest</th>
                         <th>Site Id</th>
                         <th>Disable</th>
+                        <th>Account</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,6 +87,12 @@ export class DataGrid extends Component {
                                     <td className="text-center">{item.IsTest ? "Yes" : "No"}</td>
                                     <td className="text-center">{item.SiteId}</td>
                                     <td className="text-center">{item.Disable ? "Yes" : "No"}</td>
+                                    <td className="text-center">
+                                        <a className="btn btn-primary btn-account" 
+                                            href={window.rootUrl + `LicenseeVendor/CreateToken?siteName=${item.SiteName}&userID=itsupport`}>IT Support</a>
+                                        <a className="btn btn-primary btn-account"
+                                            href={window.rootUrl + `LicenseeVendor/CreateToken?siteName=${item.SiteName}&userID=itsupport2`}>IT Support 2</a>
+                                    </td>
                                     <td className="text-center">
                                         <a href={window.rootUrl + `LicenseeVendor/Edit?vendorId=${item.VendorId}`} title="Edit">
                                             <i className="icon-edit"></i>
