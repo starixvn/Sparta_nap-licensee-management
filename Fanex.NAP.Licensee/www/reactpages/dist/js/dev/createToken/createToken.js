@@ -711,7 +711,8 @@ var Form = function (_Component) {
                     _this.setState({
                         isDisable: false,
                         isShowMessage: true,
-                        token: response.data.Data
+                        token: response.data.Data,
+                        expriedIn: _this.state.expriedIn + _this._convertHoursToSecond(_this.state.extraTime)
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.Error);
@@ -724,19 +725,6 @@ var Form = function (_Component) {
             }).catch(function (err) {
                 _this._toggleLoader(false);
             });
-        };
-
-        _this._onSubmit = function () {
-            _this.setState({
-                isShowPopup: false,
-                seconds: _this.state.seconds + _this._convertHoursToSecond(_this.state.extraTime)
-            });
-
-            if (!_this.timerID) {
-                _this.timerID = setInterval(function () {
-                    return _this._tick();
-                }, 1000);
-            }
         };
 
         _this._onCopy = function (event) {
@@ -752,22 +740,14 @@ var Form = function (_Component) {
             }, 500);
         };
 
-        _this._onExtraTimeChange = function (event) {
-            var extraTime = event.target.validity.valid ? event.target.value : _this.state.extraTime;
-
-            _this.setState({ extraTime: extraTime });
-        };
-
         _this.state = {
             timeControl: '',
-            seconds: 0,
-            extraTime: 2,
+            extraTime: 8,
             token: '',
             isCopy: false,
             isDisable: true,
             isLoading: false,
             isShowMessage: false,
-            isShowPopup: false,
             requestBy: '',
             redmineID: '',
             expriedIn: defaultState.timeRemaining
@@ -781,9 +761,10 @@ var Form = function (_Component) {
             return {
                 criteria: {
                     SiteName: defaultState.userInfo.siteName,
-                    UserID: defaultState.userInfo.userID
+                    UserID: defaultState.userInfo.userID,
+                    UserPWD: defaultState.userInfo.userPWD
                 },
-                extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime
+                extendTime: this.state.extraTime
             };
         }
     }, {
@@ -802,7 +783,7 @@ var Form = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'col-lg-9 col-sm-9' },
-                    _react2.default.createElement('input', { type: 'text', className: 'full-width ' + (this.state[stateName] ? '' : 'has-error'), value: this.state[stateName],
+                    _react2.default.createElement('input', { type: 'text', className: 'full-width ' + (this.state[stateName] || disabled ? '' : 'has-error'), value: this.state[stateName],
                         disabled: disabled, onChange: function onChange(e) {
                             return _this2.setState(_defineProperty({}, stateName, e.target.value));
                         } })
@@ -826,13 +807,13 @@ var Form = function (_Component) {
     }, {
         key: '_tick',
         value: function _tick() {
-            if (this.state.seconds == 0) {
+            if (this.state.expriedIn == 0) {
                 clearInterval(this.timerID);
                 this.timerID = false;
             } else {
-                var curentSeconds = this.state.seconds - 1;
+                var curentSeconds = this.state.expriedIn - 1;
                 this.setState({
-                    seconds: curentSeconds,
+                    expriedIn: curentSeconds,
                     timeControl: this._formatSecondsToTimeString(curentSeconds)
                 });
             }
@@ -860,8 +841,7 @@ var Form = function (_Component) {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.setState({
-                seconds: this._convertHoursToSecond(defaultState.timeRemaining),
-                timeControl: this._formatSecondsToTimeString(this.state.seconds)
+                timeControl: this._formatSecondsToTimeString(this.state.expriedIn)
             });
         }
     }, {
@@ -874,61 +854,14 @@ var Form = function (_Component) {
             }, 1000);
         }
     }, {
-        key: '_buildContent',
-        value: function _buildContent() {
-            var _this4 = this;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'confirm-popup' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group row pop-content' },
-                    _react2.default.createElement(
-                        'label',
-                        { className: 'col-lg-1 col-md-1 col-sm-1' },
-                        'Hour'
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-lg-2 col-md-2 col-sm-2' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'group-input' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'input-group-prepend icon-plus' },
-                                _react2.default.createElement(
-                                    'label',
-                                    null,
-                                    '+'
-                                )
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', pattern: '[0-9]*', value: this.state.extraTime, onChange: this._onExtraTimeChange })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-lg-3 col-md-3 col-sm-3' },
-                        _react2.default.createElement(
-                            'button',
-                            { className: 'btn btn-primary full-width', onClick: function onClick() {
-                                    return _this4._onSubmit();
-                                } },
-                            'Submit'
-                        )
-                    )
-                )
-            );
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this4 = this;
 
             var _state = this.state,
                 isCopy = _state.isCopy,
-                timeControl = _state.timeControl,
+                requestBy = _state.requestBy,
+                redmineID = _state.redmineID,
                 token = _state.token,
                 isDisable = _state.isDisable,
                 isLoading = _state.isLoading,
@@ -952,45 +885,6 @@ var Form = function (_Component) {
                             { className: 'card' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'card-header' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'card-header-content' },
-                                    expriedIn == 0 ? _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row header-content' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-12 col-sm-12 col-md-12 text-center txt-danger' },
-                                            'Your token has expired'
-                                        )
-                                    ) : _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row header-content' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-9 col-sm-9 col-md-9' },
-                                            'Current Token will be expired in ',
-                                            timeControl
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-3 col-sm-3' },
-                                            _react2.default.createElement(
-                                                'button',
-                                                { className: 'btn-green pull-right', onClick: function onClick() {
-                                                        return _this5.setState(function () {
-                                                            return { isShowPopup: true };
-                                                        });
-                                                    } },
-                                                'Extend time'
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
                                 { className: 'card-body' },
                                 _react2.default.createElement(
                                     'div',
@@ -999,15 +893,15 @@ var Form = function (_Component) {
                                     _react2.default.createElement(
                                         'b',
                                         null,
-                                        defaultState.userID
+                                        defaultState.userInfo.userID
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'card-body-content' },
-                                    this._renderCardInput('Request by', 'requestBy'),
-                                    this._renderCardInput('Redmine ID', 'redmineID'),
-                                    this._renderCardInput('Exprired in', 'expriedIn', true),
+                                    this._renderCardInput('Request by', 'requestBy', expriedIn == 0),
+                                    this._renderCardInput('Redmine ID', 'redmineID', expriedIn == 0),
+                                    this._renderCardInput('Exprired in', 'timeControl', true),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row pull-right' },
@@ -1016,7 +910,7 @@ var Form = function (_Component) {
                                             { className: 'col-lg-12' },
                                             _react2.default.createElement(
                                                 'button',
-                                                { className: 'btn btn-primary', onClick: this._onGenerate, disabled: expriedIn == 0 },
+                                                { className: 'btn btn-primary', onClick: this._onGenerate, disabled: expriedIn == 0 || !redmineID || !requestBy },
                                                 'Generate'
                                             )
                                         )
@@ -1037,7 +931,7 @@ var Form = function (_Component) {
                                                 'div',
                                                 { className: 'group-input group-prepend' },
                                                 _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
-                                                        return _this5.txtToken = txtToken;
+                                                        return _this4.txtToken = txtToken;
                                                     } }),
                                                 isCopy && this._renderTootlip('Copied', 'bottom'),
                                                 _react2.default.createElement(
@@ -1074,16 +968,7 @@ var Form = function (_Component) {
                                 )
                             )
                         )
-                    ),
-                    _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
-                        title: 'Extend Time',
-                        content: this._buildContent(),
-                        style: { top: '100px', bottom: 'auto', width: '540px' },
-                        onClose: function onClose() {
-                            return _this5.setState(function () {
-                                return { isShowPopup: false };
-                            });
-                        } })
+                    )
                 )
             );
         }

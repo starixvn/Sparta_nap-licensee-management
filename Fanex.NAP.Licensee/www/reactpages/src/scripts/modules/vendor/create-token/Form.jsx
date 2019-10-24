@@ -12,14 +12,12 @@ export default class Form extends Component {
 
         this.state = {
             timeControl: '',
-            seconds: 0,
-            extraTime: 2,
+            extraTime: 8,
             token: '',
             isCopy: false,
             isDisable: true,
             isLoading: false,
             isShowMessage: false,
-            isShowPopup: false,
             requestBy: '',
             redmineID: '',
             expriedIn: defaultState.timeRemaining
@@ -30,9 +28,10 @@ export default class Form extends Component {
         return {
             criteria: {
                 SiteName: defaultState.userInfo.siteName,
-                UserID: defaultState.userInfo.userID
+                UserID: defaultState.userInfo.userID,
+                UserPWD: defaultState.userInfo.userPWD
             },
-            extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime
+            extendTime: this.state.extraTime
         };
     }
 
@@ -47,7 +46,8 @@ export default class Form extends Component {
                     this.setState({
                         isDisable: false,
                         isShowMessage: true,
-                        token: response.data.Data
+                        token: response.data.Data,
+                        expriedIn: this.state.expriedIn + this._convertHoursToSecond(this.state.extraTime)
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -63,17 +63,6 @@ export default class Form extends Component {
             });
     }
 
-    _onSubmit = () => {
-        this.setState({
-            isShowPopup: false,
-            seconds: this.state.seconds + this._convertHoursToSecond(this.state.extraTime)
-        });
-
-        if (!this.timerID) {
-            this.timerID = setInterval(() => this._tick(), 1000);
-        }
-    }
-
     _onCopy = (event) => {
         this.txtToken.select();
         document.execCommand('copy');
@@ -87,18 +76,12 @@ export default class Form extends Component {
         }, 500);
     }
 
-    _onExtraTimeChange = (event) => {
-        const extraTime = (event.target.validity.valid) ? event.target.value : this.state.extraTime;
-
-        this.setState({ extraTime: extraTime })
-    }
-
     _renderCardInput(label, stateName, disabled) {
         return (
             <div className='form-group row'>
                 <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
                 <div className='col-lg-9 col-sm-9'>
-                    <input type='text' className={`full-width ${this.state[stateName] ? '' : 'has-error'}`} value={this.state[stateName]} 
+                    <input type='text' className={`full-width ${this.state[stateName] || disabled ? '' : 'has-error'}`} value={this.state[stateName]} 
                     disabled={disabled} onChange={(e) => this.setState({ [stateName]: e.target.value })}  />
                 </div>
             </div>
@@ -115,14 +98,14 @@ export default class Form extends Component {
     }
 
     _tick() {
-        if (this.state.seconds == 0) {
+        if (this.state.expriedIn == 0) {
             clearInterval(this.timerID);
             this.timerID = false;
         }
         else {
-            var curentSeconds = this.state.seconds - 1;
+            var curentSeconds = this.state.expriedIn - 1;
             this.setState({
-                seconds: curentSeconds,
+                expriedIn: curentSeconds,
                 timeControl: this._formatSecondsToTimeString(curentSeconds)
             });
         }
@@ -146,8 +129,7 @@ export default class Form extends Component {
 
     componentWillMount() {
         this.setState({
-            seconds: this._convertHoursToSecond(defaultState.timeRemaining),
-            timeControl: this._formatSecondsToTimeString(this.state.seconds)
+            timeControl: this._formatSecondsToTimeString(this.state.expriedIn)
         });
     }
 
@@ -155,31 +137,8 @@ export default class Form extends Component {
         this.timerID = setInterval(() => this._tick(), 1000);
     }
 
-    _buildContent() {
-        return (
-            <div className='confirm-popup'>
-                <div className='form-group row pop-content'>
-                    <label className='col-lg-1 col-md-1 col-sm-1'>Hour</label>
-                    <div className='col-lg-2 col-md-2 col-sm-2'>
-                        <div className="group-input">
-                            <div className="input-group-prepend icon-plus">
-                                <label>+</label>
-                            </div>
-                            <input type='text' className='form-control' pattern="[0-9]*" value={this.state.extraTime} onChange={this._onExtraTimeChange} />
-                        </div>
-                    </div>
-                    <div className='col-lg-3 col-md-3 col-sm-3'>
-                        <button className='btn btn-primary full-width' onClick={() => this._onSubmit()}>
-                            Submit
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     render() {
-        const { isCopy, timeControl, token, isDisable, isLoading, 
+        const { isCopy, requestBy, redmineID, token, isDisable, isLoading, 
             isShowMessage, isShowPopup, expriedIn } = this.state;
 
         return (
@@ -188,39 +147,15 @@ export default class Form extends Component {
                     <Loader isLoading={isLoading} />
                     <div className="row">
                         <div className="card">
-                            <div className="card-header">
-                                <div className="card-header-content">
-                                    {
-                                        expriedIn == 0 ?
-                                        (
-                                            <div className='form-group row header-content'>
-                                                <div className="col-lg-12 col-sm-12 col-md-12 text-center txt-danger">
-                                                    Your token has expired
-                                                </div>
-                                            </div>
-                                        ) :
-                                        (
-                                            <div className='form-group row header-content'>
-                                                <div className="col-lg-9 col-sm-9 col-md-9">
-                                                    Current Token will be expired in {timeControl}
-                                                </div>
-                                                <div className="col-lg-3 col-sm-3">
-                                                    <button className="btn-green pull-right" onClick={() => this.setState(() => ({ isShowPopup: true }))}>Extend time</button>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
                             <div className="card-body">
-                                <div className="card-title">Create new token for <b>{defaultState.userID}</b></div>
+                                <div className="card-title">Create new token for <b>{defaultState.userInfo.userID}</b></div>
                                 <div className="card-body-content">
-                                    {this._renderCardInput('Request by', 'requestBy')}
-                                    {this._renderCardInput('Redmine ID', 'redmineID')}
-                                    {this._renderCardInput('Exprired in', 'expriedIn', true)}
+                                    {this._renderCardInput('Request by', 'requestBy', expriedIn == 0)}
+                                    {this._renderCardInput('Redmine ID', 'redmineID', expriedIn == 0)}
+                                    {this._renderCardInput('Exprired in', 'timeControl', true)}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
-                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={(expriedIn == 0)}>Generate</button>
+                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={expriedIn ==0 || !redmineID || !requestBy}>Generate</button>
                                         </div>
                                     </div>
                                     <div className="clearfix"></div>
@@ -253,11 +188,6 @@ export default class Form extends Component {
                             </div>
                         </div>
                     </div>
-                    <Popup isShow={isShowPopup}
-                        title='Extend Time'
-                        content={this._buildContent()}
-                        style={{ top: '100px', bottom: 'auto', width: '540px' }}
-                        onClose={() => this.setState(() => ({ isShowPopup: false }))} />
                 </div>
             </div>
         )

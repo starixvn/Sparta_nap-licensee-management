@@ -14,6 +14,7 @@
     using Model.ViewModel.LicenseeVendor;
     using ONEbook.UM.Filters;
     using Service;
+    using Service.Redis;
 
     [NapSuperAuth]
     [CheckUMFilter]
@@ -22,10 +23,12 @@
     public class LicenseeVendorController : BaseController
     {
         private readonly ILicenseeVendorService _vendorService;
+        private readonly IRedisService _redisService;
 
         public LicenseeVendorController()
         {
             _vendorService = new LicenseeVendorService();
+            _redisService = new RedisService();
         }
 
         [HttpGet]
@@ -96,8 +99,17 @@
         [AjaxRequest]
         public ActionResult AddNewUser(VendorUserCriteria criteria)
         {
-            criteria.UserPWD = EncryptPass(criteria.UserPWD);
-            var result = _vendorService.AddUser(criteria); 
+            var encryptPass = EncryptPass(criteria.UserPWD);
+            var result = new ResultData<int>
+            {
+                IsSuccess = false
+            };
+
+            if (_redisService.AddValue(encryptPass, criteria.UserPWD))
+            {
+                criteria.UserPWD = encryptPass;
+                result = _vendorService.AddUser(criteria);
+            }
 
             return Json(result);
         }
@@ -105,18 +117,16 @@
         [HttpGet]
         public ActionResult CreateToken(string siteName, string userID)
         {
-            var testStringDateTime = "12abcde23101908";
             var result = _vendorService.GetUserBySiteNameAndUserID(siteName, userID);
             if (result == null)
             {
                 return RedirectToAction("AddNewUser", "LicenseeVendor", new { siteName, userID });
             }
 
-            var timeRemaning = (int)(GetExpriedDateFormPass(testStringDateTime) - DateTime.Now).TotalHours;
             var viewModel = new UpdateUserPWViewModel
             {
                 UserInfo = result,
-                TimeRemaining = (timeRemaning < 0) ? 0 : timeRemaning
+                TimeRemaining = _redisService.GetRemainingTime(result.UserPWD).TotalSeconds
             };
 
             return View(viewModel);
@@ -124,17 +134,22 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime)
+        public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime = 8)
         {
-            var temp = criteria.UserPWD = GeneratePass(extendTime);
-            criteria.UserPWD = EncryptPass(criteria.UserPWD);
+            var timeRemaining = _redisService.GetRemainingTime(criteria.UserPWD).TotalHours;
+            var newExpriedTime = timeRemaining + extendTime;
+            _redisService.RemoveKey(criteria.UserPWD);
+
+            var originalPass = GeneratePass(extendTime);
+            criteria.UserPWD = EncryptPass(originalPass);
 
             var result = _vendorService.UpdateUserPWA(criteria);
-
             if (result.IsSuccess)
             {
-                result.Data = temp;
+                result.Data = originalPass;
             }
+
+            _redisService.AddValue(criteria.UserPWD, originalPass, newExpriedTime);
 
             return Json(result);
         }
@@ -146,7 +161,7 @@
 
             var UserPWD = extendTime.ToString("00");
             UserPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
-            UserPWD += DateTime.Now.ToString("ddMMyyhh");
+            UserPWD += DateTime.Now.ToString("ddMMyyHH");
 
             return UserPWD;
         }
@@ -157,17 +172,6 @@
             var encryptPass = IBCCrypt.GenMD5Key(pass, UserPasswordKey);
 
             return encryptPass;
-        }
-
-        private DateTime GetExpriedDateFormPass(string pass)
-        {
-            var createdDate = Int32.Parse(pass.Substring(7, 2));
-            var createdMonth = Int32.Parse(pass.Substring(9, 2));
-            var createdYear = Int32.Parse("20" + pass.Substring(11, 2));
-            var createdHour = Int32.Parse(pass.Substring(13, 2));
-            var extraHour = Int32.Parse(pass.Substring(0, 2));
-
-            return new DateTime(createdYear, createdMonth, createdDate, createdHour, 0, 0).AddHours(extraHour);
         }
     }
 }

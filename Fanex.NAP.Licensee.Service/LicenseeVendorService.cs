@@ -148,7 +148,7 @@
                     UserName = "test",
                     Email = string.Empty,
                     isEnabled = 1,
-                    isAdmin = 0
+                    isAdmin = 1
                 };
 
                 using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
