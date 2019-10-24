@@ -1,17 +1,24 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
 @using System.Web.Script.Serialization
-@model Fanex.NAP.Licensee.Model.DTO.UserInfo
+@model Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor.UpdateUserPWViewModel
 @{
     ViewBag.Title = "Create token";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
+    var user = Model.UserInfo;
     var serializer = new JavaScriptSerializer();
+    var userInfo = new
+    {
+        siteName = user.SiteName,
+        userID = user.UserID,
+        userPWD = user.UserPWD
+    };
 }
 
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>@Model.SiteName</li>
+        <li>@Model.UserInfo.SiteName</li>
         <li class="current">Create Token</li>
     </ul>
 
@@ -24,9 +31,8 @@
 @section FooterJs{
     <script>
         var initialState = {
-            siteName: @Html.Raw(serializer.Serialize(Model.SiteName)),
-            userID: @Html.Raw(serializer.Serialize(Model.UserID)),
-            userPWD: @Html.Raw(serializer.Serialize(Model.UserPWD))
+            userInfo: @Html.Raw(serializer.Serialize(userInfo)),
+            timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining))
         }
     </script>
 

@@ -12,22 +12,25 @@ export default class Form extends Component {
 
         this.state = {
             timeControl: '',
-            seconds: 3600,
+            seconds: 0,
             extraTime: 2,
             token: '',
             isCopy: false,
             isDisable: true,
             isLoading: false,
             isShowMessage: false,
-            isShowPopup: false
+            isShowPopup: false,
+            requestBy: '',
+            redmineID: '',
+            expriedIn: defaultState.timeRemaining
         };
     }
 
     _getParams() {
         return {
             criteria: {
-                SiteName: defaultState.siteName,
-                UserID: defaultState.userID
+                SiteName: defaultState.userInfo.siteName,
+                UserID: defaultState.userInfo.userID
             },
             extendTime: this.state.extraTime == '' ? 0 : this.state.extraTime
         };
@@ -90,12 +93,13 @@ export default class Form extends Component {
         this.setState({ extraTime: extraTime })
     }
 
-    _renderCardInput(label, value) {
+    _renderCardInput(label, stateName, disabled) {
         return (
             <div className='form-group row'>
                 <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
                 <div className='col-lg-9 col-sm-9'>
-                    <input type='text' className={`full-width ${value ? '' : 'has-error'}`} value={value} />
+                    <input type='text' className={`full-width ${this.state[stateName] ? '' : 'has-error'}`} value={this.state[stateName]} 
+                    disabled={disabled} onChange={(e) => this.setState({ [stateName]: e.target.value })}  />
                 </div>
             </div>
         )
@@ -142,6 +146,7 @@ export default class Form extends Component {
 
     componentWillMount() {
         this.setState({
+            seconds: this._convertHoursToSecond(defaultState.timeRemaining),
             timeControl: this._formatSecondsToTimeString(this.state.seconds)
         });
     }
@@ -174,7 +179,8 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isCopy, timeControl, token, isDisable, isLoading, isShowMessage, isShowPopup } = this.state;
+        const { isCopy, timeControl, token, isDisable, isLoading, 
+            isShowMessage, isShowPopup, expriedIn } = this.state;
 
         return (
             <div>
@@ -184,25 +190,37 @@ export default class Form extends Component {
                         <div className="card">
                             <div className="card-header">
                                 <div className="card-header-content">
-                                    <div className='form-group row header-content'>
-                                        <div className="col-lg-9 col-sm-9 col-md-9">
-                                            Current Token will be expired in {timeControl}
-                                        </div>
-                                        <div className="col-lg-3 col-sm-3">
-                                            <button className="btn-extend pull-right" onClick={() => this.setState(() => ({ isShowPopup: true }))}>Extend time</button>
-                                        </div>
-                                    </div>
+                                    {
+                                        expriedIn == 0 ?
+                                        (
+                                            <div className='form-group row header-content'>
+                                                <div className="col-lg-12 col-sm-12 col-md-12 text-center txt-danger">
+                                                    Your token has expired
+                                                </div>
+                                            </div>
+                                        ) :
+                                        (
+                                            <div className='form-group row header-content'>
+                                                <div className="col-lg-9 col-sm-9 col-md-9">
+                                                    Current Token will be expired in {timeControl}
+                                                </div>
+                                                <div className="col-lg-3 col-sm-3">
+                                                    <button className="btn-green pull-right" onClick={() => this.setState(() => ({ isShowPopup: true }))}>Extend time</button>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="card-body">
-                                <div className="card-title">Create new token for <span className="title-name">ITsupport1</span></div>
+                                <div className="card-title">Create new token for <b>{defaultState.userID}</b></div>
                                 <div className="card-body-content">
-                                    {this._renderCardInput('Request by')}
-                                    {this._renderCardInput('Redmine ID')}
-                                    {this._renderCardInput('Exprired in')}
+                                    {this._renderCardInput('Request by', 'requestBy')}
+                                    {this._renderCardInput('Redmine ID', 'redmineID')}
+                                    {this._renderCardInput('Exprired in', 'expriedIn', true)}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
-                                            <button className="btn-submit" onClick={this._onGenerate}>Generate</button>
+                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={(expriedIn == 0)}>Generate</button>
                                         </div>
                                     </div>
                                     <div className="clearfix"></div>
@@ -215,7 +233,7 @@ export default class Form extends Component {
                                                     isCopy && this._renderTootlip('Copied', 'bottom')
                                                 }
                                                 <div className="input-group-prepend">
-                                                    <button className="btn-copy" disabled={isDisable} onClick={this._onCopy} >Copy</button>
+                                                    <button className="btn-copy" disabled={isDisable} onClick={this._onCopy}>Copy</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,7 +256,6 @@ export default class Form extends Component {
                     <Popup isShow={isShowPopup}
                         title='Extend Time'
                         content={this._buildContent()}
-                        className='no-scroll'
                         style={{ top: '100px', bottom: 'auto', width: '540px' }}
                         onClose={() => this.setState(() => ({ isShowPopup: false }))} />
                 </div>

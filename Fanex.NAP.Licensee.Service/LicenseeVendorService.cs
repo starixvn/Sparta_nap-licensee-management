@@ -106,7 +106,7 @@
                     UserPWD = criteria.UserPWD
                 };
 
-                using (var db = _objectDbGenerator.Create("Nap_LM_User_UpdateUserPWA"))
+                using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
                 {
                     result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
                 }
@@ -129,7 +129,7 @@
                 UserID = userID,
                 SiteName = siteName
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_User_SelectSingle"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_SelectSingle"))
             {
                 return db.QueryEntity<UserInfo>(parameter);
             }
@@ -151,7 +151,7 @@
                     isAdmin = 0
                 };
 
-                using (var db = _objectDbGenerator.Create("Nap_LM_User_Insert"))
+                using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
                 {
                     result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
                 }

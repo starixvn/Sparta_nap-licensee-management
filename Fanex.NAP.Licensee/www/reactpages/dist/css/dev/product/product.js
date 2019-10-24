@@ -1,11 +1,11 @@
-webpackJsonp([24],{
+webpackJsonp([25],{
 
-/***/ 261:
+/***/ 262:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[261]);
+},[262]);
 //# sourceMappingURL=product.js.map

@@ -80,8 +80,8 @@ export default class Form extends Component {
                             <div className='form-group row'>
                                 <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
                                 <div className='col-sm-12 col-md-5'>
-                                    <p>User '{defaultState.userID}' is not exist in your system. If you want to create user '{defaultState.userID}', please click the button "Submit" bellow.</p>
-                                    <p>Note: Please copy password if you want to create new user, you won't be able to see it again</p>
+                                    <p>User <b>{defaultState.userID}</b> is not exist in your system. If you want to create user <b>{defaultState.userID}</b>, please click the button "Submit" bellow.</p>
+                                    <p><b>Note:</b> Please copy password if you want to create new user, you won't be able to see it again</p>
                                 </div>
                             </div>
                             {this._renderInput('Site Name', defaultState.siteName, true)}

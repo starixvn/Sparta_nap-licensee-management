@@ -82,23 +82,12 @@
         }
 
         [HttpGet]
-        public ActionResult CreateToken(string siteName, string userID)
-        {
-            var result = _vendorService.GetUserBySiteNameAndUserID(siteName, userID);
-            if(result == null)
-            {
-                return RedirectToAction("AddNewUser", "LicenseeVendor", new { siteName, userID });
-            }
-
-            return View(result);
-        }
-
-        [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
+            const int defaulHour = 8; 
             ViewBag.SiteName = siteName;
             ViewBag.UserID = userID;
-            ViewBag.UserPWD = GeneratePass(8);
+            ViewBag.UserPWD = GeneratePass(defaulHour);
 
             return View();
         }
@@ -111,6 +100,26 @@
             var result = _vendorService.AddUser(criteria); 
 
             return Json(result);
+        }
+
+        [HttpGet]
+        public ActionResult CreateToken(string siteName, string userID)
+        {
+            var testStringDateTime = "12abcde23101908";
+            var result = _vendorService.GetUserBySiteNameAndUserID(siteName, userID);
+            if (result == null)
+            {
+                return RedirectToAction("AddNewUser", "LicenseeVendor", new { siteName, userID });
+            }
+
+            var timeRemaning = (int)(GetExpriedDateFormPass(testStringDateTime) - DateTime.Now).TotalHours;
+            var viewModel = new UpdateUserPWViewModel
+            {
+                UserInfo = result,
+                TimeRemaining = (timeRemaning < 0) ? 0 : timeRemaning
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -148,6 +157,17 @@
             var encryptPass = IBCCrypt.GenMD5Key(pass, UserPasswordKey);
 
             return encryptPass;
+        }
+
+        private DateTime GetExpriedDateFormPass(string pass)
+        {
+            var createdDate = Int32.Parse(pass.Substring(7, 2));
+            var createdMonth = Int32.Parse(pass.Substring(9, 2));
+            var createdYear = Int32.Parse("20" + pass.Substring(11, 2));
+            var createdHour = Int32.Parse(pass.Substring(13, 2));
+            var extraHour = Int32.Parse(pass.Substring(0, 2));
+
+            return new DateTime(createdYear, createdMonth, createdDate, createdHour, 0, 0).AddHours(extraHour);
         }
     }
 }

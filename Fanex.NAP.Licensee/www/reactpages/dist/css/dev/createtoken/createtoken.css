@@ -33,25 +33,21 @@
 
 .add-form {
   max-width: 540px; }
-  .add-form input[type=text] {
-    color: #545454;
-    font-size: 15px; }
-  .add-form .btn-extend, .add-form .btn-submit, .add-form .btn-copy {
+  .add-form input[type=text].has-error {
+    border: 1px solid #a94442; }
+  .add-form .txt-danger {
+    color: #a94442; }
+  .add-form .btn-green, .add-form .btn-primary, .add-form .btn-copy {
     box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
     color: #fff;
     font-size: 12px;
     font-weight: 600;
     width: 100px; }
-  .add-form .btn-extend {
-    background: #89aa5c;
-    border: 1px solid #729446;
+  .add-form .btn-green, .add-form .btn-primary {
+    margin-right: 0;
     height: 26px; }
-  .add-form .btn-submit {
-    background: #4e71bb;
-    border: 1px solid #3C5B9B;
-    height: 26px; }
-  .add-form .title-name {
-    font-weight: 700; }
+  .add-form .btn-green {
+    background: #89aa5c; }
 
 .confirm-popup input[type=text], .add-form input[type=text] {
   border-radius: 3px;
@@ -59,7 +55,7 @@
   height: 25px;
   padding: 2px; }
 
-.confirm-popup label, .add-form label {
+.confirm-popup label, .confirm-popup input[type=text], .add-form label, .add-form input[type=text] {
   color: #545454;
   font-weight: 400;
   font-size: 14px; }
@@ -86,8 +82,10 @@
   padding-right: 102px; }
 
 .group-prepend input[disabled], .group-prepend button[disabled] {
-  background: #f7f7f7;
   border: 1px solid #cbcbcb; }
+
+.group-prepend input[disabled] {
+  background: #f7f7f7; }
 
 .group-prepend button[disabled] {
   background: #d0d4d6; }
