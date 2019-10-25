@@ -12,5 +12,4 @@
 
         bool RemoveKey(string key);
     }
-
 }

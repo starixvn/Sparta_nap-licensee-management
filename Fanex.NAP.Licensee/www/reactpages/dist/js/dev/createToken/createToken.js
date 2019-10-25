@@ -1,4 +1,4 @@
-webpackJsonp([16],{
+webpackJsonp([17],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -665,10 +665,6 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Popup = __webpack_require__(54);
-
-var _Popup2 = _interopRequireDefault(_Popup);
-
 var _site = __webpack_require__(9);
 
 var _site2 = _interopRequireDefault(_site);
@@ -712,7 +708,7 @@ var Form = function (_Component) {
                         isDisable: false,
                         isShowMessage: true,
                         token: response.data.Data,
-                        expriedIn: _this.state.expriedIn + _this._convertHoursToSecond(_this.state.extraTime)
+                        expriedIn: _this._convertHoursToSecond(_this.state.extraTime)
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.Error);
@@ -725,6 +721,8 @@ var Form = function (_Component) {
             }).catch(function (err) {
                 _this._toggleLoader(false);
             });
+
+            _this._setTimeControl();
         };
 
         _this._onCopy = function (event) {
@@ -741,7 +739,7 @@ var Form = function (_Component) {
         };
 
         _this.state = {
-            timeControl: '',
+            timeSpan: '',
             extraTime: 8,
             token: '',
             isCopy: false,
@@ -791,6 +789,17 @@ var Form = function (_Component) {
             );
         }
     }, {
+        key: '_setTimeControl',
+        value: function _setTimeControl() {
+            var _this3 = this;
+
+            if (!this.timerID) {
+                this.timerID = setInterval(function () {
+                    return _this3._tick();
+                }, 1000);
+            }
+        }
+    }, {
         key: '_renderTootlip',
         value: function _renderTootlip(label, position) {
             return _react2.default.createElement(
@@ -814,7 +823,7 @@ var Form = function (_Component) {
                 var curentSeconds = this.state.expriedIn - 1;
                 this.setState({
                     expriedIn: curentSeconds,
-                    timeControl: this._formatSecondsToTimeString(curentSeconds)
+                    timeSpan: this._formatSecondsToTimeString(curentSeconds)
                 });
             }
         }
@@ -841,17 +850,13 @@ var Form = function (_Component) {
         key: 'componentWillMount',
         value: function componentWillMount() {
             this.setState({
-                timeControl: this._formatSecondsToTimeString(this.state.expriedIn)
+                timeSpan: this._formatSecondsToTimeString(this.state.expriedIn)
             });
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this3 = this;
-
-            this.timerID = setInterval(function () {
-                return _this3._tick();
-            }, 1000);
+            this._setTimeControl();
         }
     }, {
         key: 'render',
@@ -865,9 +870,7 @@ var Form = function (_Component) {
                 token = _state.token,
                 isDisable = _state.isDisable,
                 isLoading = _state.isLoading,
-                isShowMessage = _state.isShowMessage,
-                isShowPopup = _state.isShowPopup,
-                expriedIn = _state.expriedIn;
+                isShowMessage = _state.isShowMessage;
 
 
             return _react2.default.createElement(
@@ -899,9 +902,9 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'card-body-content' },
-                                    this._renderCardInput('Request by', 'requestBy', expriedIn == 0),
-                                    this._renderCardInput('Redmine ID', 'redmineID', expriedIn == 0),
-                                    this._renderCardInput('Exprired in', 'timeControl', true),
+                                    this._renderCardInput('Request by', 'requestBy'),
+                                    this._renderCardInput('Redmine ID', 'redmineID'),
+                                    this._renderCardInput('Exprired in', 'timeSpan', true),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row pull-right' },
@@ -910,7 +913,7 @@ var Form = function (_Component) {
                                             { className: 'col-lg-12' },
                                             _react2.default.createElement(
                                                 'button',
-                                                { className: 'btn btn-primary', onClick: this._onGenerate, disabled: expriedIn == 0 || !redmineID || !requestBy },
+                                                { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy },
                                                 'Generate'
                                             )
                                         )
@@ -2229,108 +2232,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
-
-/***/ }),
-
-/***/ 54:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(3);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Popup = function (_React$Component) {
-    _inherits(Popup, _React$Component);
-
-    function Popup(props) {
-        _classCallCheck(this, Popup);
-
-        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
-
-        _this.zIndex = props.zIndex ? props.zIndex : 50;
-        return _this;
-    }
-
-    _createClass(Popup, [{
-        key: '_onClose',
-        value: function _onClose(callBack) {
-            callBack && callBack();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                title = _props.title,
-                style = _props.style,
-                content = _props.content,
-                onClose = _props.onClose,
-                noShowCloseButton = _props.noShowCloseButton,
-                isShow = _props.isShow,
-                className = _props.className;
-
-            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'popup ' + (isShow ? 'show' : '') },
-                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'popup-container ' + className, style: combinedStyle },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-title' },
-                        _react2.default.createElement(
-                            'p',
-                            { title: title },
-                            title
-                        ),
-                        !noShowCloseButton && _react2.default.createElement(
-                            'a',
-                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
-                                    return _this2._onClose(onClose);
-                                } },
-                            '\xD7'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'popup-content' },
-                        content
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Popup;
-}(_react2.default.Component);
-
-exports.default = Popup;
-;
 
 /***/ }),
 

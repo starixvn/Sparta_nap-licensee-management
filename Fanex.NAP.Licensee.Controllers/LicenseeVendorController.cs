@@ -136,8 +136,6 @@
         [AjaxRequest]
         public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime = 8)
         {
-            var timeRemaining = _redisService.GetRemainingTime(criteria.UserPWD).TotalHours;
-            var newExpriedTime = timeRemaining + extendTime;
             _redisService.RemoveKey(criteria.UserPWD);
 
             var originalPass = GeneratePass(extendTime);
@@ -149,7 +147,7 @@
                 result.Data = originalPass;
             }
 
-            _redisService.AddValue(criteria.UserPWD, originalPass, newExpriedTime);
+            _redisService.AddValue(criteria.UserPWD, originalPass, extendTime);
 
             return Json(result);
         }
@@ -159,11 +157,11 @@
             Random random = new Random();
             var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";
 
-            var UserPWD = extendTime.ToString("00");
-            UserPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
-            UserPWD += DateTime.Now.ToString("ddMMyyHH");
+            var userPWD = extendTime.ToString("00");
+            userPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+            userPWD += DateTime.Now.ToString("ddMMyyHH");
 
-            return UserPWD;
+            return userPWD;
         }
 
         private string EncryptPass(string pass)

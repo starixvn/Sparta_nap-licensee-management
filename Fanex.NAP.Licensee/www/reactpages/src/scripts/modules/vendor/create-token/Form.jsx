@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Popup from '../../../components/Popup';
 import Site from '../../../lib/site';
 import Loader from '../../../components/Loader';
 import Utility from '../../../lib/utility';
@@ -11,7 +10,7 @@ export default class Form extends Component {
         super(props);
 
         this.state = {
-            timeControl: '',
+            timeSpan: '',
             extraTime: 8,
             token: '',
             isCopy: false,
@@ -47,7 +46,7 @@ export default class Form extends Component {
                         isDisable: false,
                         isShowMessage: true,
                         token: response.data.Data,
-                        expriedIn: this.state.expriedIn + this._convertHoursToSecond(this.state.extraTime)
+                        expriedIn: this._convertHoursToSecond(this.state.extraTime)
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -61,6 +60,8 @@ export default class Form extends Component {
             }).catch(err => {
                 this._toggleLoader(false);
             });
+
+            this._setTimeControl();
     }
 
     _onCopy = (event) => {
@@ -88,6 +89,12 @@ export default class Form extends Component {
         )
     }
 
+    _setTimeControl() {
+        if (!this.timerID) {
+            this.timerID = setInterval(() => this._tick(), 1000);
+        }
+    }
+
     _renderTootlip(label, position) {
         return (
             <div className={`tooltip in ${position}`}>
@@ -106,7 +113,7 @@ export default class Form extends Component {
             var curentSeconds = this.state.expriedIn - 1;
             this.setState({
                 expriedIn: curentSeconds,
-                timeControl: this._formatSecondsToTimeString(curentSeconds)
+                timeSpan: this._formatSecondsToTimeString(curentSeconds)
             });
         }
     }
@@ -129,17 +136,16 @@ export default class Form extends Component {
 
     componentWillMount() {
         this.setState({
-            timeControl: this._formatSecondsToTimeString(this.state.expriedIn)
+            timeSpan: this._formatSecondsToTimeString(this.state.expriedIn)
         });
     }
 
     componentDidMount() {
-        this.timerID = setInterval(() => this._tick(), 1000);
+        this._setTimeControl();
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, isDisable, isLoading, 
-            isShowMessage, isShowPopup, expriedIn } = this.state;
+        const { isCopy, requestBy, redmineID, token, isDisable, isLoading, isShowMessage } = this.state;
 
         return (
             <div>
@@ -150,12 +156,12 @@ export default class Form extends Component {
                             <div className="card-body">
                                 <div className="card-title">Create new token for <b>{defaultState.userInfo.userID}</b></div>
                                 <div className="card-body-content">
-                                    {this._renderCardInput('Request by', 'requestBy', expriedIn == 0)}
-                                    {this._renderCardInput('Redmine ID', 'redmineID', expriedIn == 0)}
-                                    {this._renderCardInput('Exprired in', 'timeControl', true)}
+                                    {this._renderCardInput('Request by', 'requestBy')}
+                                    {this._renderCardInput('Redmine ID', 'redmineID')}
+                                    {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
-                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={expriedIn ==0 || !redmineID || !requestBy}>Generate</button>
+                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy}>Generate</button>
                                         </div>
                                     </div>
                                     <div className="clearfix"></div>

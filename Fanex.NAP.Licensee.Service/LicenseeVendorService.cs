@@ -208,5 +208,13 @@
                 ? JsonConvert.SerializeObject(exclusionList)
                 : null;
         }
+
+        public IEnumerable<UserInfo> GetAllUserSupport()
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetAllUserSupport"))
+            {
+                return db.Query<UserInfo>();
+            }
+        }
     }
 }

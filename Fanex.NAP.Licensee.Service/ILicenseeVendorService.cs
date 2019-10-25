@@ -19,5 +19,7 @@
         UserInfo GetUserBySiteNameAndUserID(string siteName, string userID);
 
         ResultData<int> AddUser(VendorUserCriteria criteria);
+
+        IEnumerable<UserInfo> GetAllUserSupport();
     }
 }
