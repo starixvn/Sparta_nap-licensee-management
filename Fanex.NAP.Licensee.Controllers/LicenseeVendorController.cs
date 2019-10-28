@@ -13,8 +13,8 @@
     using Model.DTO;
     using Model.ViewModel.LicenseeVendor;
     using ONEbook.UM.Filters;
-    using Service;
     using Service.Redis;
+    using Service;
 
     [NapSuperAuth]
     [CheckUMFilter]
