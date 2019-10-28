@@ -342,6 +342,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSample.tt</DependentUpon>
     </Content>
+    <None Include="SiteConfig\Web.AppSettings.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </None>
     <Content Include="SiteConfig\Web.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -811,11 +816,6 @@
     <Content Include="Scripts\source\page\defaultbetsetting\addnew.js" />
     <Content Include="Scripts\source\page\defaultbetsetting\default.js" />
     <Content Include="Scripts\source\plugin\multi-select-control.js" />
-    <Content Include="SiteConfig\Web.AppSettings.config.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
