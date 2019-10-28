@@ -8,7 +8,7 @@
     {
         public static void Start()
         {
-            const int period = 4;
+            const int period = 5;
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
@@ -17,7 +17,7 @@
             ITrigger trigger = TriggerBuilder.Create()
                 .WithIdentity("Check expried pass", "user")
                 .StartNow()
-                .WithSimpleSchedule(x => x.WithIntervalInHours(period).RepeatForever())
+                .WithSimpleSchedule(x => x.WithIntervalInMinutes(period).RepeatForever())
                 .Build();
 
             scheduler.ScheduleJob(job, trigger);

@@ -134,7 +134,7 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(VendorUserCriteria criteria, int extendTime = 8)
+        public ActionResult CreateToken(VendorUserCriteria criteria, double extendTime = 0.167)
         {
             _redisService.RemoveKey(criteria.UserPWD);
 
@@ -147,12 +147,13 @@
                 result.Data = originalPass;
             }
 
+            //Test expried in 10 minutes
             _redisService.AddValue(criteria.UserPWD, originalPass, extendTime);
 
             return Json(result);
         }
 
-        private string GeneratePass(int extendTime)
+        private string GeneratePass(double extendTime)
         {
             Random random = new Random();
             var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";

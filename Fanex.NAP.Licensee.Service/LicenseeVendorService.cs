@@ -211,7 +211,7 @@
 
         public IEnumerable<UserInfo> GetAllUserSupport()
         {
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetAllUserSupport"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetITSupportAccount"))
             {
                 return db.Query<UserInfo>();
             }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using System.Linq;
     using IBCCrypt;
     using Model.Criteria.Vendor;
     using Quartz;
@@ -31,13 +32,13 @@
 
         private void UpdatePassExpried()
         {
-            var defaultPass = "00abcde" + DateTime.Now.ToString("ddMMyyHH");
             var userSupports = _vendorService.GetAllUserSupport();
 
             foreach (var user in userSupports)
             {
                 if (_redisService.GetValue(user.UserPWD) == null)
                 {
+                    var defaultPass = GeneratePass(0);
                     var criteria = new VendorUserCriteria
                     {
                         SiteName = user.SiteName,
@@ -56,6 +57,18 @@
             var encryptPass = IBCCrypt.GenMD5Key(pass, userPasswordKey);
 
             return encryptPass;
+        }
+
+        private string GeneratePass(int extendTime)
+        {
+            Random random = new Random();
+            var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";
+
+            var userPWD = extendTime.ToString("00");
+            userPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+            userPWD += DateTime.Now.ToString("ddMMyyHH");
+
+            return userPWD;
         }
     }
 }

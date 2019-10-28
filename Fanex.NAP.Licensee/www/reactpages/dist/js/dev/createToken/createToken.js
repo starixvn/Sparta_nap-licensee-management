@@ -722,7 +722,9 @@ var Form = function (_Component) {
                 _this._toggleLoader(false);
             });
 
-            _this._setTimeControl();
+            if (!_this.timerID) {
+                _this._setTimeControl();
+            }
         };
 
         _this._onCopy = function (event) {
@@ -740,7 +742,7 @@ var Form = function (_Component) {
 
         _this.state = {
             timeSpan: '',
-            extraTime: 8,
+            extraTime: 0.167,
             token: '',
             isCopy: false,
             isDisable: true,
@@ -793,11 +795,9 @@ var Form = function (_Component) {
         value: function _setTimeControl() {
             var _this3 = this;
 
-            if (!this.timerID) {
-                this.timerID = setInterval(function () {
-                    return _this3._tick();
-                }, 1000);
-            }
+            this.timerID = setInterval(function () {
+                return _this3._tick();
+            }, 1000);
         }
     }, {
         key: '_renderTootlip',

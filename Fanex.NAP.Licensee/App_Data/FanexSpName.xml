@@ -58,7 +58,7 @@
     <Setting Key="Nap_LM_LAPUser_UpdatePW" SpName="Nap_LM_LAPUser_UpdatePW" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LAPUser_SelectSingle" SpName="Nap_LM_LAPUser_SelectSingle" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LAPUser_Insert" SpName="Nap_LM_LAPUser_Insert" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_LAPUser_GetAllUserSupport" SpName="Nap_LM_LAPUser_GetAllUserSupport" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LAPUser_GetITSupportAccount" SpName="Nap_LM_LAPUser_GetITSupportAccount" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.OperatorManagement">

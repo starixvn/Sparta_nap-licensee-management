@@ -11,7 +11,7 @@ export default class Form extends Component {
 
         this.state = {
             timeSpan: '',
-            extraTime: 8,
+            extraTime: 0.167,
             token: '',
             isCopy: false,
             isDisable: true,
@@ -61,7 +61,9 @@ export default class Form extends Component {
                 this._toggleLoader(false);
             });
 
+        if (!this.timerID) {
             this._setTimeControl();
+        }
     }
 
     _onCopy = (event) => {
@@ -82,17 +84,15 @@ export default class Form extends Component {
             <div className='form-group row'>
                 <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
                 <div className='col-lg-9 col-sm-9'>
-                    <input type='text' className={`full-width ${this.state[stateName] || disabled ? '' : 'has-error'}`} value={this.state[stateName]} 
-                    disabled={disabled} onChange={(e) => this.setState({ [stateName]: e.target.value })}  />
+                    <input type='text' className={`full-width ${this.state[stateName] || disabled ? '' : 'has-error'}`} value={this.state[stateName]}
+                        disabled={disabled} onChange={(e) => this.setState({ [stateName]: e.target.value })} />
                 </div>
             </div>
         )
     }
 
     _setTimeControl() {
-        if (!this.timerID) {
-            this.timerID = setInterval(() => this._tick(), 1000);
-        }
+        this.timerID = setInterval(() => this._tick(), 1000);
     }
 
     _renderTootlip(label, position) {
