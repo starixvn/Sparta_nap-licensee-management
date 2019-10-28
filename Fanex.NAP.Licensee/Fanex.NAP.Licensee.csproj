@@ -396,6 +396,10 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
+    <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.css" />
+    <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.js" />
+    <Content Include="www\reactpages\dist\css\pro\createUser\createUser.css" />
+    <Content Include="www\reactpages\dist\css\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editUser\editUser.css" />
