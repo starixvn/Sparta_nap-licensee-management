@@ -87,7 +87,7 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            const int defaulHour = 8; 
+            const double defaulHour = 0.164; 
             ViewBag.SiteName = siteName;
             ViewBag.UserID = userID;
             ViewBag.UserPWD = GeneratePass(defaulHour);
