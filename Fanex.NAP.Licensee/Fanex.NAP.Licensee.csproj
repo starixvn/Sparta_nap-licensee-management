@@ -440,6 +440,8 @@
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
+    <Content Include="www\reactpages\dist\js\pro\createToken\createToken.js" />
+    <Content Include="www\reactpages\dist\js\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\editUser\editUser.js" />
