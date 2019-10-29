@@ -4,6 +4,9 @@
     {
         UpdateLapVendorInfo = 5512,
 
+        LAP_AddUser = 5566,
+        LAP_UpdateUserPWD = 5567,
+
         InsertOperator = 5522,
         UpdateOperator = 5523,
         ImportOperator = 5524,

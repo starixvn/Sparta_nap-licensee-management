@@ -94,35 +94,28 @@
             }
         }
 
-        public ResultData<string> UpdateUserPWA(VendorUserCriteria criteria)
+        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria)
         {
             var result = new ResultData<string>();
-            try
-            {
-                var oldValue = GetUserBySiteNameAndUserID(criteria.SiteName, criteria.UserID);
-                var parameter = new
-                {
-                    UserSEQ = oldValue.UserSEQ,
-                    UserPWD = criteria.UserPWD
-                };
 
-                using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
-                {
-                    result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
-                }
-
-                // WriteActionLog(oldValue, user);
-            }
-            catch (Exception exception)
+            var userInfo = GetUserInfo(criteria.SiteName, criteria.UserID);
+            var parameter = new
             {
-                result.Error = exception.Message;
-                result.IsSuccess = false;
+                UserSEQ = userInfo.UserSEQ,
+                UserPWD = criteria.UserPWD
+            };
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
+            {
+                result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
             }
+
+            WriteUpdateUserPWActionLog(criteria);
 
             return result;
         }
 
-        public UserInfo GetUserBySiteNameAndUserID(string siteName, string userID)
+        public UserInfo GetUserInfo(string siteName, string userID)
         {
             var parameter = new
             {
@@ -135,36 +128,36 @@
             }
         }
 
-        public ResultData<int> AddUser(VendorUserCriteria criteria)
+        public ResultData<int> AddUser(LAPUserCriteria criteria)
         {
             var result = new ResultData<int>();
-            try
+            var parameter = new
             {
-                var parameter = new
-                {
-                    UserID = criteria.UserID,
-                    SiteName = criteria.SiteName,
-                    UserPWD = criteria.UserPWD,
-                    UserName = "test",
-                    Email = string.Empty,
-                    isEnabled = 1,
-                    isAdmin = 1
-                };
+                UserID = criteria.UserID,
+                SiteName = criteria.SiteName,
+                UserPWD = criteria.UserPWD,
+                UserName = criteria.UserID,
+                Email = criteria.Email ?? string.Empty,
+                isEnabled = 1,
+                isAdmin = 1
+            };
 
-                using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
-                {
-                    result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
-                }
-
-                // WriteActionLog(oldValue, user);
-            }
-            catch (Exception exception)
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
             {
-                result.Error = exception.Message;
-                result.IsSuccess = false;
+                result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
             }
+
+            WriteAddUserActionLog(criteria);
 
             return result;
+        }
+
+        public IEnumerable<UserInfo> GetITSupportAccount()
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetITSupportAccount"))
+            {
+                return db.Query<UserInfo>();
+            }
         }
 
         private void WriteActionLog(LicenseeVendor oldValue, LicenseeVendor newValue)
@@ -209,12 +202,62 @@
                 : null;
         }
 
-        public IEnumerable<UserInfo> GetAllUserSupport()
+        private void WriteAddUserActionLog(LAPUserCriteria value)
         {
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetITSupportAccount"))
+            var userId = AppSession.CurrentUser.Id;
+
+            var actionLogCriteria = new ActionLogCriteria
             {
-                return db.Query<UserInfo>();
-            }
+                ActionId = (int)ActionLogType.LAP_AddUser,
+                CustId = userId,
+                UserId = userId,
+                Doing = BuildAddingUserLogContent(value)
+            };
+
+            _logWriter.WriteActionLog(actionLogCriteria);
+        }
+
+        private string BuildAddingUserLogContent(LAPUserCriteria value)
+        {
+            var result = new StringBuilder();
+
+            result.Append("<Action value=\"AddNewUser\">");
+            result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
+            result.Append($"<CreatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
+            result.Append($"<New UserID =\"{value.UserID}\" />");
+            result.Append("</Action>");
+
+            return result.ToString();
+        }
+
+        private void WriteUpdateUserPWActionLog(LAPUserCriteria value)
+        {
+            var userId = AppSession.CurrentUser.Id;
+
+            var actionLogCriteria = new ActionLogCriteria
+            {
+                ActionId = (int)ActionLogType.LAP_UpdateUserPWD,
+                CustId = userId,
+                UserId = userId,
+                Doing = BuildUpdatingUserPWLogContent(value)
+            };
+
+            _logWriter.WriteActionLog(actionLogCriteria);
+        }
+
+        private string BuildUpdatingUserPWLogContent(LAPUserCriteria value)
+        {
+            var result = new StringBuilder();
+
+            result.Append("<Action value=\"UpdateUserPassword\">");
+            result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
+            result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
+            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
+            result.Append($"<SiteName =\"{value.SiteName}\" UserID=\"{value.UserID}\" />");
+            result.Append("</Action>");
+
+            return result.ToString();
         }
     }
 }

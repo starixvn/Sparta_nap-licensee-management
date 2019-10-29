@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.Vendor
 {
-    public class VendorUserCriteria
+    public class LAPUserCriteria
     {
         public string SiteName { get; set; }
 
@@ -15,5 +15,9 @@
         public bool isEnabled { get; set; }
 
         public bool isAdmin { get; set; }
+
+        public string RequestBy { get; set; }
+
+        public string RedmineID { get; set; }
     }
 }

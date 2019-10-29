@@ -1,20 +1,17 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
-    using System.Configuration;
     using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
-    using IBCCrypt;
     using Model.Criteria.Vendor;
     using Model.DataDomain;
     using Model.DTO;
     using Model.ViewModel.LicenseeVendor;
     using ONEbook.UM.Filters;
-    using Service.Redis;
     using Service;
+    using Service.Redis;
 
     [NapSuperAuth]
     [CheckUMFilter]
@@ -87,19 +84,19 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            const double defaulHour = 8; 
+            const double defaulHour = 8;
             ViewBag.SiteName = siteName;
             ViewBag.UserID = userID;
-            ViewBag.UserPWD = GeneratePass(defaulHour);
+            ViewBag.UserPWD = SecurityHelper.GeneratePass(defaulHour);
 
             return View();
         }
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult AddNewUser(VendorUserCriteria criteria)
+        public ActionResult AddNewUser(LAPUserCriteria criteria)
         {
-            var encryptPass = EncryptPass(criteria.UserPWD);
+            var encryptPass = SecurityHelper.EncryptPass(criteria.UserPWD);
             var result = new ResultData<int>
             {
                 IsSuccess = false
@@ -117,7 +114,7 @@
         [HttpGet]
         public ActionResult CreateToken(string siteName, string userID)
         {
-            var result = _vendorService.GetUserBySiteNameAndUserID(siteName, userID);
+            var result = _vendorService.GetUserInfo(siteName, userID);
             if (result == null)
             {
                 return RedirectToAction("AddNewUser", "LicenseeVendor", new { siteName, userID });
@@ -134,43 +131,22 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(VendorUserCriteria criteria, double extendTime = 15)
+        public ActionResult CreateToken(LAPUserCriteria criteria, double extendTime = 8)
         {
             _redisService.RemoveKey(criteria.UserPWD);
 
-            var originalPass = GeneratePass(extendTime);
-            criteria.UserPWD = EncryptPass(originalPass);
+            var originalPass = SecurityHelper.GeneratePass(extendTime);
+            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
 
-            var result = _vendorService.UpdateUserPWA(criteria);
+            var result = _vendorService.UpdateUserPassword(criteria);
             if (result.IsSuccess)
             {
                 result.Data = originalPass;
             }
 
-            //Test expried in 15 minutes
             _redisService.AddValue(criteria.UserPWD, originalPass);
 
             return Json(result);
-        }
-
-        private string GeneratePass(double extendTime)
-        {
-            Random random = new Random();
-            var randomString = "!@#$%&=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQPRSTUVWXYZ";
-
-            var userPWD = extendTime.ToString("00");
-            userPWD += string.Concat(Enumerable.Repeat(randomString, 5).Select(s => s[random.Next(s.Length)]).ToArray());
-            userPWD += DateTime.Now.ToString("ddMMyyHH");
-
-            return userPWD;
-        }
-
-        private string EncryptPass(string pass)
-        {
-            var UserPasswordKey = ConfigurationManager.AppSettings["UserPasswordKey"];
-            var encryptPass = IBCCrypt.GenMD5Key(pass, UserPasswordKey);
-
-            return encryptPass;
         }
     }
 }

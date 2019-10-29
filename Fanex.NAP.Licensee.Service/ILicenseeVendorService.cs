@@ -14,12 +14,12 @@
 
         IEnumerable<string> GetFunctionKeyList();
 
-        ResultData<string> UpdateUserPWA(VendorUserCriteria criteria);
+        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria);
 
-        UserInfo GetUserBySiteNameAndUserID(string siteName, string userID);
+        UserInfo GetUserInfo(string siteName, string userID);
 
-        ResultData<int> AddUser(VendorUserCriteria criteria);
+        ResultData<int> AddUser(LAPUserCriteria criteria);
 
-        IEnumerable<UserInfo> GetAllUserSupport();
+        IEnumerable<UserInfo> GetITSupportAccount();
     }
 }

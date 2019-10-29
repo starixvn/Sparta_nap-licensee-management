@@ -11,7 +11,7 @@ export default class Form extends Component {
 
         this.state = {
             timeSpan: '',
-            extraTime: 0.25,
+            extraTime: 8,
             token: '',
             isCopy: false,
             isDisable: true,
@@ -28,7 +28,9 @@ export default class Form extends Component {
             criteria: {
                 SiteName: defaultState.userInfo.siteName,
                 UserID: defaultState.userInfo.userID,
-                UserPWD: defaultState.userInfo.userPWD
+                UserPWD: defaultState.userInfo.userPWD,
+                RequestBy: this.state.requestBy,
+                RedmineID: this.state.redmineID
             },
             extendTime: this.state.extraTime
         };
