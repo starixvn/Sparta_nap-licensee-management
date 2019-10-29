@@ -40,7 +40,7 @@
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-LOCAL" />
 	<add key="UserPasswordKey" value="abc123456" />
-	<add key="RedisConnectionString" value="10.18.200.125:16379, abortConnect=false" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379" />
 	<add key="RabbitMQConnectionString" value="host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw==" />
 </appSettings>
 				<#
