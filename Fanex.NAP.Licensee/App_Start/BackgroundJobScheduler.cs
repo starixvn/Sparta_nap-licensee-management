@@ -8,7 +8,7 @@
     {
         public static void Start()
         {
-            const int period = 5;
+            const int period = 10;
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 

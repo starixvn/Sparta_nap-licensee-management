@@ -87,7 +87,7 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            const double defaulHour = 0.164; 
+            const double defaulHour = 8; 
             ViewBag.SiteName = siteName;
             ViewBag.UserID = userID;
             ViewBag.UserPWD = GeneratePass(defaulHour);
@@ -134,7 +134,7 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(VendorUserCriteria criteria, double extendTime = 0.167)
+        public ActionResult CreateToken(VendorUserCriteria criteria, double extendTime = 15)
         {
             _redisService.RemoveKey(criteria.UserPWD);
 
@@ -147,8 +147,8 @@
                 result.Data = originalPass;
             }
 
-            //Test expried in 10 minutes
-            _redisService.AddValue(criteria.UserPWD, originalPass, extendTime);
+            //Test expried in 15 minutes
+            _redisService.AddValue(criteria.UserPWD, originalPass);
 
             return Json(result);
         }

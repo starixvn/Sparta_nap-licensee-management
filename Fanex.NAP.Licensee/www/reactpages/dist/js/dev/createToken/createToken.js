@@ -742,7 +742,7 @@ var Form = function (_Component) {
 
         _this.state = {
             timeSpan: '',
-            extraTime: 0.167,
+            extraTime: 0.25,
             token: '',
             isCopy: false,
             isDisable: true,
