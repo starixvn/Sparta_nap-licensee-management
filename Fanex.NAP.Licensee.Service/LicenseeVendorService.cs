@@ -224,7 +224,7 @@
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
-            result.Append($"<New UserID =\"{value.UserID}\" />");
+            result.Append($"<New UserID =\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 
             return result.ToString();
@@ -254,7 +254,7 @@
             result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-            result.Append($"<SiteName =\"{value.SiteName}\" UserID=\"{value.UserID}\" />");
+            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 
             return result.ToString();
