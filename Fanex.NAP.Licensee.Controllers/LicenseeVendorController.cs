@@ -1,10 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
     using Core.Web.Attribute;
+    using Hangfire;
     using Model.Criteria.Vendor;
     using Model.DataDomain;
     using Model.DTO;
@@ -21,6 +23,7 @@
     {
         private readonly ILicenseeVendorService _vendorService;
         private readonly IRedisService _redisService;
+        private const double ExtendedTime = 15;
 
         public LicenseeVendorController()
         {
@@ -94,7 +97,7 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult AddNewUser(LAPUserCriteria criteria)
+        public ActionResult AddNewUser(LAPUserCriteria criteria, double extendTime = ExtendedTime)
         {
             var encryptPass = SecurityHelper.EncryptPass(criteria.UserPWD);
             var result = new ResultData<int>
@@ -102,10 +105,12 @@
                 IsSuccess = false
             };
 
-            if (_redisService.AddValue(encryptPass, criteria.UserPWD))
+            if (_redisService.AddValue(encryptPass, criteria.UserPWD, extendTime))
             {
                 criteria.UserPWD = encryptPass;
                 result = _vendorService.AddUser(criteria);
+
+                BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(extendTime));
             }
 
             return Json(result);
@@ -131,7 +136,7 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(LAPUserCriteria criteria, double extendTime = 15)
+        public ActionResult CreateToken(LAPUserCriteria criteria, double extendTime = ExtendedTime)
         {
             _redisService.RemoveKey(criteria.UserPWD);
 
@@ -142,11 +147,21 @@
             if (result.IsSuccess)
             {
                 result.Data = originalPass;
+
+                BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(extendTime));
             }
 
-            _redisService.AddValue(criteria.UserPWD, originalPass);
+            _redisService.AddValue(criteria.UserPWD, originalPass, extendTime);
 
             return Json(result);
+        }
+
+        public void UpdatePassExpried(LAPUserCriteria criteria)
+        {
+            var originalPass = SecurityHelper.GeneratePass(0);
+            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
+
+            _vendorService.UpdateUserPassword(criteria, true);
         }
     }
 }

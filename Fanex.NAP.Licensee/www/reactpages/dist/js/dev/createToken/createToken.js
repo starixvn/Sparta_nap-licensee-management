@@ -765,8 +765,7 @@ var Form = function (_Component) {
                     UserPWD: defaultState.userInfo.userPWD,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID
-                },
-                extendTime: this.state.extraTime
+                }
             };
         }
     }, {

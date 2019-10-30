@@ -13,7 +13,7 @@
             _databse = redisConnection.Connection.GetDatabase();
         }
 
-        public bool AddValue(string key, string value, double minutes = 15)
+        public bool AddValue(string key, string value, double minutes)
         {
             _databse.StringSet(key, value, TimeSpan.FromMinutes(minutes));
             string result = _databse.StringGet(key);

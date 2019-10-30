@@ -31,8 +31,7 @@ export default class Form extends Component {
                 UserPWD: defaultState.userInfo.userPWD,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID
-            },
-            extendTime: this.state.extraTime
+            }
         };
     }
 

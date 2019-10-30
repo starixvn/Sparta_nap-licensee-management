@@ -41,7 +41,8 @@
 	<add key="LogCategory" value="NAP-LM-LOCAL" />
 	<add key="UserPasswordKey" value="abc123456" />
 	<add key="BackgroundJobID" value="0" />
-	<add key="RedisConnectionString" value="ha.nexdev.net:16379" />
+	<add key="RedisPrefix" value="hangfire-LAP:" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=" />
 	<add key="RabbitMQConnectionString" value="host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw==" />
 </appSettings>
 				<#
