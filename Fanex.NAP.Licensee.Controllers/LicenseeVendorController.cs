@@ -123,7 +123,7 @@
             var viewModel = new UpdateUserPWViewModel
             {
                 UserInfo = result,
-                TimeRemaining = _redisService.GetRemainingTime(result.UserPWD).TotalSeconds
+                TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds
             };
 
             return View(viewModel);
