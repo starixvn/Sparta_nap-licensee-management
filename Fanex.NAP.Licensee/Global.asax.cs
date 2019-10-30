@@ -32,7 +32,7 @@
             RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
                 .FromApplication("Fanex.NAP.LicenseeManagement");
 
-            //BackgroundJobScheduler.Start();
+            BackgroundJobScheduler.Start();
         }
 
         protected void Session_End(object sender, EventArgs e)

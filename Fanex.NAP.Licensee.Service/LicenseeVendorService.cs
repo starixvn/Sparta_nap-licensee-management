@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Text;
     using Fanex.NAP.Licensee.Model.Criteria.Vendor;
@@ -94,7 +95,7 @@
             }
         }
 
-        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria)
+        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false)
         {
             var result = new ResultData<string>();
 
@@ -110,7 +111,7 @@
                 result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
             }
 
-            WriteUpdateUserPWActionLog(criteria);
+            WriteUpdateUserPWActionLog(criteria, isBackgroundJob);
 
             return result;
         }
@@ -230,16 +231,16 @@
             return result.ToString();
         }
 
-        private void WriteUpdateUserPWActionLog(LAPUserCriteria value)
+        private void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob = false)
         {
-            var userId = AppSession.CurrentUser.Id;
+            var userId = isBackgroundJob ? int.Parse(ConfigurationManager.AppSettings["BackgroundJobID"]) : AppSession.CurrentUser.Id;
 
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)ActionLogType.LAP_UpdateUserPWD,
                 CustId = userId,
                 UserId = userId,
-                Doing = BuildUpdatingUserPWLogContent(value)
+                Doing = isBackgroundJob ? BuildBackgroundJobLogContent(value) : BuildUpdatingUserPWLogContent(value)
             };
 
             _logWriter.WriteActionLog(actionLogCriteria);
@@ -254,6 +255,19 @@
             result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
+            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
+            result.Append("</Action>");
+
+            return result.ToString();
+        }
+
+        private string BuildBackgroundJobLogContent(LAPUserCriteria value)
+        {
+            var result = new StringBuilder();
+
+            result.Append("<Action value=\"UpdateUserPassword\">");
+            result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
+            result.Append($"<UpdatedBy Background Job />");
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 

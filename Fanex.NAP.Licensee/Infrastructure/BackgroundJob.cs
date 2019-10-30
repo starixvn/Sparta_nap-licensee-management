@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Infrastructure
 {
     using System;
+    using System.Diagnostics;
     using Model.Criteria.Vendor;
     using Quartz;
     using Service;
@@ -43,7 +44,7 @@
                     };
                     criteria.UserPWD = SecurityHelper.EncryptPass(defaultPass);
 
-                    _vendorService.UpdateUserPassword(criteria);
+                    _vendorService.UpdateUserPassword(criteria, true);
                 }
             }
         }

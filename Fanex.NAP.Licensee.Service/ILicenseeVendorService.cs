@@ -14,7 +14,7 @@
 
         IEnumerable<string> GetFunctionKeyList();
 
-        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria);
+        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false);
 
         UserInfo GetUserInfo(string siteName, string userID);
 

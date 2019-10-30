@@ -131,7 +131,7 @@
 
         [HttpPost]
         [AjaxRequest]
-        public ActionResult CreateToken(LAPUserCriteria criteria, double extendTime = 8)
+        public ActionResult CreateToken(LAPUserCriteria criteria, double extendTime = 15)
         {
             _redisService.RemoveKey(criteria.UserPWD);
 
