@@ -699,19 +699,21 @@ var Form = function (_Component) {
 
         _this._onGenerate = function () {
             _this._toggleLoader(true);
-            var url = 'LicenseeVendor/CreateToken';
+            var url = 'LAPUserManagement/CreateToken';
             var param = _this._getParams();
+            console.log(param);
 
             _site2.default.fetchData(param, url).then(function (response) {
-                if (response.data.IsSuccess) {
+                if (response.data.result.IsSuccess) {
                     _this.setState({
                         isDisable: false,
                         isShowMessage: true,
-                        token: response.data.Data,
+                        token: response.data.result.Data,
+                        userEncryptPass: response.data.encryptPass,
                         expriedIn: _this._convertHoursToSecond(_this.state.extraTime)
                     });
-                    if (response.data.Error) {
-                        _utility2.default.showWarningMessage(response.data.Error);
+                    if (response.data.result.Error) {
+                        _utility2.default.showWarningMessage(response.data.result.Error);
                     }
                 } else {
                     _utility2.default.showErrorMessage(response.data.Error);
@@ -741,6 +743,7 @@ var Form = function (_Component) {
         };
 
         _this.state = {
+            userEncryptPass: defaultState.userInfo.userPWD,
             timeSpan: '',
             extraTime: 0.25,
             token: '',
@@ -762,7 +765,7 @@ var Form = function (_Component) {
                 criteria: {
                     SiteName: defaultState.userInfo.siteName,
                     UserID: defaultState.userInfo.userID,
-                    UserPWD: defaultState.userInfo.userPWD,
+                    UserPWD: this.state.userEncryptPass,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID
                 }

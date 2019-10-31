@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.Criteria.Vendor
+﻿namespace Fanex.NAP.Licensee.Model.Criteria.LAPUser
 {
     public class LAPUserCriteria
     {

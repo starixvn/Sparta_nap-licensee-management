@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Text;
     using Fanex.NAP.Licensee.Model.Criteria.Vendor;
@@ -95,72 +94,6 @@
             }
         }
 
-        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false)
-        {
-            var result = new ResultData<string>();
-
-            var userInfo = GetUserInfo(criteria.SiteName, criteria.UserID);
-            var parameter = new
-            {
-                UserSEQ = userInfo.UserSEQ,
-                UserPWD = criteria.UserPWD
-            };
-
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
-            {
-                result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
-            }
-
-            WriteUpdateUserPWActionLog(criteria, isBackgroundJob);
-
-            return result;
-        }
-
-        public UserInfo GetUserInfo(string siteName, string userID)
-        {
-            var parameter = new
-            {
-                UserID = userID,
-                SiteName = siteName
-            };
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_SelectSingle"))
-            {
-                return db.QueryEntity<UserInfo>(parameter);
-            }
-        }
-
-        public ResultData<int> AddUser(LAPUserCriteria criteria)
-        {
-            var result = new ResultData<int>();
-            var parameter = new
-            {
-                UserID = criteria.UserID,
-                SiteName = criteria.SiteName,
-                UserPWD = criteria.UserPWD,
-                UserName = criteria.UserID,
-                Email = criteria.Email ?? string.Empty,
-                isEnabled = 1,
-                isAdmin = 1
-            };
-
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
-            {
-                result.IsSuccess = db.QueryEntity<int>(parameter) == 1;
-            }
-
-            WriteAddUserActionLog(criteria);
-
-            return result;
-        }
-
-        public IEnumerable<UserInfo> GetITSupportAccount()
-        {
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetITSupportAccount"))
-            {
-                return db.Query<UserInfo>();
-            }
-        }
-
         private void WriteActionLog(LicenseeVendor oldValue, LicenseeVendor newValue)
         {
             var userId = AppSession.CurrentUser.Id;
@@ -201,77 +134,6 @@
             return exclusionList != null
                 ? JsonConvert.SerializeObject(exclusionList)
                 : null;
-        }
-
-        private void WriteAddUserActionLog(LAPUserCriteria value)
-        {
-            var userId = AppSession.CurrentUser.Id;
-
-            var actionLogCriteria = new ActionLogCriteria
-            {
-                ActionId = (int)ActionLogType.LAP_AddUser,
-                CustId = userId,
-                UserId = userId,
-                Doing = BuildAddingUserLogContent(value)
-            };
-
-            _logWriter.WriteActionLog(actionLogCriteria);
-        }
-
-        private string BuildAddingUserLogContent(LAPUserCriteria value)
-        {
-            var result = new StringBuilder();
-
-            result.Append("<Action value=\"AddNewUser\">");
-            result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
-            result.Append($"<CreatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
-            result.Append($"<New UserID =\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
-            result.Append("</Action>");
-
-            return result.ToString();
-        }
-
-        private void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob = false)
-        {
-            var userId = isBackgroundJob ? int.Parse(ConfigurationManager.AppSettings["BackgroundJobID"]) : AppSession.CurrentUser.Id;
-
-            var actionLogCriteria = new ActionLogCriteria
-            {
-                ActionId = (int)ActionLogType.LAP_UpdateUserPWD,
-                CustId = userId,
-                UserId = userId,
-                Doing = isBackgroundJob ? BuildBackgroundJobLogContent(value) : BuildUpdatingUserPWLogContent(value)
-            };
-
-            _logWriter.WriteActionLog(actionLogCriteria);
-        }
-
-        private string BuildUpdatingUserPWLogContent(LAPUserCriteria value)
-        {
-            var result = new StringBuilder();
-
-            result.Append("<Action value=\"UpdateUserPassword\">");
-            result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
-            result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
-            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
-            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
-            result.Append("</Action>");
-
-            return result.ToString();
-        }
-
-        private string BuildBackgroundJobLogContent(LAPUserCriteria value)
-        {
-            var result = new StringBuilder();
-
-            result.Append("<Action value=\"UpdateUserPassword\">");
-            result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
-            result.Append($"<UpdatedBy Background Job />");
-            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
-            result.Append("</Action>");
-
-            return result.ToString();
         }
     }
 }

@@ -751,7 +751,7 @@ var Form = function (_Component) {
 
             _site2.default.fetchData(params, url).then(function (response) {
                 if (response.data.IsSuccess) {
-                    window.location.href = window.rootUrl + ('LicenseeVendor/CreateToken?siteName=' + defaultState.siteName + '&userID=' + defaultState.userID);
+                    window.location.href = window.rootUrl + ('LAPUserManagement/CreateToken?siteName=' + defaultState.siteName + '&userID=' + defaultState.userID);
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
                     }

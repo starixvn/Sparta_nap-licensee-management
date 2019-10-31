@@ -9226,13 +9226,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     _react2.default.createElement(
                                         'a',
                                         { className: 'btn btn-primary btn-account',
-                                            href: window.rootUrl + ('LicenseeVendor/CreateToken?siteName=' + item.SiteName + '&userID=itsupport') },
+                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?siteName=' + item.SiteName + '&userID=itsupport') },
                                         'IT Support'
                                     ),
                                     _react2.default.createElement(
                                         'a',
                                         { className: 'btn btn-primary btn-account',
-                                            href: window.rootUrl + ('LicenseeVendor/CreateToken?siteName=' + item.SiteName + '&userID=itsupport2') },
+                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?siteName=' + item.SiteName + '&userID=itsupport2') },
                                         'IT Support 2'
                                     )
                                 ),
@@ -9241,7 +9241,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     { className: 'text-center' },
                                     _react2.default.createElement(
                                         'a',
-                                        { href: window.rootUrl + ('LicenseeVendor/Edit?vendorId=' + item.VendorId), title: 'Edit' },
+                                        { href: window.rootUrl + ('LAPUserManagement/Edit?vendorId=' + item.VendorId), title: 'Edit' },
                                         _react2.default.createElement('i', { className: 'icon-edit' })
                                     )
                                 )

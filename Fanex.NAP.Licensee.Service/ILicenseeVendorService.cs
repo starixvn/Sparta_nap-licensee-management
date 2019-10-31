@@ -13,13 +13,5 @@
         bool UpdateVendor(LicenseeVendor vendor);
 
         IEnumerable<string> GetFunctionKeyList();
-
-        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false);
-
-        UserInfo GetUserInfo(string siteName, string userID);
-
-        ResultData<int> AddUser(LAPUserCriteria criteria);
-
-        IEnumerable<UserInfo> GetITSupportAccount();
     }
 }

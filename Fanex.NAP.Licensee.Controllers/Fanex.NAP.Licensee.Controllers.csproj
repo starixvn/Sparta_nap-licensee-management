@@ -153,6 +153,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
     <Compile Include="ITUserManagementController.cs" />
+    <Compile Include="LAPUserManagementController.cs" />
     <Compile Include="ManageProductController.cs" />
     <Compile Include="ManageLrfFunctionController.cs" />
     <Compile Include="ManageOperatorController.cs" />

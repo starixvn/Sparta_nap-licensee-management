@@ -10,6 +10,7 @@ export default class Form extends Component {
         super(props);
 
         this.state = {
+            userEncryptPass: defaultState.userInfo.userPWD,
             timeSpan: '',
             extraTime: 0.25,
             token: '',
@@ -28,7 +29,7 @@ export default class Form extends Component {
             criteria: {
                 SiteName: defaultState.userInfo.siteName,
                 UserID: defaultState.userInfo.userID,
-                UserPWD: defaultState.userInfo.userPWD,
+                UserPWD: this.state.userEncryptPass,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID
             }
@@ -37,20 +38,22 @@ export default class Form extends Component {
 
     _onGenerate = () => {
         this._toggleLoader(true);
-        const url = 'LicenseeVendor/CreateToken';
+        const url = 'LAPUserManagement/CreateToken';
         var param = this._getParams();
+        console.log(param);
 
         Site.fetchData(param, url)
             .then(response => {
-                if (response.data.IsSuccess) {
+                if (response.data.result.IsSuccess) {
                     this.setState({
                         isDisable: false,
                         isShowMessage: true,
-                        token: response.data.Data,
+                        token: response.data.result.Data,
+                        userEncryptPass: response.data.encryptPass, 
                         expriedIn: this._convertHoursToSecond(this.state.extraTime)
                     });
-                    if (response.data.Error) {
-                        Utility.showWarningMessage(response.data.Error);
+                    if (response.data.result.Error) {
+                        Utility.showWarningMessage(response.data.result.Error);
                     }
                 }
                 else {

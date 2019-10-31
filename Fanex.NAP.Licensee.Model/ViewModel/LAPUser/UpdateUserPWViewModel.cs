@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LicenseeVendor
+﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 {
     using DTO;
 
