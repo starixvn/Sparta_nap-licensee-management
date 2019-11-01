@@ -701,7 +701,6 @@ var Form = function (_Component) {
             _this._toggleLoader(true);
             var url = 'LAPUserManagement/CreateToken';
             var param = _this._getParams();
-            console.log(param);
 
             _site2.default.fetchData(param, url).then(function (response) {
                 if (response.data.result.IsSuccess) {

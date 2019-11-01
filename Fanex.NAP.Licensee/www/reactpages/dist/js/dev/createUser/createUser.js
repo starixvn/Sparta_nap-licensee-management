@@ -746,7 +746,7 @@ var Form = function (_Component) {
     }, {
         key: '_submit',
         value: function _submit() {
-            var url = 'LicenseeVendor/AddNewUser';
+            var url = 'LAPUserManagement/AddNewUser';
             var params = this._getParams();
 
             _site2.default.fetchData(params, url).then(function (response) {

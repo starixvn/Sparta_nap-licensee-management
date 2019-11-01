@@ -1101,7 +1101,9 @@
     <Content Include="Content\source\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\source\bootstrap\bootstrap.less" />
     <Content Include="Content\source\core\custom.less" />
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\BetSetting\Default.cshtml" />
     <Content Include="Views\BetSetting\AddNew.cshtml" />

@@ -40,7 +40,6 @@ export default class Form extends Component {
         this._toggleLoader(true);
         const url = 'LAPUserManagement/CreateToken';
         var param = this._getParams();
-        console.log(param);
 
         Site.fetchData(param, url)
             .then(response => {

@@ -51,7 +51,7 @@ export default class Form extends Component {
     }
 
     _submit() {
-        const url = 'LicenseeVendor/AddNewUser';
+        const url = 'LAPUserManagement/AddNewUser';
         const params = this._getParams();
 
         Site.fetchData(params, url)
