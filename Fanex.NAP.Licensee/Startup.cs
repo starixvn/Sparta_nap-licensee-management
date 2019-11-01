@@ -30,7 +30,8 @@ namespace Fanex.NAP.Licensee
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions()
             {
-                Authorization = new[] { new HangFireAuthorizationFilter() }
+                Authorization = new[] { new HangFireAuthorizationFilter() },
+                DisplayStorageConnectionString = false
             });
             app.UseHangfireServer();
         }

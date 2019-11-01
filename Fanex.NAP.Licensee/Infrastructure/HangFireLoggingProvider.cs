@@ -5,11 +5,19 @@
 
     public class HangFireLoggingProvider : ILogProvider
     {
-        public ILog GetLogger(string name) => new NoLoggingLogger();
+        public ILog GetLogger(string name) => new HangFireLoggingLogger();
     }
 
-    public class NoLoggingLogger : ILog
+    public class HangFireLoggingLogger : ILog
     {
-        public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null) => false;
+        public bool Log(LogLevel logLevel, Func<string> messageFunc, Exception exception = null)
+        {
+            if (exception != null)
+            {
+                Logging.LogService.Error(exception.Message, exception);
+            }
+           
+            return true;
+        }
     }
 }
