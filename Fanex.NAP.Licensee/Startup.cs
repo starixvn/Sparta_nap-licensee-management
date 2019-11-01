@@ -4,6 +4,7 @@
 namespace Fanex.NAP.Licensee
 {
     using System.Configuration;
+    using System.Web;
     using Hangfire;
     using Hangfire.Redis;
     using Infrastructure;
@@ -31,7 +32,8 @@ namespace Fanex.NAP.Licensee
             app.UseHangfireDashboard("/hangfire", new DashboardOptions()
             {
                 Authorization = new[] { new HangFireAuthorizationFilter() },
-                DisplayStorageConnectionString = false
+                DisplayStorageConnectionString = false,
+                AppPath = VirtualPathUtility.ToAbsolute("~")
             });
             app.UseHangfireServer();
         }
