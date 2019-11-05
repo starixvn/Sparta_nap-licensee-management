@@ -31,7 +31,7 @@
             var time = _databse.KeyTimeToLive(key);
             if (time.HasValue)
             {
-                TimeSpan totalTime = time.Value;
+                var totalTime = time.Value;
 
                 return totalTime;
             }

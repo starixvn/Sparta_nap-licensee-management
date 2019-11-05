@@ -7,6 +7,7 @@
     using Hangfire;
     using Model.Criteria.LAPUser;
     using Model.DTO;
+    using Model.Enumerations;
     using Model.ViewModel.LAPUser;
     using Service;
     using Service.Redis;
@@ -26,23 +27,31 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            ViewBag.SiteName = siteName;
-            ViewBag.UserID = userID;
-            ViewBag.UserPWD = SecurityHelper.GeneratePass(ExtendedTime);
+            if (userID == LAPAccount.ITSupport || userID == LAPAccount.ITSupport2)
+            {
+                ViewBag.SiteName = siteName;
+                ViewBag.UserID = userID;
 
-            return View();
+                return View();
+            }
+
+            return RedirectToAction("Index", "LicenseeVendor");
         }
 
         [HttpPost]
         [AjaxRequest]
         public ActionResult AddNewUser(LAPUserCriteria criteria)
         {
-            criteria.UserPWD = SecurityHelper.EncryptPass(criteria.UserPWD);
+            var originalPass = SecurityHelper.GeneratePass(ExtendedTime);
+            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
 
             var result = _userService.AddUser(criteria);
             if (result.IsSuccess)
             {
-                CreateBackgroundJob(criteria);
+                result.Data = originalPass;
+
+                var jobId = CreateBackgroundJob(criteria);
+                _redisService.AddValue(criteria.UserPWD, jobId, ExtendedTime);
             }
 
             return Json(result);
@@ -75,8 +84,12 @@
                 IsSuccess = false
             };
 
-            if (RemoveBackgroundJob(criteria.UserPWD))
+            var userInfo = _userService.GetUserInfo(criteria.SiteName, criteria.UserID);
+            if (userInfo != null)
             {
+                RemoveBackgroundJob(userInfo.UserPWD);
+                _redisService.RemoveKey(userInfo.UserPWD);
+
                 var originalPass = SecurityHelper.GeneratePass(ExtendedTime);
                 criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
 
@@ -84,11 +97,13 @@
                 if (result.IsSuccess)
                 {
                     result.Data = originalPass;
-                    CreateBackgroundJob(criteria);
+
+                    var jobId = CreateBackgroundJob(criteria);
+                    _redisService.AddValue(criteria.UserPWD, jobId, ExtendedTime);
                 }
             }
 
-            return Json(new { result, encryptPass = criteria.UserPWD });
+            return Json(result);
         }
 
         public void UpdatePassExpried(LAPUserCriteria criteria)
@@ -99,21 +114,18 @@
             _userService.UpdateUserPassword(criteria, true);
         }
 
-        private bool RemoveBackgroundJob(string key)
+        private void RemoveBackgroundJob(string key)
         {
             var jobId = _redisService.GetValue(key);
             if (jobId != null)
             {
-                return BackgroundJob.Delete(jobId) && _redisService.RemoveKey(key);
+                BackgroundJob.Delete(jobId);
             }
-
-            return true;
         }
 
-        private void CreateBackgroundJob(LAPUserCriteria criteria)
+        private string CreateBackgroundJob(LAPUserCriteria criteria)
         {
-            var jobId = BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(ExtendedTime));
-            _redisService.AddValue(criteria.UserPWD, jobId, ExtendedTime);
+            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(ExtendedTime));
         }
     }
 }

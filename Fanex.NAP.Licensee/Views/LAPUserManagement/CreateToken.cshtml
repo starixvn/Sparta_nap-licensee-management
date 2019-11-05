@@ -5,14 +5,7 @@
     ViewBag.Title = "Create token";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
 
-    var user = Model.UserInfo;
     var serializer = new JavaScriptSerializer();
-    var userInfo = new
-    {
-        siteName = user.SiteName,
-        userID = user.UserID,
-        userPWD = user.UserPWD
-    };
 }
 
 @section Headline {
@@ -31,7 +24,7 @@
 @section FooterJs{
     <script>
         var initialState = {
-            userInfo: @Html.Raw(serializer.Serialize(userInfo)),
+            userInfo: @Html.Raw(serializer.Serialize(Model.UserInfo)),
             timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining))
         }
     </script>

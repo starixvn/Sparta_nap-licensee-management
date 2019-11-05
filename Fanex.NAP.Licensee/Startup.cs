@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 
 [assembly: OwinStartup(typeof(Fanex.NAP.Licensee.Startup))]
+
 namespace Fanex.NAP.Licensee
 {
     using System.Configuration;

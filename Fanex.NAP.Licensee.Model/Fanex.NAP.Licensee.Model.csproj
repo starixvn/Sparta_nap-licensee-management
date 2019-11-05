@@ -216,6 +216,7 @@
     <Compile Include="DTO\UserInfo.cs" />
     <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
+    <Compile Include="Enumerations\LAPAccount.cs" />
     <Compile Include="Enumerations\NapLoginStatus.cs" />
     <Compile Include="Enumerations\ITUserStatus.cs" />
     <Compile Include="Enumerations\ProductType.cs" />

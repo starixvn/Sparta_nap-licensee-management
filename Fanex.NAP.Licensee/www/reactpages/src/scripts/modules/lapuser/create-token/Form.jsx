@@ -1,35 +1,32 @@
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { createToken, toggleLoader } from './action'
+import Loader from '../../../components/Loader'
 import React, { Component } from 'react';
-import Site from '../../../lib/site';
-import Loader from '../../../components/Loader';
 import Utility from '../../../lib/utility';
 
-const defaultState = Object.assign({}, window.initialState);
-
-export default class Form extends Component {
+class Form extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            userEncryptPass: defaultState.userInfo.userPWD,
             timeSpan: '',
             extraTime: 0.25,
             token: '',
             isCopy: false,
             isDisable: true,
-            isLoading: false,
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: defaultState.timeRemaining
+            expriedIn: this.props.timeRemaining
         };
     }
 
     _getParams() {
         return {
             criteria: {
-                SiteName: defaultState.userInfo.siteName,
-                UserID: defaultState.userInfo.userID,
-                UserPWD: this.state.userEncryptPass,
+                SiteName: this.props.userInfo.SiteName,
+                UserID: this.props.userInfo.UserID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID
             }
@@ -37,21 +34,19 @@ export default class Form extends Component {
     }
 
     _onGenerate = () => {
-        this._toggleLoader(true);
-        const url = 'LAPUserManagement/CreateToken';
+        this.props.toggleLoader(true);
         var param = this._getParams();
 
-        Site.fetchData(param, url)
+        this.props.createToken(param)
             .then(response => {
-                if (response.data.result.IsSuccess) {
+                if (response.data.IsSuccess) {
                     this.setState({
                         isDisable: false,
                         isShowMessage: true,
-                        token: response.data.result.Data,
-                        userEncryptPass: response.data.encryptPass, 
+                        token: response.data.Data,
                         expriedIn: this._convertHoursToSecond(this.state.extraTime)
                     });
-                    if (response.data.result.Error) {
+                    if (response.data.Error) {
                         Utility.showWarningMessage(response.data.result.Error);
                     }
                 }
@@ -59,20 +54,17 @@ export default class Form extends Component {
                     Utility.showErrorMessage(response.data.Error);
                 }
 
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             }).catch(err => {
-                this._toggleLoader(false);
+                this.props.toggleLoader(false);
             });
 
-        if (!this.timerID) {
-            this._setTimeControl();
-        }
+        this._setTimeControl();
     }
 
     _onCopy = (event) => {
         this.txtToken.select();
         document.execCommand('copy');
-        event.target.focus();
 
         this.setState({
             isCopy: true
@@ -95,7 +87,9 @@ export default class Form extends Component {
     }
 
     _setTimeControl() {
-        this.timerID = setInterval(() => this._tick(), 1000);
+        if (!this.timerID) {
+            this.timerID = setInterval(() => this._tick(), 1000);
+        }
     }
 
     _renderTootlip(label, position) {
@@ -133,10 +127,6 @@ export default class Form extends Component {
         return ('0' + hours).slice(-2) + " : " + ('0' + minutes).slice(-2) + " : " + ('0' + seconds).slice(-2);
     }
 
-    _toggleLoader(isLoading) {
-        this.setState({ isLoading: isLoading });
-    }
-
     componentWillMount() {
         this.setState({
             timeSpan: this._formatSecondsToTimeString(this.state.expriedIn)
@@ -148,16 +138,16 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, isDisable, isLoading, isShowMessage } = this.state;
+        const { isCopy, requestBy, redmineID, token, isDisable, isShowMessage } = this.state;
 
         return (
             <div>
                 <div className="add-form">
-                    <Loader isLoading={isLoading} />
+                    <Loader isLoading={this.props.isLoading} />
                     <div className="row">
                         <div className="card">
                             <div className="card-body">
-                                <div className="card-title">Create new token for <b>{defaultState.userInfo.userID}</b></div>
+                                <div className="card-title">Create new token for <b>{this.props.userInfo.userID}</b></div>
                                 <div className="card-body-content">
                                     {this._renderCardInput('Request by', 'requestBy')}
                                     {this._renderCardInput('Redmine ID', 'redmineID')}
@@ -202,3 +192,13 @@ export default class Form extends Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ createToken, toggleLoader }, dispatch);
+}
+function mapStateToProps(state) {
+    const { userInfo, timeRemaining, isLoading } = state;
+    return { userInfo, timeRemaining, isLoading };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

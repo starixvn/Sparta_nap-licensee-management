@@ -9,7 +9,9 @@ export default class Form extends Component {
         super(props);
 
         this.state = {
-            isShowConfirmBox: false
+            isShowConfirmBox: false,
+            password: '',
+            isShowMessage: false
         };
     }
 
@@ -17,8 +19,7 @@ export default class Form extends Component {
         return {
             criteria: {
                 siteName: defaultState.siteName,
-                userID: defaultState.userID,
-                userPWD: defaultState.userPWD
+                userID: defaultState.userID
             }
         };
     }
@@ -39,12 +40,12 @@ export default class Form extends Component {
         }
     }
 
-    _renderInput(label, value, disabled) {
+    _renderInput(label, value, disabled, readonly) {
         return (
             <div className='form-group row'>
                 <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>{label}</label>
                 <div className='col-sm-12 col-md-5'>
-                    <input type='text' className='full-width' defaultValue={value} disabled={disabled} />
+                    <input type='text' className='full-width' value={value} disabled={disabled} readOnly={readonly} />
                 </div>
             </div>
         )
@@ -57,7 +58,10 @@ export default class Form extends Component {
         Site.fetchData(params, url)
             .then(response => {
                 if (response.data.IsSuccess) {
-                    window.location.href = window.rootUrl + `LAPUserManagement/CreateToken?siteName=${defaultState.siteName}&userID=${defaultState.userID}`
+                    this.setState({
+                        password: response.data.Data,
+                        isShowMessage: true
+                    });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
                     }
@@ -70,7 +74,7 @@ export default class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox } = this.state;
+        const { isShowConfirmBox, password, isShowMessage } = this.state;
 
         return (
             <div>
@@ -81,12 +85,28 @@ export default class Form extends Component {
                                 <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
                                 <div className='col-sm-12 col-md-5'>
                                     <p>User <b>{defaultState.userID}</b> is not exist in your system. If you want to create user <b>{defaultState.userID}</b>, please click the button "Submit" bellow.</p>
-                                    <p><b>Note:</b> Please copy password if you want to create new user, you won't be able to see it again</p>
                                 </div>
                             </div>
                             {this._renderInput('Site Name', defaultState.siteName, true)}
                             {this._renderInput('User ID', defaultState.userID, true)}
-                            {this._renderInput('User password', defaultState.userPWD, true)}
+                            {password.trim() == "" ?
+                                this._renderInput('User password', password, true, false) :
+                                this._renderInput('User password', password, false, true)
+                            }
+                            <div className='form-group row'>
+                                <div className="col-lg-12">
+                                    {isShowMessage &&
+                                        (
+                                            <div className='form-group row'>
+                                                <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
+                                                <div className='col-sm-12 col-md-5'>
+                                                    <p>Make sure you copy it now, you won't be able to see it again</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
                             <div className='form-group row col-sm-12'>
                                 <button className="btn btn-primary" onClick={this._handleSubmit}>
                                     Submit

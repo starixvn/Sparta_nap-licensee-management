@@ -10,11 +10,7 @@
         }
     }
 
-    .txt-danger {
-        color: $red;
-    }
-
-    .btn-green, .btn-primary, .btn-copy {
+    .btn-primary, .btn-copy {
         box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
         color: #fff;
         font-size: 12px;
@@ -22,17 +18,13 @@
         width: 100px;
     }
 
-    .btn-green, .btn-primary {
+    .btn-primary {
         margin-right: 0;
         height: 26px;
     }
-
-    .btn-green {
-        background: #89aa5c;
-    }
 }
 
-.confirm-popup, .add-form{
+.add-form{
     input[type=text] {
         border-radius: 3px;
         border: 1px solid #9d9d9d;
@@ -44,24 +36,6 @@
         color: #545454;
         font-weight: 400;
         font-size: 14px;
-    }
-}
-
-.pop-content {
-    display: flex;
-    justify-content: center;
-
-    label {
-        font-size: 16px;
-    }
-
-    input[type=text] {
-        padding-left: 45%;
-    }
-
-    .icon-plus {
-        left: 20%;
-        font-size: 17px;
     }
 }
 

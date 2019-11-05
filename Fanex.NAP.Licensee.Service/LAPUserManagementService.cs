@@ -11,17 +11,16 @@
     public class LAPUserManagementService : ILAPUserManagementService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
-        private readonly ILogWriterService _logWriter;
+        private static readonly ILogWriterService _logWriter = new LogWriterService();
 
         public LAPUserManagementService()
         {
             _objectDbGenerator = new ObjectDbGenerator();
-            _logWriter = new LogWriterService();
         }
 
-        public ResultData<int> AddUser(LAPUserCriteria criteria)
+        public ResultData<string> AddUser(LAPUserCriteria criteria)
         {
-            var result = new ResultData<int>();
+            var result = new ResultData<string>();
             var parameter = new
             {
                 criteria.UserID,
@@ -41,21 +40,6 @@
             WriteAddUserActionLog(criteria);
 
             return result;
-        }
-
-        private void WriteAddUserActionLog(LAPUserCriteria value)
-        {
-            var userId = AppSession.CurrentUser.Id;
-
-            var actionLogCriteria = new ActionLogCriteria
-            {
-                ActionId = (int)ActionLogType.LAPUser_Add,
-                CustId = userId,
-                UserId = userId,
-                Doing = BuildAddingUserLogContent(value)
-            };
-
-            _logWriter.WriteActionLog(actionLogCriteria);
         }
 
         public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false)
@@ -86,13 +70,28 @@
                 UserID = userID,
                 SiteName = siteName
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_SelectSingle"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
             {
                 return db.QueryEntity<UserInfo>(parameter);
             }
         }
 
-        private string BuildAddingUserLogContent(LAPUserCriteria value)
+        private static void WriteAddUserActionLog(LAPUserCriteria value)
+        {
+            var userId = AppSession.CurrentUser.Id;
+
+            var actionLogCriteria = new ActionLogCriteria
+            {
+                ActionId = (int)ActionLogType.LAPUser_Add,
+                CustId = userId,
+                UserId = userId,
+                Doing = BuildAddingUserLogContent(value)
+            };
+
+            _logWriter.WriteActionLog(actionLogCriteria);
+        }
+
+        private static string BuildAddingUserLogContent(LAPUserCriteria value)
         {
             var result = new StringBuilder();
 
@@ -105,7 +104,7 @@
             return result.ToString();
         }
 
-        private void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob)
+        private static void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob)
         {
             var userId = isBackgroundJob ? int.Parse(ConfigurationManager.AppSettings["UserLoginIDForBackgroundJob"]) : AppSession.CurrentUser.Id;
 
@@ -120,7 +119,7 @@
             _logWriter.WriteActionLog(actionLogCriteria);
         }
 
-        private string UpdatingByUserLogContent(LAPUserCriteria value)
+        private static string UpdatingByUserLogContent(LAPUserCriteria value)
         {
             var result = new StringBuilder();
 
@@ -131,20 +130,14 @@
             return result.ToString();
         }
 
-        private string UpdatingByBackgroundJobLogContent()
-        {
-            var result = "<UpdatedBy Background Job />";
-
-            return result;
-        }
-
-        private string BuildUpdatingUserLogContent(LAPUserCriteria value, bool isBackgroundJob)
+        private static string BuildUpdatingUserLogContent(LAPUserCriteria value, bool isBackgroundJob)
         {
             var result = new StringBuilder();
+            var updatingByBackgroundJobLogContent = "<UpdatedBy Background Job />";
 
             result.Append("<Action value=\"UpdateUserPassword\">");
             result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
-            result.Append(isBackgroundJob ? UpdatingByBackgroundJobLogContent() : UpdatingByUserLogContent(value));
+            result.Append(isBackgroundJob ? updatingByBackgroundJobLogContent : UpdatingByUserLogContent(value));
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 

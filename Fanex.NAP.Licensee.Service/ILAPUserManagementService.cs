@@ -9,6 +9,6 @@
 
         UserInfo GetUserInfo(string siteName, string userID);
 
-        ResultData<int> AddUser(LAPUserCriteria criteria);
+        ResultData<string> AddUser(LAPUserCriteria criteria);
     }
 }

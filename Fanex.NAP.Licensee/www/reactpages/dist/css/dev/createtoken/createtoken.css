@@ -35,41 +35,26 @@
   max-width: 540px; }
   .add-form input[type=text].has-error {
     border: 1px solid #a94442; }
-  .add-form .txt-danger {
-    color: #a94442; }
-  .add-form .btn-green, .add-form .btn-primary, .add-form .btn-copy {
+  .add-form .btn-primary, .add-form .btn-copy {
     box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
     color: #fff;
     font-size: 12px;
     font-weight: 600;
     width: 100px; }
-  .add-form .btn-green, .add-form .btn-primary {
+  .add-form .btn-primary {
     margin-right: 0;
     height: 26px; }
-  .add-form .btn-green {
-    background: #89aa5c; }
 
-.confirm-popup input[type=text], .add-form input[type=text] {
+.add-form input[type=text] {
   border-radius: 3px;
   border: 1px solid #9d9d9d;
   height: 25px;
   padding: 2px; }
 
-.confirm-popup label, .confirm-popup input[type=text], .add-form label, .add-form input[type=text] {
+.add-form label, .add-form input[type=text] {
   color: #545454;
   font-weight: 400;
   font-size: 14px; }
-
-.pop-content {
-  display: flex;
-  justify-content: center; }
-  .pop-content label {
-    font-size: 16px; }
-  .pop-content input[type=text] {
-    padding-left: 45%; }
-  .pop-content .icon-plus {
-    left: 20%;
-    font-size: 17px; }
 
 .group-input {
   position: relative; }
