@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
 import ConfirmBox from '../../../components/ConfirmBox';
+import React, { Component } from 'react';
 import Site from '../../../lib/site';
+import Utility from '../../../lib/utility';
 
 const defaultState = Object.assign({}, window.initialState);
 
@@ -57,6 +58,7 @@ export default class Form extends Component {
 
         Site.fetchData(params, url)
             .then(response => {
+                console.log(response)
                 if (response.data.IsSuccess) {
                     this.setState({
                         password: response.data.Data,
@@ -75,6 +77,14 @@ export default class Form extends Component {
 
     render() {
         const { isShowConfirmBox, password, isShowMessage } = this.state;
+
+        if(!defaultState.isValid){
+            return <p className='red'>User <b>{defaultState.userID}</b> is not exist in your system but cannot be created in this case!</p>;
+        }
+
+        if(defaultState.isExist){
+            return <b className='red'>Account already exists!</b>;
+        }
 
         return (
             <div>

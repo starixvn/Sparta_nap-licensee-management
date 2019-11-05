@@ -24,8 +24,7 @@
 @section FooterJs{
     <script>
         var initialState = {
-            userInfo: @Html.Raw(serializer.Serialize(Model.UserInfo)),
-            timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining))
+            user: @Html.Raw(serializer.Serialize(Model)),
         }
     </script>
 

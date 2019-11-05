@@ -7,9 +7,9 @@
     using Hangfire;
     using Model.Criteria.LAPUser;
     using Model.DTO;
-    using Model.Enumerations;
     using Model.ViewModel.LAPUser;
     using Service;
+    using Service.Helpers;
     using Service.Redis;
 
     public class LAPUserManagementController : BaseController
@@ -27,25 +27,37 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            if (userID == LAPAccount.ITSupport || userID == LAPAccount.ITSupport2)
+            var viewModel = new AddUserViewModel
             {
-                ViewBag.SiteName = siteName;
-                ViewBag.UserID = userID;
+                SiteName = siteName,
+                UserID = userID,
+                IsValid = LAPUserHelper.IsValidUserAccount(userID),
+                IsExist = _userService.GetUserInfo(siteName, userID) != null
+            };
 
-                return View();
-            }
-
-            return RedirectToAction("Index", "LicenseeVendor");
+            return View(viewModel);
         }
 
         [HttpPost]
         [AjaxRequest]
         public ActionResult AddNewUser(LAPUserCriteria criteria)
         {
+            var result = new ResultData<string>
+            {
+                IsSuccess = false
+            };
+
+            if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
+            {
+                result.Error = "This account is invalid";
+
+                return Json(result);
+            }
+
             var originalPass = SecurityHelper.GeneratePass(ExtendedTime);
             criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
 
-            var result = _userService.AddUser(criteria);
+            result = _userService.AddUser(criteria);
             if (result.IsSuccess)
             {
                 result.Data = originalPass;
@@ -69,7 +81,8 @@
             var viewModel = new UpdateUserPWViewModel
             {
                 UserInfo = result,
-                TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds
+                TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
+                IsValid = LAPUserHelper.IsValidUserAccount(userID)
             };
 
             return View(viewModel);
@@ -83,6 +96,13 @@
             {
                 IsSuccess = false
             };
+
+            if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
+            {
+                result.Error = "This account is invalid";
+
+                return Json(result);
+            }
 
             var userInfo = _userService.GetUserInfo(criteria.SiteName, criteria.UserID);
             if (userInfo != null)

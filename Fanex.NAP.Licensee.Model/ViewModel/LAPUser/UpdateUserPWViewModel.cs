@@ -7,5 +7,7 @@
         public UserInfo UserInfo { get; set; }
 
         public double TimeRemaining { get; set; }
+
+        public bool IsValid { get; set; }
     }
 }

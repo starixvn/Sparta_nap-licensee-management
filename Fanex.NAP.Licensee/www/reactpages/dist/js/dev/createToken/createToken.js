@@ -5524,7 +5524,7 @@ var Form = function (_Component) {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: _this.props.timeRemaining
+            expriedIn: _this.props.user.TimeRemaining
         };
         return _this;
     }
@@ -5534,8 +5534,8 @@ var Form = function (_Component) {
         value: function _getParams() {
             return {
                 criteria: {
-                    SiteName: this.props.userInfo.SiteName,
-                    UserID: this.props.userInfo.UserID,
+                    SiteName: this.props.user.UserInfo.SiteName,
+                    UserID: this.props.user.UserInfo.UserID,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID
                 }
@@ -5641,7 +5641,22 @@ var Form = function (_Component) {
                 token = _state.token,
                 isDisable = _state.isDisable,
                 isShowMessage = _state.isShowMessage;
+            var user = this.props.user;
 
+
+            if (!this.props.user.IsValid) {
+                return _react2.default.createElement(
+                    'p',
+                    { className: 'red' },
+                    'User ',
+                    _react2.default.createElement(
+                        'b',
+                        null,
+                        user.UserInfo.UserID
+                    ),
+                    ' is not allowed to create new token in this case!'
+                );
+            }
 
             return _react2.default.createElement(
                 'div',
@@ -5666,7 +5681,7 @@ var Form = function (_Component) {
                                     _react2.default.createElement(
                                         'b',
                                         null,
-                                        this.props.userInfo.userID
+                                        user.UserInfo.UserID
                                     )
                                 ),
                                 _react2.default.createElement(
@@ -5754,11 +5769,10 @@ function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    var userInfo = state.userInfo,
-        timeRemaining = state.timeRemaining,
+    var user = state.user,
         isLoading = state.isLoading;
 
-    return { userInfo: userInfo, timeRemaining: timeRemaining, isLoading: isLoading };
+    return { user: user, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
@@ -5807,9 +5821,9 @@ var _redux = __webpack_require__(2);
 
 var _loaderReducer = __webpack_require__(84);
 
-var _createReducer3 = __webpack_require__(48);
+var _createReducer2 = __webpack_require__(48);
 
-var _createReducer4 = _interopRequireDefault(_createReducer3);
+var _createReducer3 = _interopRequireDefault(_createReducer2);
 
 var _actionTypes = __webpack_require__(185);
 
@@ -5817,15 +5831,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var userInfo = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_USER_INFO, function (state, action) {
+var user = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_USER_INFO, function (state, action) {
     return action.data;
 }));
 
-var timeRemaining = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_TIME_REMAINING, function (state, action) {
-    return action.data;
-}));
-
-exports.default = (0, _redux.combineReducers)({ userInfo: userInfo, timeRemaining: timeRemaining, isLoading: _loaderReducer.isLoading });
+exports.default = (0, _redux.combineReducers)({ user: user, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
 /* 185 */
@@ -5838,7 +5848,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
-var SET_TIME_REMAINING = exports.SET_TIME_REMAINING = "SET_TIME_REMAINING";
 
 /***/ })
 ],[181]);

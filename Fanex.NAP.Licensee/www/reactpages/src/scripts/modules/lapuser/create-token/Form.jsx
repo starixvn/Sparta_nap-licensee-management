@@ -18,15 +18,15 @@ class Form extends Component {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: this.props.timeRemaining
+            expriedIn: this.props.user.TimeRemaining
         };
     }
 
     _getParams() {
         return {
             criteria: {
-                SiteName: this.props.userInfo.SiteName,
-                UserID: this.props.userInfo.UserID,
+                SiteName: this.props.user.UserInfo.SiteName,
+                UserID: this.props.user.UserInfo.UserID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID
             }
@@ -139,6 +139,11 @@ class Form extends Component {
 
     render() {
         const { isCopy, requestBy, redmineID, token, isDisable, isShowMessage } = this.state;
+        const { user } = this.props;
+
+        if(!this.props.user.IsValid) {
+            return <p className='red'>User <b>{user.UserInfo.UserID}</b> is not allowed to create new token in this case!</p>;
+        }
 
         return (
             <div>
@@ -147,7 +152,7 @@ class Form extends Component {
                     <div className="row">
                         <div className="card">
                             <div className="card-body">
-                                <div className="card-title">Create new token for <b>{this.props.userInfo.userID}</b></div>
+                                <div className="card-title">Create new token for <b>{user.UserInfo.UserID}</b></div>
                                 <div className="card-body-content">
                                     {this._renderCardInput('Request by', 'requestBy')}
                                     {this._renderCardInput('Redmine ID', 'redmineID')}
@@ -197,8 +202,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ createToken, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { userInfo, timeRemaining, isLoading } = state;
-    return { userInfo, timeRemaining, isLoading };
+    const { user, isLoading } = state;
+    return { user, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

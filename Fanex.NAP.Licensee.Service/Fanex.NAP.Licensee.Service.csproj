@@ -178,6 +178,7 @@
     <Compile Include="CommonService.cs" />
     <Compile Include="Core\ObjectDbGenerator.cs" />
     <Compile Include="Helpers\AuthencationHelper.cs" />
+    <Compile Include="Helpers\LAPUserHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
     <Compile Include="IBetSettingService.cs" />
     <Compile Include="ICommonService.cs" />

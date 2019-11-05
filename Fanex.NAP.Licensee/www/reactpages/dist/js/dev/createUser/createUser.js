@@ -654,17 +654,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
 var _ConfirmBox = __webpack_require__(91);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
 var _site = __webpack_require__(9);
 
 var _site2 = _interopRequireDefault(_site);
+
+var _utility = __webpack_require__(8);
+
+var _utility2 = _interopRequireDefault(_utility);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -746,16 +750,17 @@ var Form = function (_Component) {
             var params = this._getParams();
 
             _site2.default.fetchData(params, url).then(function (response) {
+                console.log(response);
                 if (response.data.IsSuccess) {
                     _this2.setState({
                         password: response.data.Data,
                         isShowMessage: true
                     });
                     if (response.data.Error) {
-                        Utility.showWarningMessage(response.data.Error);
+                        _utility2.default.showWarningMessage(response.data.Error);
                     }
                 } else {
-                    Utility.showErrorMessage(response.data.Error);
+                    _utility2.default.showErrorMessage(response.data.Error);
                 }
             }).catch(function (err) {});
         }
@@ -767,6 +772,28 @@ var Form = function (_Component) {
                 password = _state.password,
                 isShowMessage = _state.isShowMessage;
 
+
+            if (!defaultState.isValid) {
+                return _react2.default.createElement(
+                    'p',
+                    { className: 'red' },
+                    'User ',
+                    _react2.default.createElement(
+                        'b',
+                        null,
+                        defaultState.userID
+                    ),
+                    ' is not exist in your system but cannot be created in this case!'
+                );
+            }
+
+            if (defaultState.isExist) {
+                return _react2.default.createElement(
+                    'b',
+                    { className: 'red' },
+                    'Account already exists!'
+                );
+            }
 
             return _react2.default.createElement(
                 'div',

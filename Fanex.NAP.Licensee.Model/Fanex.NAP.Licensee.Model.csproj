@@ -222,6 +222,7 @@
     <Compile Include="Enumerations\ProductType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ITUser\AddUserViewModel.cs" />
+    <Compile Include="ViewModel\LAPUser\AddUserViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />

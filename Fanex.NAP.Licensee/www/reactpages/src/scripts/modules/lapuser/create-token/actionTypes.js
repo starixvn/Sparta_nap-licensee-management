@@ -1,2 +1,1 @@
 export const SET_USER_INFO = "SET_USER_INFO";
-export const SET_TIME_REMAINING = "SET_TIME_REMAINING";
