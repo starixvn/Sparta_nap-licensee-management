@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Configuration;
     using System.Text;
     using Core;
     using Model.Criteria.LAPUser;
@@ -27,9 +26,6 @@
                 criteria.SiteName,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
-                Email = criteria.Email ?? string.Empty,
-                isEnabled = 1,
-                isAdmin = 1
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
@@ -78,13 +74,11 @@
 
         private static void WriteAddUserActionLog(LAPUserCriteria value)
         {
-            var userId = AppSession.CurrentUser.Id;
-
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)ActionLogType.LAPUser_Add,
-                CustId = userId,
-                UserId = userId,
+                CustId = value.UserLoginId,
+                UserId = value.UserLoginId,
                 Doing = BuildAddingUserLogContent(value)
             };
 
@@ -97,7 +91,7 @@
 
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
-            result.Append($"<CreatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
+            result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
             result.Append($"<New UserID =\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 
@@ -106,13 +100,11 @@
 
         private static void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob)
         {
-            var userId = isBackgroundJob ? int.Parse(ConfigurationManager.AppSettings["UserLoginIDForBackgroundJob"]) : AppSession.CurrentUser.Id;
-
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)ActionLogType.LAPUser_UpdateUserPWD,
-                CustId = userId,
-                UserId = userId,
+                CustId = value.UserLoginId,
+                UserId = value.UserLoginId,
                 Doing = BuildUpdatingUserLogContent(value, isBackgroundJob)
             };
 
@@ -123,7 +115,7 @@
         {
             var result = new StringBuilder();
 
-            result.Append($"<UpdatedBy UserId=\"{AppSession.CurrentUser.Id}\" UserName=\"{AppSession.CurrentUser.Username}\" />");
+            result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
 
