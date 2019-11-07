@@ -750,7 +750,6 @@ var Form = function (_Component) {
             var params = this._getParams();
 
             _site2.default.fetchData(params, url).then(function (response) {
-                console.log(response);
                 if (response.data.IsSuccess) {
                     _this2.setState({
                         password: response.data.Data,

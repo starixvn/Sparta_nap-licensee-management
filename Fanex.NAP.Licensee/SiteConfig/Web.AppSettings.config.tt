@@ -40,7 +40,7 @@
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-LOCAL" />
 	<add key="UserPasswordKey" value="abc123456" />
-	<add key="UserLoginIDForBackgroundJob" value="0" />
+	<add key="AdminUserName" value="sa" />
 	<add key="DefaultExtendedTimeOfToken" value="15" />
 	<add key="RedisPrefix" value="hangfire-LAP:" />
 	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />

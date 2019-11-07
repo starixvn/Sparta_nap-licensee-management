@@ -10,7 +10,7 @@
 
         public string RequestBy { get; set; }
 
-        public string RedmineID { get; set; }
+        public int RedmineID { get; set; }
 
         public int UserLoginId { get; set; }
 

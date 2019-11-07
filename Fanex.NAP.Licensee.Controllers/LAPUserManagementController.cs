@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using System.Text;
     using System.Web.Mvc;
     using Attributes;
     using Hangfire;
@@ -16,7 +17,7 @@
     {
         private readonly ILAPUserManagementService _userService;
         private readonly IRedisService _redisService;
-        private readonly double ExtendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
+        private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
         public LAPUserManagementController()
         {
@@ -47,14 +48,15 @@
                 IsSuccess = false
             };
 
-            if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
+            var error = CheckValidLAPUser(criteria, false);
+            if (error != null)
             {
-                result.Error = "This account is invalid";
+                result.Error = error;
 
                 return Json(result);
             }
 
-            var originalPass = SecurityHelper.GeneratePass(ExtendedTime);
+            var originalPass = SecurityHelper.GeneratePass(extendedTime);
             criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
             criteria.UpdateUserLoginInfo();
 
@@ -64,7 +66,7 @@
                 result.Data = originalPass;
 
                 var jobId = CreateBackgroundJob(criteria);
-                _redisService.AddValue(criteria.UserPWD, jobId, ExtendedTime);
+                _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
             }
 
             return Json(result);
@@ -98,9 +100,10 @@
                 IsSuccess = false
             };
 
-            if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
+            var error = CheckValidLAPUser(criteria, true);
+            if (error != null)
             {
-                result.Error = "This account is invalid";
+                result.Error = error;
 
                 return Json(result);
             }
@@ -111,7 +114,7 @@
                 RemoveBackgroundJob(userInfo.UserPWD);
                 _redisService.RemoveKey(userInfo.UserPWD);
 
-                var originalPass = SecurityHelper.GeneratePass(ExtendedTime);
+                var originalPass = SecurityHelper.GeneratePass(extendedTime);
                 criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
                 criteria.UpdateUserLoginInfo();
 
@@ -121,7 +124,7 @@
                     result.Data = originalPass;
 
                     var jobId = CreateBackgroundJob(criteria);
-                    _redisService.AddValue(criteria.UserPWD, jobId, ExtendedTime);
+                    _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
                 }
             }
 
@@ -147,7 +150,27 @@
 
         private string CreateBackgroundJob(LAPUserCriteria criteria)
         {
-            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(ExtendedTime));
+            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(extendedTime));
+        }
+
+        private string CheckValidLAPUser(LAPUserCriteria criteria, bool isUpdate)
+        {
+            var error = new StringBuilder();
+
+            error.Append(CheckEmptyParameter("Site Name", criteria.SiteName, "<br>"));
+
+            if (isUpdate)
+            {
+                error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
+                error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
+            }
+
+            if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
+            {
+                error.Append("This user account is invalid");
+            }
+
+            return error.Length > 0 ? error.ToString() : null;
         }
     }
 }

@@ -4,6 +4,7 @@ import { createToken, toggleLoader } from './action'
 import Loader from '../../../components/Loader'
 import React, { Component } from 'react';
 import Utility from '../../../lib/utility';
+import NumericInput from '../../../components/NumericInput';
 
 class Form extends Component {
     constructor(props) {
@@ -141,7 +142,7 @@ class Form extends Component {
         const { isCopy, requestBy, redmineID, token, isDisable, isShowMessage } = this.state;
         const { user } = this.props;
 
-        if(!this.props.user.IsValid) {
+        if (!this.props.user.IsValid) {
             return <p className='red'>User <b>{user.UserInfo.UserID}</b> is not allowed to create new token in this case!</p>;
         }
 
@@ -155,7 +156,14 @@ class Form extends Component {
                                 <div className="card-title">Create new token for <b>{user.UserInfo.UserID}</b></div>
                                 <div className="card-body-content">
                                     {this._renderCardInput('Request by', 'requestBy')}
-                                    {this._renderCardInput('Redmine ID', 'redmineID')}
+                                    <div className='form-group row'>
+                                        <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
+                                        <div className='col-lg-9 col-sm-9'>
+                                            <NumericInput value={redmineID}
+                                                className={`full-width ${redmineID ? '' : 'has-error'}`}
+                                                onChange={(value) => this.setState({ redmineID: value })} />
+                                        </div>
+                                    </div>
                                     {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                     <div className='form-group row pull-right'>
                                         <div className="col-lg-12">
