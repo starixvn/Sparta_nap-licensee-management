@@ -143,7 +143,7 @@ class Form extends Component {
         const { user } = this.props;
 
         if (!this.props.user.IsValid) {
-            return <p className='red'>User <b>{user.UserInfo.UserID}</b> is not allowed to create new token in this case!</p>;
+            return <b className='red'>This username is not allowed to create new token in this case!</b>;
         }
 
         return (

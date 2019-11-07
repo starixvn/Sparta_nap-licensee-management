@@ -164,10 +164,14 @@
                 error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
                 error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
             }
+            else if (_userService.GetUserInfo(criteria.SiteName, criteria.UserID) != null)
+            {
+                error.Append("This username already exists! <br>");
+            }
 
             if (!LAPUserHelper.IsValidUserAccount(criteria.UserID))
             {
-                error.Append("This user account is invalid");
+                error.Append("This username is invalid! ");
             }
 
             return error.Length > 0 ? error.ToString() : null;

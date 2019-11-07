@@ -78,11 +78,11 @@ export default class Form extends Component {
         const { isShowConfirmBox, password, isShowMessage } = this.state;
 
         if (!defaultState.isValid) {
-            return <p className='red'>User <b>{defaultState.userID}</b> is not exist in your system but cannot be created in this case!</p>;
+            return <b className='red'>This username is not exist but cannot be created in this case!</b>;
         }
 
         if (defaultState.isExist) {
-            return <b className='red'>Account already exists!</b>;
+            return <b className='red'>This username already exists!</b>;
         }
 
         return (
@@ -93,7 +93,7 @@ export default class Form extends Component {
                             <div className='form-group row'>
                                 <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
                                 <div className='col-sm-12 col-md-5'>
-                                    <p>User <b>{defaultState.userID}</b> is not exist in your system. If you want to create user <b>{defaultState.userID}</b>, please click the button "Submit" bellow.</p>
+                                    <p>The <b>{defaultState.userID}</b> is not exist. If you want to create this username, please click the button "Submit" bellow.</p>
                                 </div>
                             </div>
                             {this._renderInput('Site Name', defaultState.siteName, true)}

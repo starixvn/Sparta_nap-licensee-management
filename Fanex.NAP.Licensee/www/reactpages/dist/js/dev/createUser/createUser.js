@@ -774,15 +774,9 @@ var Form = function (_Component) {
 
             if (!defaultState.isValid) {
                 return _react2.default.createElement(
-                    'p',
+                    'b',
                     { className: 'red' },
-                    'User ',
-                    _react2.default.createElement(
-                        'b',
-                        null,
-                        defaultState.userID
-                    ),
-                    ' is not exist in your system but cannot be created in this case!'
+                    'This username is not exist but cannot be created in this case!'
                 );
             }
 
@@ -790,7 +784,7 @@ var Form = function (_Component) {
                 return _react2.default.createElement(
                     'b',
                     { className: 'red' },
-                    'Account already exists!'
+                    'This username already exists!'
                 );
             }
 
@@ -816,19 +810,13 @@ var Form = function (_Component) {
                                     _react2.default.createElement(
                                         'p',
                                         null,
-                                        'User ',
+                                        'The ',
                                         _react2.default.createElement(
                                             'b',
                                             null,
                                             defaultState.userID
                                         ),
-                                        ' is not exist in your system. If you want to create user ',
-                                        _react2.default.createElement(
-                                            'b',
-                                            null,
-                                            defaultState.userID
-                                        ),
-                                        ', please click the button "Submit" bellow.'
+                                        ' is not exist. If you want to create this username, please click the button "Submit" bellow.'
                                     )
                                 )
                             ),

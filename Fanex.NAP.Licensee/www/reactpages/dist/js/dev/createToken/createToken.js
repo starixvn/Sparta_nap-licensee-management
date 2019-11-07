@@ -5733,15 +5733,9 @@ var Form = function (_Component) {
 
             if (!this.props.user.IsValid) {
                 return _react2.default.createElement(
-                    'p',
+                    'b',
                     { className: 'red' },
-                    'User ',
-                    _react2.default.createElement(
-                        'b',
-                        null,
-                        user.UserInfo.UserID
-                    ),
-                    ' is not allowed to create new token in this case!'
+                    'This username is not allowed to create new token in this case!'
                 );
             }
 
