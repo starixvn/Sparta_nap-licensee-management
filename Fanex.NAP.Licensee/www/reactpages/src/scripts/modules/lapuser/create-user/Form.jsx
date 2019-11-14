@@ -15,6 +15,7 @@ class Form extends Component {
             isShowConfirmBox: false,
             password: "",
             isShowMessage: false,
+            isDisableTree: false,
             requestBy: '',
             redmineID: '',
             functionOptions: JSON.parse(this.props.funcPer),
@@ -33,7 +34,7 @@ class Form extends Component {
         };
     }
 
-    _getListKeyOfSubFunctionKey(subFunctionKeys){
+    _getListKeyOfSubFunctionKey(subFunctionKeys) {
         let listFuncKeys = [];
 
         subFunctionKeys.forEach((sub) => {
@@ -43,20 +44,19 @@ class Form extends Component {
         })
 
         return listFuncKeys;
-    } 
+    }
 
-    _getSelectedFunc(){
-        let selected = this.props.selectedFunc;
+    _getSelectedFunc() {
+        const selected = this.props.selectedFunc;
 
         selected.forEach((func, i) => {
-            if(selected[i].SubFunctionKeys != null ){
-                if(Array.isArray(selected[i].SubFunctionKeys)){
+            if (selected[i].SubFunctionKeys != null) {
+                if (Array.isArray(selected[i].SubFunctionKeys)) {
                     selected[i].SubFunctionKeys = selected[i].SubFunctionKeys.filter(x => x.isCheck === true);
                     selected[i].SubFunctionKeys = this._getListKeyOfSubFunctionKey(selected[i].SubFunctionKeys);
+                    selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
                 }
             }
-
-            selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
         })
 
         return selected;
@@ -100,7 +100,8 @@ class Form extends Component {
                 if (response.data.IsSuccess) {
                     this.setState({
                         password: response.data.Data,
-                        isShowMessage: true
+                        isShowMessage: true,
+                        isDisableTree: true
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -113,7 +114,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, password, isShowMessage, requestBy, redmineID, functionOptions } = this.state;
+        const { isShowConfirmBox, password, isShowMessage, isDisableTree, requestBy, redmineID, functionOptions } = this.state;
 
         if (!this.props.isValid) {
             return <b className="red">This username is not exist but cannot be created in this case!</b>
@@ -145,7 +146,8 @@ class Form extends Component {
                                     <div className="form-group row">
                                         <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
                                         <div className="col-md-10">
-                                            <NumericInput className={`full-width ${redmineID ? '' : 'has-error'}`}
+                                            <NumericInput value={redmineID}
+                                                className={`full-width ${redmineID ? '' : 'has-error'}`}
                                                 onChange={(value) => this.setState({ redmineID: value })} />
                                         </div>
                                     </div>
@@ -160,7 +162,9 @@ class Form extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group row col-sm-12">
-                                        <button className="btn btn-primary" onClick={() => this.setState({ isShowConfirmBox: true })}>
+                                        <button className="btn btn-primary"
+                                            onClick={() => this.setState({ isShowConfirmBox: true })}
+                                            disabled={!redmineID || !requestBy || password} >
                                             Submit
                                     </button>
                                     </div>
@@ -168,10 +172,10 @@ class Form extends Component {
                             </div>
                         </div>
                         <div className="col-xs-6">
-                            <div className="panel panel-default">
+                            <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
-                                    <Tree className="tree" nodes={functionOptions}/>
+                                    <Tree className="tree" nodes={functionOptions} isDisable={isDisableTree} />
                                 </div>
                             </div>
                         </div>

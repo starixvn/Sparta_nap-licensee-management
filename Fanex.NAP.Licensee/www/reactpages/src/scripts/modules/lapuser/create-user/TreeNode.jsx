@@ -4,7 +4,7 @@ export default class TreeNode extends Component {
     getNodeLabel = (node) => node.DisplayKey
 
     render() {
-        const { index, node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild } = this.props;
+        const { index, node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild, isDisable } = this.props;
 
         return (
             <React.Fragment>
@@ -18,6 +18,7 @@ export default class TreeNode extends Component {
                         parent && parent.InputBoxType === "radio" ?
                             <span>
                                 <input type="radio"
+                                    disabled={isDisable}
                                     checked={node.isCheck == true ? true : false}
                                     onChange={() => onRadioCheck(parent, index, level)}>
                                 </input>
@@ -25,6 +26,7 @@ export default class TreeNode extends Component {
                             :
                             <span>
                                 <input type="checkbox"
+                                    disabled={isDisable}
                                     checked={node.isCheck == true ? true : false}
                                     onChange={() => onNodeCheck(node, index, level, isSubChild)}>
                                 </input>
@@ -35,7 +37,7 @@ export default class TreeNode extends Component {
                     </span>
                 </div>
 
-                {(node.isOpen == true) && getChildNodes(node).map((childNode, i) => (
+                {(node.isOpen == true) && !isDisable && getChildNodes(node).map((childNode, i) => (
                     <TreeNode
                         {...this.props}
                         key={i}

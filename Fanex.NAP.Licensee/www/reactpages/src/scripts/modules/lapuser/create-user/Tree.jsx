@@ -17,7 +17,7 @@ class Tree extends Component {
     _onNodeSelect = (index, level) => {
         const { nodes } = this.state;
 
-        let node = this._getNodeInState(index, level, nodes);
+        const node = this._getNodeInState(index, level, nodes);
         node.isOpen = !node.isOpen;
         node.level = level
 
@@ -185,6 +185,7 @@ class Tree extends Component {
                         level={JSON.parse("[" + i + "]")}
                         node={node}
                         parent={null}
+                        isDisable={this.props.isDisable}
                         isSubChild={false}
                         getChildNodes={this._getChildNodes}
                         onNodeSelect={this._onNodeSelect}

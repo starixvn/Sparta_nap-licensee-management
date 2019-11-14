@@ -5774,6 +5774,7 @@ var Form = function (_Component) {
             isShowConfirmBox: false,
             password: "",
             isShowMessage: false,
+            isDisableTree: false,
             requestBy: '',
             redmineID: '',
             functionOptions: JSON.parse(_this.props.funcPer)
@@ -5822,10 +5823,9 @@ var Form = function (_Component) {
                             return x.isCheck === true;
                         });
                         selected[i].SubFunctionKeys = _this2._getListKeyOfSubFunctionKey(selected[i].SubFunctionKeys);
+                        selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
                     }
                 }
-
-                selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
             });
 
             return selected;
@@ -5873,7 +5873,8 @@ var Form = function (_Component) {
                 if (response.data.IsSuccess) {
                     _this3.setState({
                         password: response.data.Data,
-                        isShowMessage: true
+                        isShowMessage: true,
+                        isDisableTree: true
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.Error);
@@ -5892,6 +5893,7 @@ var Form = function (_Component) {
                 isShowConfirmBox = _state.isShowConfirmBox,
                 password = _state.password,
                 isShowMessage = _state.isShowMessage,
+                isDisableTree = _state.isDisableTree,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
                 functionOptions = _state.functionOptions;
@@ -5968,7 +5970,8 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'col-md-10' },
-                                            _react2.default.createElement(_NumericInput2.default, { className: 'full-width ' + (redmineID ? '' : 'has-error'),
+                                            _react2.default.createElement(_NumericInput2.default, { value: redmineID,
+                                                className: 'full-width ' + (redmineID ? '' : 'has-error'),
                                                 onChange: function onChange(value) {
                                                     return _this4.setState({ redmineID: value });
                                                 } })
@@ -5989,9 +5992,11 @@ var Form = function (_Component) {
                                         { className: 'form-group row col-sm-12' },
                                         _react2.default.createElement(
                                             'button',
-                                            { className: 'btn btn-primary', onClick: function onClick() {
+                                            { className: 'btn btn-primary',
+                                                onClick: function onClick() {
                                                     return _this4.setState({ isShowConfirmBox: true });
-                                                } },
+                                                },
+                                                disabled: !redmineID || !requestBy || password },
                                             'Submit'
                                         )
                                     )
@@ -6012,7 +6017,7 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: functionOptions })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: functionOptions, isDisable: isDisableTree })
                                 )
                             )
                         )
@@ -6283,6 +6288,7 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
+                        isDisable: _this5.props.isDisable,
                         isSubChild: false,
                         getChildNodes: _this5._getChildNodes,
                         onNodeSelect: _this5._onNodeSelect,
@@ -6368,7 +6374,8 @@ var TreeNode = function (_Component) {
                 onNodeSelect = _props.onNodeSelect,
                 onNodeCheck = _props.onNodeCheck,
                 onRadioCheck = _props.onRadioCheck,
-                isSubChild = _props.isSubChild;
+                isSubChild = _props.isSubChild,
+                isDisable = _props.isDisable;
 
 
             return _react2.default.createElement(
@@ -6398,6 +6405,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'radio',
+                            disabled: isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onRadioCheck(parent, index, level);
@@ -6406,6 +6414,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'checkbox',
+                            disabled: isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onNodeCheck(node, index, level, isSubChild);
@@ -6419,7 +6428,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && !isDisable && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

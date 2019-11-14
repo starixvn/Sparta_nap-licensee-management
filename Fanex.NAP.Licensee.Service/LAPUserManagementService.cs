@@ -1,11 +1,14 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using Core;
     using Model.Criteria.LAPUser;
     using Model.Criteria.Vendor;
     using Model.DTO;
     using Model.Enumerations;
+    using Newtonsoft.Json;
 
     public class LAPUserManagementService : ILAPUserManagementService
     {
@@ -25,7 +28,8 @@
                 criteria.UserID,
                 criteria.SiteName,
                 criteria.UserPWD,
-                UserName = criteria.UserID
+                UserName = criteria.UserID,
+                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions)
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
@@ -92,9 +96,10 @@
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
-            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-            result.Append($"<New UserID =\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
+            result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
+            result.Append($"<RequestBy=\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID=\"{value.RedmineID}\" />");
+            result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.SiteName}\" />");
             result.Append("</Action>");
 
             return result.ToString();
@@ -136,6 +141,26 @@
             result.Append("</Action>");
 
             return result.ToString();
+        }
+
+        private static string BuildFunctionXMLParameter(IEnumerable<FunctionPermissionCriteria> criteria)
+        {
+            if (criteria == null || !criteria.Any())
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append("<ROOT>");
+
+            foreach (var item in criteria)
+            {
+                builder.Append($"<UserFuncPermission FunctionKey=\"{item.FunctionKey}\" SystemType=\"{item.SystemType}\" SubFunctionKeys=\"{item.SubFunctionKeys}\" />");
+            }
+
+            builder.Append("</ROOT>");
+
+            return builder.ToString();
         }
     }
 }
