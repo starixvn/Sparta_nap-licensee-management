@@ -1,40 +1,69 @@
-import ConfirmBox from '../../../components/ConfirmBox';
-import React, { Component } from 'react';
-import Site from '../../../lib/site';
-import Utility from '../../../lib/utility';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { createAccount } from './action'
+import ConfirmBox from "../../../components/ConfirmBox";
+import React, { Component } from "react";
+import Utility from "../../../lib/utility";
+import NumericInput from '../../../components/NumericInput';
+import Tree from './Tree';
 
-const defaultState = Object.assign({}, window.initialState);
-
-export default class Form extends Component {
+class Form extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isShowConfirmBox: false,
-            password: '',
-            isShowMessage: false
+            password: "",
+            isShowMessage: false,
+            requestBy: '',
+            redmineID: '',
+            functionOptions: JSON.parse(this.props.funcPer),
         };
     }
 
     _getParams() {
         return {
             criteria: {
-                siteName: defaultState.siteName,
-                userID: defaultState.userID
+                SiteName: this.props.siteName,
+                UserID: this.props.userID,
+                RequestBy: this.state.requestBy,
+                RedmineID: this.state.redmineID,
+                FuncPermissions: this._getSelectedFunc()
             }
         };
     }
 
-    _handleSubmit = () => {
-        this.setState({ isShowConfirmBox: true })
+    _getListKeyOfSubFunctionKey(subFunctionKeys){
+        let listFuncKeys = [];
+
+        subFunctionKeys.forEach((sub) => {
+            const { FunctionKey } = sub;
+
+            listFuncKeys.push(FunctionKey);
+        })
+
+        return listFuncKeys;
+    } 
+
+    _getSelectedFunc(){
+        let selected = this.props.selectedFunc;
+
+        selected.forEach((func, i) => {
+            if(selected[i].SubFunctionKeys != null ){
+                if(Array.isArray(selected[i].SubFunctionKeys)){
+                    selected[i].SubFunctionKeys = selected[i].SubFunctionKeys.filter(x => x.isCheck === true);
+                    selected[i].SubFunctionKeys = this._getListKeyOfSubFunctionKey(selected[i].SubFunctionKeys);
+                }
+            }
+
+            selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
+        })
+
+        return selected;
     }
 
-    _showConfirmBox(isShow) {
-        this.setState({ isShowConfirmBox: isShow });
-    }
-
-    onConfirm = (value) => {
-        this._showConfirmBox(false);
+    onConfirm = value => {
+        this.setState({ isShowConfirmBox: false });
 
         if (value) {
             this._submit();
@@ -43,20 +72,30 @@ export default class Form extends Component {
 
     _renderInput(label, value, disabled, readonly) {
         return (
-            <div className='form-group row'>
-                <label className='col-sm-12 col-lg-2 col-md-3 col-form-label'>{label}</label>
-                <div className='col-sm-12 col-md-5'>
-                    <input type='text' className='full-width' value={value} disabled={disabled} readOnly={readonly} />
+            <div className="form-group row">
+                <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">{label}</label>
+                <div className="col-sm-12 col-md-10">
+                    <input type="text" className="full-width" value={value} disabled={disabled} readOnly={readonly} />
+                </div>
+            </div>
+        );
+    }
+
+    _renderMessage(message) {
+        return (
+            <div className="form-group row">
+                <div className="col-sm-12 col-lg-2 col-md-2 col-form-label"></div>
+                <div className="col-sm-12 col-md-10">
+                    {message}
                 </div>
             </div>
         )
     }
 
     _submit() {
-        const url = 'LAPUserManagement/AddNewUser';
         const params = this._getParams();
 
-        Site.fetchData(params, url)
+        this.props.createAccount(params)
             .then(response => {
                 if (response.data.IsSuccess) {
                     this.setState({
@@ -66,70 +105,96 @@ export default class Form extends Component {
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
                     }
-                }
-                else {
+                } else {
                     Utility.showErrorMessage(response.data.Error);
                 }
-            }).catch(err => {
-            });
+            })
+            .catch(err => { });
     }
 
     render() {
-        const { isShowConfirmBox, password, isShowMessage } = this.state;
+        const { isShowConfirmBox, password, isShowMessage, requestBy, redmineID, functionOptions } = this.state;
 
-        if (!defaultState.isValid) {
-            return <b className='red'>This username is not exist but cannot be created in this case!</b>;
+        if (!this.props.isValid) {
+            return <b className="red">This username is not exist but cannot be created in this case!</b>
         }
 
-        if (defaultState.isExist) {
-            return <b className='red'>This username already exists!</b>;
+        if (this.props.isExist) {
+            return <b className="red">This username already exists!</b>;
         }
 
         return (
             <div>
-                <div className='add-form'>
-                    <div className='row'>
-                        <div className='col-xs-12'>
-                            <div className='form-group row'>
-                                <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
-                                <div className='col-sm-12 col-md-5'>
-                                    <p>The <b>{defaultState.userID}</b> is not exist. If you want to create this username, please click the button "Submit" bellow.</p>
+                <div className="add-form">
+                    <div className="row">
+                        <div className="col-xs-6">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">User Info</div>
+                                <div className="panel-body">
+                                    {this._renderMessage(`The username is not exist. If you want to create this username, please click the button "Submit" bellow.`)}
+                                    {this._renderInput("Site Name", this.props.siteName, true)}
+                                    {this._renderInput("User ID", this.props.userID, true)}
+                                    <div className='form-group row'>
+                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by</label>
+                                        <div className='col-md-10'>
+                                            <input type='text'
+                                                className={`full-width ${requestBy ? '' : 'has-error'}`}
+                                                onChange={(e) => this.setState({ requestBy: e.target.value })} />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
+                                        <div className="col-md-10">
+                                            <NumericInput className={`full-width ${redmineID ? '' : 'has-error'}`}
+                                                onChange={(value) => this.setState({ redmineID: value })} />
+                                        </div>
+                                    </div>
+                                    {password.trim() == ""
+                                        ? this._renderInput("User password", password, true, false)
+                                        : this._renderInput("User password", password, false, true)}
+                                    <div className="form-group row">
+                                        <div className="col-lg-12">
+                                            {isShowMessage && (
+                                                this._renderMessage("Make sure you copy it now, you won't be able to see it again.")
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="form-group row col-sm-12">
+                                        <button className="btn btn-primary" onClick={() => this.setState({ isShowConfirmBox: true })}>
+                                            Submit
+                                    </button>
+                                    </div>
                                 </div>
                             </div>
-                            {this._renderInput('Site Name', defaultState.siteName, true)}
-                            {this._renderInput('User ID', defaultState.userID, true)}
-                            {password.trim() == "" ?
-                                this._renderInput('User password', password, true, false) :
-                                this._renderInput('User password', password, false, true)
-                            }
-                            <div className='form-group row'>
-                                <div className="col-lg-12">
-                                    {isShowMessage &&
-                                        (
-                                            <div className='form-group row'>
-                                                <div className='col-sm-12 col-lg-2 col-md-3 col-form-label'></div>
-                                                <div className='col-sm-12 col-md-5'>
-                                                    <p>Make sure you copy it now, you won't be able to see it again</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
+                        </div>
+                        <div className="col-xs-6">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">User Permisson</div>
+                                <div className="panel-body auto-scroll">
+                                    <Tree className="tree" nodes={functionOptions}/>
                                 </div>
-                            </div>
-                            <div className='form-group row col-sm-12'>
-                                <button className="btn btn-primary" onClick={this._handleSubmit}>
-                                    Submit
-                            </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ConfirmBox isShow={isShowConfirmBox}
-                    title='Confirmation'
-                    message='Do you want to add new user?'
-                    style={{ height: '150px', width: '400px' }}
-                    onClose={this.onConfirm} />
+                <ConfirmBox
+                    isShow={isShowConfirmBox}
+                    title="Confirmation"
+                    message="Do you want to add new user?"
+                    style={{ height: "150px", width: "400px" }}
+                    onClose={this.onConfirm}
+                />
             </div>
-        )
+        );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ createAccount }, dispatch);
+}
+function mapStateToProps(state) {
+    const { selectedFunc } = state;
+    return { selectedFunc };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

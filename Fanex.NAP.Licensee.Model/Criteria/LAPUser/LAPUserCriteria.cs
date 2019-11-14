@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LAPUser
 {
+    using System.Collections.Generic;
+
     public class LAPUserCriteria
     {
         public string SiteName { get; set; }
@@ -15,5 +17,7 @@
         public int UserLoginId { get; set; }
 
         public string UserLoginName { get; set; }
+
+        public IEnumerable<FunctionPermissionCriteria> FuncPermissions { get; set; }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Configuration;
     using System.Text;
+    using System.Web.Hosting;
     using System.Web.Mvc;
     using Attributes;
     using Hangfire;
@@ -28,12 +29,16 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
+            var filePath = "~/App_Data/FunctionPermission.json";
+            var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
+
             var viewModel = new AddUserViewModel
             {
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
-                IsExist = _userService.GetUserInfo(siteName, userID) != null
+                IsExist = _userService.GetUserInfo(siteName, userID) != null,
+                FuntionPermissions = jsonStr
             };
 
             return View(viewModel);
@@ -48,7 +53,7 @@
                 IsSuccess = false
             };
 
-            var error = CheckValidLAPUser(criteria, false);
+            var error = CheckValidLAPUser(criteria, true);
             if (error != null)
             {
                 result.Error = error;
@@ -100,7 +105,7 @@
                 IsSuccess = false
             };
 
-            var error = CheckValidLAPUser(criteria, true);
+            var error = CheckValidLAPUser(criteria, false);
             if (error != null)
             {
                 result.Error = error;
@@ -153,18 +158,15 @@
             return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(extendedTime));
         }
 
-        private string CheckValidLAPUser(LAPUserCriteria criteria, bool isUpdate)
+        private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)
         {
             var error = new StringBuilder();
 
             error.Append(CheckEmptyParameter("Site Name", criteria.SiteName, "<br>"));
+            error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
+            error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
 
-            if (isUpdate)
-            {
-                error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
-                error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
-            }
-            else if (_userService.GetUserInfo(criteria.SiteName, criteria.UserID) != null)
+            if (isAddNew && _userService.GetUserInfo(criteria.SiteName, criteria.UserID) != null)
             {
                 error.Append("This username already exists! <br>");
             }

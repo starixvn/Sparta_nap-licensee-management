@@ -136,6 +136,7 @@
     <Compile Include="Criteria\ITUser\AddUserCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeCurrencyCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeFunctionCriteria.cs" />
+    <Compile Include="Criteria\LAPUser\FunctionPermissionCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\RemoveLicenseeProductCriteria.cs" />

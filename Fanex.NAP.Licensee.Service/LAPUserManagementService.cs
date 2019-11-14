@@ -25,7 +25,7 @@
                 criteria.UserID,
                 criteria.SiteName,
                 criteria.UserPWD,
-                UserName = criteria.UserID,
+                UserName = criteria.UserID
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
@@ -92,6 +92,8 @@
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
+            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
             result.Append($"<New UserID =\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append("</Action>");
 

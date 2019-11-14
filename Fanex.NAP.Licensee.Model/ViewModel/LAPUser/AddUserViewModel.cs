@@ -9,5 +9,7 @@
         public bool IsValid { get; set; }
 
         public bool IsExist { get; set; }
+
+        public string FuntionPermissions { get; set; }
     }
 }

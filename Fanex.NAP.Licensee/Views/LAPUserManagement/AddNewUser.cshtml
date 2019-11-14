@@ -27,7 +27,8 @@
                 siteName: @Html.Raw(serializer.Serialize(Model.SiteName)),
                 userID: @Html.Raw(serializer.Serialize(Model.UserID)),
                 isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
-                isExist: @Html.Raw(serializer.Serialize(Model.IsExist))
+                isExist: @Html.Raw(serializer.Serialize(Model.IsExist)),
+                funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermissions))
             }
     </script>
 
