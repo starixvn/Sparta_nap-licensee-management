@@ -5777,7 +5777,7 @@ var Form = function (_Component) {
             isDisableTree: false,
             requestBy: '',
             redmineID: '',
-            functionOptions: JSON.parse(_this.props.funcPer)
+            functionOptions: _this.props.funcPer
         };
         return _this;
     }
@@ -6091,32 +6091,50 @@ var Tree = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Tree.__proto__ || Object.getPrototypeOf(Tree)).call(this, props));
 
-        _this._onNodeSelect = function (index, level) {
+        _this._onNodeSelect = function (node, level) {
             var nodes = _this.state.nodes;
 
 
-            var node = _this._getNodeInState(index, level, nodes);
             node.isOpen = !node.isOpen;
             node.level = level;
 
             _this.setState({ nodes: nodes });
         };
 
-        _this._onNodeCheck = function (node, index, level, isSubChild) {
-            _this._checkedChildNode(index, level, !node.isCheck, isSubChild);
-            _this._checkedParentNode(index, level, node.isCheck, isSubChild);
+        _this._onNodeCheck = function (node, parent, isSubChild) {
+            var nodes = _this.state.nodes;
+
+
+            _this._checkedChildNode(node, !node.isCheck, isSubChild);
+            _this._checkedParentNode(parent, node.isCheck);
 
             _this.props.setSelectedFuncs(_this.state.selectedFunc);
+
+            _this.setState({ nodes: nodes });
         };
 
-        _this._onRadioCheck = function (parent, index, level) {
-            _this._checkRadio(parent, index, level);
-            _this._checkedParentNode(index, level, true, true);
+        _this._onRadioCheck = function (parent, node) {
+            var nodes = _this.state.nodes;
+
+
+            _this._checkRadio(parent, node);
+            _this._checkedParentNode(parent, true);
 
             _this.props.setSelectedFuncs(_this.state.selectedFunc);
+
+            _this.setState({ nodes: nodes });
         };
 
-        _this._getChildNodes = function (node) {
+        _this.state = {
+            nodes: JSON.parse(props.nodes),
+            selectedFunc: props.selectedFunc
+        };
+        return _this;
+    }
+
+    _createClass(Tree, [{
+        key: '_getChildNodes',
+        value: function _getChildNodes(node) {
             if (!node.Settings) {
                 if (!node.FunctionKeys) {
                     if (!node.SubFunctionKeys) {
@@ -6127,19 +6145,21 @@ var Tree = function (_Component) {
                 return node.FunctionKeys;
             }
             return node.Settings;
-        };
+        }
+    }, {
+        key: '_getParentNode',
+        value: function _getParentNode(level) {
+            var parentNodeLevel = level.splice(0, level.length - 1);
+            var parentNodeIndex = parentNodeLevel[parentNodeLevel.length - 1];
 
-        _this.state = {
-            nodes: props.nodes,
-            selectedFunc: props.selectedFunc
-        };
-        return _this;
-    }
-
-    _createClass(Tree, [{
+            return this._getNodeInState(parentNodeIndex, parentNodeLevel);
+        }
+    }, {
         key: '_getNodeInState',
-        value: function _getNodeInState(index, level, nodes) {
-            var node = {};
+        value: function _getNodeInState(index, level) {
+            var nodes = this.state.nodes;
+
+            var node = [];
 
             if (level.length == 1) {
                 return nodes[index];
@@ -6192,18 +6212,14 @@ var Tree = function (_Component) {
         }
     }, {
         key: '_checkRadio',
-        value: function _checkRadio(parent, index, level) {
-            var _this2 = this;
-
+        value: function _checkRadio(parent, node) {
             var nodes = this.state.nodes;
 
+            var children = this._getChildNodes(parent);
 
-            var node = this._getNodeInState(index, level, nodes);
             node.isCheck = true;
 
-            var childNodes = this._getChildNodes(parent);
-            childNodes.forEach(function (c, i) {
-                var child = _this2._getNodeInState(i, parent.level.concat(i), nodes);
+            children.forEach(function (child) {
                 if (child.FunctionKey != node.FunctionKey) {
                     child.isCheck = false;
                 }
@@ -6213,67 +6229,48 @@ var Tree = function (_Component) {
         }
     }, {
         key: '_checkedParentNode',
-        value: function _checkedParentNode(index, level, checked, isSubChild) {
-            var _this3 = this;
+        value: function _checkedParentNode(parent, checked) {
+            if (parent) {
+                parent.isCheck = checked;
+                this._addNodeIntoSelectedFunc(parent, false);
 
-            var nodes = this.state.nodes;
+                var parentNode = this._getParentNode(parent.level);
+                if (parentNode.length != 0) {
+                    var flag = false;
+                    this._getChildNodes(parentNode).forEach(function (child) {
+                        if (child.isCheck === true) {
+                            flag = true;
+                        }
+                    });
 
-
-            var node = this._getNodeInState(index, level, nodes);
-            node.isCheck = checked;
-
-            this._addNodeIntoSelectedFunc(node, isSubChild);
-
-            if (level.length >= 2) {
-                var flag = false;
-                var parentNodeLevel = level.splice(0, level.length - 1);
-                var parentNodeIndex = parentNodeLevel[parentNodeLevel.length - 1];
-                var parentNode = this._getNodeInState(parentNodeIndex, parentNodeLevel, nodes);
-
-                this._getChildNodes(parentNode).forEach(function (c) {
-                    if (c.isCheck === true) {
-                        flag = true;
-                    }
-                });
-
-                level.forEach(function (i) {
-                    _this3._checkedParentNode(parentNodeIndex, parentNodeLevel, flag, false);
-                });
+                    this._checkedParentNode(parentNode, flag);
+                }
             }
-
-            this.setState({ nodes: nodes });
         }
     }, {
         key: '_checkedChildNode',
-        value: function _checkedChildNode(index, level, checked, isSubChild) {
-            var _this4 = this;
+        value: function _checkedChildNode(node, checked, isSubChild) {
+            var _this2 = this;
 
-            var nodes = this.state.nodes;
-
-
-            var node = this._getNodeInState(index, level, nodes);
             node.isCheck = checked;
-
             this._addNodeIntoSelectedFunc(node, isSubChild);
 
-            var childNodes = this._getChildNodes(node);
-            if (childNodes.length != 0) {
+            var children = this._getChildNodes(node);
+            if (children.length != 0) {
                 if (node.InputBoxType === "radio" && checked == true) {
-                    this._checkedChildNode(0, level.concat(0), node.isCheck, true);
+                    this._checkedChildNode(children[0], node.isCheck, true);
                 } else {
-                    childNodes.forEach(function (c, i) {
+                    children.forEach(function (child) {
                         var hasSubChild = node.SubFunctionKeys != null;
-                        _this4._checkedChildNode(i, level.concat(i), node.isCheck, hasSubChild);
+                        _this2._checkedChildNode(child, node.isCheck, hasSubChild);
                     });
                 }
             }
-
-            this.setState({ nodes: nodes });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this3 = this;
 
             var nodes = this.state.nodes;
 
@@ -6284,16 +6281,15 @@ var Tree = function (_Component) {
                 nodes.map(function (node, i) {
                     return _react2.default.createElement(_TreeNode2.default, {
                         key: i,
-                        index: i,
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this5.props.isDisable,
+                        isDisable: _this3.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this5._getChildNodes,
-                        onNodeSelect: _this5._onNodeSelect,
-                        onNodeCheck: _this5._onNodeCheck,
-                        onRadioCheck: _this5._onRadioCheck
+                        getChildNodes: _this3._getChildNodes,
+                        onNodeSelect: _this3._onNodeSelect,
+                        onNodeCheck: _this3._onNodeCheck,
+                        onRadioCheck: _this3._onRadioCheck
                     });
                 })
             );
@@ -6344,20 +6340,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var TreeNode = function (_Component) {
     _inherits(TreeNode, _Component);
 
-    function TreeNode() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function TreeNode(props) {
         _classCallCheck(this, TreeNode);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = _possibleConstructorReturn(this, (TreeNode.__proto__ || Object.getPrototypeOf(TreeNode)).call(this, props));
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TreeNode.__proto__ || Object.getPrototypeOf(TreeNode)).call.apply(_ref, [this].concat(args))), _this), _this.getNodeLabel = function (node) {
+        _this.getNodeLabel = function (node) {
             return node.DisplayKey;
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        };
+
+        return _this;
     }
 
     _createClass(TreeNode, [{
@@ -6366,7 +6358,6 @@ var TreeNode = function (_Component) {
             var _this2 = this;
 
             var _props = this.props,
-                index = _props.index,
                 node = _props.node,
                 parent = _props.parent,
                 getChildNodes = _props.getChildNodes,
@@ -6388,13 +6379,13 @@ var TreeNode = function (_Component) {
                         'div',
                         null,
                         _react2.default.createElement('i', { className: 'glyphicon glyphicon-chevron-down', onClick: function onClick() {
-                                return onNodeSelect(index, level);
+                                return onNodeSelect(node, level);
                             } })
                     ) : _react2.default.createElement(
                         'div',
                         null,
                         _react2.default.createElement('i', { className: 'glyphicon glyphicon-chevron-right', onClick: function onClick() {
-                                return onNodeSelect(index, level);
+                                return onNodeSelect(node, level);
                             } })
                     ) : _react2.default.createElement(
                         'div',
@@ -6408,7 +6399,7 @@ var TreeNode = function (_Component) {
                             disabled: isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
-                                return onRadioCheck(parent, index, level);
+                                return onRadioCheck(parent, node);
                             } })
                     ) : _react2.default.createElement(
                         'span',
@@ -6417,13 +6408,13 @@ var TreeNode = function (_Component) {
                             disabled: isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
-                                return onNodeCheck(node, index, level, isSubChild);
+                                return onNodeCheck(node, parent, isSubChild);
                             } })
                     ),
                     _react2.default.createElement(
                         'span',
                         { role: 'button', onClick: function onClick() {
-                                return onNodeSelect(index, level);
+                                return onNodeSelect(node, level);
                             } },
                         this.getNodeLabel(node)
                     )
@@ -6432,10 +6423,9 @@ var TreeNode = function (_Component) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,
-                        isSubChild: parent && node.SubFunctionKeys != null,
-                        index: i,
+                        isSubChild: node && node.SubFunctionKeys != null,
                         node: childNode,
-                        level: node.level.concat(i)
+                        level: level.concat(i)
                     }));
                 })
             );

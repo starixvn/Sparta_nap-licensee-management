@@ -7,8 +7,10 @@
     {
         ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false);
 
-        UserInfo GetUserInfo(string siteName, string userID);
+        LAPUser GetUserInfo(string siteName, string userID);
 
         ResultData<string> AddUser(LAPUserCriteria criteria);
+
+        UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ);
     }
 }

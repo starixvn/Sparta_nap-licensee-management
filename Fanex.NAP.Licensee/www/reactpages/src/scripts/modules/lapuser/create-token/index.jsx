@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import reducer from './reducer'
 import Store from '../../../lib/store'
 
-const defaultState = Object.assign({}, window.initialState);
+const defaultState = Object.assign({}, { selectedFunc: [] });
+const defaultProps = Object.assign({}, window.initialState);
 const store = Store.createStore(reducer, defaultState);
 
 export default class App extends React.Component {
@@ -16,7 +17,13 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Form />
+                <Form  
+                    user={defaultProps.user}
+                    timeRemaining={defaultProps.timeRemaining}
+                    selectedSiteName={defaultProps.selectedSiteName}
+                    isValid={defaultProps.isValid}
+                    funcPer={defaultProps.funcPer}
+                    oldFuncPer={defaultProps.oldFuncPermissions} />
             </Provider>
         );
     }

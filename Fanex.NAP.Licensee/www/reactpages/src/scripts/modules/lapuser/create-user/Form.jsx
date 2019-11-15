@@ -18,7 +18,7 @@ class Form extends Component {
             isDisableTree: false,
             requestBy: '',
             redmineID: '',
-            functionOptions: JSON.parse(this.props.funcPer),
+            functionOptions: this.props.funcPer,
         };
     }
 
@@ -164,7 +164,7 @@ class Form extends Component {
                                     <div className="form-group row col-sm-12">
                                         <button className="btn btn-primary"
                                             onClick={() => this.setState({ isShowConfirmBox: true })}
-                                            disabled={!redmineID || !requestBy || password} >
+                                            disabled={!redmineID || !requestBy || password} > 
                                             Submit
                                     </button>
                                     </div>

@@ -214,7 +214,10 @@
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="DTO\LicenseeVendor.cs" />
     <Compile Include="DTO\SystemItem.cs" />
-    <Compile Include="DTO\UserInfo.cs" />
+    <Compile Include="DTO\LAPUser.cs" />
+    <Compile Include="DTO\UserFuncPermission.cs" />
+    <Compile Include="DTO\UserGroup.cs" />
+    <Compile Include="DTO\UserPermissionInfo.cs" />
     <Compile Include="Enumerations\ActionLogType.cs" />
     <Compile Include="Enumerations\HashType.cs" />
     <Compile Include="Enumerations\LAPAccount.cs" />

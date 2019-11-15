@@ -2,8 +2,6 @@
 @import "../../components/_variable";
 
 .add-form {
-    max-width: 540px;
-
     input[type=text] {
         &.has-error {
             border: 1px solid $red;
@@ -75,5 +73,21 @@
         background: #6faccf;
         border-radius: 3px;
         border: 1px solid #5b9cc1;
+    }
+}
+
+.node {
+    display: flex;
+    margin: 5px 0;
+
+    input[type=checkbox] {
+        position: relative;
+        margin: 4px 5px;
+    }
+
+    .glyphicon {
+        cursor: pointer;
+        font-size: 10px;
+        width: 10px;
     }
 }

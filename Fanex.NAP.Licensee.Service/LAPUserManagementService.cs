@@ -63,7 +63,7 @@
             return result;
         }
 
-        public UserInfo GetUserInfo(string siteName, string userID)
+        public LAPUser GetUserInfo(string siteName, string userID)
         {
             var parameter = new
             {
@@ -72,8 +72,28 @@
             };
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
             {
-                return db.QueryEntity<UserInfo>(parameter);
+                return db.QueryEntity<LAPUser>(parameter);
             }
+        }
+
+        public UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ)
+        {
+            var parameter = new
+            {
+                UserSEQ = userSEQ
+            }; 
+            var result = new UserPermissionInfo();
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_UserFuncPermission_Select"))
+            {
+                using (var multi = db.QueryMultiple(parameter))
+                {
+                    result.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
+                    result.FuncPermission = multi.Read<UserFuncPermission>();
+                }
+            }
+
+            return result;
         }
 
         private static void WriteAddUserActionLog(LAPUserCriteria value)

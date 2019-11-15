@@ -31,19 +31,19 @@
     .card .card-body .card-body-content {
       margin: 25px; }
 
-.add-form {
-  max-width: 540px; }
-  .add-form input[type=text].has-error {
-    border: 1px solid #a94442; }
-  .add-form .btn-primary, .add-form .btn-copy {
-    box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    width: 100px; }
-  .add-form .btn-primary {
-    margin-right: 0;
-    height: 26px; }
+.add-form input[type=text].has-error {
+  border: 1px solid #a94442; }
+
+.add-form .btn-primary, .add-form .btn-copy {
+  box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  width: 100px; }
+
+.add-form .btn-primary {
+  margin-right: 0;
+  height: 26px; }
 
 .add-form input[type=text] {
   border-radius: 3px;
@@ -83,5 +83,16 @@
   background: #6faccf;
   border-radius: 3px;
   border: 1px solid #5b9cc1; }
+
+.node {
+  display: flex;
+  margin: 5px 0; }
+  .node input[type=checkbox] {
+    position: relative;
+    margin: 4px 5px; }
+  .node .glyphicon {
+    cursor: pointer;
+    font-size: 10px;
+    width: 10px; }
 
 /*# sourceMappingURL=createtoken.css.map*/

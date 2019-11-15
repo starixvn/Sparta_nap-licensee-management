@@ -1,10 +1,11 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createToken, toggleLoader } from './action'
+import { setSelectedFuncs, createToken, toggleLoader } from './action'
 import Loader from '../../../components/Loader'
 import React, { Component } from 'react';
 import Utility from '../../../lib/utility';
 import NumericInput from '../../../components/NumericInput';
+import Tree from './Tree';
 
 class Form extends Component {
     constructor(props) {
@@ -19,15 +20,16 @@ class Form extends Component {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: this.props.user.TimeRemaining
+            expriedIn: this.props.timeRemaining,
+            isCheckGroup: true
         };
     }
 
     _getParams() {
         return {
             criteria: {
-                SiteName: this.props.user.UserInfo.SiteName,
-                UserID: this.props.user.UserInfo.UserID,
+                SiteName: this.props.user.SiteName,
+                UserID: this.props.user.UserID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID
             }
@@ -63,7 +65,7 @@ class Form extends Component {
         this._setTimeControl();
     }
 
-    _onCopy = (event) => {
+    _onCopy = () => {
         this.txtToken.select();
         document.execCommand('copy');
 
@@ -139,10 +141,10 @@ class Form extends Component {
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, isDisable, isShowMessage } = this.state;
-        const { user } = this.props;
+        const { isCopy, requestBy, redmineID, token, isDisable, isCheckGroup, isShowMessage } = this.state;
+        const { user, isValid, funcPer, oldFuncPer } = this.props;
 
-        if (!this.props.user.IsValid) {
+        if (!isValid) {
             return <b className='red'>This username is not allowed to create new token in this case!</b>;
         }
 
@@ -151,51 +153,80 @@ class Form extends Component {
                 <div className="add-form">
                     <Loader isLoading={this.props.isLoading} />
                     <div className="row">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="card-title">Create new token for <b>{user.UserInfo.UserID}</b></div>
-                                <div className="card-body-content">
-                                    {this._renderCardInput('Request by', 'requestBy')}
-                                    <div className='form-group row'>
-                                        <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
-                                        <div className='col-lg-9 col-sm-9'>
-                                            <NumericInput value={redmineID}
-                                                className={`full-width ${redmineID ? '' : 'has-error'}`}
-                                                onChange={(value) => this.setState({ redmineID: value })} />
-                                        </div>
-                                    </div>
-                                    {this._renderCardInput('Exprired in', 'timeSpan', true)}
-                                    <div className='form-group row pull-right'>
-                                        <div className="col-lg-12">
-                                            <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy}>Generate</button>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix"></div>
-                                    <div className='form-group row'>
-                                        <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
-                                        <div className='col-lg-9 col-sm-9'>
-                                            <div className="group-input group-prepend">
-                                                <input type="text" className='full-width' disabled={isDisable} value={token} ref={(txtToken) => this.txtToken = txtToken} />
-                                                {
-                                                    isCopy && this._renderTootlip('Copied', 'bottom')
-                                                }
-                                                <div className="input-group-prepend">
-                                                    <button className="btn-copy" disabled={isDisable} onClick={this._onCopy}>Copy</button>
+                        <div className="col-lg-5 col-md-6 col-xs-12">
+                            <div className="panel panel-default" >
+                                <div className="panel-heading">Create new token for <b>{user.UserID}</b></div>
+                                <div className="panel-body auto-scroll">
+                                    <div className="card-body">
+                                        <div className="card-body-content">
+                                            {this._renderCardInput('Request by', 'requestBy')}
+                                            <div className='form-group row'>
+                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
+                                                <div className='col-lg-9 col-sm-9'>
+                                                    <NumericInput value={redmineID}
+                                                        className={`full-width ${redmineID ? '' : 'has-error'}`}
+                                                        onChange={(value) => this.setState({ redmineID: value })} />
+                                                </div>
+                                            </div>
+                                            {this._renderCardInput('Exprired in', 'timeSpan', true)}
+                                            <div className='form-group row pull-right'>
+                                                <div className="col-lg-12">
+                                                    <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy}>Generate</button>
+                                                </div>
+                                            </div>
+                                            <div className="clearfix"></div>
+                                            <div className='form-group row'>
+                                                <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
+                                                <div className='col-lg-9 col-sm-9'>
+                                                    <div className="group-input group-prepend">
+                                                        <input type="text" className='full-width' disabled={isDisable} value={token} ref={(txtToken) => this.txtToken = txtToken} />
+                                                        {
+                                                            isCopy && this._renderTootlip('Copied', 'bottom')
+                                                        }
+                                                        <div className="input-group-prepend">
+                                                            <button className="btn-copy" disabled={isDisable} onClick={this._onCopy}>Copy</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='form-group row'>
+                                                <div className="col-lg-12">
+                                                    {isShowMessage &&
+                                                        (
+                                                            <div className='form-group row'>
+                                                                <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
+                                                            </div>
+                                                        )
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='form-group row'>
-                                        <div className="col-lg-12">
-                                            {isShowMessage &&
-                                                (
-                                                    <div className='form-group row'>
-                                                        <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
-                                                    </div>
-                                                )
-                                            }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-5 col-md-6 col-xs-12">
+                            <div className="panel panel-default" >
+                                <div className="panel-heading">User Permisson</div>
+                                <div className="panel-body auto-scroll">
+                                    {
+                                        this.props.oldFuncPer.UserGroup &&
+                                        <div className='form-group row'>
+                                            <label className='col-lg-3 col-sm-3 col-md-3'>User Group</label>
+                                            <div className='col-lg-9 col-sm-9'>
+                                                <div className="form-group">
+                                                    <label className="checkbox-inline">
+                                                        <input type="checkbox" checked={isCheckGroup} onChange={() => this.setState({ isCheckGroup: false })} />
+                                                        {oldFuncPer.UserGroup.GroupName}
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
+                                    }
+                                    <div className='form-group row'>
+                                        <label className='col-xs-12'>User Function permission</label>
                                     </div>
+                                    <Tree className="tree" nodes={funcPer} selectedNode={oldFuncPer.FuncPermission} />
                                 </div>
                             </div>
                         </div>
@@ -207,11 +238,11 @@ class Form extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ createToken, toggleLoader }, dispatch);
+    return bindActionCreators({ setSelectedFuncs, createToken, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { user, isLoading } = state;
-    return { user, isLoading };
+    const { selectedFunc, isLoading } = state;
+    return { selectedFunc, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

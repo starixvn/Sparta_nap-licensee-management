@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO
 {
-    public class UserInfo
+    public class LAPUser
     {
         public int UserSEQ { get; set; }
 

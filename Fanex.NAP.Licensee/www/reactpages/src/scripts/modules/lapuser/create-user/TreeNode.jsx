@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 
 export default class TreeNode extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     getNodeLabel = (node) => node.DisplayKey
 
     render() {
-        const { index, node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild, isDisable } = this.props;
+        const { node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild, isDisable } = this.props;
 
         return (
             <React.Fragment>
                 <div level={level} className={"node"} style={{ marginLeft: (level.length - 1) * 20 }}>
                     {getChildNodes(node).length > 0 ? node.isOpen == true ?
-                        <div><i className='glyphicon glyphicon-chevron-down' onClick={() => onNodeSelect(index, level)}></i></div>
-                        : <div><i className='glyphicon glyphicon-chevron-right' onClick={() => onNodeSelect(index, level)}></i></div>
+                        <div><i className='glyphicon glyphicon-chevron-down' onClick={() => onNodeSelect(node, level)}></i></div>
+                        : <div><i className='glyphicon glyphicon-chevron-right' onClick={() => onNodeSelect(node, level)}></i></div>
                         : <div><i className='glyphicon'></i></div>
                     }
                     {
@@ -20,7 +24,7 @@ export default class TreeNode extends Component {
                                 <input type="radio"
                                     disabled={isDisable}
                                     checked={node.isCheck == true ? true : false}
-                                    onChange={() => onRadioCheck(parent, index, level)}>
+                                    onChange={() => onRadioCheck(parent, node)}>
                                 </input>
                             </span>
                             :
@@ -28,11 +32,11 @@ export default class TreeNode extends Component {
                                 <input type="checkbox"
                                     disabled={isDisable}
                                     checked={node.isCheck == true ? true : false}
-                                    onChange={() => onNodeCheck(node, index, level, isSubChild)}>
+                                    onChange={() => onNodeCheck(node, parent, isSubChild)}>
                                 </input>
                             </span>
                     }
-                    <span role="button" onClick={() => onNodeSelect(index, level)}>
+                    <span role="button" onClick={() => onNodeSelect(node, level)}>
                         {this.getNodeLabel(node)}
                     </span>
                 </div>
@@ -42,10 +46,9 @@ export default class TreeNode extends Component {
                         {...this.props}
                         key={i}
                         parent={node}
-                        isSubChild={parent && node.SubFunctionKeys != null}
-                        index={i}
+                        isSubChild={node && node.SubFunctionKeys != null}
                         node={childNode}
-                        level={node.level.concat(i)}
+                        level={level.concat(i)}
                     />
                 ))}
             </React.Fragment>

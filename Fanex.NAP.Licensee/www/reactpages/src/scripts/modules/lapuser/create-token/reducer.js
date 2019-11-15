@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux'
 import { isLoading } from '../../../reducers/loaderReducer'
-
+import { SET_SELECTED_FUNCS } from './actionTypes'
 import createReducer from '../../../lib/createReducer'
-import { SET_USER_INFO } from './actionTypes'
 
-const user = createReducer({}, {
-    [SET_USER_INFO](state, action) {
+const selectedFunc = createReducer({}, {
+    [SET_SELECTED_FUNCS](state, action) {
         return action.data;
     }
 });
 
-export default combineReducers({ user, isLoading })
+export default combineReducers({ selectedFunc, isLoading })

@@ -4,10 +4,14 @@
 
     public class UpdateUserPWViewModel
     {
-        public UserInfo UserInfo { get; set; }
+        public LAPUser UserInfo { get; set; }
 
         public double TimeRemaining { get; set; }
 
         public bool IsValid { get; set; }
+
+        public string FuntionPermissions { get; set; }
+
+        public UserPermissionInfo OldFuncPermissions { get; set; }
     }
 }

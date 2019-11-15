@@ -1,9 +1,12 @@
 ﻿namespace Fanex.NAP.Licensee.Service.Helpers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Hosting;
     using Model.Criteria.LAPUser;
+    using Model.DTO;
     using Model.Enumerations;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public static class LAPUserHelper

@@ -9,36 +9,43 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: props.nodes,
+            nodes: JSON.parse(props.nodes),
             selectedFunc: props.selectedFunc
         };
     }
 
-    _onNodeSelect = (index, level) => {
+    _onNodeSelect = (node, level) => {
         const { nodes } = this.state;
 
-        const node = this._getNodeInState(index, level, nodes);
         node.isOpen = !node.isOpen;
         node.level = level
 
         this.setState({ nodes });
     }
 
-    _onNodeCheck = (node, index, level, isSubChild) => {
-        this._checkedChildNode(index, level, !node.isCheck, isSubChild);
-        this._checkedParentNode(index, level, node.isCheck, isSubChild);
+    _onNodeCheck = (node, parent, isSubChild) => {
+        const { nodes } = this.state;
+
+        this._checkedChildNode(node, !node.isCheck, isSubChild);
+        this._checkedParentNode(parent, node.isCheck);
 
         this.props.setSelectedFuncs(this.state.selectedFunc);
+
+        this.setState({ nodes });
     }
 
-    _onRadioCheck = (parent, index, level) => {
-        this._checkRadio(parent, index, level);
-        this._checkedParentNode(index, level, true, true);
+    _onRadioCheck = (parent, node) => {
+        const { nodes } = this.state;
+
+        this._checkRadio(parent, node);
+        this._checkedParentNode(parent, true);
 
         this.props.setSelectedFuncs(this.state.selectedFunc);
+
+        this.setState({ nodes });
     }
 
-    _getChildNodes = (node) => {
+    _getChildNodes(node) {
         if (!node.Settings) {
             if (!node.FunctionKeys) {
                 if (!node.SubFunctionKeys) {
@@ -50,9 +57,17 @@ class Tree extends Component {
         }
         return node.Settings;
     }
-    
-    _getNodeInState(index, level, nodes) {
-        let node = {};
+
+    _getParentNode(level) {
+        const parentNodeLevel = level.splice(0, level.length - 1);
+        const parentNodeIndex = parentNodeLevel[parentNodeLevel.length - 1];
+
+        return this._getNodeInState(parentNodeIndex, parentNodeLevel);
+    }
+
+    _getNodeInState(index, level) {
+        const { nodes } = this.state;
+        let node = [];
 
         if (level.length == 1) {
             return nodes[index];
@@ -103,15 +118,13 @@ class Tree extends Component {
         this.setState({ selectedFunc });
     }
 
-    _checkRadio(parent, index, level) {
+    _checkRadio(parent, node) {
         const { nodes } = this.state;
-        
-        let node = this._getNodeInState(index, level, nodes);
+        const children = this._getChildNodes(parent);
+
         node.isCheck = true;
 
-        let childNodes = this._getChildNodes(parent);
-        childNodes.forEach((c, i) => {
-            let child = this._getNodeInState(i, parent.level.concat(i), nodes);
+        children.forEach(child => {
             if (child.FunctionKey != node.FunctionKey) {
                 child.isCheck = false;
             }
@@ -120,57 +133,41 @@ class Tree extends Component {
         this.setState({ nodes });
     }
 
-    _checkedParentNode(index, level, checked, isSubChild) {
-        const { nodes } = this.state;
-        
-        let node = this._getNodeInState(index, level, nodes);
-        node.isCheck = checked;
+    _checkedParentNode(parent, checked) {
+        if (parent) {
+            parent.isCheck = checked;
+            this._addNodeIntoSelectedFunc(parent, false);
 
-        this._addNodeIntoSelectedFunc(node, isSubChild);
+            const parentNode = this._getParentNode(parent.level);
+            if (parentNode.length != 0) {
+                let flag = false;
+                this._getChildNodes(parentNode).forEach(child => {
+                    if (child.isCheck === true) {
+                        flag = true;
+                    }
+                })
 
-        if (level.length >= 2) {
-            let flag = false;
-            const parentNodeLevel = level.splice(0, level.length - 1);
-            const parentNodeIndex = parentNodeLevel[parentNodeLevel.length - 1];
-            const parentNode = this._getNodeInState(parentNodeIndex, parentNodeLevel, nodes);
-
-            this._getChildNodes(parentNode).forEach(c => {
-                if (c.isCheck === true) {
-                    flag = true;
-                }
-            })
-
-            level.forEach(i => {
-                this._checkedParentNode(parentNodeIndex, parentNodeLevel, flag, false)
-            })
+                this._checkedParentNode(parentNode, flag)
+            }
         }
-
-        this.setState({ nodes });
     }
 
-    _checkedChildNode(index, level, checked, isSubChild) {
-        const { nodes } = this.state;
-        
-        let node = this._getNodeInState(index, level, nodes);
+    _checkedChildNode(node, checked, isSubChild) {
         node.isCheck = checked;
-
         this._addNodeIntoSelectedFunc(node, isSubChild);
 
-        const childNodes = this._getChildNodes(node);
-        if (childNodes.length != 0) {
+        const children = this._getChildNodes(node);
+        if (children.length != 0) {
             if (node.InputBoxType === "radio" && checked == true) {
-                this._checkedChildNode(0, level.concat(0), node.isCheck, true)
-
+                this._checkedChildNode(children[0], node.isCheck, true)
             }
             else {
-                childNodes.forEach((c, i) => {
+                children.forEach(child => {
                     const hasSubChild = (node.SubFunctionKeys != null)
-                    this._checkedChildNode(i, level.concat(i), node.isCheck, hasSubChild)
+                    this._checkedChildNode(child, node.isCheck, hasSubChild)
                 })
             }
         }
-
-        this.setState({ nodes });
     }
 
     render() {
@@ -181,7 +178,6 @@ class Tree extends Component {
                 {nodes.map((node, i) => (
                     <TreeNode
                         key={i}
-                        index={i}
                         level={JSON.parse("[" + i + "]")}
                         node={node}
                         parent={null}

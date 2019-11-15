@@ -81,17 +81,23 @@
         [HttpGet]
         public ActionResult CreateToken(string siteName, string userID)
         {
+            var filePath = "~/App_Data/FunctionPermission.json";
+            var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
             var result = _userService.GetUserInfo(siteName, userID);
+
             if (result == null)
             {
                 return RedirectToAction("AddNewUser", "LAPUserManagement", new { siteName, userID });
             }
 
+            var userFuncPerInfo = _userService.GetUserFuncPermissionInfo(result.UserSEQ);
             var viewModel = new UpdateUserPWViewModel
             {
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
-                IsValid = LAPUserHelper.IsValidUserAccount(userID)
+                IsValid = LAPUserHelper.IsValidUserAccount(userID),
+                FuntionPermissions = jsonStr,
+                OldFuncPermissions = userFuncPerInfo
             };
 
             return View(viewModel);

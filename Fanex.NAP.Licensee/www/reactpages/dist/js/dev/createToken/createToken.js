@@ -5481,7 +5481,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, window.initialState);
+var defaultState = Object.assign({}, { selectedFunc: [] });
+var defaultProps = Object.assign({}, window.initialState);
 var store = _store2.default.createStore(_reducer2.default, defaultState);
 
 var App = function (_React$Component) {
@@ -5499,7 +5500,13 @@ var App = function (_React$Component) {
             return _react2.default.createElement(
                 _reactRedux.Provider,
                 { store: store },
-                _react2.default.createElement(_Form2.default, null)
+                _react2.default.createElement(_Form2.default, {
+                    user: defaultProps.user,
+                    timeRemaining: defaultProps.timeRemaining,
+                    selectedSiteName: defaultProps.selectedSiteName,
+                    isValid: defaultProps.isValid,
+                    funcPer: defaultProps.funcPer,
+                    oldFuncPer: defaultProps.oldFuncPermissions })
             );
         }
     }]);
@@ -5547,6 +5554,10 @@ var _NumericInput = __webpack_require__(54);
 
 var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
+var _Tree = __webpack_require__(274);
+
+var _Tree2 = _interopRequireDefault(_Tree);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5592,7 +5603,7 @@ var Form = function (_Component) {
             _this._setTimeControl();
         };
 
-        _this._onCopy = function (event) {
+        _this._onCopy = function () {
             _this.txtToken.select();
             document.execCommand('copy');
 
@@ -5613,7 +5624,8 @@ var Form = function (_Component) {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: _this.props.user.TimeRemaining
+            expriedIn: _this.props.timeRemaining,
+            isCheckGroup: true
         };
         return _this;
     }
@@ -5623,8 +5635,8 @@ var Form = function (_Component) {
         value: function _getParams() {
             return {
                 criteria: {
-                    SiteName: this.props.user.UserInfo.SiteName,
-                    UserID: this.props.user.UserInfo.UserID,
+                    SiteName: this.props.user.SiteName,
+                    UserID: this.props.user.UserID,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID
                 }
@@ -5729,11 +5741,16 @@ var Form = function (_Component) {
                 redmineID = _state.redmineID,
                 token = _state.token,
                 isDisable = _state.isDisable,
+                isCheckGroup = _state.isCheckGroup,
                 isShowMessage = _state.isShowMessage;
-            var user = this.props.user;
+            var _props = this.props,
+                user = _props.user,
+                isValid = _props.isValid,
+                funcPer = _props.funcPer,
+                oldFuncPer = _props.oldFuncPer;
 
 
-            if (!this.props.user.IsValid) {
+            if (!isValid) {
                 return _react2.default.createElement(
                     'b',
                     { className: 'red' },
@@ -5753,106 +5770,166 @@ var Form = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'card' },
+                            { className: 'col-lg-5 col-md-6 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'card-body' },
+                                { className: 'panel panel-default' },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'card-title' },
+                                    { className: 'panel-heading' },
                                     'Create new token for ',
                                     _react2.default.createElement(
                                         'b',
                                         null,
-                                        user.UserInfo.UserID
+                                        user.UserID
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'card-body-content' },
-                                    this._renderCardInput('Request by', 'requestBy'),
+                                    { className: 'panel-body auto-scroll' },
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'form-group row' },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { className: 'col-lg-3 col-sm-3 col-md-3' },
-                                            'Redmine Id'
-                                        ),
+                                        { className: 'card-body' },
                                         _react2.default.createElement(
                                             'div',
-                                            { className: 'col-lg-9 col-sm-9' },
-                                            _react2.default.createElement(_NumericInput2.default, { value: redmineID,
-                                                className: 'full-width ' + (redmineID ? '' : 'has-error'),
-                                                onChange: function onChange(value) {
-                                                    return _this4.setState({ redmineID: value });
-                                                } })
-                                        )
-                                    ),
-                                    this._renderCardInput('Exprired in', 'timeSpan', true),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row pull-right' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-12' },
+                                            { className: 'card-body-content' },
+                                            this._renderCardInput('Request by', 'requestBy'),
                                             _react2.default.createElement(
-                                                'button',
-                                                { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy },
-                                                'Generate'
-                                            )
-                                        )
-                                    ),
-                                    _react2.default.createElement('div', { className: 'clearfix' }),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row' },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { className: 'col-lg-3 col-sm-3 col-md-3' },
-                                            'Your token'
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-9 col-sm-9' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'group-input group-prepend' },
-                                                _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
-                                                        return _this4.txtToken = txtToken;
-                                                    } }),
-                                                isCopy && this._renderTootlip('Copied', 'bottom'),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'input-group-prepend' },
-                                                    _react2.default.createElement(
-                                                        'button',
-                                                        { className: 'btn-copy', disabled: isDisable, onClick: this._onCopy },
-                                                        'Copy'
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-lg-12' },
-                                            isShowMessage && _react2.default.createElement(
                                                 'div',
                                                 { className: 'form-group row' },
                                                 _react2.default.createElement(
                                                     'label',
-                                                    { className: 'col-lg-12 col-sm-12 col-md-12' },
-                                                    'New token "',
-                                                    token,
-                                                    '" has been created. Make sure you copy it now, you won\'t be able to see it again'
+                                                    { className: 'col-lg-3 col-sm-3 col-md-3' },
+                                                    'Redmine Id'
+                                                ),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-lg-9 col-sm-9' },
+                                                    _react2.default.createElement(_NumericInput2.default, { value: redmineID,
+                                                        className: 'full-width ' + (redmineID ? '' : 'has-error'),
+                                                        onChange: function onChange(value) {
+                                                            return _this4.setState({ redmineID: value });
+                                                        } })
+                                                )
+                                            ),
+                                            this._renderCardInput('Exprired in', 'timeSpan', true),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'form-group row pull-right' },
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-lg-12' },
+                                                    _react2.default.createElement(
+                                                        'button',
+                                                        { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy },
+                                                        'Generate'
+                                                    )
+                                                )
+                                            ),
+                                            _react2.default.createElement('div', { className: 'clearfix' }),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'form-group row' },
+                                                _react2.default.createElement(
+                                                    'label',
+                                                    { className: 'col-lg-3 col-sm-3 col-md-3' },
+                                                    'Your token'
+                                                ),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-lg-9 col-sm-9' },
+                                                    _react2.default.createElement(
+                                                        'div',
+                                                        { className: 'group-input group-prepend' },
+                                                        _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
+                                                                return _this4.txtToken = txtToken;
+                                                            } }),
+                                                        isCopy && this._renderTootlip('Copied', 'bottom'),
+                                                        _react2.default.createElement(
+                                                            'div',
+                                                            { className: 'input-group-prepend' },
+                                                            _react2.default.createElement(
+                                                                'button',
+                                                                { className: 'btn-copy', disabled: isDisable, onClick: this._onCopy },
+                                                                'Copy'
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            ),
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'form-group row' },
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-lg-12' },
+                                                    isShowMessage && _react2.default.createElement(
+                                                        'div',
+                                                        { className: 'form-group row' },
+                                                        _react2.default.createElement(
+                                                            'label',
+                                                            { className: 'col-lg-12 col-sm-12 col-md-12' },
+                                                            'New token "',
+                                                            token,
+                                                            '" has been created. Make sure you copy it now, you won\'t be able to see it again'
+                                                        )
+                                                    )
                                                 )
                                             )
                                         )
                                     )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-lg-5 col-md-6 col-xs-12' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'panel panel-default' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-heading' },
+                                    'User Permisson'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-body auto-scroll' },
+                                    this.props.oldFuncPer.UserGroup && _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group row' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { className: 'col-lg-3 col-sm-3 col-md-3' },
+                                            'User Group'
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'col-lg-9 col-sm-9' },
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'form-group' },
+                                                _react2.default.createElement(
+                                                    'label',
+                                                    { className: 'checkbox-inline' },
+                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup, onChange: function onChange() {
+                                                            return _this4.setState({ isCheckGroup: false });
+                                                        } }),
+                                                    oldFuncPer.UserGroup.GroupName
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group row' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { className: 'col-xs-12' },
+                                            'User Function permission'
+                                        )
+                                    ),
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: funcPer, selectedNode: oldFuncPer.FuncPermission })
                                 )
                             )
                         )
@@ -5866,13 +5943,13 @@ var Form = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    var user = state.user,
+    var selectedFunc = state.selectedFunc,
         isLoading = state.isLoading;
 
-    return { user: user, isLoading: isLoading };
+    return { selectedFunc: selectedFunc, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
@@ -5887,7 +5964,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleLoader = exports.createToken = undefined;
+exports.toggleLoader = exports.createToken = exports.setSelectedFuncs = undefined;
 
 var _loaderAction = __webpack_require__(86);
 
@@ -5895,7 +5972,16 @@ var _site = __webpack_require__(9);
 
 var _site2 = _interopRequireDefault(_site);
 
+var _actionTypes = __webpack_require__(187);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function setSelectedFuncs(data) {
+    return {
+        type: _actionTypes.SET_SELECTED_FUNCS,
+        data: data
+    };
+}
 
 function createToken(param) {
     return function () {
@@ -5903,6 +5989,7 @@ function createToken(param) {
     };
 }
 
+exports.setSelectedFuncs = setSelectedFuncs;
 exports.createToken = createToken;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
@@ -5921,21 +6008,21 @@ var _redux = __webpack_require__(2);
 
 var _loaderReducer = __webpack_require__(83);
 
+var _actionTypes = __webpack_require__(187);
+
 var _createReducer2 = __webpack_require__(27);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
-
-var _actionTypes = __webpack_require__(187);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var user = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_USER_INFO, function (state, action) {
+var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_SELECTED_FUNCS, function (state, action) {
     return action.data;
 }));
 
-exports.default = (0, _redux.combineReducers)({ user: user, isLoading: _loaderReducer.isLoading });
+exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
 /* 187 */
@@ -5948,6 +6035,532 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
+var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
+
+/***/ }),
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _redux = __webpack_require__(2);
+
+var _reactRedux = __webpack_require__(4);
+
+var _action = __webpack_require__(185);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _TreeNode = __webpack_require__(275);
+
+var _TreeNode2 = _interopRequireDefault(_TreeNode);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Tree = function (_Component) {
+    _inherits(Tree, _Component);
+
+    function Tree(props) {
+        _classCallCheck(this, Tree);
+
+        var _this = _possibleConstructorReturn(this, (Tree.__proto__ || Object.getPrototypeOf(Tree)).call(this, props));
+
+        _this._onNodeSelect = function (node, level) {
+            var nodes = _this.state.nodes;
+
+
+            node.isOpen = !node.isOpen;
+            node.level = level;
+
+            _this.setState({ nodes: nodes });
+        };
+
+        _this._onNodeCheck = function (node, parent, isSubChild) {
+            var nodes = _this.state.nodes;
+
+
+            _this._checkedChildNode(node, !node.isCheck, isSubChild);
+            _this._checkedParentNode(parent, node.isCheck);
+
+            _this.props.setSelectedFuncs(_this.state.selectedFunc);
+
+            _this.setState({ nodes: nodes });
+        };
+
+        _this._onRadioCheck = function (parent, node) {
+            var nodes = _this.state.nodes;
+
+
+            _this._checkRadio(parent, node);
+            _this._checkedParentNode(parent, true);
+
+            _this.props.setSelectedFuncs(_this.state.selectedFunc);
+
+            _this.setState({ nodes: nodes });
+        };
+
+        _this.state = {
+            nodes: _this._prepairListNode(JSON.parse(props.nodes)),
+            selectedFunc: _this.props.selectedNode
+        };
+        return _this;
+    }
+
+    _createClass(Tree, [{
+        key: '_getChildNodes',
+        value: function _getChildNodes(node) {
+            if (!node.Settings) {
+                if (!node.FunctionKeys) {
+                    if (!node.SubFunctionKeys) {
+                        return [];
+                    }
+                    return node.SubFunctionKeys;
+                }
+                return node.FunctionKeys;
+            }
+            return node.Settings;
+        }
+    }, {
+        key: '_getParentNode',
+        value: function _getParentNode(level) {
+            var parentNodeLevel = level.splice(0, level.length - 1);
+            var parentNodeIndex = parentNodeLevel[parentNodeLevel.length - 1];
+
+            return this._getNodeInState(parentNodeIndex, parentNodeLevel);
+        }
+    }, {
+        key: '_getNodeInState',
+        value: function _getNodeInState(index, level) {
+            var nodes = this.state.nodes;
+
+            var node = [];
+
+            if (level.length == 1) {
+                return nodes[index];
+            }
+
+            if (level.length == 2) {
+                return nodes[level[0]].Settings[index];
+            }
+
+            if (level.length == 3) {
+                node = nodes[level[0]].Settings[level[1]];
+            }
+
+            if (level.length == 4) {
+                node = nodes[level[0]].Settings[level[1]].FunctionKeys[level[2]];
+            }
+
+            if (level.length == 5) {
+                node = nodes[level[0]].Settings[level[1]].FunctionKeys[level[2]].FunctionKeys[level[3]];
+            }
+
+            if (node.FunctionKeys) {
+                node = node.FunctionKeys[index];
+            } else if (node.SubFunctionKeys) {
+                node = node.SubFunctionKeys[index];
+            }
+
+            return node;
+        }
+    }, {
+        key: '_addNodeIntoSelectedFunc',
+        value: function _addNodeIntoSelectedFunc(node, isSubChild) {
+            var selectedFunc = this.state.selectedFunc;
+
+
+            if (node.FunctionKey != null && !isSubChild) {
+                var result = selectedFunc.find(function (n) {
+                    return n.FunctionKey === node.FunctionKey;
+                });
+                if (node.isCheck === true) {
+                    if (result == null) {
+                        selectedFunc.push(node);
+                    }
+                } else if (result != null) {
+                    selectedFunc.splice(selectedFunc.indexOf(result), 1);
+                }
+            }
+
+            this.setState({ selectedFunc: selectedFunc });
+        }
+    }, {
+        key: '_checkRadio',
+        value: function _checkRadio(parent, node) {
+            var nodes = this.state.nodes;
+
+            var children = this._getChildNodes(parent);
+
+            node.isCheck = true;
+
+            children.forEach(function (child) {
+                if (child.FunctionKey != node.FunctionKey) {
+                    child.isCheck = false;
+                }
+            });
+
+            this.setState({ nodes: nodes });
+        }
+    }, {
+        key: '_checkedParentNode',
+        value: function _checkedParentNode(parent, checked) {
+            if (parent) {
+                parent.isCheck = checked;
+
+                this._addNodeIntoSelectedFunc(parent, false);
+
+                var parentNode = this._getParentNode(parent.level);
+                if (parentNode.length != 0) {
+                    var flag = false;
+
+                    this._getChildNodes(parentNode).forEach(function (child) {
+                        if (child.isCheck === true) {
+                            flag = true;
+                        }
+                    });
+
+                    this._checkedParentNode(parentNode, flag);
+                }
+            }
+        }
+    }, {
+        key: '_checkedChildNode',
+        value: function _checkedChildNode(node, checked, isSubChild) {
+            var _this2 = this;
+
+            node.isCheck = checked;
+
+            this._addNodeIntoSelectedFunc(node, isSubChild);
+
+            var children = this._getChildNodes(node);
+            if (children.length != 0) {
+                if (node.InputBoxType === "radio" && checked == true) {
+                    this._checkedChildNode(children[0], node.isCheck, true);
+                } else {
+                    children.forEach(function (child) {
+                        var hasSubChild = node.SubFunctionKeys != null;
+                        _this2._checkedChildNode(child, node.isCheck, hasSubChild);
+                    });
+                }
+            }
+        }
+    }, {
+        key: '_prepairListNode',
+        value: function _prepairListNode(nodes) {
+            var _this3 = this;
+
+            nodes.map(function (node) {
+                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
+            });
+
+            return nodes;
+        }
+    }, {
+        key: '_checkedNodeInStateIfExistInSelectedNode',
+        value: function _checkedNodeInStateIfExistInSelectedNode(node, parent) {
+            var _this4 = this;
+
+            var selectedNode = this.props.selectedNode;
+
+            var children = this._getChildNodes(node);
+
+            selectedNode.map(function (n) {
+                if (n.FunctionKey === node.FunctionKey) {
+                    node.isCheck = true;
+                    parent.isCheck = true;
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    _this4._checkedNodeInStateIfExistInSelectedNode(child, node);
+                });
+            }
+        }
+    }, {
+        key: '_openNodeSelected',
+        value: function _openNodeSelected() {
+            var _props = this.props,
+                index = _props.index,
+                node = _props.node,
+                level = _props.level,
+                onNodeSelect = _props.onNodeSelect;
+
+
+            if (node.isCheck === true) {
+                onNodeSelect(index, level);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this5 = this;
+
+            var nodes = this.state.nodes;
+
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                nodes.map(function (node, i) {
+                    return _react2.default.createElement(_TreeNode2.default, {
+                        key: i,
+                        level: JSON.parse("[" + i + "]"),
+                        node: node,
+                        parent: null,
+                        isDisable: _this5.props.isDisable,
+                        isSubChild: false,
+                        getChildNodes: _this5._getChildNodes,
+                        onNodeSelect: _this5._onNodeSelect,
+                        onNodeCheck: _this5._onNodeCheck,
+                        onRadioCheck: _this5._onRadioCheck
+                    });
+                })
+            );
+        }
+    }]);
+
+    return Tree;
+}(_react.Component);
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs }, dispatch);
+}
+function mapStateToProps(state) {
+    var selectedFunc = state.selectedFunc;
+
+    return { selectedFunc: selectedFunc };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Tree);
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TreeNode = function (_Component) {
+    _inherits(TreeNode, _Component);
+
+    function TreeNode(props) {
+        _classCallCheck(this, TreeNode);
+
+        var _this = _possibleConstructorReturn(this, (TreeNode.__proto__ || Object.getPrototypeOf(TreeNode)).call(this, props));
+
+        _this.getNodeLabel = function (node) {
+            return node.DisplayKey;
+        };
+
+        return _this;
+    }
+
+    _createClass(TreeNode, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                node = _props.node,
+                parent = _props.parent,
+                getChildNodes = _props.getChildNodes,
+                level = _props.level,
+                onNodeSelect = _props.onNodeSelect,
+                onNodeCheck = _props.onNodeCheck,
+                onRadioCheck = _props.onRadioCheck,
+                isSubChild = _props.isSubChild,
+                isDisable = _props.isDisable;
+
+
+            return _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { level: level, className: "node", style: { marginLeft: (level.length - 1) * 20 } },
+                    getChildNodes(node).length > 0 ? node.isOpen == true ? _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-chevron-down', onClick: function onClick() {
+                                return onNodeSelect(node, level);
+                            } })
+                    ) : _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('i', { className: 'glyphicon glyphicon-chevron-right', onClick: function onClick() {
+                                return onNodeSelect(node, level);
+                            } })
+                    ) : _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('i', { className: 'glyphicon' })
+                    ),
+                    parent && parent.InputBoxType === "radio" ? _react2.default.createElement(
+                        'span',
+                        null,
+                        _react2.default.createElement('input', { type: 'radio',
+                            disabled: isDisable,
+                            checked: node.isCheck == true ? true : false,
+                            onChange: function onChange() {
+                                return onRadioCheck(parent, node);
+                            } })
+                    ) : _react2.default.createElement(
+                        'span',
+                        null,
+                        _react2.default.createElement('input', { type: 'checkbox',
+                            disabled: isDisable,
+                            checked: node.isCheck == true ? true : false,
+                            onChange: function onChange() {
+                                return onNodeCheck(node, parent, isSubChild);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        { role: 'button', onClick: function onClick() {
+                                return onNodeSelect(node, level);
+                            } },
+                        this.getNodeLabel(node)
+                    )
+                ),
+                node.isOpen == true && !isDisable && getChildNodes(node).map(function (childNode, i) {
+                    return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
+                        key: i,
+                        parent: node,
+                        isSubChild: node && node.SubFunctionKeys != null,
+                        node: childNode,
+                        level: level.concat(i)
+                    }));
+                })
+            );
+        }
+    }]);
+
+    return TreeNode;
+}(_react.Component);
+
+exports.default = TreeNode;
 
 /***/ })
 ],[183]);
