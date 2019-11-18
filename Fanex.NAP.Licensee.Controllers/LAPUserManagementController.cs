@@ -129,6 +129,7 @@
                 var originalPass = SecurityHelper.GeneratePass(extendedTime);
                 criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
                 criteria.UpdateUserLoginInfo();
+                criteria.UpdateFunctionKeySelected();
 
                 result = _userService.UpdateUserPassword(criteria);
                 if (result.IsSuccess)

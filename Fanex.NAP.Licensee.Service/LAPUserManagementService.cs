@@ -29,7 +29,7 @@
                 criteria.SiteName,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
-                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions)
+                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded)
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
@@ -50,7 +50,11 @@
             var parameter = new
             {
                 userInfo.UserSEQ,
-                criteria.UserPWD
+                criteria.SiteName,
+                criteria.UserPWD,
+                FuncPermissionsRemoved = BuildFunctionXMLParameter(criteria.FuncPermissionsRemoved),
+                FuncPermissionsAdded = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded),
+                criteria.OldUserGroupSEQ
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
@@ -116,7 +120,7 @@
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
+            result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
             result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.SiteName}\" />");
@@ -158,6 +162,8 @@
             result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
             result.Append(isBackgroundJob ? updatingByBackgroundJobLogContent : UpdatingByUserLogContent(value));
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
+            result.Append($"<RemoveFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsRemoved)}\" />");
+            result.Append($"<AddNewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
             result.Append("</Action>");
 
             return result.ToString();

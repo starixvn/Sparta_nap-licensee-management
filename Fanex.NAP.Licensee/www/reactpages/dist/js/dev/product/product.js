@@ -8819,7 +8819,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setCheckedList = exports.toggleLoader = exports.setParams = undefined;
 
-var _types = __webpack_require__(151);
+var _types = __webpack_require__(153);
 
 var _loaderAction = __webpack_require__(86);
 
@@ -8882,7 +8882,9 @@ exports.setCheckedList = setCheckedList;
 /* 148 */,
 /* 149 */,
 /* 150 */,
-/* 151 */
+/* 151 */,
+/* 152 */,
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8898,8 +8900,6 @@ var GET_PRODUCT_LIST = exports.GET_PRODUCT_LIST = "GET_PRODUCT_LIST";
 var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 
 /***/ }),
-/* 152 */,
-/* 153 */,
 /* 154 */,
 /* 155 */,
 /* 156 */,
@@ -8974,7 +8974,9 @@ var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 /* 225 */,
 /* 226 */,
 /* 227 */,
-/* 228 */
+/* 228 */,
+/* 229 */,
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8994,13 +8996,13 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(229);
+var _AppContainer = __webpack_require__(231);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(4);
 
-var _reducer = __webpack_require__(233);
+var _reducer = __webpack_require__(235);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -9047,7 +9049,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9072,15 +9074,15 @@ var _Loader = __webpack_require__(52);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(230);
+var _FormFilter = __webpack_require__(232);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(231);
+var _DataGrid = __webpack_require__(233);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
-var _Button = __webpack_require__(232);
+var _Button = __webpack_require__(234);
 
 var _Button2 = _interopRequireDefault(_Button);
 
@@ -9127,7 +9129,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9286,7 +9288,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9526,7 +9528,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9867,7 +9869,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Button);
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9885,7 +9887,7 @@ var _createReducer4 = __webpack_require__(27);
 
 var _createReducer5 = _interopRequireDefault(_createReducer4);
 
-var _types = __webpack_require__(151);
+var _types = __webpack_require__(153);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9906,5 +9908,5 @@ var checkedList = (0, _createReducer5.default)({}, _defineProperty({}, _types.SE
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading, productList: productList, checkedList: checkedList });
 
 /***/ })
-],[228]);
+],[230]);
 //# sourceMappingURL=product.js.map

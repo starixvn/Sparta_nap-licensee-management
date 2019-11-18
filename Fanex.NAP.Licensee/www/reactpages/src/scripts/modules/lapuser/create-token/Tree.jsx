@@ -139,7 +139,8 @@ class Tree extends Component {
 
             this._addNodeIntoSelectedFunc(parent, false);
             
-            const parentNode = this._getParentNode(parent.level);
+            const parentLevel = [...parent.level];
+            const parentNode = this._getParentNode(parentLevel);
             if (parentNode.length != 0) {
                 let flag = false;
 
@@ -179,6 +180,10 @@ class Tree extends Component {
         })
 
         return nodes;
+    }
+
+    componentDidMount(){
+        this.props.setSelectedFuncs(this.props.selectedNode)
     }
 
     _checkedNodeInStateIfExistInSelectedNode(node, parent) {

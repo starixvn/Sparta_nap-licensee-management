@@ -18,6 +18,10 @@
 
         public string UserLoginName { get; set; }
 
-        public IEnumerable<FunctionPermissionCriteria> FuncPermissions { get; set; }
+        public IEnumerable<FunctionPermissionCriteria> FuncPermissionsRemoved { get; set; }
+
+        public IEnumerable<FunctionPermissionCriteria> FuncPermissionsAdded { get; set; }
+
+        public int OldUserGroupSEQ { get; set; }
     }
 }

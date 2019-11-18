@@ -1,12 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Service.Helpers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Hosting;
     using Model.Criteria.LAPUser;
-    using Model.DTO;
     using Model.Enumerations;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public static class LAPUserHelper
@@ -28,9 +25,9 @@
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
             var functionList = JArray.Parse(jsonStr).SelectTokens("..FunctionKey");
 
-            if (criteria.FuncPermissions != null)
+            if (criteria.FuncPermissionsAdded != null)
             {
-                foreach (var item in criteria.FuncPermissions)
+                foreach (var item in criteria.FuncPermissionsAdded)
                 {
                     if (item.SystemType == null)
                     {

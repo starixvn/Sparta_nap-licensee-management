@@ -5534,7 +5534,9 @@ exports.default = ConfirmBox;
 /* 139 */,
 /* 140 */,
 /* 141 */,
-/* 142 */
+/* 142 */,
+/* 143 */,
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5545,7 +5547,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createAccount = exports.setSelectedFuncs = undefined;
 
-var _actionTypes = __webpack_require__(143);
+var _actionTypes = __webpack_require__(145);
 
 var _site = __webpack_require__(9);
 
@@ -5570,7 +5572,7 @@ exports.setSelectedFuncs = setSelectedFuncs;
 exports.createAccount = createAccount;
 
 /***/ }),
-/* 143 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5582,8 +5584,6 @@ Object.defineProperty(exports, "__esModule", {
 var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
 
 /***/ }),
-/* 144 */,
-/* 145 */,
 /* 146 */,
 /* 147 */,
 /* 148 */,
@@ -5626,7 +5626,9 @@ var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
 /* 185 */,
 /* 186 */,
 /* 187 */,
-/* 188 */
+/* 188 */,
+/* 189 */,
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5640,7 +5642,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _reactRedux = __webpack_require__(4);
 
-var _Form = __webpack_require__(189);
+var _Form = __webpack_require__(191);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -5652,7 +5654,7 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reducer = __webpack_require__(192);
+var _reducer = __webpack_require__(194);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -5708,7 +5710,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5724,7 +5726,7 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(142);
+var _action = __webpack_require__(144);
 
 var _ConfirmBox = __webpack_require__(91);
 
@@ -5742,7 +5744,7 @@ var _NumericInput = __webpack_require__(54);
 
 var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
-var _Tree = __webpack_require__(190);
+var _Tree = __webpack_require__(192);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
@@ -5816,14 +5818,14 @@ var Form = function (_Component) {
 
             var selected = this.props.selectedFunc;
 
-            selected.forEach(function (func, i) {
-                if (selected[i].SubFunctionKeys != null) {
-                    if (Array.isArray(selected[i].SubFunctionKeys)) {
-                        selected[i].SubFunctionKeys = selected[i].SubFunctionKeys.filter(function (x) {
+            selected.forEach(function (func) {
+                if (func.SubFunctionKeys != null) {
+                    if (Array.isArray(func.SubFunctionKeys)) {
+                        func.SubFunctionKeys = func.SubFunctionKeys.filter(function (x) {
                             return x.isCheck === true;
                         });
-                        selected[i].SubFunctionKeys = _this2._getListKeyOfSubFunctionKey(selected[i].SubFunctionKeys);
-                        selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
+                        func.SubFunctionKeys = _this2._getListKeyOfSubFunctionKey(func.SubFunctionKeys);
+                        func.SubFunctionKeys = JSON.stringify(func.SubFunctionKeys);
                     }
                 }
             });
@@ -6049,7 +6051,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6065,17 +6067,19 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(142);
+var _action = __webpack_require__(144);
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TreeNode = __webpack_require__(191);
+var _TreeNode = __webpack_require__(193);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6234,7 +6238,8 @@ var Tree = function (_Component) {
                 parent.isCheck = checked;
                 this._addNodeIntoSelectedFunc(parent, false);
 
-                var parentNode = this._getParentNode(parent.level);
+                var parentLevel = [].concat(_toConsumableArray(parent.level));
+                var parentNode = this._getParentNode(parentLevel);
                 if (parentNode.length != 0) {
                     var flag = false;
                     this._getChildNodes(parentNode).forEach(function (child) {
@@ -6311,7 +6316,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Tree);
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6438,7 +6443,7 @@ var TreeNode = function (_Component) {
 exports.default = TreeNode;
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6456,7 +6461,7 @@ var _createReducer2 = __webpack_require__(27);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _actionTypes = __webpack_require__(143);
+var _actionTypes = __webpack_require__(145);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6469,5 +6474,5 @@ var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionT
 exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[188]);
+],[190]);
 //# sourceMappingURL=createUser.js.map

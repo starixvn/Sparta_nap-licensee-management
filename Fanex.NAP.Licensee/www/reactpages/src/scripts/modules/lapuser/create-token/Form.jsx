@@ -11,6 +11,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
 
+        const { timeRemaining, oldFuncPer } = this.props;
         this.state = {
             timeSpan: '',
             extraTime: 0.25,
@@ -20,20 +21,96 @@ class Form extends Component {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: this.props.timeRemaining,
-            isCheckGroup: true
-        };
+            expriedIn: timeRemaining,
+            isCheckGroup: true,
+            oldFunctionPermission: [...oldFuncPer.FuncPermission]
+        }
     }
 
     _getParams() {
+        const { oldFuncPer } = this.props;
         return {
             criteria: {
                 SiteName: this.props.user.SiteName,
                 UserID: this.props.user.UserID,
                 RequestBy: this.state.requestBy,
-                RedmineID: this.state.redmineID
+                RedmineID: this.state.redmineID,
+                FuncPermissionsRemoved: this._getRemoveSelectedFuncs(),
+                FuncPermissionsAdded: this._getNewSelectedFuncs(),
+                OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
             }
         };
+    }
+
+    _getListKeyOfSubFunctionKey(subFunctionKeys) {
+        let listFuncKeys = [];
+
+        subFunctionKeys.forEach((sub) => {
+            const { FunctionKey } = sub;
+
+            listFuncKeys.push(FunctionKey);
+        })
+
+        return listFuncKeys;
+    }
+
+    _getSubFunction(funcs) {
+        funcs.map(func => {
+            if (func.SubFunctionKeys != null) {
+                if (Array.isArray(func.SubFunctionKeys)) {
+                    func.SubFunctionKeys = func.SubFunctionKeys.filter(x => x.isCheck === true);
+                    func.SubFunctionKeys = this._getListKeyOfSubFunctionKey(func.SubFunctionKeys);
+                    func.SubFunctionKeys = JSON.stringify(func.SubFunctionKeys);
+                }
+            }
+        })
+
+        return funcs;
+    }
+
+    _getRemoveSelectedFuncs(){
+        const { oldFunctionPermission } = this.state;
+        const newFuncPermissions = this.props.selectedFunc;
+        let funcsRemoved = [];
+        let flag = false;
+        
+        oldFunctionPermission.forEach(oldFunc => {
+            newFuncPermissions.forEach(newFunc => {
+                if(oldFunc.FunctionKey === newFunc.FunctionKey){
+                    flag = true;
+                }
+            })
+
+            if(flag == false){
+                funcsRemoved.push(oldFunc);           
+            }
+
+            flag = false;
+        })
+
+        return this._getSubFunction(funcsRemoved);
+    }
+
+    _getNewSelectedFuncs(){
+        const { oldFunctionPermission } = this.state;
+        const newFuncPermissions = this.props.selectedFunc;
+        let funcsAdded = [];
+        let flag = true;
+        
+        newFuncPermissions.map(newFunc => {
+            oldFunctionPermission.map(oldFunc => {
+                if(newFunc.FunctionKey === oldFunc.FunctionKey){
+                    flag = false;
+                }
+            })
+            if(flag === true){
+                funcsAdded.push(newFunc);
+            }
+
+            flag = true;
+        })
+
+        return this._getSubFunction(funcsAdded);
     }
 
     _onGenerate = () => {
@@ -216,7 +293,7 @@ class Form extends Component {
                                             <div className='col-lg-9 col-sm-9'>
                                                 <div className="form-group">
                                                     <label className="checkbox-inline">
-                                                        <input type="checkbox" checked={isCheckGroup} onChange={() => this.setState({ isCheckGroup: false })} />
+                                                        <input type="checkbox" checked={isCheckGroup} onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
                                                         {oldFuncPer.UserGroup.GroupName}
                                                     </label>
                                                 </div>
@@ -238,7 +315,7 @@ class Form extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setSelectedFuncs, createToken, toggleLoader }, dispatch);
+    return bindActionCreators({ createToken, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     const { selectedFunc, isLoading } = state;

@@ -138,7 +138,8 @@ class Tree extends Component {
             parent.isCheck = checked;
             this._addNodeIntoSelectedFunc(parent, false);
 
-            const parentNode = this._getParentNode(parent.level);
+            const parentLevel = [...parent.level];
+            const parentNode = this._getParentNode(parentLevel);
             if (parentNode.length != 0) {
                 let flag = false;
                 this._getChildNodes(parentNode).forEach(child => {

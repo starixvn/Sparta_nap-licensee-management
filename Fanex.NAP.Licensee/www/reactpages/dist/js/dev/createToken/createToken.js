@@ -5398,8 +5398,58 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 /* 139 */,
 /* 140 */,
 /* 141 */,
-/* 142 */,
-/* 143 */,
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.toggleLoader = exports.createToken = exports.setSelectedFuncs = undefined;
+
+var _loaderAction = __webpack_require__(86);
+
+var _site = __webpack_require__(9);
+
+var _site2 = _interopRequireDefault(_site);
+
+var _actionTypes = __webpack_require__(143);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function setSelectedFuncs(data) {
+    return {
+        type: _actionTypes.SET_SELECTED_FUNCS,
+        data: data
+    };
+}
+
+function createToken(param) {
+    return function () {
+        return _site2.default.fetchData(param, 'LAPUserManagement/CreateToken');
+    };
+}
+
+exports.setSelectedFuncs = setSelectedFuncs;
+exports.createToken = createToken;
+exports.toggleLoader = _loaderAction.toggleLoader;
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
+var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
+
+/***/ }),
 /* 144 */,
 /* 145 */,
 /* 146 */,
@@ -5439,7 +5489,9 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 /* 180 */,
 /* 181 */,
 /* 182 */,
-/* 183 */
+/* 183 */,
+/* 184 */,
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5453,7 +5505,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _reactRedux = __webpack_require__(4);
 
-var _Form = __webpack_require__(184);
+var _Form = __webpack_require__(186);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -5465,7 +5517,7 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reducer = __webpack_require__(186);
+var _reducer = __webpack_require__(189);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -5520,7 +5572,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5536,7 +5588,7 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(185);
+var _action = __webpack_require__(142);
 
 var _Loader = __webpack_require__(52);
 
@@ -5554,13 +5606,15 @@ var _NumericInput = __webpack_require__(54);
 
 var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
-var _Tree = __webpack_require__(274);
+var _Tree = __webpack_require__(187);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5615,6 +5669,10 @@ var Form = function (_Component) {
             }, 500);
         };
 
+        var _this$props = _this.props,
+            timeRemaining = _this$props.timeRemaining,
+            oldFuncPer = _this$props.oldFuncPer;
+
         _this.state = {
             timeSpan: '',
             extraTime: 0.25,
@@ -5624,8 +5682,9 @@ var Form = function (_Component) {
             isShowMessage: false,
             requestBy: '',
             redmineID: '',
-            expriedIn: _this.props.timeRemaining,
-            isCheckGroup: true
+            expriedIn: timeRemaining,
+            isCheckGroup: true,
+            oldFunctionPermission: [].concat(_toConsumableArray(oldFuncPer.FuncPermission))
         };
         return _this;
     }
@@ -5633,19 +5692,106 @@ var Form = function (_Component) {
     _createClass(Form, [{
         key: '_getParams',
         value: function _getParams() {
+            var oldFuncPer = this.props.oldFuncPer;
+
             return {
                 criteria: {
                     SiteName: this.props.user.SiteName,
                     UserID: this.props.user.UserID,
                     RequestBy: this.state.requestBy,
-                    RedmineID: this.state.redmineID
+                    RedmineID: this.state.redmineID,
+                    FuncPermissionsRemoved: this._getRemoveSelectedFuncs(),
+                    FuncPermissionsAdded: this._getNewSelectedFuncs(),
+                    OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
                 }
             };
         }
     }, {
+        key: '_getListKeyOfSubFunctionKey',
+        value: function _getListKeyOfSubFunctionKey(subFunctionKeys) {
+            var listFuncKeys = [];
+
+            subFunctionKeys.forEach(function (sub) {
+                var FunctionKey = sub.FunctionKey;
+
+
+                listFuncKeys.push(FunctionKey);
+            });
+
+            return listFuncKeys;
+        }
+    }, {
+        key: '_getSubFunction',
+        value: function _getSubFunction(funcs) {
+            var _this2 = this;
+
+            funcs.map(function (func) {
+                if (func.SubFunctionKeys != null) {
+                    if (Array.isArray(func.SubFunctionKeys)) {
+                        func.SubFunctionKeys = func.SubFunctionKeys.filter(function (x) {
+                            return x.isCheck === true;
+                        });
+                        func.SubFunctionKeys = _this2._getListKeyOfSubFunctionKey(func.SubFunctionKeys);
+                        func.SubFunctionKeys = JSON.stringify(func.SubFunctionKeys);
+                    }
+                }
+            });
+
+            return funcs;
+        }
+    }, {
+        key: '_getRemoveSelectedFuncs',
+        value: function _getRemoveSelectedFuncs() {
+            var oldFunctionPermission = this.state.oldFunctionPermission;
+
+            var newFuncPermissions = this.props.selectedFunc;
+            var funcsRemoved = [];
+            var flag = false;
+
+            oldFunctionPermission.forEach(function (oldFunc) {
+                newFuncPermissions.forEach(function (newFunc) {
+                    if (oldFunc.FunctionKey === newFunc.FunctionKey) {
+                        flag = true;
+                    }
+                });
+
+                if (flag == false) {
+                    funcsRemoved.push(oldFunc);
+                }
+
+                flag = false;
+            });
+
+            return this._getSubFunction(funcsRemoved);
+        }
+    }, {
+        key: '_getNewSelectedFuncs',
+        value: function _getNewSelectedFuncs() {
+            var oldFunctionPermission = this.state.oldFunctionPermission;
+
+            var newFuncPermissions = this.props.selectedFunc;
+            var funcsAdded = [];
+            var flag = true;
+
+            newFuncPermissions.map(function (newFunc) {
+                oldFunctionPermission.map(function (oldFunc) {
+                    if (newFunc.FunctionKey === oldFunc.FunctionKey) {
+                        flag = false;
+                    }
+                });
+                if (flag === true) {
+                    funcsAdded.push(newFunc);
+                }
+
+                flag = true;
+            });
+
+            return this._getSubFunction(funcsAdded);
+        }
+    }, {
         key: '_renderCardInput',
         value: function _renderCardInput(label, stateName, disabled) {
-            var _this2 = this;
+            var _this3 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -5660,7 +5806,7 @@ var Form = function (_Component) {
                     { className: 'col-lg-9 col-sm-9' },
                     _react2.default.createElement('input', { type: 'text', className: 'full-width ' + (this.state[stateName] || disabled ? '' : 'has-error'), value: this.state[stateName],
                         disabled: disabled, onChange: function onChange(e) {
-                            return _this2.setState(_defineProperty({}, stateName, e.target.value));
+                            return _this3.setState(_defineProperty({}, stateName, e.target.value));
                         } })
                 )
             );
@@ -5668,11 +5814,11 @@ var Form = function (_Component) {
     }, {
         key: '_setTimeControl',
         value: function _setTimeControl() {
-            var _this3 = this;
+            var _this4 = this;
 
             if (!this.timerID) {
                 this.timerID = setInterval(function () {
-                    return _this3._tick();
+                    return _this4._tick();
                 }, 1000);
             }
         }
@@ -5733,7 +5879,7 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
             var _state = this.state,
                 isCopy = _state.isCopy,
@@ -5808,7 +5954,7 @@ var Form = function (_Component) {
                                                     _react2.default.createElement(_NumericInput2.default, { value: redmineID,
                                                         className: 'full-width ' + (redmineID ? '' : 'has-error'),
                                                         onChange: function onChange(value) {
-                                                            return _this4.setState({ redmineID: value });
+                                                            return _this5.setState({ redmineID: value });
                                                         } })
                                                 )
                                             ),
@@ -5842,7 +5988,7 @@ var Form = function (_Component) {
                                                         'div',
                                                         { className: 'group-input group-prepend' },
                                                         _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
-                                                                return _this4.txtToken = txtToken;
+                                                                return _this5.txtToken = txtToken;
                                                             } }),
                                                         isCopy && this._renderTootlip('Copied', 'bottom'),
                                                         _react2.default.createElement(
@@ -5912,8 +6058,8 @@ var Form = function (_Component) {
                                                 _react2.default.createElement(
                                                     'label',
                                                     { className: 'checkbox-inline' },
-                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup, onChange: function onChange() {
-                                                            return _this4.setState({ isCheckGroup: false });
+                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup, onChange: function onChange(e) {
+                                                            return _this5.setState({ isCheckGroup: e.target.checked });
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
                                                 )
@@ -5943,7 +6089,7 @@ var Form = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     var selectedFunc = state.selectedFunc,
@@ -5955,176 +6101,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
 
 /***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.toggleLoader = exports.createToken = exports.setSelectedFuncs = undefined;
-
-var _loaderAction = __webpack_require__(86);
-
-var _site = __webpack_require__(9);
-
-var _site2 = _interopRequireDefault(_site);
-
-var _actionTypes = __webpack_require__(187);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function setSelectedFuncs(data) {
-    return {
-        type: _actionTypes.SET_SELECTED_FUNCS,
-        data: data
-    };
-}
-
-function createToken(param) {
-    return function () {
-        return _site2.default.fetchData(param, 'LAPUserManagement/CreateToken');
-    };
-}
-
-exports.setSelectedFuncs = setSelectedFuncs;
-exports.createToken = createToken;
-exports.toggleLoader = _loaderAction.toggleLoader;
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _redux = __webpack_require__(2);
-
-var _loaderReducer = __webpack_require__(83);
-
-var _actionTypes = __webpack_require__(187);
-
-var _createReducer2 = __webpack_require__(27);
-
-var _createReducer3 = _interopRequireDefault(_createReducer2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_SELECTED_FUNCS, function (state, action) {
-    return action.data;
-}));
-
-exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
-
-/***/ }),
 /* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
-var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
-
-/***/ }),
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6140,17 +6117,19 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(185);
+var _action = __webpack_require__(142);
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TreeNode = __webpack_require__(275);
+var _TreeNode = __webpack_require__(188);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6310,7 +6289,8 @@ var Tree = function (_Component) {
 
                 this._addNodeIntoSelectedFunc(parent, false);
 
-                var parentNode = this._getParentNode(parent.level);
+                var parentLevel = [].concat(_toConsumableArray(parent.level));
+                var parentNode = this._getParentNode(parentLevel);
                 if (parentNode.length != 0) {
                     var flag = false;
 
@@ -6355,6 +6335,11 @@ var Tree = function (_Component) {
             });
 
             return nodes;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.setSelectedFuncs(this.props.selectedNode);
         }
     }, {
         key: '_checkedNodeInStateIfExistInSelectedNode',
@@ -6436,7 +6421,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Tree);
 
 /***/ }),
-/* 275 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6562,6 +6547,37 @@ var TreeNode = function (_Component) {
 
 exports.default = TreeNode;
 
+/***/ }),
+/* 189 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _redux = __webpack_require__(2);
+
+var _loaderReducer = __webpack_require__(83);
+
+var _actionTypes = __webpack_require__(143);
+
+var _createReducer2 = __webpack_require__(27);
+
+var _createReducer3 = _interopRequireDefault(_createReducer2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_SELECTED_FUNCS, function (state, action) {
+    return action.data;
+}));
+
+exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
+
 /***/ })
-],[183]);
+],[185]);
 //# sourceMappingURL=createToken.js.map

@@ -1,11 +1,11 @@
 webpackJsonp([28],{
 
-/***/ 264:
+/***/ 266:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[264]);
+},[266]);
 //# sourceMappingURL=createtoken.js.map

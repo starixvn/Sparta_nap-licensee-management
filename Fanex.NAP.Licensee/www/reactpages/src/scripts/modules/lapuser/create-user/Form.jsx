@@ -49,12 +49,12 @@ class Form extends Component {
     _getSelectedFunc() {
         const selected = this.props.selectedFunc;
 
-        selected.forEach((func, i) => {
-            if (selected[i].SubFunctionKeys != null) {
-                if (Array.isArray(selected[i].SubFunctionKeys)) {
-                    selected[i].SubFunctionKeys = selected[i].SubFunctionKeys.filter(x => x.isCheck === true);
-                    selected[i].SubFunctionKeys = this._getListKeyOfSubFunctionKey(selected[i].SubFunctionKeys);
-                    selected[i].SubFunctionKeys = JSON.stringify(selected[i].SubFunctionKeys);
+        selected.forEach(func => {
+            if (func.SubFunctionKeys != null) {
+                if (Array.isArray(func.SubFunctionKeys)) {
+                    func.SubFunctionKeys = func.SubFunctionKeys.filter(x => x.isCheck === true);
+                    func.SubFunctionKeys = this._getListKeyOfSubFunctionKey(func.SubFunctionKeys);
+                    func.SubFunctionKeys = JSON.stringify(func.SubFunctionKeys);
                 }
             }
         })
