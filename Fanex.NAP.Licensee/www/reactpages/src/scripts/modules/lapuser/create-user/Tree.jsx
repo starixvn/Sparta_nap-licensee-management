@@ -9,7 +9,7 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: JSON.parse(props.nodes),
+            nodes: props.nodes,
             selectedFunc: props.selectedFunc
         };
     }
@@ -29,8 +29,6 @@ class Tree extends Component {
         this._checkedChildNode(node, !node.isCheck, isSubChild);
         this._checkedParentNode(parent, node.isCheck);
 
-        this.props.setSelectedFuncs(this.state.selectedFunc);
-
         this.setState({ nodes });
     }
 
@@ -39,8 +37,6 @@ class Tree extends Component {
 
         this._checkRadio(parent, node);
         this._checkedParentNode(parent, true);
-
-        this.props.setSelectedFuncs(this.state.selectedFunc);
 
         this.setState({ nodes });
     }
@@ -101,7 +97,7 @@ class Tree extends Component {
     }
 
     _addNodeIntoSelectedFunc(node, isSubChild) {
-        const { selectedFunc } = this.state;
+        const { selectedFunc } = this.props;
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
@@ -115,7 +111,7 @@ class Tree extends Component {
             }
         }
 
-        this.setState({ selectedFunc });
+        this.props.setSelectedFuncs(selectedFunc);
     }
 
     _checkRadio(parent, node) {

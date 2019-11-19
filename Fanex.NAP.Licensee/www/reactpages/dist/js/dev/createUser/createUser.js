@@ -5778,8 +5778,7 @@ var Form = function (_Component) {
             isShowMessage: false,
             isDisableTree: false,
             requestBy: '',
-            redmineID: '',
-            functionOptions: _this.props.funcPer
+            redmineID: ''
         };
         return _this;
     }
@@ -5793,7 +5792,7 @@ var Form = function (_Component) {
                     UserID: this.props.userID,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID,
-                    FuncPermissions: this._getSelectedFunc()
+                    FuncPermissions: this._getSubFunction()
                 }
             };
         }
@@ -5805,20 +5804,19 @@ var Form = function (_Component) {
             subFunctionKeys.forEach(function (sub) {
                 var FunctionKey = sub.FunctionKey;
 
-
                 listFuncKeys.push(FunctionKey);
             });
 
             return listFuncKeys;
         }
     }, {
-        key: '_getSelectedFunc',
-        value: function _getSelectedFunc() {
+        key: '_getSubFunction',
+        value: function _getSubFunction() {
             var _this2 = this;
 
-            var selected = this.props.selectedFunc;
+            var funcs = JSON.parse(JSON.stringify(this.props.selectedFunc));
 
-            selected.forEach(function (func) {
+            funcs.map(function (func) {
                 if (func.SubFunctionKeys != null) {
                     if (Array.isArray(func.SubFunctionKeys)) {
                         func.SubFunctionKeys = func.SubFunctionKeys.filter(function (x) {
@@ -5830,7 +5828,7 @@ var Form = function (_Component) {
                 }
             });
 
-            return selected;
+            return funcs;
         }
     }, {
         key: '_renderInput',
@@ -5897,8 +5895,8 @@ var Form = function (_Component) {
                 isShowMessage = _state.isShowMessage,
                 isDisableTree = _state.isDisableTree,
                 requestBy = _state.requestBy,
-                redmineID = _state.redmineID,
-                functionOptions = _state.functionOptions;
+                redmineID = _state.redmineID;
+            var funcPer = this.props.funcPer;
 
 
             if (!this.props.isValid) {
@@ -6019,7 +6017,7 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: functionOptions, isDisable: isDisableTree })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: JSON.parse(funcPer), isDisable: isDisableTree })
                                 )
                             )
                         )
@@ -6112,8 +6110,6 @@ var Tree = function (_Component) {
             _this._checkedChildNode(node, !node.isCheck, isSubChild);
             _this._checkedParentNode(parent, node.isCheck);
 
-            _this.props.setSelectedFuncs(_this.state.selectedFunc);
-
             _this.setState({ nodes: nodes });
         };
 
@@ -6124,13 +6120,11 @@ var Tree = function (_Component) {
             _this._checkRadio(parent, node);
             _this._checkedParentNode(parent, true);
 
-            _this.props.setSelectedFuncs(_this.state.selectedFunc);
-
             _this.setState({ nodes: nodes });
         };
 
         _this.state = {
-            nodes: JSON.parse(props.nodes),
+            nodes: props.nodes,
             selectedFunc: props.selectedFunc
         };
         return _this;
@@ -6196,7 +6190,7 @@ var Tree = function (_Component) {
     }, {
         key: '_addNodeIntoSelectedFunc',
         value: function _addNodeIntoSelectedFunc(node, isSubChild) {
-            var selectedFunc = this.state.selectedFunc;
+            var selectedFunc = this.props.selectedFunc;
 
 
             if (node.FunctionKey != null && !isSubChild) {
@@ -6212,7 +6206,7 @@ var Tree = function (_Component) {
                 }
             }
 
-            this.setState({ selectedFunc: selectedFunc });
+            this.props.setSelectedFuncs(selectedFunc);
         }
     }, {
         key: '_checkRadio',
@@ -6424,7 +6418,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && !isDisable && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && isDisable == false && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

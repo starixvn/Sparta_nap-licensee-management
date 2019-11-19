@@ -5582,6 +5582,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _redux = __webpack_require__(2);
@@ -5614,8 +5616,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -5634,11 +5634,11 @@ var Form = function (_Component) {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
 
+            console.log(param);
             _this.props.createToken(param).then(function (response) {
-                if (response.data.IsSuccess) {
+                if (response.data.IsSuccess === true) {
                     _this.setState({
-                        isDisable: false,
-                        isShowMessage: true,
+                        isSuccess: true,
                         token: response.data.Data,
                         expriedIn: _this._convertHoursToSecond(_this.state.extraTime)
                     });
@@ -5678,13 +5678,12 @@ var Form = function (_Component) {
             extraTime: 0.25,
             token: '',
             isCopy: false,
-            isDisable: true,
-            isShowMessage: false,
+            isSuccess: false,
             requestBy: '',
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: [].concat(_toConsumableArray(oldFuncPer.FuncPermission))
+            oldFunctionPermission: oldFuncPer.FuncPermission
         };
         return _this;
     }
@@ -5700,11 +5699,27 @@ var Form = function (_Component) {
                     UserID: this.props.user.UserID,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID,
-                    FuncPermissionsRemoved: this._getRemoveSelectedFuncs(),
-                    FuncPermissionsAdded: this._getNewSelectedFuncs(),
+                    FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
+                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
                     OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
                 }
             };
+        }
+    }, {
+        key: '_convertListSubFuncsToNode',
+        value: function _convertListSubFuncsToNode(selectedFunc) {
+            selectedFunc.map(function (n) {
+                if (n.SubFunctionKeys && !Array.isArray(n.SubFunctionKeys)) {
+                    n.SubFunctionKeys = JSON.parse(n.SubFunctionKeys);
+                    n.SubFunctionKeys.map(function (subFunc, i) {
+                        n.SubFunctionKeys[i] = {
+                            FunctionKey: subFunc
+                        };
+                    });
+                }
+            });
+
+            return selectedFunc;
         }
     }, {
         key: '_getListKeyOfSubFunctionKey',
@@ -5713,7 +5728,6 @@ var Form = function (_Component) {
 
             subFunctionKeys.forEach(function (sub) {
                 var FunctionKey = sub.FunctionKey;
-
 
                 listFuncKeys.push(FunctionKey);
             });
@@ -5740,15 +5754,15 @@ var Form = function (_Component) {
             return funcs;
         }
     }, {
-        key: '_getRemoveSelectedFuncs',
-        value: function _getRemoveSelectedFuncs() {
+        key: '_getFuncsRemoved',
+        value: function _getFuncsRemoved() {
             var oldFunctionPermission = this.state.oldFunctionPermission;
-
             var newFuncPermissions = this.props.selectedFunc;
             var funcsRemoved = [];
             var flag = false;
 
             oldFunctionPermission.forEach(function (oldFunc) {
+                var node = _extends({}, oldFunc);
                 newFuncPermissions.forEach(function (newFunc) {
                     if (oldFunc.FunctionKey === newFunc.FunctionKey) {
                         flag = true;
@@ -5756,42 +5770,70 @@ var Form = function (_Component) {
                 });
 
                 if (flag == false) {
-                    funcsRemoved.push(oldFunc);
+                    funcsRemoved.push(node);
                 }
 
                 flag = false;
             });
 
-            return this._getSubFunction(funcsRemoved);
+            return funcsRemoved;
         }
     }, {
-        key: '_getNewSelectedFuncs',
-        value: function _getNewSelectedFuncs() {
-            var oldFunctionPermission = this.state.oldFunctionPermission;
+        key: '_getFuncsAdded',
+        value: function _getFuncsAdded() {
+            var _this3 = this;
 
+            var oldFunctionPermission = this.state.oldFunctionPermission;
             var newFuncPermissions = this.props.selectedFunc;
             var funcsAdded = [];
             var flag = true;
 
             newFuncPermissions.map(function (newFunc) {
+                var node = _extends({}, newFunc);
                 oldFunctionPermission.map(function (oldFunc) {
                     if (newFunc.FunctionKey === oldFunc.FunctionKey) {
-                        flag = false;
+                        flag = _this3._checkChangeSubFuncs(oldFunc, newFunc);
                     }
                 });
                 if (flag === true) {
-                    funcsAdded.push(newFunc);
+                    funcsAdded.push(node);
                 }
 
                 flag = true;
             });
 
-            return this._getSubFunction(funcsAdded);
+            return funcsAdded;
+        }
+    }, {
+        key: '_checkChangeSubFuncs',
+        value: function _checkChangeSubFuncs(oldFuncs, newFuncs) {
+            var flag = false;
+            var isExist = false;
+
+            if (oldFuncs.SubFunctionKeys && newFuncs.SubFunctionKeys) {
+                newFuncs.SubFunctionKeys.forEach(function (newSub) {
+                    oldFuncs.SubFunctionKeys.forEach(function (oldSub) {
+                        if (!newSub.isCheck || newSub.FunctionKey === oldSub.FunctionKey) {
+                            isExist = true;
+                        }
+                    });
+
+                    if (isExist === false) {
+                        flag = true;
+                    }
+
+                    isExist = false;
+                });
+
+                return flag;
+            }
+
+            return flag;
         }
     }, {
         key: '_renderCardInput',
         value: function _renderCardInput(label, stateName, disabled) {
-            var _this3 = this;
+            var _this4 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -5806,7 +5848,7 @@ var Form = function (_Component) {
                     { className: 'col-lg-9 col-sm-9' },
                     _react2.default.createElement('input', { type: 'text', className: 'full-width ' + (this.state[stateName] || disabled ? '' : 'has-error'), value: this.state[stateName],
                         disabled: disabled, onChange: function onChange(e) {
-                            return _this3.setState(_defineProperty({}, stateName, e.target.value));
+                            return _this4.setState(_defineProperty({}, stateName, e.target.value));
                         } })
                 )
             );
@@ -5814,11 +5856,11 @@ var Form = function (_Component) {
     }, {
         key: '_setTimeControl',
         value: function _setTimeControl() {
-            var _this4 = this;
+            var _this5 = this;
 
             if (!this.timerID) {
                 this.timerID = setInterval(function () {
-                    return _this4._tick();
+                    return _this5._tick();
                 }, 1000);
             }
         }
@@ -5879,16 +5921,15 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             var _state = this.state,
                 isCopy = _state.isCopy,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
                 token = _state.token,
-                isDisable = _state.isDisable,
                 isCheckGroup = _state.isCheckGroup,
-                isShowMessage = _state.isShowMessage;
+                isSuccess = _state.isSuccess;
             var _props = this.props,
                 user = _props.user,
                 isValid = _props.isValid,
@@ -5954,7 +5995,7 @@ var Form = function (_Component) {
                                                     _react2.default.createElement(_NumericInput2.default, { value: redmineID,
                                                         className: 'full-width ' + (redmineID ? '' : 'has-error'),
                                                         onChange: function onChange(value) {
-                                                            return _this5.setState({ redmineID: value });
+                                                            return _this6.setState({ redmineID: value });
                                                         } })
                                                 )
                                             ),
@@ -5967,7 +6008,7 @@ var Form = function (_Component) {
                                                     { className: 'col-lg-12' },
                                                     _react2.default.createElement(
                                                         'button',
-                                                        { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy },
+                                                        { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy || isSuccess },
                                                         'Generate'
                                                     )
                                                 )
@@ -5987,8 +6028,8 @@ var Form = function (_Component) {
                                                     _react2.default.createElement(
                                                         'div',
                                                         { className: 'group-input group-prepend' },
-                                                        _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: isDisable, value: token, ref: function ref(txtToken) {
-                                                                return _this5.txtToken = txtToken;
+                                                        _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: !isSuccess, value: token, ref: function ref(txtToken) {
+                                                                return _this6.txtToken = txtToken;
                                                             } }),
                                                         isCopy && this._renderTootlip('Copied', 'bottom'),
                                                         _react2.default.createElement(
@@ -5996,7 +6037,7 @@ var Form = function (_Component) {
                                                             { className: 'input-group-prepend' },
                                                             _react2.default.createElement(
                                                                 'button',
-                                                                { className: 'btn-copy', disabled: isDisable, onClick: this._onCopy },
+                                                                { className: 'btn-copy', disabled: !isSuccess, onClick: this._onCopy },
                                                                 'Copy'
                                                             )
                                                         )
@@ -6009,7 +6050,7 @@ var Form = function (_Component) {
                                                 _react2.default.createElement(
                                                     'div',
                                                     { className: 'col-lg-12' },
-                                                    isShowMessage && _react2.default.createElement(
+                                                    isSuccess && _react2.default.createElement(
                                                         'div',
                                                         { className: 'form-group row' },
                                                         _react2.default.createElement(
@@ -6059,7 +6100,7 @@ var Form = function (_Component) {
                                                     'label',
                                                     { className: 'checkbox-inline' },
                                                     _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup, onChange: function onChange(e) {
-                                                            return _this5.setState({ isCheckGroup: e.target.checked });
+                                                            return _this6.setState({ isCheckGroup: e.target.checked });
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
                                                 )
@@ -6075,7 +6116,7 @@ var Form = function (_Component) {
                                             'User Function permission'
                                         )
                                     ),
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: funcPer, selectedNode: oldFuncPer.FuncPermission })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree', selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission), nodes: JSON.parse(funcPer), isDisable: isSuccess })
                                 )
                             )
                         )
@@ -6089,7 +6130,7 @@ var Form = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     var selectedFunc = state.selectedFunc,
@@ -6162,8 +6203,6 @@ var Tree = function (_Component) {
             _this._checkedChildNode(node, !node.isCheck, isSubChild);
             _this._checkedParentNode(parent, node.isCheck);
 
-            _this.props.setSelectedFuncs(_this.state.selectedFunc);
-
             _this.setState({ nodes: nodes });
         };
 
@@ -6174,14 +6213,53 @@ var Tree = function (_Component) {
             _this._checkRadio(parent, node);
             _this._checkedParentNode(parent, true);
 
-            _this.props.setSelectedFuncs(_this.state.selectedFunc);
-
             _this.setState({ nodes: nodes });
         };
 
+        _this._prepairListNode = function () {
+            var nodes = _this.state.nodes;
+
+            nodes.map(function (node) {
+                _this._checkedNodeInStateIfExistInSelectedNode(node, null);
+            });
+
+            return nodes;
+        };
+
+        _this._checkedNodeInStateIfExistInSelectedNode = function (node, parent) {
+            var selectedFunc = _this.state.selectedFunc;
+
+            var children = _this._getChildNodes(node);
+
+            selectedFunc.map(function (n) {
+                if (n.FunctionKey === node.FunctionKey) {
+                    node.isCheck = true;
+                    parent.isCheck = true;
+                    _this._addNodeIntoSelectedFunc(node, false);
+                }
+                if (n.SubFunctionKeys) {
+                    n.SubFunctionKeys.map(function (subFunc) {
+                        if (subFunc.FunctionKey === node.FunctionKey) {
+                            node.isCheck = true;
+                            parent.isCheck = true;
+                            _this._addNodeIntoSelectedFunc(subFunc, true);
+                        }
+                    });
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    return _this._checkedNodeInStateIfExistInSelectedNode(child, node);
+                });
+            }
+
+            _this.setState({ selectedFunc: selectedFunc });
+        };
+
         _this.state = {
-            nodes: _this._prepairListNode(JSON.parse(props.nodes)),
-            selectedFunc: _this.props.selectedNode
+            nodes: props.nodes,
+            selectedFunc: props.selectedNode
         };
         return _this;
     }
@@ -6246,7 +6324,7 @@ var Tree = function (_Component) {
     }, {
         key: '_addNodeIntoSelectedFunc',
         value: function _addNodeIntoSelectedFunc(node, isSubChild) {
-            var selectedFunc = this.state.selectedFunc;
+            var selectedFunc = this.props.selectedFunc;
 
 
             if (node.FunctionKey != null && !isSubChild) {
@@ -6262,7 +6340,7 @@ var Tree = function (_Component) {
                 }
             }
 
-            this.setState({ selectedFunc: selectedFunc });
+            this.props.setSelectedFuncs(selectedFunc);
         }
     }, {
         key: '_checkRadio',
@@ -6283,24 +6361,24 @@ var Tree = function (_Component) {
         }
     }, {
         key: '_checkedParentNode',
-        value: function _checkedParentNode(parent, checked) {
+        value: function _checkedParentNode(parent) {
             if (parent) {
-                parent.isCheck = checked;
+                var flag = false;
+                this._getChildNodes(parent).forEach(function (child) {
+                    if (child.isCheck == true) {
+                        flag = true;
+                    }
+                });
 
-                this._addNodeIntoSelectedFunc(parent, false);
+                parent.isCheck = flag;
+                if (flag == true) {
+                    this._addNodeIntoSelectedFunc(parent, false);
+                }
 
                 var parentLevel = [].concat(_toConsumableArray(parent.level));
                 var parentNode = this._getParentNode(parentLevel);
                 if (parentNode.length != 0) {
-                    var flag = false;
-
-                    this._getChildNodes(parentNode).forEach(function (child) {
-                        if (child.isCheck === true) {
-                            flag = true;
-                        }
-                    });
-
-                    this._checkedParentNode(parentNode, flag);
+                    this._checkedParentNode(parentNode);
                 }
             }
         }
@@ -6326,42 +6404,9 @@ var Tree = function (_Component) {
             }
         }
     }, {
-        key: '_prepairListNode',
-        value: function _prepairListNode(nodes) {
-            var _this3 = this;
-
-            nodes.map(function (node) {
-                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
-            });
-
-            return nodes;
-        }
-    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.setSelectedFuncs(this.props.selectedNode);
-        }
-    }, {
-        key: '_checkedNodeInStateIfExistInSelectedNode',
-        value: function _checkedNodeInStateIfExistInSelectedNode(node, parent) {
-            var _this4 = this;
-
-            var selectedNode = this.props.selectedNode;
-
-            var children = this._getChildNodes(node);
-
-            selectedNode.map(function (n) {
-                if (n.FunctionKey === node.FunctionKey) {
-                    node.isCheck = true;
-                    parent.isCheck = true;
-                }
-            });
-
-            if (children) {
-                children.map(function (child) {
-                    _this4._checkedNodeInStateIfExistInSelectedNode(child, node);
-                });
-            }
+            this._prepairListNode();
         }
     }, {
         key: '_openNodeSelected',
@@ -6380,7 +6425,7 @@ var Tree = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this3 = this;
 
             var nodes = this.state.nodes;
 
@@ -6394,12 +6439,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this5.props.isDisable,
+                        isDisable: _this3.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this5._getChildNodes,
-                        onNodeSelect: _this5._onNodeSelect,
-                        onNodeCheck: _this5._onNodeCheck,
-                        onRadioCheck: _this5._onRadioCheck
+                        getChildNodes: _this3._getChildNodes,
+                        onNodeSelect: _this3._onNodeSelect,
+                        onNodeCheck: _this3._onNodeCheck,
+                        onRadioCheck: _this3._onRadioCheck
                     });
                 })
             );
@@ -6529,7 +6574,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && !isDisable && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && isDisable == false && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

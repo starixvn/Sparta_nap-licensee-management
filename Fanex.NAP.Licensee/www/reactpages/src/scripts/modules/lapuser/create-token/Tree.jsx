@@ -9,8 +9,8 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: this._prepairListNode(JSON.parse(props.nodes)),
-            selectedFunc: this.props.selectedNode
+            nodes: props.nodes,
+            selectedFunc: props.selectedNode
         };
     }
 
@@ -29,8 +29,6 @@ class Tree extends Component {
         this._checkedChildNode(node, !node.isCheck, isSubChild);
         this._checkedParentNode(parent, node.isCheck);
 
-        this.props.setSelectedFuncs(this.state.selectedFunc);
-
         this.setState({ nodes });
     }
 
@@ -39,8 +37,6 @@ class Tree extends Component {
 
         this._checkRadio(parent, node);
         this._checkedParentNode(parent, true);
-
-        this.props.setSelectedFuncs(this.state.selectedFunc);
 
         this.setState({ nodes });
     }
@@ -101,7 +97,7 @@ class Tree extends Component {
     }
 
     _addNodeIntoSelectedFunc(node, isSubChild) {
-        const { selectedFunc } = this.state;
+        const { selectedFunc } = this.props;
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
@@ -115,7 +111,7 @@ class Tree extends Component {
             }
         }
 
-        this.setState({ selectedFunc });
+        this.props.setSelectedFuncs(selectedFunc);
     }
 
     _checkRadio(parent, node) {
@@ -124,7 +120,7 @@ class Tree extends Component {
 
         node.isCheck = true;
 
-        children.forEach((child) => {
+        children.forEach(child => {
             if (child.FunctionKey != node.FunctionKey) {
                 child.isCheck = false;
             }
@@ -133,24 +129,24 @@ class Tree extends Component {
         this.setState({ nodes });
     }
 
-    _checkedParentNode(parent, checked) {
+    _checkedParentNode(parent) {
         if (parent) {
-            parent.isCheck = checked;
+            let flag = false;
+            this._getChildNodes(parent).forEach(child => {
+                if (child.isCheck == true) {
+                    flag = true;
+                }
+            })
 
-            this._addNodeIntoSelectedFunc(parent, false);
-            
+            parent.isCheck = flag;
+            if (flag == true) {
+                this._addNodeIntoSelectedFunc(parent, false);
+            }
+
             const parentLevel = [...parent.level];
             const parentNode = this._getParentNode(parentLevel);
             if (parentNode.length != 0) {
-                let flag = false;
-
-                this._getChildNodes(parentNode).forEach(child => {
-                    if (child.isCheck === true) {
-                        flag = true;
-                    }
-                })
-
-                this._checkedParentNode(parentNode, flag)
+                this._checkedParentNode(parentNode)
             }
         }
     }
@@ -174,7 +170,8 @@ class Tree extends Component {
         }
     }
 
-    _prepairListNode(nodes) {
+    _prepairListNode = () => {
+        const { nodes } = this.state;
         nodes.map(node => {
             this._checkedNodeInStateIfExistInSelectedNode(node, null)
         })
@@ -182,26 +179,36 @@ class Tree extends Component {
         return nodes;
     }
 
-    componentDidMount(){
-        this.props.setSelectedFuncs(this.props.selectedNode)
+    componentDidMount() {
+        this._prepairListNode();
     }
 
-    _checkedNodeInStateIfExistInSelectedNode(node, parent) {
-        const { selectedNode } = this.props;
+    _checkedNodeInStateIfExistInSelectedNode = (node, parent) => {
+        const { selectedFunc } = this.state;
         const children = this._getChildNodes(node);
 
-        selectedNode.map((n) => {
+        selectedFunc.map((n) => {
             if (n.FunctionKey === node.FunctionKey) {
                 node.isCheck = true;
                 parent.isCheck = true;
+                this._addNodeIntoSelectedFunc(node, false);
+            }
+            if (n.SubFunctionKeys) {
+                n.SubFunctionKeys.map((subFunc) => {
+                    if (subFunc.FunctionKey === node.FunctionKey) {
+                        node.isCheck = true;
+                        parent.isCheck = true;
+                        this._addNodeIntoSelectedFunc(subFunc, true);
+                    }
+                })
             }
         })
 
         if (children) {
-            children.map(child => {
-                this._checkedNodeInStateIfExistInSelectedNode(child, node)
-            })
+            children.map(child => this._checkedNodeInStateIfExistInSelectedNode(child, node))
         }
+
+        this.setState({ selectedFunc })
     }
 
     _openNodeSelected() {

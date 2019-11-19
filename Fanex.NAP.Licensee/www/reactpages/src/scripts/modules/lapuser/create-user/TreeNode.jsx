@@ -41,7 +41,7 @@ export default class TreeNode extends Component {
                     </span>
                 </div>
 
-                {(node.isOpen == true) && !isDisable && getChildNodes(node).map((childNode, i) => (
+                {(node.isOpen == true) && isDisable == false && getChildNodes(node).map((childNode, i) => (
                     <TreeNode
                         {...this.props}
                         key={i}

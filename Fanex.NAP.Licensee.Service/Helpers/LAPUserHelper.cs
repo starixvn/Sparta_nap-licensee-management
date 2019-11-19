@@ -49,6 +49,17 @@
                     }
                 }
             }
+
+            if (criteria.FuncPermissionsRemoved != null)
+            {
+                foreach (var item in criteria.FuncPermissionsRemoved)
+                {
+                    if (item.SubFunctionKeys != null)
+                    {
+                        item.SubFunctionKeys = item.SubFunctionKeys.Replace("\"", "&quot;");
+                    }
+                }
+            }
         }
     }
 }

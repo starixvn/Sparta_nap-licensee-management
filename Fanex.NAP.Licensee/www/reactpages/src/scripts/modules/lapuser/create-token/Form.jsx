@@ -17,13 +17,12 @@ class Form extends Component {
             extraTime: 0.25,
             token: '',
             isCopy: false,
-            isDisable: true,
-            isShowMessage: false,
+            isSuccess: false,
             requestBy: '',
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: [...oldFuncPer.FuncPermission]
+            oldFunctionPermission: oldFuncPer.FuncPermission
         }
     }
 
@@ -35,11 +34,26 @@ class Form extends Component {
                 UserID: this.props.user.UserID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID,
-                FuncPermissionsRemoved: this._getRemoveSelectedFuncs(),
-                FuncPermissionsAdded: this._getNewSelectedFuncs(),
+                FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
+                FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
                 OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
             }
         };
+    }
+
+    _convertListSubFuncsToNode(selectedFunc) {
+        selectedFunc.map((n) => {
+            if (n.SubFunctionKeys && !Array.isArray(n.SubFunctionKeys)) {
+                n.SubFunctionKeys = JSON.parse(n.SubFunctionKeys);
+                n.SubFunctionKeys.map((subFunc, i) => {
+                    n.SubFunctionKeys[i] = {
+                        FunctionKey: subFunc
+                    }
+                })
+            }
+        })
+
+        return selectedFunc;
     }
 
     _getListKeyOfSubFunctionKey(subFunctionKeys) {
@@ -47,7 +61,6 @@ class Form extends Component {
 
         subFunctionKeys.forEach((sub) => {
             const { FunctionKey } = sub;
-
             listFuncKeys.push(FunctionKey);
         })
 
@@ -68,61 +81,88 @@ class Form extends Component {
         return funcs;
     }
 
-    _getRemoveSelectedFuncs(){
-        const { oldFunctionPermission } = this.state;
+    _getFuncsRemoved() {
+        const oldFunctionPermission = this.state.oldFunctionPermission;
         const newFuncPermissions = this.props.selectedFunc;
         let funcsRemoved = [];
         let flag = false;
-        
+
         oldFunctionPermission.forEach(oldFunc => {
+            let node = {...oldFunc};
             newFuncPermissions.forEach(newFunc => {
-                if(oldFunc.FunctionKey === newFunc.FunctionKey){
+                if (oldFunc.FunctionKey === newFunc.FunctionKey) {
                     flag = true;
                 }
             })
 
-            if(flag == false){
-                funcsRemoved.push(oldFunc);           
+            if (flag == false) {
+                funcsRemoved.push(node);
             }
 
             flag = false;
         })
 
-        return this._getSubFunction(funcsRemoved);
+        return funcsRemoved;
     }
 
-    _getNewSelectedFuncs(){
-        const { oldFunctionPermission } = this.state;
+    _getFuncsAdded() {
+        const oldFunctionPermission = this.state.oldFunctionPermission;
         const newFuncPermissions = this.props.selectedFunc;
         let funcsAdded = [];
         let flag = true;
         
         newFuncPermissions.map(newFunc => {
+            let node = {...newFunc};
             oldFunctionPermission.map(oldFunc => {
                 if(newFunc.FunctionKey === oldFunc.FunctionKey){
-                    flag = false;
+                    flag = this._checkChangeSubFuncs(oldFunc, newFunc);
                 }
             })
             if(flag === true){
-                funcsAdded.push(newFunc);
+                funcsAdded.push(node);
             }
 
             flag = true;
         })
 
-        return this._getSubFunction(funcsAdded);
+        return funcsAdded;
+    }
+
+    _checkChangeSubFuncs(oldFuncs, newFuncs){
+        let flag = false;
+        let isExist = false;
+
+        if(oldFuncs.SubFunctionKeys && newFuncs.SubFunctionKeys){
+            newFuncs.SubFunctionKeys.forEach(newSub => { 
+                oldFuncs.SubFunctionKeys.forEach(oldSub => {
+                    if(!newSub.isCheck || newSub.FunctionKey === oldSub.FunctionKey){
+                        isExist = true;
+                    }
+                }) 
+
+                if(isExist === false){
+                    flag = true;
+                }
+
+                isExist = false;
+            })
+
+            return flag;
+        }
+
+        return flag;
     }
 
     _onGenerate = () => {
         this.props.toggleLoader(true);
         var param = this._getParams();
 
+        console.log(param)
         this.props.createToken(param)
             .then(response => {
-                if (response.data.IsSuccess) {
+                if (response.data.IsSuccess === true) {
                     this.setState({
-                        isDisable: false,
-                        isShowMessage: true,
+                        isSuccess: true,
                         token: response.data.Data,
                         expriedIn: this._convertHoursToSecond(this.state.extraTime)
                     });
@@ -215,10 +255,11 @@ class Form extends Component {
 
     componentDidMount() {
         this._setTimeControl();
+
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, isDisable, isCheckGroup, isShowMessage } = this.state;
+        const { isCopy, requestBy, redmineID, token, isCheckGroup, isSuccess } = this.state;
         const { user, isValid, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
@@ -248,7 +289,7 @@ class Form extends Component {
                                             {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                             <div className='form-group row pull-right'>
                                                 <div className="col-lg-12">
-                                                    <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy}>Generate</button>
+                                                    <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy || isSuccess}>Generate</button>
                                                 </div>
                                             </div>
                                             <div className="clearfix"></div>
@@ -256,19 +297,19 @@ class Form extends Component {
                                                 <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
                                                 <div className='col-lg-9 col-sm-9'>
                                                     <div className="group-input group-prepend">
-                                                        <input type="text" className='full-width' disabled={isDisable} value={token} ref={(txtToken) => this.txtToken = txtToken} />
+                                                        <input type="text" className='full-width' disabled={!isSuccess} value={token} ref={(txtToken) => this.txtToken = txtToken} />
                                                         {
                                                             isCopy && this._renderTootlip('Copied', 'bottom')
                                                         }
                                                         <div className="input-group-prepend">
-                                                            <button className="btn-copy" disabled={isDisable} onClick={this._onCopy}>Copy</button>
+                                                            <button className="btn-copy" disabled={!isSuccess} onClick={this._onCopy}>Copy</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='form-group row'>
                                                 <div className="col-lg-12">
-                                                    {isShowMessage &&
+                                                    {isSuccess &&
                                                         (
                                                             <div className='form-group row'>
                                                                 <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
@@ -303,7 +344,7 @@ class Form extends Component {
                                     <div className='form-group row'>
                                         <label className='col-xs-12'>User Function permission</label>
                                     </div>
-                                    <Tree className="tree" nodes={funcPer} selectedNode={oldFuncPer.FuncPermission} />
+                                    <Tree className="tree" selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
                                 </div>
                             </div>
                         </div>
@@ -315,7 +356,7 @@ class Form extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ createToken, toggleLoader }, dispatch);
+    return bindActionCreators({ setSelectedFuncs, createToken, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     const { selectedFunc, isLoading } = state;

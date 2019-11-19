@@ -17,8 +17,7 @@ class Form extends Component {
             isShowMessage: false,
             isDisableTree: false,
             requestBy: '',
-            redmineID: '',
-            functionOptions: this.props.funcPer,
+            redmineID: ''
         };
     }
 
@@ -29,7 +28,7 @@ class Form extends Component {
                 UserID: this.props.userID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID,
-                FuncPermissions: this._getSelectedFunc()
+                FuncPermissions: this._getSubFunction()
             }
         };
     }
@@ -39,17 +38,16 @@ class Form extends Component {
 
         subFunctionKeys.forEach((sub) => {
             const { FunctionKey } = sub;
-
             listFuncKeys.push(FunctionKey);
         })
 
         return listFuncKeys;
     }
 
-    _getSelectedFunc() {
-        const selected = this.props.selectedFunc;
+    _getSubFunction() {
+        const funcs = JSON.parse(JSON.stringify(this.props.selectedFunc))
 
-        selected.forEach(func => {
+        funcs.map(func => {
             if (func.SubFunctionKeys != null) {
                 if (Array.isArray(func.SubFunctionKeys)) {
                     func.SubFunctionKeys = func.SubFunctionKeys.filter(x => x.isCheck === true);
@@ -59,7 +57,7 @@ class Form extends Component {
             }
         })
 
-        return selected;
+        return funcs;
     }
 
     onConfirm = value => {
@@ -114,7 +112,8 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, password, isShowMessage, isDisableTree, requestBy, redmineID, functionOptions } = this.state;
+        const { isShowConfirmBox, password, isShowMessage, isDisableTree, requestBy, redmineID } = this.state;
+        const { funcPer } = this.props;
 
         if (!this.props.isValid) {
             return <b className="red">This username is not exist but cannot be created in this case!</b>
@@ -175,7 +174,7 @@ class Form extends Component {
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
-                                    <Tree className="tree" nodes={functionOptions} isDisable={isDisableTree} />
+                                    <Tree className="tree" nodes={JSON.parse(funcPer)} isDisable={isDisableTree} />
                                 </div>
                             </div>
                         </div>
