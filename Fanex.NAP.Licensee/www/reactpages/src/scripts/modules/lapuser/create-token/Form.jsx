@@ -27,26 +27,28 @@ class Form extends Component {
     }
 
     _getParams() {
-        const { oldFuncPer } = this.props;
+        const { oldFuncPer, user } = this.props;
+        const { requestBy, redmineID, isCheckGroup } = this.state;
+
         return {
             criteria: {
-                SiteName: this.props.user.SiteName,
-                UserID: this.props.user.UserID,
-                RequestBy: this.state.requestBy,
-                RedmineID: this.state.redmineID,
+                SiteName: user.SiteName,
+                UserID: user.UserID,
+                RequestBy: requestBy,
+                RedmineID: redmineID,
                 FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
                 FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
-                OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
+                OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
             }
         };
     }
 
     _convertListSubFuncsToNode(selectedFunc) {
-        selectedFunc.map((n) => {
-            if (n.SubFunctionKeys && !Array.isArray(n.SubFunctionKeys)) {
-                n.SubFunctionKeys = JSON.parse(n.SubFunctionKeys);
-                n.SubFunctionKeys.map((subFunc, i) => {
-                    n.SubFunctionKeys[i] = {
+        selectedFunc.map((selFunc) => {
+            if (selFunc.SubFunctionKeys && !Array.isArray(selFunc.SubFunctionKeys)) {
+                selFunc.SubFunctionKeys = JSON.parse(selFunc.SubFunctionKeys);
+                selFunc.SubFunctionKeys.map((subFunc, i) => {
+                    selFunc.SubFunctionKeys[i] = {
                         FunctionKey: subFunc
                     }
                 })
@@ -82,20 +84,25 @@ class Form extends Component {
     }
 
     _getFuncsRemoved() {
-        const oldFunctionPermission = this.state.oldFunctionPermission;
-        const newFuncPermissions = this.props.selectedFunc;
+        const oldFuncsPermission = this.state.oldFunctionPermission;
+        const newFuncsPermissions = this.props.selectedFunc;
         let funcsRemoved = [];
         let flag = false;
 
-        oldFunctionPermission.forEach(oldFunc => {
-            let node = {...oldFunc};
-            newFuncPermissions.forEach(newFunc => {
+        oldFuncsPermission.forEach(oldFunc => {
+            let node = { 
+                FunctionKey: oldFunc.FunctionKey,
+                SubFunctionKeys: oldFunc.SubFunctionKeys ? oldFunc.SubFunctionKeys : null,
+                Type: oldFunc.Type
+            };
+
+            newFuncsPermissions.forEach(newFunc => {
                 if (oldFunc.FunctionKey === newFunc.FunctionKey) {
                     flag = true;
                 }
             })
 
-            if (flag == false) {
+            if (flag === false) {
                 funcsRemoved.push(node);
             }
 
@@ -106,19 +113,24 @@ class Form extends Component {
     }
 
     _getFuncsAdded() {
-        const oldFunctionPermission = this.state.oldFunctionPermission;
-        const newFuncPermissions = this.props.selectedFunc;
+        const oldFuncsPermission = this.state.oldFunctionPermission;
+        const newFuncsPermissions = this.props.selectedFunc;
         let funcsAdded = [];
         let flag = true;
-        
-        newFuncPermissions.map(newFunc => {
-            let node = {...newFunc};
-            oldFunctionPermission.map(oldFunc => {
-                if(newFunc.FunctionKey === oldFunc.FunctionKey){
+
+        newFuncsPermissions.map(newFunc => {
+            let node = { 
+                FunctionKey: newFunc.FunctionKey,
+                SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
+                Type: newFunc.Type
+            };
+
+            oldFuncsPermission.map(oldFunc => {
+                if (newFunc.FunctionKey === oldFunc.FunctionKey) {
                     flag = this._checkChangeSubFuncs(oldFunc, newFunc);
                 }
             })
-            if(flag === true){
+            if (flag === true) {
                 funcsAdded.push(node);
             }
 
@@ -128,26 +140,24 @@ class Form extends Component {
         return funcsAdded;
     }
 
-    _checkChangeSubFuncs(oldFuncs, newFuncs){
+    _checkChangeSubFuncs(oldFuncs, newFuncs) {
         let flag = false;
         let isExist = false;
 
-        if(oldFuncs.SubFunctionKeys && newFuncs.SubFunctionKeys){
-            newFuncs.SubFunctionKeys.forEach(newSub => { 
+        if (oldFuncs.SubFunctionKeys && newFuncs.SubFunctionKeys) {
+            newFuncs.SubFunctionKeys.forEach(newSub => {
                 oldFuncs.SubFunctionKeys.forEach(oldSub => {
-                    if(!newSub.isCheck || newSub.FunctionKey === oldSub.FunctionKey){
+                    if (!newSub.isCheck || newSub.FunctionKey === oldSub.FunctionKey) {
                         isExist = true;
                     }
-                }) 
+                })
 
-                if(isExist === false){
+                if (isExist === false) {
                     flag = true;
                 }
 
                 isExist = false;
             })
-
-            return flag;
         }
 
         return flag;
@@ -155,9 +165,8 @@ class Form extends Component {
 
     _onGenerate = () => {
         this.props.toggleLoader(true);
-        var param = this._getParams();
+        const param = this._getParams();
 
-        console.log(param)
         this.props.createToken(param)
             .then(response => {
                 if (response.data.IsSuccess === true) {
@@ -255,7 +264,6 @@ class Form extends Component {
 
     componentDidMount() {
         this._setTimeControl();
-
     }
 
     render() {

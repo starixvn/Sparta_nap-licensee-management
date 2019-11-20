@@ -5775,8 +5775,7 @@ var Form = function (_Component) {
         _this.state = {
             isShowConfirmBox: false,
             password: "",
-            isShowMessage: false,
-            isDisableTree: false,
+            isSuccess: false,
             requestBy: '',
             redmineID: ''
         };
@@ -5792,7 +5791,7 @@ var Form = function (_Component) {
                     UserID: this.props.userID,
                     RequestBy: this.state.requestBy,
                     RedmineID: this.state.redmineID,
-                    FuncPermissions: this._getSubFunction()
+                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded())
                 }
             };
         }
@@ -5810,11 +5809,27 @@ var Form = function (_Component) {
             return listFuncKeys;
         }
     }, {
-        key: '_getSubFunction',
-        value: function _getSubFunction() {
-            var _this2 = this;
+        key: '_getFuncsAdded',
+        value: function _getFuncsAdded() {
+            var newFuncsPermissions = this.props.selectedFunc;
+            var funcsAdded = [];
 
-            var funcs = JSON.parse(JSON.stringify(this.props.selectedFunc));
+            newFuncsPermissions.map(function (newFunc) {
+                var node = {
+                    FunctionKey: newFunc.FunctionKey,
+                    SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
+                    Type: newFunc.Type
+                };
+
+                funcsAdded.push(node);
+            });
+
+            return funcsAdded;
+        }
+    }, {
+        key: '_getSubFunction',
+        value: function _getSubFunction(funcs) {
+            var _this2 = this;
 
             funcs.map(function (func) {
                 if (func.SubFunctionKeys != null) {
@@ -5873,8 +5888,7 @@ var Form = function (_Component) {
                 if (response.data.IsSuccess) {
                     _this3.setState({
                         password: response.data.Data,
-                        isShowMessage: true,
-                        isDisableTree: true
+                        isSuccess: true
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.Error);
@@ -5892,8 +5906,7 @@ var Form = function (_Component) {
             var _state = this.state,
                 isShowConfirmBox = _state.isShowConfirmBox,
                 password = _state.password,
-                isShowMessage = _state.isShowMessage,
-                isDisableTree = _state.isDisableTree,
+                isSuccess = _state.isSuccess,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID;
             var funcPer = this.props.funcPer;
@@ -5984,7 +5997,7 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'col-lg-12' },
-                                            isShowMessage && this._renderMessage("Make sure you copy it now, you won't be able to see it again.")
+                                            isSuccess && this._renderMessage("Make sure you copy it now, you won't be able to see it again.")
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -6017,7 +6030,7 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: JSON.parse(funcPer), isDisable: isDisableTree })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: JSON.parse(funcPer), isDisable: isSuccess })
                                 )
                             )
                         )
@@ -6117,7 +6130,7 @@ var Tree = function (_Component) {
             var nodes = _this.state.nodes;
 
 
-            _this._checkRadio(parent, node);
+            _this._checkedRadio(parent, node);
             _this._checkedParentNode(parent, true);
 
             _this.setState({ nodes: nodes });
@@ -6141,8 +6154,11 @@ var Tree = function (_Component) {
                     return node.SubFunctionKeys;
                 }
                 return node.FunctionKeys;
+            } else {
+                return node.Settings.filter(function (funs) {
+                    return funs.Type != 0;
+                });
             }
-            return node.Settings;
         }
     }, {
         key: '_getParentNode',
@@ -6209,8 +6225,8 @@ var Tree = function (_Component) {
             this.props.setSelectedFuncs(selectedFunc);
         }
     }, {
-        key: '_checkRadio',
-        value: function _checkRadio(parent, node) {
+        key: '_checkedRadio',
+        value: function _checkedRadio(parent, node) {
             var nodes = this.state.nodes;
 
             var children = this._getChildNodes(parent);
@@ -6227,22 +6243,24 @@ var Tree = function (_Component) {
         }
     }, {
         key: '_checkedParentNode',
-        value: function _checkedParentNode(parent, checked) {
+        value: function _checkedParentNode(parent) {
             if (parent) {
-                parent.isCheck = checked;
-                this._addNodeIntoSelectedFunc(parent, false);
+                var flag = false;
+                this._getChildNodes(parent).forEach(function (child) {
+                    if (child.isCheck == true) {
+                        flag = true;
+                    }
+                });
+
+                parent.isCheck = flag;
+                if (flag == true) {
+                    this._addNodeIntoSelectedFunc(parent, false);
+                }
 
                 var parentLevel = [].concat(_toConsumableArray(parent.level));
                 var parentNode = this._getParentNode(parentLevel);
                 if (parentNode.length != 0) {
-                    var flag = false;
-                    this._getChildNodes(parentNode).forEach(function (child) {
-                        if (child.isCheck === true) {
-                            flag = true;
-                        }
-                    });
-
-                    this._checkedParentNode(parentNode, flag);
+                    this._checkedParentNode(parentNode);
                 }
             }
         }
@@ -6328,6 +6346,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _language = __webpack_require__(276);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6345,7 +6365,7 @@ var TreeNode = function (_Component) {
         var _this = _possibleConstructorReturn(this, (TreeNode.__proto__ || Object.getPrototypeOf(TreeNode)).call(this, props));
 
         _this.getNodeLabel = function (node) {
-            return node.DisplayKey;
+            return _language.language[node.DisplayKey] ? _language.language[node.DisplayKey] : node.DisplayKey;
         };
 
         return _this;
@@ -6367,6 +6387,10 @@ var TreeNode = function (_Component) {
                 isSubChild = _props.isSubChild,
                 isDisable = _props.isDisable;
 
+
+            if (!parent && getChildNodes(node).length === 0) {
+                return null;
+            }
 
             return _react2.default.createElement(
                 _react2.default.Fragment,
@@ -6418,7 +6442,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && isDisable == false && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,
@@ -6466,6 +6490,205 @@ var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionT
 }));
 
 exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
+
+/***/ }),
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var language = exports.language = {
+    "lbl1X2": "1 X 2",
+    "lbl3WayHandicap": "3-Way Handicap",
+    "lblAdministration": "Administration",
+    "lblAffiliate": "Affiliate",
+    "lblAffiliateManagement": "Affiliate Management",
+    "lblAffiliateStatistics": "Affiliate Statistics",
+    "lblAGCasinoBalance": "AG Casino Balance",
+    "lblAGCasinoWinLoss": "AG Casino Win Loss",
+    "lblBettingTicketCenter": "Betting Ticket Center",
+    "lblBONTeamToScore": "B/O/N Team To Score",
+    "lblCashOutWinLoss": "Cash Out Win Loss",
+    "lblCasinoTurnover": "Casino Turnover",
+    "lblCleanSheet": "Clean Sheet",
+    "lblColossusBetsWinLoss": "Colossus Bets Win Loss",
+    "lblCommissionGroup": "Commission Group",
+    "lblCommissionGroupList": "Commission Group List",
+    "lblCorrectScore": "Correct Score",
+    "lblCurrency": "Currency",
+    "lblCustomerBalance": "Customer Balance",
+    "lblCustomerList": "Customer List",
+    "lblCustomerLog": "Customer Log",
+    "lblCustomerManagement": "Customer Management",
+    "lblCustomerPendingFunds": "Customer Pending Funds",
+    "lblCustomerTurnover": "Customer Turnover",
+    "lblCustomerWinLoss": "Customer Win Loss",
+    "lblDailyBets": "Daily Bets",
+    "lblDashboard": "DASHBOARD",
+    "lblDoubleChance": "Double Chance",
+    "lblEditBetSetting": "Edit Bet Setting",
+    "lblExchangeWinLoss": "Exchange Win Loss",
+    "lblFGLG": "FG/LG",
+    "lblForecast": "Forecast",
+    "lblGoldDeluxeWinloss": "Gold Deluxe Win Loss",
+    "lblHandicapOverUnderForecast": "Handicap/Over Under/Live",
+    "lblHandicapOverUnderLive": "Handicap/Over Under/Live",
+    "lblHomeDrawAwayNoBet": "Home/Draw/Away No Bet",
+    "lblHTFT": "HT/FT",
+    "lblLastBetsMonitoring": "Last Bets Monitoring",
+    "lblLicenseeWinLoss": "Licensee Win Loss",
+    "lblLiveReport": "Live Report",
+    "lblMarketingTools": "Marketing Tools",
+    "lblMatchWinLoss": "Win Loss By Match",
+    "lblMessage": "Message",
+    "lblMixParlay": "Mix Parlay",
+    "lblMoneyLine": "Moneyline",
+    "lblNewBonusManagement": "Bonus Management",
+    "lblNewBonusReport": "Bonus Report",
+    "lblNewBonusSystem": "New Bonus System",
+    "lblNewCancelExtendBonus": "Cancel/Extend Bonus",
+    "lblNewCreateBonus": "Create Bonus",
+    "lblNewExpiringBonusReport": "Expiring Bonus Report",
+    "lblNewMemberBonusReport": "Member Bonus Report",
+    "lblNotification": "Notification",
+    "lblOddEven1x2DND": "Odd/Even + 1x2 + DND",
+    "lblOutright": "Outright",
+    "lblPayment": "Payment",
+    "lblPlatformWinLoss": "Win Loss By Platform",
+    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
+    "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
+    "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
+    "lblPlayerAdmin_PL_BA": "Update BA Status",
+    "lblPlayerAdmin_PL_OddGroups": "Update Odds Group",
+    "lblPlayerAdmin_PL_SpecialLevel": "Update Special Level",
+    "lblPlayerAdmin_PL_Status": "Update Status",
+    "lblPlayerAdmin_Setting_BankInfo": "Bank Info",
+    "lblPlayerAdmin_Setting_ChangePassword": "Change Password",
+    "lblPlayerAdmin_Setting_FundTransferLimit": "Fund Transfer Limit",
+    "lblPlayerAdmin_Setting_ResetBankInfo": "Reset Bank Info",
+    "lblPlayerAdmin_Setting_ResetPassword": "Reset Password",
+    "lblPlayerAdmin": "Player Administration",
+    "lblPlayerAdminBetLimit": "Bet Limit",
+    "lblPlayerAdminBetList": "Bet List",
+    "lblPlayerAdminFundTransfer": "Fund Transfer",
+    "lblPlayerAdminLog": "Log",
+    "lblPlayerAdminMessage": "Message",
+    "lblPlayerAdminNote": "Note",
+    "lblPlayerAdminPlayerInfo": "Player Info",
+    "lblPlayerAdminPlayerList": "Player List",
+    "lblPlayerAdminPlayerStatement": "Statement",
+    "lblPlayerAdminSetting": "Setting",
+    "lblReports": "Reports",
+    "lblResettlement": "Resettlement",
+    "lblResults": "Results",
+    "lblSettledMatchCount": "Settled Match Count",
+    "lblSubsidiaryFundQuota": "Subsidiary Fund Quota",
+    "lblSubsidiaryManagement": "Subsidiary Setting",
+    "lblSubsidiaryPerformance": "Subsidiary Performance",
+    "lblTotalBets": "Total Bets",
+    "lblTotalGoal": "Total Goal",
+    "lblToWinToNil": "To Win To Nil",
+    "lblTurnover": "Turnover",
+    "lblWeeklyLiveMatches": "Weekly Live Matches",
+    "lblWgChartLicenseeWL": "Licensee Win Loss",
+    "lblWgChartTurnOver": "Turnover by Platform",
+    "lblWgCustomerBalance": "Customer Balance",
+    "lblWgDepositToday": "Deposit(today)",
+    "lblWgOnlineCustomers": "Online Customers",
+    "lblWgPendingFunds": "Pending Funds",
+    "lblWgRegisteredCustomer": "Registered Customers",
+    "lblWgWithdrawToday": "Withdraw(today)",
+    "lblWinLossByBetType": "Win Loss By Bet Type",
+    "lblWinLossByLeague": "Win Loss By League",
+    "lblWinLossByProducts": "Win Loss By Products",
+    "lblWinLossByTimeZone": "Win Loss By Time Zone",
+    "lblWinLossReport": "Reports"
+};
 
 /***/ })
 ],[190]);

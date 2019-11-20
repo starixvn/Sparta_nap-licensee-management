@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
+import { language } from '../language'
 
 export default class TreeNode extends Component {
     constructor(props) {
         super(props);
     }
 
-    getNodeLabel = (node) => node.DisplayKey
+    getNodeLabel = (node) => {
+        return language[node.DisplayKey] ? language[node.DisplayKey] : node.DisplayKey
+    }
 
     render() {
         const { node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild, isDisable } = this.props;
 
+        if(!parent && getChildNodes(node).length === 0)
+        {
+            return (null);
+        }
+        
         return (
             <React.Fragment>
                 <div level={level} className={"node"} style={{ marginLeft: (level.length - 1) * 20 }}>
@@ -41,7 +49,7 @@ export default class TreeNode extends Component {
                     </span>
                 </div>
 
-                {(node.isOpen == true) && isDisable == false && getChildNodes(node).map((childNode, i) => (
+                {(node.isOpen == true) && getChildNodes(node).map((childNode, i) => (
                     <TreeNode
                         {...this.props}
                         key={i}

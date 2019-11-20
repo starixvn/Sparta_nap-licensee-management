@@ -14,8 +14,7 @@ class Form extends Component {
         this.state = {
             isShowConfirmBox: false,
             password: "",
-            isShowMessage: false,
-            isDisableTree: false,
+            isSuccess: false,
             requestBy: '',
             redmineID: ''
         };
@@ -28,7 +27,7 @@ class Form extends Component {
                 UserID: this.props.userID,
                 RequestBy: this.state.requestBy,
                 RedmineID: this.state.redmineID,
-                FuncPermissions: this._getSubFunction()
+                FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded())
             }
         };
     }
@@ -44,9 +43,24 @@ class Form extends Component {
         return listFuncKeys;
     }
 
-    _getSubFunction() {
-        const funcs = JSON.parse(JSON.stringify(this.props.selectedFunc))
+    _getFuncsAdded() {
+        const newFuncsPermissions = this.props.selectedFunc;
+        let funcsAdded = [];
 
+        newFuncsPermissions.map(newFunc => {
+            let node = { 
+                FunctionKey: newFunc.FunctionKey,
+                SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
+                Type: newFunc.Type
+            };
+
+            funcsAdded.push(node);
+        })
+    
+        return funcsAdded;
+    }
+
+    _getSubFunction(funcs) {
         funcs.map(func => {
             if (func.SubFunctionKeys != null) {
                 if (Array.isArray(func.SubFunctionKeys)) {
@@ -98,8 +112,7 @@ class Form extends Component {
                 if (response.data.IsSuccess) {
                     this.setState({
                         password: response.data.Data,
-                        isShowMessage: true,
-                        isDisableTree: true
+                        isSuccess: true
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -112,7 +125,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, password, isShowMessage, isDisableTree, requestBy, redmineID } = this.state;
+        const { isShowConfirmBox, password, isSuccess, requestBy, redmineID } = this.state;
         const { funcPer } = this.props;
 
         if (!this.props.isValid) {
@@ -155,7 +168,7 @@ class Form extends Component {
                                         : this._renderInput("User password", password, false, true)}
                                     <div className="form-group row">
                                         <div className="col-lg-12">
-                                            {isShowMessage && (
+                                            {isSuccess && (
                                                 this._renderMessage("Make sure you copy it now, you won't be able to see it again.")
                                             )}
                                         </div>
@@ -174,7 +187,7 @@ class Form extends Component {
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
-                                    <Tree className="tree" nodes={JSON.parse(funcPer)} isDisable={isDisableTree} />
+                                    <Tree className="tree" nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
                                 </div>
                             </div>
                         </div>

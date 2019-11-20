@@ -1,4 +1,4 @@
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, combineReducers } from 'redux'
 import { connect } from 'react-redux'
 import { setSelectedFuncs } from './action'
 import React, { Component } from 'react';
@@ -35,7 +35,7 @@ class Tree extends Component {
     _onRadioCheck = (parent, node) => {
         const { nodes } = this.state;
 
-        this._checkRadio(parent, node);
+        this._checkedRadioNode(parent, node);
         this._checkedParentNode(parent, true);
 
         this.setState({ nodes });
@@ -49,9 +49,11 @@ class Tree extends Component {
                 }
                 return node.SubFunctionKeys;
             }
-            return node.FunctionKeys
+            return node.FunctionKeys;
         }
-        return node.Settings;
+        else{
+            return node.Settings.filter(funs => funs.Type != 0);
+        }
     }
 
     _getParentNode(level) {
@@ -101,7 +103,7 @@ class Tree extends Component {
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
-            if (node.isCheck === true) {
+            if (node.isCheck === true && !node.Settings) {
                 if (result == null) {
                     selectedFunc.push(node);
                 }
@@ -114,7 +116,7 @@ class Tree extends Component {
         this.props.setSelectedFuncs(selectedFunc);
     }
 
-    _checkRadio(parent, node) {
+    _checkedRadioNode(parent, node) {
         const { nodes } = this.state;
         const children = this._getChildNodes(parent);
 
@@ -170,7 +172,7 @@ class Tree extends Component {
         }
     }
 
-    _prepairListNode = () => {
+    _prepairListNodes() {
         const { nodes } = this.state;
         nodes.map(node => {
             this._checkedNodeInStateIfExistInSelectedNode(node, null)
@@ -180,28 +182,31 @@ class Tree extends Component {
     }
 
     componentDidMount() {
-        this._prepairListNode();
+        this._prepairListNodes();
     }
 
-    _checkedNodeInStateIfExistInSelectedNode = (node, parent) => {
+    _checkedNodeInStateIfExistInSelectedNode(node, parent) {
         const { selectedFunc } = this.state;
         const children = this._getChildNodes(node);
 
-        selectedFunc.map((n) => {
-            if (n.FunctionKey === node.FunctionKey) {
+        selectedFunc.map((selNode) => {
+            if (selNode.FunctionKey === node.FunctionKey) {
                 node.isCheck = true;
-                parent.isCheck = true;
+                if(parent) {
+                    parent.isCheck = true;
+                }
                 this._addNodeIntoSelectedFunc(node, false);
-            }
-            if (n.SubFunctionKeys) {
-                n.SubFunctionKeys.map((subFunc) => {
-                    if (subFunc.FunctionKey === node.FunctionKey) {
-                        node.isCheck = true;
-                        parent.isCheck = true;
-                        this._addNodeIntoSelectedFunc(subFunc, true);
-                    }
-                })
-            }
+
+                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                    selNode.SubFunctionKeys.map(selSubNode => {
+                        node.SubFunctionKeys.map(nodeSub => {
+                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                nodeSub.isCheck = true;
+                            }
+                        })
+                    })
+                }
+            }          
         })
 
         if (children) {
@@ -209,14 +214,6 @@ class Tree extends Component {
         }
 
         this.setState({ selectedFunc })
-    }
-
-    _openNodeSelected() {
-        const { index, node, level, onNodeSelect } = this.props;
-
-        if (node.isCheck === true) {
-            onNodeSelect(index, level)
-        }
     }
 
     render() {

@@ -35,7 +35,7 @@ class Tree extends Component {
     _onRadioCheck = (parent, node) => {
         const { nodes } = this.state;
 
-        this._checkRadio(parent, node);
+        this._checkedRadio(parent, node);
         this._checkedParentNode(parent, true);
 
         this.setState({ nodes });
@@ -51,7 +51,9 @@ class Tree extends Component {
             }
             return node.FunctionKeys
         }
-        return node.Settings;
+        else{
+            return node.Settings.filter(funs => funs.Type != 0);
+        }
     }
 
     _getParentNode(level) {
@@ -114,7 +116,7 @@ class Tree extends Component {
         this.props.setSelectedFuncs(selectedFunc);
     }
 
-    _checkRadio(parent, node) {
+    _checkedRadio(parent, node) {
         const { nodes } = this.state;
         const children = this._getChildNodes(parent);
 
@@ -129,22 +131,24 @@ class Tree extends Component {
         this.setState({ nodes });
     }
 
-    _checkedParentNode(parent, checked) {
+    _checkedParentNode(parent) {
         if (parent) {
-            parent.isCheck = checked;
-            this._addNodeIntoSelectedFunc(parent, false);
+            let flag = false;
+            this._getChildNodes(parent).forEach(child => {
+                if (child.isCheck == true) {
+                    flag = true;
+                }
+            })
+
+            parent.isCheck = flag;
+            if (flag == true) {
+                this._addNodeIntoSelectedFunc(parent, false);
+            }
 
             const parentLevel = [...parent.level];
             const parentNode = this._getParentNode(parentLevel);
             if (parentNode.length != 0) {
-                let flag = false;
-                this._getChildNodes(parentNode).forEach(child => {
-                    if (child.isCheck === true) {
-                        flag = true;
-                    }
-                })
-
-                this._checkedParentNode(parentNode, flag)
+                this._checkedParentNode(parentNode)
             }
         }
     }

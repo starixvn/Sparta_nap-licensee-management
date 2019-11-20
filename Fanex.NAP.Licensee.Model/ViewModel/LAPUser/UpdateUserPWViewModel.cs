@@ -10,8 +10,8 @@
 
         public bool IsValid { get; set; }
 
-        public string FuntionPermissions { get; set; }
+        public string FuntionPermission { get; set; }
 
-        public UserPermissionInfo OldFuncPermissions { get; set; }
+        public UserPermissionInfo OldFuncPermission { get; set; }
     }
 }

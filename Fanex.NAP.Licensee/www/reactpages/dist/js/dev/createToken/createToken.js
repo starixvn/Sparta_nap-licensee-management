@@ -5558,7 +5558,7 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
-                    oldFuncPer: defaultProps.oldFuncPermissions })
+                    oldFuncPer: defaultProps.oldFuncPermission })
             );
         }
     }]);
@@ -5581,8 +5581,6 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -5634,7 +5632,6 @@ var Form = function (_Component) {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
 
-            console.log(param);
             _this.props.createToken(param).then(function (response) {
                 if (response.data.IsSuccess === true) {
                     _this.setState({
@@ -5691,28 +5688,35 @@ var Form = function (_Component) {
     _createClass(Form, [{
         key: '_getParams',
         value: function _getParams() {
-            var oldFuncPer = this.props.oldFuncPer;
+            var _props = this.props,
+                oldFuncPer = _props.oldFuncPer,
+                user = _props.user;
+            var _state = this.state,
+                requestBy = _state.requestBy,
+                redmineID = _state.redmineID,
+                isCheckGroup = _state.isCheckGroup;
+
 
             return {
                 criteria: {
-                    SiteName: this.props.user.SiteName,
-                    UserID: this.props.user.UserID,
-                    RequestBy: this.state.requestBy,
-                    RedmineID: this.state.redmineID,
+                    SiteName: user.SiteName,
+                    UserID: user.UserID,
+                    RequestBy: requestBy,
+                    RedmineID: redmineID,
                     FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
                     FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
-                    OldUserGroupSEQ: this.state.isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
+                    OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
                 }
             };
         }
     }, {
         key: '_convertListSubFuncsToNode',
         value: function _convertListSubFuncsToNode(selectedFunc) {
-            selectedFunc.map(function (n) {
-                if (n.SubFunctionKeys && !Array.isArray(n.SubFunctionKeys)) {
-                    n.SubFunctionKeys = JSON.parse(n.SubFunctionKeys);
-                    n.SubFunctionKeys.map(function (subFunc, i) {
-                        n.SubFunctionKeys[i] = {
+            selectedFunc.map(function (selFunc) {
+                if (selFunc.SubFunctionKeys && !Array.isArray(selFunc.SubFunctionKeys)) {
+                    selFunc.SubFunctionKeys = JSON.parse(selFunc.SubFunctionKeys);
+                    selFunc.SubFunctionKeys.map(function (subFunc, i) {
+                        selFunc.SubFunctionKeys[i] = {
                             FunctionKey: subFunc
                         };
                     });
@@ -5756,20 +5760,25 @@ var Form = function (_Component) {
     }, {
         key: '_getFuncsRemoved',
         value: function _getFuncsRemoved() {
-            var oldFunctionPermission = this.state.oldFunctionPermission;
-            var newFuncPermissions = this.props.selectedFunc;
+            var oldFuncsPermission = this.state.oldFunctionPermission;
+            var newFuncsPermissions = this.props.selectedFunc;
             var funcsRemoved = [];
             var flag = false;
 
-            oldFunctionPermission.forEach(function (oldFunc) {
-                var node = _extends({}, oldFunc);
-                newFuncPermissions.forEach(function (newFunc) {
+            oldFuncsPermission.forEach(function (oldFunc) {
+                var node = {
+                    FunctionKey: oldFunc.FunctionKey,
+                    SubFunctionKeys: oldFunc.SubFunctionKeys ? oldFunc.SubFunctionKeys : null,
+                    Type: oldFunc.Type
+                };
+
+                newFuncsPermissions.forEach(function (newFunc) {
                     if (oldFunc.FunctionKey === newFunc.FunctionKey) {
                         flag = true;
                     }
                 });
 
-                if (flag == false) {
+                if (flag === false) {
                     funcsRemoved.push(node);
                 }
 
@@ -5783,14 +5792,19 @@ var Form = function (_Component) {
         value: function _getFuncsAdded() {
             var _this3 = this;
 
-            var oldFunctionPermission = this.state.oldFunctionPermission;
-            var newFuncPermissions = this.props.selectedFunc;
+            var oldFuncsPermission = this.state.oldFunctionPermission;
+            var newFuncsPermissions = this.props.selectedFunc;
             var funcsAdded = [];
             var flag = true;
 
-            newFuncPermissions.map(function (newFunc) {
-                var node = _extends({}, newFunc);
-                oldFunctionPermission.map(function (oldFunc) {
+            newFuncsPermissions.map(function (newFunc) {
+                var node = {
+                    FunctionKey: newFunc.FunctionKey,
+                    SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
+                    Type: newFunc.Type
+                };
+
+                oldFuncsPermission.map(function (oldFunc) {
                     if (newFunc.FunctionKey === oldFunc.FunctionKey) {
                         flag = _this3._checkChangeSubFuncs(oldFunc, newFunc);
                     }
@@ -5824,8 +5838,6 @@ var Form = function (_Component) {
 
                     isExist = false;
                 });
-
-                return flag;
             }
 
             return flag;
@@ -5923,18 +5935,18 @@ var Form = function (_Component) {
         value: function render() {
             var _this6 = this;
 
-            var _state = this.state,
-                isCopy = _state.isCopy,
-                requestBy = _state.requestBy,
-                redmineID = _state.redmineID,
-                token = _state.token,
-                isCheckGroup = _state.isCheckGroup,
-                isSuccess = _state.isSuccess;
-            var _props = this.props,
-                user = _props.user,
-                isValid = _props.isValid,
-                funcPer = _props.funcPer,
-                oldFuncPer = _props.oldFuncPer;
+            var _state2 = this.state,
+                isCopy = _state2.isCopy,
+                requestBy = _state2.requestBy,
+                redmineID = _state2.redmineID,
+                token = _state2.token,
+                isCheckGroup = _state2.isCheckGroup,
+                isSuccess = _state2.isSuccess;
+            var _props2 = this.props,
+                user = _props2.user,
+                isValid = _props2.isValid,
+                funcPer = _props2.funcPer,
+                oldFuncPer = _props2.oldFuncPer;
 
 
             if (!isValid) {
@@ -6210,51 +6222,10 @@ var Tree = function (_Component) {
             var nodes = _this.state.nodes;
 
 
-            _this._checkRadio(parent, node);
+            _this._checkedRadioNode(parent, node);
             _this._checkedParentNode(parent, true);
 
             _this.setState({ nodes: nodes });
-        };
-
-        _this._prepairListNode = function () {
-            var nodes = _this.state.nodes;
-
-            nodes.map(function (node) {
-                _this._checkedNodeInStateIfExistInSelectedNode(node, null);
-            });
-
-            return nodes;
-        };
-
-        _this._checkedNodeInStateIfExistInSelectedNode = function (node, parent) {
-            var selectedFunc = _this.state.selectedFunc;
-
-            var children = _this._getChildNodes(node);
-
-            selectedFunc.map(function (n) {
-                if (n.FunctionKey === node.FunctionKey) {
-                    node.isCheck = true;
-                    parent.isCheck = true;
-                    _this._addNodeIntoSelectedFunc(node, false);
-                }
-                if (n.SubFunctionKeys) {
-                    n.SubFunctionKeys.map(function (subFunc) {
-                        if (subFunc.FunctionKey === node.FunctionKey) {
-                            node.isCheck = true;
-                            parent.isCheck = true;
-                            _this._addNodeIntoSelectedFunc(subFunc, true);
-                        }
-                    });
-                }
-            });
-
-            if (children) {
-                children.map(function (child) {
-                    return _this._checkedNodeInStateIfExistInSelectedNode(child, node);
-                });
-            }
-
-            _this.setState({ selectedFunc: selectedFunc });
         };
 
         _this.state = {
@@ -6275,8 +6246,11 @@ var Tree = function (_Component) {
                     return node.SubFunctionKeys;
                 }
                 return node.FunctionKeys;
+            } else {
+                return node.Settings.filter(function (funs) {
+                    return funs.Type != 0;
+                });
             }
-            return node.Settings;
         }
     }, {
         key: '_getParentNode',
@@ -6331,7 +6305,7 @@ var Tree = function (_Component) {
                 var result = selectedFunc.find(function (n) {
                     return n.FunctionKey === node.FunctionKey;
                 });
-                if (node.isCheck === true) {
+                if (node.isCheck === true && !node.Settings) {
                     if (result == null) {
                         selectedFunc.push(node);
                     }
@@ -6343,8 +6317,8 @@ var Tree = function (_Component) {
             this.props.setSelectedFuncs(selectedFunc);
         }
     }, {
-        key: '_checkRadio',
-        value: function _checkRadio(parent, node) {
+        key: '_checkedRadioNode',
+        value: function _checkedRadioNode(parent, node) {
             var nodes = this.state.nodes;
 
             var children = this._getChildNodes(parent);
@@ -6404,28 +6378,64 @@ var Tree = function (_Component) {
             }
         }
     }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this._prepairListNode();
+        key: '_prepairListNodes',
+        value: function _prepairListNodes() {
+            var _this3 = this;
+
+            var nodes = this.state.nodes;
+
+            nodes.map(function (node) {
+                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
+            });
+
+            return nodes;
         }
     }, {
-        key: '_openNodeSelected',
-        value: function _openNodeSelected() {
-            var _props = this.props,
-                index = _props.index,
-                node = _props.node,
-                level = _props.level,
-                onNodeSelect = _props.onNodeSelect;
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._prepairListNodes();
+        }
+    }, {
+        key: '_checkedNodeInStateIfExistInSelectedNode',
+        value: function _checkedNodeInStateIfExistInSelectedNode(node, parent) {
+            var _this4 = this;
 
+            var selectedFunc = this.state.selectedFunc;
 
-            if (node.isCheck === true) {
-                onNodeSelect(index, level);
+            var children = this._getChildNodes(node);
+
+            selectedFunc.map(function (selNode) {
+                if (selNode.FunctionKey === node.FunctionKey) {
+                    node.isCheck = true;
+                    if (parent) {
+                        parent.isCheck = true;
+                    }
+                    _this4._addNodeIntoSelectedFunc(node, false);
+
+                    if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                        selNode.SubFunctionKeys.map(function (selSubNode) {
+                            node.SubFunctionKeys.map(function (nodeSub) {
+                                if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                    nodeSub.isCheck = true;
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    return _this4._checkedNodeInStateIfExistInSelectedNode(child, node);
+                });
             }
+
+            this.setState({ selectedFunc: selectedFunc });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this5 = this;
 
             var nodes = this.state.nodes;
 
@@ -6439,12 +6449,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this3.props.isDisable,
+                        isDisable: _this5.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this3._getChildNodes,
-                        onNodeSelect: _this3._onNodeSelect,
-                        onNodeCheck: _this3._onNodeCheck,
-                        onRadioCheck: _this3._onRadioCheck
+                        getChildNodes: _this5._getChildNodes,
+                        onNodeSelect: _this5._onNodeSelect,
+                        onNodeCheck: _this5._onNodeCheck,
+                        onRadioCheck: _this5._onRadioCheck
                     });
                 })
             );
@@ -6484,6 +6494,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _language = __webpack_require__(276);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6501,7 +6513,7 @@ var TreeNode = function (_Component) {
         var _this = _possibleConstructorReturn(this, (TreeNode.__proto__ || Object.getPrototypeOf(TreeNode)).call(this, props));
 
         _this.getNodeLabel = function (node) {
-            return node.DisplayKey;
+            return _language.language[node.DisplayKey] ? _language.language[node.DisplayKey] : node.DisplayKey;
         };
 
         return _this;
@@ -6515,14 +6527,18 @@ var TreeNode = function (_Component) {
             var _props = this.props,
                 node = _props.node,
                 parent = _props.parent,
-                getChildNodes = _props.getChildNodes,
                 level = _props.level,
+                getChildNodes = _props.getChildNodes,
+                isSubChild = _props.isSubChild,
+                isDisable = _props.isDisable,
                 onNodeSelect = _props.onNodeSelect,
                 onNodeCheck = _props.onNodeCheck,
-                onRadioCheck = _props.onRadioCheck,
-                isSubChild = _props.isSubChild,
-                isDisable = _props.isDisable;
+                onRadioCheck = _props.onRadioCheck;
 
+
+            if (!parent && getChildNodes(node).length === 0) {
+                return null;
+            }
 
             return _react2.default.createElement(
                 _react2.default.Fragment,
@@ -6574,7 +6590,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && isDisable == false && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,
@@ -6622,6 +6638,210 @@ var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionT
 }));
 
 exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
+
+/***/ }),
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var language = exports.language = {
+    "lbl1X2": "1 X 2",
+    "lbl3WayHandicap": "3-Way Handicap",
+    "lblAdministration": "Administration",
+    "lblAffiliate": "Affiliate",
+    "lblAffiliateManagement": "Affiliate Management",
+    "lblAffiliateStatistics": "Affiliate Statistics",
+    "lblAGCasinoBalance": "AG Casino Balance",
+    "lblAGCasinoWinLoss": "AG Casino Win Loss",
+    "lblBettingTicketCenter": "Betting Ticket Center",
+    "lblBONTeamToScore": "B/O/N Team To Score",
+    "lblCashOutWinLoss": "Cash Out Win Loss",
+    "lblCasinoTurnover": "Casino Turnover",
+    "lblCleanSheet": "Clean Sheet",
+    "lblColossusBetsWinLoss": "Colossus Bets Win Loss",
+    "lblCommissionGroup": "Commission Group",
+    "lblCommissionGroupList": "Commission Group List",
+    "lblCorrectScore": "Correct Score",
+    "lblCurrency": "Currency",
+    "lblCustomerBalance": "Customer Balance",
+    "lblCustomerList": "Customer List",
+    "lblCustomerLog": "Customer Log",
+    "lblCustomerManagement": "Customer Management",
+    "lblCustomerPendingFunds": "Customer Pending Funds",
+    "lblCustomerTurnover": "Customer Turnover",
+    "lblCustomerWinLoss": "Customer Win Loss",
+    "lblDailyBets": "Daily Bets",
+    "lblDashboard": "DASHBOARD",
+    "lblDoubleChance": "Double Chance",
+    "lblEditBetSetting": "Edit Bet Setting",
+    "lblExchangeWinLoss": "Exchange Win Loss",
+    "lblFGLG": "FG/LG",
+    "lblForecast": "Forecast",
+    "lblGoldDeluxeWinloss": "Gold Deluxe Win Loss",
+    "lblHandicapOverUnderForecast": "Handicap/Over Under/Live",
+    "lblHandicapOverUnderLive": "Handicap/Over Under/Live",
+    "lblHomeDrawAwayNoBet": "Home/Draw/Away No Bet",
+    "lblHTFT": "HT/FT",
+    "lblLastBetsMonitoring": "Last Bets Monitoring",
+    "lblLicenseeWinLoss": "Licensee Win Loss",
+    "lblLiveReport": "Live Report",
+    "lblMarketingTools": "Marketing Tools",
+    "lblMatchWinLoss": "Win Loss By Match",
+    "lblMessage": "Message",
+    "lblMixParlay": "Mix Parlay",
+    "lblMoneyLine": "Moneyline",
+    "lblNewBonusManagement": "Bonus Management",
+    "lblNewBonusReport": "Bonus Report",
+    "lblNewBonusSystem": "New Bonus System",
+    "lblNewCancelExtendBonus": "Cancel/Extend Bonus",
+    "lblNewCreateBonus": "Create Bonus",
+    "lblNewExpiringBonusReport": "Expiring Bonus Report",
+    "lblNewMemberBonusReport": "Member Bonus Report",
+    "lblNotification": "Notification",
+    "lblOddEven1x2DND": "Odd/Even + 1x2 + DND",
+    "lblOutright": "Outright",
+    "lblPayment": "Payment",
+    "lblPlatformWinLoss": "Win Loss By Platform",
+    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
+    "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
+    "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
+    "lblPlayerAdmin_PL_BA": "Update BA Status",
+    "lblPlayerAdmin_PL_OddGroups": "Update Odds Group",
+    "lblPlayerAdmin_PL_SpecialLevel": "Update Special Level",
+    "lblPlayerAdmin_PL_Status": "Update Status",
+    "lblPlayerAdmin_Setting_BankInfo": "Bank Info",
+    "lblPlayerAdmin_Setting_ChangePassword": "Change Password",
+    "lblPlayerAdmin_Setting_FundTransferLimit": "Fund Transfer Limit",
+    "lblPlayerAdmin_Setting_ResetBankInfo": "Reset Bank Info",
+    "lblPlayerAdmin_Setting_ResetPassword": "Reset Password",
+    "lblPlayerAdmin": "Player Administration",
+    "lblPlayerAdminBetLimit": "Bet Limit",
+    "lblPlayerAdminBetList": "Bet List",
+    "lblPlayerAdminFundTransfer": "Fund Transfer",
+    "lblPlayerAdminLog": "Log",
+    "lblPlayerAdminMessage": "Message",
+    "lblPlayerAdminNote": "Note",
+    "lblPlayerAdminPlayerInfo": "Player Info",
+    "lblPlayerAdminPlayerList": "Player List",
+    "lblPlayerAdminPlayerStatement": "Statement",
+    "lblPlayerAdminSetting": "Setting",
+    "lblReports": "Reports",
+    "lblResettlement": "Resettlement",
+    "lblResults": "Results",
+    "lblSettledMatchCount": "Settled Match Count",
+    "lblSubsidiaryFundQuota": "Subsidiary Fund Quota",
+    "lblSubsidiaryManagement": "Subsidiary Setting",
+    "lblSubsidiaryPerformance": "Subsidiary Performance",
+    "lblTotalBets": "Total Bets",
+    "lblTotalGoal": "Total Goal",
+    "lblToWinToNil": "To Win To Nil",
+    "lblTurnover": "Turnover",
+    "lblWeeklyLiveMatches": "Weekly Live Matches",
+    "lblWgChartLicenseeWL": "Licensee Win Loss",
+    "lblWgChartTurnOver": "Turnover by Platform",
+    "lblWgCustomerBalance": "Customer Balance",
+    "lblWgDepositToday": "Deposit(today)",
+    "lblWgOnlineCustomers": "Online Customers",
+    "lblWgPendingFunds": "Pending Funds",
+    "lblWgRegisteredCustomer": "Registered Customers",
+    "lblWgWithdrawToday": "Withdraw(today)",
+    "lblWinLossByBetType": "Win Loss By Bet Type",
+    "lblWinLossByLeague": "Win Loss By League",
+    "lblWinLossByProducts": "Win Loss By Products",
+    "lblWinLossByTimeZone": "Win Loss By Time Zone",
+    "lblWinLossReport": "Reports"
+};
 
 /***/ })
 ],[185]);

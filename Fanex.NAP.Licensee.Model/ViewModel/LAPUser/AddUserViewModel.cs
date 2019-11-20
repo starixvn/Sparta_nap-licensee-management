@@ -10,6 +10,6 @@
 
         public bool IsExist { get; set; }
 
-        public string FuntionPermissions { get; set; }
+        public string FuntionPermission { get; set; }
     }
 }

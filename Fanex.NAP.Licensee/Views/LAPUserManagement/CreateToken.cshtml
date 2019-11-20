@@ -27,8 +27,8 @@
             user: @Html.Raw(serializer.Serialize(Model.UserInfo)),
             timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining)),
             isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
-            funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermissions)),
-            oldFuncPermissions: @Html.Raw(serializer.Serialize(Model.OldFuncPermissions))
+            funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermission)),
+            oldFuncPermission: @Html.Raw(serializer.Serialize(Model.OldFuncPermission))
         }
     </script>
 

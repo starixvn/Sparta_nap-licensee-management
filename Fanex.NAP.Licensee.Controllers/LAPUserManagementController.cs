@@ -29,16 +29,13 @@
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
-            var filePath = "~/App_Data/FunctionPermission.json";
-            var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
-
             var viewModel = new AddUserViewModel
             {
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
                 IsExist = _userService.GetUserInfo(siteName, userID) != null,
-                FuntionPermissions = jsonStr
+                FuntionPermission = GetFunctionPermissionFileContent()
             };
 
             return View(viewModel);
@@ -81,8 +78,6 @@
         [HttpGet]
         public ActionResult CreateToken(string siteName, string userID)
         {
-            var filePath = "~/App_Data/FunctionPermission.json";
-            var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
             var result = _userService.GetUserInfo(siteName, userID);
 
             if (result == null)
@@ -96,8 +91,8 @@
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
-                FuntionPermissions = jsonStr,
-                OldFuncPermissions = userFuncPerInfo
+                FuntionPermission = GetFunctionPermissionFileContent(),
+                OldFuncPermission = userFuncPerInfo
             };
 
             return View(viewModel);
@@ -185,6 +180,14 @@
             }
 
             return error.Length > 0 ? error.ToString() : null;
+        }
+
+        private string GetFunctionPermissionFileContent()
+        {
+            var filePath = "~/App_Data/FunctionPermission.json";
+            var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
+
+            return jsonStr;
         }
     }
 }
