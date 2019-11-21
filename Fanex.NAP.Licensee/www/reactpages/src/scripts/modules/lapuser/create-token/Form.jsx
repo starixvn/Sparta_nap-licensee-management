@@ -268,7 +268,7 @@ class Form extends Component {
 
     render() {
         const { isCopy, requestBy, redmineID, token, isCheckGroup, isSuccess } = this.state;
-        const { user, isValid, funcPer, oldFuncPer } = this.props;
+        const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
             return <b className='red'>This username is not allowed to create new token in this case!</b>;
@@ -277,7 +277,7 @@ class Form extends Component {
         return (
             <div>
                 <div className="add-form">
-                    <Loader isLoading={this.props.isLoading} />
+                    <Loader isLoading={isLoading} />
                     <div className="row">
                         <div className="col-lg-5 col-md-6 col-xs-12">
                             <div className="panel panel-default" >
@@ -318,11 +318,9 @@ class Form extends Component {
                                             <div className='form-group row'>
                                                 <div className="col-lg-12">
                                                     {isSuccess &&
-                                                        (
-                                                            <div className='form-group row'>
-                                                                <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
-                                                            </div>
-                                                        )
+                                                        <div className='form-group row'>
+                                                            <label className='col-lg-12 col-sm-12 col-md-12'>New token "{token}" has been created. Make sure you copy it now, you won't be able to see it again</label>
+                                                        </div>
                                                     }
                                                 </div>
                                             </div>
@@ -336,13 +334,15 @@ class Form extends Component {
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
                                     {
-                                        this.props.oldFuncPer.UserGroup &&
+                                        oldFuncPer.UserGroup &&
                                         <div className='form-group row'>
                                             <label className='col-lg-3 col-sm-3 col-md-3'>User Group</label>
                                             <div className='col-lg-9 col-sm-9'>
                                                 <div className="form-group">
                                                     <label className="checkbox-inline">
-                                                        <input type="checkbox" checked={isCheckGroup} onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
+                                                        <input type="checkbox" checked={isCheckGroup} 
+                                                        disabled={isSuccess}
+                                                        onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
                                                         {oldFuncPer.UserGroup.GroupName}
                                                     </label>
                                                 </div>

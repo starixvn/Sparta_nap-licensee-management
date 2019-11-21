@@ -1,4 +1,4 @@
-webpackJsonp([12],[
+webpackJsonp([11],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5363,7 +5363,124 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 /* 104 */,
 /* 105 */,
 /* 106 */,
-/* 107 */,
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var language = exports.language = {
+    "lbl1X2": "1 X 2",
+    "lbl3WayHandicap": "3-Way Handicap",
+    "lblAdministration": "Administration",
+    "lblAffiliate": "Affiliate",
+    "lblAffiliateManagement": "Affiliate Management",
+    "lblAffiliateStatistics": "Affiliate Statistics",
+    "lblAGCasinoBalance": "AG Casino Balance",
+    "lblAGCasinoWinLoss": "AG Casino Win Loss",
+    "lblBettingTicketCenter": "Betting Ticket Center",
+    "lblBONTeamToScore": "B/O/N Team To Score",
+    "lblCashOutWinLoss": "Cash Out Win Loss",
+    "lblCasinoTurnover": "Casino Turnover",
+    "lblCleanSheet": "Clean Sheet",
+    "lblColossusBetsWinLoss": "Colossus Bets Win Loss",
+    "lblCommissionGroup": "Commission Group",
+    "lblCommissionGroupList": "Commission Group List",
+    "lblCorrectScore": "Correct Score",
+    "lblCurrency": "Currency",
+    "lblCustomerBalance": "Customer Balance",
+    "lblCustomerList": "Customer List",
+    "lblCustomerLog": "Customer Log",
+    "lblCustomerManagement": "Customer Management",
+    "lblCustomerPendingFunds": "Customer Pending Funds",
+    "lblCustomerTurnover": "Customer Turnover",
+    "lblCustomerWinLoss": "Customer Win Loss",
+    "lblDailyBets": "Daily Bets",
+    "lblDashboard": "DASHBOARD",
+    "lblDoubleChance": "Double Chance",
+    "lblEditBetSetting": "Edit Bet Setting",
+    "lblExchangeWinLoss": "Exchange Win Loss",
+    "lblFGLG": "FG/LG",
+    "lblForecast": "Forecast",
+    "lblGoldDeluxeWinloss": "Gold Deluxe Win Loss",
+    "lblHandicapOverUnderForecast": "Handicap/Over Under/Live",
+    "lblHandicapOverUnderLive": "Handicap/Over Under/Live",
+    "lblHomeDrawAwayNoBet": "Home/Draw/Away No Bet",
+    "lblHTFT": "HT/FT",
+    "lblLastBetsMonitoring": "Last Bets Monitoring",
+    "lblLicenseeWinLoss": "Licensee Win Loss",
+    "lblLiveReport": "Live Report",
+    "lblMarketingTools": "Marketing Tools",
+    "lblMatchWinLoss": "Win Loss By Match",
+    "lblMessage": "Message",
+    "lblMixParlay": "Mix Parlay",
+    "lblMoneyLine": "Moneyline",
+    "lblNewBonusManagement": "Bonus Management",
+    "lblNewBonusReport": "Bonus Report",
+    "lblNewBonusSystem": "New Bonus System",
+    "lblNewCancelExtendBonus": "Cancel/Extend Bonus",
+    "lblNewCreateBonus": "Create Bonus",
+    "lblNewExpiringBonusReport": "Expiring Bonus Report",
+    "lblNewMemberBonusReport": "Member Bonus Report",
+    "lblNotification": "Notification",
+    "lblOddEven1x2DND": "Odd/Even + 1x2 + DND",
+    "lblOutright": "Outright",
+    "lblPayment": "Payment",
+    "lblPlatformWinLoss": "Win Loss By Platform",
+    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
+    "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
+    "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
+    "lblPlayerAdmin_PL_BA": "Update BA Status",
+    "lblPlayerAdmin_PL_OddGroups": "Update Odds Group",
+    "lblPlayerAdmin_PL_SpecialLevel": "Update Special Level",
+    "lblPlayerAdmin_PL_Status": "Update Status",
+    "lblPlayerAdmin_Setting_BankInfo": "Bank Info",
+    "lblPlayerAdmin_Setting_ChangePassword": "Change Password",
+    "lblPlayerAdmin_Setting_FundTransferLimit": "Fund Transfer Limit",
+    "lblPlayerAdmin_Setting_ResetBankInfo": "Reset Bank Info",
+    "lblPlayerAdmin_Setting_ResetPassword": "Reset Password",
+    "lblPlayerAdmin": "Player Administration",
+    "lblPlayerAdminBetLimit": "Bet Limit",
+    "lblPlayerAdminBetList": "Bet List",
+    "lblPlayerAdminFundTransfer": "Fund Transfer",
+    "lblPlayerAdminLog": "Log",
+    "lblPlayerAdminMessage": "Message",
+    "lblPlayerAdminNote": "Note",
+    "lblPlayerAdminPlayerInfo": "Player Info",
+    "lblPlayerAdminPlayerList": "Player List",
+    "lblPlayerAdminPlayerStatement": "Statement",
+    "lblPlayerAdminSetting": "Setting",
+    "lblReports": "Reports",
+    "lblResettlement": "Resettlement",
+    "lblResults": "Results",
+    "lblSettledMatchCount": "Settled Match Count",
+    "lblSubsidiaryFundQuota": "Subsidiary Fund Quota",
+    "lblSubsidiaryManagement": "Subsidiary Setting",
+    "lblSubsidiaryPerformance": "Subsidiary Performance",
+    "lblTotalBets": "Total Bets",
+    "lblTotalGoal": "Total Goal",
+    "lblToWinToNil": "To Win To Nil",
+    "lblTurnover": "Turnover",
+    "lblWeeklyLiveMatches": "Weekly Live Matches",
+    "lblWgChartLicenseeWL": "Licensee Win Loss",
+    "lblWgChartTurnOver": "Turnover by Platform",
+    "lblWgCustomerBalance": "Customer Balance",
+    "lblWgDepositToday": "Deposit(today)",
+    "lblWgOnlineCustomers": "Online Customers",
+    "lblWgPendingFunds": "Pending Funds",
+    "lblWgRegisteredCustomer": "Registered Customers",
+    "lblWgWithdrawToday": "Withdraw(today)",
+    "lblWinLossByBetType": "Win Loss By Bet Type",
+    "lblWinLossByLeague": "Win Loss By League",
+    "lblWinLossByProducts": "Win Loss By Products",
+    "lblWinLossByTimeZone": "Win Loss By Time Zone",
+    "lblWinLossReport": "Reports"
+};
+
+/***/ }),
 /* 108 */,
 /* 109 */,
 /* 110 */,
@@ -5398,7 +5515,8 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 /* 139 */,
 /* 140 */,
 /* 141 */,
-/* 142 */
+/* 142 */,
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5415,7 +5533,7 @@ var _site = __webpack_require__(9);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _actionTypes = __webpack_require__(143);
+var _actionTypes = __webpack_require__(144);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5437,7 +5555,7 @@ exports.createToken = createToken;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5450,7 +5568,6 @@ var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
 var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
 
 /***/ }),
-/* 144 */,
 /* 145 */,
 /* 146 */,
 /* 147 */,
@@ -5491,7 +5608,8 @@ var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
 /* 182 */,
 /* 183 */,
 /* 184 */,
-/* 185 */
+/* 185 */,
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5505,7 +5623,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _reactRedux = __webpack_require__(4);
 
-var _Form = __webpack_require__(186);
+var _Form = __webpack_require__(187);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -5517,7 +5635,7 @@ var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reducer = __webpack_require__(189);
+var _reducer = __webpack_require__(190);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -5572,7 +5690,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5588,7 +5706,7 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(142);
+var _action = __webpack_require__(143);
 
 var _Loader = __webpack_require__(52);
 
@@ -5606,7 +5724,7 @@ var _NumericInput = __webpack_require__(54);
 
 var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
-var _Tree = __webpack_require__(187);
+var _Tree = __webpack_require__(188);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
@@ -5945,6 +6063,7 @@ var Form = function (_Component) {
             var _props2 = this.props,
                 user = _props2.user,
                 isValid = _props2.isValid,
+                isLoading = _props2.isLoading,
                 funcPer = _props2.funcPer,
                 oldFuncPer = _props2.oldFuncPer;
 
@@ -5963,7 +6082,7 @@ var Form = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'add-form' },
-                    _react2.default.createElement(_Loader2.default, { isLoading: this.props.isLoading }),
+                    _react2.default.createElement(_Loader2.default, { isLoading: isLoading }),
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -6094,7 +6213,7 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
-                                    this.props.oldFuncPer.UserGroup && _react2.default.createElement(
+                                    oldFuncPer.UserGroup && _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row' },
                                         _react2.default.createElement(
@@ -6111,7 +6230,9 @@ var Form = function (_Component) {
                                                 _react2.default.createElement(
                                                     'label',
                                                     { className: 'checkbox-inline' },
-                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup, onChange: function onChange(e) {
+                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup,
+                                                        disabled: isSuccess,
+                                                        onChange: function onChange(e) {
                                                             return _this6.setState({ isCheckGroup: e.target.checked });
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
@@ -6154,7 +6275,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6170,13 +6291,13 @@ var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(4);
 
-var _action = __webpack_require__(142);
+var _action = __webpack_require__(143);
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TreeNode = __webpack_require__(188);
+var _TreeNode = __webpack_require__(189);
 
 var _TreeNode2 = _interopRequireDefault(_TreeNode);
 
@@ -6476,7 +6597,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Tree);
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6494,7 +6615,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _language = __webpack_require__(276);
+var _language = __webpack_require__(107);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6609,7 +6730,7 @@ var TreeNode = function (_Component) {
 exports.default = TreeNode;
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6623,7 +6744,7 @@ var _redux = __webpack_require__(2);
 
 var _loaderReducer = __webpack_require__(83);
 
-var _actionTypes = __webpack_require__(143);
+var _actionTypes = __webpack_require__(144);
 
 var _createReducer2 = __webpack_require__(27);
 
@@ -6639,210 +6760,6 @@ var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionT
 
 exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
 
-/***/ }),
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var language = exports.language = {
-    "lbl1X2": "1 X 2",
-    "lbl3WayHandicap": "3-Way Handicap",
-    "lblAdministration": "Administration",
-    "lblAffiliate": "Affiliate",
-    "lblAffiliateManagement": "Affiliate Management",
-    "lblAffiliateStatistics": "Affiliate Statistics",
-    "lblAGCasinoBalance": "AG Casino Balance",
-    "lblAGCasinoWinLoss": "AG Casino Win Loss",
-    "lblBettingTicketCenter": "Betting Ticket Center",
-    "lblBONTeamToScore": "B/O/N Team To Score",
-    "lblCashOutWinLoss": "Cash Out Win Loss",
-    "lblCasinoTurnover": "Casino Turnover",
-    "lblCleanSheet": "Clean Sheet",
-    "lblColossusBetsWinLoss": "Colossus Bets Win Loss",
-    "lblCommissionGroup": "Commission Group",
-    "lblCommissionGroupList": "Commission Group List",
-    "lblCorrectScore": "Correct Score",
-    "lblCurrency": "Currency",
-    "lblCustomerBalance": "Customer Balance",
-    "lblCustomerList": "Customer List",
-    "lblCustomerLog": "Customer Log",
-    "lblCustomerManagement": "Customer Management",
-    "lblCustomerPendingFunds": "Customer Pending Funds",
-    "lblCustomerTurnover": "Customer Turnover",
-    "lblCustomerWinLoss": "Customer Win Loss",
-    "lblDailyBets": "Daily Bets",
-    "lblDashboard": "DASHBOARD",
-    "lblDoubleChance": "Double Chance",
-    "lblEditBetSetting": "Edit Bet Setting",
-    "lblExchangeWinLoss": "Exchange Win Loss",
-    "lblFGLG": "FG/LG",
-    "lblForecast": "Forecast",
-    "lblGoldDeluxeWinloss": "Gold Deluxe Win Loss",
-    "lblHandicapOverUnderForecast": "Handicap/Over Under/Live",
-    "lblHandicapOverUnderLive": "Handicap/Over Under/Live",
-    "lblHomeDrawAwayNoBet": "Home/Draw/Away No Bet",
-    "lblHTFT": "HT/FT",
-    "lblLastBetsMonitoring": "Last Bets Monitoring",
-    "lblLicenseeWinLoss": "Licensee Win Loss",
-    "lblLiveReport": "Live Report",
-    "lblMarketingTools": "Marketing Tools",
-    "lblMatchWinLoss": "Win Loss By Match",
-    "lblMessage": "Message",
-    "lblMixParlay": "Mix Parlay",
-    "lblMoneyLine": "Moneyline",
-    "lblNewBonusManagement": "Bonus Management",
-    "lblNewBonusReport": "Bonus Report",
-    "lblNewBonusSystem": "New Bonus System",
-    "lblNewCancelExtendBonus": "Cancel/Extend Bonus",
-    "lblNewCreateBonus": "Create Bonus",
-    "lblNewExpiringBonusReport": "Expiring Bonus Report",
-    "lblNewMemberBonusReport": "Member Bonus Report",
-    "lblNotification": "Notification",
-    "lblOddEven1x2DND": "Odd/Even + 1x2 + DND",
-    "lblOutright": "Outright",
-    "lblPayment": "Payment",
-    "lblPlatformWinLoss": "Win Loss By Platform",
-    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
-    "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
-    "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
-    "lblPlayerAdmin_PL_BA": "Update BA Status",
-    "lblPlayerAdmin_PL_OddGroups": "Update Odds Group",
-    "lblPlayerAdmin_PL_SpecialLevel": "Update Special Level",
-    "lblPlayerAdmin_PL_Status": "Update Status",
-    "lblPlayerAdmin_Setting_BankInfo": "Bank Info",
-    "lblPlayerAdmin_Setting_ChangePassword": "Change Password",
-    "lblPlayerAdmin_Setting_FundTransferLimit": "Fund Transfer Limit",
-    "lblPlayerAdmin_Setting_ResetBankInfo": "Reset Bank Info",
-    "lblPlayerAdmin_Setting_ResetPassword": "Reset Password",
-    "lblPlayerAdmin": "Player Administration",
-    "lblPlayerAdminBetLimit": "Bet Limit",
-    "lblPlayerAdminBetList": "Bet List",
-    "lblPlayerAdminFundTransfer": "Fund Transfer",
-    "lblPlayerAdminLog": "Log",
-    "lblPlayerAdminMessage": "Message",
-    "lblPlayerAdminNote": "Note",
-    "lblPlayerAdminPlayerInfo": "Player Info",
-    "lblPlayerAdminPlayerList": "Player List",
-    "lblPlayerAdminPlayerStatement": "Statement",
-    "lblPlayerAdminSetting": "Setting",
-    "lblReports": "Reports",
-    "lblResettlement": "Resettlement",
-    "lblResults": "Results",
-    "lblSettledMatchCount": "Settled Match Count",
-    "lblSubsidiaryFundQuota": "Subsidiary Fund Quota",
-    "lblSubsidiaryManagement": "Subsidiary Setting",
-    "lblSubsidiaryPerformance": "Subsidiary Performance",
-    "lblTotalBets": "Total Bets",
-    "lblTotalGoal": "Total Goal",
-    "lblToWinToNil": "To Win To Nil",
-    "lblTurnover": "Turnover",
-    "lblWeeklyLiveMatches": "Weekly Live Matches",
-    "lblWgChartLicenseeWL": "Licensee Win Loss",
-    "lblWgChartTurnOver": "Turnover by Platform",
-    "lblWgCustomerBalance": "Customer Balance",
-    "lblWgDepositToday": "Deposit(today)",
-    "lblWgOnlineCustomers": "Online Customers",
-    "lblWgPendingFunds": "Pending Funds",
-    "lblWgRegisteredCustomer": "Registered Customers",
-    "lblWgWithdrawToday": "Withdraw(today)",
-    "lblWinLossByBetType": "Win Loss By Bet Type",
-    "lblWinLossByLeague": "Win Loss By League",
-    "lblWinLossByProducts": "Win Loss By Products",
-    "lblWinLossByTimeZone": "Win Loss By Time Zone",
-    "lblWinLossReport": "Reports"
-};
-
 /***/ })
-],[185]);
+],[186]);
 //# sourceMappingURL=createToken.js.map
