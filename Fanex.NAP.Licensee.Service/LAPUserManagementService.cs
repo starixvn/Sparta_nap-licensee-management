@@ -42,7 +42,7 @@
             return result;
         }
 
-        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false)
+        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria)
         {
             var result = new ResultData<string>();
 
@@ -57,12 +57,12 @@
                 criteria.OldUserGroupSEQ
             };
 
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_UpdatePW"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Update"))
             {
                 result.IsSuccess = (int)db.ExecuteScalar(parameter) == 1;
             }
 
-            WriteUpdateUserPWActionLog(criteria, isBackgroundJob);
+            WriteUpdateUserPWActionLog(criteria);
 
             return result;
         }
@@ -129,41 +129,32 @@
             return result.ToString();
         }
 
-        private static void WriteUpdateUserPWActionLog(LAPUserCriteria value, bool isBackgroundJob)
+        private static void WriteUpdateUserPWActionLog(LAPUserCriteria value)
         {
             var actionLogCriteria = new ActionLogCriteria
             {
                 ActionId = (int)ActionLogType.LAPUser_UpdateUserPWD,
                 CustId = value.UserLoginId,
                 UserId = value.UserLoginId,
-                Doing = BuildUpdatingUserLogContent(value, isBackgroundJob)
+                Doing = BuildUpdatingUserLogContent(value)
             };
 
             _logWriter.WriteActionLog(actionLogCriteria);
         }
 
-        private static string UpdatingByUserLogContent(LAPUserCriteria value)
+        private static string BuildUpdatingUserLogContent(LAPUserCriteria value)
         {
             var result = new StringBuilder();
-
-            result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
-            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-
-            return result.ToString();
-        }
-
-        private static string BuildUpdatingUserLogContent(LAPUserCriteria value, bool isBackgroundJob)
-        {
-            var result = new StringBuilder();
-            var updatingByBackgroundJobLogContent = "<UpdatedBy Background Job />";
 
             result.Append("<Action value=\"UpdateUserPassword\">");
             result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
-            result.Append(isBackgroundJob ? updatingByBackgroundJobLogContent : UpdatingByUserLogContent(value));
+            result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
+            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append($"<RemoveFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsRemoved)}\" />");
             result.Append($"<AddNewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
+            result.Append($"<RemoveUserGroup=\"{value.OldUserGroupSEQ}\" />");
             result.Append("</Action>");
 
             return result.ToString();
@@ -171,17 +162,15 @@
 
         private static string BuildFunctionXMLParameter(IEnumerable<FunctionPermissionCriteria> criteria)
         {
-            if (criteria == null || !criteria.Any())
-            {
-                return string.Empty;
-            }
-
             var builder = new StringBuilder();
             builder.Append("<ROOT>");
 
-            foreach (var item in criteria)
+            if (criteria != null && criteria.Any())
             {
-                builder.Append($"<UserFuncPermission FunctionKey=\"{item.FunctionKey}\" SystemType=\"{item.SystemType}\" SubFunctionKeys=\"{item.SubFunctionKeys}\" />");
+                foreach (var item in criteria)
+                {
+                    builder.Append($"<UserFuncPermission FunctionKey=\"{item.FunctionKey}\" SystemType=\"{item.SystemType}\" SubFunctionKeys=\"{item.SubFunctionKeys}\" />");
+                }
             }
 
             builder.Append("</ROOT>");

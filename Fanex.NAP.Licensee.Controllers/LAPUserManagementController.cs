@@ -6,14 +6,22 @@
     using System.Web.Hosting;
     using System.Web.Mvc;
     using Attributes;
+    using Core.Business;
+    using Core.Web.Attribute;
     using Hangfire;
     using Model.Criteria.LAPUser;
+    using Model.DataDomain;
     using Model.DTO;
     using Model.ViewModel.LAPUser;
+    using ONEbook.UM.Filters;
     using Service;
     using Service.Helpers;
     using Service.Redis;
 
+    [NapSuperAuth]
+    [CheckUMFilter]
+    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageLicenseeVendor, Policy = Constant.Policy.Read)]
+    [CustomValidateAntiForgery]
     public class LAPUserManagementController : BaseController
     {
         private readonly ILAPUserManagementService _userService;
@@ -43,6 +51,7 @@
 
         [HttpPost]
         [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditLicenseeVendor, Policy = Constant.Policy.Host)]
         public ActionResult AddNewUser(LAPUserCriteria criteria)
         {
             var result = new ResultData<string>
@@ -59,9 +68,7 @@
             }
 
             var originalPass = SecurityHelper.GeneratePass(extendedTime);
-            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
-            criteria.UpdateUserLoginInfo();
-            criteria.UpdateFunctionKeySelected();
+            criteria.UpdateLAPUserInfo(originalPass);
 
             result = _userService.AddUser(criteria);
             if (result.IsSuccess)
@@ -100,6 +107,7 @@
 
         [HttpPost]
         [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.EditLicenseeVendor, Policy = Constant.Policy.Host)]
         public ActionResult CreateToken(LAPUserCriteria criteria)
         {
             var result = new ResultData<string>
@@ -122,9 +130,7 @@
                 _redisService.RemoveKey(userInfo.UserPWD);
 
                 var originalPass = SecurityHelper.GeneratePass(extendedTime);
-                criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
-                criteria.UpdateUserLoginInfo();
-                criteria.UpdateFunctionKeySelected();
+                criteria.UpdateLAPUserInfo(originalPass);
 
                 result = _userService.UpdateUserPassword(criteria);
                 if (result.IsSuccess)
@@ -142,9 +148,9 @@
         public void UpdatePassExpried(LAPUserCriteria criteria)
         {
             var originalPass = SecurityHelper.GeneratePass(0);
-            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
+            criteria.UpdatePassword(originalPass);
 
-            _userService.UpdateUserPassword(criteria, true);
+            _userService.UpdateUserPassword(criteria);
         }
 
         private void RemoveBackgroundJob(string key)
@@ -158,18 +164,21 @@
 
         private string CreateBackgroundJob(LAPUserCriteria criteria)
         {
+            criteria.RemoveUnusefulInfoForBackgroundJob();
+
             return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromMinutes(extendedTime));
         }
 
         private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)
         {
             var error = new StringBuilder();
+            var userInfo = _userService.GetUserInfo(criteria.SiteName, criteria.UserID);
 
             error.Append(CheckEmptyParameter("Site Name", criteria.SiteName, "<br>"));
             error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
             error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
 
-            if (isAddNew && _userService.GetUserInfo(criteria.SiteName, criteria.UserID) != null)
+            if (isAddNew && userInfo != null)
             {
                 error.Append("This username already exists! <br>");
             }

@@ -19,7 +19,12 @@
             criteria.UserLoginName = AppSession.CurrentUser.Username;
         }
 
-        public static void UpdateFunctionKeySelected(this LAPUserCriteria criteria)
+        public static void UpdatePassword(this LAPUserCriteria criteria, string originalPass)
+        {
+            criteria.UserPWD = SecurityHelper.EncryptPass(originalPass);
+        }
+
+        public static void UpdateFunctionKeySelectedInfo(this LAPUserCriteria criteria)
         {
             var filePath = "~/App_Data/FunctionPermission.json";
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
@@ -60,6 +65,19 @@
                     }
                 }
             }
+        }
+
+        public static void RemoveUnusefulInfoForBackgroundJob(this LAPUserCriteria criteria)
+        {
+            criteria.FuncPermissionsAdded = Enumerable.Empty<FunctionPermissionCriteria>();
+            criteria.FuncPermissionsRemoved = Enumerable.Empty<FunctionPermissionCriteria>();
+        }
+
+        public static void UpdateLAPUserInfo(this LAPUserCriteria criteria, string originalPass)
+        {
+            criteria.UpdatePassword(originalPass);
+            criteria.UpdateUserLoginInfo();
+            criteria.UpdateFunctionKeySelectedInfo();
         }
     }
 }

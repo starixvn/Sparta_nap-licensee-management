@@ -5,7 +5,7 @@
 
     public interface ILAPUserManagementService
     {
-        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria, bool isBackgroundJob = false);
+        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria);
 
         LAPUser GetUserInfo(string siteName, string userID);
 
