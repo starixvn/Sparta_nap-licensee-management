@@ -10,6 +10,9 @@
     using Fanex.RemotingRef;
     using Logging;
     using Logging.RabbitMQ;
+    using Logging.Sentry.RavenClient;
+    using SharpRaven;
+    using SharpRaven.Data;
 
     /// <summary>
     /// MVC application.
@@ -20,7 +23,10 @@
         {
             LogManager
              .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
-             .Use(new RabbitMQLogging(ConfigurationManager.AppSettings["RabbitMQConnectionString"]));
+             .Use(new SentryLogging(new SentryEngineOptions
+             {
+                 Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
+             }));
 
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();
