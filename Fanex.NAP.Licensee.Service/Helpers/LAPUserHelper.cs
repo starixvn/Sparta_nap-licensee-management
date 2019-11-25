@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Service.Helpers
 {
+    using System;
     using System.Linq;
     using System.Web.Hosting;
     using Model.Criteria.LAPUser;
@@ -34,16 +35,18 @@
             {
                 foreach (var item in criteria.FuncPermissionsAdded)
                 {
-                    if (item.SystemType == null)
+                    if (item.Type == null)
                     {
                         foreach (var func in functionList)
                         {
                             if (func.ToString() == item.FunctionKey)
                             {
-                                item.SystemType = func.Ancestors()
+                                var nearestType = func.Ancestors()
                                     .OfType<JObject>()
-                                    .Select(x => x.Value<int>("Type"))
-                                    .FirstOrDefault();
+                                    .Select(x => x.Value<string>("Type"))
+                                    .FirstOrDefault(x => x != null);
+
+                                item.Type = Convert.ToInt32(nearestType);
                             }
                         }
                     }

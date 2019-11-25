@@ -169,7 +169,7 @@
             {
                 foreach (var item in criteria)
                 {
-                    builder.Append($"<UserFuncPermission FunctionKey=\"{item.FunctionKey}\" SystemType=\"{item.SystemType}\" SubFunctionKeys=\"{item.SubFunctionKeys}\" />");
+                    builder.Append($"<UserFuncPermission FunctionKey=\"{item.FunctionKey}\" SystemType=\"{item.Type}\" SubFunctionKeys=\"{item.SubFunctionKeys}\" />");
                 }
             }
 

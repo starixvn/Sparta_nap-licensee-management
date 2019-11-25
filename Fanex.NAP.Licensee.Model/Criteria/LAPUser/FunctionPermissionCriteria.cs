@@ -4,7 +4,7 @@
     {
         public string FunctionKey { get; set; }
 
-        public int? SystemType { get; set; }
+        public int? Type { get; set; }
 
         public string SubFunctionKeys { get; set; }
     }
