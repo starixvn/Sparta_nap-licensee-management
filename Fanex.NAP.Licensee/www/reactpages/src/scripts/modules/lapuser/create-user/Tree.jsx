@@ -9,8 +9,7 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: props.nodes,
-            selectedFunc: props.selectedFunc
+            nodes: props.nodes
         };
     }
 
@@ -35,7 +34,7 @@ class Tree extends Component {
     _onRadioCheck = (parent, node) => {
         const { nodes } = this.state;
 
-        this._checkedRadio(parent, node);
+        this._checkedRadioNode(parent, node);
         this._checkedParentNode(parent, true);
 
         this.setState({ nodes });
@@ -49,7 +48,7 @@ class Tree extends Component {
                 }
                 return node.SubFunctionKeys;
             }
-            return node.FunctionKeys
+            return node.FunctionKeys;
         }
         else{
             return node.Settings.filter(funs => funs.Type != 0);
@@ -103,7 +102,7 @@ class Tree extends Component {
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
-            if (node.isCheck === true) {
+            if (node.isCheck === true && !node.Settings) {
                 if (result == null) {
                     selectedFunc.push(node);
                 }
@@ -116,7 +115,7 @@ class Tree extends Component {
         this.props.setSelectedFuncs(selectedFunc);
     }
 
-    _checkedRadio(parent, node) {
+    _checkedRadioNode(parent, node) {
         const { nodes } = this.state;
         const children = this._getChildNodes(parent);
 
@@ -155,6 +154,7 @@ class Tree extends Component {
 
     _checkedChildNode(node, checked, isSubChild) {
         node.isCheck = checked;
+
         this._addNodeIntoSelectedFunc(node, isSubChild);
 
         const children = this._getChildNodes(node);

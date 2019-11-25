@@ -11,7 +11,7 @@ export default class TreeNode extends Component {
     }
 
     render() {
-        const { node, parent, getChildNodes, level, onNodeSelect, onNodeCheck, onRadioCheck, isSubChild, isDisable } = this.props;
+        const { node, parent, level, getChildNodes, isSubChild, isDisable , onNodeSelect, onNodeCheck, onRadioCheck } = this.props;
 
         if(!parent && getChildNodes(node).length === 0)
         {

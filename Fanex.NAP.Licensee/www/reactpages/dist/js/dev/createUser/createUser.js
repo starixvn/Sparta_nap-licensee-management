@@ -6248,15 +6248,14 @@ var Tree = function (_Component) {
             var nodes = _this.state.nodes;
 
 
-            _this._checkedRadio(parent, node);
+            _this._checkedRadioNode(parent, node);
             _this._checkedParentNode(parent, true);
 
             _this.setState({ nodes: nodes });
         };
 
         _this.state = {
-            nodes: props.nodes,
-            selectedFunc: props.selectedFunc
+            nodes: props.nodes
         };
         return _this;
     }
@@ -6331,7 +6330,7 @@ var Tree = function (_Component) {
                 var result = selectedFunc.find(function (n) {
                     return n.FunctionKey === node.FunctionKey;
                 });
-                if (node.isCheck === true) {
+                if (node.isCheck === true && !node.Settings) {
                     if (result == null) {
                         selectedFunc.push(node);
                     }
@@ -6343,8 +6342,8 @@ var Tree = function (_Component) {
             this.props.setSelectedFuncs(selectedFunc);
         }
     }, {
-        key: '_checkedRadio',
-        value: function _checkedRadio(parent, node) {
+        key: '_checkedRadioNode',
+        value: function _checkedRadioNode(parent, node) {
             var nodes = this.state.nodes;
 
             var children = this._getChildNodes(parent);
@@ -6388,6 +6387,7 @@ var Tree = function (_Component) {
             var _this2 = this;
 
             node.isCheck = checked;
+
             this._addNodeIntoSelectedFunc(node, isSubChild);
 
             var children = this._getChildNodes(node);
@@ -6497,13 +6497,13 @@ var TreeNode = function (_Component) {
             var _props = this.props,
                 node = _props.node,
                 parent = _props.parent,
-                getChildNodes = _props.getChildNodes,
                 level = _props.level,
+                getChildNodes = _props.getChildNodes,
+                isSubChild = _props.isSubChild,
+                isDisable = _props.isDisable,
                 onNodeSelect = _props.onNodeSelect,
                 onNodeCheck = _props.onNodeCheck,
-                onRadioCheck = _props.onRadioCheck,
-                isSubChild = _props.isSubChild,
-                isDisable = _props.isDisable;
+                onRadioCheck = _props.onRadioCheck;
 
 
             if (!parent && getChildNodes(node).length === 0) {
