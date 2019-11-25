@@ -14,7 +14,7 @@ class Form extends Component {
         const { timeRemaining, oldFuncPer } = this.props;
         this.state = {
             timeSpan: '',
-            extraTime: 0.25,
+            extraTime: 8,
             token: '',
             isCopy: false,
             isSuccess: false,

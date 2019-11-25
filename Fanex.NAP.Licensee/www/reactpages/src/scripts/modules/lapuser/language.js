@@ -56,7 +56,7 @@ export const language = {
     "lblOutright": "Outright",
     "lblPayment": "Payment",
     "lblPlatformWinLoss": "Win Loss By Platform",
-    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
+    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit & Withdraw",
     "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
     "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
     "lblPlayerAdmin_PL_BA": "Update BA Status",

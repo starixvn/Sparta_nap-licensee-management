@@ -5430,7 +5430,7 @@ var language = exports.language = {
     "lblOutright": "Outright",
     "lblPayment": "Payment",
     "lblPlatformWinLoss": "Win Loss By Platform",
-    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit &amp; Withdraw",
+    "lblPlayerAdmin_FT_DepositAndWithdraw": "Deposit & Withdraw",
     "lblPlayerAdmin_FT_PlayerWallet": "Player Wallet",
     "lblPlayerAdmin_FT_TransferLog": "Transfer Log",
     "lblPlayerAdmin_PL_BA": "Update BA Status",
@@ -5790,7 +5790,7 @@ var Form = function (_Component) {
 
         _this.state = {
             timeSpan: '',
-            extraTime: 0.25,
+            extraTime: 8,
             token: '',
             isCopy: false,
             isSuccess: false,
