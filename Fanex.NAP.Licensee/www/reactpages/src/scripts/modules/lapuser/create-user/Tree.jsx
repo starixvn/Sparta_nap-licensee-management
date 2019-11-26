@@ -50,9 +50,7 @@ class Tree extends Component {
             }
             return node.FunctionKeys;
         }
-        else{
-            return node.Settings.filter(funs => funs.Type != 0);
-        }
+        return node.Settings;   
     }
 
     _getParentNode(level) {
