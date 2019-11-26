@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 {
+    using System.Collections.Generic;
     using DTO;
 
     public class UpdateUserPWViewModel
@@ -13,5 +14,9 @@
         public string FuntionPermission { get; set; }
 
         public UserPermissionInfo OldFuncPermission { get; set; }
+
+        public IEnumerable<CurrencyItem> Currency { get; set; }
+
+        public string OldCurrency { get; set; }
     }
 }

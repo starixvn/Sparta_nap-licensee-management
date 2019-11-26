@@ -28,7 +28,9 @@
             timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining)),
             isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
             funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermission)),
-            oldFuncPermission: @Html.Raw(serializer.Serialize(Model.OldFuncPermission))
+            oldFuncPermission: @Html.Raw(serializer.Serialize(Model.OldFuncPermission)),
+            currency: @Html.Raw(serializer.Serialize(Model.Currency)),
+            oldCurrency: @Html.Raw(serializer.Serialize(Model.OldCurrency)),
         }
     </script>
 

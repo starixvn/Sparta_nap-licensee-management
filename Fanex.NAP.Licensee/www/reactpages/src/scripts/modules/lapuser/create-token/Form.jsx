@@ -11,7 +11,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
 
-        const { timeRemaining, oldFuncPer } = this.props;
+        const { timeRemaining, oldFuncPer, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
             extraTime: 8,
@@ -22,13 +22,15 @@ class Form extends Component {
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: oldFuncPer.FuncPermission
+            oldFunctionPermission: oldFuncPer.FuncPermission,
+            currency: currency,
+            currencySelected: oldCurrency ? oldCurrency : []
         }
     }
 
     _getParams() {
         const { oldFuncPer, user } = this.props;
-        const { requestBy, redmineID, isCheckGroup } = this.state;
+        const { requestBy, redmineID, isCheckGroup, currencySelected } = this.state;
 
         return {
             criteria: {
@@ -38,7 +40,8 @@ class Form extends Component {
                 RedmineID: redmineID,
                 FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
                 FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
-                OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
+                OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : '',
+                Currency: JSON.stringify(currencySelected)
             }
         };
     }
@@ -90,7 +93,7 @@ class Form extends Component {
         let flag = false;
 
         oldFuncsPermission.forEach(oldFunc => {
-            let node = { 
+            let node = {
                 FunctionKey: oldFunc.FunctionKey,
                 SubFunctionKeys: oldFunc.SubFunctionKeys ? oldFunc.SubFunctionKeys : null,
                 Type: oldFunc.Type
@@ -119,7 +122,7 @@ class Form extends Component {
         let flag = true;
 
         newFuncsPermissions.map(newFunc => {
-            let node = { 
+            let node = {
                 FunctionKey: newFunc.FunctionKey,
                 SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
                 Type: newFunc.Type
@@ -167,6 +170,7 @@ class Form extends Component {
         this.props.toggleLoader(true);
         const param = this._getParams();
 
+        console.log(param)
         this.props.createToken(param)
             .then(response => {
                 if (response.data.IsSuccess === true) {
@@ -262,12 +266,45 @@ class Form extends Component {
         });
     }
 
+    _onCheck = (value) => {
+        const { currencySelected } = this.state;
+
+        var index = currencySelected.indexOf(value.Id);
+        value.isCheck = !value.isCheck;
+
+        if(value.isCheck == true && index < 0){
+            currencySelected.push(value.Id);
+        }
+        else{
+            currencySelected.splice(index, 1);
+        }
+
+        this.setState( {currencySelected} );
+    }
+
+    _checkedOldCurency() {
+        const { currency, currencySelected } = this.state;
+
+        currency.map(cur => {
+            cur.isCheck = false;
+
+            currencySelected.map(olCur => {
+                if (cur.Id === olCur) {
+                    cur.isCheck = true;
+                }
+            }) 
+        })
+
+        this.setState({ currency, currencySelected});
+    }
+
     componentDidMount() {
         this._setTimeControl();
+        this._checkedOldCurency();
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, isCheckGroup, isSuccess } = this.state;
+        const { isCopy, requestBy, redmineID, token, currency, isCheckGroup, isSuccess } = this.state;
         const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
@@ -279,7 +316,7 @@ class Form extends Component {
                 <div className="add-form">
                     <Loader isLoading={isLoading} />
                     <div className="row">
-                        <div className="col-lg-5 col-md-6 col-xs-12">
+                        <div className="col-lg-6 col-sm-6 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">Create new token for <b>{user.UserID}</b></div>
                                 <div className="panel-body auto-scroll">
@@ -329,7 +366,7 @@ class Form extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-5 col-md-6 col-xs-12">
+                        <div className="col-lg-3 col-sm-4 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
@@ -340,9 +377,9 @@ class Form extends Component {
                                             <div className='col-lg-9 col-sm-9'>
                                                 <div className="form-group">
                                                     <label className="checkbox-inline">
-                                                        <input type="checkbox" checked={isCheckGroup} 
-                                                        disabled={isSuccess}
-                                                        onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
+                                                        <input type="checkbox" checked={isCheckGroup}
+                                                            disabled={isSuccess}
+                                                            onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
                                                         {oldFuncPer.UserGroup.GroupName}
                                                     </label>
                                                 </div>
@@ -353,6 +390,21 @@ class Form extends Component {
                                         <label className='col-xs-12'>User Function permission</label>
                                     </div>
                                     <Tree className="tree" selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-sm-2 col-xs-12">
+                            <div className="panel panel-default" >
+                                <div className="panel-heading">User Currency</div>
+                                <div className="panel-body auto-scroll">
+                                    {currency.map((cur, i) => (
+                                        <div className="form-group" key={i}>
+                                            <label className="checkbox-inline node">
+                                                <input type="checkbox" checked={cur.isCheck == true ? true : false} disabled={isSuccess} onChange={() => this._onCheck(cur)} />
+                                                {cur.Name}
+                                            </label>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>

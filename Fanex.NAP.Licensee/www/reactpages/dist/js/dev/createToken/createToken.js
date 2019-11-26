@@ -5715,7 +5715,9 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
-                    oldFuncPer: defaultProps.oldFuncPermission })
+                    oldFuncPer: defaultProps.oldFuncPermission,
+                    currency: defaultProps.currency,
+                    oldCurrency: JSON.parse(defaultProps.oldCurrency) })
             );
         }
     }]);
@@ -5789,6 +5791,7 @@ var Form = function (_Component) {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
 
+            console.log(param);
             _this.props.createToken(param).then(function (response) {
                 if (response.data.IsSuccess === true) {
                     _this.setState({
@@ -5823,9 +5826,27 @@ var Form = function (_Component) {
             }, 500);
         };
 
+        _this._onCheck = function (value) {
+            var currencySelected = _this.state.currencySelected;
+
+
+            var index = currencySelected.indexOf(value.Id);
+            value.isCheck = !value.isCheck;
+
+            if (value.isCheck == true && index < 0) {
+                currencySelected.push(value.Id);
+            } else {
+                currencySelected.splice(index, 1);
+            }
+
+            _this.setState({ currencySelected: currencySelected });
+        };
+
         var _this$props = _this.props,
             timeRemaining = _this$props.timeRemaining,
-            oldFuncPer = _this$props.oldFuncPer;
+            oldFuncPer = _this$props.oldFuncPer,
+            oldCurrency = _this$props.oldCurrency,
+            currency = _this$props.currency;
 
         _this.state = {
             timeSpan: '',
@@ -5837,7 +5858,9 @@ var Form = function (_Component) {
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: oldFuncPer.FuncPermission
+            oldFunctionPermission: oldFuncPer.FuncPermission,
+            currency: currency,
+            currencySelected: oldCurrency ? oldCurrency : []
         };
         return _this;
     }
@@ -5851,7 +5874,8 @@ var Form = function (_Component) {
             var _state = this.state,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
-                isCheckGroup = _state.isCheckGroup;
+                isCheckGroup = _state.isCheckGroup,
+                currencySelected = _state.currencySelected;
 
 
             return {
@@ -5862,7 +5886,8 @@ var Form = function (_Component) {
                     RedmineID: redmineID,
                     FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
                     FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
-                    OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : ''
+                    OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : '',
+                    Currency: JSON.stringify(currencySelected)
                 }
             };
         }
@@ -6083,22 +6108,44 @@ var Form = function (_Component) {
             });
         }
     }, {
+        key: '_checkedOldCurency',
+        value: function _checkedOldCurency() {
+            var _state2 = this.state,
+                currency = _state2.currency,
+                currencySelected = _state2.currencySelected;
+
+
+            currency.map(function (cur) {
+                cur.isCheck = false;
+
+                currencySelected.map(function (olCur) {
+                    if (cur.Id === olCur) {
+                        cur.isCheck = true;
+                    }
+                });
+            });
+
+            this.setState({ currency: currency, currencySelected: currencySelected });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this._setTimeControl();
+            this._checkedOldCurency();
         }
     }, {
         key: 'render',
         value: function render() {
             var _this6 = this;
 
-            var _state2 = this.state,
-                isCopy = _state2.isCopy,
-                requestBy = _state2.requestBy,
-                redmineID = _state2.redmineID,
-                token = _state2.token,
-                isCheckGroup = _state2.isCheckGroup,
-                isSuccess = _state2.isSuccess;
+            var _state3 = this.state,
+                isCopy = _state3.isCopy,
+                requestBy = _state3.requestBy,
+                redmineID = _state3.redmineID,
+                token = _state3.token,
+                currency = _state3.currency,
+                isCheckGroup = _state3.isCheckGroup,
+                isSuccess = _state3.isSuccess;
             var _props2 = this.props,
                 user = _props2.user,
                 isValid = _props2.isValid,
@@ -6127,7 +6174,7 @@ var Form = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-5 col-md-6 col-xs-12' },
+                            { className: 'col-lg-6 col-sm-6 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6240,7 +6287,7 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-5 col-md-6 col-xs-12' },
+                            { className: 'col-lg-3 col-sm-4 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6289,6 +6336,37 @@ var Form = function (_Component) {
                                         )
                                     ),
                                     _react2.default.createElement(_Tree2.default, { className: 'tree', selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission), nodes: JSON.parse(funcPer), isDisable: isSuccess })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-lg-3 col-sm-2 col-xs-12' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'panel panel-default' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-heading' },
+                                    'User Currency'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-body auto-scroll' },
+                                    currency.map(function (cur, i) {
+                                        return _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group', key: i },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'checkbox-inline node' },
+                                                _react2.default.createElement('input', { type: 'checkbox', checked: cur.isCheck == true ? true : false, disabled: isSuccess, onChange: function onChange() {
+                                                        return _this6._onCheck(cur);
+                                                    } }),
+                                                cur.Name
+                                            )
+                                        );
+                                    })
                                 )
                             )
                         )

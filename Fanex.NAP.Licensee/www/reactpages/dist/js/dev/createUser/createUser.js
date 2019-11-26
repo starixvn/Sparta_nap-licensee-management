@@ -5852,7 +5852,8 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
-                    funcPer: defaultProps.funcPer
+                    funcPer: defaultProps.funcPer,
+                    currency: defaultProps.currency
                 })
             );
         }
@@ -5929,12 +5930,26 @@ var Form = function (_Component) {
             }
         };
 
+        _this._onCheck = function (value, e) {
+            var currencySelected = _this.state.currencySelected;
+
+
+            var index = currencySelected.indexOf(value);
+
+            if (e.target.checked == true && index < 0) {
+                currencySelected.push(value);
+            } else {
+                currencySelected.splice(index, 1);
+            }
+        };
+
         _this.state = {
             isShowConfirmBox: false,
             password: "",
             isSuccess: false,
             requestBy: '',
-            redmineID: ''
+            redmineID: '',
+            currencySelected: []
         };
         return _this;
     }
@@ -5942,13 +5957,20 @@ var Form = function (_Component) {
     _createClass(Form, [{
         key: '_getParams',
         value: function _getParams() {
+            var _state = this.state,
+                requestBy = _state.requestBy,
+                redmineID = _state.redmineID,
+                currencySelected = _state.currencySelected;
+
+
             return {
                 criteria: {
                     SiteName: this.props.siteName,
                     UserID: this.props.userID,
-                    RequestBy: this.state.requestBy,
-                    RedmineID: this.state.redmineID,
-                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded())
+                    RequestBy: requestBy,
+                    RedmineID: redmineID,
+                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
+                    Currency: JSON.stringify(currencySelected)
                 }
             };
         }
@@ -6060,15 +6082,18 @@ var Form = function (_Component) {
         value: function render() {
             var _this4 = this;
 
-            var _state = this.state,
-                isShowConfirmBox = _state.isShowConfirmBox,
-                password = _state.password,
-                isSuccess = _state.isSuccess,
-                requestBy = _state.requestBy,
-                redmineID = _state.redmineID;
-            var funcPer = this.props.funcPer;
+            var _state2 = this.state,
+                isShowConfirmBox = _state2.isShowConfirmBox,
+                password = _state2.password,
+                isSuccess = _state2.isSuccess,
+                requestBy = _state2.requestBy,
+                redmineID = _state2.redmineID;
+            var _props = this.props,
+                funcPer = _props.funcPer,
+                currency = _props.currency;
 
 
+            console.log(currency);
             if (!this.props.isValid) {
                 return _react2.default.createElement(
                     'b',
@@ -6096,7 +6121,7 @@ var Form = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-xs-6' },
+                            { className: 'col-lg-6 col-sm-6 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6175,7 +6200,7 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-xs-6' },
+                            { className: 'col-lg-3 col-sm-4 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6188,6 +6213,37 @@ var Form = function (_Component) {
                                     'div',
                                     { className: 'panel-body auto-scroll' },
                                     _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: JSON.parse(funcPer), isDisable: isSuccess })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-lg-3 col-sm-2 col-xs-12' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'panel panel-default' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-heading' },
+                                    'User Currency'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-body auto-scroll' },
+                                    currency.map(function (cur, i) {
+                                        return _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group', key: i },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'checkbox-inline node' },
+                                                _react2.default.createElement('input', { type: 'checkbox', disabled: isSuccess, onChange: function onChange(e) {
+                                                        return _this4._onCheck(cur.Id, e);
+                                                    } }),
+                                                cur.Name
+                                            )
+                                        );
+                                    })
                                 )
                             )
                         )

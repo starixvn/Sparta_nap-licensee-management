@@ -22,6 +22,8 @@
 
         public IEnumerable<FunctionPermissionCriteria> FuncPermissionsAdded { get; set; }
 
+        public string Currency { get; set; }
+
         public int OldUserGroupSEQ { get; set; }
     }
 }

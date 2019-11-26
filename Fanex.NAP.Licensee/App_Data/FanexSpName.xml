@@ -66,6 +66,10 @@
   <Function Name="Site.Nap.Licensee.UserFuncPermission">
     <Setting Key="Nap_LM_UserFuncPermission_Select" SpName="Nap_LM_UserFuncPermission_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
+
+  <Function Name="Site.Nap.Licensee.AuthorCurrency">
+    <Setting Key="Nap_LM_AuthorCurrency_Select" SpName="Nap_LM_AuthorCurrency_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+  </Function>
       
   <Function Name="Site.Nap.Licensee.OperatorManagement">
     <Setting Key="Nap_LM_Operator_Search" SpName="Nap_LM_Operator_Search" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>

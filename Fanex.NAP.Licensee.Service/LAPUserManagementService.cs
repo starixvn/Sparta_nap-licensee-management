@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -29,7 +30,8 @@
                 criteria.SiteName,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
-                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded)
+                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded),
+                criteria.Currency
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Insert"))
@@ -42,7 +44,7 @@
             return result;
         }
 
-        public ResultData<string> UpdateUserPassword(LAPUserCriteria criteria)
+        public ResultData<string> UpdateUser(LAPUserCriteria criteria)
         {
             var result = new ResultData<string>();
 
@@ -54,7 +56,8 @@
                 criteria.UserPWD,
                 FuncPermissionsRemoved = BuildFunctionXMLParameter(criteria.FuncPermissionsRemoved),
                 FuncPermissionsAdded = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded),
-                criteria.OldUserGroupSEQ
+                criteria.OldUserGroupSEQ,
+                criteria.Currency
             };
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Update"))
@@ -100,6 +103,18 @@
             return result;
         }
 
+        public string GetCurrency(int userSEQ)
+        {
+            var result = string.Empty;
+
+            using (var db = _objectDbGenerator.Create("Nap_LM_AuthorCurrency_Select"))
+            {
+                result = db.QueryEntity<string>(new { UserSEQ = userSEQ });
+            }
+
+            return result;
+        }
+
         private static void WriteAddUserActionLog(LAPUserCriteria value)
         {
             var actionLogCriteria = new ActionLogCriteria
@@ -121,6 +136,7 @@
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
             result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
+            result.Append($"<Curency=\"{value.Currency}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
             result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.SiteName}\" />");
@@ -155,6 +171,7 @@
             result.Append($"<RemoveFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsRemoved)}\" />");
             result.Append($"<AddNewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
             result.Append($"<RemoveUserGroup=\"{value.OldUserGroupSEQ}\" />");
+            result.Append($"<NewCurency=\"{value.Currency}\" />");
             result.Append("</Action>");
 
             return result.ToString();

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Text;
     using System.Web.Hosting;
@@ -26,24 +27,31 @@
     {
         private readonly ILAPUserManagementService _userService;
         private readonly IRedisService _redisService;
+        private readonly ICommonService _commonService;
+        private readonly ILicenseeSettingService _licenseeService;
         private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
         public LAPUserManagementController()
         {
             _userService = new LAPUserManagementService();
             _redisService = new RedisService();
+            _commonService = new CommonService();
+            _licenseeService = new LicenseeSettingService();
         }
 
         [HttpGet]
         public ActionResult AddNewUser(string siteName, string userID)
         {
+            var licenseeInfo = _licenseeService.GetLicensee(siteName);
+
             var viewModel = new AddUserViewModel
             {
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
                 IsExist = _userService.GetUserInfo(siteName, userID) != null,
-                FuntionPermission = GetFunctionPermissionFileContent()
+                FuntionPermission = GetFunctionPermissionFileContent(),
+                Currency = _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID),
             };
 
             return View(viewModel);
@@ -92,14 +100,17 @@
                 return RedirectToAction("AddNewUser", "LAPUserManagement", new { siteName, userID });
             }
 
-            var userFuncPerInfo = _userService.GetUserFuncPermissionInfo(result.UserSEQ);
+            var licenseeInfo = _licenseeService.GetLicensee(siteName);
+
             var viewModel = new UpdateUserPWViewModel
             {
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
                 FuntionPermission = GetFunctionPermissionFileContent(),
-                OldFuncPermission = userFuncPerInfo
+                OldFuncPermission = _userService.GetUserFuncPermissionInfo(result.UserSEQ),
+                Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
+                OldCurrency = _userService.GetCurrency(result.UserSEQ)
             };
 
             return View(viewModel);
@@ -132,7 +143,7 @@
                 var originalPass = SecurityHelper.GeneratePass(extendedTime);
                 criteria.UpdateLAPUserInfo(originalPass);
 
-                result = _userService.UpdateUserPassword(criteria);
+                result = _userService.UpdateUser(criteria);
                 if (result.IsSuccess)
                 {
                     result.Data = originalPass;
@@ -150,7 +161,7 @@
             var originalPass = SecurityHelper.GeneratePass(0);
             criteria.UpdatePassword(originalPass);
 
-            _userService.UpdateUserPassword(criteria);
+            _userService.UpdateUser(criteria);
         }
 
         private void RemoveBackgroundJob(string key)

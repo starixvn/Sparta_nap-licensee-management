@@ -24,6 +24,7 @@ export default class App extends React.Component {
                     isValid={defaultProps.isValid}
                     isExist={defaultProps.isExist}
                     funcPer={defaultProps.funcPer}
+                    currency={defaultProps.currency}
                     />
             </Provider>
         );

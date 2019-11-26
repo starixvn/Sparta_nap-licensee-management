@@ -3,9 +3,20 @@
 
 .add-form {
     input[type=text] {
+        border-radius: 3px;
+        border: 1px solid #9d9d9d;
+        height: 25px;
+        padding: 2px;
+
         &.has-error {
             border: 1px solid $red;
         }
+    }
+
+    label, input[type=text] {
+        color: #545454;
+        font-weight: 400;
+        font-size: 14px;
     }
 
     .btn-primary, .btn-copy {
@@ -20,20 +31,10 @@
         margin-right: 0;
         height: 26px;
     }
-}
 
-.add-form{
-    input[type=text] {
-        border-radius: 3px;
-        border: 1px solid #9d9d9d;
-        height: 25px;
-        padding: 2px;
-    }
-
-    label, input[type=text] {
-        color: #545454;
-        font-weight: 400;
-        font-size: 14px;
+    .auto-scroll {
+        max-height: 400px;
+        overflow-y: scroll;
     }
 }
 
@@ -76,8 +77,9 @@
     }
 }
 
-.node {
+.checkbox-inline.node, .node{
     display: flex;
+    padding-left: 0;
     margin: 5px 0;
 
     input[type=checkbox] {

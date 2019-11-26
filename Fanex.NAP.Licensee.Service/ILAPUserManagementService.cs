@@ -5,12 +5,14 @@
 
     public interface ILAPUserManagementService
     {
-        ResultData<string> UpdateUserPassword(LAPUserCriteria criteria);
+        ResultData<string> UpdateUser(LAPUserCriteria criteria);
 
         LAPUser GetUserInfo(string siteName, string userID);
 
         ResultData<string> AddUser(LAPUserCriteria criteria);
 
         UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ);
+
+        string GetCurrency(int userSEQ);
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
+﻿using System.Collections.Generic;
+using Fanex.NAP.Licensee.Model.DTO;
+
+namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 {
     public class AddUserViewModel
     {
@@ -11,5 +14,7 @@
         public bool IsExist { get; set; }
 
         public string FuntionPermission { get; set; }
+
+        public IEnumerable<CurrencyItem> Currency { get; set; }
     }
 }

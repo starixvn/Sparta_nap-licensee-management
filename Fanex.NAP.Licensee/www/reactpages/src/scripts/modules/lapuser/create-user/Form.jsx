@@ -16,18 +16,22 @@ class Form extends Component {
             password: "",
             isSuccess: false,
             requestBy: '',
-            redmineID: ''
+            redmineID: '',
+            currencySelected: []
         };
     }
 
     _getParams() {
+        const { requestBy, redmineID, currencySelected } = this.state;
+
         return {
             criteria: {
                 SiteName: this.props.siteName,
                 UserID: this.props.userID,
-                RequestBy: this.state.requestBy,
-                RedmineID: this.state.redmineID,
-                FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded())
+                RequestBy: requestBy,
+                RedmineID: redmineID,
+                FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
+                Currency: JSON.stringify(currencySelected)
             }
         };
     }
@@ -48,7 +52,7 @@ class Form extends Component {
         let funcsAdded = [];
 
         newFuncsPermissions.map(newFunc => {
-            let node = { 
+            let node = {
                 FunctionKey: newFunc.FunctionKey,
                 SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
                 Type: newFunc.Type
@@ -56,7 +60,7 @@ class Form extends Component {
 
             funcsAdded.push(node);
         })
-    
+
         return funcsAdded;
     }
 
@@ -104,6 +108,20 @@ class Form extends Component {
         )
     }
 
+    _onCheck = (value, e) => {
+        const { currencySelected } = this.state;
+
+        var index = currencySelected.indexOf(value);
+
+        if(e.target.checked == true && index < 0){
+            currencySelected.push(value);
+        }
+        else{
+            currencySelected.splice(index, 1);
+        }
+
+    }
+
     _submit() {
         const params = this._getParams();
 
@@ -126,8 +144,9 @@ class Form extends Component {
 
     render() {
         const { isShowConfirmBox, password, isSuccess, requestBy, redmineID } = this.state;
-        const { funcPer } = this.props;
+        const { funcPer, currency } = this.props;
 
+        console.log(currency)
         if (!this.props.isValid) {
             return <b className="red">This username is not exist but cannot be created in this case!</b>
         }
@@ -140,7 +159,7 @@ class Form extends Component {
             <div>
                 <div className="add-form">
                     <div className="row">
-                        <div className="col-xs-6">
+                        <div className="col-lg-6 col-sm-6 col-xs-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">User Info</div>
                                 <div className="panel-body">
@@ -176,18 +195,33 @@ class Form extends Component {
                                     <div className="form-group row col-sm-12">
                                         <button className="btn btn-primary"
                                             onClick={() => this.setState({ isShowConfirmBox: true })}
-                                            disabled={!redmineID || !requestBy || password} > 
+                                            disabled={!redmineID || !requestBy || password} >
                                             Submit
                                     </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xs-6">
+                        <div className="col-lg-3 col-sm-4 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
                                     <Tree className="tree" nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-sm-2 col-xs-12">
+                            <div className="panel panel-default" >
+                                <div className="panel-heading">User Currency</div>
+                                <div className="panel-body auto-scroll">
+                                    {currency.map((cur, i) => (
+                                        <div className="form-group" key={i}>
+                                            <label className="checkbox-inline node">
+                                                <input type="checkbox" disabled={isSuccess} onChange={(e) => this._onCheck(cur.Id, e)} />
+                                                {cur.Name}
+                                            </label>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
