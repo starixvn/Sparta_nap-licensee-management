@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -64,7 +65,7 @@
                 result.IsSuccess = (int)db.ExecuteScalar(parameter) == 1;
             }
 
-            WriteUpdateUserPWActionLog(criteria);
+            WriteUpdateUserActionLog(criteria);
 
             return result;
         }
@@ -100,6 +101,14 @@
             return user;
         }
 
+        public string GetFunctionIgnore(string vendorId)
+        {
+            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetFunctionIgnore"))
+            {
+                return db.QueryEntity<string>(new { VendorID = vendorId });
+            }
+        }
+
         private static void WriteAddUserActionLog(LAPUserCriteria value)
         {
             var actionLogCriteria = new ActionLogCriteria
@@ -130,11 +139,11 @@
             return result.ToString();
         }
 
-        private static void WriteUpdateUserPWActionLog(LAPUserCriteria value)
+        private static void WriteUpdateUserActionLog(LAPUserCriteria value)
         {
             var actionLogCriteria = new ActionLogCriteria
             {
-                ActionId = (int)ActionLogType.LAPUser_UpdateUserPWD,
+                ActionId = (int)ActionLogType.LAPUser_UpdateUser,
                 CustId = value.UserLoginId,
                 UserId = value.UserLoginId,
                 Doing = BuildUpdatingUserLogContent(value)

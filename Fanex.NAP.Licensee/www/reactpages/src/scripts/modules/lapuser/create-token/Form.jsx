@@ -170,7 +170,6 @@ class Form extends Component {
         this.props.toggleLoader(true);
         const param = this._getParams();
 
-        console.log(param)
         this.props.createToken(param)
             .then(response => {
                 if (response.data.IsSuccess === true) {
@@ -305,11 +304,11 @@ class Form extends Component {
 
     render() {
         const { isCopy, requestBy, redmineID, token, currency, isCheckGroup, isSuccess } = this.state;
-        const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
+        const { user, isValid, isLoading, funcPer, oldFuncPer, exclusions } = this.props;
 
-        // if (!isValid) {
-        //     return <b className='red'>This username is not allowed to create new token in this case!</b>;
-        // }
+        if (!isValid) {
+            return <b className='red'>This username is not allowed to create new token in this case!</b>;
+        }
 
         return (
             <div>
@@ -322,9 +321,9 @@ class Form extends Component {
                                 <div className="panel-body auto-scroll">
                                     <div className="card-body">
                                         <div className="card-body-content">
-                                            {this._renderCardInput('Request by', 'requestBy')}
+                                            {this._renderCardInput('Request by *', 'requestBy')}
                                             <div className='form-group row'>
-                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
+                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id *</label>
                                                 <div className='col-lg-9 col-sm-9'>
                                                     <NumericInput value={redmineID}
                                                         className={`full-width ${redmineID ? '' : 'has-error'}`}
@@ -367,7 +366,7 @@ class Form extends Component {
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-3 col-xs-12">
-                            <div className="panel panel-default" >
+                            <div className="panel panel-default panel-large" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
                                     {
@@ -392,12 +391,16 @@ class Form extends Component {
                                             <label className='col-xs-12'>User Function permission</label>
                                         </div>
                                     }
-                                    <Tree className="tree" selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
+                                    <Tree className="tree"
+                                        selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
+                                        nodes={JSON.parse(funcPer)} 
+                                        ignoreNodes={JSON.parse(exclusions)}
+                                        isDisable={isSuccess} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-2 col-sm-2 col-xs-12">
-                            <div className="panel panel-default" >
+                            <div className="panel panel-default panel-large">
                                 <div className="panel-heading">Currency permission</div>
                                 <div className="panel-body auto-scroll">
                                     {currency.map((cur, i) => (

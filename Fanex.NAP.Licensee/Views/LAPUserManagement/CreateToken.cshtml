@@ -1,6 +1,6 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
 @using System.Web.Script.Serialization
-@model Fanex.NAP.Licensee.Model.ViewModel.LAPUser.UpdateUserPWViewModel
+@model Fanex.NAP.Licensee.Model.ViewModel.LAPUser.UpdateUserViewModel
 @{
     ViewBag.Title = "Create token";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
@@ -27,6 +27,7 @@
             user: @Html.Raw(serializer.Serialize(Model.UserInfo)),
             timeRemaining: @Html.Raw(serializer.Serialize(Model.TimeRemaining)),
             isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
+            exclusions : @Html.Raw(serializer.Serialize(Model.Exclusions)),
             funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermission)),
             currency: @Html.Raw(serializer.Serialize(Model.Currency)),
         }

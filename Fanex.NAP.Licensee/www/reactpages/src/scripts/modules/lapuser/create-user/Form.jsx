@@ -15,6 +15,7 @@ class Form extends Component {
             isShowConfirmBox: false,
             password: "",
             isSuccess: false,
+            isCopy: false,
             requestBy: '',
             redmineID: '',
             currencySelected: []
@@ -86,12 +87,33 @@ class Form extends Component {
         }
     }
 
-    _renderInput(label, value, disabled, readonly) {
+    _renderTootlip(label, position) {
+        return (
+            <div className={`tooltip in ${position}`}>
+                <div className="tooltip-arrow"></div>
+                <div className="tooltip-inner">{label}</div>
+            </div>
+        )
+    }
+
+    _onCopy = () => {
+        this.txtToken.select();
+        document.execCommand('copy');
+
+        this.setState({
+            isCopy: true
+        })
+        setTimeout(() => {
+            this.setState({ isCopy: false });
+        }, 500);
+    }
+
+    _renderInput(label, value, disabled) {
         return (
             <div className="form-group row">
                 <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">{label}</label>
                 <div className="col-sm-12 col-md-10">
-                    <input type="text" className="full-width" value={value} disabled={disabled} readOnly={readonly} />
+                    <input type="text" className="full-width" value={value} disabled={disabled} />
                 </div>
             </div>
         );
@@ -113,13 +135,12 @@ class Form extends Component {
 
         var index = currencySelected.indexOf(value);
 
-        if(e.target.checked == true && index < 0){
+        if (e.target.checked == true && index < 0) {
             currencySelected.push(value);
         }
-        else{
+        else {
             currencySelected.splice(index, 1);
         }
-
     }
 
     _submit() {
@@ -143,10 +164,9 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, password, isSuccess, requestBy, redmineID } = this.state;
-        const { funcPer, currency } = this.props;
+        const { isShowConfirmBox, isCopy, password, isSuccess, requestBy, redmineID } = this.state;
+        const { funcPer, currency, exclusions } = this.props;
 
-        console.log(currency)
         if (!this.props.isValid) {
             return <b className="red">This username is not exist but cannot be created in this case!</b>
         }
@@ -167,7 +187,7 @@ class Form extends Component {
                                     {this._renderInput("Site Name", this.props.siteName, true)}
                                     {this._renderInput("User ID", this.props.userID, true)}
                                     <div className='form-group row'>
-                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by</label>
+                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by *</label>
                                         <div className='col-md-10'>
                                             <input type='text'
                                                 className={`full-width ${requestBy ? '' : 'has-error'}`}
@@ -175,16 +195,27 @@ class Form extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
+                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id *</label>
                                         <div className="col-md-10">
                                             <NumericInput value={redmineID}
                                                 className={`full-width ${redmineID ? '' : 'has-error'}`}
                                                 onChange={(value) => this.setState({ redmineID: value })} />
                                         </div>
                                     </div>
-                                    {password.trim() == ""
-                                        ? this._renderInput("User password", password, true, false)
-                                        : this._renderInput("User password", password, false, true)}
+                                    <div className="form-group row">
+                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Password</label>
+                                        <div className="col-sm-12 col-md-10">
+                                            <div className="group-input group-prepend">
+                                                <input type="text" className='full-width' value={password} disabled={!isSuccess} ref={(txtToken) => this.txtToken = txtToken} />
+                                                {
+                                                    isCopy && this._renderTootlip('Copied', 'bottom')
+                                                }
+                                                <div className="input-group-prepend">
+                                                    <button className="btn-copy" disabled={!isSuccess} onClick={this._onCopy}>Copy</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="form-group row">
                                         <div className="col-lg-12">
                                             {isSuccess && (
@@ -203,16 +234,19 @@ class Form extends Component {
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-3 col-xs-12">
-                            <div className="panel panel-default" >
+                            <div className="panel panel-default panel-large">
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
-                                    <Tree className="tree" nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
+                                    <Tree className="tree"
+                                        nodes={JSON.parse(funcPer)}
+                                        ignoreNodes={JSON.parse(exclusions)}
+                                        isDisable={isSuccess} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-2 col-sm-2 col-xs-12">
-                            <div className="panel panel-default" >
-                            <div className="panel-heading">Currency permission</div>
+                            <div className="panel panel-default panel-large">
+                                <div className="panel-heading">Currency permission</div>
                                 <div className="panel-body auto-scroll">
                                     {currency.map((cur, i) => (
                                         <div className="form-group" key={i}>

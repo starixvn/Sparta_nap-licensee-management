@@ -5,7 +5,7 @@
         UpdateLapVendorInfo = 5512,
 
         LAPUser_Add = 5566,
-        LAPUser_UpdateUserPWD = 5567,
+        LAPUser_UpdateUser = 5567,
 
         InsertOperator = 5522,
         UpdateOperator = 5523,

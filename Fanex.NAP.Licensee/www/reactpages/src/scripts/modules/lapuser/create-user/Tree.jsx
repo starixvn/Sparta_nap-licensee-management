@@ -9,7 +9,8 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: props.nodes
+            nodes: props.nodes,
+            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : [],
         };
     }
 
@@ -48,9 +49,9 @@ class Tree extends Component {
                 }
                 return node.SubFunctionKeys;
             }
-            return node.FunctionKeys;
+            return node.FunctionKeys.filter(x => x.isIgnore != true);
         }
-        return node.Settings;   
+        return node.Settings.filter(x => x.isIgnore != true);   
     }
 
     _getParentNode(level) {
@@ -167,6 +168,38 @@ class Tree extends Component {
                 })
             }
         }
+    }
+
+    _prepairListNodes() {
+        const { nodes } = this.state;
+
+        nodes.map(node => {
+            this._checkedNodeInStateIfIsIgnored(node);
+        })
+
+        return nodes;
+    }
+
+    componentDidMount() {
+        this._prepairListNodes();
+    }
+
+    _checkedNodeInStateIfIsIgnored(node) {
+        const { ignoreNodes } = this.state;
+        const children = this._getChildNodes(node);
+
+        console.log(ignoreNodes)
+        ignoreNodes.map(func => {
+            if(func === node.FunctionKey){
+                node.isIgnore = true
+            }
+        }) 
+
+        if (children) {
+            children.map(child => this._checkedNodeInStateIfIsIgnored(child))
+        }
+
+        this.setState({ ignoreNodes })
     }
 
     render() {

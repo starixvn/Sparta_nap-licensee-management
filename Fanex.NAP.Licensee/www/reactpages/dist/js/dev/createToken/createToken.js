@@ -5715,6 +5715,7 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
+                    exclusions: defaultProps.exclusions,
                     oldFuncPer: defaultProps.user.UserPermission,
                     currency: defaultProps.currency,
                     oldCurrency: JSON.parse(defaultProps.user.Currency) })
@@ -5791,7 +5792,6 @@ var Form = function (_Component) {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
 
-            console.log(param);
             _this.props.createToken(param).then(function (response) {
                 if (response.data.IsSuccess === true) {
                     _this.setState({
@@ -6151,11 +6151,17 @@ var Form = function (_Component) {
                 isValid = _props2.isValid,
                 isLoading = _props2.isLoading,
                 funcPer = _props2.funcPer,
-                oldFuncPer = _props2.oldFuncPer;
+                oldFuncPer = _props2.oldFuncPer,
+                exclusions = _props2.exclusions;
 
-            // if (!isValid) {
-            //     return <b className='red'>This username is not allowed to create new token in this case!</b>;
-            // }
+
+            if (!isValid) {
+                return _react2.default.createElement(
+                    'b',
+                    { className: 'red' },
+                    'This username is not allowed to create new token in this case!'
+                );
+            }
 
             return _react2.default.createElement(
                 'div',
@@ -6192,14 +6198,14 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'card-body-content' },
-                                            this._renderCardInput('Request by', 'requestBy'),
+                                            this._renderCardInput('Request by *', 'requestBy'),
                                             _react2.default.createElement(
                                                 'div',
                                                 { className: 'form-group row' },
                                                 _react2.default.createElement(
                                                     'label',
                                                     { className: 'col-lg-3 col-sm-3 col-md-3' },
-                                                    'Redmine Id'
+                                                    'Redmine Id *'
                                                 ),
                                                 _react2.default.createElement(
                                                     'div',
@@ -6285,7 +6291,7 @@ var Form = function (_Component) {
                             { className: 'col-lg-4 col-sm-3 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel panel-default' },
+                                { className: 'panel panel-default panel-large' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
@@ -6330,7 +6336,11 @@ var Form = function (_Component) {
                                             'User Function permission'
                                         )
                                     ),
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission), nodes: JSON.parse(funcPer), isDisable: isSuccess })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree',
+                                        selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
+                                        nodes: JSON.parse(funcPer),
+                                        ignoreNodes: JSON.parse(exclusions),
+                                        isDisable: isSuccess })
                                 )
                             )
                         ),
@@ -6339,7 +6349,7 @@ var Form = function (_Component) {
                             { className: 'col-lg-2 col-sm-2 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel panel-default' },
+                                { className: 'panel panel-default panel-large' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
@@ -6463,7 +6473,8 @@ var Tree = function (_Component) {
 
         _this.state = {
             nodes: props.nodes,
-            selectedFunc: props.selectedNode
+            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : [],
+            selectedFunc: props.selectedNode ? props.selectedNode : []
         };
         return _this;
     }
@@ -6478,9 +6489,13 @@ var Tree = function (_Component) {
                     }
                     return node.SubFunctionKeys;
                 }
-                return node.FunctionKeys;
+                return node.FunctionKeys.filter(function (x) {
+                    return x.isIgnore != true;
+                });
             }
-            return node.Settings;
+            return node.Settings.filter(function (x) {
+                return x.isIgnore != true;
+            });
         }
     }, {
         key: '_getParentNode',
@@ -6616,6 +6631,7 @@ var Tree = function (_Component) {
 
             nodes.map(function (node) {
                 _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
+                _this3._checkedNodeInStateIfIsIgnored(node);
             });
 
             return nodes;
@@ -6663,9 +6679,32 @@ var Tree = function (_Component) {
             this.setState({ selectedFunc: selectedFunc });
         }
     }, {
+        key: '_checkedNodeInStateIfIsIgnored',
+        value: function _checkedNodeInStateIfIsIgnored(node) {
+            var _this5 = this;
+
+            var ignoreNodes = this.state.ignoreNodes;
+
+            var children = this._getChildNodes(node);
+
+            ignoreNodes.map(function (func) {
+                if (func === node.FunctionKey) {
+                    node.isIgnore = true;
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    return _this5._checkedNodeInStateIfIsIgnored(child);
+                });
+            }
+
+            this.setState({ ignoreNodes: ignoreNodes });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             var nodes = this.state.nodes;
 
@@ -6679,12 +6718,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this5.props.isDisable,
+                        isDisable: _this6.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this5._getChildNodes,
-                        onNodeSelect: _this5._onNodeSelect,
-                        onNodeCheck: _this5._onNodeCheck,
-                        onRadioCheck: _this5._onRadioCheck
+                        getChildNodes: _this6._getChildNodes,
+                        onNodeSelect: _this6._onNodeSelect,
+                        onNodeCheck: _this6._onNodeCheck,
+                        onRadioCheck: _this6._onRadioCheck
                     });
                 })
             );
@@ -6766,7 +6805,7 @@ var TreeNode = function (_Component) {
                 onRadioCheck = _props.onRadioCheck;
 
 
-            if (!parent && getChildNodes(node).length === 0) {
+            if (!parent && getChildNodes(node).length === 0 || node.isIgnore == true) {
                 return null;
             }
 
@@ -6820,7 +6859,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && node.isIgnore != true && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

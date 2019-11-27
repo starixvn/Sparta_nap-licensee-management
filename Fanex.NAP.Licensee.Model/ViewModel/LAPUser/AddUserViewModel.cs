@@ -13,6 +13,8 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 
         public bool IsExist { get; set; }
 
+        public string Exclusions { get; set; }
+
         public string FuntionPermission { get; set; }
 
         public IEnumerable<CurrencyItem> Currency { get; set; }

@@ -9231,13 +9231,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     _react2.default.createElement(
                                         'a',
                                         { className: 'btn btn-primary btn-account',
-                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?siteName=' + item.SiteName + '&userID=itsupport') },
+                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?vendorId=' + item.VendorId + '&siteName=' + item.SiteName + '&userID=itsupport') },
                                         'IT Support'
                                     ),
                                     _react2.default.createElement(
                                         'a',
                                         { className: 'btn btn-primary btn-account',
-                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?siteName=' + item.SiteName + '&userID=itsupport2') },
+                                            href: window.rootUrl + ('LAPUserManagement/CreateToken?vendorId=' + item.VendorId + '&siteName=' + item.SiteName + '&userID=itsupport2') },
                                         'IT Support 2'
                                     )
                                 ),

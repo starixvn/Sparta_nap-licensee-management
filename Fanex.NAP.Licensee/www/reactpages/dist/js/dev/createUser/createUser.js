@@ -5852,6 +5852,7 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
+                    exclusions: defaultProps.exclusions,
                     funcPer: defaultProps.funcPer,
                     currency: defaultProps.currency
                 })
@@ -5930,6 +5931,18 @@ var Form = function (_Component) {
             }
         };
 
+        _this._onCopy = function () {
+            _this.txtToken.select();
+            document.execCommand('copy');
+
+            _this.setState({
+                isCopy: true
+            });
+            setTimeout(function () {
+                _this.setState({ isCopy: false });
+            }, 500);
+        };
+
         _this._onCheck = function (value, e) {
             var currencySelected = _this.state.currencySelected;
 
@@ -5947,6 +5960,7 @@ var Form = function (_Component) {
             isShowConfirmBox: false,
             password: "",
             isSuccess: false,
+            isCopy: false,
             requestBy: '',
             redmineID: '',
             currencySelected: []
@@ -6025,8 +6039,22 @@ var Form = function (_Component) {
             return funcs;
         }
     }, {
+        key: '_renderTootlip',
+        value: function _renderTootlip(label, position) {
+            return _react2.default.createElement(
+                'div',
+                { className: 'tooltip in ' + position },
+                _react2.default.createElement('div', { className: 'tooltip-arrow' }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'tooltip-inner' },
+                    label
+                )
+            );
+        }
+    }, {
         key: '_renderInput',
-        value: function _renderInput(label, value, disabled, readonly) {
+        value: function _renderInput(label, value, disabled) {
             return _react2.default.createElement(
                 'div',
                 { className: 'form-group row' },
@@ -6038,7 +6066,7 @@ var Form = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'col-sm-12 col-md-10' },
-                    _react2.default.createElement('input', { type: 'text', className: 'full-width', value: value, disabled: disabled, readOnly: readonly })
+                    _react2.default.createElement('input', { type: 'text', className: 'full-width', value: value, disabled: disabled })
                 )
             );
         }
@@ -6084,16 +6112,17 @@ var Form = function (_Component) {
 
             var _state2 = this.state,
                 isShowConfirmBox = _state2.isShowConfirmBox,
+                isCopy = _state2.isCopy,
                 password = _state2.password,
                 isSuccess = _state2.isSuccess,
                 requestBy = _state2.requestBy,
                 redmineID = _state2.redmineID;
             var _props = this.props,
                 funcPer = _props.funcPer,
-                currency = _props.currency;
+                currency = _props.currency,
+                exclusions = _props.exclusions;
 
 
-            console.log(currency);
             if (!this.props.isValid) {
                 return _react2.default.createElement(
                     'b',
@@ -6142,7 +6171,7 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'label',
                                             { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
-                                            'Request by'
+                                            'Request by *'
                                         ),
                                         _react2.default.createElement(
                                             'div',
@@ -6160,7 +6189,7 @@ var Form = function (_Component) {
                                         _react2.default.createElement(
                                             'label',
                                             { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
-                                            'Redmine Id'
+                                            'Redmine Id *'
                                         ),
                                         _react2.default.createElement(
                                             'div',
@@ -6172,7 +6201,36 @@ var Form = function (_Component) {
                                                 } })
                                         )
                                     ),
-                                    password.trim() == "" ? this._renderInput("User password", password, true, false) : this._renderInput("User password", password, false, true),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group row' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
+                                            'Password'
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'col-sm-12 col-md-10' },
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: 'group-input group-prepend' },
+                                                _react2.default.createElement('input', { type: 'text', className: 'full-width', value: password, disabled: !isSuccess, ref: function ref(txtToken) {
+                                                        return _this4.txtToken = txtToken;
+                                                    } }),
+                                                isCopy && this._renderTootlip('Copied', 'bottom'),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'input-group-prepend' },
+                                                    _react2.default.createElement(
+                                                        'button',
+                                                        { className: 'btn-copy', disabled: !isSuccess, onClick: this._onCopy },
+                                                        'Copy'
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row' },
@@ -6203,7 +6261,7 @@ var Form = function (_Component) {
                             { className: 'col-lg-4 col-sm-3 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel panel-default' },
+                                { className: 'panel panel-default panel-large' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
@@ -6212,7 +6270,10 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
-                                    _react2.default.createElement(_Tree2.default, { className: 'tree', nodes: JSON.parse(funcPer), isDisable: isSuccess })
+                                    _react2.default.createElement(_Tree2.default, { className: 'tree',
+                                        nodes: JSON.parse(funcPer),
+                                        ignoreNodes: JSON.parse(exclusions),
+                                        isDisable: isSuccess })
                                 )
                             )
                         ),
@@ -6221,7 +6282,7 @@ var Form = function (_Component) {
                             { className: 'col-lg-2 col-sm-2 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel panel-default' },
+                                { className: 'panel panel-default panel-large' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
@@ -6350,7 +6411,8 @@ var Tree = function (_Component) {
         };
 
         _this.state = {
-            nodes: props.nodes
+            nodes: props.nodes,
+            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : []
         };
         return _this;
     }
@@ -6365,9 +6427,13 @@ var Tree = function (_Component) {
                     }
                     return node.SubFunctionKeys;
                 }
-                return node.FunctionKeys;
+                return node.FunctionKeys.filter(function (x) {
+                    return x.isIgnore != true;
+                });
             }
-            return node.Settings;
+            return node.Settings.filter(function (x) {
+                return x.isIgnore != true;
+            });
         }
     }, {
         key: '_getParentNode',
@@ -6495,9 +6561,52 @@ var Tree = function (_Component) {
             }
         }
     }, {
+        key: '_prepairListNodes',
+        value: function _prepairListNodes() {
+            var _this3 = this;
+
+            var nodes = this.state.nodes;
+
+
+            nodes.map(function (node) {
+                _this3._checkedNodeInStateIfIsIgnored(node);
+            });
+
+            return nodes;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._prepairListNodes();
+        }
+    }, {
+        key: '_checkedNodeInStateIfIsIgnored',
+        value: function _checkedNodeInStateIfIsIgnored(node) {
+            var _this4 = this;
+
+            var ignoreNodes = this.state.ignoreNodes;
+
+            var children = this._getChildNodes(node);
+
+            console.log(ignoreNodes);
+            ignoreNodes.map(function (func) {
+                if (func === node.FunctionKey) {
+                    node.isIgnore = true;
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    return _this4._checkedNodeInStateIfIsIgnored(child);
+                });
+            }
+
+            this.setState({ ignoreNodes: ignoreNodes });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this5 = this;
 
             var nodes = this.state.nodes;
 
@@ -6511,12 +6620,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this3.props.isDisable,
+                        isDisable: _this5.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this3._getChildNodes,
-                        onNodeSelect: _this3._onNodeSelect,
-                        onNodeCheck: _this3._onNodeCheck,
-                        onRadioCheck: _this3._onRadioCheck
+                        getChildNodes: _this5._getChildNodes,
+                        onNodeSelect: _this5._onNodeSelect,
+                        onNodeCheck: _this5._onNodeCheck,
+                        onRadioCheck: _this5._onRadioCheck
                     });
                 })
             );
@@ -6598,7 +6707,7 @@ var TreeNode = function (_Component) {
                 onRadioCheck = _props.onRadioCheck;
 
 
-            if (!parent && getChildNodes(node).length === 0) {
+            if (!parent && getChildNodes(node).length === 0 || node.isIgnore == true) {
                 return null;
             }
 
@@ -6652,7 +6761,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && node.isIgnore != true && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

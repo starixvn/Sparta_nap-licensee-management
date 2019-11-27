@@ -40,7 +40,7 @@
         }
 
         [HttpGet]
-        public ActionResult AddNewUser(string siteName, string userID)
+        public ActionResult AddNewUser(string vendorId, string siteName, string userID)
         {
             var licenseeInfo = _licenseeService.GetLicensee(siteName);
 
@@ -48,8 +48,9 @@
             {
                 SiteName = siteName,
                 UserID = userID,
-                IsValid = LAPUserHelper.IsValidUserAccount(userID),
+                IsValid = CheckParamRequest(vendorId, siteName, userID),
                 IsExist = _userService.GetUserInfo(siteName, userID) != null,
+                Exclusions = _userService.GetFunctionIgnore(vendorId),
                 FuntionPermission = GetFunctionPermissionFileContent(),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
             };
@@ -91,22 +92,23 @@
         }
 
         [HttpGet]
-        public ActionResult CreateToken(string siteName, string userID)
+        public ActionResult CreateToken(string vendorId, string siteName, string userID)
         {
             var result = _userService.GetUserInfo(siteName, userID);
 
             if (result == null)
             {
-                return RedirectToAction("AddNewUser", "LAPUserManagement", new { siteName, userID });
+                return RedirectToAction("AddNewUser", "LAPUserManagement", new { vendorId, siteName, userID });
             }
 
             var licenseeInfo = _licenseeService.GetLicensee(siteName);
 
-            var viewModel = new UpdateUserPWViewModel
+            var viewModel = new UpdateUserViewModel
             {
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
-                IsValid = LAPUserHelper.IsValidUserAccount(userID),
+                IsValid = CheckParamRequest(vendorId, siteName, userID),
+                Exclusions = _userService.GetFunctionIgnore(vendorId),
                 FuntionPermission = GetFunctionPermissionFileContent(),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
             };
@@ -198,6 +200,21 @@
             }
 
             return error.Length > 0 ? error.ToString() : null;
+        }
+
+        private bool CheckParamRequest(string vendorId, string siteName, string userID)
+        {
+            var error = new StringBuilder();
+
+            error.Append(CheckEmptyParameter("Site Name", siteName, "<br>"));
+            error.Append(CheckEmptyParameter("Vendor Id", vendorId, "<br>"));
+
+            if (!LAPUserHelper.IsValidUserAccount(userID))
+            {
+                error.Append("This username is invalid! ");
+            }
+
+            return error.Length == 0;
         }
 
         private string GetFunctionPermissionFileContent()

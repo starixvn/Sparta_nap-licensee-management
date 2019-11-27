@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using DTO;
 
-    public class UpdateUserPWViewModel
+    public class UpdateUserViewModel
     {
         public LAPUser UserInfo { get; set; }
 
@@ -12,6 +12,8 @@
         public bool IsValid { get; set; }
 
         public string FuntionPermission { get; set; }
+
+        public string Exclusions { get; set; }
 
         public IEnumerable<CurrencyItem> Currency { get; set; }
     }
