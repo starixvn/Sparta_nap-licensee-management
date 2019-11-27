@@ -9102,7 +9102,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             ),
                             _react2.default.createElement(
                                 'th',
-                                null,
+                                { className: 'hidden' },
                                 'Internal Url'
                             ),
                             _react2.default.createElement(
@@ -9122,12 +9122,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             ),
                             _react2.default.createElement(
                                 'th',
-                                null,
+                                { className: 'hidden' },
                                 'IsTest'
                             ),
                             _react2.default.createElement(
                                 'th',
-                                null,
+                                { className: 'hidden' },
                                 'Site Id'
                             ),
                             _react2.default.createElement(
@@ -9180,7 +9180,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'td',
-                                    null,
+                                    { className: 'hidden' },
                                     _react2.default.createElement(
                                         'a',
                                         { href: item.InternalUrl, target: '_blank' },
@@ -9212,12 +9212,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'td',
-                                    { className: 'text-center' },
+                                    { className: 'text-center hidden' },
                                     item.IsTest ? "Yes" : "No"
                                 ),
                                 _react2.default.createElement(
                                     'td',
-                                    { className: 'text-center' },
+                                    { className: 'text-center hidden' },
                                     item.SiteId
                                 ),
                                 _react2.default.createElement(

@@ -159,7 +159,7 @@ class Form extends Component {
             <div>
                 <div className="add-form">
                     <div className="row">
-                        <div className="col-lg-6 col-sm-6 col-xs-12">
+                        <div className="col-lg-5 col-sm-7 col-xs-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">User Info</div>
                                 <div className="panel-body">
@@ -202,7 +202,7 @@ class Form extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-sm-4 col-xs-12">
+                        <div className="col-lg-4 col-sm-3 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
@@ -210,9 +210,9 @@ class Form extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-sm-2 col-xs-12">
+                        <div className="col-lg-2 col-sm-2 col-xs-12">
                             <div className="panel panel-default" >
-                                <div className="panel-heading">User Currency</div>
+                            <div className="panel-heading">Currency permission</div>
                                 <div className="panel-body auto-scroll">
                                     {currency.map((cur, i) => (
                                         <div className="form-group" key={i}>

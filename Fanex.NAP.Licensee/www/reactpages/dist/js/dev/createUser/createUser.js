@@ -6121,7 +6121,7 @@ var Form = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-6 col-sm-6 col-xs-12' },
+                            { className: 'col-lg-5 col-sm-7 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6200,7 +6200,7 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-3 col-sm-4 col-xs-12' },
+                            { className: 'col-lg-4 col-sm-3 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6218,14 +6218,14 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-3 col-sm-2 col-xs-12' },
+                            { className: 'col-lg-2 col-sm-2 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
-                                    'User Currency'
+                                    'Currency permission'
                                 ),
                                 _react2.default.createElement(
                                     'div',

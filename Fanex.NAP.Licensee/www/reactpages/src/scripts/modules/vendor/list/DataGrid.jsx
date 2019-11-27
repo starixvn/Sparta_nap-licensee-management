@@ -57,12 +57,12 @@ export class DataGrid extends Component {
                         <th>Site Name</th>
                         <th>Licensee Type</th>
                         <th>Portal Url</th>
-                        <th>Internal Url</th>
+                        <th className="hidden">Internal Url</th>
                         <th>LRF Url</th>
                         <th>Affiliate Url</th>
                         <th>Ignored Functions</th>
-                        <th>IsTest</th>
-                        <th>Site Id</th>
+                        <th className="hidden">IsTest</th>
+                        <th className="hidden">Site Id</th>
                         <th>Disable</th>
                         <th>Account</th>
                         <th>Action</th>
@@ -78,14 +78,14 @@ export class DataGrid extends Component {
                                     <td>{item.SiteName}</td>
                                     <td className="text-center">{LicenseeType[item.LicenseeType] || item.LicenseeType}</td>
                                     <td><a href={item.PortalUrl} target="_blank">{item.PortalUrl}</a></td>
-                                    <td><a href={item.InternalUrl} target="_blank">{item.InternalUrl}</a></td>
+                                    <td className="hidden"><a href={item.InternalUrl} target="_blank">{item.InternalUrl}</a></td>
                                     <td><a href={item.LrfUrl} target="_blank">{item.LrfUrl}</a></td>
                                     <td><a href={item.AffiliateUrl} target="_blank">{item.AffiliateUrl}</a></td>
                                     <td style={{ width: 240 }}>
                                         {item.ExclusionList && item.ExclusionList.length > 0 && <IgnoredFunctionToggleable functionList={item.ExclusionList} />}
                                     </td>
-                                    <td className="text-center">{item.IsTest ? "Yes" : "No"}</td>
-                                    <td className="text-center">{item.SiteId}</td>
+                                    <td className="text-center hidden">{item.IsTest ? "Yes" : "No"}</td>
+                                    <td className="text-center hidden">{item.SiteId}</td>
                                     <td className="text-center">{item.Disable ? "Yes" : "No"}</td>
                                     <td className="text-center">
                                         <a className="btn btn-primary btn-account" 

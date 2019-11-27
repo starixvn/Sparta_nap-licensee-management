@@ -272,14 +272,14 @@ class Form extends Component {
         var index = currencySelected.indexOf(value.Id);
         value.isCheck = !value.isCheck;
 
-        if(value.isCheck == true && index < 0){
+        if (value.isCheck == true && index < 0) {
             currencySelected.push(value.Id);
         }
-        else{
+        else {
             currencySelected.splice(index, 1);
         }
 
-        this.setState( {currencySelected} );
+        this.setState({ currencySelected });
     }
 
     _checkedOldCurency() {
@@ -292,10 +292,10 @@ class Form extends Component {
                 if (cur.Id === olCur) {
                     cur.isCheck = true;
                 }
-            }) 
+            })
         })
 
-        this.setState({ currency, currencySelected});
+        this.setState({ currency, currencySelected });
     }
 
     componentDidMount() {
@@ -307,16 +307,16 @@ class Form extends Component {
         const { isCopy, requestBy, redmineID, token, currency, isCheckGroup, isSuccess } = this.state;
         const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
-        if (!isValid) {
-            return <b className='red'>This username is not allowed to create new token in this case!</b>;
-        }
+        // if (!isValid) {
+        //     return <b className='red'>This username is not allowed to create new token in this case!</b>;
+        // }
 
         return (
             <div>
                 <div className="add-form">
                     <Loader isLoading={isLoading} />
                     <div className="row">
-                        <div className="col-lg-6 col-sm-6 col-xs-12">
+                        <div className="col-lg-5 col-sm-7 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">Create new token for <b>{user.UserID}</b></div>
                                 <div className="panel-body auto-scroll">
@@ -366,7 +366,7 @@ class Form extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-sm-4 col-xs-12">
+                        <div className="col-lg-4 col-sm-3 col-xs-12">
                             <div className="panel panel-default" >
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
@@ -386,16 +386,19 @@ class Form extends Component {
                                             </div>
                                         </div>
                                     }
-                                    <div className='form-group row'>
-                                        <label className='col-xs-12'>User Function permission</label>
-                                    </div>
+                                    {
+                                        oldFuncPer.UserGroup &&
+                                        <div className='form-group row'>
+                                            <label className='col-xs-12'>User Function permission</label>
+                                        </div>
+                                    }
                                     <Tree className="tree" selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} nodes={JSON.parse(funcPer)} isDisable={isSuccess} />
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-sm-2 col-xs-12">
+                        <div className="col-lg-2 col-sm-2 col-xs-12">
                             <div className="panel panel-default" >
-                                <div className="panel-heading">User Currency</div>
+                                <div className="panel-heading">Currency permission</div>
                                 <div className="panel-body auto-scroll">
                                     {currency.map((cur, i) => (
                                         <div className="form-group" key={i}>

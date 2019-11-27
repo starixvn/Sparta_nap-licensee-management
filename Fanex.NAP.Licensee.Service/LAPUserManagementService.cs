@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -77,42 +76,28 @@
                 UserID = userID,
                 SiteName = siteName
             };
+            var user = new LAPUser();
+            var userPermission = new UserPermissionInfo();
+            var currency = string.Empty;
+
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
-            {
-                return db.QueryEntity<LAPUser>(parameter);
-            }
-        }
-
-        public UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ)
-        {
-            var parameter = new
-            {
-                UserSEQ = userSEQ
-            }; 
-            var result = new UserPermissionInfo();
-
-            using (var db = _objectDbGenerator.Create("Nap_LM_UserFuncPermission_Select"))
             {
                 using (var multi = db.QueryMultiple(parameter))
                 {
-                    result.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
-                    result.FuncPermission = multi.Read<UserFuncPermission>();
+                    user = multi.Read<LAPUser>().FirstOrDefault();
+                    userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
+                    userPermission.FuncPermission = multi.Read<UserFuncPermission>();
+                    currency = multi.Read<string>().FirstOrDefault();
                 }
             }
 
-            return result;
-        }
-
-        public string GetCurrency(int userSEQ)
-        {
-            var result = string.Empty;
-
-            using (var db = _objectDbGenerator.Create("Nap_LM_AuthorCurrency_Select"))
+            if (user != null)
             {
-                result = db.QueryEntity<string>(new { UserSEQ = userSEQ });
+                user.UserPermission = userPermission;
+                user.Currency = currency;
             }
 
-            return result;
+            return user;
         }
 
         private static void WriteAddUserActionLog(LAPUserCriteria value)

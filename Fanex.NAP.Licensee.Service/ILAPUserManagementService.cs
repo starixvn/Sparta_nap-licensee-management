@@ -11,8 +11,8 @@
 
         ResultData<string> AddUser(LAPUserCriteria criteria);
 
-        UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ);
+        //UserPermissionInfo GetUserFuncPermissionInfo(int userSEQ);
 
-        string GetCurrency(int userSEQ);
+        //string GetCurrency(int userSEQ);
     }
 }

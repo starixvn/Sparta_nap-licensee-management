@@ -51,7 +51,7 @@
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
                 IsExist = _userService.GetUserInfo(siteName, userID) != null,
                 FuntionPermission = GetFunctionPermissionFileContent(),
-                Currency = _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID),
+                Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
             };
 
             return View(viewModel);
@@ -108,9 +108,7 @@
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = LAPUserHelper.IsValidUserAccount(userID),
                 FuntionPermission = GetFunctionPermissionFileContent(),
-                OldFuncPermission = _userService.GetUserFuncPermissionInfo(result.UserSEQ),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
-                OldCurrency = _userService.GetCurrency(result.UserSEQ)
             };
 
             return View(viewModel);

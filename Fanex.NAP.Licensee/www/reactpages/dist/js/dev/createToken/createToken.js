@@ -5715,9 +5715,9 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
-                    oldFuncPer: defaultProps.oldFuncPermission,
+                    oldFuncPer: defaultProps.user.UserPermission,
                     currency: defaultProps.currency,
-                    oldCurrency: JSON.parse(defaultProps.oldCurrency) })
+                    oldCurrency: JSON.parse(defaultProps.user.Currency) })
             );
         }
     }]);
@@ -6153,14 +6153,9 @@ var Form = function (_Component) {
                 funcPer = _props2.funcPer,
                 oldFuncPer = _props2.oldFuncPer;
 
-
-            if (!isValid) {
-                return _react2.default.createElement(
-                    'b',
-                    { className: 'red' },
-                    'This username is not allowed to create new token in this case!'
-                );
-            }
+            // if (!isValid) {
+            //     return <b className='red'>This username is not allowed to create new token in this case!</b>;
+            // }
 
             return _react2.default.createElement(
                 'div',
@@ -6174,7 +6169,7 @@ var Form = function (_Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-6 col-sm-6 col-xs-12' },
+                            { className: 'col-lg-5 col-sm-7 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6287,7 +6282,7 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-3 col-sm-4 col-xs-12' },
+                            { className: 'col-lg-4 col-sm-3 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
@@ -6326,7 +6321,7 @@ var Form = function (_Component) {
                                             )
                                         )
                                     ),
-                                    _react2.default.createElement(
+                                    oldFuncPer.UserGroup && _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row' },
                                         _react2.default.createElement(
@@ -6341,14 +6336,14 @@ var Form = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-lg-3 col-sm-2 col-xs-12' },
+                            { className: 'col-lg-2 col-sm-2 col-xs-12' },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'panel panel-default' },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-heading' },
-                                    'User Currency'
+                                    'Currency permission'
                                 ),
                                 _react2.default.createElement(
                                     'div',
