@@ -43,7 +43,7 @@
 	<add key="AdminUserName" value="sa" />
 	<add key="DefaultExtendedTimeOfToken" value="8" />
 	<add key="RedisPrefix" value="hangfire-LAP:" />
-	<add key="SentryDSN" value="https://0b2c97ed84804804ae23e4f29b4dbf02@sentry.nexdev.net/74" /> 
+	<add key="SentryDSN" value="https://0b2c97ed84804804ae23e4f29b4dbf02@sentry.nexdev.net/74" />
 	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />
 	<add key="RabbitMQConnectionString" value="host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw==" />
 </appSettings>
@@ -63,6 +63,12 @@
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-UAT" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="AdminUserName" value="sa" />
+	<add key="DefaultExtendedTimeOfToken" value="8" />
+	<add key="RedisPrefix" value="hangfire-LAP:" />
+	<add key="SentryDSN" value="https://434920377c9e479e9d2931e7bfef7306@10.99.99.37:801/95" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />
 	<add key="RabbitMQConnectionString" value="host=10.99.99.37:5673;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=" />
 </appSettings>
 
@@ -82,6 +88,12 @@
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="AdminUserName" value="sa" />
+	<add key="DefaultExtendedTimeOfToken" value="8" />
+	<add key="RedisPrefix" value="hangfire-LAP:" />
+	<add key="SentryDSN" value="https://434920377c9e479e9d2931e7bfef7306@10.99.99.37:801/95" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />
 	<add key="RabbitMQConnectionString" value="host=10.99.99.37;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=" />
 </appSettings>
 
@@ -101,6 +113,12 @@
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="AdminUserName" value="sa" />
+	<add key="DefaultExtendedTimeOfToken" value="8" />
+	<add key="RedisPrefix" value="hangfire-LAP:" />
+	<add key="SentryDSN" value="https://6880691f2ec146faba2e64f72463c653@172.16.4.109:800/42" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />
 	<add key="RabbitMQConnectionString" value="host=172.16.4.106,172.16.4.107;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=" />
 </appSettings>
 <#
@@ -119,6 +137,12 @@ break;
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-UAT" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="AdminUserName" value="sa" />
+	<add key="DefaultExtendedTimeOfToken" value="8" />
+	<add key="RedisPrefix" value="hangfire-LAP:" />
+	<add key="SentryDSN" value="http://f75a9f8b67b841a69c240e49e5c18f13@10.11.200.202:800/25" />
+	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=NAPLicensee" />
 	<add key="RabbitMQConnectionString" value="host=10.40.40.202;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=" />
 </appSettings>
 				<#

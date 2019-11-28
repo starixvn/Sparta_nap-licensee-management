@@ -5852,7 +5852,7 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
-                    exclusions: defaultProps.exclusions,
+                    exclusions: defaultProps.funcIgnore,
                     funcPer: defaultProps.funcPer,
                     currency: defaultProps.currency
                 })
@@ -5983,7 +5983,7 @@ var Form = function (_Component) {
                     UserID: this.props.userID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,
-                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
+                    FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                     Currency: JSON.stringify(currencySelected)
                 }
             };
@@ -6488,7 +6488,7 @@ var Tree = function (_Component) {
                 var result = selectedFunc.find(function (n) {
                     return n.FunctionKey === node.FunctionKey;
                 });
-                if (node.isCheck === true && !node.Settings) {
+                if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
                     if (result == null) {
                         selectedFunc.push(node);
                     }
@@ -6588,7 +6588,6 @@ var Tree = function (_Component) {
 
             var children = this._getChildNodes(node);
 
-            console.log(ignoreNodes);
             ignoreNodes.map(function (func) {
                 if (func === node.FunctionKey) {
                     node.isIgnore = true;

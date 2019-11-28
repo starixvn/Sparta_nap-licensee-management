@@ -31,7 +31,7 @@ class Form extends Component {
                 UserID: this.props.userID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
-                FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
+                FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 Currency: JSON.stringify(currencySelected)
             }
         };

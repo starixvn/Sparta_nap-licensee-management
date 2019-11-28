@@ -102,7 +102,7 @@ class Tree extends Component {
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
-            if (node.isCheck === true && !node.Settings) {
+            if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
                 if (result == null) {
                     selectedFunc.push(node);
                 }
@@ -174,8 +174,8 @@ class Tree extends Component {
     _prepairListNodes() {
         const { nodes } = this.state;
         nodes.map(node => {
-            this._checkedNodeInStateIfExistInSelectedNode(node, null);
             this._checkedNodeInStateIfIsIgnored(node);
+            this._checkedNodeInStateIfExistInSelectedNode(node, null);
         })
 
         return nodes;

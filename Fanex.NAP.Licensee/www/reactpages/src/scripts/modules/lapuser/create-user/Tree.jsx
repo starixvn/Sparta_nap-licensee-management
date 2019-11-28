@@ -101,7 +101,7 @@ class Tree extends Component {
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
-            if (node.isCheck === true && !node.Settings) {
+            if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
                 if (result == null) {
                     selectedFunc.push(node);
                 }
@@ -188,7 +188,6 @@ class Tree extends Component {
         const { ignoreNodes } = this.state;
         const children = this._getChildNodes(node);
 
-        console.log(ignoreNodes)
         ignoreNodes.map(func => {
             if(func === node.FunctionKey){
                 node.isIgnore = true

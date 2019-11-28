@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -30,7 +29,7 @@
                 criteria.SiteName,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
-                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded),
+                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.Currency
             };
 
@@ -48,14 +47,13 @@
         {
             var result = new ResultData<string>();
 
-            var userInfo = GetUserInfo(criteria.SiteName, criteria.UserID);
+            var userInfo = GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
             var parameter = new
             {
                 userInfo.UserSEQ,
                 criteria.SiteName,
                 criteria.UserPWD,
-                FuncPermissionsRemoved = BuildFunctionXMLParameter(criteria.FuncPermissionsRemoved),
-                FuncPermissionsAdded = BuildFunctionXMLParameter(criteria.FuncPermissionsAdded),
+                FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.OldUserGroupSEQ,
                 criteria.Currency
             };
@@ -70,21 +68,25 @@
             return result;
         }
 
-        public LAPUser GetUserInfo(string siteName, string userID)
+        public LAPUser GetUserInfo(string vendorId, string siteName, string userID)
         {
+            LAPUser user;
+            var userPermission = new UserPermissionInfo();
+            var currency = string.Empty;
+            var functionIgnore = string.Empty;
+
             var parameter = new
             {
+                VendorID = vendorId,
                 UserID = userID,
                 SiteName = siteName
             };
-            var user = new LAPUser();
-            var userPermission = new UserPermissionInfo();
-            var currency = string.Empty;
 
             using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
             {
                 using (var multi = db.QueryMultiple(parameter))
                 {
+                    functionIgnore = multi.Read<string>().FirstOrDefault();
                     user = multi.Read<LAPUser>().FirstOrDefault();
                     userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
                     userPermission.FuncPermission = multi.Read<UserFuncPermission>();
@@ -96,17 +98,15 @@
             {
                 user.UserPermission = userPermission;
                 user.Currency = currency;
+                user.FunctionIgnore = functionIgnore;
+            }
+            else
+            {
+                user = new LAPUser();
+                user.FunctionIgnore = functionIgnore;
             }
 
             return user;
-        }
-
-        public string GetFunctionIgnore(string vendorId)
-        {
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_GetFunctionIgnore"))
-            {
-                return db.QueryEntity<string>(new { VendorID = vendorId });
-            }
         }
 
         private static void WriteAddUserActionLog(LAPUserCriteria value)
@@ -129,7 +129,7 @@
             result.Append("<Action value=\"AddNewUser\">");
             result.Append("<SpName>Nap_LM_LAPUser_Insert</SpName>");
             result.Append($"<CreatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
+            result.Append($"<FunctionPermisstion=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
             result.Append($"<Curency=\"{value.Currency}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
@@ -162,8 +162,7 @@
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
-            result.Append($"<RemoveFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsRemoved)}\" />");
-            result.Append($"<AddNewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissionsAdded)}\" />");
+            result.Append($"<NewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
             result.Append($"<RemoveUserGroup=\"{value.OldUserGroupSEQ}\" />");
             result.Append($"<NewCurency=\"{value.Currency}\" />");
             result.Append("</Action>");

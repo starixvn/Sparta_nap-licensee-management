@@ -23,7 +23,7 @@ export default class App extends React.Component {
                     selectedSiteName={defaultProps.selectedSiteName}
                     isValid={defaultProps.isValid}
                     funcPer={defaultProps.funcPer}
-                    exclusions={defaultProps.exclusions}
+                    exclusions={defaultProps.user.FunctionIgnore}
                     oldFuncPer={defaultProps.user.UserPermission}
                     currency={defaultProps.currency}
                     oldCurrency={JSON.parse(defaultProps.user.Currency)} />

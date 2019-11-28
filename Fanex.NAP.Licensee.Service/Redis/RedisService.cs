@@ -28,6 +28,11 @@
 
         public TimeSpan GetRemainingTime(string key)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return TimeSpan.Zero;
+            }
+            
             var time = _databse.KeyTimeToLive(key);
             if (time.HasValue)
             {

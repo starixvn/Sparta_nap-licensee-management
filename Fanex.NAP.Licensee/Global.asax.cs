@@ -9,10 +9,8 @@
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
     using Logging;
-    using Logging.RabbitMQ;
     using Logging.Sentry.RavenClient;
     using SharpRaven;
-    using SharpRaven.Data;
 
     /// <summary>
     /// MVC application.

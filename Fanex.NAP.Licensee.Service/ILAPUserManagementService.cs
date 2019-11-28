@@ -7,10 +7,8 @@
     {
         ResultData<string> UpdateUser(LAPUserCriteria criteria);
 
-        LAPUser GetUserInfo(string siteName, string userID);
+        LAPUser GetUserInfo(string vendorId, string siteName, string userID);
 
         ResultData<string> AddUser(LAPUserCriteria criteria);
-
-        string GetFunctionIgnore(string vendorId);
     }
 }

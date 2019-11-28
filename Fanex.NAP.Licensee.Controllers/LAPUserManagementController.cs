@@ -43,14 +43,15 @@
         public ActionResult AddNewUser(string vendorId, string siteName, string userID)
         {
             var licenseeInfo = _licenseeService.GetLicensee(siteName);
+            var result = _userService.GetUserInfo(vendorId, siteName, userID);
 
             var viewModel = new AddUserViewModel
             {
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                IsExist = _userService.GetUserInfo(siteName, userID) != null,
-                Exclusions = _userService.GetFunctionIgnore(vendorId),
+                FuntionIgnore = result.FunctionIgnore,
+                IsExist = !string.IsNullOrEmpty(result.UserID),
                 FuntionPermission = GetFunctionPermissionFileContent(),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
             };
@@ -94,9 +95,9 @@
         [HttpGet]
         public ActionResult CreateToken(string vendorId, string siteName, string userID)
         {
-            var result = _userService.GetUserInfo(siteName, userID);
+            var result = _userService.GetUserInfo(vendorId, siteName, userID);
 
-            if (result == null)
+            if (string.IsNullOrEmpty(result.UserID) && string.IsNullOrEmpty(result.SiteName))
             {
                 return RedirectToAction("AddNewUser", "LAPUserManagement", new { vendorId, siteName, userID });
             }
@@ -108,7 +109,6 @@
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                Exclusions = _userService.GetFunctionIgnore(vendorId),
                 FuntionPermission = GetFunctionPermissionFileContent(),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
             };
@@ -134,7 +134,7 @@
                 return Json(result);
             }
 
-            var userInfo = _userService.GetUserInfo(criteria.SiteName, criteria.UserID);
+            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
             if (userInfo != null)
             {
                 RemoveBackgroundJob(userInfo.UserPWD);
@@ -183,13 +183,13 @@
         private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)
         {
             var error = new StringBuilder();
-            var userInfo = _userService.GetUserInfo(criteria.SiteName, criteria.UserID);
+            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
 
             error.Append(CheckEmptyParameter("Site Name", criteria.SiteName, "<br>"));
             error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
             error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
 
-            if (isAddNew && userInfo != null)
+            if (isAddNew && !string.IsNullOrEmpty(userInfo.UserID))
             {
                 error.Append("This username already exists! <br>");
             }

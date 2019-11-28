@@ -28,7 +28,7 @@
                 userID: @Html.Raw(serializer.Serialize(Model.UserID)),
                 isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
                 isExist: @Html.Raw(serializer.Serialize(Model.IsExist)),
-                exclusions : @Html.Raw(serializer.Serialize(Model.Exclusions)),
+                funcIgnore: @Html.Raw(serializer.Serialize(Model.FuntionIgnore)),
                 funcPer: @Html.Raw(serializer.Serialize(Model.FuntionPermission)),
                 currency: @Html.Raw(serializer.Serialize(Model.Currency))
             }

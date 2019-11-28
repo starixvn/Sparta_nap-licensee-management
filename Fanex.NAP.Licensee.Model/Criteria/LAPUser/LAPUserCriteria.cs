@@ -4,6 +4,8 @@
 
     public class LAPUserCriteria
     {
+        public string VendorId { get; set; }
+
         public string SiteName { get; set; }
 
         public string UserID { get; set; }
@@ -18,9 +20,7 @@
 
         public string UserLoginName { get; set; }
 
-        public IEnumerable<FunctionPermissionCriteria> FuncPermissionsRemoved { get; set; }
-
-        public IEnumerable<FunctionPermissionCriteria> FuncPermissionsAdded { get; set; }
+        public IEnumerable<FunctionPermissionCriteria> FuncPermissions{ get; set; }
 
         public string Currency { get; set; }
 

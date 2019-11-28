@@ -5715,7 +5715,7 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
-                    exclusions: defaultProps.exclusions,
+                    exclusions: defaultProps.user.FunctionIgnore,
                     oldFuncPer: defaultProps.user.UserPermission,
                     currency: defaultProps.currency,
                     oldCurrency: JSON.parse(defaultProps.user.Currency) })
@@ -5884,12 +5884,29 @@ var Form = function (_Component) {
                     UserID: user.UserID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,
-                    FuncPermissionsRemoved: this._getSubFunction(this._getFuncsRemoved()),
-                    FuncPermissionsAdded: this._getSubFunction(this._getFuncsAdded()),
+                    FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                     OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : '',
                     Currency: JSON.stringify(currencySelected)
                 }
             };
+        }
+    }, {
+        key: '_getFuncsAdded',
+        value: function _getFuncsAdded() {
+            var newFuncsPermissions = this.props.selectedFunc;
+            var funcsAdded = [];
+
+            newFuncsPermissions.map(function (newFunc) {
+                var node = {
+                    FunctionKey: newFunc.FunctionKey,
+                    SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
+                    Type: newFunc.Type
+                };
+
+                funcsAdded.push(node);
+            });
+
+            return funcsAdded;
         }
     }, {
         key: '_convertListSubFuncsToNode',
@@ -5940,67 +5957,6 @@ var Form = function (_Component) {
             return funcs;
         }
     }, {
-        key: '_getFuncsRemoved',
-        value: function _getFuncsRemoved() {
-            var oldFuncsPermission = this.state.oldFunctionPermission;
-            var newFuncsPermissions = this.props.selectedFunc;
-            var funcsRemoved = [];
-            var flag = false;
-
-            oldFuncsPermission.forEach(function (oldFunc) {
-                var node = {
-                    FunctionKey: oldFunc.FunctionKey,
-                    SubFunctionKeys: oldFunc.SubFunctionKeys ? oldFunc.SubFunctionKeys : null,
-                    Type: oldFunc.Type
-                };
-
-                newFuncsPermissions.forEach(function (newFunc) {
-                    if (oldFunc.FunctionKey === newFunc.FunctionKey) {
-                        flag = true;
-                    }
-                });
-
-                if (flag === false) {
-                    funcsRemoved.push(node);
-                }
-
-                flag = false;
-            });
-
-            return funcsRemoved;
-        }
-    }, {
-        key: '_getFuncsAdded',
-        value: function _getFuncsAdded() {
-            var _this3 = this;
-
-            var oldFuncsPermission = this.state.oldFunctionPermission;
-            var newFuncsPermissions = this.props.selectedFunc;
-            var funcsAdded = [];
-            var flag = true;
-
-            newFuncsPermissions.map(function (newFunc) {
-                var node = {
-                    FunctionKey: newFunc.FunctionKey,
-                    SubFunctionKeys: newFunc.SubFunctionKeys ? newFunc.SubFunctionKeys : null,
-                    Type: newFunc.Type
-                };
-
-                oldFuncsPermission.map(function (oldFunc) {
-                    if (newFunc.FunctionKey === oldFunc.FunctionKey) {
-                        flag = _this3._checkChangeSubFuncs(oldFunc, newFunc);
-                    }
-                });
-                if (flag === true) {
-                    funcsAdded.push(node);
-                }
-
-                flag = true;
-            });
-
-            return funcsAdded;
-        }
-    }, {
         key: '_checkChangeSubFuncs',
         value: function _checkChangeSubFuncs(oldFuncs, newFuncs) {
             var flag = false;
@@ -6027,7 +5983,7 @@ var Form = function (_Component) {
     }, {
         key: '_renderCardInput',
         value: function _renderCardInput(label, stateName, disabled) {
-            var _this4 = this;
+            var _this3 = this;
 
             return _react2.default.createElement(
                 'div',
@@ -6042,7 +5998,7 @@ var Form = function (_Component) {
                     { className: 'col-lg-9 col-sm-9' },
                     _react2.default.createElement('input', { type: 'text', className: 'full-width ' + (this.state[stateName] || disabled ? '' : 'has-error'), value: this.state[stateName],
                         disabled: disabled, onChange: function onChange(e) {
-                            return _this4.setState(_defineProperty({}, stateName, e.target.value));
+                            return _this3.setState(_defineProperty({}, stateName, e.target.value));
                         } })
                 )
             );
@@ -6050,11 +6006,11 @@ var Form = function (_Component) {
     }, {
         key: '_setTimeControl',
         value: function _setTimeControl() {
-            var _this5 = this;
+            var _this4 = this;
 
             if (!this.timerID) {
                 this.timerID = setInterval(function () {
-                    return _this5._tick();
+                    return _this4._tick();
                 }, 1000);
             }
         }
@@ -6136,7 +6092,7 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this5 = this;
 
             var _state3 = this.state,
                 isCopy = _state3.isCopy,
@@ -6213,7 +6169,7 @@ var Form = function (_Component) {
                                                     _react2.default.createElement(_NumericInput2.default, { value: redmineID,
                                                         className: 'full-width ' + (redmineID ? '' : 'has-error'),
                                                         onChange: function onChange(value) {
-                                                            return _this6.setState({ redmineID: value });
+                                                            return _this5.setState({ redmineID: value });
                                                         } })
                                                 )
                                             ),
@@ -6247,7 +6203,7 @@ var Form = function (_Component) {
                                                         'div',
                                                         { className: 'group-input group-prepend' },
                                                         _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: !isSuccess, value: token, ref: function ref(txtToken) {
-                                                                return _this6.txtToken = txtToken;
+                                                                return _this5.txtToken = txtToken;
                                                             } }),
                                                         isCopy && this._renderTootlip('Copied', 'bottom'),
                                                         _react2.default.createElement(
@@ -6320,7 +6276,7 @@ var Form = function (_Component) {
                                                     _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup,
                                                         disabled: isSuccess,
                                                         onChange: function onChange(e) {
-                                                            return _this6.setState({ isCheckGroup: e.target.checked });
+                                                            return _this5.setState({ isCheckGroup: e.target.checked });
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
                                                 )
@@ -6366,7 +6322,7 @@ var Form = function (_Component) {
                                                 'label',
                                                 { className: 'checkbox-inline node' },
                                                 _react2.default.createElement('input', { type: 'checkbox', checked: cur.isCheck == true ? true : false, disabled: isSuccess, onChange: function onChange() {
-                                                        return _this6._onCheck(cur);
+                                                        return _this5._onCheck(cur);
                                                     } }),
                                                 cur.Name
                                             )
@@ -6550,7 +6506,7 @@ var Tree = function (_Component) {
                 var result = selectedFunc.find(function (n) {
                     return n.FunctionKey === node.FunctionKey;
                 });
-                if (node.isCheck === true && !node.Settings) {
+                if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
                     if (result == null) {
                         selectedFunc.push(node);
                     }
@@ -6630,8 +6586,8 @@ var Tree = function (_Component) {
             var nodes = this.state.nodes;
 
             nodes.map(function (node) {
-                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
                 _this3._checkedNodeInStateIfIsIgnored(node);
+                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
             });
 
             return nodes;

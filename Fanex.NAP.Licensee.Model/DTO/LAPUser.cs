@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.NAP.Licensee.Model.DTO
+﻿namespace Fanex.NAP.Licensee.Model.DTO
 {
     public class LAPUser
     {
@@ -8,11 +6,13 @@ namespace Fanex.NAP.Licensee.Model.DTO
 
         public string SiteName { get; set; }
 
-        public string UserID  { get; set; }
+        public string UserID { get; set; }
 
         public string UserPWD { get; set; }
 
         public string Currency { get; set; }
+
+        public string FunctionIgnore { get; set; }
 
         public UserPermissionInfo UserPermission { get; set; }
     }

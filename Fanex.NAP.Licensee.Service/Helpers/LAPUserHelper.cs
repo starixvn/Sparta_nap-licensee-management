@@ -31,9 +31,9 @@
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
             var functionList = JArray.Parse(jsonStr).SelectTokens("..FunctionKey");
 
-            if (criteria.FuncPermissionsAdded != null)
+            if (criteria.FuncPermissions != null)
             {
-                foreach (var item in criteria.FuncPermissionsAdded)
+                foreach (var item in criteria.FuncPermissions)
                 {
                     if (item.Type == null)
                     {
@@ -57,23 +57,11 @@
                     }
                 }
             }
-
-            if (criteria.FuncPermissionsRemoved != null)
-            {
-                foreach (var item in criteria.FuncPermissionsRemoved)
-                {
-                    if (item.SubFunctionKeys != null)
-                    {
-                        item.SubFunctionKeys = item.SubFunctionKeys.Replace("\"", "&quot;");
-                    }
-                }
-            }
         }
 
         public static void RemoveUnusefulInfoForBackgroundJob(this LAPUserCriteria criteria)
         {
-            criteria.FuncPermissionsAdded = Enumerable.Empty<FunctionPermissionCriteria>();
-            criteria.FuncPermissionsRemoved = Enumerable.Empty<FunctionPermissionCriteria>();
+            criteria.FuncPermissions = Enumerable.Empty<FunctionPermissionCriteria>();
         }
 
         public static void UpdateLAPUserInfo(this LAPUserCriteria criteria, string originalPass)
