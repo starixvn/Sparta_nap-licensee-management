@@ -61,7 +61,6 @@
     <Setting Key="Nap_LM_LAPUser_Update" SpName="Nap_LM_LAPUser_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LAPUser_Select" SpName="Nap_LM_LAPUser_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_LAPUser_Insert" SpName="Nap_LM_LAPUser_Insert" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
-    <Setting Key="Nap_LM_LAPUser_GetFunctionIgnore" SpName="Nap_LM_LAPUser_GetFunctionIgnore" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
       
   <Function Name="Site.Nap.Licensee.OperatorManagement">
