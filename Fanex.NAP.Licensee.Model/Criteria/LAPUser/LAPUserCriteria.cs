@@ -24,6 +24,6 @@
 
         public string Currency { get; set; }
 
-        public int OldUserGroupSEQ { get; set; }
+        public int IsRemoveGroup { get; set; }
     }
 }

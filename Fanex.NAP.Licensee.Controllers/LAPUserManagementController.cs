@@ -225,39 +225,38 @@
         {
             var filePath = "~/App_Data/FunctionPermission.json";
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
+            var functionList = (JArray)JsonConvert.DeserializeObject(jsonStr);
 
-            jsonStr = FilterFunctionByLicenseeType(jsonStr, licenseeType);
-            jsonStr = ExcludeFunctionByLicensee(jsonStr, funcIgnore);
+            var functionPermission = FilterFunctionByLicenseeType(functionList, licenseeType);
+            functionPermission = ExcludeFunctionByLicensee(functionList, funcIgnore);
 
-            return jsonStr;
+            return JsonConvert.SerializeObject(functionPermission);
         }
 
-        private static string FilterFunctionByLicenseeType(string data, int licenseeType)
+        private static JArray FilterFunctionByLicenseeType(JArray functionList, int licenseeType)
         {
             var removeMode = licenseeType == (int)LicenseeType.API ? (int)SystemMode.OnlyAthena : (int)SystemMode.OnlyAPI;
-            var functionList = (JArray)JsonConvert.DeserializeObject(data);
 
             functionList.Descendants().OfType<JObject>().Where(x => x.Value<int>("Mode") == removeMode).ToList().ForEach(i => i.Remove());
 
-            return JsonConvert.SerializeObject(functionList);
+            return functionList;
         }
 
-        private static string ExcludeFunctionByLicensee(string data, string funcIgnore)
+        private static JArray ExcludeFunctionByLicensee(JArray functionList, string funcIgnore)
         {
             if (string.IsNullOrEmpty(funcIgnore))
             {
-                return data;
+                return functionList;
             }
 
             var funcIg = JsonConvert.DeserializeObject<IEnumerable<string>>(funcIgnore);
-            var functionList = (JArray)JsonConvert.DeserializeObject(data);
 
             foreach (var item in funcIg)
             {
                 functionList.Descendants().OfType<JObject>().Where(x => x.Value<string>("FunctionKey") == item.ToString()).ToList().ForEach(i => i.Remove());
             }
 
-            return JsonConvert.SerializeObject(functionList);
+            return functionList;
         }
     }
 }

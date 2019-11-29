@@ -11,7 +11,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
 
-        const { timeRemaining, oldFuncPer, oldCurrency, currency } = this.props;
+        const { timeRemaining, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
             extraTime: 8,
@@ -22,14 +22,13 @@ class Form extends Component {
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: oldFuncPer.FuncPermission,
             currency: currency,
             currencySelected: oldCurrency ? oldCurrency : []
         }
     }
 
     _getParams() {
-        const { oldFuncPer, user } = this.props;
+        const { user } = this.props;
         const { requestBy, redmineID, isCheckGroup, currencySelected } = this.state;
         
         return {
@@ -39,7 +38,7 @@ class Form extends Component {
                 RequestBy: requestBy,
                 RedmineID: redmineID,
                 FuncPermissions:this._getSubFunction(this._getFuncsAdded()),
-                OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : '',
+                IsRemoveGroup: isCheckGroup == false ? true : false,
                 Currency: JSON.stringify(currencySelected)
             }
         };

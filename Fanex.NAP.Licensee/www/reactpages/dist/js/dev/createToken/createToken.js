@@ -5843,7 +5843,6 @@ var Form = function (_Component) {
 
         var _this$props = _this.props,
             timeRemaining = _this$props.timeRemaining,
-            oldFuncPer = _this$props.oldFuncPer,
             oldCurrency = _this$props.oldCurrency,
             currency = _this$props.currency;
 
@@ -5857,7 +5856,6 @@ var Form = function (_Component) {
             redmineID: '',
             expriedIn: timeRemaining,
             isCheckGroup: true,
-            oldFunctionPermission: oldFuncPer.FuncPermission,
             currency: currency,
             currencySelected: oldCurrency ? oldCurrency : []
         };
@@ -5867,9 +5865,7 @@ var Form = function (_Component) {
     _createClass(Form, [{
         key: '_getParams',
         value: function _getParams() {
-            var _props = this.props,
-                oldFuncPer = _props.oldFuncPer,
-                user = _props.user;
+            var user = this.props.user;
             var _state = this.state,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
@@ -5884,7 +5880,7 @@ var Form = function (_Component) {
                     RequestBy: requestBy,
                     RedmineID: redmineID,
                     FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
-                    OldUserGroupSEQ: isCheckGroup == false ? oldFuncPer.UserGroup.SEQ : '',
+                    IsRemoveGroup: isCheckGroup == false ? true : false,
                     Currency: JSON.stringify(currencySelected)
                 }
             };
@@ -6101,12 +6097,12 @@ var Form = function (_Component) {
                 currency = _state3.currency,
                 isCheckGroup = _state3.isCheckGroup,
                 isSuccess = _state3.isSuccess;
-            var _props2 = this.props,
-                user = _props2.user,
-                isValid = _props2.isValid,
-                isLoading = _props2.isLoading,
-                funcPer = _props2.funcPer,
-                oldFuncPer = _props2.oldFuncPer;
+            var _props = this.props,
+                user = _props.user,
+                isValid = _props.isValid,
+                isLoading = _props.isLoading,
+                funcPer = _props.funcPer,
+                oldFuncPer = _props.oldFuncPer;
 
 
             if (!isValid) {

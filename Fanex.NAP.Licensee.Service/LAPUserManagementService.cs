@@ -54,7 +54,7 @@
                 criteria.SiteName,
                 criteria.UserPWD,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
-                criteria.OldUserGroupSEQ,
+                criteria.IsRemoveGroup,
                 criteria.Currency
             };
 
@@ -165,7 +165,7 @@
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
             result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
             result.Append($"<NewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
-            result.Append($"<RemoveUserGroup=\"{value.OldUserGroupSEQ}\" />");
+            result.Append($"<IsRemoveUserGroup=\"{value.IsRemoveGroup}\" />");
             result.Append($"<NewCurency=\"{value.Currency}\" />");
             result.Append("</Action>");
 
