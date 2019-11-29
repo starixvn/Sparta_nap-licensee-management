@@ -22,10 +22,6 @@
         {
             SiteEnvironment = SiteEnvironment.SIT
         },
-        new SiteInfo
-        {
-            SiteEnvironment = SiteEnvironment.SANDBOX
-        }
     };
 #>
 <#+
@@ -35,8 +31,7 @@
         UAT,
 		BACKUPMNL,
         PRO,
-		SIT,
-        SANDBOX
+		SIT
     }
 
 	class SiteInfo
@@ -60,8 +55,6 @@
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.127:42424\" />";
-                    case SiteEnvironment.SANDBOX:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" />";
                     default:
                         return string.Empty;
                 }
