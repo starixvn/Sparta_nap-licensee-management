@@ -6,7 +6,7 @@
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Model.Enumerations;
+    using Model.DataDomain;
 
     public class BaseController : Controller
     {

@@ -7,7 +7,7 @@
     using Model.Criteria.LAPUser;
     using Model.Criteria.Vendor;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using Newtonsoft.Json;
 
     public class LAPUserManagementService : ILAPUserManagementService
@@ -102,8 +102,10 @@
             }
             else
             {
-                user = new LAPUser();
-                user.VendorInfo = vendorInfo;
+                user = new LAPUser
+                {
+                    VendorInfo = vendorInfo
+                };
             }
 
             return user;

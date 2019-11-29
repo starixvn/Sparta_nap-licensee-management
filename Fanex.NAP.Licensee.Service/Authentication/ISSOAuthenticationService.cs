@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using NAP.Core.Web.Session;
 
     public interface ISSOAuthenticationService

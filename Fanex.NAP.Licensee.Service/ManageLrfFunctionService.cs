@@ -8,7 +8,7 @@
     using Model.Criteria.LrfFunction;
     using Model.Criteria.Vendor;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
 
     public class ManageLrfFunctionService : IManageLrfFunctionService
     {

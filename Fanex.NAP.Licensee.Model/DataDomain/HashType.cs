@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Model.Enumerations
+﻿namespace Fanex.NAP.Licensee.Model.DataDomain
 {
     using System;
     using System.Collections.Generic;

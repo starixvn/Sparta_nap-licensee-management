@@ -4,14 +4,14 @@
     using System.Linq;
     using System.Web.Hosting;
     using Model.Criteria.LAPUser;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using Newtonsoft.Json.Linq;
 
     public static class LAPUserHelper
     {
         public static bool IsValidUserAccount(string userID)
         {
-            return userID == LAPAccount.ITSupport || userID == LAPAccount.ITSupport2;
+            return userID == LAPITAccount.ITSupport || userID == LAPITAccount.ITSupport2;
         }
 
         public static void UpdateUserLoginInfo(this LAPUserCriteria criteria)

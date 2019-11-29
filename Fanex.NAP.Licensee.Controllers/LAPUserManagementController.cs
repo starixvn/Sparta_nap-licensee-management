@@ -14,7 +14,7 @@
     using Model.Criteria.LAPUser;
     using Model.DataDomain;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using Model.ViewModel.LAPUser;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -56,7 +56,7 @@
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
                 VendorInfo = result.VendorInfo,
                 IsExist = result.UserID != null,
-                FuntionPermission = GetFunctionPermissionFileContent(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
+                FuntionPermission = GetFunctionFromConfig(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
             };
 
@@ -113,7 +113,7 @@
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                FuntionPermission = GetFunctionPermissionFileContent(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
+                FuntionPermission = GetFunctionFromConfig(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
             };
 
@@ -221,18 +221,18 @@
             return error.Length == 0;
         }
 
-        private string GetFunctionPermissionFileContent(int licenseeType, string funcIgnore)
+        private static string GetFunctionFromConfig(int licenseeType, string funcIgnore)
         {
             var filePath = "~/App_Data/FunctionPermission.json";
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
 
-            jsonStr = FilterFunctionModeByLicenseeType(jsonStr, licenseeType);
-            jsonStr = RemoveFunctionIgnore(jsonStr, funcIgnore);
+            jsonStr = FilterFunctionByLicenseeType(jsonStr, licenseeType);
+            jsonStr = ExcludeFunctionByLicensee(jsonStr, funcIgnore);
 
             return jsonStr;
         }
 
-        private string FilterFunctionModeByLicenseeType(string data, int licenseeType)
+        private static string FilterFunctionByLicenseeType(string data, int licenseeType)
         {
             var removeMode = licenseeType == (int)LicenseeType.API ? (int)SystemMode.OnlyAthena : (int)SystemMode.OnlyAPI;
             var functionList = (JArray)JsonConvert.DeserializeObject(data);
@@ -242,7 +242,7 @@
             return JsonConvert.SerializeObject(functionList);
         }
 
-        private string RemoveFunctionIgnore(string data, string funcIgnore)
+        private static string ExcludeFunctionByLicensee(string data, string funcIgnore)
         {
             if (string.IsNullOrEmpty(funcIgnore))
             {

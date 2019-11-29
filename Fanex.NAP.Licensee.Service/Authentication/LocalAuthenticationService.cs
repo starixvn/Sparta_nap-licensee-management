@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using NAP.Core.Context;
     using NAP.Core.Models;
     using NAP.Core.Models.ParameterObject;

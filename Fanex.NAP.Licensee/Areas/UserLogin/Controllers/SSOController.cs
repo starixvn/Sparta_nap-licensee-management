@@ -12,7 +12,7 @@
     using Fanex.NAP.Licensee.Controllers;
     using Fanex.NAP.Licensee.Service;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
     using ONEbook.UM.Filters;
 
     [GeneratedCode("T4", "1.0.0.0")]

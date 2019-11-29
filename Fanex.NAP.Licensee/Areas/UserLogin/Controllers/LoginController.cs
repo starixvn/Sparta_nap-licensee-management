@@ -7,7 +7,7 @@
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Licensee.Controllers;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.Enumerations;
+    using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Service;
     using NAP.Core.Configuration;
     using NAP.Core.Service.Impl;

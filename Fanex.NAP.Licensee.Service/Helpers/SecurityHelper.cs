@@ -6,7 +6,7 @@
     using System.Security.Cryptography;
     using System.Text;
     using IBCCrypt;
-    using Model.Enumerations;
+    using Model.DataDomain;
 
     public static class SecurityHelper
     {
