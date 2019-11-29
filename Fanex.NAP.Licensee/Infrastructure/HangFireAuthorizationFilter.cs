@@ -8,7 +8,7 @@
     {
         public bool Authorize(DashboardContext context)
         {
-            var adminUserName = ConfigurationManager.AppSettings["AdminUserName"];
+            var adminUserName = ConfigurationManager.AppSettings["HangfireUserName"];
             var user = HttpContext.Current.User;
 
             return user.Identity.IsAuthenticated && user.Identity.Name == adminUserName;

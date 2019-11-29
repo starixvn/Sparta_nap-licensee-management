@@ -9,8 +9,7 @@ class Tree extends Component {
         super(props);
 
         this.state = {
-            nodes: props.nodes,
-            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : [],
+            nodes: props.nodes
         };
     }
 

@@ -6426,7 +6426,6 @@ var Tree = function (_Component) {
 
         _this.state = {
             nodes: props.nodes,
-            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : [],
             selectedFunc: props.selectedNode ? props.selectedNode : []
         };
         return _this;

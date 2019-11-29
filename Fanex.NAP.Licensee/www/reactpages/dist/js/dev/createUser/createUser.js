@@ -6408,8 +6408,7 @@ var Tree = function (_Component) {
         };
 
         _this.state = {
-            nodes: props.nodes,
-            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : []
+            nodes: props.nodes
         };
         return _this;
     }

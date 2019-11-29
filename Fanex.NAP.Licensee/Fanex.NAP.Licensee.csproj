@@ -876,9 +876,6 @@
     <Content Include="SiteConfig\Web.AppSettings.PRO.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.AppSettings.SANDBOX.config">
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </Content>
     <Content Include="SiteConfig\Web.AppSettings.UAT.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>

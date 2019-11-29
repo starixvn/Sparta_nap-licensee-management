@@ -10,7 +10,6 @@ class Tree extends Component {
 
         this.state = {
             nodes: props.nodes,
-            ignoreNodes: props.ignoreNodes ? props.ignoreNodes : [],
             selectedFunc: props.selectedNode ? props.selectedNode : []
         };
     }
