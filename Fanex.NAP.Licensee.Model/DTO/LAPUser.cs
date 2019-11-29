@@ -12,7 +12,7 @@
 
         public string Currency { get; set; }
 
-        public string FunctionIgnore { get; set; }
+        public LAPVendorInfo VendorInfo { get; set; }
 
         public UserPermissionInfo UserPermission { get; set; }
     }

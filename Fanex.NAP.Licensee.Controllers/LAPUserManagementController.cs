@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
     using System.Text;
     using System.Web.Hosting;
     using System.Web.Mvc;
@@ -13,7 +14,10 @@
     using Model.Criteria.LAPUser;
     using Model.DataDomain;
     using Model.DTO;
+    using Model.Enumerations;
     using Model.ViewModel.LAPUser;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using ONEbook.UM.Filters;
     using Service;
     using Service.Helpers;
@@ -50,9 +54,9 @@
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                FuntionIgnore = result.FunctionIgnore,
-                IsExist = !string.IsNullOrEmpty(result.UserID),
-                FuntionPermission = GetFunctionPermissionFileContent(),
+                VendorInfo = result.VendorInfo,
+                IsExist = result.UserID != null,
+                FuntionPermission = GetFunctionPermissionFileContent(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
             };
 
@@ -97,7 +101,7 @@
         {
             var result = _userService.GetUserInfo(vendorId, siteName, userID);
 
-            if (string.IsNullOrEmpty(result.UserID) && string.IsNullOrEmpty(result.SiteName))
+            if (result.UserID == null && result.SiteName == null)
             {
                 return RedirectToAction("AddNewUser", "LAPUserManagement", new { vendorId, siteName, userID });
             }
@@ -109,7 +113,7 @@
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                FuntionPermission = GetFunctionPermissionFileContent(),
+                FuntionPermission = GetFunctionPermissionFileContent(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
             };
 
@@ -189,7 +193,7 @@
             error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
             error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
 
-            if (isAddNew && !string.IsNullOrEmpty(userInfo.UserID))
+            if (isAddNew && userInfo.UserID != null)
             {
                 error.Append("This username already exists! <br>");
             }
@@ -217,12 +221,43 @@
             return error.Length == 0;
         }
 
-        private string GetFunctionPermissionFileContent()
+        private string GetFunctionPermissionFileContent(int licenseeType, string funcIgnore)
         {
             var filePath = "~/App_Data/FunctionPermission.json";
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
 
+            jsonStr = FilterFunctionModeByLicenseeType(jsonStr, licenseeType);
+            jsonStr = RemoveFunctionIgnore(jsonStr, funcIgnore);
+
             return jsonStr;
+        }
+
+        private string FilterFunctionModeByLicenseeType(string data, int licenseeType)
+        {
+            var removeMode = licenseeType == (int)LicenseeType.API ? (int)SystemMode.OnlyAthena : (int)SystemMode.OnlyAPI;
+            var functionList = (JArray)JsonConvert.DeserializeObject(data);
+
+            functionList.Descendants().OfType<JObject>().Where(x => x.Value<int>("Mode") == removeMode).ToList().ForEach(i => i.Remove());
+
+            return JsonConvert.SerializeObject(functionList);
+        }
+
+        private string RemoveFunctionIgnore(string data, string funcIgnore)
+        {
+            if (string.IsNullOrEmpty(funcIgnore))
+            {
+                return data;
+            }
+
+            var funcIg = JsonConvert.DeserializeObject<IEnumerable<string>>(funcIgnore);
+            var functionList = (JArray)JsonConvert.DeserializeObject(data);
+
+            foreach (var item in funcIg)
+            {
+                functionList.Descendants().OfType<JObject>().Where(x => x.Value<string>("FunctionKey") == item.ToString()).ToList().ForEach(i => i.Remove());
+            }
+
+            return JsonConvert.SerializeObject(functionList);
         }
     }
 }

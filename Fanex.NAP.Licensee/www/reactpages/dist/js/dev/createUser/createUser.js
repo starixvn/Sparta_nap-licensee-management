@@ -5852,7 +5852,6 @@ var App = function (_React$Component) {
                     selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
-                    exclusions: defaultProps.funcIgnore,
                     funcPer: defaultProps.funcPer,
                     currency: defaultProps.currency
                 })
@@ -6119,8 +6118,7 @@ var Form = function (_Component) {
                 redmineID = _state2.redmineID;
             var _props = this.props,
                 funcPer = _props.funcPer,
-                currency = _props.currency,
-                exclusions = _props.exclusions;
+                currency = _props.currency;
 
 
             if (!this.props.isValid) {
@@ -6272,7 +6270,6 @@ var Form = function (_Component) {
                                     { className: 'panel-body auto-scroll' },
                                     _react2.default.createElement(_Tree2.default, { className: 'tree',
                                         nodes: JSON.parse(funcPer),
-                                        ignoreNodes: JSON.parse(exclusions),
                                         isDisable: isSuccess })
                                 )
                             )
@@ -6427,13 +6424,9 @@ var Tree = function (_Component) {
                     }
                     return node.SubFunctionKeys;
                 }
-                return node.FunctionKeys.filter(function (x) {
-                    return x.isIgnore != true;
-                });
+                return node.FunctionKeys;
             }
-            return node.Settings.filter(function (x) {
-                return x.isIgnore != true;
-            });
+            return node.Settings;
         }
     }, {
         key: '_getParentNode',
@@ -6488,7 +6481,7 @@ var Tree = function (_Component) {
                 var result = selectedFunc.find(function (n) {
                     return n.FunctionKey === node.FunctionKey;
                 });
-                if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
+                if (node.isCheck === true && !node.Settings) {
                     if (result == null) {
                         selectedFunc.push(node);
                     }
@@ -6561,51 +6554,9 @@ var Tree = function (_Component) {
             }
         }
     }, {
-        key: '_prepairListNodes',
-        value: function _prepairListNodes() {
-            var _this3 = this;
-
-            var nodes = this.state.nodes;
-
-
-            nodes.map(function (node) {
-                _this3._checkedNodeInStateIfIsIgnored(node);
-            });
-
-            return nodes;
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this._prepairListNodes();
-        }
-    }, {
-        key: '_checkedNodeInStateIfIsIgnored',
-        value: function _checkedNodeInStateIfIsIgnored(node) {
-            var _this4 = this;
-
-            var ignoreNodes = this.state.ignoreNodes;
-
-            var children = this._getChildNodes(node);
-
-            ignoreNodes.map(function (func) {
-                if (func === node.FunctionKey) {
-                    node.isIgnore = true;
-                }
-            });
-
-            if (children) {
-                children.map(function (child) {
-                    return _this4._checkedNodeInStateIfIsIgnored(child);
-                });
-            }
-
-            this.setState({ ignoreNodes: ignoreNodes });
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this3 = this;
 
             var nodes = this.state.nodes;
 
@@ -6619,12 +6570,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this5.props.isDisable,
+                        isDisable: _this3.props.isDisable,
                         isSubChild: false,
-                        getChildNodes: _this5._getChildNodes,
-                        onNodeSelect: _this5._onNodeSelect,
-                        onNodeCheck: _this5._onNodeCheck,
-                        onRadioCheck: _this5._onRadioCheck
+                        getChildNodes: _this3._getChildNodes,
+                        onNodeSelect: _this3._onNodeSelect,
+                        onNodeCheck: _this3._onNodeCheck,
+                        onRadioCheck: _this3._onRadioCheck
                     });
                 })
             );
@@ -6706,7 +6657,7 @@ var TreeNode = function (_Component) {
                 onRadioCheck = _props.onRadioCheck;
 
 
-            if (!parent && getChildNodes(node).length === 0 || node.isIgnore == true) {
+            if (!parent && getChildNodes(node).length === 0) {
                 return null;
             }
 
@@ -6760,7 +6711,7 @@ var TreeNode = function (_Component) {
                         this.getNodeLabel(node)
                     )
                 ),
-                node.isOpen == true && node.isIgnore != true && getChildNodes(node).map(function (childNode, i) {
+                node.isOpen == true && getChildNodes(node).map(function (childNode, i) {
                     return _react2.default.createElement(TreeNode, _extends({}, _this2.props, {
                         key: i,
                         parent: node,

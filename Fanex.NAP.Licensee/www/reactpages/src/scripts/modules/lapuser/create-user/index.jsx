@@ -23,7 +23,6 @@ export default class App extends React.Component {
                     selectedSiteName={defaultProps.selectedSiteName}
                     isValid={defaultProps.isValid}
                     isExist={defaultProps.isExist}
-                    exclusions={defaultProps.funcIgnore}
                     funcPer={defaultProps.funcPer}
                     currency={defaultProps.currency}
                     />

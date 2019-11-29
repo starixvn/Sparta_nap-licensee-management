@@ -165,7 +165,7 @@ class Form extends Component {
 
     render() {
         const { isShowConfirmBox, isCopy, password, isSuccess, requestBy, redmineID } = this.state;
-        const { funcPer, currency, exclusions } = this.props;
+        const { funcPer, currency } = this.props;
 
         if (!this.props.isValid) {
             return <b className="red">This username is not exist but cannot be created in this case!</b>
@@ -239,7 +239,6 @@ class Form extends Component {
                                 <div className="panel-body auto-scroll">
                                     <Tree className="tree"
                                         nodes={JSON.parse(funcPer)}
-                                        ignoreNodes={JSON.parse(exclusions)}
                                         isDisable={isSuccess} />
                                 </div>
                             </div>

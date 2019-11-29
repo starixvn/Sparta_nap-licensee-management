@@ -49,9 +49,9 @@ class Tree extends Component {
                 }
                 return node.SubFunctionKeys;
             }
-            return node.FunctionKeys.filter(x => x.isIgnore != true);
+            return node.FunctionKeys;
         }
-        return node.Settings.filter(x => x.isIgnore != true);   
+        return node.Settings;   
     }
 
     _getParentNode(level) {
@@ -101,7 +101,7 @@ class Tree extends Component {
 
         if (node.FunctionKey != null && !isSubChild) {
             let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
-            if (node.isCheck === true && !node.Settings && node.isIgnore != true) {
+            if (node.isCheck === true && !node.Settings) {
                 if (result == null) {
                     selectedFunc.push(node);
                 }
@@ -168,37 +168,6 @@ class Tree extends Component {
                 })
             }
         }
-    }
-
-    _prepairListNodes() {
-        const { nodes } = this.state;
-
-        nodes.map(node => {
-            this._checkedNodeInStateIfIsIgnored(node);
-        })
-
-        return nodes;
-    }
-
-    componentDidMount() {
-        this._prepairListNodes();
-    }
-
-    _checkedNodeInStateIfIsIgnored(node) {
-        const { ignoreNodes } = this.state;
-        const children = this._getChildNodes(node);
-
-        ignoreNodes.map(func => {
-            if(func === node.FunctionKey){
-                node.isIgnore = true
-            }
-        }) 
-
-        if (children) {
-            children.map(child => this._checkedNodeInStateIfIsIgnored(child))
-        }
-
-        this.setState({ ignoreNodes })
     }
 
     render() {

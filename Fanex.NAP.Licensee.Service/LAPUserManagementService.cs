@@ -71,9 +71,9 @@
         public LAPUser GetUserInfo(string vendorId, string siteName, string userID)
         {
             LAPUser user;
+            LAPVendorInfo vendorInfo;
             var userPermission = new UserPermissionInfo();
             var currency = string.Empty;
-            var functionIgnore = string.Empty;
 
             var parameter = new
             {
@@ -86,7 +86,7 @@
             {
                 using (var multi = db.QueryMultiple(parameter))
                 {
-                    functionIgnore = multi.Read<string>().FirstOrDefault();
+                    vendorInfo = multi.Read<LAPVendorInfo>().FirstOrDefault();
                     user = multi.Read<LAPUser>().FirstOrDefault();
                     userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
                     userPermission.FuncPermission = multi.Read<UserFuncPermission>();
@@ -98,12 +98,12 @@
             {
                 user.UserPermission = userPermission;
                 user.Currency = currency;
-                user.FunctionIgnore = functionIgnore;
+                user.VendorInfo = vendorInfo;
             }
             else
             {
                 user = new LAPUser();
-                user.FunctionIgnore = functionIgnore;
+                user.VendorInfo = vendorInfo;
             }
 
             return user;

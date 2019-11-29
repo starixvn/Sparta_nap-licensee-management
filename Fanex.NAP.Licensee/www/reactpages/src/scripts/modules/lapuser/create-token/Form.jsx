@@ -263,7 +263,7 @@ class Form extends Component {
 
     render() {
         const { isCopy, requestBy, redmineID, token, currency, isCheckGroup, isSuccess } = this.state;
-        const { user, isValid, isLoading, funcPer, oldFuncPer, exclusions } = this.props;
+        const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
             return <b className='red'>This username is not allowed to create new token in this case!</b>;
@@ -352,8 +352,7 @@ class Form extends Component {
                                     }
                                     <Tree className="tree"
                                         selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
-                                        nodes={JSON.parse(funcPer)} 
-                                        ignoreNodes={JSON.parse(exclusions)}
+                                        nodes={JSON.parse(funcPer)}
                                         isDisable={isSuccess} />
                                 </div>
                             </div>

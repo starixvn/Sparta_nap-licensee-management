@@ -15,7 +15,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 
         public string FuntionPermission { get; set; }
 
-        public string FuntionIgnore { get; set; }
+        public LAPVendorInfo VendorInfo { get; set; }
 
         public IEnumerable<CurrencyItem> Currency { get; set; }
     }

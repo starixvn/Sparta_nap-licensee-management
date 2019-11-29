@@ -13,7 +13,7 @@ export default class TreeNode extends Component {
     render() {
         const { node, parent, level, getChildNodes, isSubChild, isDisable , onNodeSelect, onNodeCheck, onRadioCheck } = this.props;
 
-        if((!parent && getChildNodes(node).length === 0) || node.isIgnore == true)
+        if((!parent && getChildNodes(node).length === 0))
         {
             return (null);
         }
@@ -49,7 +49,7 @@ export default class TreeNode extends Component {
                     </span>
                 </div>
 
-                {(node.isOpen == true) && node.isIgnore != true && getChildNodes(node).map((childNode, i) => (
+                {(node.isOpen == true) && getChildNodes(node).map((childNode, i) => (
                     <TreeNode
                         {...this.props}
                         key={i}
