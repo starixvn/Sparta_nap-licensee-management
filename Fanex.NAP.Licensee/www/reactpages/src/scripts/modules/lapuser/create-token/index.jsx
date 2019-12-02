@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import reducer from './reducer'
 import Store from '../../../lib/store'
 
-const defaultState = Object.assign({}, { selectedFunc: [] });
+const defaultState = Object.assign({}, { selectedFunc: [], isCheckGroup: false });
 const defaultProps = Object.assign({}, window.initialState);
 const store = Store.createStore(reducer, defaultState);
 

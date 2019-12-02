@@ -1,6 +1,6 @@
-import { bindActionCreators, combineReducers } from 'redux'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { setSelectedFuncs } from './action'
+import { setSelectedFuncs, setIsCheckGroup } from './action'
 import React, { Component } from 'react';
 import TreeNode from './TreeNode';
 
@@ -10,7 +10,8 @@ class Tree extends Component {
 
         this.state = {
             nodes: props.nodes,
-            selectedFunc: props.selectedNode ? props.selectedNode : []
+            selectedNode: props.selectedNode ? props.selectedNode : [],
+            defaultSelectedNode: props.defaultSelectedNode ? props.defaultSelectedNode : []
         };
     }
 
@@ -172,11 +173,25 @@ class Tree extends Component {
 
     _prepairListNodes() {
         const { nodes } = this.state;
+    
         nodes.map(node => {
             this._checkedNodeInStateIfExistInSelectedNode(node, null);
+            this._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, this.props.isCheckGroup);
         })
 
         return nodes;
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.isCheckGroup != this.props.isCheckGroup){
+            const { nodes } = this.state;
+
+            nodes.map(node => {
+                this._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, nextProps.isCheckGroup);
+            })
+    
+            return nodes;
+        }
     }
 
     componentDidMount() {
@@ -184,10 +199,10 @@ class Tree extends Component {
     }
 
     _checkedNodeInStateIfExistInSelectedNode(node, parent) {
-        const { selectedFunc } = this.state;
+        const { selectedNode } = this.state;
         const children = this._getChildNodes(node);
 
-        selectedFunc.map((selNode) => {
+        selectedNode.map((selNode) => {
             if (selNode.FunctionKey === node.FunctionKey) {
                 node.isCheck = true;
                 if(parent) {
@@ -211,7 +226,41 @@ class Tree extends Component {
             children.map(child => this._checkedNodeInStateIfExistInSelectedNode(child, node))
         }
 
-        this.setState({ selectedFunc })
+        this.setState({ selectedNode })
+    }
+
+    _checkedNodeInStateIfExistInDefaultSelectedNode(node, parent, isCheck) {
+        const { defaultSelectedNode } = this.state;
+        const children = this._getChildNodes(node);
+
+        defaultSelectedNode.map((selNode) => {
+            if (selNode.FunctionKey === node.FunctionKey) { 
+                node.isCheck = true;
+                node.isDisable = isCheck;
+
+                if(parent) {
+                    parent.isCheck = true;
+                    parent.isDisable = isCheck;
+                }
+                this._addNodeIntoSelectedFunc(node, false);
+
+                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                    selNode.SubFunctionKeys.map(selSubNode => {
+                        node.SubFunctionKeys.map(nodeSub => {
+                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                nodeSub.isCheck = true;
+                            }
+                        })
+                    })
+                }
+            }          
+        })
+
+        if (children) {
+            children.map(child => this._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck))
+        }
+
+        this.setState({ defaultSelectedNode })
     }
 
     render() {
@@ -225,7 +274,7 @@ class Tree extends Component {
                         level={JSON.parse("[" + i + "]")}
                         node={node}
                         parent={null}
-                        isDisable={this.props.isDisable}
+                        isDisableAll={this.props.isDisableAll}
                         isSubChild={false}
                         getChildNodes={this._getChildNodes}
                         onNodeSelect={this._onNodeSelect}
@@ -239,11 +288,11 @@ class Tree extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setSelectedFuncs }, dispatch);
+    return bindActionCreators({ setSelectedFuncs, setIsCheckGroup }, dispatch);
 }
 function mapStateToProps(state) {
-    const { selectedFunc } = state;
-    return { selectedFunc };
+    const { selectedFunc, isCheckGroup } = state;
+    return { selectedFunc, isCheckGroup };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tree);

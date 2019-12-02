@@ -227,10 +227,10 @@
             var jsonStr = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
             var functionList = (JArray)JsonConvert.DeserializeObject(jsonStr);
 
-            var functionPermission = FilterFunctionByLicenseeType(functionList, licenseeType);
-            functionPermission = ExcludeFunctionByLicensee(functionList, funcIgnore);
+            functionList = FilterFunctionByLicenseeType(functionList, licenseeType);
+            functionList = ExcludeFunctionByLicensee(functionList, funcIgnore);
 
-            return JsonConvert.SerializeObject(functionPermission);
+            return JsonConvert.SerializeObject(functionList);
         }
 
         private static JArray FilterFunctionByLicenseeType(JArray functionList, int licenseeType)
@@ -250,6 +250,11 @@
             }
 
             var funcIg = JsonConvert.DeserializeObject<IEnumerable<string>>(funcIgnore);
+
+            if(funcIg == null)
+            {
+                return functionList;
+            }
 
             foreach (var item in funcIg)
             {

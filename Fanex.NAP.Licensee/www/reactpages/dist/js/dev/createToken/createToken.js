@@ -5564,7 +5564,7 @@ var language = exports.language = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.toggleLoader = exports.createToken = exports.setSelectedFuncs = undefined;
+exports.toggleLoader = exports.createToken = exports.setIsCheckGroup = exports.setSelectedFuncs = undefined;
 
 var _loaderAction = __webpack_require__(86);
 
@@ -5583,6 +5583,13 @@ function setSelectedFuncs(data) {
     };
 }
 
+function setIsCheckGroup(data) {
+    return {
+        type: _actionTypes.SET_IS_CHECK_GROUP,
+        data: data
+    };
+}
+
 function createToken(param) {
     return function () {
         return _site2.default.fetchData(param, 'LAPUserManagement/CreateToken');
@@ -5590,6 +5597,7 @@ function createToken(param) {
 }
 
 exports.setSelectedFuncs = setSelectedFuncs;
+exports.setIsCheckGroup = setIsCheckGroup;
 exports.createToken = createToken;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
@@ -5605,6 +5613,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var SET_USER_INFO = exports.SET_USER_INFO = "SET_USER_INFO";
 var SET_SELECTED_FUNCS = exports.SET_SELECTED_FUNCS = 'SET_SELECTED_FUNCS';
+var SET_IS_CHECK_GROUP = exports.SET_IS_CHECK_GROUP = 'SET_IS_CHECK_GROUP';
 
 /***/ }),
 /* 145 */,
@@ -5690,7 +5699,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, { selectedFunc: [] });
+var defaultState = Object.assign({}, { selectedFunc: [], isCheckGroup: false });
 var defaultProps = Object.assign({}, window.initialState);
 var store = _store2.default.createStore(_reducer2.default, defaultState);
 
@@ -5855,7 +5864,6 @@ var Form = function (_Component) {
             requestBy: '',
             redmineID: '',
             expriedIn: timeRemaining,
-            isCheckGroup: true,
             currency: currency,
             currencySelected: oldCurrency ? oldCurrency : []
         };
@@ -5869,7 +5877,6 @@ var Form = function (_Component) {
             var _state = this.state,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
-                isCheckGroup = _state.isCheckGroup,
                 currencySelected = _state.currencySelected;
 
 
@@ -5880,7 +5887,7 @@ var Form = function (_Component) {
                     RequestBy: requestBy,
                     RedmineID: redmineID,
                     FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
-                    IsRemoveGroup: isCheckGroup == false ? true : false,
+                    IsRemoveGroup: this.props.isCheckGroup == false ? true : false,
                     Currency: JSON.stringify(currencySelected)
                 }
             };
@@ -6054,6 +6061,10 @@ var Form = function (_Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
+            if (this.props.oldFuncPer.UserGroup) {
+                this.props.setIsCheckGroup(true);
+            }
+
             this.setState({
                 timeSpan: this._formatSecondsToTimeString(this.state.expriedIn)
             });
@@ -6095,7 +6106,6 @@ var Form = function (_Component) {
                 redmineID = _state3.redmineID,
                 token = _state3.token,
                 currency = _state3.currency,
-                isCheckGroup = _state3.isCheckGroup,
                 isSuccess = _state3.isSuccess;
             var _props = this.props,
                 user = _props.user,
@@ -6267,10 +6277,10 @@ var Form = function (_Component) {
                                                 _react2.default.createElement(
                                                     'label',
                                                     { className: 'checkbox-inline' },
-                                                    _react2.default.createElement('input', { type: 'checkbox', checked: isCheckGroup,
+                                                    _react2.default.createElement('input', { type: 'checkbox', checked: this.props.isCheckGroup,
                                                         disabled: isSuccess,
                                                         onChange: function onChange(e) {
-                                                            return _this5.setState({ isCheckGroup: e.target.checked });
+                                                            return _this5.props.setIsCheckGroup(e.target.checked);
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
                                                 )
@@ -6288,8 +6298,9 @@ var Form = function (_Component) {
                                     ),
                                     _react2.default.createElement(_Tree2.default, { className: 'tree',
                                         selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
+                                        defaultSelectedNode: oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission),
                                         nodes: JSON.parse(funcPer),
-                                        isDisable: isSuccess })
+                                        isDisableAll: isSuccess })
                                 )
                             )
                         ),
@@ -6334,13 +6345,14 @@ var Form = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
+    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, setIsCheckGroup: _action.setIsCheckGroup, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
     var selectedFunc = state.selectedFunc,
+        isCheckGroup = state.isCheckGroup,
         isLoading = state.isLoading;
 
-    return { selectedFunc: selectedFunc, isLoading: isLoading };
+    return { selectedFunc: selectedFunc, isCheckGroup: isCheckGroup, isLoading: isLoading };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Form);
@@ -6422,7 +6434,8 @@ var Tree = function (_Component) {
 
         _this.state = {
             nodes: props.nodes,
-            selectedFunc: props.selectedNode ? props.selectedNode : []
+            selectedNode: props.selectedNode ? props.selectedNode : [],
+            defaultSelectedNode: props.defaultSelectedNode ? props.defaultSelectedNode : []
         };
         return _this;
     }
@@ -6573,11 +6586,29 @@ var Tree = function (_Component) {
 
             var nodes = this.state.nodes;
 
+
             nodes.map(function (node) {
                 _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
+                _this3._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, _this3.props.isCheckGroup);
             });
 
             return nodes;
+        }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            var _this4 = this;
+
+            if (nextProps.isCheckGroup != this.props.isCheckGroup) {
+                var nodes = this.state.nodes;
+
+
+                nodes.map(function (node) {
+                    _this4._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, nextProps.isCheckGroup);
+                });
+
+                return nodes;
+            }
         }
     }, {
         key: 'componentDidMount',
@@ -6587,19 +6618,19 @@ var Tree = function (_Component) {
     }, {
         key: '_checkedNodeInStateIfExistInSelectedNode',
         value: function _checkedNodeInStateIfExistInSelectedNode(node, parent) {
-            var _this4 = this;
+            var _this5 = this;
 
-            var selectedFunc = this.state.selectedFunc;
+            var selectedNode = this.state.selectedNode;
 
             var children = this._getChildNodes(node);
 
-            selectedFunc.map(function (selNode) {
+            selectedNode.map(function (selNode) {
                 if (selNode.FunctionKey === node.FunctionKey) {
                     node.isCheck = true;
                     if (parent) {
                         parent.isCheck = true;
                     }
-                    _this4._addNodeIntoSelectedFunc(node, false);
+                    _this5._addNodeIntoSelectedFunc(node, false);
 
                     if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
                         selNode.SubFunctionKeys.map(function (selSubNode) {
@@ -6615,16 +6646,56 @@ var Tree = function (_Component) {
 
             if (children) {
                 children.map(function (child) {
-                    return _this4._checkedNodeInStateIfExistInSelectedNode(child, node);
+                    return _this5._checkedNodeInStateIfExistInSelectedNode(child, node);
                 });
             }
 
-            this.setState({ selectedFunc: selectedFunc });
+            this.setState({ selectedNode: selectedNode });
+        }
+    }, {
+        key: '_checkedNodeInStateIfExistInDefaultSelectedNode',
+        value: function _checkedNodeInStateIfExistInDefaultSelectedNode(node, parent, isCheck) {
+            var _this6 = this;
+
+            var defaultSelectedNode = this.state.defaultSelectedNode;
+
+            var children = this._getChildNodes(node);
+
+            defaultSelectedNode.map(function (selNode) {
+                if (selNode.FunctionKey === node.FunctionKey) {
+                    node.isCheck = true;
+                    node.isDisable = isCheck;
+
+                    if (parent) {
+                        parent.isCheck = true;
+                        parent.isDisable = isCheck;
+                    }
+                    _this6._addNodeIntoSelectedFunc(node, false);
+
+                    if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                        selNode.SubFunctionKeys.map(function (selSubNode) {
+                            node.SubFunctionKeys.map(function (nodeSub) {
+                                if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                    nodeSub.isCheck = true;
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+
+            if (children) {
+                children.map(function (child) {
+                    return _this6._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck);
+                });
+            }
+
+            this.setState({ defaultSelectedNode: defaultSelectedNode });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this7 = this;
 
             var nodes = this.state.nodes;
 
@@ -6638,12 +6709,12 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this5.props.isDisable,
+                        isDisableAll: _this7.props.isDisableAll,
                         isSubChild: false,
-                        getChildNodes: _this5._getChildNodes,
-                        onNodeSelect: _this5._onNodeSelect,
-                        onNodeCheck: _this5._onNodeCheck,
-                        onRadioCheck: _this5._onRadioCheck
+                        getChildNodes: _this7._getChildNodes,
+                        onNodeSelect: _this7._onNodeSelect,
+                        onNodeCheck: _this7._onNodeCheck,
+                        onRadioCheck: _this7._onRadioCheck
                     });
                 })
             );
@@ -6654,12 +6725,13 @@ var Tree = function (_Component) {
 }(_react.Component);
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs }, dispatch);
+    return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, setIsCheckGroup: _action.setIsCheckGroup }, dispatch);
 }
 function mapStateToProps(state) {
-    var selectedFunc = state.selectedFunc;
+    var selectedFunc = state.selectedFunc,
+        isCheckGroup = state.isCheckGroup;
 
-    return { selectedFunc: selectedFunc };
+    return { selectedFunc: selectedFunc, isCheckGroup: isCheckGroup };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Tree);
@@ -6719,7 +6791,7 @@ var TreeNode = function (_Component) {
                 level = _props.level,
                 getChildNodes = _props.getChildNodes,
                 isSubChild = _props.isSubChild,
-                isDisable = _props.isDisable,
+                isDisableAll = _props.isDisableAll,
                 onNodeSelect = _props.onNodeSelect,
                 onNodeCheck = _props.onNodeCheck,
                 onRadioCheck = _props.onRadioCheck;
@@ -6756,7 +6828,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'radio',
-                            disabled: isDisable,
+                            disabled: isDisableAll || node.isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onRadioCheck(parent, node);
@@ -6765,7 +6837,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'checkbox',
-                            disabled: isDisable,
+                            disabled: isDisableAll || node.isDisable,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onNodeCheck(node, parent, isSubChild);
@@ -6814,19 +6886,23 @@ var _loaderReducer = __webpack_require__(83);
 
 var _actionTypes = __webpack_require__(144);
 
-var _createReducer2 = __webpack_require__(27);
+var _createReducer3 = __webpack_require__(27);
 
-var _createReducer3 = _interopRequireDefault(_createReducer2);
+var _createReducer4 = _interopRequireDefault(_createReducer3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var selectedFunc = (0, _createReducer3.default)({}, _defineProperty({}, _actionTypes.SET_SELECTED_FUNCS, function (state, action) {
+var selectedFunc = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_SELECTED_FUNCS, function (state, action) {
     return action.data;
 }));
 
-exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isLoading: _loaderReducer.isLoading });
+var isCheckGroup = (0, _createReducer4.default)({}, _defineProperty({}, _actionTypes.SET_IS_CHECK_GROUP, function (state, action) {
+    return action.data;
+}));
+
+exports.default = (0, _redux.combineReducers)({ selectedFunc: selectedFunc, isCheckGroup: isCheckGroup, isLoading: _loaderReducer.isLoading });
 
 /***/ })
 ],[186]);

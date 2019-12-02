@@ -11,7 +11,7 @@ export default class TreeNode extends Component {
     }
 
     render() {
-        const { node, parent, level, getChildNodes, isSubChild, isDisable , onNodeSelect, onNodeCheck, onRadioCheck } = this.props;
+        const { node, parent, level, getChildNodes, isSubChild, isDisableAll , onNodeSelect, onNodeCheck, onRadioCheck } = this.props;
 
         if((!parent && getChildNodes(node).length === 0))
         {
@@ -30,7 +30,7 @@ export default class TreeNode extends Component {
                         parent && parent.InputBoxType === "radio" ?
                             <span>
                                 <input type="radio"
-                                    disabled={isDisable}
+                                    disabled={isDisableAll || node.isDisable}
                                     checked={node.isCheck == true ? true : false}
                                     onChange={() => onRadioCheck(parent, node)}>
                                 </input>
@@ -38,7 +38,7 @@ export default class TreeNode extends Component {
                             :
                             <span>
                                 <input type="checkbox"
-                                    disabled={isDisable}
+                                    disabled={isDisableAll || node.isDisable}
                                     checked={node.isCheck == true ? true : false}
                                     onChange={() => onNodeCheck(node, parent, isSubChild)}>
                                 </input>

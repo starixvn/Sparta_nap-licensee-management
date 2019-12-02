@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { setSelectedFuncs, createToken, toggleLoader } from './action'
+import { setSelectedFuncs, setIsCheckGroup, createToken, toggleLoader } from './action'
 import Loader from '../../../components/Loader'
 import React, { Component } from 'react';
 import Utility from '../../../lib/utility';
@@ -21,7 +21,6 @@ class Form extends Component {
             requestBy: '',
             redmineID: '',
             expriedIn: timeRemaining,
-            isCheckGroup: true,
             currency: currency,
             currencySelected: oldCurrency ? oldCurrency : []
         }
@@ -29,7 +28,7 @@ class Form extends Component {
 
     _getParams() {
         const { user } = this.props;
-        const { requestBy, redmineID, isCheckGroup, currencySelected } = this.state;
+        const { requestBy, redmineID, currencySelected } = this.state;
         
         return {
             criteria: {
@@ -38,7 +37,7 @@ class Form extends Component {
                 RequestBy: requestBy,
                 RedmineID: redmineID,
                 FuncPermissions:this._getSubFunction(this._getFuncsAdded()),
-                IsRemoveGroup: isCheckGroup == false ? true : false,
+                IsRemoveGroup: this.props.isCheckGroup == false ? true : false,
                 Currency: JSON.stringify(currencySelected)
             }
         };
@@ -218,6 +217,11 @@ class Form extends Component {
     }
 
     componentWillMount() {
+        if(this.props.oldFuncPer.UserGroup)
+        {
+            this.props.setIsCheckGroup(true);
+        }
+
         this.setState({
             timeSpan: this._formatSecondsToTimeString(this.state.expriedIn)
         });
@@ -257,11 +261,11 @@ class Form extends Component {
 
     componentDidMount() {
         this._setTimeControl();
-        this._checkedOldCurency();
+        this._checkedOldCurency();    
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, currency, isCheckGroup, isSuccess } = this.state;
+        const { isCopy, requestBy, redmineID, token, currency, isSuccess } = this.state;
         const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
@@ -334,9 +338,9 @@ class Form extends Component {
                                             <div className='col-lg-9 col-sm-9'>
                                                 <div className="form-group">
                                                     <label className="checkbox-inline">
-                                                        <input type="checkbox" checked={isCheckGroup}
+                                                        <input type="checkbox" checked={this.props.isCheckGroup}
                                                             disabled={isSuccess}
-                                                            onChange={(e) => this.setState({ isCheckGroup: e.target.checked })} />
+                                                            onChange={(e) => this.props.setIsCheckGroup(e.target.checked)} />
                                                         {oldFuncPer.UserGroup.GroupName}
                                                     </label>
                                                 </div>
@@ -351,8 +355,9 @@ class Form extends Component {
                                     }
                                     <Tree className="tree"
                                         selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
+                                        defaultSelectedNode={oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission)}
                                         nodes={JSON.parse(funcPer)}
-                                        isDisable={isSuccess} />
+                                        isDisableAll={isSuccess} />
                                 </div>
                             </div>
                         </div>
@@ -379,11 +384,11 @@ class Form extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setSelectedFuncs, createToken, toggleLoader }, dispatch);
+    return bindActionCreators({ setSelectedFuncs, setIsCheckGroup, createToken, toggleLoader }, dispatch);
 }
 function mapStateToProps(state) {
-    const { selectedFunc, isLoading } = state;
-    return { selectedFunc, isLoading };
+    const { selectedFunc, isCheckGroup, isLoading } = state;
+    return { selectedFunc, isCheckGroup, isLoading };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

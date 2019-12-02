@@ -72,6 +72,7 @@
         {
             LAPUser user;
             LAPVendorInfo vendorInfo;
+            IEnumerable<UserFuncPermission> groupPermission;
             var userPermission = new UserPermissionInfo();
             var currency = string.Empty;
 
@@ -89,6 +90,7 @@
                     vendorInfo = multi.Read<LAPVendorInfo>().FirstOrDefault();
                     user = multi.Read<LAPUser>().FirstOrDefault();
                     userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
+                    groupPermission = multi.Read<UserFuncPermission>();
                     userPermission.FuncPermission = multi.Read<UserFuncPermission>();
                     currency = multi.Read<string>().FirstOrDefault();
                 }
@@ -99,6 +101,11 @@
                 user.UserPermission = userPermission;
                 user.Currency = currency;
                 user.VendorInfo = vendorInfo;
+
+                if(user.UserPermission.UserGroup != null)
+                {
+                    user.UserPermission.UserGroup.FuncPermission = groupPermission;
+                }
             }
             else
             {
