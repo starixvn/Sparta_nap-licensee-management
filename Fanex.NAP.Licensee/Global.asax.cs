@@ -54,9 +54,10 @@
             // Code that runs when an unhandled error occurs
             var exception = Server.GetLastError();
             var isIgnore = exception is HttpAntiForgeryException
-                          || exception is HttpException
-                       || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor) &&
-                            exception.TargetSite.Name == "ExtractParameterFromDictionary");
+                || exception is HttpException
+                || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor) 
+                && exception.TargetSite.Name == "ExtractParameterFromDictionary");
+
             // Exception when passing wrong data type to action method
             if (!isIgnore)
             {

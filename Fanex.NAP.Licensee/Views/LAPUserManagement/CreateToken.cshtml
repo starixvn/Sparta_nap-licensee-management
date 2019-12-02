@@ -14,8 +14,8 @@
         <li>@Model.UserInfo.SiteName</li>
         <li class="current">Create Token</li>
     </ul>
-
-    <a class="btn-back" href="@Url.Content("~/LicenseeVendor")">← Back To List</a>
+    
+    <a class="btn-back" href="@Url.Content("~/LicenseeVendor?VendorId=" + @ViewBag.VendorId)">← Back To List</a>
 }
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createtoken/createtoken.css")

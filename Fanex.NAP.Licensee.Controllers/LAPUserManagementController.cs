@@ -14,7 +14,6 @@
     using Model.Criteria.LAPUser;
     using Model.DataDomain;
     using Model.DTO;
-    using Model.DataDomain;
     using Model.ViewModel.LAPUser;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -46,6 +45,7 @@
         [HttpGet]
         public ActionResult AddNewUser(string vendorId, string siteName, string userID)
         {
+            ViewBag.VendorId = vendorId;
             var licenseeInfo = _licenseeService.GetLicensee(siteName);
             var result = _userService.GetUserInfo(vendorId, siteName, userID);
 
@@ -99,6 +99,7 @@
         [HttpGet]
         public ActionResult CreateToken(string vendorId, string siteName, string userID)
         {
+            ViewBag.VendorId = vendorId;
             var result = _userService.GetUserInfo(vendorId, siteName, userID);
 
             if (result.UserID == null && result.SiteName == null)
@@ -251,7 +252,7 @@
 
             var funcIg = JsonConvert.DeserializeObject<IEnumerable<string>>(funcIgnore);
 
-            if(funcIg == null)
+            if (funcIg == null)
             {
                 return functionList;
             }
