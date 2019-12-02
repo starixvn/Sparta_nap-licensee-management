@@ -204,9 +204,7 @@
     <Compile Include="DTO\SettingConfiguration\BSBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKenoItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSNumberGameItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSRacingItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSportbookItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSVirtualSportItem.cs" />
     <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
@@ -251,13 +249,11 @@
     <Compile Include="ViewModel\ManageProduct\SearchProductViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSKenoViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRowBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSSportbookViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\BSVirtualSportViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\CommRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />

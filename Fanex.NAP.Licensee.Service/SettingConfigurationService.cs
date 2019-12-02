@@ -13,15 +13,12 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.Data;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class SettingConfigurationService : ISettingConfigurationService
     {
-        private const int SuccessCode = 0;
-
         public string GetPositionTaking(int custId, int productId)
         {
             using (var db = new ObjectDb("NAP_LM_LicenseePositionTakingSel"))
@@ -44,39 +41,6 @@ namespace Fanex.NAP.Licensee.Service
                 db.AddInParameter("CustID", DbType.Int32, custId);
                 db.AddInParameter("SportType", DbType.Int32, productId);
                 db.AddInParameter("ptVALUE", DbType.Decimal, positionTakingValue);
-                AddResultParameters(db);
-
-                db.ExecuteNonQuery();
-
-                return GetResults(db);
-            }
-        }
-
-        public IList<CommItem> GetCommList(int custId)
-        {
-            using (var db = new ObjectDb("NAP_LM_LicenseeCommissionSel"))
-            {
-                return db.Query<CommItem>(new { CustID = custId }).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Update commission.
-        /// </summary>
-        /// <param name="custId">Customer Id.</param>
-        /// <param name="sportTypeId">Sport type Id.</param>
-        /// <param name="betTypeId">Bet type Id.</param>
-        /// <param name="commValue">Commission value.</param>
-        /// <returns>Result info.</returns>
-        public ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue)
-        {
-            using (var db = new ObjectDb("NAP_LM_LicenseeCommissionUpd"))
-            {
-                db.AddInParameter("CustID", DbType.Int32, custId);
-                db.AddInParameter("Sporttype", DbType.Int32, sportTypeId);
-                db.AddInParameter("Bettype", DbType.Int32, betTypeId);
-                db.AddInParameter("Discount", DbType.Decimal, commValue);
-
                 AddResultParameters(db);
 
                 db.ExecuteNonQuery();

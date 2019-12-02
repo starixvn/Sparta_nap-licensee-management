@@ -20,10 +20,6 @@ namespace Fanex.NAP.Licensee.Service
 
         ResultInfo UpdatePositionTaking(int custId, int productId, float positionTakingValue);
 
-        IList<CommItem> GetCommList(int custId);
-
-        ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue);
-
         IList<T> GetBetSetting<T>(int custId, int productId);
 
         ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem);
