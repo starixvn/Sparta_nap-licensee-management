@@ -33,7 +33,7 @@
       <Mapping DataField="username" ObjectProperty="Name" />
     </Setting>
 
-    <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel " DbName="DBCUST.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
     <Setting Key="NAP_LM_LicenseePositionTakingUpd" SpName="NAP_LM_LicenseePositionTakingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
