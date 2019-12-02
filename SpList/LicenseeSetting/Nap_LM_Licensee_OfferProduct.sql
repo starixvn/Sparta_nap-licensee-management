@@ -18,20 +18,18 @@ AS
 	  - 20181112@Amanda: Offer Product from Licensee [Redmine: #83584]
 	  - 20190102@Amanda: Modify to support offer multi products for multi licensees [Redmine: #83584]
 	  - 20190419@Amanda: Move code from DBA_Lrf_OfferProduct to this [Redmine: #111321]
+	  - 20191202@Amanda: Remove OA_ tables [Redmine: #119443]
 */
 BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @tblProductPrefix		AS TABLE(ID INT IDENTITY(1,1), ProductId INT, ProductCode VARCHAR(10))  
 	DECLARE @tblProductFunctions	AS TABLE(ProductId INT, FunctionId INT, TypeId INT)  
-	DECLARE @tblLicensee			AS TABLE(ID INT IDENTITY(1,1), LicenseeId INT, LicenseeName VARCHAR(50), ResellerId INT)
+	DECLARE @tblLicensee			AS TABLE(ID INT IDENTITY(1,1), LicenseeId INT, LicenseeName VARCHAR(50))
 	DECLARE @tblAdminUserID			AS TABLE (id INT IDENTITY(1,1), UserID INT)
-	DECLARE @tblNoReseller			AS TABLE (LicenseeName VARCHAR(50))
 
 	CREATE TABLE #tblLicenseeProduct (ProductId INT, ProductCode VARCHAR(10))
 	CREATE TABLE #tblLicenseeFunction (FunctionId INT, TypeId INT)
-	CREATE TABLE #tblOAGroupID (GroupID INT)
-	CREATE TABLE #tblOAUserID (id INT IDENTITY(1,1), UserID INT)
 
 	DECLARE  @ProductName	VARCHAR(10)  
 			,@n				INT  
@@ -57,11 +55,6 @@ BEGIN
 	FROM @tblLicensee tl 
 	INNER JOIN dbo.Licensees l WITH (NOLOCK) ON tl.LicenseeName = l.LicenseeName
 
-	UPDATE l
-	SET l.ResellerId = r.ResellerID
-	FROM @tblLicensee l
-	INNER JOIN dbo.LicenseeReseller r WITH (NOLOCK) ON l.LicenseeID = r.LicenseeID
-	WHERE r.ResellerID <> 3
 
 	IF EXISTS (SELECT 1 FROM @tblLicensee WHERE LicenseeId IS NULL)
 	BEGIN
@@ -136,7 +129,7 @@ BEGIN
 		,@m = MAX(ID) FROM @tblLicensee
 	WHILE (@n <= @m)
 	BEGIN
-		SELECT @LicenseeId = LicenseeId, @Licensee = LicenseeName, @ResellerId = ResellerId
+		SELECT @LicenseeId = LicenseeId, @Licensee = LicenseeName
 		FROM @tblLicensee
 		WHERE ID = @n
 		
@@ -194,39 +187,8 @@ BEGIN
 						AND luf.FunctionId = lf.FunctionId
 						AND luf.UserId = c.UserID
 					)
-			
-			-- 3.4 Insert OA_Function
-			IF ISNULL(@ResellerID, 0) > 0
-			BEGIN
-				INSERT INTO DBLIC.bodb_licensee.dbo.OA_FunctionResellers (FunctionID, ResellerId)
-				SELECT oaf.FunctionID, @ResellerID
-				FROM DBLIC.bodb_licensee.dbo.OA_Functions oaf WITH (NOLOCK)
-				INNER JOIN #tblLicenseeFunction pf ON oaf.FunctionID = pf.FunctionId
-				WHERE pf.TypeId = 2 AND NOT EXISTS (
-					SELECT 1
-					FROM DBLIC.bodb_licensee.dbo.OA_FunctionResellers fs WITH (NOLOCK)
-					WHERE fs.ResellerID = @ResellerID AND fs.FunctionId = pf.FunctionId
-				)
 
-				INSERT INTO DBLIC.bodb_licensee.dbo.OA_FunctionLicensees (FunctionID, ResellerID, LicenseeID)  
-				SELECT oaf.FunctionID, @ResellerID, @LicenseeId  
-				FROM DBLIC.bodb_licensee.dbo.OA_Functions oaf WITH (NOLOCK)    
-				INNER JOIN #tblLicenseeFunction pf ON oaf.FunctionID = pf.FunctionId  
-				WHERE pf.TypeId = 2 AND NOT EXISTS (
-					SELECT 1  
-					FROM DBLIC.bodb_licensee.dbo.OA_FunctionLicensees fl WITH (NOLOCK)  
-					WHERE fl.LicenseeID   = @LicenseeId   
-						AND fl.ResellerID = @ResellerID
-						AND fl.FunctionId = pf.FunctionId
-				)
-			END
-			ELSE
-			BEGIN
-				INSERT INTO @tblNoReseller(LicenseeName)
-				VALUES (@Licensee)
-			END
-
-			-- 3.5 PULL DATA INTO SERVICE
+			-- 3.4 PULL DATA INTO SERVICE
 			IF EXISTS (SELECT 1 FROM #tblLicenseeProduct WHERE ProductCode = 'AGC') AND @IsPullService =1
 			BEGIN   
 				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @Licensee, @SettingName ='AGCasino_VersionKey'
@@ -237,7 +199,7 @@ BEGIN
 				EXEC DBPTCS.bodb_PlaytechCS.[dbo].[Nap_LM_PullServiceSetting] @LicenseeID = @LicenseeId, @LicenseeName = @Licensee, @SettingName ='GoldDeluxe_VersionKey'
 			END
 
-			-- 3.6 Config BA
+			-- 3.5 Config BA
 			IF EXISTS (SELECT 1 FROM #tblLicenseeProduct WHERE ProductCode = 'BA')  
 			BEGIN  
 				IF NOT EXISTS(SELECT 1 FROM dbo.LicenseeReseller WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND ResellerID = 3)
@@ -245,32 +207,6 @@ BEGIN
 					-- Add Licensee to BA reseller  
 					INSERT INTO dbo.LicenseeReseller (ResellerID,LicenseeID,TnxRate)
 					VALUES (3, @LicenseeID,0.13)
-
-					-- Insert OA group for BA reseller (OA_GroupLicensees)
-					INSERT INTO #tblOAGroupID(GroupID)
-					SELECT DISTINCT GroupID FROM DBLIC.bodb_licensee.dbo.OA_GroupLicensees WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND ResellerID <> 3
-					
-					DELETE g
-					FROM #tblOAGroupID g
-					INNER JOIN DBLIC.bodb_licensee.dbo.OA_GroupLicensees o WITH (NOLOCK) ON o.GroupID = g.GroupID
-					WHERE o.ResellerID = 3 AND o.LicenseeID = @LicenseeID
-					
-					INSERT INTO DBLIC.bodb_licensee.dbo.OA_GroupLicensees (GroupID,ResellerID,LicenseeID) 
-					SELECT GroupID, 3, @LicenseeId
-					FROM #tblOAGroupID
-
-					-- Insert OA Users for BA reseller (OA_UserLicensees)  
-					INSERT INTO #tblOAUserId(UserID)  
-					SELECT DISTINCT UserID FROM DBLIC.bodb_licensee.dbo.OA_UserLicensees WITH (NOLOCK) WHERE LicenseeID = @LicenseeID AND ResellerID <> 3
-					
-					DELETE u
-					FROM #tblOAUserId u
-					INNER JOIN DBLIC.bodb_licensee.dbo.OA_UserLicensees o WITH (NOLOCK) ON u.UserID = o.UserID
-					WHERE o.ResellerID = 3 AND o.LicenseeID = @LicenseeID
-					
-					INSERT INTO DBLIC.bodb_licensee.dbo.OA_UserLicensees (UserID,ResellerID,LicenseeID)
-					SELECT UserID, 3, @LicenseeId
-					FROM #tblOAUserId
 				END
 			
 				-- Insert BA permission
@@ -305,9 +241,6 @@ BEGIN
 					
 					SET @j = @j + 1
 				END
-
-				TRUNCATE TABLE #tblOAGroupID
-				TRUNCATE TABLE #tblOAUserId
 			END
 
 			TRUNCATE TABLE #tblLicenseeProduct
@@ -316,23 +249,8 @@ BEGIN
 		
 		SET @n = @n +1
 	END
-
-	IF EXISTS (SELECT 1 FROM @tblNoReseller)
-	BEGIN
-		IF ISNULL(@ErrMsg, '') <> ''
-		BEGIN
-			SET @ErrMsg = @ErrMsg + ';';
-		END
-	
-		SELECT @ErrMsg = @ErrMsg + 'Licensee(s) do(es) not have reseller: ' + STUFF((
-							SELECT ',' + LicenseeName
-							FROM @tblNoReseller
-						FOR XML PATH('')), 1, 1, '')
-	END
 	
 	DROP TABLE #tblLicenseeProduct
 	DROP TABLE #tblLicenseeFunction
-	DROP TABLE #tblOAGroupID
-	DROP TABLE #tblOAUserId
 END
 GO

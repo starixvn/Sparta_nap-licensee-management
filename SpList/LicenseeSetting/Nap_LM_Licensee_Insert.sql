@@ -26,6 +26,7 @@ AS
 	  - 20181112@Amanda: Set up new licensee [Redmine: #83584]
 	  - 20190114@Amanda: add more info for new licensee [redmine: #83584]
 	  - 20190418@Amanda: Move code from DBA_Lrf_CreateNewLicensee to this and use LM's SPs instead of DBA's SPs [Redmine: #111321]
+	  - 20191202@Amanda: Remove OA_ tables [Redmine: #119443]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -212,43 +213,6 @@ BEGIN
 		SELECT @ResellerID = ResellerID
 		FROM dbo.Resellers WITH (NOLOCK)
 		WHERE ResellerName = @ResellerName
-	
-		---- REGIST NEW RESELLER IN L.A  
-		IF NOT EXISTS (
-				SELECT 1
-				FROM DBLIC.bodb_Licensee.dbo.OA_GroupLicensees WITH (NOLOCK)
-				WHERE ResellerID = @ResellerID AND LicenseeID = @LicenseeID
-				)
-		BEGIN
-			INSERT INTO DBLIC.bodb_Licensee.dbo.OA_GroupLicensees (
-					GroupID
-				,	ResellerID
-				,	LicenseeID
-				)
-			SELECT	Groupid
-				,	@resellerid
-				,	@LicenseeID
-			FROM DBLIC.bodb_Licensee.dbo.OA_GroupLicensees WITH (NOLOCK)
-			WHERE licenseeid = 9 AND resellerid = 2
-		END
-
-		IF NOT EXISTS (
-				SELECT 1
-				FROM DBLIC.bodb_Licensee.dbo.OA_UserLicensees WITH (NOLOCK)
-				WHERE ResellerID = @ResellerID AND LicenseeID = @LicenseeID
-				)
-		BEGIN
-			INSERT INTO DBLIC.bodb_Licensee.dbo.OA_UserLicensees (
-					UserID
-				,	ResellerID
-				,	LicenseeID
-				)
-			SELECT	Userid
-				,	@resellerid
-				,	@LicenseeID
-			FROM DBLIC.bodb_Licensee.dbo.OA_UserLicensees WITH (NOLOCK)
-			WHERE licenseeid = 9 AND resellerid = 2
-		END
 	END TRY
 	BEGIN CATCH
 		SELECT @ErrCode = 50104
