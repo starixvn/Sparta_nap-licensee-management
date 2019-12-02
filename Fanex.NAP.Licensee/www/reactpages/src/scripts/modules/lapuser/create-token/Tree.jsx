@@ -205,6 +205,7 @@ class Tree extends Component {
         selectedNode.map((selNode) => {
             if (selNode.FunctionKey === node.FunctionKey) {
                 node.isCheck = true;
+                
                 if(parent) {
                     parent.isCheck = true;
                 }
@@ -249,6 +250,7 @@ class Tree extends Component {
                         node.SubFunctionKeys.map(nodeSub => {
                             if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
                                 nodeSub.isCheck = true;
+                                nodeSub.isDisable = isCheck;
                             }
                         })
                     })

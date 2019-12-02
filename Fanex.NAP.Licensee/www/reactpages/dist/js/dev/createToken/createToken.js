@@ -6627,6 +6627,7 @@ var Tree = function (_Component) {
             selectedNode.map(function (selNode) {
                 if (selNode.FunctionKey === node.FunctionKey) {
                     node.isCheck = true;
+
                     if (parent) {
                         parent.isCheck = true;
                     }
@@ -6677,6 +6678,7 @@ var Tree = function (_Component) {
                             node.SubFunctionKeys.map(function (nodeSub) {
                                 if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
                                     nodeSub.isCheck = true;
+                                    nodeSub.isDisable = isCheck;
                                 }
                             });
                         });
