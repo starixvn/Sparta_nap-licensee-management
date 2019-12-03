@@ -92,14 +92,12 @@ namespace Fanex.NAP.Licensee.Service
             get
             {
                 IList<string> betPT = new List<string>() { "Bet setting", "PT" };
-                IList<string> pt = new List<string>() { "PT" };
 
                 return new List<ProductTypeItem>()
                 {
                     new ProductTypeItem(1, "Sportsbook", betPT),
                     new ProductTypeItem(161, "Number Game", betPT),
                     new ProductTypeItem(202, "Keno", betPT),
-                    new ProductTypeItem(162, "Live casino", pt), 
                 };
             }
         }
