@@ -27,7 +27,7 @@ class Form extends Component {
 
         return {
             criteria: {
-                SiteName: this.props.siteName,
+                VendorId: this.props.vendorInfo.VendorId,
                 UserID: this.props.userID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,

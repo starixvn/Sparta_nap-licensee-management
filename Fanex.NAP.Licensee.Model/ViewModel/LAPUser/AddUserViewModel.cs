@@ -5,6 +5,8 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 {
     public class AddUserViewModel
     {
+        public string VendorId { get; set; }
+
         public string SiteName { get; set; }
 
         public string UserID { get; set; }

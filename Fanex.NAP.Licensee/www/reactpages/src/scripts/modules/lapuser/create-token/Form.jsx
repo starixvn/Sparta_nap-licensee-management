@@ -32,7 +32,7 @@ class Form extends Component {
         
         return {
             criteria: {
-                SiteName: user.SiteName,
+                VendorId: user.VendorInfo.VendorID,
                 UserID: user.UserID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
@@ -126,7 +126,7 @@ class Form extends Component {
     _onGenerate = () => {
         this.props.toggleLoader(true);
         const param = this._getParams();
-
+        console.log(param)
         this.props.createToken(param)
             .then(response => {
                 if (response.data.IsSuccess === true) {

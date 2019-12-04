@@ -26,8 +26,8 @@
             var result = new ResultData<string>();
             var parameter = new
             {
-                criteria.UserID,
                 criteria.VendorId,
+                criteria.UserID,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
@@ -52,6 +52,7 @@
             var parameter = new
             {
                 userInfo.UserSEQ,
+                userInfo.VendorInfo.VendorID,
                 criteria.UserPWD,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.IsRemoveGroup,
@@ -75,8 +76,8 @@
             var mappingTypes = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new UserFuncPermission(), new UserFuncPermission(), string.Empty };
             var parameter = new
             {
-                VendorID = vendorId,
-                UserID = userID,
+                VendorID = vendorId ?? string.Empty,
+                UserID = userID ?? string.Empty,
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance("Nap_LM_LAPUser_Select"))

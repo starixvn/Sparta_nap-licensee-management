@@ -31,6 +31,7 @@
         private readonly ILAPUserManagementService _userService;
         private readonly IRedisService _redisService;
         private readonly ICommonService _commonService;
+        private readonly ILicenseeVendorService _vendorService;
         private readonly ILicenseeSettingService _licenseeService;
         private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
@@ -40,18 +41,20 @@
             _redisService = new RedisService();
             _commonService = new CommonService();
             _licenseeService = new LicenseeSettingService();
+            _vendorService = new LicenseeVendorService();
         }
 
         [HttpGet]
-        public ActionResult AddNewUser(string vendorId, string siteName, string userID)
+        public ActionResult AddNewUser(string vendorId, string userID)
         {
-            ViewBag.VendorId = vendorId;
-            var licenseeInfo = _licenseeService.GetLicensee(siteName);
+            var vendorInfo = _vendorService.GetVendorById(vendorId ?? string.Empty);
+            var licenseeInfo = _licenseeService.GetLicensee(vendorInfo.SiteName);
             var result = _userService.GetUserInfo(vendorId, userID);
 
             var viewModel = new AddUserViewModel
             {
-                SiteName = siteName,
+                VendorId = vendorInfo.VendorId,
+                SiteName = vendorInfo.SiteName,
                 UserID = userID,
                 IsValid = IsValidRequest(vendorId, userID),
                 IsExist = result.UserID != null,
@@ -98,7 +101,6 @@
         [HttpGet]
         public ActionResult CreateToken(string vendorId, string userID)
         {
-            ViewBag.VendorId = vendorId;
             var isValidRequest = IsValidRequest(vendorId, userID);
             var result = isValidRequest ? _userService.GetUserInfo(vendorId, userID) : null;
 
@@ -209,7 +211,7 @@
 
         private static bool IsValidRequest(string vendorId, string userID)
         {
-            return !string.IsNullOrEmpty(vendorId) && !LAPUserHelper.IsValidUserAccount(userID);
+            return !string.IsNullOrEmpty(vendorId) && LAPUserHelper.IsValidUserAccount(userID);
         }
 
         private static string GetFunctionFromConfig(int licenseeType, string funcIgnore)

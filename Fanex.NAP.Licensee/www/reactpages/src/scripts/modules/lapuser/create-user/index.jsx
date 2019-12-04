@@ -18,7 +18,7 @@ export default class App extends React.Component {
         return (
             <Provider store={store}>
                 <Form 
-                    siteName={defaultProps.siteName}
+                    vendorInfo={defaultProps.VendorInfo}
                     userID={defaultProps.userID}
                     isValid={defaultProps.isValid}
                     isExist={defaultProps.isExist}

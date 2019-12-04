@@ -5798,7 +5798,7 @@ var Form = function (_Component) {
         _this._onGenerate = function () {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
-
+            console.log(param);
             _this.props.createToken(param).then(function (response) {
                 if (response.data.IsSuccess === true) {
                     _this.setState({
@@ -5881,7 +5881,7 @@ var Form = function (_Component) {
 
             return {
                 criteria: {
-                    SiteName: user.SiteName,
+                    VendorId: user.VendorInfo.VendorID,
                     UserID: user.UserID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,

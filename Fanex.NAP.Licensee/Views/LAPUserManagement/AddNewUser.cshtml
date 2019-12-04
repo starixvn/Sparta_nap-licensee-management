@@ -11,11 +11,11 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>@Model.SiteName</li>
+        <li>@Model.VendorId</li>
         <li class="current">Create new user</li>
     </ul>
 
-    <a class="btn-back" href="@Url.Content("~/LicenseeVendor?VendorId=" + ViewBag.VendorId)">← Back To List</a>
+    <a class="btn-back" href="@Url.Content("~/LicenseeVendor?VendorId=" + Model.VendorId)">← Back To List</a>
 }
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createUser/createUser.css")
@@ -24,7 +24,7 @@
 @section FooterJs{
     <script>
             var initialState = {
-                siteName: @Html.Raw(serializer.Serialize(Model.SiteName)),
+                vendorId: @Html.Raw(serializer.Serialize(Model.VendorId)),
                 userID: @Html.Raw(serializer.Serialize(Model.UserID)),
                 isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
                 isExist: @Html.Raw(serializer.Serialize(Model.IsExist)),
