@@ -17,13 +17,13 @@ namespace Fanex.NAP.Licensee.Service.Core
 
         public IObjectDb Create(string key, int commandTimeOut = 120)
         {
-            return new ObjectDb(key, commandTimeOut);
+            return ObjectDbFactory.CreateInstance(key, commandTimeOut);
         }
 
-        public IObjectDb Create(IDbSetting setting, bool ignoreExceptionIsNotParameter = false, int commandTimeOut = 120)
-        {
-            return new ObjectDb(setting, ignoreExceptionIsNotParameter, commandTimeOut);
-        }
+        //public IObjectDb Create(IDbSetting setting, bool ignoreExceptionIsNotParameter = false, int commandTimeOut = 120)
+        //{
+        //    return ObjectDbFactory.CreateInstance(setting, ignoreExceptionIsNotParameter, commandTimeOut);
+        //}
 
         #endregion
     }

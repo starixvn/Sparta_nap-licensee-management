@@ -16,7 +16,7 @@
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

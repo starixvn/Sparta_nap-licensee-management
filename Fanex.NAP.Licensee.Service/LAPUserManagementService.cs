@@ -4,10 +4,11 @@
     using System.Linq;
     using System.Text;
     using Core;
+    using Data;
     using Model.Criteria.LAPUser;
     using Model.Criteria.Vendor;
-    using Model.DTO;
     using Model.DataDomain;
+    using Model.DTO;
     using Newtonsoft.Json;
 
     public class LAPUserManagementService : ILAPUserManagementService
@@ -71,47 +72,52 @@
         public LAPUser GetUserInfo(string vendorId, string siteName, string userID)
         {
             LAPUser user;
-            LAPVendorInfo vendorInfo;
-            IEnumerable<UserFuncPermission> groupPermission;
-            var userPermission = new UserPermissionInfo();
-            var currency = string.Empty;
-
+            var result = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>(){ }, new List<UserFuncPermission>() { }, string.Empty };
+            var mappingTypes = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new UserFuncPermission(), new UserFuncPermission(), string.Empty };
             var parameter = new
             {
-                VendorID = vendorId,
+                VendorID = vendorId == null ? string.Empty : vendorId,
                 UserID = userID,
                 SiteName = siteName
             };
 
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
+            using (var objectDb = ObjectDbFactory.CreateInstance("Nap_LM_LAPUser_Select"))
             {
-                using (var multi = db.QueryMultiple(parameter))
+                using (var multiResultReader = objectDb.QueryMultiple(parameter))
                 {
-                    vendorInfo = multi.Read<LAPVendorInfo>().FirstOrDefault();
-                    user = multi.Read<LAPUser>().FirstOrDefault();
-                    userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
-                    groupPermission = multi.Read<UserFuncPermission>();
-                    userPermission.FuncPermission = multi.Read<UserFuncPermission>();
-                    currency = multi.Read<string>().FirstOrDefault();
+                    var index = 0;
+
+                    while (!multiResultReader.IsEmptyOrClosed && index < result.Length)
+                    {
+                        result[index] = multiResultReader.Read(mappingTypes[index].GetType());
+                        index++;
+                    }
                 }
             }
 
+            user = (LAPUser)(result[1] as IEnumerable<object>)?.FirstOrDefault();
+
             if (user != null)
             {
-                user.UserPermission = userPermission;
-                user.Currency = currency;
-                user.VendorInfo = vendorInfo;
-
-                if(user.UserPermission.UserGroup != null)
+                user.UserPermission = new UserPermissionInfo();
+                user.VendorInfo = (LAPVendorInfo)(result[0] as IEnumerable<object>)?.FirstOrDefault();
+                user.UserPermission.UserGroup = (UserGroup)(result[2] as IEnumerable<object>)?.FirstOrDefault();
+                user.Currency = (string)(result[5] as IEnumerable<object>)?.FirstOrDefault();
+                if (result[4] != null)
                 {
-                    user.UserPermission.UserGroup.FuncPermission = groupPermission;
+                    user.UserPermission.FuncPermission = (result[4] as IEnumerable<object>)?.Select(x => (UserFuncPermission)x);
+                }
+
+                if (user.UserPermission.UserGroup != null && result[3] != null)
+                {
+                    user.UserPermission.UserGroup.FuncPermission = (result[3] as IEnumerable<object>)?.Select(x => (UserFuncPermission)x);
                 }
             }
             else
             {
                 user = new LAPUser
                 {
-                    VendorInfo = vendorInfo
+                    VendorInfo = (LAPVendorInfo)(result[0] as IEnumerable<object>).FirstOrDefault()
                 };
             }
 

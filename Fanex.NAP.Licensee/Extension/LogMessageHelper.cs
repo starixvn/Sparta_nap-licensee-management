@@ -52,7 +52,7 @@
             }
         }
 
-        private static void AddExceptionInfo(StringBuilder builder, Exception exception, int limitedInnerException = 3)
+        private static void AddExceptionInfo(StringBuilder builder, Exception exception, int limitedInnerException = 4)
         {
             builder.AppendLine();
             builder.AppendLine("EXCEPTION INFO");
@@ -72,14 +72,17 @@
             if (ex is ObjectDbException)
             {
                 var dbException = ex as ObjectDbException;
-                var connString = new SqlConnectionStringBuilder(dbException.DbSetting.ConnectionString);
+                var connString = new SqlConnectionStringBuilder(dbException.ConnectionString);
 
                 return new Dictionary<string, object>
                 {
                     ["Server"] = connString.DataSource,
-                    [nameof(dbException.DbSetting.DbName)] = dbException.DbSetting.DbName,
+                    [nameof(dbException.DbName)] = dbException.DbName,
                     [nameof(connString.UserID)] = connString.UserID,
-                    [nameof(dbException.DbSetting.SpName)] = dbException.DbSetting.SpName
+                    [nameof(dbException.SpName)] = dbException.SpName,
+                    ["Parameters"] = GetParameters(dbException.Parameters),
+                    [nameof(dbException.CommandTimeout)] = dbException.CommandTimeout
+
                 };
             }
             return new Dictionary<string, object>();

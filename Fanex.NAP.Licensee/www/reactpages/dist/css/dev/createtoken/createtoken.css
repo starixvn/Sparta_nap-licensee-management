@@ -49,6 +49,7 @@
   color: #fff;
   font-size: 12px;
   font-weight: 600;
+  height: 25px;
   width: 100px; }
 
 .add-form .btn-primary {
@@ -79,8 +80,8 @@
   background: #d0d4d6; }
 
 .group-prepend .input-group-prepend {
-  right: 2px;
-  top: 2px; }
+  right: 0px;
+  top: 0px; }
 
 .group-prepend .btn-copy {
   background: #6faccf;

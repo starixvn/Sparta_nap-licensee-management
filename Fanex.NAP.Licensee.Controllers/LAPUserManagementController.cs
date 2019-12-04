@@ -54,7 +54,6 @@
                 SiteName = siteName,
                 UserID = userID,
                 IsValid = CheckParamRequest(vendorId, siteName, userID),
-                VendorInfo = result.VendorInfo,
                 IsExist = result.UserID != null,
                 FuntionPermission = GetFunctionFromConfig(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()

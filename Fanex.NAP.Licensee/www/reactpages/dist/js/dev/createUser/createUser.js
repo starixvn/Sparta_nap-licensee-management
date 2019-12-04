@@ -5849,7 +5849,6 @@ var App = function (_React$Component) {
                 _react2.default.createElement(_Form2.default, {
                     siteName: defaultProps.siteName,
                     userID: defaultProps.userID,
-                    selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
                     funcPer: defaultProps.funcPer,

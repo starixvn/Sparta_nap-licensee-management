@@ -354,7 +354,7 @@ class Form extends Component {
                                         </div>
                                     }
                                     <Tree className="tree"
-                                        selectedNode={this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
+                                        selectedNode={oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
                                         defaultSelectedNode={oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission)}
                                         nodes={JSON.parse(funcPer)}
                                         isDisableAll={isSuccess} />

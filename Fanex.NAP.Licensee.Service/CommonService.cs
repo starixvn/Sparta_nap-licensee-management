@@ -30,7 +30,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             get
             {
-                using (var db = new ObjectDb("NAP_SpecialCustSetting_LicenseeList"))
+                using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSetting_LicenseeList"))
                 {
                     return db.Query<LicenseeItem>().ToList();
                 }
@@ -45,7 +45,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             get
             {
-                using (var db = new ObjectDb("NAP_SpecialCustSetting_CurrencyList"))
+                using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSetting_CurrencyList"))
                 {
                     return db.Query<CurrencyItem>().ToList();
                 }
@@ -64,7 +64,7 @@ namespace Fanex.NAP.Licensee.Service
 
                 if (result == null)
                 {
-                    using (var db = new ObjectDb("NAP_SpecialCustSettingGameType_Sel"))
+                    using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSettingGameType_Sel"))
                     {
                         result = new Dictionary<int, string>();
                         using (var reader = db.ExecuteReader())
@@ -182,7 +182,7 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>List of licensee items.</returns>
         public IList<LicenseeItem> GetSuperLicenseeList(string siteName)
         {
-            using (var db = new ObjectDb("NAP_LM_LicenseeSuperList"))
+            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeSuperList"))
             {
                 return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
             }
@@ -190,7 +190,7 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId)
         {
-            using (var db = new ObjectDb("Nap_LM_LicenseeCurrency_Select"))
+            using (var db = ObjectDbFactory.CreateInstance("Nap_LM_LicenseeCurrency_Select"))
             {
                 return db.Query<CurrencyItem>(new { LicenseeId = licenseeId }).ToList();
             }

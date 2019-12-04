@@ -20,7 +20,6 @@ export default class App extends React.Component {
                 <Form  
                     user={defaultProps.user}
                     timeRemaining={defaultProps.timeRemaining}
-                    selectedSiteName={defaultProps.selectedSiteName}
                     isValid={defaultProps.isValid}
                     funcPer={defaultProps.funcPer}
                     oldFuncPer={defaultProps.user.UserPermission}

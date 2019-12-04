@@ -42,9 +42,19 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<DefaultBetSetting> GetAll(GetAllDefaultBetSettingCriteria criteria)
         {
+            var parameters = new
+            {
+                criteria.Licensee,
+                criteria.Currency,
+                criteria.ShowSportBook,
+                criteria.ShowNumberGame,
+                criteria.ShowVirtualSport,
+                criteria.ShowKeno
+            };
+
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                return db.Query<DefaultBetSetting>(criteria.GetSpParams()).ToList();
+                return db.Query<DefaultBetSetting>(parameters).ToList();
             }
         }
 
@@ -55,10 +65,20 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>The Bet setting view model.</returns>
         public SingleDefaultBetSettingViewModel SingleSetting(GetSingleDefaultBetSettingCriteria criteria)
         {
+            var parameters = new
+            {
+                criteria.HasSetting,
+                criteria.AgentName,
+                criteria.CurrencyName,
+                criteria.Licensee,
+                criteria.CurrencyID,
+                criteria.AgentID
+            };
+
             var result = new SingleDefaultBetSettingViewModel();
             using (var objectDb = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = objectDb.ExecuteReader(parameters))
                 {
                     while (reader.Read())
                     {
@@ -99,10 +119,22 @@ namespace Fanex.NAP.Licensee.Service
         /// <returns>True if successful.</returns>
         public ResultInfo InsertOrUpdate(InsertOrUpdateDefaultBetSetting criteria)
         {
+            var parameters = new
+            {
+                criteria.Licensee,
+                criteria.CurrencyID,
+                criteria.AgentID,
+                criteria.Settings,
+                criteria.ErrCode,
+                criteria.ErrMsg,
+                criteria.IP,
+                criteria.UserID
+            };
+
             var result = new ResultInfo();
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                db.ExecuteReader(criteria.GetSpParams());
+                db.ExecuteReader(parameters);
                 result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
                 var msg = db.GetParameterValue("@ErrMsg");
                 result.Message = msg != null ? msg.ToString() : string.Empty;
@@ -113,9 +145,15 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<AgentItem> GetAgents(GetAgentListCriteria criteria)
         {
+            var parameters = new
+            {
+                criteria.Licensee,
+                criteria.CurrencyID,
+            };
+
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                var results = db.Query<AgentItem>(criteria.GetSpParams()).ToList();
+                var results = db.Query<AgentItem>(parameters).ToList();
                 results.Insert(0, new AgentItem { Name = NoneAgent });
                 return results;
             }
@@ -123,9 +161,18 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<SettingLogItem> GetLogs(GetSettingLogCriteria criteria)
         {
+            var parameters = new
+            {
+                criteria.LicenseeID,
+                criteria.CurrencyID,
+                criteria.AgentID,
+                criteria.FromDate,
+                criteria.ToDate
+            };
+
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                return db.Query<SettingLogItem>(criteria.GetSpParams()).ToList();
+                return db.Query<SettingLogItem>(parameters).ToList();
             }
         }
 

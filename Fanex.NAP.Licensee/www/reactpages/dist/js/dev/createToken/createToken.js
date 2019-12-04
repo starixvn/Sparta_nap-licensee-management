@@ -5721,7 +5721,6 @@ var App = function (_React$Component) {
                 _react2.default.createElement(_Form2.default, {
                     user: defaultProps.user,
                     timeRemaining: defaultProps.timeRemaining,
-                    selectedSiteName: defaultProps.selectedSiteName,
                     isValid: defaultProps.isValid,
                     funcPer: defaultProps.funcPer,
                     oldFuncPer: defaultProps.user.UserPermission,
@@ -6297,7 +6296,7 @@ var Form = function (_Component) {
                                         )
                                     ),
                                     _react2.default.createElement(_Tree2.default, { className: 'tree',
-                                        selectedNode: this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
+                                        selectedNode: oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
                                         defaultSelectedNode: oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission),
                                         nodes: JSON.parse(funcPer),
                                         isDisableAll: isSuccess })

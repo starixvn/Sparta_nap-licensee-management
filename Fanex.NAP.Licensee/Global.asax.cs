@@ -6,8 +6,9 @@
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Data;
+    using Data.SqlServer;
     using Extension;
-    using Fanex.Data.Configuration;
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
     using Logging;
@@ -28,7 +29,10 @@
                  Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
              }));
 
-            DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager
+               .StartNewSession()
+               .WithSqlServer(resourcePath: "~/App_Data")
+               .Run();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -51,14 +55,14 @@
 
         public void Application_Error(object sender, EventArgs e)
         {
-            // Code that runs when an unhandled error occurs
+            //// Code that runs when an unhandled error occurs
             var exception = Server.GetLastError();
             var isIgnore = exception is HttpAntiForgeryException
                 || exception is HttpException
-                || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor) 
+                || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor)
                 && exception.TargetSite.Name == "ExtractParameterFromDictionary");
 
-            // Exception when passing wrong data type to action method
+            //// Exception when passing wrong data type to action method
             if (!isIgnore)
             {
                 LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
