@@ -23,14 +23,16 @@
     }
 }
 
-.node {
-    display: flex;
-    margin: 5px 0;
-
+.checkbox-inline {
     input[type=checkbox] {
         position: relative;
         margin: 4px 5px;
     }
+}
+
+.node {
+    display: flex;
+    margin: 5px 0;
 
     .glyphicon {
         cursor: pointer;

@@ -12,12 +12,13 @@
     max-height: 400px;
     overflow-y: scroll; }
 
+.checkbox-inline input[type=checkbox] {
+  position: relative;
+  margin: 4px 5px; }
+
 .node {
   display: flex;
   margin: 5px 0; }
-  .node input[type=checkbox] {
-    position: relative;
-    margin: 4px 5px; }
   .node .glyphicon {
     cursor: pointer;
     font-size: 10px;
