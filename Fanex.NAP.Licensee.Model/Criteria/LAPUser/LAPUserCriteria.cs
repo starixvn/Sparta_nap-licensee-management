@@ -6,8 +6,6 @@
     {
         public string VendorId { get; set; }
 
-        public string SiteName { get; set; }
-
         public string UserID { get; set; }
 
         public string UserPWD { get; set; }
@@ -25,5 +23,6 @@
         public string Currency { get; set; }
 
         public int IsRemoveGroup { get; set; }
+
     }
 }

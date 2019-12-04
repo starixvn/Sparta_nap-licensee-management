@@ -27,7 +27,7 @@
             var parameter = new
             {
                 criteria.UserID,
-                criteria.SiteName,
+                criteria.VendorId,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
@@ -48,11 +48,10 @@
         {
             var result = new ResultData<string>();
 
-            var userInfo = GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
+            var userInfo = GetUserInfo(criteria.VendorId, criteria.UserID);
             var parameter = new
             {
                 userInfo.UserSEQ,
-                criteria.SiteName,
                 criteria.UserPWD,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.IsRemoveGroup,
@@ -69,16 +68,15 @@
             return result;
         }
 
-        public LAPUser GetUserInfo(string vendorId, string siteName, string userID)
+        public LAPUser GetUserInfo(string vendorId, string userID)
         {
             LAPUser user;
-            var result = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>(){ }, new List<UserFuncPermission>() { }, string.Empty };
+            var result = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>() { }, new List<UserFuncPermission>() { }, string.Empty };
             var mappingTypes = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new UserFuncPermission(), new UserFuncPermission(), string.Empty };
             var parameter = new
             {
-                VendorID = vendorId == null ? string.Empty : vendorId,
+                VendorID = vendorId,
                 UserID = userID,
-                SiteName = siteName
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance("Nap_LM_LAPUser_Select"))
@@ -148,7 +146,7 @@
             result.Append($"<Curency=\"{value.Currency}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
-            result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.SiteName}\" />");
+            result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.VendorId}\" />");
             result.Append("</Action>");
 
             return result.ToString();
@@ -176,7 +174,7 @@
             result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
+            result.Append($"<UserID=\"{value.UserID}\" VendorId =\"{value.VendorId}\" />");
             result.Append($"<NewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
             result.Append($"<IsRemoveUserGroup=\"{value.IsRemoveGroup}\" />");
             result.Append($"<NewCurency=\"{value.Currency}\" />");
