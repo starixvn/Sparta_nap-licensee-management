@@ -547,7 +547,6 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\LAPUserManagement\CreateToken.cshtml" />
     <Content Include="www\reactpages\dist\js\dev\createToken\createToken.js.map" />
     <Content Include="Views\LAPUserManagement\AddNewUser.cshtml" />
