@@ -283,9 +283,9 @@ class Form extends Component {
                                 <div className="panel-body auto-scroll">
                                     <div className="card-body">
                                         <div className="card-body-content">
-                                            {this._renderCardInput('Request by *', 'requestBy')}
+                                            {this._renderCardInput('Request by', 'requestBy')}
                                             <div className='form-group row'>
-                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id *</label>
+                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
                                                 <div className='col-lg-9 col-sm-9'>
                                                     <NumericInput value={redmineID}
                                                         className={`full-width ${redmineID ? '' : 'has-error'}`}

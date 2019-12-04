@@ -166,7 +166,7 @@
             var result = new StringBuilder();
 
             result.Append("<Action value=\"UpdateUserPassword\">");
-            result.Append("<SpName>Nap_LM_LAPUser_UpdatePW</SpName>");
+            result.Append("<SpName>Nap_LM_LAPUser_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
             result.Append($"<RequestBy =\"{value.RequestBy}\" />");
             result.Append($"<RedmineID =\"{value.RedmineID}\" />");

@@ -187,7 +187,7 @@ class Form extends Component {
                                     {this._renderInput("Site Name", this.props.siteName, true)}
                                     {this._renderInput("User ID", this.props.userID, true)}
                                     <div className='form-group row'>
-                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by *</label>
+                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by</label>
                                         <div className='col-md-10'>
                                             <input type='text'
                                                 className={`full-width ${requestBy ? '' : 'has-error'}`}
@@ -195,7 +195,7 @@ class Form extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id *</label>
+                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
                                         <div className="col-md-10">
                                             <NumericInput value={redmineID}
                                                 className={`full-width ${redmineID ? '' : 'has-error'}`}
