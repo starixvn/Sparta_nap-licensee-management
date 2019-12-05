@@ -11,11 +11,11 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>Model.UserInfo.VendorInfo.VendorID</li>
+        <li>@Model.UserInfo.SiteName</li>
         <li class="current">Create Token</li>
     </ul>
     
-    <a class="btn-back" href="@Url.Content("~/LicenseeVendor?VendorId=" + Model.UserInfo.VendorInfo.VendorID)">← Back To List</a>
+    <a class="btn-back" href="@Url.Content("~/LicenseeVendor?VendorId=" + Model.UserInfo.SiteName)">← Back To List</a>
 }
 @section HeadCss{
     @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/createtoken/createtoken.css")

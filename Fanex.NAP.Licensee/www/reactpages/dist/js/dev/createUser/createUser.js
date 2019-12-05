@@ -5847,7 +5847,8 @@ var App = function (_React$Component) {
                 _reactRedux.Provider,
                 { store: store },
                 _react2.default.createElement(_Form2.default, {
-                    vendorInfo: defaultProps.VendorInfo,
+                    vendorId: defaultProps.vendorId,
+                    siteName: defaultProps.siteName,
                     userID: defaultProps.userID,
                     isValid: defaultProps.isValid,
                     isExist: defaultProps.isExist,
@@ -5977,7 +5978,7 @@ var Form = function (_Component) {
 
             return {
                 criteria: {
-                    VendorId: this.props.vendorInfo.VendorId,
+                    VendorId: this.props.vendorId,
                     UserID: this.props.userID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,

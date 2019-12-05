@@ -23,16 +23,15 @@
     }
 }
 
-.checkbox-inline.node, .node {
+.node {
     display: flex;
-    padding-left: 0;
     margin: 5px 0;
 
     input[type=checkbox] {
         position: relative;
         margin: 4px 5px;
     }
-    
+
     .glyphicon {
         cursor: pointer;
         font-size: 10px;

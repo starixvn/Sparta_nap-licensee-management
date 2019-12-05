@@ -11,7 +11,7 @@
 @section Headline {
     <ul class="breadcrumb title">
         <li>Vendor Info</li>
-        <li>@Model.VendorId</li>
+        <li>@Model.SiteName</li>
         <li class="current">Create new user</li>
     </ul>
 
@@ -25,6 +25,7 @@
     <script>
             var initialState = {
                 vendorId: @Html.Raw(serializer.Serialize(Model.VendorId)),
+                siteName: @Html.Raw(serializer.Serialize(Model.SiteName)),
                 userID: @Html.Raw(serializer.Serialize(Model.UserID)),
                 isValid: @Html.Raw(serializer.Serialize(Model.IsValid)),
                 isExist: @Html.Raw(serializer.Serialize(Model.IsExist)),
