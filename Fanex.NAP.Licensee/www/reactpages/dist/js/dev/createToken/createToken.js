@@ -5798,13 +5798,17 @@ var Form = function (_Component) {
         _this._onGenerate = function () {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
-            console.log(param);
+            var _this$props = _this.props,
+                extendTime = _this$props.extendTime,
+                expriedIn = _this$props.expriedIn;
+
+
             _this.props.createToken(param).then(function (response) {
                 if (response.data.IsSuccess === true) {
                     _this.setState({
                         isSuccess: true,
                         token: response.data.Data,
-                        expriedIn: _this._convertHoursToSecond(_this.state.extraTime)
+                        expriedIn: _this._convertHourToSecond(extendTime) + expriedIn
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.result.Error);
@@ -5849,14 +5853,14 @@ var Form = function (_Component) {
             _this.setState({ currencySelected: currencySelected });
         };
 
-        var _this$props = _this.props,
-            timeRemaining = _this$props.timeRemaining,
-            oldCurrency = _this$props.oldCurrency,
-            currency = _this$props.currency;
+        var _this$props2 = _this.props,
+            timeRemaining = _this$props2.timeRemaining,
+            oldCurrency = _this$props2.oldCurrency,
+            currency = _this$props2.currency;
 
         _this.state = {
             timeSpan: '',
-            extraTime: 8,
+            extendTime: 8,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -5874,9 +5878,11 @@ var Form = function (_Component) {
         value: function _getParams() {
             var user = this.props.user;
             var _state = this.state,
+                expriedIn = _state.expriedIn,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
-                currencySelected = _state.currencySelected;
+                currencySelected = _state.currencySelected,
+                extendTime = _state.extendTime;
 
 
             return {
@@ -5885,6 +5891,7 @@ var Form = function (_Component) {
                     UserID: user.UserID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,
+                    ExtendTime: this._convertHourToSecond(extendTime) + expriedIn,
                     FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                     IsRemoveGroup: this.props.isCheckGroup == false ? true : false,
                     Currency: JSON.stringify(currencySelected)
@@ -6005,13 +6012,37 @@ var Form = function (_Component) {
             );
         }
     }, {
+        key: '_renderCardInputNumber',
+        value: function _renderCardInputNumber(label, stateName) {
+            var _this4 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'form-group row' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'col-lg-3 col-sm-3 col-md-3' },
+                    label
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-lg-9 col-sm-9' },
+                    _react2.default.createElement(_NumericInput2.default, { value: this.state[stateName],
+                        className: 'full-width ' + (this.state[stateName] ? '' : 'has-error'),
+                        onChange: function onChange(value) {
+                            return _this4.setState(_defineProperty({}, stateName, value));
+                        } })
+                )
+            );
+        }
+    }, {
         key: '_setTimeControl',
         value: function _setTimeControl() {
-            var _this4 = this;
+            var _this5 = this;
 
             if (!this.timerID) {
                 this.timerID = setInterval(function () {
-                    return _this4._tick();
+                    return _this5._tick();
                 }, 1000);
             }
         }
@@ -6044,8 +6075,8 @@ var Form = function (_Component) {
             }
         }
     }, {
-        key: '_convertHoursToSecond',
-        value: function _convertHoursToSecond(hours) {
+        key: '_convertHourToSecond',
+        value: function _convertHourToSecond(hours) {
             return hours * 60 * 60;
         }
     }, {
@@ -6097,7 +6128,7 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             var _state3 = this.state,
                 isCopy = _state3.isCopy,
@@ -6158,24 +6189,8 @@ var Form = function (_Component) {
                                             'div',
                                             { className: 'card-body-content' },
                                             this._renderCardInput('Request by', 'requestBy'),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'form-group row' },
-                                                _react2.default.createElement(
-                                                    'label',
-                                                    { className: 'col-lg-3 col-sm-3 col-md-3' },
-                                                    'Redmine Id'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'col-lg-9 col-sm-9' },
-                                                    _react2.default.createElement(_NumericInput2.default, { value: redmineID,
-                                                        className: 'full-width ' + (redmineID ? '' : 'has-error'),
-                                                        onChange: function onChange(value) {
-                                                            return _this5.setState({ redmineID: value });
-                                                        } })
-                                                )
-                                            ),
+                                            this._renderCardInputNumber('Redmine Id', 'redmineID'),
+                                            this._renderCardInputNumber('Extend time (hour)', 'extendTime'),
                                             this._renderCardInput('Exprired in', 'timeSpan', true),
                                             _react2.default.createElement(
                                                 'div',
@@ -6206,7 +6221,7 @@ var Form = function (_Component) {
                                                         'div',
                                                         { className: 'group-input group-prepend' },
                                                         _react2.default.createElement('input', { type: 'text', className: 'full-width', disabled: !isSuccess, value: token, ref: function ref(txtToken) {
-                                                                return _this5.txtToken = txtToken;
+                                                                return _this6.txtToken = txtToken;
                                                             } }),
                                                         isCopy && this._renderTootlip('Copied', 'bottom'),
                                                         _react2.default.createElement(
@@ -6279,7 +6294,7 @@ var Form = function (_Component) {
                                                     _react2.default.createElement('input', { type: 'checkbox', checked: this.props.isCheckGroup,
                                                         disabled: isSuccess,
                                                         onChange: function onChange(e) {
-                                                            return _this5.props.setIsCheckGroup(e.target.checked);
+                                                            return _this6.props.setIsCheckGroup(e.target.checked);
                                                         } }),
                                                     oldFuncPer.UserGroup.GroupName
                                                 )
@@ -6325,7 +6340,7 @@ var Form = function (_Component) {
                                                 'label',
                                                 { className: 'checkbox-inline node' },
                                                 _react2.default.createElement('input', { type: 'checkbox', checked: cur.isCheck == true ? true : false, disabled: isSuccess, onChange: function onChange() {
-                                                        return _this5._onCheck(cur);
+                                                        return _this6._onCheck(cur);
                                                     } }),
                                                 cur.Name
                                             )

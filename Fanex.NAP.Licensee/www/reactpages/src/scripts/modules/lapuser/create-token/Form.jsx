@@ -14,7 +14,7 @@ class Form extends Component {
         const { timeRemaining, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
-            extraTime: 8,
+            extendTime: 8,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -28,15 +28,16 @@ class Form extends Component {
 
     _getParams() {
         const { user } = this.props;
-        const { requestBy, redmineID, currencySelected } = this.state;
-        
+        const { expriedIn, requestBy, redmineID, currencySelected, extendTime } = this.state;
+
         return {
             criteria: {
                 VendorId: user.VendorInfo.VendorID,
                 UserID: user.UserID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
-                FuncPermissions:this._getSubFunction(this._getFuncsAdded()),
+                ExtendTime: this._convertHourToSecond(extendTime) + expriedIn,
+                FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 IsRemoveGroup: this.props.isCheckGroup == false ? true : false,
                 Currency: JSON.stringify(currencySelected)
             }
@@ -126,14 +127,15 @@ class Form extends Component {
     _onGenerate = () => {
         this.props.toggleLoader(true);
         const param = this._getParams();
-        console.log(param)
+        const { extendTime, expriedIn } = this.props;
+
         this.props.createToken(param)
             .then(response => {
                 if (response.data.IsSuccess === true) {
                     this.setState({
                         isSuccess: true,
                         token: response.data.Data,
-                        expriedIn: this._convertHoursToSecond(this.state.extraTime)
+                        expriedIn: this._convertHourToSecond(extendTime) + expriedIn
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.result.Error);
@@ -175,6 +177,19 @@ class Form extends Component {
         )
     }
 
+    _renderCardInputNumber(label, stateName) {
+        return (
+            <div className='form-group row'>
+                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
+                <div className='col-lg-9 col-sm-9'>
+                    <NumericInput value={this.state[stateName]}
+                        className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
+                        onChange={(value) => this.setState({ [stateName]: value })} />
+                </div>
+            </div>
+        )
+    }
+
     _setTimeControl() {
         if (!this.timerID) {
             this.timerID = setInterval(() => this._tick(), 1000);
@@ -204,7 +219,7 @@ class Form extends Component {
         }
     }
 
-    _convertHoursToSecond(hours) {
+    _convertHourToSecond(hours) {
         return hours * 60 * 60;
     }
 
@@ -217,8 +232,7 @@ class Form extends Component {
     }
 
     componentWillMount() {
-        if(this.props.oldFuncPer.UserGroup)
-        {
+        if (this.props.oldFuncPer.UserGroup) {
             this.props.setIsCheckGroup(true);
         }
 
@@ -261,7 +275,7 @@ class Form extends Component {
 
     componentDidMount() {
         this._setTimeControl();
-        this._checkedOldCurency();    
+        this._checkedOldCurency();
     }
 
     render() {
@@ -284,14 +298,8 @@ class Form extends Component {
                                     <div className="card-body">
                                         <div className="card-body-content">
                                             {this._renderCardInput('Request by', 'requestBy')}
-                                            <div className='form-group row'>
-                                                <label className='col-lg-3 col-sm-3 col-md-3'>Redmine Id</label>
-                                                <div className='col-lg-9 col-sm-9'>
-                                                    <NumericInput value={redmineID}
-                                                        className={`full-width ${redmineID ? '' : 'has-error'}`}
-                                                        onChange={(value) => this.setState({ redmineID: value })} />
-                                                </div>
-                                            </div>
+                                            {this._renderCardInputNumber('Redmine Id', 'redmineID')}
+                                            {this._renderCardInputNumber('Extend time (hour)', 'extendTime')}
                                             {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                             <div className='form-group row pull-right'>
                                                 <div className="col-lg-12">
@@ -354,7 +362,7 @@ class Form extends Component {
                                         </div>
                                     }
                                     <Tree className="tree"
-                                        selectedNode={oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)} 
+                                        selectedNode={oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)}
                                         defaultSelectedNode={oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission)}
                                         nodes={JSON.parse(funcPer)}
                                         isDisableAll={isSuccess} />

@@ -33,7 +33,7 @@
         private readonly ICommonService _commonService;
         private readonly ILicenseeVendorService _vendorService;
         private readonly ILicenseeSettingService _licenseeService;
-        private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
+        //private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
         public LAPUserManagementController()
         {
@@ -83,7 +83,7 @@
                 return Json(result);
             }
 
-            var originalPass = SecurityHelper.GeneratePass(extendedTime);
+            var originalPass = SecurityHelper.GeneratePass(criteria.ExtendTime);
             criteria.UpdateLAPUserInfo(originalPass);
 
             result = _userService.AddUser(criteria);
@@ -92,7 +92,7 @@
                 result.Data = originalPass;
 
                 var jobId = CreateBackgroundJob(criteria);
-                _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
+                _redisService.AddValue(criteria.UserPWD, jobId, criteria.ExtendTime);
             }
 
             return Json(result);
@@ -147,7 +147,7 @@
                 RemoveBackgroundJob(userInfo.UserPWD);
                 _redisService.RemoveKey(userInfo.UserPWD);
 
-                var originalPass = SecurityHelper.GeneratePass(extendedTime);
+                var originalPass = SecurityHelper.GeneratePass(criteria.ExtendTime);
                 criteria.UpdateLAPUserInfo(originalPass);
 
                 result = _userService.UpdateUser(criteria);
@@ -156,7 +156,7 @@
                     result.Data = originalPass;
 
                     var jobId = CreateBackgroundJob(criteria);
-                    _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
+                    _redisService.AddValue(criteria.UserPWD, jobId, criteria.ExtendTime);
                 }
             }
 
@@ -184,7 +184,7 @@
         {
             criteria.RemoveUnusefulInfoForBackgroundJob();
 
-            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromHours(extendedTime));
+            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromSeconds(criteria.ExtendTime));
         }
 
         private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)

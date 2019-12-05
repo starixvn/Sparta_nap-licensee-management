@@ -14,6 +14,8 @@
 
         public int RedmineID { get; set; }
 
+        public int ExtendTime { get; set; }
+
         public int UserLoginId { get; set; }
 
         public string UserLoginName { get; set; }

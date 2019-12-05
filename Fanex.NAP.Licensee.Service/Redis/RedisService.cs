@@ -15,7 +15,7 @@
 
         public bool AddValue(string key, string value, double hours)
         {
-            _databse.StringSet(key, value, TimeSpan.FromHours(hours));
+            _databse.StringSet(key, value, TimeSpan.FromSeconds(hours));
             string result = _databse.StringGet(key);
 
             return result != null;
