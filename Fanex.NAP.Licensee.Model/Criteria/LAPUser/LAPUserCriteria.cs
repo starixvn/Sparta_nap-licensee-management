@@ -25,6 +25,5 @@
         public string Currency { get; set; }
 
         public int IsRemoveGroup { get; set; }
-
     }
 }

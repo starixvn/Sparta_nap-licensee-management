@@ -6,7 +6,7 @@
     {
         string GetValue(string key);
 
-        bool AddValue(string key, string value, double hours);
+        bool AddValue(string key, string value, double seconds);
 
         TimeSpan GetRemainingTime(string key);
 

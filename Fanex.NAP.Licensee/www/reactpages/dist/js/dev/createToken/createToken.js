@@ -5725,7 +5725,7 @@ var App = function (_React$Component) {
                     funcPer: defaultProps.funcPer,
                     oldFuncPer: defaultProps.user.UserPermission,
                     currency: defaultProps.currency,
-                    oldCurrency: JSON.parse(defaultProps.user.Currency) })
+                    oldCurrency: defaultProps.user.Currency && JSON.parse(defaultProps.user.Currency) })
             );
         }
     }]);
@@ -5798,9 +5798,9 @@ var Form = function (_Component) {
         _this._onGenerate = function () {
             _this.props.toggleLoader(true);
             var param = _this._getParams();
-            var _this$props = _this.props,
-                extendTime = _this$props.extendTime,
-                expriedIn = _this$props.expriedIn;
+            var _this$state = _this.state,
+                extendTime = _this$state.extendTime,
+                expriedIn = _this$state.expriedIn;
 
 
             _this.props.createToken(param).then(function (response) {
@@ -5853,14 +5853,14 @@ var Form = function (_Component) {
             _this.setState({ currencySelected: currencySelected });
         };
 
-        var _this$props2 = _this.props,
-            timeRemaining = _this$props2.timeRemaining,
-            oldCurrency = _this$props2.oldCurrency,
-            currency = _this$props2.currency;
+        var _this$props = _this.props,
+            timeRemaining = _this$props.timeRemaining,
+            oldCurrency = _this$props.oldCurrency,
+            currency = _this$props.currency;
 
         _this.state = {
             timeSpan: '',
-            extendTime: 8,
+            extendTime: 2,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -6313,7 +6313,7 @@ var Form = function (_Component) {
                                     _react2.default.createElement(_Tree2.default, { className: 'tree',
                                         selectedNode: oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
                                         defaultSelectedNode: oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission),
-                                        nodes: JSON.parse(funcPer),
+                                        nodes: funcPer && JSON.parse(funcPer),
                                         isDisableAll: isSuccess })
                                 )
                             )

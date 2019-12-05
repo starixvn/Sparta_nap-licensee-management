@@ -24,7 +24,7 @@ export default class App extends React.Component {
                     funcPer={defaultProps.funcPer}
                     oldFuncPer={defaultProps.user.UserPermission}
                     currency={defaultProps.currency}
-                    oldCurrency={JSON.parse(defaultProps.user.Currency)} />
+                    oldCurrency={defaultProps.user.Currency && JSON.parse(defaultProps.user.Currency)} />
             </Provider>
         );
     }

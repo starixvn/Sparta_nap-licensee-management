@@ -72,8 +72,9 @@
         public LAPUser GetUserInfo(string vendorId, string userID)
         {
             LAPUser user;
-            var result = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>() { }, new List<UserFuncPermission>() { }, string.Empty };
-            var mappingTypes = new object[] { new LAPVendorInfo(), new LAPUser(), new UserGroup(), new UserFuncPermission(), new UserFuncPermission(), string.Empty };
+            var result = new object[] {
+                new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>() { }, new List<UserFuncPermission>() { }, string.Empty
+            };
             var parameter = new
             {
                 VendorID = vendorId ?? string.Empty,
@@ -88,20 +89,31 @@
 
                     while (!multiResultReader.IsEmptyOrClosed && index < result.Length)
                     {
-                        result[index] = multiResultReader.Read(mappingTypes[index].GetType());
+                        var genericType = result[index].GetType().IsGenericType;
+
+                        if(genericType)
+                        {
+                            result[index] = multiResultReader.Read(result[index].GetType().GetGenericArguments()[0]);
+                        }
+                        else
+                        {
+                            result[index] = multiResultReader.Read(result[index].GetType()).FirstOrDefault();
+                        }
+
                         index++;
                     }
                 }
             }
 
-            user = (LAPUser)(result[1] as IEnumerable<object>)?.FirstOrDefault();
+            user = (LAPUser)result[1];
 
             if (user != null)
             {
                 user.UserPermission = new UserPermissionInfo();
-                user.VendorInfo = (LAPVendorInfo)(result[0] as IEnumerable<object>)?.FirstOrDefault();
-                user.UserPermission.UserGroup = (UserGroup)(result[2] as IEnumerable<object>)?.FirstOrDefault();
-                user.Currency = (string)(result[5] as IEnumerable<object>)?.FirstOrDefault();
+                user.VendorInfo = (LAPVendorInfo)result[0];
+                user.UserPermission.UserGroup = (UserGroup)result[2];
+                user.Currency = (string)result[5];
+
                 if (result[4] != null)
                 {
                     user.UserPermission.FuncPermission = (result[4] as IEnumerable<object>)?.Select(x => (UserFuncPermission)x);
@@ -116,7 +128,7 @@
             {
                 user = new LAPUser
                 {
-                    VendorInfo = (LAPVendorInfo)(result[0] as IEnumerable<object>).FirstOrDefault()
+                    VendorInfo = (LAPVendorInfo)result[0]
                 };
             }
 
@@ -147,7 +159,7 @@
             result.Append($"<Curency=\"{value.Currency}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
-            result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.VendorId}\" />");
+            result.Append($"<New UserID=\"{value.UserID}\" VendorId=\"{value.VendorId}\" />");
             result.Append("</Action>");
 
             return result.ToString();

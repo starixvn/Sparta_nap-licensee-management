@@ -14,7 +14,7 @@ class Form extends Component {
         const { timeRemaining, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
-            extendTime: 8,
+            extendTime: 2,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -127,7 +127,7 @@ class Form extends Component {
     _onGenerate = () => {
         this.props.toggleLoader(true);
         const param = this._getParams();
-        const { extendTime, expriedIn } = this.props;
+        const { extendTime, expriedIn } = this.state;
 
         this.props.createToken(param)
             .then(response => {
@@ -364,7 +364,7 @@ class Form extends Component {
                                     <Tree className="tree"
                                         selectedNode={oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)}
                                         defaultSelectedNode={oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission)}
-                                        nodes={JSON.parse(funcPer)}
+                                        nodes={funcPer && JSON.parse(funcPer)}
                                         isDisableAll={isSuccess} />
                                 </div>
                             </div>

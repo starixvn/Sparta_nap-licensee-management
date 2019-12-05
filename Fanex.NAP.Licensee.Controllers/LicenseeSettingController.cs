@@ -10,7 +10,6 @@
     using Model.Criteria.LicenseeSetting;
     using Model.DataDomain;
     using Model.DTO;
-    using Model.DataDomain;
     using Model.ViewModel.LicenseeSetting;
     using ONEbook.UM.Filters;
     using Service;

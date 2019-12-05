@@ -5908,6 +5908,8 @@ var _Tree2 = _interopRequireDefault(_Tree);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -5957,6 +5959,7 @@ var Form = function (_Component) {
 
         _this.state = {
             isShowConfirmBox: false,
+            extendTime: 2,
             password: "",
             isSuccess: false,
             isCopy: false,
@@ -5973,6 +5976,7 @@ var Form = function (_Component) {
             var _state = this.state,
                 requestBy = _state.requestBy,
                 redmineID = _state.redmineID,
+                extendTime = _state.extendTime,
                 currencySelected = _state.currencySelected;
 
 
@@ -5982,6 +5986,7 @@ var Form = function (_Component) {
                     UserID: this.props.userID,
                     RequestBy: requestBy,
                     RedmineID: redmineID,
+                    ExtendTime: this._convertHourToSecond(extendTime),
                     FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                     Currency: JSON.stringify(currencySelected)
                 }
@@ -6017,6 +6022,11 @@ var Form = function (_Component) {
             });
 
             return funcsAdded;
+        }
+    }, {
+        key: '_convertHourToSecond',
+        value: function _convertHourToSecond(hours) {
+            return hours * 60 * 60;
         }
     }, {
         key: '_getSubFunction',
@@ -6059,13 +6069,37 @@ var Form = function (_Component) {
                 { className: 'form-group row' },
                 _react2.default.createElement(
                     'label',
-                    { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
+                    { className: 'col-sm-12 col-lg-3 col-md-3 col-form-label' },
                     label
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-sm-12 col-md-10' },
+                    { className: 'col-sm-12 col-md-9' },
                     _react2.default.createElement('input', { type: 'text', className: 'full-width', value: value, disabled: disabled })
+                )
+            );
+        }
+    }, {
+        key: '_renderCardInputNumber',
+        value: function _renderCardInputNumber(label, stateName) {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'form-group row' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'col-sm-12 col-lg-3 col-md-3 col-form-label' },
+                    label
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-9' },
+                    _react2.default.createElement(_NumericInput2.default, { value: this.state[stateName],
+                        className: 'full-width ' + (this.state[stateName] ? '' : 'has-error'),
+                        onChange: function onChange(value) {
+                            return _this3.setState(_defineProperty({}, stateName, value));
+                        } })
                 )
             );
         }
@@ -6075,10 +6109,10 @@ var Form = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'form-group row' },
-                _react2.default.createElement('div', { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' }),
+                _react2.default.createElement('div', { className: 'col-sm-12 col-lg-3 col-md-3 col-form-label' }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'col-sm-12 col-md-10' },
+                    { className: 'col-sm-12 col-md-9' },
                     message
                 )
             );
@@ -6086,15 +6120,16 @@ var Form = function (_Component) {
     }, {
         key: '_submit',
         value: function _submit() {
-            var _this3 = this;
+            var _this4 = this;
 
             var params = this._getParams();
 
             this.props.createAccount(params).then(function (response) {
                 if (response.data.IsSuccess) {
-                    _this3.setState({
+                    _this4.setState({
                         password: response.data.Data,
-                        isSuccess: true
+                        isSuccess: true,
+                        expriedIn: _this4._convertHourToSecond(_this4.state.extendTime)
                     });
                     if (response.data.Error) {
                         _utility2.default.showWarningMessage(response.data.Error);
@@ -6107,7 +6142,7 @@ var Form = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
             var _state2 = this.state,
                 isShowConfirmBox = _state2.isShowConfirmBox,
@@ -6168,53 +6203,37 @@ var Form = function (_Component) {
                                         { className: 'form-group row' },
                                         _react2.default.createElement(
                                             'label',
-                                            { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
+                                            { className: 'col-sm-12 col-lg-3 col-md-3 col-form-label' },
                                             'Request by'
                                         ),
                                         _react2.default.createElement(
                                             'div',
-                                            { className: 'col-md-10' },
+                                            { className: 'col-md-9' },
                                             _react2.default.createElement('input', { type: 'text',
                                                 className: 'full-width ' + (requestBy ? '' : 'has-error'),
                                                 onChange: function onChange(e) {
-                                                    return _this4.setState({ requestBy: e.target.value });
+                                                    return _this5.setState({ requestBy: e.target.value });
                                                 } })
                                         )
                                     ),
+                                    this._renderCardInputNumber('Redmine Id', 'redmineID'),
+                                    this._renderCardInputNumber('Extend Time (hour)', 'extendTime'),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group row' },
                                         _react2.default.createElement(
                                             'label',
-                                            { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
-                                            'Redmine Id'
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'col-md-10' },
-                                            _react2.default.createElement(_NumericInput2.default, { value: redmineID,
-                                                className: 'full-width ' + (redmineID ? '' : 'has-error'),
-                                                onChange: function onChange(value) {
-                                                    return _this4.setState({ redmineID: value });
-                                                } })
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'form-group row' },
-                                        _react2.default.createElement(
-                                            'label',
-                                            { className: 'col-sm-12 col-lg-2 col-md-2 col-form-label' },
+                                            { className: 'col-sm-12 col-lg-3 col-md-3 col-form-label' },
                                             'Password'
                                         ),
                                         _react2.default.createElement(
                                             'div',
-                                            { className: 'col-sm-12 col-md-10' },
+                                            { className: 'col-sm-12 col-md-9' },
                                             _react2.default.createElement(
                                                 'div',
                                                 { className: 'group-input group-prepend' },
                                                 _react2.default.createElement('input', { type: 'text', className: 'full-width', value: password, disabled: !isSuccess, ref: function ref(txtToken) {
-                                                        return _this4.txtToken = txtToken;
+                                                        return _this5.txtToken = txtToken;
                                                     } }),
                                                 isCopy && this._renderTootlip('Copied', 'bottom'),
                                                 _react2.default.createElement(
@@ -6245,7 +6264,7 @@ var Form = function (_Component) {
                                             'button',
                                             { className: 'btn btn-primary',
                                                 onClick: function onClick() {
-                                                    return _this4.setState({ isShowConfirmBox: true });
+                                                    return _this5.setState({ isShowConfirmBox: true });
                                                 },
                                                 disabled: !redmineID || !requestBy || password },
                                             'Submit'
@@ -6269,8 +6288,8 @@ var Form = function (_Component) {
                                     'div',
                                     { className: 'panel-body auto-scroll' },
                                     _react2.default.createElement(_Tree2.default, { className: 'tree',
-                                        nodes: JSON.parse(funcPer),
-                                        isDisable: isSuccess })
+                                        nodes: funcPer && JSON.parse(funcPer),
+                                        isDisableAll: isSuccess })
                                 )
                             )
                         ),
@@ -6296,7 +6315,7 @@ var Form = function (_Component) {
                                                 'label',
                                                 { className: 'checkbox-inline node' },
                                                 _react2.default.createElement('input', { type: 'checkbox', disabled: isSuccess, onChange: function onChange(e) {
-                                                        return _this4._onCheck(cur.Id, e);
+                                                        return _this5._onCheck(cur.Id, e);
                                                     } }),
                                                 cur.Name
                                             )
@@ -6650,7 +6669,7 @@ var TreeNode = function (_Component) {
                 level = _props.level,
                 getChildNodes = _props.getChildNodes,
                 isSubChild = _props.isSubChild,
-                isDisable = _props.isDisable,
+                isDisableAll = _props.isDisableAll,
                 onNodeSelect = _props.onNodeSelect,
                 onNodeCheck = _props.onNodeCheck,
                 onRadioCheck = _props.onRadioCheck;
@@ -6687,7 +6706,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'radio',
-                            disabled: isDisable,
+                            disabled: isDisableAll,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onRadioCheck(parent, node);
@@ -6696,7 +6715,7 @@ var TreeNode = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement('input', { type: 'checkbox',
-                            disabled: isDisable,
+                            disabled: isDisableAll,
                             checked: node.isCheck == true ? true : false,
                             onChange: function onChange() {
                                 return onNodeCheck(node, parent, isSubChild);

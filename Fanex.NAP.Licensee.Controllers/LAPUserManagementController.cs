@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Text;
     using System.Web.Hosting;
@@ -33,7 +32,6 @@
         private readonly ICommonService _commonService;
         private readonly ILicenseeVendorService _vendorService;
         private readonly ILicenseeSettingService _licenseeService;
-        //private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
         public LAPUserManagementController()
         {

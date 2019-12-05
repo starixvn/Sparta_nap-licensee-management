@@ -13,6 +13,7 @@ class Form extends Component {
 
         this.state = {
             isShowConfirmBox: false,
+            extendTime: 2,
             password: "",
             isSuccess: false,
             isCopy: false,
@@ -23,7 +24,7 @@ class Form extends Component {
     }
 
     _getParams() {
-        const { requestBy, redmineID, currencySelected } = this.state;
+        const { requestBy, redmineID, extendTime, currencySelected } = this.state;
 
         return {
             criteria: {
@@ -31,6 +32,7 @@ class Form extends Component {
                 UserID: this.props.userID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
+                ExtendTime: this._convertHourToSecond(extendTime),
                 FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 Currency: JSON.stringify(currencySelected)
             }
@@ -63,6 +65,10 @@ class Form extends Component {
         })
 
         return funcsAdded;
+    }
+
+    _convertHourToSecond(hours) {
+        return hours * 60 * 60;
     }
 
     _getSubFunction(funcs) {
@@ -111,19 +117,32 @@ class Form extends Component {
     _renderInput(label, value, disabled) {
         return (
             <div className="form-group row">
-                <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">{label}</label>
-                <div className="col-sm-12 col-md-10">
+                <label className="col-sm-12 col-lg-3 col-md-3 col-form-label">{label}</label>
+                <div className="col-sm-12 col-md-9">
                     <input type="text" className="full-width" value={value} disabled={disabled} />
                 </div>
             </div>
         );
     }
 
+    _renderCardInputNumber(label, stateName) {
+        return (
+            <div className='form-group row'>
+                <label className='col-sm-12 col-lg-3 col-md-3 col-form-label'>{label}</label>
+                <div className='col-md-9'>
+                    <NumericInput value={this.state[stateName]}
+                        className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
+                        onChange={(value) => this.setState({ [stateName]: value })} />
+                </div>
+            </div>
+        )
+    }
+
     _renderMessage(message) {
         return (
             <div className="form-group row">
-                <div className="col-sm-12 col-lg-2 col-md-2 col-form-label"></div>
-                <div className="col-sm-12 col-md-10">
+                <div className="col-sm-12 col-lg-3 col-md-3 col-form-label"></div>
+                <div className="col-sm-12 col-md-9">
                     {message}
                 </div>
             </div>
@@ -151,7 +170,8 @@ class Form extends Component {
                 if (response.data.IsSuccess) {
                     this.setState({
                         password: response.data.Data,
-                        isSuccess: true
+                        isSuccess: true,
+                        expriedIn: this._convertHourToSecond(this.state.extendTime)
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -187,24 +207,18 @@ class Form extends Component {
                                     {this._renderInput("Site Name", this.props.siteName, true)}
                                     {this._renderInput("User ID", this.props.userID, true)}
                                     <div className='form-group row'>
-                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by</label>
-                                        <div className='col-md-10'>
+                                        <label className='col-sm-12 col-lg-3 col-md-3 col-form-label'>Request by</label>
+                                        <div className='col-md-9'>
                                             <input type='text'
                                                 className={`full-width ${requestBy ? '' : 'has-error'}`}
                                                 onChange={(e) => this.setState({ requestBy: e.target.value })} />
                                         </div>
                                     </div>
+                                    {this._renderCardInputNumber('Redmine Id', 'redmineID')}
+                                    {this._renderCardInputNumber('Extend Time (hour)', 'extendTime')}
                                     <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
-                                        <div className="col-md-10">
-                                            <NumericInput value={redmineID}
-                                                className={`full-width ${redmineID ? '' : 'has-error'}`}
-                                                onChange={(value) => this.setState({ redmineID: value })} />
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Password</label>
-                                        <div className="col-sm-12 col-md-10">
+                                        <label className="col-sm-12 col-lg-3 col-md-3 col-form-label">Password</label>
+                                        <div className="col-sm-12 col-md-9">
                                             <div className="group-input group-prepend">
                                                 <input type="text" className='full-width' value={password} disabled={!isSuccess} ref={(txtToken) => this.txtToken = txtToken} />
                                                 {
@@ -238,8 +252,8 @@ class Form extends Component {
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
                                     <Tree className="tree"
-                                        nodes={JSON.parse(funcPer)}
-                                        isDisable={isSuccess} />
+                                        nodes={funcPer && JSON.parse(funcPer)}
+                                        isDisableAll={isSuccess} />
                                 </div>
                             </div>
                         </div>
