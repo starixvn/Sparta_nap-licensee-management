@@ -180,7 +180,7 @@ class Tree extends Component {
                         level={JSON.parse("[" + i + "]")}
                         node={node}
                         parent={null}
-                        isDisable={this.props.isDisable}
+                        isDisableAll={this.props.isDisableAll}
                         isSubChild={false}
                         getChildNodes={this._getChildNodes}
                         onNodeSelect={this._onNodeSelect}

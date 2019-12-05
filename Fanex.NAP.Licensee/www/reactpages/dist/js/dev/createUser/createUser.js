@@ -6588,7 +6588,7 @@ var Tree = function (_Component) {
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisable: _this3.props.isDisable,
+                        isDisableAll: _this3.props.isDisableAll,
                         isSubChild: false,
                         getChildNodes: _this3._getChildNodes,
                         onNodeSelect: _this3._onNodeSelect,
