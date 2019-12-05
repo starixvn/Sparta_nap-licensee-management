@@ -1,8 +1,11 @@
-﻿namespace Fanex.NAP.Licensee.Model.Enumerations
+﻿namespace Fanex.NAP.Licensee.Model.DataDomain
 {
     public enum ActionLogType
     {
         UpdateLapVendorInfo = 5512,
+
+        LAPUser_Add = 5566,
+        LAPUser_UpdateUser = 5567,
 
         InsertOperator = 5522,
         UpdateOperator = 5523,

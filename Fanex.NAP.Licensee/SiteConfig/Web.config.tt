@@ -45,7 +45,6 @@
    <# switch(siteName)
 		{
 		 case "LOCAL":
-		 case "SANDBOX":
 		 #>
 	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://ha.nexdev.net:7221/nap-sc-local3" ServiceUrls="http://ha.nexdev.net:1711/api" AccessKey="8VWXgdj1dqISn5o5cE/PT/YfjDUu3OCJObGKAeDw5SQ=">
 		<Domain>
@@ -116,11 +115,10 @@
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
-        <customErrors mode="RemoteOnly">
-            <error statusCode="403" redirect="~/Utility/Error?err=403" />
-            <error statusCode="404" redirect="~/Utility/Error?err=404" />
-            <error statusCode="400" redirect="~/Utility/Error?err=404" />
-        </customErrors>
+        <customErrors mode="RemoteOnly" defaultRedirect="~/Utility/Error">
+			<error statusCode="403" redirect="~/Utility/Error?err=403" />
+			<error statusCode="404" redirect="~/Utility/Error?err=404" />
+		</customErrors>
         <authentication mode="Forms">
             <forms loginUrl="~/UserLogin/Login" cookieless="UseCookies" timeout="2880" name=".NAPLMFORMSAUTH" defaultUrl="~/Home/Index" path="/" />
         </authentication>
@@ -202,6 +200,10 @@
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
         <bindingRedirect oldVersion="0.0.0.0-5.2.6.0" newVersion="5.2.6.0" />
+      </dependentAssembly>
+	   <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.5.0" newVersion="4.0.5.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Net.Http" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />

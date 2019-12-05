@@ -57,6 +57,12 @@
     <Setting Key="Nap_LM_VendorFunction_Select" SpName="Nap_LM_VendorFunction_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
   </Function>
 
+  <Function Name="Site.Nap.Licensee.LAPUserManagement">
+    <Setting Key="Nap_LM_LAPUser_Update" SpName="Nap_LM_LAPUser_Update" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LAPUser_Select" SpName="Nap_LM_LAPUser_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+    <Setting Key="Nap_LM_LAPUser_Insert" SpName="Nap_LM_LAPUser_Insert" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+  </Function>
+      
   <Function Name="Site.Nap.Licensee.OperatorManagement">
     <Setting Key="Nap_LM_Operator_Search" SpName="Nap_LM_Operator_Search" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_SubsidiarySiteName_Select" SpName="Nap_LM_SubsidiarySiteName_Select" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>

@@ -52,6 +52,15 @@ export class FormFilter extends Component {
         this._submit();
     }
 
+    componentDidMount(){
+        if(this.props.vendorId){
+            this.params.vendorId = this.props.vendorId
+
+            this._submit();
+            this.params.vendorId = '';
+        }
+    }
+
     _submit() {
         const params = Object.assign(
             {},
@@ -104,7 +113,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ setParams }, dispatch);
 }
 function mapStateToProps(state) {
-    const { functionKeyList, params } = state;
-    return { functionKeyList, params };
+    const { functionKeyList, vendorId, params } = state;
+    return { functionKeyList, vendorId, params };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FormFilter);

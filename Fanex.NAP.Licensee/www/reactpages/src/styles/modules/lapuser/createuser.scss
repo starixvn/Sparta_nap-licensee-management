@@ -1,0 +1,86 @@
+@import "../../components/_variable";
+
+.add-form {
+    margin-top: 10px;
+
+    input[type=text] {
+        border: 1px solid #CECCCD;
+        padding: 2px;
+        height: 25px;
+
+        &.has-error {
+            border: 1px solid $red;
+        }
+    }
+
+    .btn-copy, .btn-primary {
+        box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
+    }
+
+    .auto-scroll {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+}
+
+.checkbox-inline.node, .node {
+    display: flex;
+    padding-left: 0;
+    margin: 5px 0;
+
+    input[type=checkbox] {
+        position: relative;
+        margin: 4px 5px;
+    }
+    
+    .glyphicon {
+        cursor: pointer;
+        font-size: 10px;
+        width: 10px;
+    }
+}
+
+.panel-large {
+    min-height: 450px;
+}
+
+.group-input {
+    position: relative;
+
+    .input-group-prepend {
+        position: absolute;
+    }
+}
+
+.group-prepend {
+    input[type=text] {
+        background: #ecf8ff;
+        border: 1px solid #6faccf;
+        padding-right: 102px;
+    }
+
+    input[disabled], button[disabled] {
+        border: 1px solid #cbcbcb;
+    }
+
+    input[disabled] {
+        background: #f7f7f7;
+    }
+
+    button[disabled] {
+        background: #d0d4d6;
+    }
+    
+    .input-group-prepend {
+        right: 0;
+        top: 0;
+    }
+
+    .btn-copy {
+        background: #6faccf;
+        border: 1px solid #5b9cc1;
+        color: #fff;
+        height: 25px;
+        width: 100px;
+    }
+}

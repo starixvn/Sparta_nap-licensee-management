@@ -23,7 +23,8 @@
 @section FooterJs{
     <script>
             var initialState = {
-                functionKeyList: @Html.Raw(serializer.Serialize(functionKeyList))
+                functionKeyList: @Html.Raw(serializer.Serialize(functionKeyList)),
+                vendorId: @Html.Raw(serializer.Serialize(@ViewBag.VendorId))
             }
     </script>
     @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/vendor/vendor.js")

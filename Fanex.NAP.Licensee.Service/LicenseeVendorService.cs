@@ -6,7 +6,7 @@
     using System.Text;
     using Fanex.NAP.Licensee.Model.Criteria.Vendor;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.Enumerations;
+    using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Service.Core;
     using Newtonsoft.Json;
 

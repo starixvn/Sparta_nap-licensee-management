@@ -26,9 +26,11 @@
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string vendorId = null)
         {
+            ViewBag.VendorId = vendorId;
             var functionKeyList = _vendorService.GetFunctionKeyList();
+
             return View(functionKeyList);
         }
 

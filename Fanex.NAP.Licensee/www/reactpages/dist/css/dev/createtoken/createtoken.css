@@ -1,0 +1,105 @@
+.card {
+  border-radius: .25rem;
+  border: 1px solid #bdd9e9;
+  display: flex;
+  flex-direction: column;
+  margin: 20px; }
+  .card .card-header {
+    align-items: center;
+    background: #ecf8ff;
+    border-bottom: 1px solid #bdd9e9;
+    color: #545454;
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    height: 60px;
+    padding: 1.25rem; }
+    .card .card-header .card-header-content {
+      margin: 0 25px;
+      width: 100%; }
+    .card .card-header .header-content {
+      align-items: center;
+      display: flex;
+      margin-bottom: 0; }
+  .card .card-body {
+    padding: 1.25rem; }
+    .card .card-body .card-title {
+      color: #486cb8;
+      font-size: 18px;
+      text-align: center;
+      text-transform: uppercase; }
+    .card .card-body .card-body-content {
+      margin: 25px; }
+
+.add-form input[type=text] {
+  border-radius: 3px;
+  border: 1px solid #9d9d9d;
+  height: 25px;
+  padding: 2px; }
+  .add-form input[type=text].has-error {
+    border: 1px solid #a94442; }
+
+.add-form label, .add-form input[type=text] {
+  color: #545454;
+  font-weight: 400;
+  font-size: 14px; }
+
+.add-form .btn-primary, .add-form .btn-copy {
+  box-shadow: inset 0px 2px 1px rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  width: 100px; }
+
+.add-form .btn-primary {
+  margin-right: 0;
+  height: 26px; }
+
+.add-form .auto-scroll {
+  max-height: 400px;
+  overflow-y: scroll; }
+
+.group-input {
+  position: relative; }
+  .group-input .input-group-prepend {
+    position: absolute; }
+
+.group-prepend input[type=text] {
+  background: #ecf8ff;
+  border: 1px solid #6faccf;
+  padding-right: 102px; }
+
+.group-prepend input[disabled], .group-prepend button[disabled] {
+  border: 1px solid #cbcbcb; }
+
+.group-prepend input[disabled] {
+  background: #f7f7f7; }
+
+.group-prepend button[disabled] {
+  background: #d0d4d6; }
+
+.group-prepend .input-group-prepend {
+  right: 2px;
+  top: 2px; }
+
+.group-prepend .btn-copy {
+  background: #6faccf;
+  border-radius: 3px;
+  border: 1px solid #5b9cc1; }
+
+.checkbox-inline.node, .node {
+  display: flex;
+  padding-left: 0;
+  margin: 5px 0; }
+  .checkbox-inline.node input[type=checkbox], .node input[type=checkbox] {
+    position: relative;
+    margin: 4px 5px; }
+  .checkbox-inline.node .glyphicon, .node .glyphicon {
+    cursor: pointer;
+    font-size: 10px;
+    width: 10px; }
+
+.panel-large {
+  min-height: 450px; }
+
+/*# sourceMappingURL=createtoken.css.map*/

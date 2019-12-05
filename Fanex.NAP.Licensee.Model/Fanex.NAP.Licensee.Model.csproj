@@ -136,6 +136,7 @@
     <Compile Include="Criteria\ITUser\AddUserCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeCurrencyCriteria.cs" />
     <Compile Include="Criteria\ITUser\UserLicenseeFunctionCriteria.cs" />
+    <Compile Include="Criteria\LAPUser\FunctionPermissionCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\ActivateSystemCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\TerminateLicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\RemoveLicenseeProductCriteria.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Criteria\Product\LicenseeProductMatrixCriteria.cs" />
     <Compile Include="Criteria\Vendor\ActionLogCriteria.cs" />
     <Compile Include="Criteria\Vendor\VendorSearchingCriteria.cs" />
+    <Compile Include="Criteria\LAPUser\LAPUserCriteria.cs" />
     <Compile Include="DataDomain\LogActionType.cs" />
     <Compile Include="DataDomain\NapLicenseeFunctionKeys.cs">
       <AutoGen>True</AutoGen>
@@ -177,6 +179,7 @@
     <Compile Include="DTO\ITUserFunctionHierarchy.cs" />
     <Compile Include="DTO\ITUserFunction.cs" />
     <Compile Include="DTO\ITUser.cs" />
+    <Compile Include="DTO\LAPVendorInfo.cs" />
     <Compile Include="DTO\LrfFunctionHierarchy.cs" />
     <Compile Include="DTO\LrfFunction.cs" />
     <Compile Include="DTO\OptionItem.cs" />
@@ -212,16 +215,25 @@
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="DTO\LicenseeVendor.cs" />
     <Compile Include="DTO\SystemItem.cs" />
-    <Compile Include="Enumerations\ActionLogType.cs" />
-    <Compile Include="Enumerations\HashType.cs" />
-    <Compile Include="Enumerations\NapLoginStatus.cs" />
-    <Compile Include="Enumerations\ITUserStatus.cs" />
-    <Compile Include="Enumerations\ProductType.cs" />
+    <Compile Include="DTO\LAPUser.cs" />
+    <Compile Include="DTO\UserFuncPermission.cs" />
+    <Compile Include="DTO\UserGroup.cs" />
+    <Compile Include="DTO\UserPermissionInfo.cs" />
+    <Compile Include="DataDomain\ActionLogType.cs" />
+    <Compile Include="DataDomain\HashType.cs" />
+    <Compile Include="DataDomain\LAPITAccount.cs" />
+    <Compile Include="DataDomain\LicenseeType.cs" />
+    <Compile Include="DataDomain\NapLoginStatus.cs" />
+    <Compile Include="DataDomain\ITUserStatus.cs" />
+    <Compile Include="DataDomain\ProductType.cs" />
+    <Compile Include="DataDomain\SystemMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ITUser\AddUserViewModel.cs" />
+    <Compile Include="ViewModel\LAPUser\AddUserViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\LicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeSetting\NewLicenseeViewModel.cs" />
     <Compile Include="ViewModel\LicenseeVendor\EditVendorViewModel.cs" />
+    <Compile Include="ViewModel\LAPUser\UpdateUserViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />

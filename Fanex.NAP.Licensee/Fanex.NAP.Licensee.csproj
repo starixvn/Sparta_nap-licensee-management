@@ -81,12 +81,16 @@
       <HintPath>..\packages\Fanex.Data.DbSettingProviderExtension.1.0.0.1\lib\net40\Fanex.Data.DbSettingProviderExtension.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.2.0.0\lib\net461\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.RabbitMQ.1.0.1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Sentry.RavenClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Sentry.RavenClient.1.0.1\lib\net461\Fanex.Logging.Sentry.RavenClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
@@ -98,12 +102,28 @@
     <Reference Include="Fanex.RemotingRef, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.1.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
+    <Reference Include="Hangfire.Core, Version=1.7.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.7.7\lib\net46\Hangfire.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Redis.StackExchange, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Redis.StackExchange.1.8.0\lib\net461\Hangfire.Redis.StackExchange.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MessagePack, Version=1.7.3.4, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
       <HintPath>..\packages\MessagePack.1.7.3.4\lib\net45\MessagePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
@@ -136,6 +156,14 @@
     <Reference Include="ONEbook.UM, Version=2.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.9\lib\net40\ONEbook.UM.dll</HintPath>
     </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.0.22\lib\net461\Pipelines.Sockets.Unofficial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
@@ -144,11 +172,35 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.2.0.601\lib\net461\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.PerformanceCounter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.4.5.0\lib\net461\System.Diagnostics.PerformanceCounter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Pipelines, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.4.5.1\lib\netstandard1.3\System.IO.Pipelines.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard1.1\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
@@ -161,6 +213,20 @@
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -173,8 +239,13 @@
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Threading.Channels, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.5.0\lib\netstandard1.3\System.Threading.Channels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -240,11 +311,16 @@
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
     <Compile Include="Areas\UserLogin\UserLoginAreaRegistration.cs" />
+    <Compile Include="Extension\LogMessageHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\HangFireAuthorizationFilter.cs" />
+    <Compile Include="Infrastructure\HangFireLoggingLogger.cs" />
+    <Compile Include="Infrastructure\HangFireLoggingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppress.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="TestFolder\SimpleClass1.cs">
       <DependentUpon>SimpleSample.txt4</DependentUpon>
     </Compile>
@@ -304,6 +380,10 @@
     <Content Include="www\.webpack\config\path.js" />
     <Content Include="www\.webpack\config\plugin.js" />
     <Content Include="www\.webpack\plugins\BundleVersionPlugin.js" />
+    <Content Include="www\reactpages\dist\css\dev\createtoken\createtoken.css" />
+    <Content Include="www\reactpages\dist\css\dev\createtoken\createtoken.js" />
+    <Content Include="www\reactpages\dist\css\dev\createUser\createUser.css" />
+    <Content Include="www\reactpages\dist\css\dev\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css" />
@@ -327,6 +407,10 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
+    <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.css" />
+    <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.js" />
+    <Content Include="www\reactpages\dist\css\pro\createUser\createUser.css" />
+    <Content Include="www\reactpages\dist\css\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.css" />
     <Content Include="www\reactpages\dist\css\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\css\pro\editUser\editUser.css" />
@@ -351,6 +435,8 @@
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\addUser\addUser.js" />
+    <Content Include="www\reactpages\dist\js\dev\createToken\createToken.js" />
+    <Content Include="www\reactpages\dist\js\dev\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\js\dev\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\dev\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\dev\editUser\editUser.js" />
@@ -369,6 +455,8 @@
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
+    <Content Include="www\reactpages\dist\js\pro\createToken\createToken.js" />
+    <Content Include="www\reactpages\dist\js\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
     <Content Include="www\reactpages\dist\js\pro\editlicensee\editlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\editUser\editUser.js" />
@@ -397,6 +485,21 @@
     <Content Include="www\reactpages\src\scripts\modules\function\list\AssignFunctionForm.js" />
     <Content Include="www\reactpages\src\scripts\modules\function\list\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\function\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\Tree.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-token\TreeNode.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\actionTypes.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\Form.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\Tree.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\create-user\TreeNode.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\lapuser\language.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\licensee\edit\types.js" />
@@ -444,6 +547,20 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.js.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.css.map" />
     <Content Include="www\reactpages\dist\css\dev\editUser\editUser.js.map" />
+    <Content Include="Views\LAPUserManagement\CreateToken.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\createToken\createToken.js.map" />
+    <Content Include="Views\LAPUserManagement\AddNewUser.cshtml" />
+    <Content Include="www\reactpages\dist\css\dev\createtoken\createtoken.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\createtoken\createtoken.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\createUser\createUser.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\createUser\createUser.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\createUser\createUser.js.map" />
+    <Content Include="App_Data\FunctionPermission.json" />
+    <None Include="SiteConfig\Web.AppSettings.config.txt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </None>
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
@@ -733,11 +850,6 @@
     <Content Include="Scripts\source\page\defaultbetsetting\addnew.js" />
     <Content Include="Scripts\source\page\defaultbetsetting\default.js" />
     <Content Include="Scripts\source\plugin\multi-select-control.js" />
-    <Content Include="SiteConfig\Web.AppSettings.config.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -779,9 +891,6 @@
     <Content Include="SiteConfig\Web.AppSettings.PRO.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.AppSettings.SANDBOX.config">
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </Content>
     <Content Include="SiteConfig\Web.AppSettings.UAT.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
@@ -820,9 +929,6 @@
     <Content Include="SiteConfig\Web.PRO.config">
       <DependentUpon>Web.config.tt</DependentUpon>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SiteConfig\Web.SANDBOX.config">
-      <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="SiteConfig\Web.UAT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
@@ -947,7 +1053,9 @@
     <Folder Include="Areas\UserLogin\Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1016,7 +1124,9 @@
     <Content Include="Content\source\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\source\bootstrap\bootstrap.less" />
     <Content Include="Content\source\core\custom.less" />
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\BetSetting\Default.cshtml" />
     <Content Include="Views\BetSetting\AddNew.cshtml" />
@@ -1031,6 +1141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

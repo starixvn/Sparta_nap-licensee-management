@@ -6,7 +6,7 @@
     using Model.Criteria.SourceLicenseeSetting;
     using Model.Criteria.Vendor;
     using Model.DTO;
-    using Model.Enumerations;
+    using Model.DataDomain;
 
     public class SourceLicenseeSettingService : ISourceLicenseeSettingService
     {
