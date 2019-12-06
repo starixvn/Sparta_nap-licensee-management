@@ -31,7 +31,7 @@
 
             DbSettingProviderManager
                .StartNewSession()
-               .WithSqlServer(resourcePath: "~/App_Data")
+               .WithSqlServer(resourcePath: "~/App_Data/")
                .Run();
             AreaRegistration.RegisterAllAreas();
 
