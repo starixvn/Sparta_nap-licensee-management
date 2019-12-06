@@ -185,8 +185,8 @@
             result.Append("<Action value=\"UpdateUserPassword\">");
             result.Append("<SpName>Nap_LM_LAPUser_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
-            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
+            result.Append($"<RequestBy=\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID=\"{value.RedmineID}\" />");
             result.Append($"<UserID=\"{value.UserID}\" VendorId =\"{value.VendorId}\" />");
             result.Append($"<NewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
             result.Append($"<IsRemoveUserGroup=\"{value.IsRemoveGroup}\" />");

@@ -182,7 +182,7 @@
         {
             criteria.RemoveUnusefulInfoForBackgroundJob();
 
-            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromSeconds(criteria.ExtendTime));
+            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromHours(criteria.ExtendTime));
         }
 
         private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)

@@ -700,7 +700,7 @@ var _utility = __webpack_require__(8);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _NumericInput = __webpack_require__(57);
+var _NumericInput = __webpack_require__(85);
 
 var _NumericInput2 = _interopRequireDefault(_NumericInput);
 
@@ -6175,91 +6175,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 57:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(3);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NumericInput = function (_React$Component) {
-    _inherits(NumericInput, _React$Component);
-
-    function NumericInput(props) {
-        _classCallCheck(this, NumericInput);
-
-        var _this = _possibleConstructorReturn(this, (NumericInput.__proto__ || Object.getPrototypeOf(NumericInput)).call(this, props));
-
-        _this.state = { value: props.value === null ? '' : props.value };
-        return _this;
-    }
-
-    _createClass(NumericInput, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
-            if (prevProps.value !== this.props.value) {
-                this.setState({ value: this.props.value });
-            }
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(e, callback) {
-            var value = e.target.value;
-
-            if (value.length <= 10 && /^\d+$/.test(value) || value === '') {
-                callback && callback(e.target.value);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                className = _props.className,
-                _onChange = _props.onChange;
-            var value = this.state.value;
-
-
-            return _react2.default.createElement('input', { className: className,
-                type: 'text',
-                maxLength: '10',
-                value: value,
-                onChange: function onChange(e) {
-                    return _this2.onChange(e, _onChange);
-                } });
-        }
-    }]);
-
-    return NumericInput;
-}(_react2.default.Component);
-
-exports.default = NumericInput;
-;
-
-/***/ }),
-
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6454,6 +6369,91 @@ var Utility = function () {
 }();
 
 exports.default = Utility;
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NumericInput = function (_React$Component) {
+    _inherits(NumericInput, _React$Component);
+
+    function NumericInput(props) {
+        _classCallCheck(this, NumericInput);
+
+        var _this = _possibleConstructorReturn(this, (NumericInput.__proto__ || Object.getPrototypeOf(NumericInput)).call(this, props));
+
+        _this.state = { value: props.value === null ? '' : props.value };
+        return _this;
+    }
+
+    _createClass(NumericInput, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+            if (prevProps.value !== this.props.value) {
+                this.setState({ value: this.props.value });
+            }
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e, callback) {
+            var value = e.target.value;
+
+            if (value.length <= 10 && /^\d+$/.test(value) || value === '') {
+                callback && callback(e.target.value);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                className = _props.className,
+                _onChange = _props.onChange;
+            var value = this.state.value;
+
+
+            return _react2.default.createElement('input', { className: className,
+                type: 'text',
+                maxLength: '10',
+                value: value,
+                onChange: function onChange(e) {
+                    return _this2.onChange(e, _onChange);
+                } });
+        }
+    }]);
+
+    return NumericInput;
+}(_react2.default.Component);
+
+exports.default = NumericInput;
+;
 
 /***/ }),
 

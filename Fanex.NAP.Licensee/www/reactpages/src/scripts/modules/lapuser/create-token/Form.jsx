@@ -13,7 +13,7 @@ class Form extends Component {
         const { timeRemaining, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
-            extendTime: 1,
+            extendTime: 8,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -27,7 +27,7 @@ class Form extends Component {
 
     _getParams() {
         const { user } = this.props;
-        const { expriedIn, requestBy, redmineID, currencySelected, extendTime } = this.state;
+        const { requestBy, redmineID, currencySelected, extendTime } = this.state;
 
         return {
             criteria: {
@@ -35,7 +35,7 @@ class Form extends Component {
                 UserID: user.UserID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
-                ExtendTime: this._convertHourToSecond(extendTime) + expriedIn,
+                ExtendTime: extendTime,
                 FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 IsRemoveGroup: this.props.isCheckGroup == false ? true : false,
                 Currency: JSON.stringify(currencySelected)
@@ -126,7 +126,7 @@ class Form extends Component {
     _onGenerate = () => {
         this.props.toggleLoader(true);
         const param = this._getParams();
-        const { extendTime, expriedIn } = this.state;
+        const { extendTime } = this.state;
 
         this.props.createToken(param)
             .then(response => {
@@ -134,7 +134,7 @@ class Form extends Component {
                     this.setState({
                         isSuccess: true,
                         token: response.data.Data,
-                        expriedIn: this._convertHourToSecond(extendTime) + expriedIn
+                        expriedIn: this._convertHourToSecond(extendTime)
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.result.Error);
@@ -167,8 +167,8 @@ class Form extends Component {
     _renderCardInput(label, stateName, disabled) {
         return (
             <div className='form-group row'>
-                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
-                <div className='col-lg-9 col-sm-9'>
+                <label className='col-lg-2 col-sm-2 col-md-2'>{label}</label>
+                <div className='col-lg-10 col-sm-10'>
                     <input type='text' className={`full-width ${this.state[stateName] || disabled ? '' : 'has-error'}`} value={this.state[stateName]}
                         disabled={disabled} onChange={(e) => this.setState({ [stateName]: e.target.value })} />
                 </div>
@@ -193,8 +193,8 @@ class Form extends Component {
     _renderCardInputNumber(label, stateName, minValue, maxValue) {
         return (
             <div className='form-group row'>
-                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
-                <div className='col-lg-9 col-sm-9'>
+                <label className='col-lg-2 col-sm-2 col-md-2'>{label}</label>
+                <div className='col-lg-10 col-sm-10'>
                     <input type='text'
                         className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
                         min={minValue}
@@ -317,7 +317,7 @@ class Form extends Component {
                                         <div className="card-body-content">
                                             {this._renderCardInput('Request by', 'requestBy')}
                                             {this._renderCardInputNumber('Redmine Id', 'redmineID')}
-                                            {this._renderCardInputNumber('Extend time (1-8 hour)', 'extendTime', '1', '8')}
+                                            {this._renderCardInputNumber(`Extend time  (1-24 hours)`, 'extendTime', '1', '24')}
                                             {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                             <div className='form-group row pull-right'>
                                                 <div className="col-lg-12">
@@ -329,8 +329,8 @@ class Form extends Component {
                                             </div>
                                             <div className="clearfix"></div>
                                             <div className='form-group row'>
-                                                <label className='col-lg-3 col-sm-3 col-md-3'>Your token</label>
-                                                <div className='col-lg-9 col-sm-9'>
+                                                <label className='col-lg-2 col-sm-2 col-md-2'>Your token</label>
+                                                <div className='col-lg-10 col-sm-10'>
                                                     <div className="group-input group-prepend">
                                                         <input type="text" className='full-width' disabled={!isSuccess} value={token} ref={(txtToken) => this.txtToken = txtToken} />
                                                         {

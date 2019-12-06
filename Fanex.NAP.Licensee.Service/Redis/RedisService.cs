@@ -13,9 +13,9 @@
             _databse = redisConnection.Connection.GetDatabase();
         }
 
-        public bool AddValue(string key, string value, double seconds)
+        public bool AddValue(string key, string value, double hours)
         {
-            _databse.StringSet(key, value, TimeSpan.FromSeconds(seconds));
+            _databse.StringSet(key, value, TimeSpan.FromHours(hours));
             string result = _databse.StringGet(key);
 
             return result != null;

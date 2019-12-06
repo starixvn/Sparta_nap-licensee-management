@@ -4,7 +4,6 @@ import { createAccount } from './action'
 import ConfirmBox from "../../../components/ConfirmBox";
 import React, { Component } from "react";
 import Utility from "../../../lib/utility";
-import NumericInput from '../../../components/NumericInput';
 import Tree from './Tree';
 
 class Form extends Component {
@@ -13,7 +12,7 @@ class Form extends Component {
 
         this.state = {
             isShowConfirmBox: false,
-            extendTime: 1,
+            extendTime: 8,
             password: "",
             isSuccess: false,
             isCopy: false,
@@ -32,7 +31,7 @@ class Form extends Component {
                 UserID: this.props.userID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
-                ExtendTime: this._convertHourToSecond(extendTime),
+                ExtendTime: extendTime,
                 FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 Currency: JSON.stringify(currencySelected)
             }
@@ -65,10 +64,6 @@ class Form extends Component {
         })
 
         return funcsAdded;
-    }
-
-    _convertHourToSecond(hours) {
-        return hours * 60 * 60;
     }
 
     _getSubFunction(funcs) {
@@ -117,8 +112,8 @@ class Form extends Component {
     _renderInput(label, value, disabled) {
         return (
             <div className="form-group row">
-                <label className="col-sm-12 col-lg-3 col-md-3 col-form-label">{label}</label>
-                <div className="col-sm-12 col-md-9">
+                <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">{label}</label>
+                <div className="col-sm-12 col-md-10">
                     <input type="text" className="full-width" value={value} disabled={disabled} />
                 </div>
             </div>
@@ -142,8 +137,8 @@ class Form extends Component {
     _renderCardInputNumber(label, stateName, minValue, maxValue) {
         return (
             <div className='form-group row'>
-                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
-                <div className='col-lg-9 col-sm-9'>
+                <label className='col-lg-2 col-sm-2 col-md-2'>{label}</label>
+                <div className='col-lg-10 col-sm-10'>
                     <input type='text'
                         className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
                         min={minValue}
@@ -159,8 +154,8 @@ class Form extends Component {
     _renderMessage(message) {
         return (
             <div className="form-group row">
-                <div className="col-sm-12 col-lg-3 col-md-3 col-form-label"></div>
-                <div className="col-sm-12 col-md-9">
+                <div className="col-sm-12 col-lg-2 col-md-2 col-form-label"></div>
+                <div className="col-sm-12 col-md-10">
                     {message}
                 </div>
             </div>
@@ -188,8 +183,7 @@ class Form extends Component {
                 if (response.data.IsSuccess) {
                     this.setState({
                         password: response.data.Data,
-                        isSuccess: true,
-                        expriedIn: this._convertHourToSecond(this.state.extendTime)
+                        isSuccess: true
                     });
                     if (response.data.Error) {
                         Utility.showWarningMessage(response.data.Error);
@@ -225,18 +219,18 @@ class Form extends Component {
                                     {this._renderInput("Site Name", this.props.siteName, true)}
                                     {this._renderInput("User ID", this.props.userID, true)}
                                     <div className='form-group row'>
-                                        <label className='col-sm-12 col-lg-3 col-md-3 col-form-label'>Request by</label>
-                                        <div className='col-md-9'>
+                                        <label className='col-sm-12 col-lg-2 col-md-2 col-form-label'>Request by</label>
+                                        <div className='col-md-10'>
                                             <input type='text'
                                                 className={`full-width ${requestBy ? '' : 'has-error'}`}
                                                 onChange={(e) => this.setState({ requestBy: e.target.value })} />
                                         </div>
                                     </div>
                                     {this._renderCardInputNumber('Redmine Id', 'redmineID')}
-                                    {this._renderCardInputNumber('Extend Time (1-8 hour)', 'extendTime', '1', '8')}
+                                    {this._renderCardInputNumber('Extend time (1-24 hours)', 'extendTime', '1', '24')}
                                     <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-3 col-md-3 col-form-label">Password</label>
-                                        <div className="col-sm-12 col-md-9">
+                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Password</label>
+                                        <div className="col-sm-12 col-md-10">
                                             <div className="group-input group-prepend">
                                                 <input type="text" className='full-width' value={password} disabled={!isSuccess} ref={(txtToken) => this.txtToken = txtToken} />
                                                 {
