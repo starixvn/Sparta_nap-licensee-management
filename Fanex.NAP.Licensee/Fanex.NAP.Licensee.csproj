@@ -565,6 +565,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </None>
+    <Content Include="Views\Error\Error.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
@@ -1124,7 +1125,6 @@
     <Content Include="Views\BetSetting\Edit.cshtml" />
     <Content Include="Views\BetSetting\__UpdateLogItems.cshtml" />
     <Content Include="Views\BetSetting\Logs.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BetSetting\_DefaultBetSettingList.cshtml" />
     <Content Include="Views\BetSetting\_LogItems.cshtml" />
     <Content Include="Views\BetSetting\__DeleteLogItems.cshtml" />
