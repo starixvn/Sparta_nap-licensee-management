@@ -52,7 +52,7 @@
             var parameter = new
             {
                 userInfo.UserSEQ,
-                userInfo.VendorInfo.VendorID,
+                VendorID = criteria.VendorId,
                 criteria.UserPWD,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.IsRemoveGroup,

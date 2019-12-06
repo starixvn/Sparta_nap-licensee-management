@@ -4,7 +4,6 @@ import { setSelectedFuncs, setIsCheckGroup, createToken, toggleLoader } from './
 import Loader from '../../../components/Loader'
 import React, { Component } from 'react';
 import Utility from '../../../lib/utility';
-import NumericInput from '../../../components/NumericInput';
 import Tree from './Tree';
 
 class Form extends Component {
@@ -14,7 +13,7 @@ class Form extends Component {
         const { timeRemaining, oldCurrency, currency } = this.props;
         this.state = {
             timeSpan: '',
-            extendTime: 2,
+            extendTime: 1,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -177,14 +176,33 @@ class Form extends Component {
         )
     }
 
-    _renderCardInputNumber(label, stateName) {
+    _handleChange = (event, stateName) => {
+        let { value, min, max } = event.target;
+
+        if (!event.target.validity.valid) {
+            return;
+        }
+
+        if (value != '' && (min && value < Number(min)) || (max && value > Number(max))) {
+            return;
+        }
+
+        this.setState({ [stateName]: value });
+    };
+
+    _renderCardInputNumber(label, stateName, minValue, maxValue) {
         return (
             <div className='form-group row'>
                 <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
                 <div className='col-lg-9 col-sm-9'>
-                    <NumericInput value={this.state[stateName]}
+                    <input type='text'
                         className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
-                        onChange={(value) => this.setState({ [stateName]: value })} />
+                        min={minValue}
+                        max={maxValue}
+                        pattern="[0-9]*"
+                        inputMode="numeric"
+                        value={this.state[stateName]}
+                        onChange={(e) => this._handleChange(e, stateName)} />
                 </div>
             </div>
         )
@@ -279,7 +297,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, token, currency, isSuccess } = this.state;
+        const { isCopy, requestBy, redmineID, extendTime, token, currency, isSuccess } = this.state;
         const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
@@ -299,11 +317,14 @@ class Form extends Component {
                                         <div className="card-body-content">
                                             {this._renderCardInput('Request by', 'requestBy')}
                                             {this._renderCardInputNumber('Redmine Id', 'redmineID')}
-                                            {this._renderCardInputNumber('Extend time (hour)', 'extendTime')}
+                                            {this._renderCardInputNumber('Extend time (1-8 hour)', 'extendTime', '1', '8')}
                                             {this._renderCardInput('Exprired in', 'timeSpan', true)}
                                             <div className='form-group row pull-right'>
                                                 <div className="col-lg-12">
-                                                    <button className="btn btn-primary" onClick={this._onGenerate} disabled={!redmineID || !requestBy || isSuccess}>Generate</button>
+                                                    <button className="btn btn-primary"
+                                                        onClick={this._onGenerate} disabled={!redmineID || !requestBy || !extendTime || isSuccess}>
+                                                        Generate
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="clearfix"></div>

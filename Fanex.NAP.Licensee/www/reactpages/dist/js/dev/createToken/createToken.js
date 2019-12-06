@@ -3867,90 +3867,7 @@ exports.default = Loader;
 
 /***/ }),
 /* 53 */,
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(3);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NumericInput = function (_React$Component) {
-    _inherits(NumericInput, _React$Component);
-
-    function NumericInput(props) {
-        _classCallCheck(this, NumericInput);
-
-        var _this = _possibleConstructorReturn(this, (NumericInput.__proto__ || Object.getPrototypeOf(NumericInput)).call(this, props));
-
-        _this.state = { value: props.value === null ? '' : props.value };
-        return _this;
-    }
-
-    _createClass(NumericInput, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps) {
-            if (prevProps.value !== this.props.value) {
-                this.setState({ value: this.props.value });
-            }
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(e, callback) {
-            var value = e.target.value;
-
-            if (value.length <= 10 && /^\d+$/.test(value) || value === '') {
-                callback && callback(e.target.value);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                className = _props.className,
-                _onChange = _props.onChange;
-            var value = this.state.value;
-
-
-            return _react2.default.createElement('input', { className: className,
-                type: 'text',
-                maxLength: '10',
-                value: value,
-                onChange: function onChange(e) {
-                    return _this2.onChange(e, _onChange);
-                } });
-        }
-    }]);
-
-    return NumericInput;
-}(_react2.default.Component);
-
-exports.default = NumericInput;
-;
-
-/***/ }),
+/* 54 */,
 /* 55 */,
 /* 56 */,
 /* 57 */,
@@ -5769,10 +5686,6 @@ var _utility = __webpack_require__(8);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _NumericInput = __webpack_require__(54);
-
-var _NumericInput2 = _interopRequireDefault(_NumericInput);
-
 var _Tree = __webpack_require__(188);
 
 var _Tree2 = _interopRequireDefault(_Tree);
@@ -5837,6 +5750,24 @@ var Form = function (_Component) {
             }, 500);
         };
 
+        _this._handleChange = function (event, stateName) {
+            var _event$target = event.target,
+                value = _event$target.value,
+                min = _event$target.min,
+                max = _event$target.max;
+
+
+            if (!event.target.validity.valid) {
+                return;
+            }
+
+            if (value != '' && min && value < Number(min) || max && value > Number(max)) {
+                return;
+            }
+
+            _this.setState(_defineProperty({}, stateName, value));
+        };
+
         _this._onCheck = function (value) {
             var currencySelected = _this.state.currencySelected;
 
@@ -5860,7 +5791,7 @@ var Form = function (_Component) {
 
         _this.state = {
             timeSpan: '',
-            extendTime: 2,
+            extendTime: 1,
             token: '',
             isCopy: false,
             isSuccess: false,
@@ -6013,7 +5944,7 @@ var Form = function (_Component) {
         }
     }, {
         key: '_renderCardInputNumber',
-        value: function _renderCardInputNumber(label, stateName) {
+        value: function _renderCardInputNumber(label, stateName, minValue, maxValue) {
             var _this4 = this;
 
             return _react2.default.createElement(
@@ -6027,10 +5958,15 @@ var Form = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'col-lg-9 col-sm-9' },
-                    _react2.default.createElement(_NumericInput2.default, { value: this.state[stateName],
+                    _react2.default.createElement('input', { type: 'text',
                         className: 'full-width ' + (this.state[stateName] ? '' : 'has-error'),
-                        onChange: function onChange(value) {
-                            return _this4.setState(_defineProperty({}, stateName, value));
+                        min: minValue,
+                        max: maxValue,
+                        pattern: '[0-9]*',
+                        inputMode: 'numeric',
+                        value: this.state[stateName],
+                        onChange: function onChange(e) {
+                            return _this4._handleChange(e, stateName);
                         } })
                 )
             );
@@ -6134,6 +6070,7 @@ var Form = function (_Component) {
                 isCopy = _state3.isCopy,
                 requestBy = _state3.requestBy,
                 redmineID = _state3.redmineID,
+                extendTime = _state3.extendTime,
                 token = _state3.token,
                 currency = _state3.currency,
                 isSuccess = _state3.isSuccess;
@@ -6190,7 +6127,7 @@ var Form = function (_Component) {
                                             { className: 'card-body-content' },
                                             this._renderCardInput('Request by', 'requestBy'),
                                             this._renderCardInputNumber('Redmine Id', 'redmineID'),
-                                            this._renderCardInputNumber('Extend time (hour)', 'extendTime'),
+                                            this._renderCardInputNumber('Extend time (1-8 hour)', 'extendTime', '1', '8'),
                                             this._renderCardInput('Exprired in', 'timeSpan', true),
                                             _react2.default.createElement(
                                                 'div',
@@ -6200,7 +6137,8 @@ var Form = function (_Component) {
                                                     { className: 'col-lg-12' },
                                                     _react2.default.createElement(
                                                         'button',
-                                                        { className: 'btn btn-primary', onClick: this._onGenerate, disabled: !redmineID || !requestBy || isSuccess },
+                                                        { className: 'btn btn-primary',
+                                                            onClick: this._onGenerate, disabled: !redmineID || !requestBy || !extendTime || isSuccess },
                                                         'Generate'
                                                     )
                                                 )

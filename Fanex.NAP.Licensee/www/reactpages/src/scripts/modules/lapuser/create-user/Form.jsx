@@ -13,7 +13,7 @@ class Form extends Component {
 
         this.state = {
             isShowConfirmBox: false,
-            extendTime: 2,
+            extendTime: 1,
             password: "",
             isSuccess: false,
             isCopy: false,
@@ -125,19 +125,37 @@ class Form extends Component {
         );
     }
 
-    _renderCardInputNumber(label, stateName) {
+    _handleChange = (event, stateName) => {
+        let { value, min, max } = event.target;
+
+        if (!event.target.validity.valid) {
+            return;
+        }
+
+        if (value != '' && (min && value < Number(min)) || (max && value > Number(max))) {
+            return;
+        }
+
+        this.setState({ [stateName]: value });
+    };
+
+    _renderCardInputNumber(label, stateName, minValue, maxValue) {
         return (
             <div className='form-group row'>
-                <label className='col-sm-12 col-lg-3 col-md-3 col-form-label'>{label}</label>
-                <div className='col-md-9'>
-                    <NumericInput value={this.state[stateName]}
+                <label className='col-lg-3 col-sm-3 col-md-3'>{label}</label>
+                <div className='col-lg-9 col-sm-9'>
+                    <input type='text'
                         className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
-                        onChange={(value) => this.setState({ [stateName]: value })} />
+                        min={minValue}
+                        max={maxValue}
+                        pattern="[0-9]*"
+                        inputMode="numeric"
+                        value={this.state[stateName]}
+                        onChange={(e) => this._handleChange(e, stateName)} />
                 </div>
             </div>
         )
     }
-
     _renderMessage(message) {
         return (
             <div className="form-group row">
@@ -184,7 +202,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, isCopy, password, isSuccess, requestBy, redmineID } = this.state;
+        const { isShowConfirmBox, isCopy, password, extendTime, isSuccess, requestBy, redmineID } = this.state;
         const { funcPer, currency } = this.props;
 
         if (!this.props.isValid) {
@@ -215,7 +233,7 @@ class Form extends Component {
                                         </div>
                                     </div>
                                     {this._renderCardInputNumber('Redmine Id', 'redmineID')}
-                                    {this._renderCardInputNumber('Extend Time (hour)', 'extendTime')}
+                                    {this._renderCardInputNumber('Extend Time (1-8 hour)', 'extendTime', '1', '8')}
                                     <div className="form-group row">
                                         <label className="col-sm-12 col-lg-3 col-md-3 col-form-label">Password</label>
                                         <div className="col-sm-12 col-md-9">
@@ -240,7 +258,7 @@ class Form extends Component {
                                     <div className="form-group row col-sm-12">
                                         <button className="btn btn-primary"
                                             onClick={() => this.setState({ isShowConfirmBox: true })}
-                                            disabled={!redmineID || !requestBy || password} >
+                                            disabled={!redmineID || !requestBy || !extendTime || password} >
                                             Submit
                                     </button>
                                     </div>
