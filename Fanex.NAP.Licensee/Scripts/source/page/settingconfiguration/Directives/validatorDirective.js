@@ -1,10 +1,11 @@
 ﻿"use strict";
 
-angular.module('settingConfiguration.directives', []).directive('bsValidation', function () {
+angular.module('settingConfiguration.directives', []).directive('bsValidation', ['$filter', function ($filter) {
     return {
         require: 'ngModel',
         restrict: 'A',
         link: function (scope, elem, attrs, ngModel) {
+            $filter('filter')([], 'query');
 
             var validFn = function (value) {
                 var min = parseInt(attrs['min']);
@@ -41,12 +42,13 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             });
 
             ngModel.$parsers.push(function (inputValue) {
-                var transformedText = inputValue.replace(/\D/g, '');
-                if (transformedText !== inputValue) {
-                    ngModel.$setViewValue(transformedText);
+                var transformedText = inputValue.replace(/[\,\.]/g, '');
+                var number = $filter('number')(transformedText);
+                if (number !== inputValue) {
+                    ngModel.$setViewValue(number);
                     ngModel.$render();
 
-                    return transformedText;
+                    return number;
                 }
 
                 return inputValue;
@@ -68,4 +70,4 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             });
         }
     };
-});
+}]);
