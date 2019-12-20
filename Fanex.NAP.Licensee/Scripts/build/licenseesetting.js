@@ -649,9 +649,9 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
 // Main controller
 
 settingConfigurationApp.controller("settingConfigurationCtrl", [
-    '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
+'$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
  'GetSuperLicenseeListUrl', 'ContextFunc', 'GetSettingsUrl',
-    function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, ContextFunc, GetSettingsUrl) {
+function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, ContextFunc, GetSettingsUrl) {
     $scope.isButtonEnable = true;
 
     // Load data for ddls
@@ -822,11 +822,18 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
         link: function (scope, elem, attrs, ngModel) {
             $filter('filter')([], 'query');
 
-            var validFn = function (value) {
-                var min = parseInt(attrs['min']);
-                var max = parseInt(attrs['max']);
+            function formatNumber(value) {
+                var transformedText = value.replace(/\D/g, '');
+                var number = transformedText.replace(/[\,\.]/g, '');
 
-                var numValue = parseInt(value);
+                return number;
+            }
+
+            var validFn = function (value) {
+                var min = parseInt(formatNumber(attrs['min']));
+                var max = parseInt(formatNumber(attrs['max']));
+
+                var numValue = parseInt(formatNumber(value));
                 return numValue >= min && (numValue <= max || attrs['max'] === "*");
             };
 
@@ -856,23 +863,28 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
 
             });
 
-            ngModel.$parsers.push(function (inputValue) {
-                var transformedText = inputValue.replace(/[\,\.]/g, '');
-                var number = $filter('number')(transformedText);
-                if (number !== inputValue) {
-                    ngModel.$setViewValue(number);
-                    ngModel.$render();
+            ngModel.$parsers.unshift(function (inputValue) {
+                var number = formatNumber(inputValue);
+                var el = elem[0];
 
-                    return number;
+                var formartNumber = $filter('number')(number);
+
+                if (formartNumber !== inputValue) {
+                    var start = el.selectionStart + 1;
+                    var end = el.selectionEnd + formartNumber.length - inputValue.length;
+
+                    elem.val(formartNumber);
+                    el.setSelectionRange(start, end);
                 }
 
-                return inputValue;
+                return number;
             });
 
             //For DOM -> model validation
             ngModel.$parsers.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+
                 return value;
             });
 
@@ -880,8 +892,9 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             ngModel.$formatters.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+                var number = formatNumber(value);
 
-                return value;
+                return $filter('number')(number);
             });
         }
     };
