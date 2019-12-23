@@ -89,9 +89,9 @@ export class DataGrid extends Component {
                                     <td className="text-center">{item.Disable ? "Yes" : "No"}</td>
                                     <td className="text-center">
                                         <a className="btn btn-primary btn-account" 
-                                            href={window.rootUrl + `LAPUserManagement/CreateToken?vendorId=${item.VendorId}&siteName=${item.SiteName}&userID=itsupport`}>IT Support</a>
+                                            href={window.rootUrl + `LAPUserManagement/CreateToken?vendorId=${item.VendorId}&userID=itsupport`}>IT Support</a>
                                         <a className="btn btn-primary btn-account"
-                                            href={window.rootUrl + `LAPUserManagement/CreateToken?vendorId=${item.VendorId}&siteName=${item.SiteName}&userID=itsupport2`}>IT Support 2</a>
+                                            href={window.rootUrl + `LAPUserManagement/CreateToken?vendorId=${item.VendorId}&userID=itsupport2`}>IT Support 2</a>
                                     </td>
                                     <td className="text-center">
                                         <a href={window.rootUrl + `LicenseeVendor/Edit?vendorId=${item.VendorId}`} title="Edit">

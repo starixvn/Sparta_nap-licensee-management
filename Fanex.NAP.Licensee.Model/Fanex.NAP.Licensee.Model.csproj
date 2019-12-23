@@ -42,9 +42,17 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Data, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.4.2.0\lib\net461\Fanex.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Data.Repository, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.Repository.4.2.0\lib\net461\Fanex.Data.Repository.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
@@ -90,6 +98,7 @@
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -105,8 +114,10 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -204,9 +215,7 @@
     <Compile Include="DTO\SettingConfiguration\BSBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKenoItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSNumberGameItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSRacingItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSportbookItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSVirtualSportItem.cs" />
     <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
@@ -251,13 +260,11 @@
     <Compile Include="ViewModel\ManageProduct\SearchProductViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSCheckableRowViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\BSRacingViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSKenoViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRowBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSSportbookViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\BSVirtualSportViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\CommRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />

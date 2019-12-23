@@ -30,7 +30,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             get
             {
-                using (var db = new ObjectDb("NAP_SpecialCustSetting_LicenseeList"))
+                using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSetting_LicenseeList"))
                 {
                     return db.Query<LicenseeItem>().ToList();
                 }
@@ -45,7 +45,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             get
             {
-                using (var db = new ObjectDb("NAP_SpecialCustSetting_CurrencyList"))
+                using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSetting_CurrencyList"))
                 {
                     return db.Query<CurrencyItem>().ToList();
                 }
@@ -64,7 +64,7 @@ namespace Fanex.NAP.Licensee.Service
 
                 if (result == null)
                 {
-                    using (var db = new ObjectDb("NAP_SpecialCustSettingGameType_Sel"))
+                    using (var db = ObjectDbFactory.CreateInstance("NAP_SpecialCustSettingGameType_Sel"))
                     {
                         result = new Dictionary<int, string>();
                         using (var reader = db.ExecuteReader())
@@ -92,17 +92,12 @@ namespace Fanex.NAP.Licensee.Service
             get
             {
                 IList<string> betPT = new List<string>() { "Bet setting", "PT" };
-                IList<string> betComm = new List<string>() { "Bet setting", "Comm" };
-                IList<string> pt = new List<string>() { "PT" };
 
                 return new List<ProductTypeItem>()
                 {
                     new ProductTypeItem(1, "Sportsbook", betPT),
                     new ProductTypeItem(161, "Number Game", betPT),
-                    new ProductTypeItem(180, "Virtual Sports", betPT),
                     new ProductTypeItem(202, "Keno", betPT),
-                    new ProductTypeItem(162, "Live casino", pt), 
-                    new ProductTypeItem(151, "Racing", betComm)
                 };
             }
         }
@@ -166,27 +161,6 @@ namespace Fanex.NAP.Licensee.Service
         }
 
         /// <summary>
-        /// Gets virtual sport game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetVirtualSportGameTypeList
-        {
-            get
-            {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(180, 1201), "Virtual Soccer");
-                dctGameType.Add(new BSKeyPair(186, 1220), "Virtual Tennis");
-                dctGameType.Add(new BSKeyPair(181, 1231), "Virtual Horse Racing");
-                dctGameType.Add(new BSKeyPair(182, 1231), "Virtual Greyhounds");
-                dctGameType.Add(new BSKeyPair(183, 1231), "Virtual Speedway");
-                dctGameType.Add(new BSKeyPair(184, 1231), "Virtual Motosports");
-                dctGameType.Add(new BSKeyPair(185, 1231), "Virtual Cycling");
-
-                return dctGameType;
-            }
-        }
-
-        /// <summary>
         /// Gets keno game type list.
         /// </summary>
         /// <value>A dictionary.</value>
@@ -202,33 +176,13 @@ namespace Fanex.NAP.Licensee.Service
         }
 
         /// <summary>
-        /// Gets racing game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetRacingGameTypeList
-        {
-            get
-            {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(151, 41), "Racing;UK/Irish Tote");
-                dctGameType.Add(new BSKeyPair(151, 31), "Racing;SA Tote");
-                dctGameType.Add(new BSKeyPair(151, 51), "Racing;Aust Tote");
-                dctGameType.Add(new BSKeyPair(152, 41), "Greyhound;UK/Irish Tote");
-                dctGameType.Add(new BSKeyPair(152, 51), "Greyhound;Aust Tote");
-                dctGameType.Add(new BSKeyPair(153, 51), "Hamess;Aust Tote");
-
-                return dctGameType;
-            }
-        }
-
-        /// <summary>
         /// Gets super licensee list.
         /// </summary>
         /// <param name="siteName">Site name.</param>
         /// <returns>List of licensee items.</returns>
         public IList<LicenseeItem> GetSuperLicenseeList(string siteName)
         {
-            using (var db = new ObjectDb("NAP_LM_LicenseeSuperList"))
+            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeSuperList"))
             {
                 return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
             }
@@ -236,7 +190,7 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId)
         {
-            using (var db = new ObjectDb("Nap_LM_LicenseeCurrency_Select"))
+            using (var db = ObjectDbFactory.CreateInstance("Nap_LM_LicenseeCurrency_Select"))
             {
                 return db.Query<CurrencyItem>(new { LicenseeId = licenseeId }).ToList();
             }

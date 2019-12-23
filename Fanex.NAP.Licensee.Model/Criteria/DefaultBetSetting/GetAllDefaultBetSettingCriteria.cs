@@ -7,7 +7,7 @@
 namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
     using System;
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     /// <summary>
     /// TODO: Update summary.

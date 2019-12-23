@@ -1,7 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Infrastructure
 {
     using System;
+    using Extension;
     using Hangfire.Logging;
+    using Logging;
 
     public class HangFireLoggingLogger : ILog
     {
@@ -9,7 +11,7 @@
         {
             if (exception != null)
             {
-                Logging.LogService.Error(exception.Message, exception);
+                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
             }
 
             return true;

@@ -44,7 +44,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                return db.Query<DefaultBetSetting>(criteria.GetSpParams()).ToList();
+                return db.Query<DefaultBetSetting>(criteria).ToList();
             }
         }
 
@@ -58,7 +58,7 @@ namespace Fanex.NAP.Licensee.Service
             var result = new SingleDefaultBetSettingViewModel();
             using (var objectDb = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = objectDb.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -102,7 +102,7 @@ namespace Fanex.NAP.Licensee.Service
             var result = new ResultInfo();
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                db.ExecuteReader(criteria.GetSpParams());
+                db.ExecuteReader(criteria);
                 result.IsOk = db.GetParameterValue("@errcode").Equals(SuccessCode);
                 var msg = db.GetParameterValue("@ErrMsg");
                 result.Message = msg != null ? msg.ToString() : string.Empty;
@@ -113,9 +113,15 @@ namespace Fanex.NAP.Licensee.Service
 
         public IList<AgentItem> GetAgents(GetAgentListCriteria criteria)
         {
+            var parameters = new
+            {
+                criteria.Licensee,
+                criteria.CurrencyID,
+            };
+
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                var results = db.Query<AgentItem>(criteria.GetSpParams()).ToList();
+                var results = db.Query<AgentItem>(parameters).ToList();
                 results.Insert(0, new AgentItem { Name = NoneAgent });
                 return results;
             }
@@ -125,7 +131,7 @@ namespace Fanex.NAP.Licensee.Service
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                return db.Query<SettingLogItem>(criteria.GetSpParams()).ToList();
+                return db.Query<SettingLogItem>(criteria).ToList();
             }
         }
 

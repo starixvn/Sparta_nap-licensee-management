@@ -4,10 +4,11 @@
     using System.Linq;
     using System.Text;
     using Core;
+    using Data;
     using Model.Criteria.LAPUser;
     using Model.Criteria.Vendor;
-    using Model.DTO;
     using Model.DataDomain;
+    using Model.DTO;
     using Newtonsoft.Json;
 
     public class LAPUserManagementService : ILAPUserManagementService
@@ -25,8 +26,8 @@
             var result = new ResultData<string>();
             var parameter = new
             {
+                criteria.VendorId,
                 criteria.UserID,
-                criteria.SiteName,
                 criteria.UserPWD,
                 UserName = criteria.UserID,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
@@ -47,11 +48,11 @@
         {
             var result = new ResultData<string>();
 
-            var userInfo = GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
+            var userInfo = GetUserInfo(criteria.VendorId, criteria.UserID);
             var parameter = new
             {
                 userInfo.UserSEQ,
-                criteria.SiteName,
+                VendorID = criteria.VendorId,
                 criteria.UserPWD,
                 FuncPermissions = BuildFunctionXMLParameter(criteria.FuncPermissions),
                 criteria.IsRemoveGroup,
@@ -68,50 +69,66 @@
             return result;
         }
 
-        public LAPUser GetUserInfo(string vendorId, string siteName, string userID)
+        public LAPUser GetUserInfo(string vendorId, string userID)
         {
             LAPUser user;
-            LAPVendorInfo vendorInfo;
-            IEnumerable<UserFuncPermission> groupPermission;
-            var userPermission = new UserPermissionInfo();
-            var currency = string.Empty;
-
+            var result = new object[] {
+                new LAPVendorInfo(), new LAPUser(), new UserGroup(), new List<UserFuncPermission>() { }, new List<UserFuncPermission>() { }, string.Empty
+            };
             var parameter = new
             {
-                VendorID = vendorId,
-                UserID = userID,
-                SiteName = siteName
+                VendorID = vendorId ?? string.Empty,
+                UserID = userID ?? string.Empty,
             };
 
-            using (var db = _objectDbGenerator.Create("Nap_LM_LAPUser_Select"))
+            using (var objectDb = ObjectDbFactory.CreateInstance("Nap_LM_LAPUser_Select"))
             {
-                using (var multi = db.QueryMultiple(parameter))
+                using (var multiResultReader = objectDb.QueryMultiple(parameter))
                 {
-                    vendorInfo = multi.Read<LAPVendorInfo>().FirstOrDefault();
-                    user = multi.Read<LAPUser>().FirstOrDefault();
-                    userPermission.UserGroup = multi.Read<UserGroup>().FirstOrDefault();
-                    groupPermission = multi.Read<UserFuncPermission>();
-                    userPermission.FuncPermission = multi.Read<UserFuncPermission>();
-                    currency = multi.Read<string>().FirstOrDefault();
+                    var index = 0;
+
+                    while (!multiResultReader.IsEmptyOrClosed && index < result.Length)
+                    {
+                        var genericType = result[index].GetType().IsGenericType;
+
+                        if(genericType)
+                        {
+                            result[index] = multiResultReader.Read(result[index].GetType().GetGenericArguments()[0]);
+                        }
+                        else
+                        {
+                            result[index] = multiResultReader.Read(result[index].GetType()).FirstOrDefault();
+                        }
+
+                        index++;
+                    }
                 }
             }
 
+            user = (LAPUser)result[1];
+
             if (user != null)
             {
-                user.UserPermission = userPermission;
-                user.Currency = currency;
-                user.VendorInfo = vendorInfo;
+                user.UserPermission = new UserPermissionInfo();
+                user.VendorInfo = (LAPVendorInfo)result[0];
+                user.UserPermission.UserGroup = (UserGroup)result[2];
+                user.Currency = (string)result[5];
 
-                if(user.UserPermission.UserGroup != null)
+                if (result[4] != null)
                 {
-                    user.UserPermission.UserGroup.FuncPermission = groupPermission;
+                    user.UserPermission.FuncPermission = (result[4] as IEnumerable<object>)?.Select(x => (UserFuncPermission)x);
+                }
+
+                if (user.UserPermission.UserGroup != null && result[3] != null)
+                {
+                    user.UserPermission.UserGroup.FuncPermission = (result[3] as IEnumerable<object>)?.Select(x => (UserFuncPermission)x);
                 }
             }
             else
             {
                 user = new LAPUser
                 {
-                    VendorInfo = vendorInfo
+                    VendorInfo = (LAPVendorInfo)result[0]
                 };
             }
 
@@ -142,7 +159,7 @@
             result.Append($"<Curency=\"{value.Currency}\" />");
             result.Append($"<RequestBy=\"{value.RequestBy}\" />");
             result.Append($"<RedmineID=\"{value.RedmineID}\" />");
-            result.Append($"<New UserID=\"{value.UserID}\" SiteName=\"{value.SiteName}\" />");
+            result.Append($"<New UserID=\"{value.UserID}\" VendorId=\"{value.VendorId}\" />");
             result.Append("</Action>");
 
             return result.ToString();
@@ -168,9 +185,9 @@
             result.Append("<Action value=\"UpdateUserPassword\">");
             result.Append("<SpName>Nap_LM_LAPUser_Update</SpName>");
             result.Append($"<UpdatedBy UserId=\"{value.UserLoginId}\" UserName=\"{value.UserLoginName}\" />");
-            result.Append($"<RequestBy =\"{value.RequestBy}\" />");
-            result.Append($"<RedmineID =\"{value.RedmineID}\" />");
-            result.Append($"<UserID=\"{value.UserID}\" SiteName =\"{value.SiteName}\" />");
+            result.Append($"<RequestBy=\"{value.RequestBy}\" />");
+            result.Append($"<RedmineID=\"{value.RedmineID}\" />");
+            result.Append($"<UserID=\"{value.UserID}\" VendorId =\"{value.VendorId}\" />");
             result.Append($"<NewFunction=\"{JsonConvert.SerializeObject(value.FuncPermissions)}\" />");
             result.Append($"<IsRemoveUserGroup=\"{value.IsRemoveGroup}\" />");
             result.Append($"<NewCurency=\"{value.Currency}\" />");

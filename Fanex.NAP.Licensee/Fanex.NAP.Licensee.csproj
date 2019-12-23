@@ -57,6 +57,10 @@
       <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EasyNetQ, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyNetQ.2.3.3\lib\net451\EasyNetQ.dll</HintPath>
       <Private>True</Private>
@@ -73,12 +77,16 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.Data, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
+      <HintPath>..\packages\Fanex.Data.4.2.0\lib\net461\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data.DbSettingProviderExtension, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.DbSettingProviderExtension.1.0.0.1\lib\net40\Fanex.Data.DbSettingProviderExtension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Data.SqlServer, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.SqlServer.4.2.0\lib\net461\Fanex.Data.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -561,6 +569,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </None>
+    <Content Include="Views\Error\Error.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
@@ -816,19 +825,13 @@
     <Content Include="Scripts\source\jquery\numeric.min.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSFuncs.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSRacingCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSVirtualSportCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSSportbookCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSRacingCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSVirtualSportCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSSportbookCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\Comm\editCommController.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\PT\editPTController.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\Comm\reviewCommController.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\PT\reviewPTController.js" />
     <Content Include="Scripts\source\page\settingconfiguration\settingConfiguration.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\settingConfigurationController.js" />
@@ -936,20 +939,13 @@
     </Content>
     <Content Include="Views\SettingConfiguration\Index.cshtml" />
     <Content Include="Views\SettingConfiguration\PT\EditPT.cshtml" />
-    <Content Include="Views\SettingConfiguration\Comm\EditComm.cshtml" />
-    <Content Include="Views\SettingConfiguration\Comm\ReviewComm.cshtml" />
     <Content Include="Views\SettingConfiguration\PT\ReviewPT.cshtml" />
-    <Content Include="Views\SettingConfiguration\Comm\UpdateCommResult.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSNumberGame.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSKeno.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSKeno.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSNumberGame.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\EditBSVirtualSport.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\EditBSRacing.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSRacing.cshtml" />
     <Content Include="Views\Error\UnsupportedFunction.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSVirtualSport.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />
     <Content Include="www\reactpages\dist\css\dev\demo\demo.css.map" />
@@ -1133,7 +1129,6 @@
     <Content Include="Views\BetSetting\Edit.cshtml" />
     <Content Include="Views\BetSetting\__UpdateLogItems.cshtml" />
     <Content Include="Views\BetSetting\Logs.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\BetSetting\_DefaultBetSettingList.cshtml" />
     <Content Include="Views\BetSetting\_LogItems.cshtml" />
     <Content Include="Views\BetSetting\__DeleteLogItems.cshtml" />

@@ -6,8 +6,6 @@
     {
         public string VendorId { get; set; }
 
-        public string SiteName { get; set; }
-
         public string UserID { get; set; }
 
         public string UserPWD { get; set; }
@@ -15,6 +13,8 @@
         public string RequestBy { get; set; }
 
         public int RedmineID { get; set; }
+
+        public int ExtendTime { get; set; }
 
         public int UserLoginId { get; set; }
 

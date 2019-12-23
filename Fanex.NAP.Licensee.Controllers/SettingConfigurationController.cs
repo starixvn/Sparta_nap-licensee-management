@@ -93,53 +93,6 @@ namespace Fanex.NAP.Licensee.Controllers
 
         #endregion
 
-        #region Comm
-
-        public PartialViewResult EditComm()
-        {
-            return PartialView("Comm/EditComm");
-        }
-
-        public JsonResult GetEditCommData(int custId)
-        {
-            IList<CommItem> lstCommItems = _settingConfigurationService.GetCommList(custId);
-            IList<string> lstComms = _commonService.GetCommList;
-            CommViewModel editCommVm = new CommViewModel(lstCommItems, lstComms);
-
-            return Json(editCommVm.EditCommRows, JsonRequestBehavior.AllowGet);
-        }
-
-        public PartialViewResult ReviewComm()
-        {
-            return PartialView("Comm/ReviewComm");
-        }
-
-        /// <summary>
-        /// Update commission.
-        /// </summary>
-        /// <param name="updateCommVM">Update commission view model.</param>
-        /// <returns>String result.</returns>
-        [HttpPost]
-        public JsonResult UpdateComm(UpdateCommViewModel updateCommVM)
-        {
-            var result = _settingConfigurationService.UpdateComm(
-                updateCommVM.CustId,
-                updateCommVM.SportCommission.SportTypeId,
-                updateCommVM.SportCommission.BetTypeId,
-                float.Parse(updateCommVM.SportCommission.SelectedComm));
-
-            return new JsonResult
-            {
-                Data = new UpdateCommResultViewModel(
-                        updateCommVM.SportCommission.SportTypeName,
-                        updateCommVM.SportCommission.BetTypeName,
-                        result.IsOk,
-                        result.Message)
-            };
-        }
-
-        #endregion
-
         #region Bet setting
 
         /// <summary>
@@ -154,12 +107,8 @@ namespace Fanex.NAP.Licensee.Controllers
             {
                 case SportType.SportBook:
                     return PartialView(rootPath + "EditBSSportbook");
-                case SportType.Racing:
-                    return PartialView(rootPath + "EditBSRacing");
                 case SportType.NumberGame:
                     return PartialView(rootPath + "EditBSNumberGame");
-                case SportType.VirtualSport:
-                    return PartialView(rootPath + "EditBSVirtualSport");
                 case SportType.Keno:
                     return PartialView(rootPath + "EditBSKeno");
                 default:
@@ -180,18 +129,10 @@ namespace Fanex.NAP.Licensee.Controllers
                     IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
                     return Json(sportBookVM, JsonRequestBehavior.AllowGet);
-                case SportType.Racing:
-                    IList<BSRacingItem> lstRacingItems = _settingConfigurationService.GetBetSetting<BSRacingItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
-                    BSRacingViewModel racingVM = new BSRacingViewModel(lstRacingItems, _commonService.GetRacingGameTypeList);
-                    return Json(racingVM, JsonRequestBehavior.AllowGet);
                 case SportType.NumberGame:
                     IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
                     return Json(numberGameVM, JsonRequestBehavior.AllowGet);
-                case SportType.VirtualSport:
-                    IList<BSVirtualSportItem> lstVirtualSportItems = _settingConfigurationService.GetBetSetting<BSVirtualSportItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
-                    BSVirtualSportViewModel virtualSportVM = new BSVirtualSportViewModel(lstVirtualSportItems, _commonService.GetVirtualSportGameTypeList);
-                    return Json(virtualSportVM, JsonRequestBehavior.AllowGet);
                 case SportType.Keno:
                     IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
                     BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
@@ -213,12 +154,8 @@ namespace Fanex.NAP.Licensee.Controllers
             {
                 case SportType.SportBook:
                     return PartialView(rootPath + "ReviewBSSportbook");
-                case SportType.Racing:
-                    return PartialView(rootPath + "ReviewBSRacing");
                 case SportType.NumberGame:
                     return PartialView(rootPath + "ReviewBSNumberGame");
-                case SportType.VirtualSport:
-                    return PartialView(rootPath + "ReviewBSVirtualSport");
                 case SportType.Keno:
                     return PartialView(rootPath + "ReviewBSKeno");
                 default:
@@ -270,54 +207,6 @@ namespace Fanex.NAP.Licensee.Controllers
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
             return new JsonResult { Data = new UpdateBSResultViewModel(numberGameVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
-        }
-
-        /// <summary>
-        /// Update bet setting virtual sport.
-        /// </summary>
-        /// <param name="virtualSportVM">Bet setting virtual sport view model.</param>
-        /// <returns>Partial view.</returns>
-        [HttpPost]
-        public JsonResult UpdateBetSettingVirtualSport(BSVirtualSportViewModel virtualSportVM)
-        {
-            var updItem = new UpdateBetSettingItem(
-                virtualSportVM.CustId,
-                virtualSportVM.SportBetSetting.SportTypeId,
-                virtualSportVM.SportBetSetting.BetTypeId,
-                Converter.ToDecimal(virtualSportVM.SportBetSetting.MinBet),
-                Converter.ToDecimal(virtualSportVM.SportBetSetting.MaxBet),
-                Converter.ToDecimal(virtualSportVM.SportBetSetting.MaxPerMatch),
-                virtualSportVM.IsEnableChecked,
-                virtualSportVM.IsDownlineChecked,
-                virtualSportVM.IsApplyExistingMemberChecked);
-
-            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-
-            return new JsonResult { Data = new UpdateBSResultViewModel(virtualSportVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
-        }
-
-        /// <summary>
-        /// Update bet setting racing.
-        /// </summary>
-        /// <param name="racingVM">Bet setting racing view model.</param>
-        /// <returns>Partial view.</returns>
-        [HttpPost]
-        public JsonResult UpdateBetSettingRacing(BSRacingViewModel racingVM)
-        {
-            var updItem = new UpdateBetSettingItem(
-                racingVM.CustId,
-                racingVM.SportBetSetting.SportTypeId,
-                racingVM.SportBetSetting.BetTypeId,
-                Converter.ToDecimal(racingVM.SportBetSetting.MinBet),
-                Converter.ToDecimal(racingVM.SportBetSetting.MaxBet),
-                Converter.ToDecimal(racingVM.SportBetSetting.MaxPerMatch),
-                racingVM.SportBetSetting.IsSuperChecked,
-                racingVM.SportBetSetting.IsDownlineChecked,
-                racingVM.IsApplyExistingMemberChecked);
-
-            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
-
-            return new JsonResult { Data = new UpdateBSResultViewModel(racingVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         /// <summary>

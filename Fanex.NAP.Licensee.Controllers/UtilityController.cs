@@ -11,7 +11,7 @@
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed")]
         public ActionResult Error(string err)
         {
-            return View("~/Views/Shared/Error.cshtml");
+            return View("~/Views/Error/Error.cshtml");
         }
     }
 }

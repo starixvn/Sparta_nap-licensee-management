@@ -4,7 +4,6 @@ import { createAccount } from './action'
 import ConfirmBox from "../../../components/ConfirmBox";
 import React, { Component } from "react";
 import Utility from "../../../lib/utility";
-import NumericInput from '../../../components/NumericInput';
 import Tree from './Tree';
 
 class Form extends Component {
@@ -13,6 +12,7 @@ class Form extends Component {
 
         this.state = {
             isShowConfirmBox: false,
+            extendTime: 8,
             password: "",
             isSuccess: false,
             isCopy: false,
@@ -23,14 +23,15 @@ class Form extends Component {
     }
 
     _getParams() {
-        const { requestBy, redmineID, currencySelected } = this.state;
+        const { requestBy, redmineID, extendTime, currencySelected } = this.state;
 
         return {
             criteria: {
-                SiteName: this.props.siteName,
+                VendorId: this.props.vendorId,
                 UserID: this.props.userID,
                 RequestBy: requestBy,
                 RedmineID: redmineID,
+                ExtendTime: extendTime,
                 FuncPermissions: this._getSubFunction(this._getFuncsAdded()),
                 Currency: JSON.stringify(currencySelected)
             }
@@ -119,6 +120,37 @@ class Form extends Component {
         );
     }
 
+    _handleChange = (event, stateName) => {
+        let { value, min, max } = event.target;
+
+        if (!event.target.validity.valid) {
+            return;
+        }
+
+        if (value != '' && (min && value < Number(min)) || (max && value > Number(max))) {
+            return;
+        }
+
+        this.setState({ [stateName]: value });
+    };
+
+    _renderCardInputNumber(label, stateName, minValue, maxValue) {
+        return (
+            <div className='form-group row'>
+                <label className='col-lg-2 col-sm-2 col-md-2'>{label}</label>
+                <div className='col-lg-10 col-sm-10'>
+                    <input type='text'
+                        className={`full-width ${this.state[stateName] ? '' : 'has-error'}`}
+                        min={minValue}
+                        max={maxValue}
+                        pattern="[0-9]*"
+                        inputMode="numeric"
+                        value={this.state[stateName]}
+                        onChange={(e) => this._handleChange(e, stateName)} />
+                </div>
+            </div>
+        )
+    }
     _renderMessage(message) {
         return (
             <div className="form-group row">
@@ -164,7 +196,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isShowConfirmBox, isCopy, password, isSuccess, requestBy, redmineID } = this.state;
+        const { isShowConfirmBox, isCopy, password, extendTime, isSuccess, requestBy, redmineID } = this.state;
         const { funcPer, currency } = this.props;
 
         if (!this.props.isValid) {
@@ -194,14 +226,8 @@ class Form extends Component {
                                                 onChange={(e) => this.setState({ requestBy: e.target.value })} />
                                         </div>
                                     </div>
-                                    <div className="form-group row">
-                                        <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Redmine Id</label>
-                                        <div className="col-md-10">
-                                            <NumericInput value={redmineID}
-                                                className={`full-width ${redmineID ? '' : 'has-error'}`}
-                                                onChange={(value) => this.setState({ redmineID: value })} />
-                                        </div>
-                                    </div>
+                                    {this._renderCardInputNumber('Redmine Id', 'redmineID')}
+                                    {this._renderCardInputNumber('Extend time (1-24 hours)', 'extendTime', '1', '24')}
                                     <div className="form-group row">
                                         <label className="col-sm-12 col-lg-2 col-md-2 col-form-label">Password</label>
                                         <div className="col-sm-12 col-md-10">
@@ -226,7 +252,7 @@ class Form extends Component {
                                     <div className="form-group row col-sm-12">
                                         <button className="btn btn-primary"
                                             onClick={() => this.setState({ isShowConfirmBox: true })}
-                                            disabled={!redmineID || !requestBy || password} >
+                                            disabled={!redmineID || !requestBy || !extendTime || password} >
                                             Submit
                                     </button>
                                     </div>
@@ -238,8 +264,8 @@ class Form extends Component {
                                 <div className="panel-heading">User Permisson</div>
                                 <div className="panel-body auto-scroll">
                                     <Tree className="tree"
-                                        nodes={JSON.parse(funcPer)}
-                                        isDisable={isSuccess} />
+                                        nodes={funcPer && JSON.parse(funcPer)}
+                                        isDisableAll={isSuccess} />
                                 </div>
                             </div>
                         </div>

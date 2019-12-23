@@ -31,11 +31,7 @@ namespace Fanex.NAP.Licensee.Service
 
         IDictionary<BSKeyPair, string> GetNumberGameTypeList { get; }
 
-        IDictionary<BSKeyPair, string> GetVirtualSportGameTypeList { get; }
-
         IDictionary<BSKeyPair, string> GetKenoGameTypeList { get; }
-
-        IDictionary<BSKeyPair, string> GetRacingGameTypeList { get; }
 
         IList<LicenseeItem> GetSuperLicenseeList(string siteName);
 

@@ -5,6 +5,8 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
 {
     public class AddUserViewModel
     {
+        public string VendorId { get; set; }
+
         public string SiteName { get; set; }
 
         public string UserID { get; set; }
@@ -14,8 +16,6 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.LAPUser
         public bool IsExist { get; set; }
 
         public string FuntionPermission { get; set; }
-
-        public LAPVendorInfo VendorInfo { get; set; }
 
         public IEnumerable<CurrencyItem> Currency { get; set; }
     }

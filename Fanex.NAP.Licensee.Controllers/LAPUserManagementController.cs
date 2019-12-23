@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Text;
     using System.Web.Hosting;
@@ -31,8 +30,8 @@
         private readonly ILAPUserManagementService _userService;
         private readonly IRedisService _redisService;
         private readonly ICommonService _commonService;
+        private readonly ILicenseeVendorService _vendorService;
         private readonly ILicenseeSettingService _licenseeService;
-        private readonly double extendedTime = double.Parse(ConfigurationManager.AppSettings["DefaultExtendedTimeOfToken"]);
 
         public LAPUserManagementController()
         {
@@ -40,21 +39,22 @@
             _redisService = new RedisService();
             _commonService = new CommonService();
             _licenseeService = new LicenseeSettingService();
+            _vendorService = new LicenseeVendorService();
         }
 
         [HttpGet]
-        public ActionResult AddNewUser(string vendorId, string siteName, string userID)
+        public ActionResult AddNewUser(string vendorId, string userID)
         {
-            ViewBag.VendorId = vendorId;
-            var licenseeInfo = _licenseeService.GetLicensee(siteName);
-            var result = _userService.GetUserInfo(vendorId, siteName, userID);
+            var vendorInfo = _vendorService.GetVendorById(vendorId ?? string.Empty);
+            var licenseeInfo = _licenseeService.GetLicensee(vendorInfo.SiteName);
+            var result = _userService.GetUserInfo(vendorId, userID);
 
             var viewModel = new AddUserViewModel
             {
-                SiteName = siteName,
+                VendorId = vendorInfo.VendorId,
+                SiteName = vendorInfo.SiteName,
                 UserID = userID,
-                IsValid = CheckParamRequest(vendorId, siteName, userID),
-                VendorInfo = result.VendorInfo,
+                IsValid = IsValidRequest(vendorId, userID),
                 IsExist = result.UserID != null,
                 FuntionPermission = GetFunctionFromConfig(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>()
@@ -81,7 +81,7 @@
                 return Json(result);
             }
 
-            var originalPass = SecurityHelper.GeneratePass(extendedTime);
+            var originalPass = SecurityHelper.GeneratePass(criteria.ExtendTime);
             criteria.UpdateLAPUserInfo(originalPass);
 
             result = _userService.AddUser(criteria);
@@ -90,30 +90,30 @@
                 result.Data = originalPass;
 
                 var jobId = CreateBackgroundJob(criteria);
-                _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
+                _redisService.AddValue(criteria.UserPWD, jobId, criteria.ExtendTime);
             }
 
             return Json(result);
         }
 
         [HttpGet]
-        public ActionResult CreateToken(string vendorId, string siteName, string userID)
+        public ActionResult CreateToken(string vendorId, string userID)
         {
-            ViewBag.VendorId = vendorId;
-            var result = _userService.GetUserInfo(vendorId, siteName, userID);
+            var isValidRequest = IsValidRequest(vendorId, userID);
+            var result = isValidRequest ? _userService.GetUserInfo(vendorId, userID) : null;
 
-            if (result.UserID == null && result.SiteName == null)
+            if (result == null || result.UserID == null)
             {
-                return RedirectToAction("AddNewUser", "LAPUserManagement", new { vendorId, siteName, userID });
+                return RedirectToAction("AddNewUser", "LAPUserManagement", new { vendorId, userID });
             }
 
-            var licenseeInfo = _licenseeService.GetLicensee(siteName);
+            var licenseeInfo = _licenseeService.GetLicensee(result.SiteName);
 
             var viewModel = new UpdateUserViewModel
             {
                 UserInfo = result,
                 TimeRemaining = (int)_redisService.GetRemainingTime(result.UserPWD).TotalSeconds,
-                IsValid = CheckParamRequest(vendorId, siteName, userID),
+                IsValid = isValidRequest,
                 FuntionPermission = GetFunctionFromConfig(result.VendorInfo.LicenseeType, result.VendorInfo.FunctionIgnore),
                 Currency = licenseeInfo != null ? _commonService.GetLicenseeCurrencyList(licenseeInfo.LicenseeID) : new List<CurrencyItem>(),
             };
@@ -139,13 +139,13 @@
                 return Json(result);
             }
 
-            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
+            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.UserID);
             if (userInfo != null)
             {
                 RemoveBackgroundJob(userInfo.UserPWD);
                 _redisService.RemoveKey(userInfo.UserPWD);
 
-                var originalPass = SecurityHelper.GeneratePass(extendedTime);
+                var originalPass = SecurityHelper.GeneratePass(criteria.ExtendTime);
                 criteria.UpdateLAPUserInfo(originalPass);
 
                 result = _userService.UpdateUser(criteria);
@@ -154,7 +154,7 @@
                     result.Data = originalPass;
 
                     var jobId = CreateBackgroundJob(criteria);
-                    _redisService.AddValue(criteria.UserPWD, jobId, extendedTime);
+                    _redisService.AddValue(criteria.UserPWD, jobId, criteria.ExtendTime);
                 }
             }
 
@@ -182,15 +182,15 @@
         {
             criteria.RemoveUnusefulInfoForBackgroundJob();
 
-            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromHours(extendedTime));
+            return BackgroundJob.Schedule(() => UpdatePassExpried(criteria), TimeSpan.FromHours(criteria.ExtendTime));
         }
 
         private string CheckValidLAPUser(LAPUserCriteria criteria, bool isAddNew)
         {
             var error = new StringBuilder();
-            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.SiteName, criteria.UserID);
+            var userInfo = _userService.GetUserInfo(criteria.VendorId, criteria.UserID);
 
-            error.Append(CheckEmptyParameter("Site Name", criteria.SiteName, "<br>"));
+            error.Append(CheckEmptyParameter("Vendor Id", criteria.VendorId, "<br>"));
             error.Append(CheckEmptyParameter("Request By", criteria.RequestBy, "<br>"));
             error.Append(CheckInvalidRedmineId(criteria.RedmineID, "<br>"));
 
@@ -207,19 +207,9 @@
             return error.Length > 0 ? error.ToString() : null;
         }
 
-        private bool CheckParamRequest(string vendorId, string siteName, string userID)
+        private static bool IsValidRequest(string vendorId, string userID)
         {
-            var error = new StringBuilder();
-
-            error.Append(CheckEmptyParameter("Site Name", siteName, "<br>"));
-            error.Append(CheckEmptyParameter("Vendor Id", vendorId, "<br>"));
-
-            if (!LAPUserHelper.IsValidUserAccount(userID))
-            {
-                error.Append("This username is invalid! ");
-            }
-
-            return error.Length == 0;
+            return !string.IsNullOrEmpty(vendorId) && LAPUserHelper.IsValidUserAccount(userID);
         }
 
         private static string GetFunctionFromConfig(int licenseeType, string funcIgnore)
