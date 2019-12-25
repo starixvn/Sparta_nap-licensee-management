@@ -1,6 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
+    using System.Web.Hosting;
     using System.Web.Mvc;
     using Attributes;
     using Core.Business;
@@ -8,6 +11,7 @@
     using Model.Criteria.LicenseeSetting;
     using Model.Criteria.Product;
     using Model.DataDomain;
+    using Model.DTO;
     using Model.ViewModel.ManageProduct;
     using Newtonsoft.Json;
     using ONEbook.UM.Filters;
@@ -32,10 +36,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ManageProduct, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var products = _licenseeService.GetProductList();
+
             var viewModel = new SearchProductViewModel
             {
                 LicenseeList = _licenseeService.GetLicenseeList(),
-                ProductList = _licenseeService.GetProductList()
+                ProductList = RemoveProductIgnored(products)
             };
 
             return View(viewModel);
@@ -113,6 +119,20 @@
             error.Append(CheckInvalidRedmineId(criteria.RedmineId));
 
             return error.Length > 0 ? error.ToString() : null;
+        }
+
+        private IEnumerable<Product> RemoveProductIgnored(IEnumerable<Product> products)
+        {
+            var filePath = "~/App_Data/ProductIgnored.json";
+            var jsonContent = System.IO.File.ReadAllText(HostingEnvironment.MapPath(filePath));
+            var productIgnored = JsonConvert.DeserializeObject<IEnumerable<string>>(jsonContent);
+
+            foreach(var pro in productIgnored)
+            {
+                products = products.Where(x => x.ProductCode != pro.ToString());
+            }
+
+            return products;
         }
     }
 }

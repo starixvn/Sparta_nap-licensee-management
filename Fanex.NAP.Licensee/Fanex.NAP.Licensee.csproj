@@ -563,6 +563,7 @@
     <Content Include="www\reactpages\dist\css\dev\createUser\createUser.css.map" />
     <Content Include="www\reactpages\dist\css\dev\createUser\createUser.js.map" />
     <Content Include="App_Data\FunctionPermission.json" />
+    <Content Include="App_Data\ProductIgnored.json" />
     <None Include="SiteConfig\Web.AppSettings.config.txt">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
