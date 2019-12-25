@@ -1,7 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -51,9 +53,10 @@
         [AjaxRequest]
         public ActionResult Default(GetAllDefaultBetSettingCriteria criteria)
         {
+            var result = _betSettingService.GetAll(criteria);
             if (criteria.IsValid())
             {
-                return Json(_betSettingService.GetAll(criteria));
+                return Json(SortBetSettingByProduct(result));
             }
 
             return Json(string.Empty);
@@ -87,6 +90,7 @@
             if (criteria.IsValid())
             {
                 viewModel = _betSettingService.SingleSetting(criteria);
+                viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
             }
 
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
@@ -101,7 +105,10 @@
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Edit(string licensee, int? currencyId, int? agentId)
         {
-            return View(_betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId)));
+            var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId));
+            viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -194,6 +201,33 @@
             }
 
             return result;
+        }
+
+        private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
+        {
+            var eSportBets = betSettings.FirstOrDefault(x => x.SportOrGame.Name == "E-Sports");
+            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportOrGame.Name == "Basketball"));
+
+            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1 );
+        }
+
+        private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
+        {
+            var eSportBets = betSettings.FirstOrDefault(x => x.SportName == "E-Sports");
+            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportName == "Basketball"));
+
+            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
+        }
+
+        public static IList<T> ChangeItemPosition<T>(IList<T> betSettings, T value, int newIndex)
+        {
+            if(value != null)
+            {
+                betSettings.Remove(value);
+                betSettings.Insert(newIndex, value);
+            }
+
+            return betSettings;
         }
 
         #endregion CommonFunction
