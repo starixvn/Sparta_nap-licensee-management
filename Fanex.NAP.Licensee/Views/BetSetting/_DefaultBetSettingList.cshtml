@@ -148,10 +148,13 @@
         <div class="col-sm-12 title-group" id="kn-area">
             <i class="icon-collapse" data-key="area-icon"></i>Keno</div>
         <div class="col-sm-12 content" data-key="area-content">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="copy-kn" data-key="#kn-table">
-                Copy all Bet Setting from 1st row
-            </label>
+            @if (Model.Keno.Count > 1)
+            {
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="copy-kn" data-key="#kn-table">
+                    Copy all Bet Setting from 1st row
+                </label>
+            }
             <table class="table table-bordered table-setting" id="kn-table">
                 <thead>
                     <tr>
