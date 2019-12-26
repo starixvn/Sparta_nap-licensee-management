@@ -27,7 +27,7 @@
         private const int BasketballId = 2;
         private const int ESportId = 43;
         private const string RNGKenoName = "RNG Keno";
-        private const string AustraliaGameName = "Australia Acttab";
+        private const int KenoId = 202;
 
         public BetSettingController()
             : base()
@@ -229,7 +229,7 @@
 
         private static IList<BetSettingBySport> ChangeItemName(IList<BetSettingBySport> betSettings)
         {
-            var result = betSettings.FirstOrDefault(x => x.SportOrGame.Name == AustraliaGameName);
+            var result = betSettings.FirstOrDefault(x => x.SportOrGame.Id == KenoId);
             if(result != null)
             {
                 result.SportOrGame.Name = RNGKenoName;
@@ -240,7 +240,7 @@
 
         private static IList<DefaultBetSetting> ChangeItemName(IList<DefaultBetSetting> betSettings)
         {
-            var result = betSettings.FirstOrDefault(x => x.SportGameType == AustraliaGameName);
+            var result = betSettings.FirstOrDefault(x => x.SportType == KenoId);
             if (result != null)
             {
                 result.SportGameType = RNGKenoName;
