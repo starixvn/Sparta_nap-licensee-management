@@ -820,7 +820,6 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
         require: 'ngModel',
         restrict: 'A',
         link: function (scope, elem, attrs, ngModel) {
-            $filter('filter')([], 'query');
 
             function formatNumber(value) {
                 var transformedText = value.replace(/\D/g, '');
@@ -873,7 +872,8 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
                     var start = el.selectionStart + 1;
                     var end = el.selectionEnd + formartNumber.length - inputValue.length;
 
-                    elem.val(formartNumber);
+                    ngModel.$setViewValue(formartNumber);
+                    ngModel.$render();
                     el.setSelectionRange(start, end);
                 }
 
