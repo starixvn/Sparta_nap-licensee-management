@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -25,6 +24,8 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
+        private const int BasketballId = 2;
+        private const int ESportId = 43;
 
         public BetSettingController()
             : base()
@@ -205,23 +206,23 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var eSportBets = betSettings.FirstOrDefault(x => x.SportOrGame.Name == "E-Sports");
-            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportOrGame.Name == "Basketball"));
+            var eSportBets = betSettings.FirstOrDefault(x => x.SportOrGame.Id == ESportId);
+            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportOrGame.Id == BasketballId));
 
-            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1 );
+            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
         }
 
         private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
         {
-            var eSportBets = betSettings.FirstOrDefault(x => x.SportName == "E-Sports");
-            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportName == "Basketball"));
+            var eSportBets = betSettings.FirstOrDefault(x => x.SportType == ESportId);
+            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportType == BasketballId));
 
             return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
         }
 
         public static IList<T> ChangeItemPosition<T>(IList<T> betSettings, T value, int newIndex)
         {
-            if(value != null)
+            if (value != null)
             {
                 betSettings.Remove(value);
                 betSettings.Insert(newIndex, value);

@@ -21,6 +21,8 @@ namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 
         public string AgentName { get; set; }
 
+        public int SportType { get; set; }
+
         public string SportName { get; set; }
 
         public string SportGameType { get; set; }
