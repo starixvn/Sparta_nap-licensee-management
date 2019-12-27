@@ -15,7 +15,8 @@ export class DataGrid extends Component {
             gridData: [],
             assignedFunctions: [],
             unassignedFunctions: [],
-            isShowConfirmBox: false
+            isShowConfirmBox: false,
+            checkedAll: false
         };
     }
 
@@ -26,15 +27,14 @@ export class DataGrid extends Component {
     }
 
     get isValid() {
-        const { assignedFunctions, unassignedFunctions} = this.state;
+        const { assignedFunctions, unassignedFunctions } = this.state;
 
         return assignedFunctions.length > 0 || unassignedFunctions.length > 0;
     }
 
     onCheck(e, item) {
         const checked = e.target.checked;
-        let newList = [];
-        
+
         if (item.UserFunctionId > 0) {
             const newRemovedFunctions = this._getNewCheckedFunctionList(!checked, item, this.state.unassignedFunctions);
             this.setState({ unassignedFunctions: newRemovedFunctions });
@@ -45,13 +45,54 @@ export class DataGrid extends Component {
         }
     }
 
+    onCheckAll(e, isActiveUser) {
+        const { gridData } = this.state;
+        const checked = e.target.checked;
+        let newRemovedFunctions = [];
+        let newAssignedFunctions = [];
+
+        for (let i = 0; i < gridData.length; i++) {
+            const item = gridData[i];
+
+            if (item.Licensee.Checked === true && isActiveUser) {
+                for (let j = 0; j < item.Functions.length; j++) {
+                    const func = item.Functions[j];
+                    this.onFuncCheck(item.Licensee, func, checked, newRemovedFunctions, newAssignedFunctions);
+                }
+            }
+        }
+
+        this.setState({
+            checkedAll: checked,
+            gridData: gridData,
+            unassignedFunctions: newRemovedFunctions,
+            assignedFunctions: newAssignedFunctions
+        })
+    }
+
+    onFuncCheck(licensee, node, checked, newRemovedFunctions, newAssignedFunctions) {
+        if (((node.IsActive && licensee.IsValid) || node.UserFunctionId > 0) && checked === false && newRemovedFunctions.indexOf(node) === -1) {
+            newRemovedFunctions.push(node);
+        }
+        else if (((node.IsActive && licensee.IsValid) || node.UserFunctionId < 0) && checked === true && newAssignedFunctions.indexOf(node) === -1) {
+            newAssignedFunctions.push(node);
+        }
+
+        if (node.Children) {
+            const totalChildren = node.Children.length;
+            for (let k = 0; k < totalChildren; k++) {
+                this.onFuncCheck(licensee, node.Children[k], checked, newRemovedFunctions, newAssignedFunctions);
+            }
+        }
+    }
+
     onSubmit = () => {
         this._showConfirmBox(true);
     }
 
     onConfirm = (redmineId) => {
         this._showConfirmBox(false);
-        
+
         if (redmineId) {
             this._submit(redmineId);
         }
@@ -61,8 +102,7 @@ export class DataGrid extends Component {
         this.setState({ isShowConfirmBox: isShow });
     }
 
-    _getParams(redmineId)
-    {
+    _getParams(redmineId) {
         const { assignedFunctions, unassignedFunctions } = this.state;
 
         return {
@@ -114,7 +154,7 @@ export class DataGrid extends Component {
         };
         Site.fetchData(params, 'ITUserManagement/GetLicenseeUserFunction')
             .then(response => {
-                this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: []});
+                this.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: [] });
                 this.props.toggleLoader(false);
             }).catch(err => {
                 this.props.toggleLoader(false);
@@ -122,26 +162,26 @@ export class DataGrid extends Component {
     }
 
     _buildFunctionNode(licensee, node, level, hierachy, isActiveUser) {
-        const checked = licensee.Checked 
-            && (node.UserFunctionId > 0 ? this.state.unassignedFunctions.indexOf(node) === -1 : this.state.assignedFunctions.indexOf(node) > -1 );
+        const checked = licensee.Checked
+            && (node.UserFunctionId > 0 ? this.state.unassignedFunctions.indexOf(node) === -1 : this.state.assignedFunctions.indexOf(node) > -1);
 
         hierachy.push(
             <tr key={`${licensee.Id}-${node.FunctionId}`} className={licensee.Checked ? '' : 'disable'}>
                 <td>
-                    <span style={{display: 'inline-block', width: `${30*level}px`}}></span>
-                    { level > 0 && <span className='hierarchy-node'></span> }
+                    <span style={{ display: 'inline-block', width: `${30 * level}px` }}></span>
+                    {level > 0 && <span className='hierarchy-node'></span>}
                     {node.FunctionName}
-                        </td>
-                        {
-                            licensee.Checked && isActiveUser && ((node.IsActive && licensee.IsValid) || node.UserFunctionId > 0)
-                            ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
-                            : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
-                        }
+                </td>
+                {
+                    licensee.Checked && isActiveUser && ((node.IsActive && licensee.IsValid) || node.UserFunctionId > 0)
+                        ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, node)} /></td>
+                        : <td className='text-center'>{node.UserFunctionId > 0 && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                }
             </tr>
         );
 
         const total = node.Children.length;
-        for(let k = 0; k < total; k++) {
+        for (let k = 0; k < total; k++) {
             this._buildFunctionNode(licensee, node.Children[k], level + 1, hierachy, isActiveUser);
         }
     }
@@ -150,7 +190,7 @@ export class DataGrid extends Component {
         let hierachy = [];
 
         const total = functions.length;
-        for(let j = 0; j < total; j++) {
+        for (let j = 0; j < total; j++) {
             this._buildFunctionNode(licensee, functions[j], 0, hierachy, isActiveUser);
         }
 
@@ -161,13 +201,13 @@ export class DataGrid extends Component {
         let grid = [];
 
         const total = gridData.length;
-        for(let i = 0; i < total; i++) {
+        for (let i = 0; i < total; i++) {
             const item = gridData[i];
             const hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions, isActiveUser);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
                     <td className='middle' rowSpan={hierachy.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
-                    <td className='middle text-center' rowSpan={hierachy.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                    <td className='middle text-center' rowSpan={hierachy.length + 1}>{item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );
             grid.push(
@@ -180,25 +220,30 @@ export class DataGrid extends Component {
 
     _buildTable(gridData, isActiveUser) {
         return (
-          <table className="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th className='middle' rowSpan='2'>Licensee Name</th>
-                            <th className='middle' rowSpan='2'>Active</th>
-                            <th className='middle' colSpan='2'>Function</th>
-                        </tr>
-                        <tr>
-                            <th className='middle'>Name</th>
-                            <th className='middle'>Assigned</th>
-                        </tr>
-                    </thead>
+            <table className="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th className='middle' rowSpan='2'>Licensee Name</th>
+                        <th className='middle' rowSpan='2'>Active</th>
+                        <th className='middle' colSpan='2'>Function</th>
+                    </tr>
+                    <tr>
+                        <th className='middle'>Name</th>
+                        <th className='middle'>
+                            <label className="checkbox-inline node">
+                                <input type="checkbox" checked={this.state.checkedAll} onChange={(e) => this.onCheckAll(e, isActiveUser)} />
+                                Assigned
+                            </label>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
                     {
                         this._buildTableBody(gridData, isActiveUser)
                     }
-                    </tbody>
-            </table>  
+                </tbody>
+            </table>
         );
     }
 
@@ -209,7 +254,7 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { user } = this.props;    
+        const { user } = this.props;
 
         return (
             <div>
@@ -221,9 +266,9 @@ export class DataGrid extends Component {
                 }
                 <RedmineConfirmForm isShow={isShowConfirmBox}
                     msg='Do you want to update functions of user?'
-                    style={{height: '210px', width: '400px'}}
+                    style={{ height: '210px', width: '400px' }}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, user.IsActive)}       
+                {this._buildTable(gridData, user.IsActive)}
             </div>
         )
     }

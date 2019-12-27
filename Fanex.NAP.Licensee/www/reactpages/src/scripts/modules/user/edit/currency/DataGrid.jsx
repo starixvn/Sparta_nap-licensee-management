@@ -15,7 +15,8 @@ export class DataGrid extends Component {
             gridData: [],
             assignedCurrencies: [],
             unassignedCurrencies: [],
-            isShowConfirmBox: false
+            isShowConfirmBox: false,
+            checkedAll: false
         };
     }
 
@@ -26,15 +27,14 @@ export class DataGrid extends Component {
     }
 
     get isValid() {
-        const { assignedCurrencies, unassignedCurrencies} = this.state;
+        const { assignedCurrencies, unassignedCurrencies } = this.state;
 
         return assignedCurrencies.length > 0 || unassignedCurrencies.length > 0;
     }
 
     onCheck(e, item) {
         const checked = e.target.checked;
-        let newList = [];
-        
+
         if (item.IsAssigned) {
             const newRemovedCurrencies = this._getNewCheckedCurrencyList(!checked, item, this.state.unassignedCurrencies);
             this.setState({ unassignedCurrencies: newRemovedCurrencies });
@@ -51,9 +51,43 @@ export class DataGrid extends Component {
 
     onConfirm = (redmineId) => {
         this._showConfirmBox(false);
-        
+
         if (redmineId) {
             this._submit(redmineId);
+        }
+    }
+
+    onCheckAll(e, isActiveUser) {
+        const { gridData } = this.state;
+        const checked = e.target.checked;
+        let newRemovedCurrencies = [];
+        let newAssignedCurrencies = [];
+
+        for (let i = 0; i < gridData.length; i++) {
+            const item = gridData[i];
+
+            if (item.Licensee.Checked === true && isActiveUser) {
+                for (let j = 0; j < item.Currencies.length; j++) {
+                    const currency = item.Currencies[j];
+                    this.onCurrencyCheck(item.Licensee, currency, checked, newRemovedCurrencies, newAssignedCurrencies);
+                }
+            }
+        }
+
+        this.setState({
+            checkedAll: checked,
+            gridData: gridData,
+            unassignedCurrencies: newRemovedCurrencies,
+            assignedCurrencies: newAssignedCurrencies
+        })
+    }
+
+    onCurrencyCheck(licensee, currency, checked, newRemovedCurrencies, newAssignedCurrencies) {
+        if (currency.IsAssigned && checked === false && newRemovedCurrencies.indexOf(currency) === -1) {
+            newRemovedCurrencies.push(currency);
+        }
+        else if (licensee.IsValid && !currency.IsAssigned && checked === true && newAssignedCurrencies.indexOf(currency) === -1) {
+            newAssignedCurrencies.push(currency);
         }
     }
 
@@ -61,8 +95,7 @@ export class DataGrid extends Component {
         this.setState({ isShowConfirmBox: isShow });
     }
 
-    _getParams(redmineId)
-    {
+    _getParams(redmineId) {
         const { assignedCurrencies, unassignedCurrencies } = this.state;
 
         return {
@@ -114,7 +147,7 @@ export class DataGrid extends Component {
         };
         Site.fetchData(params, 'ITUserManagement/GetLicenseeUserCurrency')
             .then(response => {
-                this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: []});
+                this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: [] });
                 this.props.toggleLoader(false);
             }).catch(err => {
                 this.props.toggleLoader(false);
@@ -125,20 +158,20 @@ export class DataGrid extends Component {
         let currencyRows = [];
 
         const total = currencies.length;
-        for(let j = 0; j < total; j++) {
+        for (let j = 0; j < total; j++) {
             const currency = currencies[j];
-            const checked = licensee.Checked 
-            && (currency.IsAssigned ? this.state.unassignedCurrencies.indexOf(currency) === -1 : this.state.assignedCurrencies.indexOf(currency) > -1 );
+            const checked = licensee.Checked
+                && (currency.IsAssigned ? this.state.unassignedCurrencies.indexOf(currency) === -1 : this.state.assignedCurrencies.indexOf(currency) > -1);
 
             currencyRows.push(
                 <tr key={`${licensee.Id}-${currency.CurrencyId}`} className={licensee.Checked ? '' : 'disable'}>
                     <td>
-                    {currency.CurrencyName}
+                        {currency.CurrencyName}
                     </td>
                     {
                         licensee.Checked && isActiveUser && (licensee.IsValid || currency.IsAssigned)
-                        ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, currency)} /></td>
-                        : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                            ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, currency)} /></td>
+                            : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
                     }
                 </tr>
             );
@@ -151,13 +184,13 @@ export class DataGrid extends Component {
         let grid = [];
 
         const total = gridData.length;
-        for(let i = 0; i < total; i++) {
+        for (let i = 0; i < total; i++) {
             const item = gridData[i];
             const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, isActiveUser);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
                     <td className='middle' rowSpan={currencyRows.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
-                    <td className='middle text-center' rowSpan={currencyRows.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                    <td className='middle text-center' rowSpan={currencyRows.length + 1}>{item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );
             grid.push(
@@ -170,25 +203,30 @@ export class DataGrid extends Component {
 
     _buildTable(gridData, isActiveUser) {
         return (
-          <table className="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th className='middle' rowSpan='2'>Licensee Name</th>
-                            <th className='middle' rowSpan='2'>Active</th>
-                            <th className='middle' colSpan='2'>Currency</th>
-                        </tr>
-                        <tr>
-                            <th className='middle'>Name</th>
-                            <th className='middle'>Assigned</th>
-                        </tr>
-                    </thead>
+            <table className="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th className='middle' rowSpan='2'>Licensee Name</th>
+                        <th className='middle' rowSpan='2'>Active</th>
+                        <th className='middle' colSpan='2'>Currency</th>
+                    </tr>
+                    <tr>
+                        <th className='middle'>Name</th>
+                        <th className='middle'>
+                            <label className="checkbox-inline node">
+                                <input type="checkbox" checked={this.state.checkedAll} onChange={(e) => this.onCheckAll(e, isActiveUser)} />
+                                Assigned
+                                </label>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
                     {
                         this._buildTableBody(gridData, isActiveUser)
                     }
-                    </tbody>
-            </table>  
+                </tbody>
+            </table>
         );
     }
 
@@ -211,9 +249,9 @@ export class DataGrid extends Component {
                 }
                 <RedmineConfirmForm isShow={isShowConfirmBox}
                     msg='Do you want to update currencies of user?'
-                    style={{height: '210px', width: '400px'}}
+                    style={{ height: '210px', width: '400px' }}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, user.IsActive)}       
+                {this._buildTable(gridData, user.IsActive)}
             </div>
         )
     }
