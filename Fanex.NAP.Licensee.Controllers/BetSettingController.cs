@@ -26,8 +26,6 @@
         private readonly IBetSettingService _betSettingService;
         private const int BasketballId = 2;
         private const int ESportId = 43;
-        private const string RNGKenoName = "RNG Keno";
-        private const int KenoId = 202;
 
         public BetSettingController()
             : base()
@@ -57,7 +55,6 @@
         public ActionResult Default(GetAllDefaultBetSettingCriteria criteria)
         {
             var result = _betSettingService.GetAll(criteria);
-            result = ChangeItemName(result);
             result = SortBetSettingByProduct(result);
 
             if (criteria.IsValid())
@@ -97,7 +94,6 @@
             {
                 viewModel = _betSettingService.SingleSetting(criteria);
                 viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
-                viewModel.Keno = ChangeItemName(viewModel.Keno);
             }
 
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
@@ -114,7 +110,6 @@
         {
             var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId));
             viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
-            viewModel.Keno = ChangeItemName(viewModel.Keno);
 
             return View(viewModel);
         }
@@ -225,28 +220,6 @@
             var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportType == BasketballId));
 
             return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
-        }
-
-        private static IList<BetSettingBySport> ChangeItemName(IList<BetSettingBySport> betSettings)
-        {
-            var result = betSettings.FirstOrDefault(x => x.SportOrGame.Id == KenoId);
-            if(result != null)
-            {
-                result.SportOrGame.Name = RNGKenoName;
-            }
-
-            return betSettings;
-        }
-
-        private static IList<DefaultBetSetting> ChangeItemName(IList<DefaultBetSetting> betSettings)
-        {
-            var result = betSettings.FirstOrDefault(x => x.SportType == KenoId);
-            if (result != null)
-            {
-                result.SportGameType = RNGKenoName;
-            }
-
-            return betSettings;
         }
 
         private static IList<T> ChangeItemPosition<T>(IList<T> betSettings, T value, int newIndex)
