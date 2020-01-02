@@ -8,12 +8,12 @@
     display: inline-block;
     width: 150px;
 
-    .Select-value {
-        line-height: 23px !important;
-    }
-
     .Select-placeholder {
         line-height: 27px !important;
+    }
+
+    .Select-value {
+        line-height: 23px;
     }
 
     .Select-input {
@@ -35,6 +35,19 @@
     }
 }
 
+.Select--multi {
+    width: 400px;
+
+    .Select-value {
+        margin: 2px;
+        line-height: unset;
+    }
+}
+
+.Select--single > .Select-control .Select-value {
+    line-height: 23px;
+}
+
 input[type=date], input[type=text] {
     height: 25px;
     border: 1px solid #CECCCD;
@@ -48,8 +61,15 @@ input[type=date] {
     line-height: initial !important;
 }
 
-.filter-form {
+.filter-form.form-inline {
     input[type=date] {
         width: 150px;
+    }
+
+    .form-group {
+
+        label {
+            margin-right: 5px;
+        }
     }
 }

@@ -137,8 +137,12 @@ export class FormFilterBase extends Component {
                 </div>
                 <div className='form-group'>
                     <label>Currency</label>
-                    <Select instanceId='ddlCurrency'
+                    <Select.Creatable 
+                        instanceId='ddlCurrency'
                         value={selectedCurrency}
+                        multi={true}
+                        closeOnSelect={false}
+                        removeSelected={true}
                         options={currencyList}
                         className={selectedCurrency || !isRequired ? '' : 'has-error'}
                         onChange={(item) => this._handleSelectedChange('selectedCurrency', item)} />
