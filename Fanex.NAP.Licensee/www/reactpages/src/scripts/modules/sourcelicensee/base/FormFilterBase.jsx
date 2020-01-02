@@ -86,8 +86,7 @@ export class FormFilterBase extends Component {
             Site.fetchData(param, url)
                 .then(response => {
                     var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
-                    data.Insert(0, new { label : "All", value : 0 });
-                        
+
                     this.setState({ currencyList: data, selectedCurrency: null });
 
                     this.props.toggleLoader(false);
