@@ -86,7 +86,8 @@ export class FormFilterBase extends Component {
             Site.fetchData(param, url)
                 .then(response => {
                     var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
-
+                    data.Insert(0, new { label : "All", value : 0 });
+                        
                     this.setState({ currencyList: data, selectedCurrency: null });
 
                     this.props.toggleLoader(false);
@@ -137,12 +138,8 @@ export class FormFilterBase extends Component {
                 </div>
                 <div className='form-group'>
                     <label>Currency</label>
-                    <Select.Creatable 
-                        instanceId='ddlCurrency'
+                    <Select instanceId='ddlCurrency'
                         value={selectedCurrency}
-                        multi={true}
-                        closeOnSelect={false}
-                        removeSelected={true}
                         options={currencyList}
                         className={selectedCurrency || !isRequired ? '' : 'has-error'}
                         onChange={(item) => this._handleSelectedChange('selectedCurrency', item)} />
