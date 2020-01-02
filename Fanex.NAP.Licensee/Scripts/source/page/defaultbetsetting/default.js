@@ -190,10 +190,10 @@ var defaultSetting = (function () { // jshint ignore:line
                 });
             }
             currentColumms = currentColumms.concat([
-                    { Name: "SportGameType", Value: data[index]["SportGameType"] },
-                    { Name: "MaxBet", Value: data[index]["MaxBet"] },
-                    { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] },
-                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] }
+                    { Name: "SportGameType", Value: data[index]["SportGameType"] === null ? data[index]["SportGameType"] : data[index]["SportGameType"].toLocaleString('en') },
+                    { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"]: data[index]["MaxBet"].toLocaleString('en')},
+                    { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] === null ? data[index]["MaxPerMatch"] : data[index]["MaxPerMatch"].toLocaleString('en') },
+                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') }
                 ]);
 
             if (actionMerRowNumber === 0) {
