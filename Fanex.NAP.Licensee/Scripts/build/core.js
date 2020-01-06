@@ -13058,6 +13058,13 @@ var site = (function () {
                 error++;
             }
         }
+
+        if (parseInt(maxBet) > parseInt(maxPerMatch)) {
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            error++;
+        }
+
         return error;
     };
     var verifyNumberGameBetSetting = function ($row) {
@@ -13094,6 +13101,18 @@ var site = (function () {
 
         if (!site.isNumber(maxBet) && !site.isNumber(maxperBall) && site.isNumber(maxPerMatch)) {
             $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            error++;
+        }
+
+        if (parseInt(maxBet) > parseInt(maxPerMatch)) {
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            error++;
+        }
+
+        if (parseInt(maxBet) > parseInt(maxperBall)) {
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxPerBall\"]").addClass("warning");
             error++;
         }
 
