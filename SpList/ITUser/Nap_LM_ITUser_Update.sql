@@ -2,8 +2,8 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_ITUser_Update]
 	@UserId INT,
-	@FirstName NVARCHAR(50),
-	@LastName NVARCHAR(50),
+	@FirstName NVARCHAR(50) = NULL,
+	@LastName NVARCHAR(50) = NULL,
 	@IsActive BIT
 AS
 /*
