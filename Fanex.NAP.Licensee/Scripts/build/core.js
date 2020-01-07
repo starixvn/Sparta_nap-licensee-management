@@ -9924,6 +9924,10 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 	    					start = getSelection.apply(this, ['start']),
 	    					setPos;
 
+                        if (code == 9) {
+                            data.c = 0;
+                        }
+
                         // Stop executing if the user didn't type a number key, a decimal, or a comma.
                         if (this.value === '' || (code < 46 || code > 57) && (code < 96 || code > 105) && code !== 8 && code !== 46) {
                             return;
@@ -9955,7 +9959,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
                             }
                         }
 
-                        //console.log( 'Setting pos: ', start, decimals, this.value.length + data.c, this.value.length, data.c );
+                        //console.log( 'Setting pos: ', this.value.length, data.c, data);
 
                         // Set the selection position.
                         setPos = this.value.length + data.c;
