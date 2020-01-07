@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -24,8 +25,7 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
-        private const int BasketballId = 2;
-        private const int ESportId = 43;
+        private static readonly int[] _sortedSport = { 1, 2, 43, 3, 5, 8, 10, 11, 99 };
 
         public BetSettingController()
             : base()
@@ -208,30 +208,18 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var eSportBets = betSettings.FirstOrDefault(x => x.SportOrGame.Id == ESportId);
-            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportOrGame.Id == BasketballId));
+            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportOrGame.Id)).ToList();
 
-            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
+            return orderedList;
         }
 
         private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
         {
-            var eSportBets = betSettings.FirstOrDefault(x => x.SportType == ESportId);
-            var indexOfBasketballBets = betSettings.IndexOf(betSettings.FirstOrDefault(x => x.SportType == BasketballId));
+            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportType)).GroupBy(x => new { x.Currency, x.AgentID }).SelectMany(group => group).ToList();
 
-            return ChangeItemPosition(betSettings, eSportBets, indexOfBasketballBets + 1);
+            return orderedList;
         }
 
-        private static IList<T> ChangeItemPosition<T>(IList<T> betSettings, T value, int newIndex)
-        {
-            if (value != null)
-            {
-                betSettings.Remove(value);
-                betSettings.Insert(newIndex, value);
-            }
-
-            return betSettings;
-        }
         #endregion CommonFunction
     }
 }
