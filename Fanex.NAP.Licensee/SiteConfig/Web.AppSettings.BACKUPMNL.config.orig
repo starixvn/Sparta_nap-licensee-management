@@ -9,7 +9,7 @@
 	<add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.202:7258/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
 <<<<<<< HEAD
-    <add key="BundlesVersion" value="707b805bd36246bdf716" />
+    <add key="BundlesVersion" value="45603e5c3145320edc7c" />
 =======
     <add key="BundlesVersion" value="8a560454814f65c88a61" />
 >>>>>>> 122008 - Update Fanex data to version 4.2
