@@ -8,7 +8,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Insert]
 	@CurrencyId			INT,
 	@RoleId				INT,
 	@IsAddAll			BIT,
-	@SourceIdList		VARCHAR(MAX),
+	@SourceIdList		VARCHAR(MAX) = '',
 	@AffectedRow		INT	= 0 OUTPUT
 AS
 /*
