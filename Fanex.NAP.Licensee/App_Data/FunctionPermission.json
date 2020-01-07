@@ -57,6 +57,13 @@
         "Enable": false,
         "Type": 3,
         "Mode": 1
+      },
+      {
+        "DisplayKey": "lblDashboadPerformanceTab",
+        "FunctionKey": "db_per_tab",
+        "Enable": false,
+        "Type": 3,
+        "Mode": 1
       }
     ]
   },
@@ -68,7 +75,29 @@
         "FunctionKey": "BTC79",
         "Enable": false,
         "Type": 1,
-        "Mode": 1
+        "Mode": 1,
+        "FunctionKeys": [
+          {
+            "DisplayKey": "lblMultiCustomers",
+            "FunctionKey": "BTC_MultiCustomer",
+            "Mode": 1
+          },
+          {
+            "DisplayKey": "lblSingleCustomer",
+            "FunctionKey": "BTC_SingleCustomer",
+            "Mode": 1
+          },
+          {
+            "DisplayKey": "lblRefNo",
+            "FunctionKey": "BTC_RefNo",
+            "Mode": 1
+          },
+          {
+            "DisplayKey": "lblRunning",
+            "FunctionKey": "BTC_Running",
+            "Mode": 1
+          }
+        ]
       }
     ]
   },
@@ -81,7 +110,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       }
     ]
   },
@@ -223,7 +252,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCustomerDetailReport",
@@ -245,7 +274,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblAGCasinoWinLoss",
@@ -253,7 +282,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCustomerBalance",
@@ -261,7 +290,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCustomerPendingFunds",
@@ -290,7 +319,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
 
       {
@@ -306,7 +335,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblDailyBets",
@@ -314,7 +343,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWinLossByTimeZone",
@@ -322,7 +351,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblLiveReport",
@@ -330,7 +359,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblMatchWinLoss",
@@ -338,7 +367,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblPlatformWinLoss",
@@ -346,7 +375,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
 
       {
@@ -369,7 +398,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWinLossByBetType",
@@ -377,7 +406,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWinLossByProducts",
@@ -385,7 +414,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWinLossByLeague",
@@ -393,7 +422,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWeeklyLiveMatches",
@@ -408,7 +437,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCashOutWinLoss",
@@ -416,7 +445,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblSubsidiaryPerformance",
@@ -431,7 +460,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCasinoTurnover",
@@ -488,7 +517,7 @@
             "DisplayKey": "lblPlayerAdminPlayerInfo",
             "FunctionKey": "pa_acc_Info",
             "Enable": false,
-            "Type": 1,
+            "Type": 3,
             "Mode": 1
           },
           {
@@ -765,7 +794,7 @@
           {
             "DisplayKey": "tdTransferHistory_TP",
             "FunctionKey": "tdTransferHistory_TP",
-            "Mode": 3
+            "Mode": 1
           },
           {
             "DisplayKey": "tdResetBonus",
@@ -846,7 +875,7 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCustomerLog",
@@ -1017,7 +1046,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblBetLimitController",
@@ -1025,7 +1054,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblLeagueRankSetting",
@@ -1033,7 +1062,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblSportsbookMenuSetting",
@@ -1041,7 +1070,14 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
+      },
+      {
+        "DisplayKey": "lblStreamingControl",
+        "FunctionKey": "StreamingControl",
+        "Enable": false,
+        "Type": 3,
+        "Mode": 1
       }
     ]
   },
@@ -1054,7 +1090,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       }
     ]
   },
@@ -1068,7 +1104,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblAffiliateManagement",
@@ -1076,7 +1112,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblPayment",
@@ -1084,7 +1120,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCommissionGroup",
@@ -1092,7 +1128,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblWinLossReport",
@@ -1100,7 +1136,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblMarketingTools",
@@ -1108,7 +1144,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblMessage",
@@ -1116,7 +1152,7 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       },
       {
         "DisplayKey": "lblCurrency",
@@ -1124,21 +1160,13 @@
         "Enable": false,
         "Type": 2,
         "Mode": 1,
-        "MinLevel": 1
+        "Level": [ 0, 1, 101 ]
       }
     ]
   },
   {
     "DisplayKey": "lblAdministration",
     "Settings": [
-      {
-        "DisplayKey": "lblSubsidiaryManagement",
-        "FunctionKey": "SubsidiaryManage",
-        "Enable": false,
-        "Type": 3,
-        "Mode": 2,
-        "MinLevel": 1
-      },
       {
         "DisplayKey": "lblSystemGroupAuthority",
         "FunctionKey": "UserGroupList.aspx",
@@ -1159,7 +1187,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 0
+        "Level": [ 0 ]
       },
       {
         "DisplayKey": "lblIPWhiteListSetting",
@@ -1167,7 +1195,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 1,
-        "MinLevel": 0
+        "Level": [ 0 ]
       },
       {
         "DisplayKey": "lblTransferListReport",
@@ -1182,7 +1210,7 @@
         "Enable": false,
         "Type": 0,
         "Mode": 3,
-        "MinLevel": 0
+        "Level": [ 0 ]
       },
       {
         "DisplayKey": "lblFrontendUserBankDetail",
@@ -1197,6 +1225,27 @@
         "Enable": false,
         "Type": 0,
         "Mode": 3
+      }
+    ]
+  },
+  {
+    "DisplayKey": "lblSubLicenseeAdmin",
+    "Settings": [
+      {
+        "DisplayKey": "lblSubsidiaryManagement",
+        "FunctionKey": "SubsidiaryManage",
+        "Enable": false,
+        "Type": 3,
+        "Mode": 2,
+        "Level": [ 0, 1, 101 ]
+      },
+      {
+        "DisplayKey": "lblWhiteLabelManagement",
+        "FunctionKey": "WhiteLabelManagement",
+        "Enable": false,
+        "Type": 3,
+        "Mode": 2,
+        "Level": [ 0, 1 ]
       }
     ]
   },
