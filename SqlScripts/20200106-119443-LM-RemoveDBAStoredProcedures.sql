@@ -7,7 +7,7 @@ GO
 	 Database: DBCUST.bodb_Licensee
 
 	 Revisions:
-	 -20200106@Amanda : Remove used DBA SPs [redmine:#119443]
+	 -20200106@Amanda : Remove unused DBA SPs [redmine:#119443]
 */
 
 -- DBA_Lrf_FunctionProduct
