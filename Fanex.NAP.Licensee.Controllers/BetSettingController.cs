@@ -25,7 +25,7 @@
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
         private const int ESportId = 43;
-        private const double TempESportId = 2.5;
+        private const float TempESportId = 2.5f;
 
         public BetSettingController()
             : base()
