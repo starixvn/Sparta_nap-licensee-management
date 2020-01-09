@@ -69,9 +69,8 @@
       <HintPath>..\packages\Fanex.Data.Repository.4.2.0\lib\net461\Fanex.Data.Repository.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.2.0.0\lib\net461\Fanex.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
