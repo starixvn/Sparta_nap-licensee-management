@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -25,7 +24,8 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
-        private static readonly int[] _sortedSport = { 1, 2, 43, 3, 5, 8, 10, 11, 99 };
+        private const int ESportId = 43;
+        private const double TempESportId = 2.5;
 
         public BetSettingController()
             : base()
@@ -208,14 +208,14 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportOrGame.Id)).ToList();
+            var orderedList = betSettings.OrderBy(i => i.SportOrGame.Id == ESportId ? TempESportId : i.SportOrGame.Id).ToList();
 
             return orderedList;
         }
 
         private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportType) > -1 ? Array.IndexOf(_sortedSport, i.SportType) : int.MaxValue)
+            var orderedList = betSettings.OrderBy(i => i.SportType == ESportId ? TempESportId : i.SportType)
                 .GroupBy(x => new { x.Currency, x.AgentID })
                 .SelectMany(group => group).ToList();
 
