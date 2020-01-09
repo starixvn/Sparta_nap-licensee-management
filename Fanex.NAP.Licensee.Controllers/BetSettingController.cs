@@ -215,7 +215,9 @@
 
         private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportType)).GroupBy(x => new { x.Currency, x.AgentID }).SelectMany(group => group).ToList();
+            var orderedList = betSettings.OrderBy(i => Array.IndexOf(_sortedSport, i.SportType) > -1 ? Array.IndexOf(_sortedSport, i.SportType) : int.MaxValue)
+                .GroupBy(x => new { x.Currency, x.AgentID })
+                .SelectMany(group => group).ToList();
 
             return orderedList;
         }
