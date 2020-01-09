@@ -45,6 +45,7 @@ export const language = {
     "lblCustomerWinLoss": "Customer Win Loss",
     "lblDailyBets": "Daily Bets",
     "lblDashboadPerformanceTab": "lblDashboadPerformanceTab",
+    "lblDashboadPerformanceTab": "Performance Tab",
     "lblDashboard": "DASHBOARD",
     "lblDepositBankDetail": "Licensee Deposit Banks",
     "lblDepositInformation": "Deposit Information",
