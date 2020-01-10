@@ -31,7 +31,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
         private const string MIXPARLAYSPORTNAME = "Mix Sports Parlay";
         private const string ORTHERSPORTNAME = "Other Sports";
         private const int ESportId = 43;
-        private const double TempESportId = 2.5;
+        private const float TempESportId = 2.5f;
 
         /// <summary>
         /// Convert xml content to .NET object.
