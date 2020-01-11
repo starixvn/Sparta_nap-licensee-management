@@ -5614,6 +5614,7 @@ button.close {
     height: 25px;
     overflow: hidden;
     position: absolute;
+    z-index: 1;
 }
 .multi-select-control:hover
 {

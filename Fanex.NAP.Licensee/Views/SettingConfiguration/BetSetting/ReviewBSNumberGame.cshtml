@@ -30,16 +30,16 @@
         <tbody>
             <tr ng-repeat="item in reviewBS.BSRows">
                 <td>
-                    {{item.MinBet}}
+                    {{item.MinBet | number}}
                 </td>
                 <td>
-                    {{item.MaxBet}}
+                    {{item.MaxBet | number}}
                 </td>
                 <td>
-                    {{item.MaxPerMatch}}
+                    {{item.MaxPerMatch | number}}
                 </td>
                 <td>
-                    {{item.MaxPerBall}}
+                    {{item.MaxPerBall | number}}
                 </td>
                  <td ng-if="buttonStatus.isUpdated">
                     <span class="glyphicon {{item.Status}}"></span>

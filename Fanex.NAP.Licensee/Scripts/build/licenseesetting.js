@@ -815,17 +815,24 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
 
 ﻿"use strict";
 
-angular.module('settingConfiguration.directives', []).directive('bsValidation', function () {
+angular.module('settingConfiguration.directives', []).directive('bsValidation', ['$filter', function ($filter) {
     return {
         require: 'ngModel',
         restrict: 'A',
         link: function (scope, elem, attrs, ngModel) {
 
-            var validFn = function (value) {
-                var min = parseInt(attrs['min']);
-                var max = parseInt(attrs['max']);
+            function formatNumber(value) {
+                var transformedText = value.replace(/\D/g, '');
+                var number = transformedText.replace(/[\,\.]/g, '');
 
-                var numValue = parseInt(value);
+                return number;
+            }
+
+            var validFn = function (value) {
+                var min = parseInt(formatNumber(attrs['min']));
+                var max = parseInt(formatNumber(attrs['max']));
+
+                var numValue = parseInt(formatNumber(value));
                 return numValue >= min && (numValue <= max || attrs['max'] === "*");
             };
 
@@ -855,22 +862,29 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
 
             });
 
-            ngModel.$parsers.push(function (inputValue) {
-                var transformedText = inputValue.replace(/\D/g, '');
-                if (transformedText !== inputValue) {
-                    ngModel.$setViewValue(transformedText);
-                    ngModel.$render();
+            ngModel.$parsers.unshift(function (inputValue) {
+                var number = formatNumber(inputValue);
+                var el = elem[0];
 
-                    return transformedText;
+                var formartNumber = $filter('number')(number);
+
+                if (formartNumber !== inputValue) {
+                    var start = el.selectionStart + 1;
+                    var end = el.selectionEnd + formartNumber.length - inputValue.length;
+
+                    ngModel.$setViewValue(formartNumber);
+                    ngModel.$render();
+                    el.setSelectionRange(start, end);
                 }
 
-                return inputValue;
+                return number;
             });
 
             //For DOM -> model validation
             ngModel.$parsers.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+
                 return value;
             });
 
@@ -878,12 +892,13 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             ngModel.$formatters.unshift(function (value) {
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+                var number = formatNumber(value);
 
-                return value;
+                return $filter('number')(number);
             });
         }
     };
-});
+}]);
 ﻿"use strict";
 
 // Define service module

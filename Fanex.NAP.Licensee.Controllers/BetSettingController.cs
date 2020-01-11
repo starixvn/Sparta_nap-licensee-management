@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -23,6 +24,8 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
+        private const int ESportId = 43;
+        private const float TempESportId = 2.5f;
 
         public BetSettingController()
             : base()
@@ -51,9 +54,12 @@
         [AjaxRequest]
         public ActionResult Default(GetAllDefaultBetSettingCriteria criteria)
         {
+            var result = _betSettingService.GetAll(criteria);
+            result = SortBetSettingByProduct(result);
+
             if (criteria.IsValid())
             {
-                return Json(_betSettingService.GetAll(criteria));
+                return Json(result);
             }
 
             return Json(string.Empty);
@@ -87,6 +93,7 @@
             if (criteria.IsValid())
             {
                 viewModel = _betSettingService.SingleSetting(criteria);
+                viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
             }
 
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
@@ -101,7 +108,10 @@
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Edit(string licensee, int? currencyId, int? agentId)
         {
-            return View(_betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId)));
+            var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId));
+            viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -194,6 +204,22 @@
             }
 
             return result;
+        }
+
+        private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
+        {
+            var orderedList = betSettings.OrderBy(i => i.SportOrGame.Id == ESportId ? TempESportId : i.SportOrGame.Id).ToList();
+
+            return orderedList;
+        }
+
+        private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
+        {
+            var orderedList = betSettings.OrderBy(i => i.SportType == ESportId ? TempESportId : i.SportType)
+                .GroupBy(x => new { x.Currency, x.AgentID })
+                .SelectMany(group => group).ToList();
+
+            return orderedList;
         }
 
         #endregion CommonFunction

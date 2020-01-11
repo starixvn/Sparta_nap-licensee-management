@@ -41,7 +41,7 @@
         @{
 
             var updatedSportList=Model.OldSettings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})
-                .Union(Model.Settings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType})).OrderBy(i=>i.SportId);
+                .Union(Model.Settings.Select(i=>new {SportId=i.SportOrGame.Id,Bettype=i.BetType}));
             var kenoGameType =(IDictionary<int,string>)ViewData[StaticSiteValue.KENOGAMETYPE];
         }
         @foreach (var item in updatedSportList)

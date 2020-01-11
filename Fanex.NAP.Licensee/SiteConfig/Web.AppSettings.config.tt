@@ -58,7 +58,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.40.40.248:7207/Main/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://10.99.99.101:7207/Main/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-UAT" />
@@ -90,7 +90,7 @@
 	<add key="HangfireUserName" value="starix41" />
 	<add key="RedisPrefix" value="LM-Hangfire:" />
 	<add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@10.99.99.37:801/95" />
-	<add key="RedisConnectionString" value="10.99.99.100:6380, password=foo1@bared, name=LMApp" />
+	<add key="RedisConnectionString" value="10.99.99.37:16379, password=foo1@bared, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
 </appSettings>
 
@@ -137,7 +137,7 @@ break;
 	<add key="HangfireUserName" value="sa" />
 	<add key="RedisPrefix" value="LM-Hangfire:" />
 	<add key="SentryDSN" value="http://f75a9f8b67b841a69c240e49e5c18f13@10.11.200.202:800/25" />
-	<add key="RedisConnectionString" value="10.11.200.202:6379, password=, name=LMApp" />
+	<add key="RedisConnectionString" value="10.40.40.202:6379, password=, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
 </appSettings>
 				<#

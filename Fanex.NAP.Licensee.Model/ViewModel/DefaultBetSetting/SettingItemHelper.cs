@@ -8,6 +8,7 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Xml.Linq;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO.XmlLog;
@@ -29,6 +30,8 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
         private const int ORTHERSPORT = 99;
         private const string MIXPARLAYSPORTNAME = "Mix Sports Parlay";
         private const string ORTHERSPORTNAME = "Other Sports";
+        private const int ESportId = 43;
+        private const float TempESportId = 2.5f;
 
         /// <summary>
         /// Convert xml content to .NET object.
@@ -57,7 +60,16 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
                 }
             }
 
+            result = SortBetSettingByProduct(result);
+
             return result;
+        }
+
+        private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
+        {
+            var orderedList = betSettings.OrderBy(i => i.SportOrGame.Id == ESportId ? TempESportId : i.SportOrGame.Id).ToList();
+
+            return orderedList;
         }
 
         /// <summary>

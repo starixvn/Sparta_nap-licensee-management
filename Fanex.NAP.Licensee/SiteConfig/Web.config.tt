@@ -53,12 +53,12 @@
 	 break;
 	  case "UAT":
 	  #>
-	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.40.40.248:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.99.99.101:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
 		<Domain>
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.40.40.248:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://10.99.99.101:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
@@ -168,10 +168,6 @@
         <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
       </dependentAssembly>
       <dependentAssembly>
-        <assemblyIdentity name="BundleTransformer.Core" publicKeyToken="973c344c93aac60d" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-1.9.34.0" newVersion="1.9.34.0" />
-      </dependentAssembly>
-      <dependentAssembly>
         <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
         <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
       </dependentAssembly>
@@ -195,13 +191,25 @@
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
         <bindingRedirect oldVersion="0.0.0.0-5.2.6.0" newVersion="5.2.6.0" />
       </dependentAssembly>
-	   <dependentAssembly>
-        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.0.5.0" newVersion="4.0.5.0" />
-      </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Net.Http" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.1.1.2" newVersion="4.1.1.2" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.6.0" newVersion="4.0.6.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Threading.Tasks.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.1" newVersion="4.2.0.1" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.ValueTuple" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.3.0" newVersion="4.0.3.0" />
+      </dependentAssembly>
+	  <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.InteropServices.RuntimeInformation" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.1.0" newVersion="4.0.1.0" />
       </dependentAssembly>
     </assemblyBinding>
   </runtime>

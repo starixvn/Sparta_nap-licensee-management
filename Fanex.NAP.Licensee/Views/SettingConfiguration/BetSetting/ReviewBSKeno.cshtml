@@ -42,13 +42,13 @@
                         Keno
                     </td>
                     <td>
-                        {{item.MinBet}}
+                        {{item.MinBet | number}}
                     </td>
                     <td>
-                        {{item.MaxBet}}
+                        {{item.MaxBet | number}}
                     </td>
                     <td>
-                        {{item.MaxPerMatch}}
+                        {{item.MaxPerMatch | number}}
                     </td>
                     <td>
                         {{item.IsRowSelected === true? 'X': ''}}
