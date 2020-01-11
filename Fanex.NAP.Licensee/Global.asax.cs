@@ -1,19 +1,24 @@
 ﻿namespace Fanex.NAP.Licensee
 {
+    using Data;
+    using Data.SqlServer;
+
+    using Extension;
+
+    using Fanex.Logging.Sentry;
+    using Fanex.NAP.Licensee.AppStart;
+    using Fanex.RemotingRef;
+
+    using Logging;
+
+    using Sentry;
+
     using System;
     using System.Configuration;
     using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Data;
-    using Data.SqlServer;
-    using Extension;
-    using Fanex.NAP.Licensee.AppStart;
-    using Fanex.RemotingRef;
-    using Logging;
-    using Logging.Sentry.RavenClient;
-    using SharpRaven;
 
     /// <summary>
     /// MVC application.
@@ -24,7 +29,7 @@
         {
             LogManager
              .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
-             .Use(new SentryLogging(new SentryEngineOptions
+             .Use(new SentryLogging(new SentryOptions
              {
                  Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
              }));
