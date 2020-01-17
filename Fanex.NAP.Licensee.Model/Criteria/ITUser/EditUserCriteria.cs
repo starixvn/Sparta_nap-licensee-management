@@ -15,8 +15,8 @@
         public dynamic SpParam => new
         {
             UserId = UserId,
-            FirstName = FirstName ?? string.Empty,
-            LastName = LastName ?? string.Empty,
+            FirstName = FirstName,
+            LastName = LastName,
             IsActive = IsActive ? 1 : 0
         };
     }

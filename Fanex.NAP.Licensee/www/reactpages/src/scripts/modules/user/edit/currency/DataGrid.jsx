@@ -13,8 +13,7 @@ export class DataGrid extends Component {
 
         this.state = {
             gridData: [],
-            assignedCurrencies: [],
-            unassignedCurrencies: [],
+            validCurrencies: [],
             isShowConfirmBox: false,
             checkedAll: false
         };
@@ -27,22 +26,26 @@ export class DataGrid extends Component {
     }
 
     get isValid() {
-        const { assignedCurrencies, unassignedCurrencies } = this.state;
+        const { validCurrencies } = this.state;
 
-        return assignedCurrencies.length > 0 || unassignedCurrencies.length > 0;
+        return validCurrencies.findIndex(x => (x.IsAssigned && !x.Checked) || (!x.IsAssigned && x.Checked)) > -1;
     }
 
     onCheck(e, item) {
         const checked = e.target.checked;
+        const { validCurrencies } = this.state;
 
-        if (item.IsAssigned) {
-            const newRemovedCurrencies = this._getNewCheckedCurrencyList(!checked, item, this.state.unassignedCurrencies);
-            this.setState({ unassignedCurrencies: newRemovedCurrencies });
-        }
-        else {
-            const newAssignedCurrencies = this._getNewCheckedCurrencyList(checked, item, this.state.assignedCurrencies);
-            this.setState({ assignedCurrencies: newAssignedCurrencies });
-        }
+        const newValidCurrencies = validCurrencies.map(x => {
+            if (x == item) {
+                return Object.assign({}, x, { Checked: checked });
+            }
+
+            return x;
+        });
+
+        const isCheckedAll = newValidCurrencies.findIndex(x => !x.Checked) == -1;
+
+        this.setState({ validCurrencies: newValidCurrencies, checkedAll: isCheckedAll });
     }
 
     onSubmit = () => {
@@ -57,38 +60,33 @@ export class DataGrid extends Component {
         }
     }
 
-    onCheckAll(e, isActiveUser) {
-        const { gridData } = this.state;
+    onCheckAll(e) {
         const checked = e.target.checked;
-        let newRemovedCurrencies = [];
-        let newAssignedCurrencies = [];
+        const { validCurrencies } = this.state;
 
-        for (let i = 0; i < gridData.length; i++) {
-            const item = gridData[i];
-
-            if (item.Licensee.Checked === true && isActiveUser) {
-                for (let j = 0; j < item.Currencies.length; j++) {
-                    const currency = item.Currencies[j];
-                    this.onCurrencyCheck(item.Licensee, currency, checked, newRemovedCurrencies, newAssignedCurrencies);
+        if (checked) {
+            const newValidCurrencies = validCurrencies.map(x => {
+                if (!x.Checked) {
+                    return Object.assign({}, x, { Checked: true });
                 }
+
+                return x;
+            });
+
+            this.setState({ validCurrencies: newValidCurrencies, checkedAll: checked });
+
+            return;
+        }
+
+        const newValidCurrencies = validCurrencies.map(x => {
+            if (x.Checked) {
+                return Object.assign({}, x, { Checked: false });
             }
-        }
 
-        this.setState({
-            checkedAll: checked,
-            gridData: gridData,
-            unassignedCurrencies: newRemovedCurrencies,
-            assignedCurrencies: newAssignedCurrencies
-        })
-    }
+            return x;
+        });
 
-    onCurrencyCheck(licensee, currency, checked, newRemovedCurrencies, newAssignedCurrencies) {
-        if (currency.IsAssigned && checked === false && newRemovedCurrencies.indexOf(currency) === -1) {
-            newRemovedCurrencies.push(currency);
-        }
-        else if (licensee.IsValid && !currency.IsAssigned && checked === true && newAssignedCurrencies.indexOf(currency) === -1) {
-            newAssignedCurrencies.push(currency);
-        }
+        this.setState({ validCurrencies: newValidCurrencies, checkedAll: checked });
     }
 
     _showConfirmBox(isShow) {
@@ -96,12 +94,12 @@ export class DataGrid extends Component {
     }
 
     _getParams(redmineId) {
-        const { assignedCurrencies, unassignedCurrencies } = this.state;
+        const { validCurrencies } = this.state;
 
         return {
             UserId: this.props.user.UserId,
-            ActiveCurrencies: assignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
-            DeactiveCurrencies: unassignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
+            ActiveCurrencies: validCurrencies.filter(x => !x.IsAssigned && x.Checked),
+            DeactiveCurrencies: validCurrencies.filter(x => x.IsAssigned && !x.Checked),
             RedmineId: redmineId
         };
     }
@@ -130,38 +128,78 @@ export class DataGrid extends Component {
             });
     }
 
-    _getNewCheckedCurrencyList(isCheck, item, oldList) {
-        if (isCheck) {
-            return [...oldList, item];
-        }
-
-        return oldList.filter(x => x !== item);
-    }
-
     _getData() {
         this.props.toggleLoader(true);
+
+        const { user, currencyParams } = this.props;
+
         const params = {
-            UserId: this.props.user.UserId,
-            LicenseeId: this.props.currencyParams.LicenseeId,
-            CurrencyId: this.props.currencyParams.CurrencyId
+            UserId: user.UserId,
+            LicenseeId: currencyParams.LicenseeId,
+            CurrencyId: currencyParams.CurrencyId
         };
         Site.fetchData(params, 'ITUserManagement/GetLicenseeUserCurrency')
             .then(response => {
-                this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: [] });
+                const validCurrencies = user.IsActive ? this._getValidCurrencies(response.data) : [];
+                const isCheckedAll = validCurrencies.findIndex(x => !x.Checked) == -1;
+
+                this.setState({
+                    gridData: response.data,
+                    validCurrencies: validCurrencies,
+                    checkedAll: isCheckedAll
+                });
+
                 this.props.toggleLoader(false);
             }).catch(err => {
                 this.props.toggleLoader(false);
             });
     }
 
-    _buildCurrencyRow(licensee, currencies, isActiveUser) {
+    _getValidCurrencies(gridData) {
+        let validCurrencies = [];
+
+        for (let i = 0; i < gridData.length; i++) {
+            const item = gridData[i];
+
+            if (!item.Licensee.Checked) {
+                continue;;
+            }
+
+            if (!item.Licensee.IsValid) {
+                item.Currencies.forEach(x => {
+                    if (x.IsAssigned) {
+                        validCurrencies.push({
+                            LicenseeName: x.LicenseeName,
+                            CurrencyId: x.CurrencyId,
+                            IsAssigned: x.IsAssigned,
+                            Checked: x.IsAssigned,
+                        });
+                    }
+                });
+            }
+            else {
+                item.Currencies.forEach(x =>
+                {
+                    validCurrencies.push({
+                        LicenseeName: x.LicenseeName,
+                        CurrencyId: x.CurrencyId,
+                        IsAssigned: x.IsAssigned,
+                        Checked: x.IsAssigned
+                    });
+                });
+            }
+        }
+
+        return validCurrencies;
+    }
+
+    _buildCurrencyRow(licensee, currencyData, validCurrencies) {
         let currencyRows = [];
 
-        const total = currencies.length;
+        const total = currencyData.length;
         for (let j = 0; j < total; j++) {
-            const currency = currencies[j];
-            const checked = licensee.Checked
-                && (currency.IsAssigned ? this.state.unassignedCurrencies.indexOf(currency) === -1 : this.state.assignedCurrencies.indexOf(currency) > -1);
+            const currency = currencyData[j];
+            const validCurrency = validCurrencies.find(x => x.LicenseeName == currency.LicenseeName && x.CurrencyId == currency.CurrencyId);
 
             currencyRows.push(
                 <tr key={`${licensee.Id}-${currency.CurrencyId}`} className={licensee.Checked ? '' : 'disable'}>
@@ -169,8 +207,8 @@ export class DataGrid extends Component {
                         {currency.CurrencyName}
                     </td>
                     {
-                        licensee.Checked && isActiveUser && (licensee.IsValid || currency.IsAssigned)
-                            ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, currency)} /></td>
+                        validCurrency
+                            ? <td className='text-center'><input type='checkbox' checked={validCurrency.Checked} onChange={(e) => this.onCheck(e, validCurrency)} /></td>
                             : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
                     }
                 </tr>
@@ -180,13 +218,13 @@ export class DataGrid extends Component {
         return currencyRows;
     }
 
-    _buildTableBody(gridData, isActiveUser) {
+    _buildTableBody(gridData, validCurrencies) {
         let grid = [];
 
         const total = gridData.length;
         for (let i = 0; i < total; i++) {
             const item = gridData[i];
-            const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, isActiveUser);
+            const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, validCurrencies);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
                     <td className='middle' rowSpan={currencyRows.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
@@ -201,7 +239,7 @@ export class DataGrid extends Component {
         return grid;
     }
 
-    _buildTable(gridData, isActiveUser) {
+    _buildTable(gridData, validCurrencies) {
         return (
             <table className="table table-bordered table-hover">
                 <thead>
@@ -214,16 +252,19 @@ export class DataGrid extends Component {
                         <th className='middle'>Name</th>
                         <th className='middle'>
                             <label className="checkbox-inline node">
-                                <input type="checkbox" checked={this.state.checkedAll} onChange={(e) => this.onCheckAll(e, isActiveUser)} />
+                                {
+                                    validCurrencies && validCurrencies.length > 0 &&
+                                    <input type="checkbox" checked={this.state.checkedAll} onChange={(e) => this.onCheckAll(e)} />
+                                }
                                 Assigned
-                                </label>
+                            </label>
                         </th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {
-                        this._buildTableBody(gridData, isActiveUser)
+                        this._buildTableBody(gridData, validCurrencies)
                     }
                 </tbody>
             </table>
@@ -231,7 +272,7 @@ export class DataGrid extends Component {
     }
 
     render() {
-        const { gridData, isShowConfirmBox } = this.state;
+        const { gridData, isShowConfirmBox, validCurrencies} = this.state;
 
         if (gridData.length === 0) {
             return false;
@@ -251,7 +292,7 @@ export class DataGrid extends Component {
                     msg='Do you want to update currencies of user?'
                     style={{ height: '210px', width: '400px' }}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, user.IsActive)}
+                {this._buildTable(gridData, validCurrencies)}
             </div>
         )
     }
