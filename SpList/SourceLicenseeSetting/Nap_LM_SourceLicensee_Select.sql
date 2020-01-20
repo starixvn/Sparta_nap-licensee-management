@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Select]
 	@ToDate				DATE		= '',
 	@LicenseeId			INT			= 0,
 	@SourceLicenseeId	INT			= 0,
-	@CurrencyId			INT			= 0,
+	@Currencies			VARCHAR(MAX) = '',
 	@RoleId				INT			= 0,
 	@PageIndex			INT			= 1,
 	@PageSize			INT			= 20,
@@ -21,6 +21,7 @@ AS
 	  - 20181207@Amanda: Select Source Licensees [Redmine: #83584]
 	  - 20181225@Amanda: Add 'order by' [Redmine: #83584]
 	  - 20190215@Amanda: Correct where condition for date [Redmine: #83584]
+	  - 20200117@Amanda: Allow search with multiple currencies [Redmine: #112840]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -30,23 +31,56 @@ BEGIN
 		RowNum	INT
 	)
 	
-	DECLARE @from INT, @to INT
-	
-	INSERT INTO #data (
-			RowNum,
-			ID
+	DECLARE @currency AS TABLE (
+		Id			INT
 	)
-	SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.SourcedId ASC, l.EffectiveDate ASC),
-			l.ID	
-	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
-	WHERE (ISNULL(@ToDate, '') = '' OR l.EffectiveDate <= @ToDate)
-		AND (ISNULL(@FromDate, '') = '' OR l.EndDate >= @FromDate)
-		AND l.EffectiveDate <= l.EndDate
-		AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
-		AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)
-		AND (@CurrencyId = 0 OR l.SourcedCurrencyID = @CurrencyId)
-		AND l.Roleid = @RoleId
-		AND l.IsActive = 1
+	
+	DECLARE @from INT, @to INT, @isAllCurrency BIT
+	
+	INSERT INTO @currency(Id)
+	SELECT DISTINCT val
+	FROM CUSTDB.dbo.strSplit(@Currencies,',')
+	
+	IF EXISTS (SELECT 1 FROM @currency WHERE Id = 0)
+	BEGIN
+		SET @isAllCurrency = 1;
+	END
+	
+	IF (@isAllCurrency = 1)
+	BEGIN	
+		INSERT INTO #data (
+				RowNum,
+				ID
+		)
+		SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.SourcedId ASC, l.EffectiveDate ASC),
+				l.ID	
+		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+		WHERE (ISNULL(@ToDate, '') = '' OR l.EffectiveDate <= @ToDate)
+			AND (ISNULL(@FromDate, '') = '' OR l.EndDate >= @FromDate)
+			AND l.EffectiveDate <= l.EndDate
+			AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+			AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)
+			AND l.Roleid = @RoleId
+			AND l.IsActive = 1
+	END
+	ELSE
+	BEGIN
+		INSERT INTO #data (
+				RowNum,
+				ID
+		)
+		SELECT	ROW_NUMBER() OVER (ORDER BY l.LicenseeID ASC, l.SourcedLicenseeID ASC, l.SourcedCurrencyID ASC, l.SourcedId ASC, l.EffectiveDate ASC),
+				l.ID	
+		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+		WHERE (ISNULL(@ToDate, '') = '' OR l.EffectiveDate <= @ToDate)
+			AND (ISNULL(@FromDate, '') = '' OR l.EndDate >= @FromDate)
+			AND l.EffectiveDate <= l.EndDate
+			AND (@LicenseeId = 0 OR l.LicenseeID = @LicenseeId)
+			AND (@SourceLicenseeId = 0 OR l.SourcedLicenseeID = @SourceLicenseeId)
+			AND l.Roleid = @RoleId
+			AND l.IsActive = 1
+			AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+	END
 
 	SELECT @TotalItem = MAX(RowNum)
 	FROM #data
