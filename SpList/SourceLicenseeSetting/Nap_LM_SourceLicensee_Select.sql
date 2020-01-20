@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Select]
 	@ToDate				DATE		= '',
 	@LicenseeId			INT			= 0,
 	@SourceLicenseeId	INT			= 0,
-	@Currencies			VARCHAR(MAX) = '',
+	@CurrencyId			VARCHAR(MAX) = '',
 	@RoleId				INT			= 0,
 	@PageIndex			INT			= 1,
 	@PageSize			INT			= 20,
@@ -39,7 +39,7 @@ BEGIN
 	
 	INSERT INTO @currency(Id)
 	SELECT DISTINCT val
-	FROM CUSTDB.dbo.strSplit(@Currencies,',')
+	FROM CUSTDB.dbo.strSplit(@CurrencyId,',')
 	
 	IF EXISTS (SELECT 1 FROM @currency WHERE Id = 0)
 	BEGIN
