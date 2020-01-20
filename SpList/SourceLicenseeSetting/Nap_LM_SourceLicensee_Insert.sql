@@ -153,7 +153,7 @@ BEGIN
 		IF NOT EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
 		BEGIN
 			INSERT INTO #data(SourceId, CurrencyId)
-			SELECT Id
+			SELECT Id, CurrencyId
 			FROM @sourceId
 			WHERE IsValid = 1 AND Existed = 0
 			
