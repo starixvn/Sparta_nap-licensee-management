@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_Insert]
 	@ToDate				DATE,
 	@LicenseeId			INT,
 	@SourceLicenseeId	INT,
-	@CurrencyId			INT,
+	@CurrencyId			VARCHAR(MAX) = '',
 	@RoleId				INT,
 	@IsAddAll			BIT,
 	@SourceIdList		VARCHAR(MAX) = '',
@@ -24,14 +24,24 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	CREATE TABLE #data (
-		SourceId	INT
+		SourceId	INT,
+		CurrencyId	INT
 	)
 	DECLARE @sourceId AS TABLE (
 		Id			INT,
+		CurrencyId	INT,
 		IsValid		BIT,
 		Existed		BIT
 	)
+	DECLARE @currency AS TABLE (
+		Id			INT
+	)
+	
 	DECLARE @SiteName VARCHAR(50), @SourceSiteName VARCHAR(50)
+	
+	INSERT INTO @currency(Id)
+	SELECT DISTINCT val
+	FROM CUSTDB.dbo.strSplit(@CurrencyId,',')
 	
 	SELECT @SiteName = LicenseeName
 	FROM dbo.Licensees WITH (NOLOCK)
@@ -51,24 +61,23 @@ BEGIN
 				WHERE l.LicenseeID = @LicenseeId
 					AND l.SourcedLicenseeID = @SourceLicenseeId
 					AND l.Roleid = @Roleid
-					AND l.SourcedCurrencyID = @CurrencyId
 					AND @FromDate <= l.EndDate
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
+					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedLicenseeID = c.Id)
 			)
-			INSERT INTO #data (SourceId)
-			SELECT c.custid
+			INSERT INTO #data (SourceId, CurrencyId)
+			SELECT c.custid, l.Currency
 			FROM CustDB.dbo.custInfo c WITH (NOLOCK)
-			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend AND l.Currency = c.currency
 			LEFT JOIN Setting_CTE s ON c.custid = s.SourcedId
 			WHERE l.LicenseeID = @SourceLicenseeId 
-				AND l.Currency = @CurrencyId 
 				AND l.RoleID = 2 
 				AND c.roleid = 1
-				AND c.currency = @CurrencyId
 				AND s.SourcedId IS NULL
-			
+				AND EXISTS (SELECT 1 FROM @currency cu WHERE l.Currency = cu.Id)
+				
 			;SET @AffectedRow = @@ROWCOUNT	
 		END
 		ELSE IF @RoleId = 2
@@ -79,52 +88,51 @@ BEGIN
 				WHERE l.LicenseeID = @LicenseeId
 					AND l.SourcedLicenseeID = @SourceLicenseeId
 					AND l.Roleid = @Roleid
-					AND l.SourcedCurrencyID = @CurrencyId
 					AND @FromDate <= l.EndDate
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
+					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedLicenseeID = c.Id)
 			)
-			INSERT INTO #data (SourceId)
-			SELECT l.CustID
+			INSERT INTO #data (SourceId, CurrencyId)
+			SELECT l.CustID, l.Currency
 			FROM dbo.LicenseeCust l WITH (NOLOCK)
 			LEFT JOIN Setting_CTE s ON l.custid = s.SourcedId
-			WHERE l.LicenseeID = @SourceLicenseeId 
-				AND l.Currency = @CurrencyId 
+			WHERE l.LicenseeID = @SourceLicenseeId
 				AND l.RoleID = 2
 				AND s.SourcedId IS NULL
+				AND EXISTS (SELECT 1 FROM @currency c WHERE l.Currency = c.Id)
 				
 			;SET @AffectedRow = @@ROWCOUNT
 		END
 	END
 	ELSE
 	BEGIN
-		INSERT INTO @sourceId(Id, IsValid, Existed)
-		SELECT DISTINCT val, 0, 0
+		INSERT INTO @sourceId(Id, IsValid, Existed, CurrencyId)
+		SELECT DISTINCT val, 0, 0, 0
 		FROM CUSTDB.dbo.strSplit(@SourceIdList,',')
 		
 		IF @RoleId = 1
 		BEGIN
 			UPDATE s
-			SET IsValid = 1
+			SET IsValid = 1, s.CurrencyId = l.Currency
 			FROM @sourceId s
 			INNER JOIN CustDB.dbo.custInfo c WITH (NOLOCK) ON c.custid = s.Id
-			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend AND l.Currency = c.currency
 			WHERE l.LicenseeID = @SourceLicenseeId
-				AND l.Currency = @CurrencyId
 				AND l.RoleID = 2
 				AND c.roleid = 1
-				AND c.currency = @CurrencyId
+				AND EXISTS (SELECT 1 FROM @currency cu WHERE l.Currency = cu.Id)
 		END
 		ELSE IF @RoleId = 2
 		BEGIN
 			UPDATE s
-			SET IsValid = 1
+			SET IsValid = 1, s.CurrencyId = l.Currency
 			FROM @sourceId s
 			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = s.Id
 			WHERE l.LicenseeID = @SourceLicenseeId
-				AND l.Currency = @CurrencyId
 				AND l.RoleID = 2
+				AND EXISTS (SELECT 1 FROM @currency c WHERE l.Currency = c.Id)
 		END
 		
 		UPDATE s
@@ -134,16 +142,16 @@ BEGIN
 		WHERE l.LicenseeID = @LicenseeId
 			AND l.SourcedLicenseeID = @SourceLicenseeId
 			AND l.Roleid = @Roleid
-			AND l.SourcedCurrencyID = @CurrencyId
 			AND @FromDate <= l.EndDate
 			AND @ToDate >= l.EffectiveDate
 			AND l.EffectiveDate <= l.EndDate
 			AND l.IsActive = 1
 			AND s.IsValid = 1
+			AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
 			
 		IF NOT EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
 		BEGIN
-			INSERT INTO #data(SourceId)
+			INSERT INTO #data(SourceId, CurrencyId)
 			SELECT Id
 			FROM @sourceId
 			WHERE IsValid = 1 AND Existed = 0
@@ -164,7 +172,7 @@ BEGIN
 		SourcedSiteName,
 		EndDate
 	)
-	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, @CurrencyId, 1, @RoleId, @FromDate, SourceId, @SourceSiteName, @ToDate
+	SELECT @SiteName, @LicenseeId, @SourceLicenseeId, CurrencyId, 1, @RoleId, @FromDate, SourceId, @SourceSiteName, @ToDate
 	FROM #data
 	
 	SELECT Id AS SourceId, IsValid, Existed
