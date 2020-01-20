@@ -20,6 +20,7 @@ AS
 	 Revisions:
 	  - 20181211@Amanda: Select Source Licensees [Redmine: #83584]
 	  - 20180315@Amanda: Fix paging issue [Redmine: #83584]
+	  - 20200117@Amanda: Allow search with multiple currencies [Redmine: #112840]
 */
 BEGIN
 	SET NOCOUNT ON;

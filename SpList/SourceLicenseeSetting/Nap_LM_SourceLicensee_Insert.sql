@@ -19,6 +19,7 @@ AS
 	 
 	 Revisions:
 	  - 20181212@Amanda: Add new Source Licensees [Redmine: #83584]
+	  - 20200117@Amanda: Allow to add data with multiple currencies [Redmine: #112840]
 */
 BEGIN
 	SET NOCOUNT ON;
