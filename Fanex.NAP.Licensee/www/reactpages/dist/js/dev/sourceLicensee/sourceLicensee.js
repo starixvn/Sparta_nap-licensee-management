@@ -8983,8 +8983,12 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
                 siteName: this.state.selectedSiteName ? this.state.selectedSiteName.label : '',
                 sourceLicenseeId: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.value : 0,
                 sourceSiteName: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.label : '',
-                currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.value : 0,
-                currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.label : '',
+                currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.map(function (i) {
+                    return i.value;
+                }).join(',') : '',
+                currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.map(function (i) {
+                    return i.label;
+                }).join(',') : '',
                 roleId: this.state.selectedRole ? this.state.selectedRole.value : 0,
                 role: this.state.selectedRole ? this.state.selectedRole.label : '',
                 pageIndex: 1,
@@ -9037,102 +9041,111 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-xs-12 filter-form form-inline' },
+                { className: 'col-xs-12 filter-form' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row' },
                     _react2.default.createElement(
-                        'label',
-                        null,
-                        'From Date'
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'From Date'
+                        ),
+                        _react2.default.createElement('input', { type: 'date',
+                            value: fromDate,
+                            className: fromDate || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(e) {
+                                return _this3.setState({ fromDate: e.target.value });
+                            } })
                     ),
-                    _react2.default.createElement('input', { type: 'date',
-                        value: fromDate,
-                        className: fromDate || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(e) {
-                            return _this3.setState({ fromDate: e.target.value });
-                        } })
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'To Date'
+                        ),
+                        _react2.default.createElement('input', { type: 'date',
+                            value: toDate,
+                            className: toDate || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(e) {
+                                return _this3.setState({ toDate: e.target.value });
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Site Name'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSiteName',
+                            value: selectedSiteName,
+                            options: defaultState.siteNameList,
+                            className: selectedSiteName || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedChange('selectedSiteName', item);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Source Site Name'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSourceSiteName',
+                            value: selectedSourceSiteName,
+                            options: defaultState.sourceSiteNameList,
+                            className: selectedSourceSiteName || !isRequired ? '' : 'has-error',
+                            onChange: this.onSourceSiteNameChange })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Role'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlRole',
+                            value: selectedRole,
+                            options: defaultState.roleList,
+                            className: selectedRole || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedChange('selectedRole', item);
+                            } })
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row' },
                     _react2.default.createElement(
-                        'label',
-                        null,
-                        'To Date'
-                    ),
-                    _react2.default.createElement('input', { type: 'date',
-                        value: toDate,
-                        className: toDate || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(e) {
-                            return _this3.setState({ toDate: e.target.value });
-                        } })
+                        'div',
+                        { className: 'col-xs-12 col-sm-10 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Currency'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlCurrency',
+                            value: selectedCurrency,
+                            options: currencyList,
+                            className: selectedCurrency && selectedCurrency.length || !isRequired ? '' : 'has-error',
+                            multi: true,
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedChange('selectedCurrency', item);
+                            } })
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Site Name'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSiteName',
-                        value: selectedSiteName,
-                        options: defaultState.siteNameList,
-                        className: selectedSiteName || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedSiteName', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Source Site Name'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSourceSiteName',
-                        value: selectedSourceSiteName,
-                        options: defaultState.sourceSiteNameList,
-                        className: selectedSourceSiteName || !isRequired ? '' : 'has-error',
-                        onChange: this.onSourceSiteNameChange })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Currency'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlCurrency',
-                        value: selectedCurrency,
-                        options: currencyList,
-                        className: selectedCurrency || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedCurrency', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Role'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlRole',
-                        value: selectedRole,
-                        options: defaultState.roleList,
-                        className: selectedRole || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedRole', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row form-group' },
                     _react2.default.createElement(
                         'button',
                         { type: 'button', className: 'btn btn-primary', onClick: this._handleSubmit, disabled: !this.isValid },
@@ -9879,7 +9892,6 @@ var Action = exports.Action = function (_Component) {
             var _props$params = this.props.params,
                 siteName = _props$params.siteName,
                 sourceSiteName = _props$params.sourceSiteName,
-                currencyName = _props$params.currencyName,
                 role = _props$params.role,
                 fromDate = _props$params.fromDate,
                 toDate = _props$params.toDate;
@@ -9906,16 +9918,6 @@ var Action = exports.Action = function (_Component) {
                         'b',
                         null,
                         sourceSiteName
-                    )
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    'Currency: ',
-                    _react2.default.createElement(
-                        'b',
-                        null,
-                        currencyName
                     )
                 ),
                 _react2.default.createElement(
@@ -9962,7 +9964,6 @@ var Action = exports.Action = function (_Component) {
                 sourceLicenseeId: params.sourceLicenseeId,
                 sourceLicenseeName: params.sourceSiteName,
                 currencyId: params.currencyId,
-                currency: params.currencyName,
                 roleId: params.roleId,
                 isAddAll: isAddAll,
                 sourceIdList: sourceIdList,
@@ -10125,7 +10126,7 @@ var Action = exports.Action = function (_Component) {
                 ),
                 _react2.default.createElement(_RedmineConfirmForm2.default, { isShow: isShowPopup,
                     msg: confirmMsg,
-                    style: { height: '350px', width: '400px' },
+                    style: { height: '320px', width: '400px' },
                     onConfirm: onConfirm }),
                 result && this._buildResult(result)
             );

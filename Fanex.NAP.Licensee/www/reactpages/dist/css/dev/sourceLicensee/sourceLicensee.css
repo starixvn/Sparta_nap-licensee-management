@@ -489,6 +489,15 @@ tr.disable {
 .red {
   color: #a94442; }
 
+.filter-form .Select, .filter-form input[type=date] {
+  width: calc(100% - 75px); }
+
+.filter-form .form-group {
+  margin-right: 0 !important; }
+
+.filter-form label {
+  width: 70px; }
+
 .Select {
   display: inline-block;
   width: 150px; }
@@ -513,8 +522,5 @@ input[type=date], input[type=text] {
 
 input[type=date] {
   line-height: initial !important; }
-
-.filter-form input[type=date] {
-  width: 150px; }
 
 /*# sourceMappingURL=sourceLicensee.css.map*/
