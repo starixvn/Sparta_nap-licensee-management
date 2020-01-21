@@ -66,7 +66,7 @@ BEGIN
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
-					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedLicenseeID = c.Id)
+					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
 			)
 			INSERT INTO #data (SourceId, CurrencyId)
 			SELECT c.custid, l.Currency
@@ -93,7 +93,7 @@ BEGIN
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
-					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedLicenseeID = c.Id)
+					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
 			)
 			INSERT INTO #data (SourceId, CurrencyId)
 			SELECT l.CustID, l.Currency
