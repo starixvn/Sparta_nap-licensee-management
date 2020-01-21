@@ -29,7 +29,7 @@
     <script>
         var initialState = {
             currencyList: @Html.Raw(serializer.Serialize(currencyList)),
-            selectedCurrency: @Html.Raw(serializer.Serialize(currencyList.First())),
+            selectedCurrency: @Html.Raw(serializer.Serialize(currencyList.Where(x => x.value == 0).ToList())),
             siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
             selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.FirstOrDefault())),
             sourceSiteNameList: @Html.Raw(serializer.Serialize(sourceSiteNameList)),

@@ -12,7 +12,7 @@
 
         public int SourceLicenseeId { get; set; }
 
-        public int CurrencyId { get; set; }
+        public string CurrencyId { get; set; }
 
         public int RoleId { get; set; }
     }

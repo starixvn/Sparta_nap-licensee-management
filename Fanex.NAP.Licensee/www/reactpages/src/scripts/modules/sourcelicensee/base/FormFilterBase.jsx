@@ -65,8 +65,8 @@ export class FormFilterBase extends Component {
             siteName: this.state.selectedSiteName ? this.state.selectedSiteName.label : '',
             sourceLicenseeId: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.value : 0,
             sourceSiteName: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.label : '',
-            currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.value : 0,
-            currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.label : '',
+            currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.map(i => i.value).join(',') : '',
+            currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.map(i => i.label).join(',') : '',
             roleId: this.state.selectedRole ? this.state.selectedRole.value : 0,
             role: this.state.selectedRole ? this.state.selectedRole.label : '',
             pageIndex: 1,
@@ -104,22 +104,23 @@ export class FormFilterBase extends Component {
         const { isRequired } = this.props;
 
         return (
-            <div className='col-xs-12 filter-form form-inline'>
-                <div className='form-group'>
+        <div className='col-xs-12 filter-form'>
+            <div className='col-xs-12 row'>
+                <div className='col-xs-12 col-sm-2 form-group'>
                     <label>From Date</label>
                     <input type='date'
                         value={fromDate} 
                         className={fromDate || !isRequired ? '' : 'has-error'} 
                         onChange={(e) => this.setState({ fromDate: e.target.value })} />
                 </div>
-                <div className='form-group'>
+                <div className='col-xs-12 col-sm-2 form-group'>
                     <label>To Date</label>
                     <input type='date'
                         value={toDate}
                         className={toDate || !isRequired ? '' : 'has-error'}
                         onChange={(e) => this.setState({ toDate: e.target.value })} />
                 </div>
-                <div className='form-group'>
+                <div className='col-xs-12 col-sm-2 form-group'>
                     <label>Site Name</label>
                     <Select instanceId='ddlSiteName'
                         value={selectedSiteName}
@@ -127,7 +128,7 @@ export class FormFilterBase extends Component {
                         className={selectedSiteName || !isRequired ? '' : 'has-error'}
                         onChange={(item) => this._handleSelectedChange('selectedSiteName', item)} />
                 </div>
-                <div className='form-group'>
+                <div className='col-xs-12 col-sm-2 form-group'>
                     <label>Source Site Name</label>
                     <Select instanceId='ddlSourceSiteName'
                         value={selectedSourceSiteName}
@@ -135,15 +136,7 @@ export class FormFilterBase extends Component {
                         className={selectedSourceSiteName || !isRequired ? '' : 'has-error'}
                         onChange={this.onSourceSiteNameChange} />
                 </div>
-                <div className='form-group'>
-                    <label>Currency</label>
-                    <Select instanceId='ddlCurrency'
-                        value={selectedCurrency}
-                        options={currencyList}
-                        className={selectedCurrency || !isRequired ? '' : 'has-error'}
-                        onChange={(item) => this._handleSelectedChange('selectedCurrency', item)} />
-                </div>
-                <div className='form-group'>
+                <div className='col-xs-12 col-sm-2 form-group'>
                     <label>Role</label>
                     <Select instanceId='ddlRole'
                         value={selectedRole}
@@ -151,10 +144,22 @@ export class FormFilterBase extends Component {
                         className={selectedRole || !isRequired ? '' : 'has-error'}
                         onChange={(item) => this._handleSelectedChange('selectedRole', item)} />
                 </div>
-                <div className='form-group'>
-                    <button type='button' className='btn btn-primary' onClick={this._handleSubmit} disabled={!this.isValid}>Submit</button>
+            </div>
+            <div className='col-xs-12 row'>
+                <div className='col-xs-12 col-sm-10 form-group'>
+                <label>Currency</label>
+                    <Select instanceId='ddlCurrency'
+                        value={selectedCurrency}
+                        options={currencyList}
+                        className={(selectedCurrency && selectedCurrency.length) || !isRequired ? '' : 'has-error'}
+                        multi={true}
+                        onChange={(item) => this._handleSelectedChange('selectedCurrency', item)} />
                 </div>
             </div>
+            <div className='col-xs-12 row form-group'>
+                <button type='button' className='btn btn-primary' onClick={this._handleSubmit} disabled={!this.isValid}>Submit</button>
+            </div>
+        </div>
         )
     }
 }

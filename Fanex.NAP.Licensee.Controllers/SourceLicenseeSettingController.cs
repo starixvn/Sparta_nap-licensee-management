@@ -144,7 +144,7 @@
                 error.Append("Invalid date range!<br>");
             }
 
-            if (criteria.LicenseeId <= 0 || criteria.SourceLicenseeId <= 0 || criteria.CurrencyId <= 0 || criteria.RoleId <= 0)
+            if (criteria.LicenseeId <= 0 || criteria.SourceLicenseeId <= 0 || string.IsNullOrWhiteSpace(criteria.CurrencyId) || criteria.RoleId <= 0)
             {
                 error.Append("Invalid data!<br>");
             }

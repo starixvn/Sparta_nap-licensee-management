@@ -51,12 +51,11 @@ export class Action extends Component {
     }
 
     _buildConfirmMsg(isAddAll) {
-        const { siteName, sourceSiteName, currencyName, role, fromDate, toDate } = this.props.params;
+        const { siteName, sourceSiteName, role, fromDate, toDate } = this.props.params;
         const countSelectedItem = isAddAll ? 0 : this.props.checkedList.length;
         return (<div>
                 <p>Site Name: <b>{siteName}</b></p>
                 <p>Source Site Name: <b>{sourceSiteName}</b></p>
-                <p>Currency: <b>{currencyName}</b></p>
                 <p>Role: <b>{role}</b></p>
                 <p>Date range: <b>{Utility.formatDate(fromDate)} - {Utility.formatDate(toDate)}</b></p>
                 <p>{isAddAll ? ('Do you want to add all?') : ('Do you want to add ' + countSelectedItem + ' selected source data?')}</p>
@@ -75,7 +74,6 @@ export class Action extends Component {
             sourceLicenseeId: params.sourceLicenseeId,
             sourceLicenseeName: params.sourceSiteName,
             currencyId: params.currencyId,
-            currency: params.currencyName,
             roleId: params.roleId,
             isAddAll: isAddAll,
             sourceIdList: sourceIdList,
@@ -166,7 +164,7 @@ export class Action extends Component {
             }
             <RedmineConfirmForm isShow={isShowPopup}
                 msg={confirmMsg}
-                style={{height: '350px', width: '400px'}}
+                style={{height: '320px', width: '400px'}}
                 onConfirm={onConfirm} />
             {result && this._buildResult(result)}
         </div>);
