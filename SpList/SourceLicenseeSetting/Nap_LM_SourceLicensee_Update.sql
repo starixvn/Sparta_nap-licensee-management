@@ -15,6 +15,8 @@ AS
 	 
 	 Revisions:
 	  - 20181212@Amanda: Supsend and restart Source Licensees [Redmine: #83584]
+	  - 20200120@Amanda: Only validate restart data if @Restart = 1 [Redmine: #112840]
+
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -54,19 +56,22 @@ BEGIN
 	DELETE @settingId
 	WHERE SourceId IS NULL OR LicenseeId IS NULL
 	
-	;WITH Source_CTE AS (
-		SELECT DISTINCT SourceId, LicenseeId
-		FROM @settingId
-	)
-	INSERT INTO @result (SourceId, Existed, SiteName)
-	SELECT s.SourceId, 1, l.SiteName
-	FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
-	INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
-	WHERE l.IsActive = 1
-		AND	l.EffectiveDate > @EndDate
-		AND l.EffectiveDate <= l.EndDate
-		AND @RestartFrom <= l.EndDate
-		AND @RestartTo >= l.EffectiveDate
+	IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
+	BEGIN
+		;WITH Source_CTE AS (
+			SELECT DISTINCT SourceId, LicenseeId
+			FROM @settingId
+		)
+		INSERT INTO @result (SourceId, Existed, SiteName)
+		SELECT s.SourceId, 1, l.SiteName
+		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
+		INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
+		WHERE l.IsActive = 1
+			AND	l.EffectiveDate > @EndDate
+			AND l.EffectiveDate <= l.EndDate
+			AND @RestartFrom <= l.EndDate
+			AND @RestartTo >= l.EffectiveDate
+	END
 	
 	IF NOT EXISTS (SELECT 1 FROM @result)
 	BEGIN
