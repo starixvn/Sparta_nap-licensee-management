@@ -8942,6 +8942,20 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
             this.setState(selectedItem);
         }
     }, {
+        key: '_handleSelectedCurency',
+        value: function _handleSelectedCurency(value) {
+            var result = value && value.findIndex(function (x) {
+                return x.value === 0;
+            });
+            if (result != -1) {
+                value = value.filter(function (x) {
+                    return x.value === 0;
+                });
+            }
+
+            this.setState({ selectedCurrency: value });
+        }
+    }, {
         key: '_submit',
         value: function _submit() {
             var params = {
@@ -9108,7 +9122,7 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
                             className: selectedCurrency && selectedCurrency.length || !isRequired ? '' : 'has-error',
                             multi: true,
                             onChange: function onChange(item) {
-                                return _this3._handleSelectedChange('selectedCurrency', item);
+                                return _this3._handleSelectedCurency(item);
                             } })
                     )
                 ),
