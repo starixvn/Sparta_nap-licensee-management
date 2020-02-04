@@ -54,7 +54,7 @@ BEGIN
 				AND @FromDate <= l.EndDate
 				AND @ToDate >= l.EffectiveDate
 				AND l.EffectiveDate <= l.EndDate
-				AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 		)
 		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
 		SELECT	ROW_NUMBER() OVER (ORDER BY l.CustID ASC, l.Currency ASC, s.EffectiveDate ASC),
@@ -65,7 +65,7 @@ BEGIN
 				CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive
 		FROM dbo.LicenseeCust l WITH (NOLOCK)
 		LEFT JOIN Setting_CTE s ON s.SourcedId = l.CustID
-		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND EXISTS (SELECT 1 FROM @currency c WHERE l.Currency = c.Id)
+		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.Currency = c.Id)
 	END
 	IF @RoleId = 1 -- Member
 	BEGIN
@@ -78,7 +78,7 @@ BEGIN
 				AND @FromDate <= l.EndDate
 				AND @ToDate >= l.EffectiveDate
 				AND l.EffectiveDate <= l.EndDate
-				AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 		)
 		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
 		SELECT	ROW_NUMBER() OVER (ORDER BY c.custid ASC, c.currency ASC, s.EffectiveDate ASC),
@@ -90,7 +90,7 @@ BEGIN
 		FROM CustDB.dbo.custInfo c WITH (NOLOCK)
 		INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend AND c.currency = l.currency
 		LEFT JOIN Setting_CTE s ON s.SourcedId = c.custid
-		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND c.roleid = 1 AND EXISTS (SELECT 1 FROM @currency cu WHERE l.Currency = cu.Id)
+		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND c.roleid = 1 AND EXISTS (SELECT 1 FROM @currency cu WHERE cu.Id = 0 OR l.Currency = cu.Id)
 	END
 
 	SELECT @TotalItem = MAX(RowNum)
