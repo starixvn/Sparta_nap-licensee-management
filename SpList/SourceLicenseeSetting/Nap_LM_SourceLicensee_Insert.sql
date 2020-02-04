@@ -66,7 +66,7 @@ BEGIN
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
-					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+					AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 			)
 			INSERT INTO #data (SourceId, CurrencyId)
 			SELECT c.custid, l.Currency
@@ -77,7 +77,7 @@ BEGIN
 				AND l.RoleID = 2 
 				AND c.roleid = 1
 				AND s.SourcedId IS NULL
-				AND EXISTS (SELECT 1 FROM @currency cu WHERE l.Currency = cu.Id)
+				AND EXISTS (SELECT 1 FROM @currency cu WHERE cu.Id = 0 OR l.Currency = cu.Id)
 				
 			;SET @AffectedRow = @@ROWCOUNT	
 		END
@@ -93,7 +93,7 @@ BEGIN
 					AND @ToDate >= l.EffectiveDate
 					AND l.EffectiveDate <= l.EndDate
 					AND l.IsActive = 1
-					AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+					AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 			)
 			INSERT INTO #data (SourceId, CurrencyId)
 			SELECT l.CustID, l.Currency
@@ -102,7 +102,7 @@ BEGIN
 			WHERE l.LicenseeID = @SourceLicenseeId
 				AND l.RoleID = 2
 				AND s.SourcedId IS NULL
-				AND EXISTS (SELECT 1 FROM @currency c WHERE l.Currency = c.Id)
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.Currency = c.Id)
 				
 			;SET @AffectedRow = @@ROWCOUNT
 		END
@@ -123,7 +123,7 @@ BEGIN
 			WHERE l.LicenseeID = @SourceLicenseeId
 				AND l.RoleID = 2
 				AND c.roleid = 1
-				AND EXISTS (SELECT 1 FROM @currency cu WHERE l.Currency = cu.Id)
+				AND EXISTS (SELECT 1 FROM @currency cu WHERE cu.Id = 0 OR l.Currency = cu.Id)
 		END
 		ELSE IF @RoleId = 2
 		BEGIN
@@ -133,7 +133,7 @@ BEGIN
 			INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = s.Id
 			WHERE l.LicenseeID = @SourceLicenseeId
 				AND l.RoleID = 2
-				AND EXISTS (SELECT 1 FROM @currency c WHERE l.Currency = c.Id)
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.Currency = c.Id)
 		END
 		
 		UPDATE s
@@ -148,7 +148,7 @@ BEGIN
 			AND l.EffectiveDate <= l.EndDate
 			AND l.IsActive = 1
 			AND s.IsValid = 1
-			AND EXISTS (SELECT 1 FROM @currency c WHERE l.SourcedCurrencyID = c.Id)
+			AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 			
 		IF NOT EXISTS (SELECT 1 FROM @sourceId WHERE IsValid = 0 OR Existed = 1)
 		BEGIN
