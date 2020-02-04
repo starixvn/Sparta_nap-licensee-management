@@ -47,6 +47,15 @@ export class FormFilterBase extends Component {
         this.setState(selectedItem);
     }
 
+    _handleSelectedCurency(value) {
+        let result = value && value.findIndex(x => x.value === 0);
+        if (result != -1) {
+            value = value.filter(x => x.value === 0);
+        }
+
+        this.setState({ selectedCurrency: value });
+    }
+
     onSourceSiteNameChange = (item) => {
         const oldValue = this.state.selectedSourceSiteName;
 
@@ -86,7 +95,7 @@ export class FormFilterBase extends Component {
             Site.fetchData(param, url)
                 .then(response => {
                     var data = response.data ? response.data.map((item) => { return { label: item.Name, value: item.Id }; }) : []
-                    data.splice(0, 0, { label : "All", value : 0 });
+                    data.splice(0, 0, { label: "All", value: 0 });
 
                     this.setState({ currencyList: data, selectedCurrency: null });
 
@@ -101,66 +110,68 @@ export class FormFilterBase extends Component {
     }
 
     render() {
-        const { selectedSiteName, selectedSourceSiteName, selectedCurrency, selectedRole, fromDate, toDate, currencyList } = this.state;
+        const { selectedSiteName, selectedSourceSiteName, selectedCurrency, selectedRole,
+            fromDate, toDate, currencyList } = this.state;
+
         const { isRequired } = this.props;
 
         return (
-        <div className='col-xs-12 filter-form'>
-            <div className='col-xs-12 row'>
-                <div className='col-xs-12 col-sm-2 form-group'>
-                    <label>From Date</label>
-                    <input type='date'
-                        value={fromDate} 
-                        className={fromDate || !isRequired ? '' : 'has-error'} 
-                        onChange={(e) => this.setState({ fromDate: e.target.value })} />
+            <div className='col-xs-12 filter-form'>
+                <div className='col-xs-12 row'>
+                    <div className='col-xs-12 col-sm-2 form-group'>
+                        <label>From Date</label>
+                        <input type='date'
+                            value={fromDate}
+                            className={fromDate || !isRequired ? '' : 'has-error'}
+                            onChange={(e) => this.setState({ fromDate: e.target.value })} />
+                    </div>
+                    <div className='col-xs-12 col-sm-2 form-group'>
+                        <label>To Date</label>
+                        <input type='date'
+                            value={toDate}
+                            className={toDate || !isRequired ? '' : 'has-error'}
+                            onChange={(e) => this.setState({ toDate: e.target.value })} />
+                    </div>
+                    <div className='col-xs-12 col-sm-2 form-group'>
+                        <label>Site Name</label>
+                        <Select instanceId='ddlSiteName'
+                            value={selectedSiteName}
+                            options={defaultState.siteNameList}
+                            className={selectedSiteName || !isRequired ? '' : 'has-error'}
+                            onChange={(item) => this._handleSelectedChange('selectedSiteName', item)} />
+                    </div>
+                    <div className='col-xs-12 col-sm-2 form-group'>
+                        <label>Source Site Name</label>
+                        <Select instanceId='ddlSourceSiteName'
+                            value={selectedSourceSiteName}
+                            options={defaultState.sourceSiteNameList}
+                            className={selectedSourceSiteName || !isRequired ? '' : 'has-error'}
+                            onChange={this.onSourceSiteNameChange} />
+                    </div>
+                    <div className='col-xs-12 col-sm-2 form-group'>
+                        <label>Role</label>
+                        <Select instanceId='ddlRole'
+                            value={selectedRole}
+                            options={defaultState.roleList}
+                            className={selectedRole || !isRequired ? '' : 'has-error'}
+                            onChange={(item) => this._handleSelectedChange('selectedRole', item)} />
+                    </div>
                 </div>
-                <div className='col-xs-12 col-sm-2 form-group'>
-                    <label>To Date</label>
-                    <input type='date'
-                        value={toDate}
-                        className={toDate || !isRequired ? '' : 'has-error'}
-                        onChange={(e) => this.setState({ toDate: e.target.value })} />
+                <div className='col-xs-12 row'>
+                    <div className='col-xs-12 col-sm-10 form-group'>
+                        <label>Currency</label>
+                        <Select instanceId='ddlCurrency'
+                            value={selectedCurrency}
+                            options={currencyList}
+                            className={(selectedCurrency && selectedCurrency.length) || !isRequired ? '' : 'has-error'}
+                            multi={true}
+                            onChange={(item) => this._handleSelectedCurency(item)} />
+                    </div>
                 </div>
-                <div className='col-xs-12 col-sm-2 form-group'>
-                    <label>Site Name</label>
-                    <Select instanceId='ddlSiteName'
-                        value={selectedSiteName}
-                        options={defaultState.siteNameList}
-                        className={selectedSiteName || !isRequired ? '' : 'has-error'}
-                        onChange={(item) => this._handleSelectedChange('selectedSiteName', item)} />
-                </div>
-                <div className='col-xs-12 col-sm-2 form-group'>
-                    <label>Source Site Name</label>
-                    <Select instanceId='ddlSourceSiteName'
-                        value={selectedSourceSiteName}
-                        options={defaultState.sourceSiteNameList}
-                        className={selectedSourceSiteName || !isRequired ? '' : 'has-error'}
-                        onChange={this.onSourceSiteNameChange} />
-                </div>
-                <div className='col-xs-12 col-sm-2 form-group'>
-                    <label>Role</label>
-                    <Select instanceId='ddlRole'
-                        value={selectedRole}
-                        options={defaultState.roleList}
-                        className={selectedRole || !isRequired ? '' : 'has-error'}
-                        onChange={(item) => this._handleSelectedChange('selectedRole', item)} />
+                <div className='col-xs-12 row form-group'>
+                    <button type='button' className='btn btn-primary' onClick={this._handleSubmit} disabled={!this.isValid}>Submit</button>
                 </div>
             </div>
-            <div className='col-xs-12 row'>
-                <div className='col-xs-12 col-sm-10 form-group'>
-                <label>Currency</label>
-                    <Select instanceId='ddlCurrency'
-                        value={selectedCurrency}
-                        options={currencyList}
-                        className={(selectedCurrency && selectedCurrency.length) || !isRequired ? '' : 'has-error'}
-                        multi={true}
-                        onChange={(item) => this._handleSelectedChange('selectedCurrency', item)} />
-                </div>
-            </div>
-            <div className='col-xs-12 row form-group'>
-                <button type='button' className='btn btn-primary' onClick={this._handleSubmit} disabled={!this.isValid}>Submit</button>
-            </div>
-        </div>
         )
     }
 }
