@@ -9012,6 +9012,7 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
                     var data = response.data ? response.data.map(function (item) {
                         return { label: item.Name, value: item.Id };
                     }) : [];
+                    data.splice(0, 0, { label: "All", value: 0 });
 
                     _this2.setState({ currencyList: data, selectedCurrency: null });
 
