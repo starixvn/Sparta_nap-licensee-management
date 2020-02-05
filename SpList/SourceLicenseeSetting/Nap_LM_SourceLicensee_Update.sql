@@ -48,7 +48,7 @@ BEGIN
 	UPDATE s
 	SET s.SourceId = l.SourcedId, 
 		s.LicenseeId = l.LicenseeID,
-		s.IsUpdated = CASE WHEN l.EffectiveDate <= @EndDate AND l.EndDate > @EndDate THEN 1 ELSE 0 END
+		s.IsUpdated = CASE WHEN l.EndDate > @EndDate THEN 1 ELSE 0 END
 	FROM @settingId s
 	INNER JOIN dbo.LicenseeSourcedSetting l WITH (NOLOCK) ON s.Id = l.ID
 	WHERE l.IsActive = 1
