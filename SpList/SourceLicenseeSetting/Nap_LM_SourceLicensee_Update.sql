@@ -67,7 +67,6 @@ BEGIN
 		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
 		INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
 		WHERE l.IsActive = 1
-			AND	l.EffectiveDate > @EndDate
 			AND l.EffectiveDate <= l.EndDate
 			AND @RestartFrom <= l.EndDate
 			AND @RestartTo >= l.EffectiveDate
@@ -81,7 +80,7 @@ BEGIN
 		FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK, UPDLOCK)
 		INNER JOIN @settingId s ON l.ID = s.Id
 		WHERE s.IsUpdated = 1
-	
+
 		IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
 		BEGIN
 			INSERT INTO @duplicateSource(SourceId, LicenseeId, DuplicatedRow)
@@ -112,6 +111,10 @@ BEGIN
 			FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
 			INNER JOIN @settingId s ON l.ID = s.Id
 		END
+
+		DELETE l from dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
+		INNER JOIN @settingId s ON l.ID = s.Id 
+		WHERE l.EffectiveDate > l.EndDate
 	END
 	
 	SELECT SourceId, Existed, SiteName
