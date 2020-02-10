@@ -68,8 +68,8 @@ BEGIN
 		INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
 		WHERE l.IsActive = 1
 			AND l.EffectiveDate <= l.EndDate
-			AND @RestartFrom <= l.EndDate
-			AND @RestartTo >= l.EffectiveDate
+			AND (@RestartFrom <= l.EffectiveDate
+			OR @RestartTo <= l.EffectiveDate)
 	END
 	
 	IF NOT EXISTS (SELECT 1 FROM @result)
