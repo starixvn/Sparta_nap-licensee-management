@@ -9845,9 +9845,9 @@ var Action = exports.Action = function (_Component) {
 
         _this.onPopupClose = function () {
             _this.setState({
-                stopFrom: _utility2.default.getTodayString(),
+                stopFrom: _this._getMinStopDate(),
                 restart: false,
-                restartFrom: _utility2.default.getTodayString(),
+                restartFrom: _this._getMinStopDate(),
                 restartTo: _utility2.default.getDateString(new Date(2050, 0, 1)),
                 redmineId: '',
                 isShowPopup: false
@@ -9862,9 +9862,9 @@ var Action = exports.Action = function (_Component) {
         };
 
         _this.state = {
-            stopFrom: _utility2.default.getTodayString(),
+            stopFrom: _this._getMinStopDate(),
             restart: false,
-            restartFrom: _utility2.default.getTodayString(),
+            restartFrom: _this._getMinStopDate(),
             restartTo: _utility2.default.getDateString(new Date(2050, 0, 1)),
             redmineId: '',
             result: null,
@@ -9880,6 +9880,37 @@ var Action = exports.Action = function (_Component) {
             if (prevProps.params.timeStamp !== this.props.params.timeStamp) {
                 this.setState({ result: null });
             }
+        }
+    }, {
+        key: '_convertDateToString',
+        value: function _convertDateToString(date) {
+            var dd = date.getDate();
+            var mm = date.getMonth() + 1;
+            var yyyy = date.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            return yyyy + '-' + mm + '-' + dd;
+        }
+    }, {
+        key: '_addDate',
+        value: function _addDate(date, days) {
+            date.setDate(date.getDate() + days);
+
+            return date;
+        }
+    }, {
+        key: '_getMinStopDate',
+        value: function _getMinStopDate() {
+            var minDate = new Date();
+            minDate = this._addDate(minDate, 1);
+            minDate = this._convertDateToString(minDate);
+
+            return minDate;
         }
     }, {
         key: '_getParam',
@@ -9946,7 +9977,7 @@ var Action = exports.Action = function (_Component) {
                     ),
                     _react2.default.createElement('input', { className: 'full-width ' + (stopFrom ? '' : 'has-error'),
                         type: 'date',
-                        value: stopFrom,
+                        value: stopFrom, min: stopFrom,
                         onChange: function onChange(e) {
                             return _this3.setState({ stopFrom: e.target.value });
                         } })
@@ -9973,7 +10004,7 @@ var Action = exports.Action = function (_Component) {
                     ),
                     _react2.default.createElement('input', { className: 'full-width ' + (!restart || restartFrom ? '' : 'has-error'),
                         disabled: !restart,
-                        type: 'date', value: restartFrom,
+                        type: 'date', value: restartFrom, min: stopFrom,
                         onChange: function onChange(e) {
                             return _this3.setState({ restartFrom: e.target.value });
                         } })
