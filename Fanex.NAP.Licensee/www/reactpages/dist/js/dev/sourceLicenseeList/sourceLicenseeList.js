@@ -9869,7 +9869,8 @@ var Action = exports.Action = function (_Component) {
             redmineId: '',
             result: null,
             isShowPopup: false,
-            isShowConfirmation: false
+            isShowConfirmation: false,
+            minDate: _this._getMinStopDate()
         };
         return _this;
     }
@@ -9961,7 +9962,7 @@ var Action = exports.Action = function (_Component) {
         }
     }, {
         key: '_buildPopupContent',
-        value: function _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId) {
+        value: function _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate) {
             var _this3 = this;
 
             return _react2.default.createElement(
@@ -9977,7 +9978,7 @@ var Action = exports.Action = function (_Component) {
                     ),
                     _react2.default.createElement('input', { className: 'full-width ' + (stopFrom ? '' : 'has-error'),
                         type: 'date',
-                        value: stopFrom, min: stopFrom,
+                        value: stopFrom, min: minDate,
                         onChange: function onChange(e) {
                             return _this3.setState({ stopFrom: e.target.value });
                         } })
@@ -10065,7 +10066,8 @@ var Action = exports.Action = function (_Component) {
                 redmineId = _state.redmineId,
                 result = _state.result,
                 isShowPopup = _state.isShowPopup,
-                isShowConfirmation = _state.isShowConfirmation;
+                isShowConfirmation = _state.isShowConfirmation,
+                minDate = _state.minDate;
 
             var countSelectedItem = this.props.checkedList.length;
 
@@ -10095,7 +10097,7 @@ var Action = exports.Action = function (_Component) {
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
                     title: 'Suspend Source Licensee',
-                    content: this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId),
+                    content: this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate),
                     className: 'no-scroll',
                     style: { height: '410px', width: '600px' },
                     onClose: this.onPopupClose }),
