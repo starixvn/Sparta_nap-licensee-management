@@ -27,6 +27,10 @@ BEGIN
 			LicenseeId	INT,
 			IsUpdated	BIT
 	)
+
+	DECLARE @invalidSource AS TABLE (
+			Id			INT
+	)
 	
 	DECLARE @result AS TABLE (
 			SiteName	VARCHAR(50),
@@ -56,22 +60,6 @@ BEGIN
 	DELETE @settingId
 	WHERE SourceId IS NULL OR LicenseeId IS NULL
 	
-	IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
-	BEGIN
-		;WITH Source_CTE AS (
-			SELECT DISTINCT SourceId, LicenseeId
-			FROM @settingId
-		)
-		INSERT INTO @result (SourceId, Existed, SiteName)
-		SELECT s.SourceId, 1, l.SiteName
-		FROM dbo.LicenseeSourcedSetting l WITH(NOLOCK)
-		INNER JOIN Source_CTE s ON l.LicenseeID = s.LicenseeId AND l.SourcedId = s.SourceId
-		WHERE l.IsActive = 1
-			AND l.EffectiveDate <= l.EndDate
-			AND (@RestartFrom <= l.EffectiveDate
-			OR @RestartTo <= l.EffectiveDate)
-	END
-	
 	IF NOT EXISTS (SELECT 1 FROM @result)
 	BEGIN
 		-- Stop Source Licensee
@@ -80,6 +68,12 @@ BEGIN
 		FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK, UPDLOCK)
 		INNER JOIN @settingId s ON l.ID = s.Id
 		WHERE s.IsUpdated = 1
+
+		INSERT INTO @invalidSource(id) 
+		SELECT s.Id 
+		FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
+		INNER JOIN @settingId s ON l.ID = s.Id 
+		WHERE l.EffectiveDate > l.EndDate
 
 		IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
 		BEGIN
@@ -101,7 +95,7 @@ BEGIN
 				DELETE TOP (@duplicatedRow)  
 				FROM @settingId
 				WHERE SourceId = @sourceId AND LicenseeId = @licenseeId
-				
+
 				SET @i = @i + 1	
 			END
 			
@@ -113,8 +107,8 @@ BEGIN
 		END
 
 		DELETE l from dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
-		INNER JOIN @settingId s ON l.ID = s.Id 
-		WHERE l.EffectiveDate > l.EndDate
+		INNER JOIN @invalidSource s ON l.ID = s.Id
+
 	END
 	
 	SELECT SourceId, Existed, SiteName
