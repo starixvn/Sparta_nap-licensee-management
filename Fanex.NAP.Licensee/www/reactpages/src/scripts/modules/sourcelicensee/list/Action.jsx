@@ -20,7 +20,8 @@ export class Action extends Component {
             redmineId: '',
             result: null,
             isShowPopup: false,
-            isShowConfirmation: false
+            isShowConfirmation: false,
+            minDate: this._getMinStopDate()
         };
     }
 
@@ -134,14 +135,14 @@ export class Action extends Component {
         this.props.setParams(filterParams);
     }
 
-    _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId) {
+    _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Stop From</label>
                     <input className={`full-width ${stopFrom ? '' : 'has-error'}`}
                         type='date'
-                        value={stopFrom} min={stopFrom}
+                        value={stopFrom} min={minDate}
                         onChange={(e) => this.setState({ stopFrom: e.target.value })} />
                 </div>
                 <div className='form-group'>
@@ -183,7 +184,7 @@ export class Action extends Component {
     }
 
     render() {
-        const { stopFrom, restart, restartTo, restartFrom, redmineId, result, isShowPopup, isShowConfirmation } = this.state;
+        const { stopFrom, restart, restartTo, restartFrom, redmineId, result, isShowPopup, isShowConfirmation, minDate } = this.state;
         const countSelectedItem = this.props.checkedList.length;
 
         return (
@@ -199,7 +200,7 @@ export class Action extends Component {
                     onClose={this.onConfirm} />
                 <Popup isShow={isShowPopup}
                     title='Suspend Source Licensee'
-                    content={this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId)}
+                    content={this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate)}
                     className='no-scroll'
                     style={{ height: '410px', width: '600px' }}
                     onClose={this.onPopupClose} />
