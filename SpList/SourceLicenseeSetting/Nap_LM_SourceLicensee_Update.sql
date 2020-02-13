@@ -32,12 +32,6 @@ BEGIN
 			Id			INT
 	)
 	
-	DECLARE @result AS TABLE (
-			SiteName	VARCHAR(50),
-			SourceId	INT,
-			Existed		BIT
-	)
-	
 	DECLARE @duplicateSource AS TABLE (
 			Id				INT IDENTITY(1,1),
 			LicenseeId		INT,
@@ -60,58 +54,52 @@ BEGIN
 	DELETE @settingId
 	WHERE SourceId IS NULL OR LicenseeId IS NULL
 	
-	IF NOT EXISTS (SELECT 1 FROM @result)
+	-- Stop Source Licensee
+	UPDATE l
+	SET l.EndDate = @EndDate
+	FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK, UPDLOCK)
+	INNER JOIN @settingId s ON l.ID = s.Id
+	WHERE s.IsUpdated = 1
+
+	INSERT INTO @invalidSource(id) 
+	SELECT s.Id 
+	FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
+	INNER JOIN @settingId s ON l.ID = s.Id 
+	WHERE l.EffectiveDate > l.EndDate
+
+	IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
 	BEGIN
-		-- Stop Source Licensee
-		UPDATE l
-		SET l.EndDate = @EndDate
-		FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK, UPDLOCK)
-		INNER JOIN @settingId s ON l.ID = s.Id
-		WHERE s.IsUpdated = 1
-
-		INSERT INTO @invalidSource(id) 
-		SELECT s.Id 
-		FROM dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
-		INNER JOIN @settingId s ON l.ID = s.Id 
-		WHERE l.EffectiveDate > l.EndDate
-
-		IF (@Restart = 1 AND ISNULL(@RestartFrom,'') <> '' AND ISNULL(@RestartTo,'') <> '')
+		INSERT INTO @duplicateSource(SourceId, LicenseeId, DuplicatedRow)
+		SELECT SourceId, LicenseeId, COUNT(1) - 1
+		FROM @settingId
+		GROUP BY SourceId, LicenseeId
+		HAVING COUNT(1) > 1
+			
+		DECLARE @m INT, @i INT, @sourceId INT, @licenseeId INT, @duplicatedRow INT
+		SELECT @m = MAX(Id), @i = 1 FROM @duplicateSource
+			
+		WHILE (@i <= @m)
 		BEGIN
-			INSERT INTO @duplicateSource(SourceId, LicenseeId, DuplicatedRow)
-			SELECT SourceId, LicenseeId, COUNT(1) - 1
-			FROM @settingId
-			GROUP BY SourceId, LicenseeId
-			HAVING COUNT(1) > 1
-			
-			DECLARE @m INT, @i INT, @sourceId INT, @licenseeId INT, @duplicatedRow INT
-			SELECT @m = MAX(Id), @i = 1 FROM @duplicateSource
-			
-			WHILE (@i <= @m)
-			BEGIN
-				SELECT @SourceId = SourceId, @licenseeId = LicenseeId, @duplicatedRow = DuplicatedRow
-				FROM @duplicateSource
-				WHERE Id = @i
+			SELECT @SourceId = SourceId, @licenseeId = LicenseeId, @duplicatedRow = DuplicatedRow
+			FROM @duplicateSource
+			WHERE Id = @i
 				
-				DELETE TOP (@duplicatedRow)  
-				FROM @settingId
-				WHERE SourceId = @sourceId AND LicenseeId = @licenseeId
+			DELETE TOP (@duplicatedRow)  
+			FROM @settingId
+			WHERE SourceId = @sourceId AND LicenseeId = @licenseeId
 
-				SET @i = @i + 1	
-			END
-			
-			-- Restart
-			INSERT INTO dbo.LicenseeSourcedSetting (SiteName, LicenseeID, SourcedLicenseeID, SourcedCurrencyID, IsActive, Roleid, EffectiveDate, SourcedId, SourcedSiteName, EndDate)
-			SELECT l.SiteName, l.LicenseeID, l.SourcedLicenseeID, l.SourcedCurrencyID, 1, l.Roleid, @RestartFrom, l.SourcedId, l.SourcedSiteName, @RestartTo
-			FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
-			INNER JOIN @settingId s ON l.ID = s.Id
+			SET @i = @i + 1	
 		END
+			
+		-- Restart
+		INSERT INTO dbo.LicenseeSourcedSetting (SiteName, LicenseeID, SourcedLicenseeID, SourcedCurrencyID, IsActive, Roleid, EffectiveDate, SourcedId, SourcedSiteName, EndDate)
+		SELECT l.SiteName, l.LicenseeID, l.SourcedLicenseeID, l.SourcedCurrencyID, 1, l.Roleid, @RestartFrom, l.SourcedId, l.SourcedSiteName, @RestartTo
+		FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
+		INNER JOIN @settingId s ON l.ID = s.Id
 
 		DELETE l from dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
 		INNER JOIN @invalidSource s ON l.ID = s.Id
 
 	END
-	
-	SELECT SourceId, Existed, SiteName
-	FROM @result
 END
 GO
