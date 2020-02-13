@@ -97,9 +97,9 @@ BEGIN
 		FROM dbo.LicenseeSourcedSetting l WITH (NOLOCK)
 		INNER JOIN @settingId s ON l.ID = s.Id
 
-		DELETE l from dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
-		INNER JOIN @invalidSource s ON l.ID = s.Id
-
 	END
+
+	DELETE l from dbo.LicenseeSourcedSetting l WITH (ROWLOCK) 
+	INNER JOIN @invalidSource s ON l.ID = s.Id
 END
 GO
