@@ -79,7 +79,6 @@
                         + $" SiteNameId=\"{criteria.LicenseeId}\""
                         + $" SourceSiteName=\"{criteria.SourceLicenseeName}\""
                         + $" SourceSiteNameId=\"{criteria.SourceLicenseeId}\""
-                        + $" Currency=\"{criteria.Currency}\""
                         + $" CurrencyId=\"{criteria.CurrencyId}\""
                         + $" Role=\"{criteria.RoleId}\""
                         + $" EffectiveDate=\"{criteria.FromDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)}\""

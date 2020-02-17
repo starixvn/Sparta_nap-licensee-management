@@ -2,8 +2,8 @@
 
 CREATE PROCEDURE [dbo].[Nap_LM_ITUser_Update]
 	@UserId INT,
-	@FirstName NVARCHAR(50),
-	@LastName NVARCHAR(50),
+	@FirstName NVARCHAR(50) = NULL,
+	@LastName NVARCHAR(50) = NULL,
 	@IsActive BIT
 AS
 /*
@@ -14,6 +14,7 @@ AS
 	 
 	 Revisions:
 	  - 20190215@Amanda: Update IT User [Redmine: #83584]
+	  - 20200117@Amanda: Allow tp update NULL data [Redmine: #112840]
 */
 BEGIN
 	SET NOCOUNT ON;

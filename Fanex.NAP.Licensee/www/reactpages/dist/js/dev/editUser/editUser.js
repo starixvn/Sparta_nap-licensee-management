@@ -16234,9 +16234,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         _this.state = {
             gridData: [],
-            assignedFunctions: [],
-            unassignedFunctions: [],
-            isShowConfirmBox: false
+            validFunctions: [],
+            isShowConfirmBox: false,
+            checkedAll: false
         };
         return _this;
     }
@@ -16252,15 +16252,52 @@ var DataGrid = exports.DataGrid = function (_Component) {
         key: 'onCheck',
         value: function onCheck(e, item) {
             var checked = e.target.checked;
-            var newList = [];
+            var validFunctions = this.state.validFunctions;
 
-            if (item.UserFunctionId > 0) {
-                var newRemovedFunctions = this._getNewCheckedFunctionList(!checked, item, this.state.unassignedFunctions);
-                this.setState({ unassignedFunctions: newRemovedFunctions });
-            } else {
-                var newAssignedFunctions = this._getNewCheckedFunctionList(checked, item, this.state.assignedFunctions);
-                this.setState({ assignedFunctions: newAssignedFunctions });
+
+            var newValidFunctions = validFunctions.map(function (x) {
+                if (x == item) {
+                    return Object.assign({}, x, { Checked: checked });
+                }
+
+                return x;
+            });
+
+            var isCheckedAll = newValidFunctions.findIndex(function (x) {
+                return !x.Checked;
+            }) == -1;
+
+            this.setState({ validFunctions: newValidFunctions, checkedAll: isCheckedAll });
+        }
+    }, {
+        key: 'onCheckAll',
+        value: function onCheckAll(e) {
+            var checked = e.target.checked;
+            var validFunctions = this.state.validFunctions;
+
+
+            if (checked) {
+                var _newValidFunctions = validFunctions.map(function (x) {
+                    if (!x.Checked) {
+                        return Object.assign({}, x, { Checked: true });
+                    }
+                    return x;
+                });
+
+                this.setState({ validFunctions: _newValidFunctions, checkedAll: checked });
+
+                return;
             }
+
+            var newValidFunctions = validFunctions.map(function (x) {
+                if (x.Checked) {
+                    return Object.assign({}, x, { Checked: false });
+                }
+
+                return x;
+            });
+
+            this.setState({ validFunctions: newValidFunctions, checkedAll: checked });
         }
     }, {
         key: '_showConfirmBox',
@@ -16270,18 +16307,16 @@ var DataGrid = exports.DataGrid = function (_Component) {
     }, {
         key: '_getParams',
         value: function _getParams(redmineId) {
-            var _state = this.state,
-                assignedFunctions = _state.assignedFunctions,
-                unassignedFunctions = _state.unassignedFunctions;
+            var validFunctions = this.state.validFunctions;
 
 
             return {
                 UserId: this.props.user.UserId,
-                NewFunctions: assignedFunctions.map(function (x) {
-                    return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId };
+                NewFunctions: validFunctions.filter(function (x) {
+                    return !x.IsAssigned && x.Checked;
                 }),
-                RemovedFunctions: unassignedFunctions.map(function (x) {
-                    return { LicenseeName: x.LicenseeName, FunctionId: x.FunctionId };
+                RemovedFunctions: validFunctions.filter(function (x) {
+                    return x.IsAssigned && !x.Checked;
                 }),
                 RedmineId: redmineId
             };
@@ -16311,40 +16346,89 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
         }
     }, {
-        key: '_getNewCheckedFunctionList',
-        value: function _getNewCheckedFunctionList(isCheck, item, oldList) {
-            if (isCheck) {
-                return [].concat(_toConsumableArray(oldList), [item]);
-            }
-
-            return oldList.filter(function (x) {
-                return x !== item;
-            });
-        }
-    }, {
         key: '_getData',
         value: function _getData() {
             var _this3 = this;
 
             this.props.toggleLoader(true);
+            var _props = this.props,
+                user = _props.user,
+                functionParams = _props.functionParams;
+
+
             var params = {
-                UserId: this.props.user.UserId,
-                LicenseeId: this.props.functionParams.LicenseeId,
-                FunctionId: this.props.functionParams.FunctionId
+                UserId: user.UserId,
+                LicenseeId: functionParams.LicenseeId,
+                FunctionId: functionParams.FunctionId
             };
             _site2.default.fetchData(params, 'ITUserManagement/GetLicenseeUserFunction').then(function (response) {
-                _this3.setState({ gridData: response.data, assignedFunctions: [], unassignedFunctions: [] });
+                var validFunctions = user.IsActive ? _this3._getValidFunctions(response.data) : [];
+                var isCheckedAll = validFunctions.findIndex(function (x) {
+                    return !x.Checked;
+                }) == -1;
+
+                _this3.setState({ gridData: response.data, validFunctions: validFunctions, checkedAll: isCheckedAll });
                 _this3.props.toggleLoader(false);
             }).catch(function (err) {
                 _this3.props.toggleLoader(false);
             });
         }
     }, {
+        key: '_getValidChildFunctions',
+        value: function _getValidChildFunctions(parent, checkValidFunc) {
+            var validFunctions = [];
+
+            if (checkValidFunc(parent)) {
+                validFunctions.push({ LicenseeName: parent.LicenseeName, FunctionId: parent.FunctionId, IsAssigned: parent.UserFunctionId > 0, Checked: parent.UserFunctionId > 0 });
+            }
+
+            for (var i = 0; i < parent.Children.length; i++) {
+                var childFunctions = this._getValidChildFunctions(parent.Children[i], checkValidFunc);
+                validFunctions.push.apply(validFunctions, _toConsumableArray(childFunctions));
+            }
+
+            return validFunctions;
+        }
+    }, {
+        key: '_getValidFunctions',
+        value: function _getValidFunctions(gridData) {
+            var validFunctions = [];
+
+            for (var i = 0; i < gridData.length; i++) {
+                var item = gridData[i];
+
+                if (!item.Licensee.Checked) {
+                    continue;
+                }
+
+                var checkValidFunc = void 0;
+
+                if (!item.Licensee.IsValid) {
+                    checkValidFunc = function checkValidFunc(x) {
+                        return x.UserFunctionId > 0;
+                    };
+                } else {
+                    checkValidFunc = function checkValidFunc(x) {
+                        return x.UserFunctionId > 0 || x.IsActive;
+                    };
+                }
+
+                for (var j = 0; j < item.Functions.length; j++) {
+                    var childFunctions = this._getValidChildFunctions(item.Functions[j], checkValidFunc);
+                    validFunctions.push.apply(validFunctions, _toConsumableArray(childFunctions));
+                }
+            }
+
+            return validFunctions;
+        }
+    }, {
         key: '_buildFunctionNode',
-        value: function _buildFunctionNode(licensee, node, level, hierachy, isActiveUser) {
+        value: function _buildFunctionNode(licensee, node, level, hierachy, validFunctions) {
             var _this4 = this;
 
-            var checked = licensee.Checked && (node.UserFunctionId > 0 ? this.state.unassignedFunctions.indexOf(node) === -1 : this.state.assignedFunctions.indexOf(node) > -1);
+            var validFunction = validFunctions.find(function (x) {
+                return x.LicenseeName == node.LicenseeName && x.FunctionId == node.FunctionId;
+            });
 
             hierachy.push(_react2.default.createElement(
                 'tr',
@@ -16356,11 +16440,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     level > 0 && _react2.default.createElement('span', { className: 'hierarchy-node' }),
                     node.FunctionName
                 ),
-                licensee.Checked && isActiveUser && (node.IsActive && licensee.IsValid || node.UserFunctionId > 0) ? _react2.default.createElement(
+                validFunction ? _react2.default.createElement(
                     'td',
                     { className: 'text-center' },
-                    _react2.default.createElement('input', { type: 'checkbox', checked: checked, onChange: function onChange(e) {
-                            return _this4.onCheck(e, node);
+                    _react2.default.createElement('input', { type: 'checkbox', checked: validFunction.Checked, onChange: function onChange(e) {
+                            return _this4.onCheck(e, validFunction);
                         } })
                 ) : _react2.default.createElement(
                     'td',
@@ -16371,30 +16455,30 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
             var total = node.Children.length;
             for (var k = 0; k < total; k++) {
-                this._buildFunctionNode(licensee, node.Children[k], level + 1, hierachy, isActiveUser);
+                this._buildFunctionNode(licensee, node.Children[k], level + 1, hierachy, validFunctions);
             }
         }
     }, {
         key: '_buildFunctionHierachy',
-        value: function _buildFunctionHierachy(licensee, functions, isActiveUser) {
+        value: function _buildFunctionHierachy(licensee, functions, validFunctions) {
             var hierachy = [];
 
             var total = functions.length;
             for (var j = 0; j < total; j++) {
-                this._buildFunctionNode(licensee, functions[j], 0, hierachy, isActiveUser);
+                this._buildFunctionNode(licensee, functions[j], 0, hierachy, validFunctions);
             }
 
             return hierachy;
         }
     }, {
         key: '_buildTableBody',
-        value: function _buildTableBody(gridData, isActiveUser) {
+        value: function _buildTableBody(gridData, validFunctions) {
             var grid = [];
 
             var total = gridData.length;
             for (var i = 0; i < total; i++) {
                 var item = gridData[i];
-                var hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions, isActiveUser);
+                var hierachy = this._buildFunctionHierachy(item.Licensee, item.Functions, validFunctions);
                 grid.push(_react2.default.createElement(
                     'tr',
                     { key: item.Licensee.Name, className: item.Licensee.Checked ? '' : 'disable' },
@@ -16425,7 +16509,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
         }
     }, {
         key: '_buildTable',
-        value: function _buildTable(gridData, isActiveUser) {
+        value: function _buildTable(gridData, validFunctions) {
+            var _this5 = this;
+
             return _react2.default.createElement(
                 'table',
                 { className: 'table table-bordered table-hover' },
@@ -16462,23 +16548,31 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         _react2.default.createElement(
                             'th',
                             { className: 'middle' },
-                            'Assigned'
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'checkbox-inline node' },
+                                validFunctions && validFunctions.length > 0 && _react2.default.createElement('input', { type: 'checkbox', checked: this.state.checkedAll, onChange: function onChange(e) {
+                                        return _this5.onCheckAll(e);
+                                    } }),
+                                'Assigned'
+                            )
                         )
                     )
                 ),
                 _react2.default.createElement(
                     'tbody',
                     null,
-                    this._buildTableBody(gridData, isActiveUser)
+                    this._buildTableBody(gridData, validFunctions)
                 )
             );
         }
     }, {
         key: 'render',
         value: function render() {
-            var _state2 = this.state,
-                gridData = _state2.gridData,
-                isShowConfirmBox = _state2.isShowConfirmBox;
+            var _state = this.state,
+                gridData = _state.gridData,
+                isShowConfirmBox = _state.isShowConfirmBox,
+                validFunctions = _state.validFunctions;
 
 
             if (gridData.length === 0) {
@@ -16504,18 +16598,18 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     msg: 'Do you want to update functions of user?',
                     style: { height: '210px', width: '400px' },
                     onConfirm: this.onConfirm }),
-                this._buildTable(gridData, user.IsActive)
+                this._buildTable(gridData, validFunctions)
             );
         }
     }, {
         key: 'isValid',
         get: function get() {
-            var _state3 = this.state,
-                assignedFunctions = _state3.assignedFunctions,
-                unassignedFunctions = _state3.unassignedFunctions;
+            var validFunctions = this.state.validFunctions;
 
 
-            return assignedFunctions.length > 0 || unassignedFunctions.length > 0;
+            return validFunctions.findIndex(function (x) {
+                return x.IsAssigned && !x.Checked || !x.IsAssigned && x.Checked;
+            }) > -1;
         }
     }]);
 
@@ -16878,9 +16972,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         _this.state = {
             gridData: [],
-            assignedCurrencies: [],
-            unassignedCurrencies: [],
-            isShowConfirmBox: false
+            validCurrencies: [],
+            isShowConfirmBox: false,
+            checkedAll: false
         };
         return _this;
     }
@@ -16896,15 +16990,53 @@ var DataGrid = exports.DataGrid = function (_Component) {
         key: 'onCheck',
         value: function onCheck(e, item) {
             var checked = e.target.checked;
-            var newList = [];
+            var validCurrencies = this.state.validCurrencies;
 
-            if (item.IsAssigned) {
-                var newRemovedCurrencies = this._getNewCheckedCurrencyList(!checked, item, this.state.unassignedCurrencies);
-                this.setState({ unassignedCurrencies: newRemovedCurrencies });
-            } else {
-                var newAssignedCurrencies = this._getNewCheckedCurrencyList(checked, item, this.state.assignedCurrencies);
-                this.setState({ assignedCurrencies: newAssignedCurrencies });
+
+            var newValidCurrencies = validCurrencies.map(function (x) {
+                if (x == item) {
+                    return Object.assign({}, x, { Checked: checked });
+                }
+
+                return x;
+            });
+
+            var isCheckedAll = newValidCurrencies.findIndex(function (x) {
+                return !x.Checked;
+            }) == -1;
+
+            this.setState({ validCurrencies: newValidCurrencies, checkedAll: isCheckedAll });
+        }
+    }, {
+        key: 'onCheckAll',
+        value: function onCheckAll(e) {
+            var checked = e.target.checked;
+            var validCurrencies = this.state.validCurrencies;
+
+
+            if (checked) {
+                var _newValidCurrencies = validCurrencies.map(function (x) {
+                    if (!x.Checked) {
+                        return Object.assign({}, x, { Checked: true });
+                    }
+
+                    return x;
+                });
+
+                this.setState({ validCurrencies: _newValidCurrencies, checkedAll: checked });
+
+                return;
             }
+
+            var newValidCurrencies = validCurrencies.map(function (x) {
+                if (x.Checked) {
+                    return Object.assign({}, x, { Checked: false });
+                }
+
+                return x;
+            });
+
+            this.setState({ validCurrencies: newValidCurrencies, checkedAll: checked });
         }
     }, {
         key: '_showConfirmBox',
@@ -16914,18 +17046,16 @@ var DataGrid = exports.DataGrid = function (_Component) {
     }, {
         key: '_getParams',
         value: function _getParams(redmineId) {
-            var _state = this.state,
-                assignedCurrencies = _state.assignedCurrencies,
-                unassignedCurrencies = _state.unassignedCurrencies;
+            var validCurrencies = this.state.validCurrencies;
 
 
             return {
                 UserId: this.props.user.UserId,
-                ActiveCurrencies: assignedCurrencies.map(function (x) {
-                    return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId };
+                ActiveCurrencies: validCurrencies.filter(function (x) {
+                    return !x.IsAssigned && x.Checked;
                 }),
-                DeactiveCurrencies: unassignedCurrencies.map(function (x) {
-                    return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId };
+                DeactiveCurrencies: validCurrencies.filter(function (x) {
+                    return x.IsAssigned && !x.Checked;
                 }),
                 RedmineId: redmineId
             };
@@ -16955,46 +17085,90 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
         }
     }, {
-        key: '_getNewCheckedCurrencyList',
-        value: function _getNewCheckedCurrencyList(isCheck, item, oldList) {
-            if (isCheck) {
-                return [].concat(_toConsumableArray(oldList), [item]);
-            }
-
-            return oldList.filter(function (x) {
-                return x !== item;
-            });
-        }
-    }, {
         key: '_getData',
         value: function _getData() {
             var _this3 = this;
 
             this.props.toggleLoader(true);
+
+            var _props = this.props,
+                user = _props.user,
+                currencyParams = _props.currencyParams;
+
+
             var params = {
-                UserId: this.props.user.UserId,
-                LicenseeId: this.props.currencyParams.LicenseeId,
-                CurrencyId: this.props.currencyParams.CurrencyId
+                UserId: user.UserId,
+                LicenseeId: currencyParams.LicenseeId,
+                CurrencyId: currencyParams.CurrencyId
             };
             _site2.default.fetchData(params, 'ITUserManagement/GetLicenseeUserCurrency').then(function (response) {
-                _this3.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: [] });
+                var validCurrencies = user.IsActive ? _this3._getValidCurrencies(response.data) : [];
+                var isCheckedAll = validCurrencies.findIndex(function (x) {
+                    return !x.Checked;
+                }) == -1;
+
+                _this3.setState({
+                    gridData: response.data,
+                    validCurrencies: validCurrencies,
+                    checkedAll: isCheckedAll
+                });
+
                 _this3.props.toggleLoader(false);
             }).catch(function (err) {
                 _this3.props.toggleLoader(false);
             });
         }
     }, {
+        key: '_getValidCurrencies',
+        value: function _getValidCurrencies(gridData) {
+            var validCurrencies = [];
+
+            for (var i = 0; i < gridData.length; i++) {
+                var item = gridData[i];
+
+                if (!item.Licensee.Checked) {
+                    continue;;
+                }
+
+                if (!item.Licensee.IsValid) {
+                    item.Currencies.forEach(function (x) {
+                        if (x.IsAssigned) {
+                            validCurrencies.push({
+                                LicenseeName: x.LicenseeName,
+                                CurrencyId: x.CurrencyId,
+                                IsAssigned: x.IsAssigned,
+                                Checked: x.IsAssigned
+                            });
+                        }
+                    });
+                } else {
+                    item.Currencies.forEach(function (x) {
+                        validCurrencies.push({
+                            LicenseeName: x.LicenseeName,
+                            CurrencyId: x.CurrencyId,
+                            IsAssigned: x.IsAssigned,
+                            Checked: x.IsAssigned
+                        });
+                    });
+                }
+            }
+
+            return validCurrencies;
+        }
+    }, {
         key: '_buildCurrencyRow',
-        value: function _buildCurrencyRow(licensee, currencies, isActiveUser) {
+        value: function _buildCurrencyRow(licensee, currencyData, validCurrencies) {
             var _this4 = this;
 
             var currencyRows = [];
 
-            var total = currencies.length;
+            var total = currencyData.length;
 
             var _loop = function _loop(j) {
-                var currency = currencies[j];
-                var checked = licensee.Checked && (currency.IsAssigned ? _this4.state.unassignedCurrencies.indexOf(currency) === -1 : _this4.state.assignedCurrencies.indexOf(currency) > -1);
+                var currency = currencyData[j];
+                var validCurrency = validCurrencies.find(function (x) {
+                    return x.LicenseeName == currency.LicenseeName && x.CurrencyId == currency.CurrencyId;
+                });
 
                 currencyRows.push(_react2.default.createElement(
                     'tr',
@@ -17004,11 +17178,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         null,
                         currency.CurrencyName
                     ),
-                    licensee.Checked && isActiveUser && (licensee.IsValid || currency.IsAssigned) ? _react2.default.createElement(
+                    validCurrency ? _react2.default.createElement(
                         'td',
                         { className: 'text-center' },
-                        _react2.default.createElement('input', { type: 'checkbox', checked: checked, onChange: function onChange(e) {
-                                return _this4.onCheck(e, currency);
+                        _react2.default.createElement('input', { type: 'checkbox', checked: validCurrency.Checked, onChange: function onChange(e) {
+                                return _this4.onCheck(e, validCurrency);
                             } })
                     ) : _react2.default.createElement(
                         'td',
@@ -17026,13 +17200,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
         }
     }, {
         key: '_buildTableBody',
-        value: function _buildTableBody(gridData, isActiveUser) {
+        value: function _buildTableBody(gridData, validCurrencies) {
             var grid = [];
 
             var total = gridData.length;
             for (var i = 0; i < total; i++) {
                 var item = gridData[i];
-                var currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, isActiveUser);
+                var currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, validCurrencies);
                 grid.push(_react2.default.createElement(
                     'tr',
                     { key: item.Licensee.Name, className: item.Licensee.Checked ? '' : 'disable' },
@@ -17063,7 +17237,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
         }
     }, {
         key: '_buildTable',
-        value: function _buildTable(gridData, isActiveUser) {
+        value: function _buildTable(gridData, validCurrencies) {
+            var _this5 = this;
+
             return _react2.default.createElement(
                 'table',
                 { className: 'table table-bordered table-hover' },
@@ -17100,23 +17276,31 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         _react2.default.createElement(
                             'th',
                             { className: 'middle' },
-                            'Assigned'
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'checkbox-inline node' },
+                                validCurrencies && validCurrencies.length > 0 && _react2.default.createElement('input', { type: 'checkbox', checked: this.state.checkedAll, onChange: function onChange(e) {
+                                        return _this5.onCheckAll(e);
+                                    } }),
+                                'Assigned'
+                            )
                         )
                     )
                 ),
                 _react2.default.createElement(
                     'tbody',
                     null,
-                    this._buildTableBody(gridData, isActiveUser)
+                    this._buildTableBody(gridData, validCurrencies)
                 )
             );
         }
     }, {
         key: 'render',
         value: function render() {
-            var _state2 = this.state,
-                gridData = _state2.gridData,
-                isShowConfirmBox = _state2.isShowConfirmBox;
+            var _state = this.state,
+                gridData = _state.gridData,
+                isShowConfirmBox = _state.isShowConfirmBox,
+                validCurrencies = _state.validCurrencies;
 
 
             if (gridData.length === 0) {
@@ -17142,18 +17326,18 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     msg: 'Do you want to update currencies of user?',
                     style: { height: '210px', width: '400px' },
                     onConfirm: this.onConfirm }),
-                this._buildTable(gridData, user.IsActive)
+                this._buildTable(gridData, validCurrencies)
             );
         }
     }, {
         key: 'isValid',
         get: function get() {
-            var _state3 = this.state,
-                assignedCurrencies = _state3.assignedCurrencies,
-                unassignedCurrencies = _state3.unassignedCurrencies;
+            var validCurrencies = this.state.validCurrencies;
 
 
-            return assignedCurrencies.length > 0 || unassignedCurrencies.length > 0;
+            return validCurrencies.findIndex(function (x) {
+                return x.IsAssigned && !x.Checked || !x.IsAssigned && x.Checked;
+            }) > -1;
         }
     }]);
 

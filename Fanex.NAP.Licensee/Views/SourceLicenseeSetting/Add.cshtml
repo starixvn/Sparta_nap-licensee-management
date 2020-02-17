@@ -9,6 +9,7 @@
     var serializer = new JavaScriptSerializer();
 
     var currencyList = Model.CurrencyList.Select(x => new { label = x.Name, value = x.Id }).ToList();
+    currencyList.Insert(0, new { label = "All", value = 0 });
     var siteNameList = Model.SiteNameList.Select(x => new { label = x.Name, value = x.Id }).ToList();
     var sourceSiteNameList = Model.SourceSiteNameList.Select(x => new { label = x.Name, value = x.Id }).ToList();
     var roleList = Model.RoleList.Select(x => new { label = x.Value, value = x.Key }).ToList();

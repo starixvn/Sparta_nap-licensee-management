@@ -519,4 +519,8 @@ tr.disable {
       color: #3C5EA5;
       border-bottom: 1px solid #3C5EA5; }
 
+.checkbox-inline.node {
+  vertical-align: unset;
+  font-weight: 700; }
+
 /*# sourceMappingURL=user.css.map*/

@@ -16,9 +16,7 @@
 
         public string SourceLicenseeName { get; set; }
 
-        public int CurrencyId { get; set; }
-
-        public string Currency { get; set; }
+        public string CurrencyId { get; set; }
 
         public int RoleId { get; set; }
 

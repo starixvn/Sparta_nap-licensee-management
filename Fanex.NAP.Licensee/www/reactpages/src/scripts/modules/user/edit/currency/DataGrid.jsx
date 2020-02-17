@@ -13,9 +13,9 @@ export class DataGrid extends Component {
 
         this.state = {
             gridData: [],
-            assignedCurrencies: [],
-            unassignedCurrencies: [],
-            isShowConfirmBox: false
+            validCurrencies: [],
+            isShowConfirmBox: false,
+            checkedAll: false
         };
     }
 
@@ -26,23 +26,26 @@ export class DataGrid extends Component {
     }
 
     get isValid() {
-        const { assignedCurrencies, unassignedCurrencies} = this.state;
+        const { validCurrencies } = this.state;
 
-        return assignedCurrencies.length > 0 || unassignedCurrencies.length > 0;
+        return validCurrencies.findIndex(x => (x.IsAssigned && !x.Checked) || (!x.IsAssigned && x.Checked)) > -1;
     }
 
     onCheck(e, item) {
         const checked = e.target.checked;
-        let newList = [];
-        
-        if (item.IsAssigned) {
-            const newRemovedCurrencies = this._getNewCheckedCurrencyList(!checked, item, this.state.unassignedCurrencies);
-            this.setState({ unassignedCurrencies: newRemovedCurrencies });
-        }
-        else {
-            const newAssignedCurrencies = this._getNewCheckedCurrencyList(checked, item, this.state.assignedCurrencies);
-            this.setState({ assignedCurrencies: newAssignedCurrencies });
-        }
+        const { validCurrencies } = this.state;
+
+        const newValidCurrencies = validCurrencies.map(x => {
+            if (x == item) {
+                return Object.assign({}, x, { Checked: checked });
+            }
+
+            return x;
+        });
+
+        const isCheckedAll = newValidCurrencies.findIndex(x => !x.Checked) == -1;
+
+        this.setState({ validCurrencies: newValidCurrencies, checkedAll: isCheckedAll });
     }
 
     onSubmit = () => {
@@ -51,24 +54,52 @@ export class DataGrid extends Component {
 
     onConfirm = (redmineId) => {
         this._showConfirmBox(false);
-        
+
         if (redmineId) {
             this._submit(redmineId);
         }
+    }
+
+    onCheckAll(e) {
+        const checked = e.target.checked;
+        const { validCurrencies } = this.state;
+
+        if (checked) {
+            const newValidCurrencies = validCurrencies.map(x => {
+                if (!x.Checked) {
+                    return Object.assign({}, x, { Checked: true });
+                }
+
+                return x;
+            });
+
+            this.setState({ validCurrencies: newValidCurrencies, checkedAll: checked });
+
+            return;
+        }
+
+        const newValidCurrencies = validCurrencies.map(x => {
+            if (x.Checked) {
+                return Object.assign({}, x, { Checked: false });
+            }
+
+            return x;
+        });
+
+        this.setState({ validCurrencies: newValidCurrencies, checkedAll: checked });
     }
 
     _showConfirmBox(isShow) {
         this.setState({ isShowConfirmBox: isShow });
     }
 
-    _getParams(redmineId)
-    {
-        const { assignedCurrencies, unassignedCurrencies } = this.state;
+    _getParams(redmineId) {
+        const { validCurrencies } = this.state;
 
         return {
             UserId: this.props.user.UserId,
-            ActiveCurrencies: assignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
-            DeactiveCurrencies: unassignedCurrencies.map(x => { return { LicenseeName: x.LicenseeName, CurrencyId: x.CurrencyId }; }),
+            ActiveCurrencies: validCurrencies.filter(x => !x.IsAssigned && x.Checked),
+            DeactiveCurrencies: validCurrencies.filter(x => x.IsAssigned && !x.Checked),
             RedmineId: redmineId
         };
     }
@@ -97,48 +128,88 @@ export class DataGrid extends Component {
             });
     }
 
-    _getNewCheckedCurrencyList(isCheck, item, oldList) {
-        if (isCheck) {
-            return [...oldList, item];
-        }
-
-        return oldList.filter(x => x !== item);
-    }
-
     _getData() {
         this.props.toggleLoader(true);
+
+        const { user, currencyParams } = this.props;
+
         const params = {
-            UserId: this.props.user.UserId,
-            LicenseeId: this.props.currencyParams.LicenseeId,
-            CurrencyId: this.props.currencyParams.CurrencyId
+            UserId: user.UserId,
+            LicenseeId: currencyParams.LicenseeId,
+            CurrencyId: currencyParams.CurrencyId
         };
         Site.fetchData(params, 'ITUserManagement/GetLicenseeUserCurrency')
             .then(response => {
-                this.setState({ gridData: response.data, assignedCurrencies: [], unassignedCurrencies: []});
+                const validCurrencies = user.IsActive ? this._getValidCurrencies(response.data) : [];
+                const isCheckedAll = validCurrencies.findIndex(x => !x.Checked) == -1;
+
+                this.setState({
+                    gridData: response.data,
+                    validCurrencies: validCurrencies,
+                    checkedAll: isCheckedAll
+                });
+
                 this.props.toggleLoader(false);
             }).catch(err => {
                 this.props.toggleLoader(false);
             });
     }
 
-    _buildCurrencyRow(licensee, currencies, isActiveUser) {
+    _getValidCurrencies(gridData) {
+        let validCurrencies = [];
+
+        for (let i = 0; i < gridData.length; i++) {
+            const item = gridData[i];
+
+            if (!item.Licensee.Checked) {
+                continue;;
+            }
+
+            if (!item.Licensee.IsValid) {
+                item.Currencies.forEach(x => {
+                    if (x.IsAssigned) {
+                        validCurrencies.push({
+                            LicenseeName: x.LicenseeName,
+                            CurrencyId: x.CurrencyId,
+                            IsAssigned: x.IsAssigned,
+                            Checked: x.IsAssigned,
+                        });
+                    }
+                });
+            }
+            else {
+                item.Currencies.forEach(x =>
+                {
+                    validCurrencies.push({
+                        LicenseeName: x.LicenseeName,
+                        CurrencyId: x.CurrencyId,
+                        IsAssigned: x.IsAssigned,
+                        Checked: x.IsAssigned
+                    });
+                });
+            }
+        }
+
+        return validCurrencies;
+    }
+
+    _buildCurrencyRow(licensee, currencyData, validCurrencies) {
         let currencyRows = [];
 
-        const total = currencies.length;
-        for(let j = 0; j < total; j++) {
-            const currency = currencies[j];
-            const checked = licensee.Checked 
-            && (currency.IsAssigned ? this.state.unassignedCurrencies.indexOf(currency) === -1 : this.state.assignedCurrencies.indexOf(currency) > -1 );
+        const total = currencyData.length;
+        for (let j = 0; j < total; j++) {
+            const currency = currencyData[j];
+            const validCurrency = validCurrencies.find(x => x.LicenseeName == currency.LicenseeName && x.CurrencyId == currency.CurrencyId);
 
             currencyRows.push(
                 <tr key={`${licensee.Id}-${currency.CurrencyId}`} className={licensee.Checked ? '' : 'disable'}>
                     <td>
-                    {currency.CurrencyName}
+                        {currency.CurrencyName}
                     </td>
                     {
-                        licensee.Checked && isActiveUser && (licensee.IsValid || currency.IsAssigned)
-                        ? <td className='text-center'><input type='checkbox' checked={checked} onChange={(e) => this.onCheck(e, currency)} /></td>
-                        : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                        validCurrency
+                            ? <td className='text-center'><input type='checkbox' checked={validCurrency.Checked} onChange={(e) => this.onCheck(e, validCurrency)} /></td>
+                            : <td className='text-center'>{currency.IsAssigned && <span className='glyphicon glyphicon-ok green'></span>}</td>
                     }
                 </tr>
             );
@@ -147,17 +218,17 @@ export class DataGrid extends Component {
         return currencyRows;
     }
 
-    _buildTableBody(gridData, isActiveUser) {
+    _buildTableBody(gridData, validCurrencies) {
         let grid = [];
 
         const total = gridData.length;
-        for(let i = 0; i < total; i++) {
+        for (let i = 0; i < total; i++) {
             const item = gridData[i];
-            const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, isActiveUser);
+            const currencyRows = this._buildCurrencyRow(item.Licensee, item.Currencies, validCurrencies);
             grid.push(
                 <tr key={item.Licensee.Name} className={item.Licensee.Checked ? '' : 'disable'}>
                     <td className='middle' rowSpan={currencyRows.length + 1}><b>{item.Licensee.Name}{!item.Licensee.IsValid && <sup className='red'>*</sup>}</b></td>
-                    <td className='middle text-center' rowSpan={currencyRows.length + 1}>{ item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
+                    <td className='middle text-center' rowSpan={currencyRows.length + 1}>{item.Licensee.Checked && <span className='glyphicon glyphicon-ok green'></span>}</td>
                 </tr>
             );
             grid.push(
@@ -168,32 +239,40 @@ export class DataGrid extends Component {
         return grid;
     }
 
-    _buildTable(gridData, isActiveUser) {
+    _buildTable(gridData, validCurrencies) {
         return (
-          <table className="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th className='middle' rowSpan='2'>Licensee Name</th>
-                            <th className='middle' rowSpan='2'>Active</th>
-                            <th className='middle' colSpan='2'>Currency</th>
-                        </tr>
-                        <tr>
-                            <th className='middle'>Name</th>
-                            <th className='middle'>Assigned</th>
-                        </tr>
-                    </thead>
+            <table className="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th className='middle' rowSpan='2'>Licensee Name</th>
+                        <th className='middle' rowSpan='2'>Active</th>
+                        <th className='middle' colSpan='2'>Currency</th>
+                    </tr>
+                    <tr>
+                        <th className='middle'>Name</th>
+                        <th className='middle'>
+                            <label className="checkbox-inline node">
+                                {
+                                    validCurrencies && validCurrencies.length > 0 &&
+                                    <input type="checkbox" checked={this.state.checkedAll} onChange={(e) => this.onCheckAll(e)} />
+                                }
+                                Assigned
+                            </label>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
                     {
-                        this._buildTableBody(gridData, isActiveUser)
+                        this._buildTableBody(gridData, validCurrencies)
                     }
-                    </tbody>
-            </table>  
+                </tbody>
+            </table>
         );
     }
 
     render() {
-        const { gridData, isShowConfirmBox } = this.state;
+        const { gridData, isShowConfirmBox, validCurrencies} = this.state;
 
         if (gridData.length === 0) {
             return false;
@@ -211,9 +290,9 @@ export class DataGrid extends Component {
                 }
                 <RedmineConfirmForm isShow={isShowConfirmBox}
                     msg='Do you want to update currencies of user?'
-                    style={{height: '210px', width: '400px'}}
+                    style={{ height: '210px', width: '400px' }}
                     onConfirm={this.onConfirm} />
-                {this._buildTable(gridData, user.IsActive)}       
+                {this._buildTable(gridData, validCurrencies)}
             </div>
         )
     }

@@ -8942,6 +8942,20 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
             this.setState(selectedItem);
         }
     }, {
+        key: '_handleSelectedCurency',
+        value: function _handleSelectedCurency(value) {
+            var result = value && value.findIndex(function (x) {
+                return x.value === 0;
+            });
+            if (result != -1) {
+                value = value.filter(function (x) {
+                    return x.value === 0;
+                });
+            }
+
+            this.setState({ selectedCurrency: value });
+        }
+    }, {
         key: '_submit',
         value: function _submit() {
             var params = {
@@ -8951,8 +8965,12 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
                 siteName: this.state.selectedSiteName ? this.state.selectedSiteName.label : '',
                 sourceLicenseeId: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.value : 0,
                 sourceSiteName: this.state.selectedSourceSiteName ? this.state.selectedSourceSiteName.label : '',
-                currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.value : 0,
-                currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.label : '',
+                currencyId: this.state.selectedCurrency ? this.state.selectedCurrency.map(function (i) {
+                    return i.value;
+                }).join(',') : '',
+                currencyName: this.state.selectedCurrency ? this.state.selectedCurrency.map(function (i) {
+                    return i.label;
+                }).join(',') : '',
                 roleId: this.state.selectedRole ? this.state.selectedRole.value : 0,
                 role: this.state.selectedRole ? this.state.selectedRole.label : '',
                 pageIndex: 1,
@@ -8976,6 +8994,7 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
                     var data = response.data ? response.data.map(function (item) {
                         return { label: item.Name, value: item.Id };
                     }) : [];
+                    data.splice(0, 0, { label: "All", value: 0 });
 
                     _this2.setState({ currencyList: data, selectedCurrency: null });
 
@@ -9005,102 +9024,111 @@ var FormFilterBase = exports.FormFilterBase = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-xs-12 filter-form form-inline' },
+                { className: 'col-xs-12 filter-form' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row' },
                     _react2.default.createElement(
-                        'label',
-                        null,
-                        'From Date'
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'From Date'
+                        ),
+                        _react2.default.createElement('input', { type: 'date',
+                            value: fromDate,
+                            className: fromDate || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(e) {
+                                return _this3.setState({ fromDate: e.target.value });
+                            } })
                     ),
-                    _react2.default.createElement('input', { type: 'date',
-                        value: fromDate,
-                        className: fromDate || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(e) {
-                            return _this3.setState({ fromDate: e.target.value });
-                        } })
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'To Date'
+                        ),
+                        _react2.default.createElement('input', { type: 'date',
+                            value: toDate,
+                            className: toDate || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(e) {
+                                return _this3.setState({ toDate: e.target.value });
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Site Name'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSiteName',
+                            value: selectedSiteName,
+                            options: defaultState.siteNameList,
+                            className: selectedSiteName || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedChange('selectedSiteName', item);
+                            } })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Source Site Name'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSourceSiteName',
+                            value: selectedSourceSiteName,
+                            options: defaultState.sourceSiteNameList,
+                            className: selectedSourceSiteName || !isRequired ? '' : 'has-error',
+                            onChange: this.onSourceSiteNameChange })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12 col-sm-2 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Role'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlRole',
+                            value: selectedRole,
+                            options: defaultState.roleList,
+                            className: selectedRole || !isRequired ? '' : 'has-error',
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedChange('selectedRole', item);
+                            } })
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row' },
                     _react2.default.createElement(
-                        'label',
-                        null,
-                        'To Date'
-                    ),
-                    _react2.default.createElement('input', { type: 'date',
-                        value: toDate,
-                        className: toDate || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(e) {
-                            return _this3.setState({ toDate: e.target.value });
-                        } })
+                        'div',
+                        { className: 'col-xs-12 col-sm-10 form-group' },
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Currency'
+                        ),
+                        _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlCurrency',
+                            value: selectedCurrency,
+                            options: currencyList,
+                            className: selectedCurrency && selectedCurrency.length || !isRequired ? '' : 'has-error',
+                            multi: true,
+                            onChange: function onChange(item) {
+                                return _this3._handleSelectedCurency(item);
+                            } })
+                    )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Site Name'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSiteName',
-                        value: selectedSiteName,
-                        options: defaultState.siteNameList,
-                        className: selectedSiteName || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedSiteName', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Source Site Name'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlSourceSiteName',
-                        value: selectedSourceSiteName,
-                        options: defaultState.sourceSiteNameList,
-                        className: selectedSourceSiteName || !isRequired ? '' : 'has-error',
-                        onChange: this.onSourceSiteNameChange })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Currency'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlCurrency',
-                        value: selectedCurrency,
-                        options: currencyList,
-                        className: selectedCurrency || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedCurrency', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        'Role'
-                    ),
-                    _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlRole',
-                        value: selectedRole,
-                        options: defaultState.roleList,
-                        className: selectedRole || !isRequired ? '' : 'has-error',
-                        onChange: function onChange(item) {
-                            return _this3._handleSelectedChange('selectedRole', item);
-                        } })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
+                    { className: 'col-xs-12 row form-group' },
                     _react2.default.createElement(
                         'button',
                         { type: 'button', className: 'btn btn-primary', onClick: this._handleSubmit, disabled: !this.isValid },
@@ -9817,9 +9845,9 @@ var Action = exports.Action = function (_Component) {
 
         _this.onPopupClose = function () {
             _this.setState({
-                stopFrom: _utility2.default.getTodayString(),
+                stopFrom: _this._getMinStopDate(),
                 restart: false,
-                restartFrom: _utility2.default.getTodayString(),
+                restartFrom: _this._getMinStopDate(),
                 restartTo: _utility2.default.getDateString(new Date(2050, 0, 1)),
                 redmineId: '',
                 isShowPopup: false
@@ -9834,14 +9862,15 @@ var Action = exports.Action = function (_Component) {
         };
 
         _this.state = {
-            stopFrom: _utility2.default.getTodayString(),
+            stopFrom: _this._getMinStopDate(),
             restart: false,
-            restartFrom: _utility2.default.getTodayString(),
+            restartFrom: _this._getMinStopDate(),
             restartTo: _utility2.default.getDateString(new Date(2050, 0, 1)),
             redmineId: '',
             result: null,
             isShowPopup: false,
-            isShowConfirmation: false
+            isShowConfirmation: false,
+            minDate: _this._getMinStopDate()
         };
         return _this;
     }
@@ -9852,6 +9881,37 @@ var Action = exports.Action = function (_Component) {
             if (prevProps.params.timeStamp !== this.props.params.timeStamp) {
                 this.setState({ result: null });
             }
+        }
+    }, {
+        key: '_convertDateToString',
+        value: function _convertDateToString(date) {
+            var dd = date.getDate();
+            var mm = date.getMonth() + 1;
+            var yyyy = date.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            return yyyy + '-' + mm + '-' + dd;
+        }
+    }, {
+        key: '_addDate',
+        value: function _addDate(date, days) {
+            date.setDate(date.getDate() + days);
+
+            return date;
+        }
+    }, {
+        key: '_getMinStopDate',
+        value: function _getMinStopDate() {
+            var minDate = new Date();
+            minDate = this._addDate(minDate, 1);
+            minDate = this._convertDateToString(minDate);
+
+            return minDate;
         }
     }, {
         key: '_getParam',
@@ -9902,7 +9962,7 @@ var Action = exports.Action = function (_Component) {
         }
     }, {
         key: '_buildPopupContent',
-        value: function _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId) {
+        value: function _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate) {
             var _this3 = this;
 
             return _react2.default.createElement(
@@ -9918,7 +9978,7 @@ var Action = exports.Action = function (_Component) {
                     ),
                     _react2.default.createElement('input', { className: 'full-width ' + (stopFrom ? '' : 'has-error'),
                         type: 'date',
-                        value: stopFrom,
+                        value: stopFrom, min: minDate,
                         onChange: function onChange(e) {
                             return _this3.setState({ stopFrom: e.target.value });
                         } })
@@ -9945,7 +10005,7 @@ var Action = exports.Action = function (_Component) {
                     ),
                     _react2.default.createElement('input', { className: 'full-width ' + (!restart || restartFrom ? '' : 'has-error'),
                         disabled: !restart,
-                        type: 'date', value: restartFrom,
+                        type: 'date', value: restartFrom, min: stopFrom,
                         onChange: function onChange(e) {
                             return _this3.setState({ restartFrom: e.target.value });
                         } })
@@ -10006,7 +10066,8 @@ var Action = exports.Action = function (_Component) {
                 redmineId = _state.redmineId,
                 result = _state.result,
                 isShowPopup = _state.isShowPopup,
-                isShowConfirmation = _state.isShowConfirmation;
+                isShowConfirmation = _state.isShowConfirmation,
+                minDate = _state.minDate;
 
             var countSelectedItem = this.props.checkedList.length;
 
@@ -10036,7 +10097,7 @@ var Action = exports.Action = function (_Component) {
                     onClose: this.onConfirm }),
                 _react2.default.createElement(_Popup2.default, { isShow: isShowPopup,
                     title: 'Suspend Source Licensee',
-                    content: this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId),
+                    content: this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate),
                     className: 'no-scroll',
                     style: { height: '410px', width: '600px' },
                     onClose: this.onPopupClose }),

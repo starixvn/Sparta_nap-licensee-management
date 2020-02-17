@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[Nap_LM_SourceLicensee_GetSourceData]
 	@ToDate				DATE		= '',
 	@LicenseeId			INT			= 0,
 	@SourceLicenseeId	INT			= 0,
-	@CurrencyId			INT			= 0,
+	@CurrencyId			VARCHAR(MAX) = '',
 	@RoleId				INT			= 0,
 	@PageIndex			INT			= 1,
 	@PageSize			INT			= 20,
@@ -20,6 +20,7 @@ AS
 	 Revisions:
 	  - 20181211@Amanda: Select Source Licensees [Redmine: #83584]
 	  - 20180315@Amanda: Fix paging issue [Redmine: #83584]
+	  - 20200117@Amanda: Allow search with multiple currencies [Redmine: #112840]
 */
 BEGIN
 	SET NOCOUNT ON;
@@ -32,7 +33,15 @@ BEGIN
 		EndDate		SMALLDATETIME,
 		IsActive	BIT
 	)
+	DECLARE @currency AS TABLE (
+		Id			INT
+	)
+	
 	DECLARE @from INT, @to INT
+		
+	INSERT INTO @currency(Id)
+	SELECT DISTINCT val
+	FROM CUSTDB.dbo.strSplit(@CurrencyId,',')
 	
 	IF @RoleId = 2 -- Agent
 	BEGIN
@@ -42,10 +51,10 @@ BEGIN
 			WHERE l.LicenseeID = @LicenseeId
 				AND l.SourcedLicenseeID = @SourceLicenseeId
 				AND l.Roleid = @Roleid
-				AND l.SourcedCurrencyID = @CurrencyId
 				AND @FromDate <= l.EndDate
 				AND @ToDate >= l.EffectiveDate
 				AND l.EffectiveDate <= l.EndDate
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 		)
 		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
 		SELECT	ROW_NUMBER() OVER (ORDER BY l.CustID ASC, l.Currency ASC, s.EffectiveDate ASC),
@@ -56,7 +65,7 @@ BEGIN
 				CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive
 		FROM dbo.LicenseeCust l WITH (NOLOCK)
 		LEFT JOIN Setting_CTE s ON s.SourcedId = l.CustID
-		WHERE l.LicenseeID = @SourceLicenseeId AND l.Currency = @CurrencyId AND l.RoleID = 2
+		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.Currency = c.Id)
 	END
 	IF @RoleId = 1 -- Member
 	BEGIN
@@ -66,10 +75,10 @@ BEGIN
 			WHERE l.LicenseeID = @LicenseeId
 				AND l.SourcedLicenseeID = @SourceLicenseeId
 				AND l.Roleid = @Roleid
-				AND l.SourcedCurrencyID = @CurrencyId
 				AND @FromDate <= l.EndDate
 				AND @ToDate >= l.EffectiveDate
 				AND l.EffectiveDate <= l.EndDate
+				AND EXISTS (SELECT 1 FROM @currency c WHERE c.Id = 0 OR l.SourcedCurrencyID = c.Id)
 		)
 		INSERT INTO #data (RowNum, SourceId, CurrencyId, EffectiveDate, EndDate, IsActive)
 		SELECT	ROW_NUMBER() OVER (ORDER BY c.custid ASC, c.currency ASC, s.EffectiveDate ASC),
@@ -79,9 +88,9 @@ BEGIN
 				s.EndDate,
 				CASE WHEN s.SourcedId IS NOT NULL THEN 0 ELSE 1 END AS IsActive
 		FROM CustDB.dbo.custInfo c WITH (NOLOCK)
-		INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend
+		INNER JOIN dbo.LicenseeCust l WITH (NOLOCK) ON l.CustID = c.recommend AND c.currency = l.currency
 		LEFT JOIN Setting_CTE s ON s.SourcedId = c.custid
-		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND l.currency = @CurrencyId AND c.roleid = 1 AND c.currency = @CurrencyId
+		WHERE l.LicenseeID = @SourceLicenseeId AND l.RoleID = 2 AND c.roleid = 1 AND EXISTS (SELECT 1 FROM @currency cu WHERE cu.Id = 0 OR l.Currency = cu.Id)
 	END
 
 	SELECT @TotalItem = MAX(RowNum)

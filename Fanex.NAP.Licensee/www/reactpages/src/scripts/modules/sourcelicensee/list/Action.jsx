@@ -13,14 +13,15 @@ export class Action extends Component {
         super(props);
 
         this.state = {
-            stopFrom: Utility.getTodayString(),
+            stopFrom: this._getMinStopDate(),
             restart: false,
-            restartFrom: Utility.getTodayString(),
+            restartFrom: this._getMinStopDate(),
             restartTo: Utility.getDateString(new Date(2050, 0, 1)),
             redmineId: '',
             result: null,
             isShowPopup: false,
-            isShowConfirmation: false
+            isShowConfirmation: false,
+            minDate: this._getMinStopDate()
         };
     }
 
@@ -33,7 +34,7 @@ export class Action extends Component {
     get isValidPopup() {
         const { stopFrom, restart, restartTo, restartFrom, redmineId } = this.state;
 
-        return stopFrom && redmineId && (!restart || ( restartTo && restartFrom ));
+        return stopFrom && redmineId && (!restart || (restartTo && restartFrom));
     }
 
     onClick = () => {
@@ -46,9 +47,9 @@ export class Action extends Component {
 
     onPopupClose = () => {
         this.setState({
-            stopFrom: Utility.getTodayString(),
+            stopFrom: this._getMinStopDate(),
             restart: false,
-            restartFrom: Utility.getTodayString(),
+            restartFrom: this._getMinStopDate(),
             restartTo: Utility.getDateString(new Date(2050, 0, 1)),
             redmineId: '',
             isShowPopup: false
@@ -60,6 +61,34 @@ export class Action extends Component {
             this._submit();
         }
         this.setState({ isShowConfirmation: false });
+    }
+
+    _convertDateToString(date) {
+        var dd = date.getDate();
+        var mm = date.getMonth() + 1;
+        var yyyy = date.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        return yyyy + '-' + mm + '-' + dd;
+    }
+
+    _addDate(date, days) {
+        date.setDate(date.getDate() + days);
+
+        return date;
+    }
+
+    _getMinStopDate() {
+        var minDate = new Date();
+        minDate = this._addDate(minDate, 1);
+        minDate = this._convertDateToString(minDate);
+
+        return minDate;
     }
 
     _getParam() {
@@ -106,18 +135,18 @@ export class Action extends Component {
         this.props.setParams(filterParams);
     }
 
-    _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId) {
+    _buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate) {
         return (
             <div className='edit-form'>
                 <div className='form-group'>
                     <label className='col-form-label'>Stop From</label>
                     <input className={`full-width ${stopFrom ? '' : 'has-error'}`}
                         type='date'
-                        value={stopFrom}
+                        value={stopFrom} min={minDate}
                         onChange={(e) => this.setState({ stopFrom: e.target.value })} />
                 </div>
                 <div className='form-group'>
-                    <label className="checkbox-inline">           
+                    <label className="checkbox-inline">
                         <input type="checkbox" name="restart" onChange={(e) => this.setState({ restart: e.target.checked })} checked={restart} />
                         Restart
                     </label>
@@ -125,8 +154,8 @@ export class Action extends Component {
                 <div className='form-group'>
                     <label className='col-form-label'>Restart From</label>
                     <input className={`full-width ${!restart || restartFrom ? '' : 'has-error'}`}
-                        disabled={!restart} 
-                        type='date' value={restartFrom}
+                        disabled={!restart}
+                        type='date' value={restartFrom} min={stopFrom}
                         onChange={(e) => this.setState({ restartFrom: e.target.value })} />
                 </div>
                 <div className='form-group'>
@@ -150,47 +179,47 @@ export class Action extends Component {
                         Cancel
                     </button>
                 </div>
-            </div>    
+            </div>
         );
     }
 
     render() {
-        const { stopFrom, restart, restartTo, restartFrom, redmineId, result, isShowPopup, isShowConfirmation } = this.state;
+        const { stopFrom, restart, restartTo, restartFrom, redmineId, result, isShowPopup, isShowConfirmation, minDate } = this.state;
         const countSelectedItem = this.props.checkedList.length;
 
-        return(
-        <div>
-            <div style={{ display: 'inline-block' }}>
-                <a className='btn btn-green' href={window.rootUrl + 'SourceLicenseeSetting/Add'}>+ Add New Setting</a>
-                <button className='btn btn-red' onClick={this.onClick} disabled={countSelectedItem === 0}>Suspend({countSelectedItem})</button>
-            </div>
-            <ConfirmBox isShow={isShowConfirmation}
-                title='Confirmation'
-                message={`Do you want to stop getting data from ${Utility.formatDate(stopFrom)}${restart ? ' and restart with date range '+ Utility.formatDate(restartFrom) + ' - ' + Utility.formatDate(restartTo) : ''}?`}
-                style={{ height: '160px', width: '400px' }}
-                onClose={this.onConfirm} /> 
-            <Popup isShow={isShowPopup}
-                title='Suspend Source Licensee'
-                content={this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId)}
-                className='no-scroll'
-                style={{height: '410px', width: '600px'}}
-                onClose={this.onPopupClose} />
-    {
-                result && result.existedItems &&
-                <table className='table table-bordered'>
-                    <thead>
-                        <tr><th colSpan={2}>Suspend Result</th></tr>
-                    </thead>
+        return (
+            <div>
+                <div style={{ display: 'inline-block' }}>
+                    <a className='btn btn-green' href={window.rootUrl + 'SourceLicenseeSetting/Add'}>+ Add New Setting</a>
+                    <button className='btn btn-red' onClick={this.onClick} disabled={countSelectedItem === 0}>Suspend({countSelectedItem})</button>
+                </div>
+                <ConfirmBox isShow={isShowConfirmation}
+                    title='Confirmation'
+                    message={`Do you want to stop getting data from ${Utility.formatDate(stopFrom)}${restart ? ' and restart with date range ' + Utility.formatDate(restartFrom) + ' - ' + Utility.formatDate(restartTo) : ''}?`}
+                    style={{ height: '160px', width: '400px' }}
+                    onClose={this.onConfirm} />
+                <Popup isShow={isShowPopup}
+                    title='Suspend Source Licensee'
+                    content={this._buildPopupContent(stopFrom, restart, restartTo, restartFrom, redmineId, minDate)}
+                    className='no-scroll'
+                    style={{ height: '410px', width: '600px' }}
+                    onClose={this.onPopupClose} />
+                {
+                    result && result.existedItems &&
+                    <table className='table table-bordered'>
+                        <thead>
+                            <tr><th colSpan={2}>Suspend Result</th></tr>
+                        </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>Source items overlap with an existing setting item</td>
-                            <td dangerouslySetInnerHTML={{__html: result.existedItems}}></td>
-                        </tr>
-                    </tbody>
-                </table>
-    }
-        </div>);
+                        <tbody>
+                            <tr>
+                                <td>Source items overlap with an existing setting item</td>
+                                <td dangerouslySetInnerHTML={{ __html: result.existedItems }}></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </div>);
     }
 }
 function mapDispatchToProps(dispatch) {
