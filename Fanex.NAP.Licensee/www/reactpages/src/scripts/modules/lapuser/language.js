@@ -151,5 +151,8 @@ export const language = {
     "lblWinLossByProducts": "Win Loss By Products",
     "lblWinLossByTimeZone": "Win Loss By Time Zone",
     "lblWinLossReport": "Reports",
-    "lblWithdrawalInformation": "Withdrawal Information"
+    "lblWithdrawalInformation": "Withdrawal Information",
+    "lblPlayerSegmentation": "Player Segmentation",
+    "lblProblemManagement": "Problem Management",
+    "lblVIPManagement": "VIP Management"
 }
