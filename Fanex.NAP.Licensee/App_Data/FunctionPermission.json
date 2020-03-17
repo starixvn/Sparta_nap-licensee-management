@@ -482,6 +482,29 @@
     "DisplayKey": "lblCustomerManagement",
     "Settings": [
       {
+        "DisplayKey": "lblPlayerSegmentation",
+        "FunctionKey": "PlayerSegmentation",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "FunctionKeys": [
+          {
+            "DisplayKey": "lblProblemManagement",
+            "FunctionKey": "PlayerSegmentation_ProblemManagement",
+            "Enable": false,
+            "Type": 1,
+            "Mode": 1
+          },
+          {
+            "DisplayKey": "lblVIPManagement",
+            "FunctionKey": "PlayerSegmentation_VIPManagement",
+            "Enable": false,
+            "Type": 1,
+            "Mode": 1
+          }
+        ]
+      },
+      {
         "DisplayKey": "lblPlayerAdmin",
         "FunctionKey": "PlayerAdmin",
         "Enable": false,
