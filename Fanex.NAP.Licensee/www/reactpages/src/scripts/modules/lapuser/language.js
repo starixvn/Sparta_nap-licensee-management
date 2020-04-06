@@ -154,5 +154,6 @@ export const language = {
     "lblWithdrawalInformation": "Withdrawal Information",
     "lblPlayerSegmentation": "Player Segmentation",
     "lblProblemManagement": "Problem Management",
-    "lblVIPManagement": "VIP Management"
+    "lblVIPManagement": "VIP Management",
+    "lblPlayerDetailTransaction": "Detail Transaction"
 }

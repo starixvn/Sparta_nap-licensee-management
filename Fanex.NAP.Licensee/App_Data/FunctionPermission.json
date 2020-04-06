@@ -622,6 +622,13 @@
             ]
           },
           {
+            "DisplayKey": "lblPlayerDetailTransaction",
+            "FunctionKey": "pa_detail_transaction",
+            "Enable": false,
+            "Type": 1,
+            "Mode": 1
+          },
+          {
             "DisplayKey": "lblPlayerAdminLog",
             "FunctionKey": "pa_log",
             "Enable": false,
