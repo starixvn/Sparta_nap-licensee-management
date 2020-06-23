@@ -136,6 +136,7 @@ namespace Fanex.NAP.Licensee.Service
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
                 dctGameType.Add(new BSKeyPair(1, 1), "Soccer");
+                dctGameType.Add(new BSKeyPair(1, 9), "Soccer Parlay");
                 dctGameType.Add(new BSKeyPair(2, 1), "BasketBall");
                 dctGameType.Add(new BSKeyPair(3, 1), "Football");
                 dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
