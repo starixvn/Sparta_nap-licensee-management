@@ -32,6 +32,9 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
         private const string ORTHERSPORTNAME = "Other Sports";
         private const int ESportId = 43;
         private const float TempESportId = 2.5f;
+        private const int SoccerId = 1;
+        private const int SoccerParlay = 9;
+        private const string SOCCERPARLAYNAME = "Soccer Parlay";
 
         /// <summary>
         /// Convert xml content to .NET object.
@@ -86,8 +89,12 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
             if (bettype > 0 && sport > 0)
             {
                 result.Id = sport;
-                result.Name = new RemotingRefService().GetSportName(sport.ToString(), ENGLISHLANGCODE);
-                if (sport == ORTHERSPORT)
+
+                if (sport == SoccerId && bettype == SoccerParlay)
+                {
+                    result.Name = SOCCERPARLAYNAME;
+                }
+                else if (sport == ORTHERSPORT)
                 {
                     if (bettype == MIXPARLAYBETTYPE)
                     {
@@ -97,6 +104,10 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
                     {
                         result.Name = ORTHERSPORTNAME;
                     }
+                }
+                else
+                {
+                    result.Name = new RemotingRefService().GetSportName(sport.ToString(), ENGLISHLANGCODE);
                 }
             }
 
