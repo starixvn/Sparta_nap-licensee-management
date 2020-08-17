@@ -351,6 +351,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\build\images\icon_cancel.gif" />
+    <Content Include="Content\build\images\icon_checked.gif" />
     <Content Include="Content\source\core\images\sprites.png" />
     <Content Include="Content\source\core\site.css" />
     <Content Include="SimpleParameterTemplate.tt">
@@ -489,9 +491,23 @@
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
     <Content Include="www\reactpages\src\scripts\actions\types.js" />
     <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\month-picker\Day.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\month-picker\index.js" />
+    <Content Include="www\reactpages\src\scripts\components\month-picker\Month.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\month-picker\MonthPicker.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\Overlay.jsx" />
     <Content Include="www\reactpages\src\scripts\lib\createReducer.js" />
+    <Content Include="www\reactpages\src\scripts\lib\langHelper.js" />
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\LicenseeForm.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\add\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
     <Content Include="www\reactpages\src\scripts\lib\utility.js" />
     <Content Include="www\reactpages\src\scripts\modules\function\list\action.js" />
@@ -575,7 +591,16 @@
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </None>
     <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\BetTicketVolumeControl\Index.cshtml" />
+    <Content Include="Views\BetTicketVolumeControl\Add.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\betticket\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\FormFilter.jsx" />
@@ -1049,9 +1074,11 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\ResetPasswordForm.jsx" />
+    <Content Include="www\reactpages\src\styles\components\month-picker.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
+    <Folder Include="www\reactpages\src\scripts\modules\betticket\edit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -941,6 +941,22 @@ input[type="submit"].btn-ok,
   right: 0;
   margin: auto;
 }
+.icon-checked {
+  background: url(images/icon_checked.gif) no-repeat;
+  height: 15px;
+  width: 15px;
+  padding: 0px 0px 15px 20px;
+  display: block;
+  float: left;
+}
+.icon-cancel {
+  background: url(images/icon_cancel.gif) no-repeat;
+  height: 15px;
+  width: 15px;
+  padding: 0px 0px 15px 0px;
+  display: block;
+  float: left;
+}
 /********************************************************/
 /*					    Table                           */
 /********************************************************/

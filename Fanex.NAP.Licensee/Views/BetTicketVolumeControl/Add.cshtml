@@ -1,0 +1,45 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.ViewModel.BetTicket.SearchBetTicketViewModel
+
+@{
+    ViewBag.Title = "Add New Setting";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@{
+    var serializer = new JavaScriptSerializer();
+
+    var siteNameList = Model.SiteNameList.Select(x => new { label = x, value = x }).ToList();
+    siteNameList.Insert(0, new { label = "All", value = string.Empty });
+
+    var today = DateTime.Now.Date;
+    var minDate = today.AddMonths(-12);
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Volume Control on Bet Ticket</li>
+        <li class="current">Add New Setting</li>
+    </ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/betticketList/betticketList.css")
+}
+@section FooterJs{
+    <script>
+        var initialState = {
+            siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
+            selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.First())),
+        }
+        var dateConstraint = {
+            minDate: '@minDate.ToString("MM/dd/yyyy")',
+            maxDate: '@today.AddMonths(12).ToString("MM/dd/yyyy")',
+            currentDate: '@today.ToString("MM/dd/yyyy")'
+        }
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/betticketAddSetting/betticketAddSetting.js")
+}
+
+<div id="app-container"></div>

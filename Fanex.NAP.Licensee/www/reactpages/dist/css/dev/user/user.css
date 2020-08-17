@@ -1,3 +1,4 @@
+/* z-index */
 .Select {
   position: relative; }
 
@@ -390,6 +391,7 @@
   border-radius: 0;
   border: 1px solid #c3c0c2; }
 
+/* z-index */
 .green {
   color: #A1C46B; }
 
@@ -461,6 +463,7 @@ tr.disable {
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
 
+/* z-index */
 .edit-form input[type=text], .edit-form input[type=password] {
   border: 1px solid #CECCCD;
   height: 25px;

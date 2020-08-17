@@ -23,7 +23,9 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
 		public const string BetSetting = "BetSetting";
 
-		public const string DefaultBetSetting = "DefaultBetSetting";
+        public const string BetTicketVolumeControl = "BetTicketVolumeControl";
+
+        public const string DefaultBetSetting = "DefaultBetSetting";
 
 		public const string EditBetSetting = "EditBetSetting";
 

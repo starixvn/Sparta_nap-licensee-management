@@ -1,0 +1,99 @@
+﻿@import "../../components/react-select/react-select.main";
+@import "../../components/pager";
+@import "../../components/common";
+@import "../../components/month-picker";
+@import "../../components/_variable";
+
+.grant-total {
+  background: $bisque;
+}
+
+table {
+  width:100%;
+  border-collapse: collapse;
+}
+
+ input[type="number"] {
+     width: 100%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.data-container {
+  width: 50%;
+  min-width: 500px;
+}
+
+.arrow-icon {
+  display: inline-block;
+  border-width: 4px;
+  border-style: solid;
+  width: 0;
+  height: 0;
+}
+
+.arrow-icon.left-arrow {
+  border-color: transparent #2c2c2c transparent transparent; }
+  
+.arrow-icon.left-arrow.disable {
+  border-color: transparent rgba(0, 0, 0, 0.26) transparent transparent; }
+
+.arrow-icon.right-arrow {
+  border-color: transparent transparent transparent #2c2c2c; }
+
+.arrow-icon.right-arrow.disable {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.26); }
+
+.arrow-icon.down-arrow {
+  border-color: #2c2c2c transparent transparent; }
+
+.arrow-icon.down-arrow.disable {
+border-color: rgba(0, 0, 0, 0.26) transparent transparent; }
+
+.month-container {
+    z-index: 2;
+}
+
+.Select {
+  display: inline-block;
+  width: 150px;
+
+  .Select-value {
+      line-height: 23px !important;
+  }
+
+  .Select-placeholder {
+      line-height: 27px !important;
+  }
+
+  .Select-input {
+      height: 23px;
+
+      input {
+          padding: 0;
+      }
+  }
+
+  &.has-error {
+      .Select-control {
+          border: 1px solid $red;
+      }
+  }
+
+  .Select-control {
+      height: 25px;
+  }
+}

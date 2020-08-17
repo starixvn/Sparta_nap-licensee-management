@@ -446,6 +446,7 @@
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
 
+/* z-index */
 .pager {
   margin-top: -20px;
   border: 1px solid #ddd;

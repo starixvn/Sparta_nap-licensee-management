@@ -165,6 +165,7 @@
     <Compile Include="Attributes\CustomValidateAntiForgeryAttribute.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
+    <Compile Include="BetTicketVolumeControlController.cs" />
     <Compile Include="ITUserManagementController.cs" />
     <Compile Include="LAPUserManagementController.cs" />
     <Compile Include="ManageProductController.cs" />
