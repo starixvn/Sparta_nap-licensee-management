@@ -186,7 +186,7 @@
     <Compile Include="Authentication\LocalAuthenticationService.cs" />
     <Compile Include="Authentication\SSOAuthenticationService.cs" />
     <Compile Include="BetSettingService.cs" />
-    <Compile Include="BetTicketService.cs" />
+    <Compile Include="BetTicketVolumeControlSettingService.cs" />
     <Compile Include="CommonService.cs" />
     <Compile Include="Core\ObjectDbGenerator.cs" />
     <Compile Include="Helpers\AuthencationHelper.cs" />
@@ -200,7 +200,7 @@
     <Compile Include="ILicenseeSettingService.cs" />
     <Compile Include="ILogWriterService.cs" />
     <Compile Include="IManageLrfFunctionService.cs" />
-    <Compile Include="IBetTicketService.cs" />
+    <Compile Include="IBetTicketVolumecontrolService.cs" />
     <Compile Include="ISourceLicenseeSettingService.cs" />
     <Compile Include="IManageOperatorService.cs" />
     <Compile Include="ISettingConfigurationService.cs" />

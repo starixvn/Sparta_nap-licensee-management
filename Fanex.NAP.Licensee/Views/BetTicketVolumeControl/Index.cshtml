@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.Licensee.App_Start
 @using System.Web.Script.Serialization
+@model Fanex.NAP.Licensee.Model.ViewModel.BetTicketVolumeControl.SearchVolumeControlViewModel
 
-@model Fanex.NAP.Licensee.Model.ViewModel.BetTicket.SearchBetTicketViewModel
 @{
     ViewBag.Title = "Bet Ticket on Volume Control";
     Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
@@ -10,10 +10,9 @@
 @{
     var serializer = new JavaScriptSerializer();
 
-    var siteNameList = Model.SiteNameList.Select(x => new { label = x, value = x }).ToList();
-    siteNameList.Insert(0, new { label = "All", value = string.Empty });
+    var siteNameList = Model.SiteNameList.Select(x => new { label = x.LicenseeName, value = x.BrandCode}).ToList();
 
-    var today = DateTime.Now.Date;
+    var today = DateTime.Now.Date.AddDays(-DateTime.Now.Date.Day + 1);
     var minDate = today.AddMonths(-12);
 }
 
@@ -24,13 +23,13 @@
 </ul>
 }
 @section HeadCss{
-    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/betticketList/betticketList.css")
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/volumeControlList/volumeControlList.css")
 }
 @section FooterJs{
     <script>
         var initialState = {
             siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
-            selectedSiteName: @Html.Raw(serializer.Serialize(siteNameList.First())),
+            selectedBrandCode: @Html.Raw(serializer.Serialize(siteNameList.First().value)),
         }
         var dateConstraint = {
             minDate: '@minDate.ToString("MM/dd/yyyy")',
@@ -38,7 +37,7 @@
             currentDate: '@today.ToString("MM/dd/yyyy")'
         }
     </script>
-    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/betticketList/betticketList.js")
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/volumeControlList/volumeControlList.js")
 }
 
 <div id="app-container"></div>

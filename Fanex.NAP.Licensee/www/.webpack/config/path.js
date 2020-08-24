@@ -17,7 +17,7 @@ const cssPaths = {
 	'function': './www/reactpages/src/styles/modules/function/index.scss',
 	userList: './www/reactpages/src/styles/modules/user/index.scss',
     user: './www/reactpages/src/styles/modules/user/item.scss',
-    betticketList: './www/reactpages/src/styles/modules/betticket/index.scss',
+    volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
 };
 
 const scriptPaths = {
@@ -44,8 +44,8 @@ const scriptPaths = {
     userList: './www/reactpages/src/scripts/modules/user/list',
     editUser: './www/reactpages/src/scripts/modules/user/edit',
     addUser: './www/reactpages/src/scripts/modules/user/add',
-    betticketList: './www/reactpages/src/scripts/modules/betticket/list',
-    betticketAddSetting: './www/reactpages/src/scripts/modules/betticket/add',
+    volumeControlList: './www/reactpages/src/scripts/modules/volumecontrol/list',
+    volumeControlAddSetting: './www/reactpages/src/scripts/modules/volumecontrol/add',
 };
 
 module.exports = {

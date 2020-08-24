@@ -421,9 +421,9 @@
     <Content Include="www\reactpages\dist\css\dev\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js" />
+    <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.css" />
+    <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
-    <Content Include="www\reactpages\dist\css\pro\betticketList\betticketList.css" />
-    <Content Include="www\reactpages\dist\css\pro\betticketList\betticketList.js" />
     <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.css" />
     <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.js" />
     <Content Include="www\reactpages\dist\css\pro\createUser\createUser.css" />
@@ -448,6 +448,8 @@
     <Content Include="www\reactpages\dist\css\pro\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\pro\user\user.css" />
     <Content Include="www\reactpages\dist\css\pro\user\user.js" />
+    <Content Include="www\reactpages\dist\css\pro\volumeControlList\volumeControlList.css" />
+    <Content Include="www\reactpages\dist\css\pro\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\dist\js\dev\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.css" />
     <Content Include="www\reactpages\dist\css\pro\sourceLicensee\sourceLicensee.js" />
@@ -470,10 +472,10 @@
     <Content Include="www\reactpages\dist\js\dev\userList\userList.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor.js" />
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
+    <Content Include="www\reactpages\dist\js\dev\volumeControlAddSetting\volumeControlAddSetting.js" />
+    <Content Include="www\reactpages\dist\js\dev\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
-    <Content Include="www\reactpages\dist\js\pro\betticketAddSetting\betticketAddSetting.js" />
-    <Content Include="www\reactpages\dist\js\pro\betticketList\betticketList.js" />
     <Content Include="www\reactpages\dist\js\pro\createToken\createToken.js" />
     <Content Include="www\reactpages\dist\js\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
@@ -492,6 +494,8 @@
     <Content Include="www\reactpages\dist\js\pro\userList\userList.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\vendor\vendor.js" />
+    <Content Include="www\reactpages\dist\js\pro\volumeControlAddSetting\volumeControlAddSetting.js" />
+    <Content Include="www\reactpages\dist\js\pro\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
     <Content Include="www\reactpages\src\scripts\actions\types.js" />
     <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
@@ -504,13 +508,13 @@
     <Content Include="www\reactpages\src\scripts\lib\langHelper.js" />
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\AppContainer.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\DataGrid.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\FormFilter.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
     <Content Include="www\reactpages\src\scripts\lib\utility.js" />
     <Content Include="www\reactpages\src\scripts\modules\function\list\action.js" />
@@ -596,14 +600,18 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\BetTicketVolumeControl\Index.cshtml" />
     <Content Include="Views\BetTicketVolumeControl\Add.cshtml" />
+    <Content Include="www\reactpages\dist\js\dev\volumeControlAddSetting\volumeControlAddSetting.js.map" />
+    <Content Include="www\reactpages\dist\js\dev\volumeControlList\volumeControlList.js.map" />
+    <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\action.js" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\AppContainer.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\DataGrid.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\FormFilter.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\reducer.js" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\list\types.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\currency\FormFilter.jsx" />
@@ -950,6 +958,7 @@
     </None>
     <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
@@ -1078,11 +1087,10 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\ResetPasswordForm.jsx" />
     <Content Include="www\reactpages\src\styles\components\month-picker.scss" />
-    <Content Include="www\reactpages\src\styles\modules\betticket\index.scss" />
+    <Content Include="www\reactpages\src\styles\modules\volumecontrol\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
-    <Folder Include="www\reactpages\src\scripts\modules\betticket\edit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

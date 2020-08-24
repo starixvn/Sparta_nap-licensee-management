@@ -134,7 +134,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\BetTicket\SearchBetTicketCriteria.cs" />
+    <Compile Include="Criteria\BetTicketVolumeControlSetting\InsUpdVolumeControlSettingCriteria.cs" />
+    <Compile Include="Criteria\BetTicketVolumeControlSetting\SearchVolumeControlSettingCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetAgentListCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetSettingLogCriteria.cs" />
     <Compile Include="Criteria\DefaultBetSetting\GetSingleDefaultBetSettingCriteria.cs" />
@@ -187,7 +188,7 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
-    <Compile Include="DTO\BetTicket.cs" />
+    <Compile Include="DTO\VolumeControlSetting\ProductVolumeControlSetting.cs" />
     <Compile Include="DTO\ITUserLicensee.cs" />
     <Compile Include="DTO\ITUserCurrency.cs" />
     <Compile Include="DTO\ITUserLicenseeCurrency.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="DataDomain\ITUserStatus.cs" />
     <Compile Include="DataDomain\ProductType.cs" />
     <Compile Include="DataDomain\SystemMode.cs" />
+    <Compile Include="DTO\VolumeControlSetting\Brand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ITUser\AddUserViewModel.cs" />
     <Compile Include="ViewModel\LAPUser\AddUserViewModel.cs" />
@@ -250,8 +252,7 @@
     <Compile Include="ViewModel\LAPUser\UpdateUserViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
-    <Compile Include="ViewModel\BetTicket\BetTicketViewModel.cs" />
-    <Compile Include="ViewModel\BetTicket\SearchBetTicketViewModel.cs" />
+    <Compile Include="ViewModel\BetTicketVolumeControl\SearchVolumeControlViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
