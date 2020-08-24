@@ -422,6 +422,8 @@
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
     <Content Include="www\reactpages\dist\css\dev\user\user.js" />
     <Content Include="www\reactpages\dist\css\image\sprites.png" />
+    <Content Include="www\reactpages\dist\css\pro\betticketList\betticketList.css" />
+    <Content Include="www\reactpages\dist\css\pro\betticketList\betticketList.js" />
     <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.css" />
     <Content Include="www\reactpages\dist\css\pro\createtoken\createtoken.js" />
     <Content Include="www\reactpages\dist\css\pro\createUser\createUser.css" />
@@ -470,6 +472,8 @@
     <Content Include="www\reactpages\dist\js\dev\vendor\vendor.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
     <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
+    <Content Include="www\reactpages\dist\js\pro\betticketAddSetting\betticketAddSetting.js" />
+    <Content Include="www\reactpages\dist\js\pro\betticketList\betticketList.js" />
     <Content Include="www\reactpages\dist\js\pro\createToken\createToken.js" />
     <Content Include="www\reactpages\dist\js\pro\createUser\createUser.js" />
     <Content Include="www\reactpages\dist\js\pro\demo\demo.js" />
@@ -505,7 +509,6 @@
     <Content Include="www\reactpages\src\scripts\modules\betticket\add\DataGrid.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\betticket\add\FormFilter.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\betticket\add\index.jsx" />
-    <Content Include="www\reactpages\src\scripts\modules\betticket\add\LicenseeForm.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\betticket\add\reducer.js" />
     <Content Include="www\reactpages\src\scripts\modules\betticket\add\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\demo\index.js" />
@@ -1075,6 +1078,7 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\function\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\ResetPasswordForm.jsx" />
     <Content Include="www\reactpages\src\styles\components\month-picker.scss" />
+    <Content Include="www\reactpages\src\styles\modules\betticket\index.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
