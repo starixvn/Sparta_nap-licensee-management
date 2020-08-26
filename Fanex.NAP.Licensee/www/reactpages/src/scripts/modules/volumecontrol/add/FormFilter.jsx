@@ -82,7 +82,7 @@ export class FormFilter extends Component {
                 </div>
                 <div className="form-group">
                     <label>Win Loss</label>
-                    <input type="number" className="text-right" maxLength='50' name='winLoss' value={this.props.totalWinLoss} disabled={true} style={{width: 'auto'}}/><span> USD</span>
+                    <input type="text" className="text-right" maxLength='50' name='winLoss' value={this.props.totalWinLoss.toLocaleString('en')} disabled={true} style={{width: 'auto'}}/><span> USD</span>
                 </div>
             </div>
         )

@@ -12,7 +12,7 @@ export class DataGrid extends Component {
             gridData: [],
             dataItem: [],
             totalItem: 0,
-            clientIsEditing:false,
+            clientIsEditing:false
         };
     }
 
@@ -26,6 +26,33 @@ export class DataGrid extends Component {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(response => {
             this.setState({ gridData: response.data.Data, dataItem: response.data.Data, totalItem: !!(response.data.Data) ? response.data.Data.length : 0, clientIsEditing: false });
+            this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
+        });
+    }
+
+    _updateData(item, index) {
+        this.props.toggleLoader(true);
+        Site.fetchData({criteria: this.props.params, productSetting: item }, 'BetTicketVolumeControl/Update').then(response => {
+            const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }))
+            const dataItem = this.state.dataItem.map(item => ({ ...item }))
+            gridData[index].editing = false;
+            gridData[index].WLExpected = parseInt(item.WLExpected);
+            gridData[index].TOExpected = parseInt(item.TOExpected);
+            if (!!response.data.IsSuccess) {
+                this.setState({
+                    gridData,
+                    clientIsEditing: false,
+                    dataItem: gridData,
+                });
+            } else {
+                gridData[index] = dataItem[index];
+                this.setState({
+                    gridData,
+                    clientIsEditing: false
+                });
+            }
             this.props.toggleLoader(false);
         }).catch(err => {
             this.props.toggleLoader(false);
@@ -76,29 +103,35 @@ export class DataGrid extends Component {
 
                                 // Clone gridData data before mutation
                                 const gridData = this.state.gridData.map(item => ({ ...item }))
-                          
+
                                 // Update field by index of current gridData
-                                gridData[index][key] = value
+                                // gridData[index][key] = value
+                                gridData[index][key] = parseFloat(value.split(',').join(""));
                           
                                 // Trigger re-render
                                 this.setState({ gridData })
                             }
 
-                            const onAction = (isEdit) => {
+                            const onEdit = () => {
                                 const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }))
 
-                                gridData[index].editing = isEdit;
+                                gridData[index].editing = true;
 
                                 // Trigger re-render
                                 this.setState({
                                     gridData,
-                                    clientIsEditing: isEdit
+                                    clientIsEditing: true
                                 });
                             }
 
-                            const onCancel = (dataItem) => {
+                            const onSave = (item) => {
+                                this._updateData(item, index);
+                            }
+
+                            const onCancel = () => {
                                 // Clone gridData data before mutation
                                 const gridData = this.state.gridData.map(item => ({ ...item }))
+                                const dataItem = this.state.dataItem.map(item => ({ ...item }))
                           
                                 // Update field by index of current gridData
                                 gridData[index] = dataItem[index]
@@ -115,16 +148,16 @@ export class DataGrid extends Component {
                                 <tr key={item.ProductId} className={item.editing ? 'editing' : ''}>
                                     <td>{item.ProductName}</td>
                                     <td>
-                                        {item.editing ? <span><i className="icon-checked" onClick={e => onAction(false)}/><i className="icon-cancel" onClick={e => onCancel(this.state.dataItem)}/></span> 
-                                        : !!!this.state.clientIsEditing ? <i className="icon-edit" onClick={e => onAction(true)}/> : <i className="icon-edit"/>}
+                                        {item.editing ? <span><i className="icon-checked" onClick={e => onSave(item)}/><i className="icon-cancel" onClick={e => onCancel()}/></span> 
+                                        : !!!this.state.clientIsEditing ? <i className="icon-edit" onClick={e => onEdit()}/> : <i className="icon-edit"/>}
                                     </td>
-                                    <td className="text-right">{item.editing ? <input type="number" className="text-right" value={item.WLPercentage} onChange={ e => editField(e.target.value, 'Percent') }/> : <span>{item.WLPercentage}</span>}</td>
-                                    <td className="text-right">{item.editing ? <input type="number" className="text-right" value={item.WLExpected} onChange={ e => editField(e.target.value, 'ExpectedWL') }/> : <span>{item.WLExpected}</span>}</td>
-                                    <td className="text-right">{item.WLAccumulated}</td>
-                                    <td className="text-right">{item.WLRemaining}</td>
-                                    <td className="text-right">{item.editing ? <input type="number" className="text-right" value={item.TOExpected} onChange={ e => editField(e.target.value, 'TOExpected') }/> : <span>{item.TOExpected}</span>}</td>
-                                    <td className="text-right">{item.TOAccumulated}</td>
-                                    <td className="text-right">{item.TORemaining}</td>
+                                    <td className="text-right">{item.editing ? <input type="number" className="text-right" value={item.ProductPercentage} onChange={ e => editField(e.target.value, 'ProductPercentage') }/> : <span>{item.ProductPercentage}</span>}</td>
+                                    <td className="text-right">{item.editing ? <input type="text" className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'WLExpected') }/> : <span>{item.WLExpected.toLocaleString('en')}</span>}</td>
+                                    <td className="text-right">{item.WLAccumulated.toLocaleString('en')}</td>
+                                    <td className="text-right">{item.WLRemaining.toLocaleString('en')}</td>
+                                    <td className="text-right">{item.editing ? <input type="text" className="text-right" value={item.TOExpected.toLocaleString('en')} onChange={ e => editField(e.target.value, 'TOExpected') }/> : <span>{item.TOExpected.toLocaleString('en')}</span>}</td>
+                                    <td className="text-right">{item.TOAccumulated.toLocaleString('en')}</td>
+                                    <td className="text-right">{item.TORemaining.toLocaleString('en')}</td>
                                 </tr>
                             )
                         })
@@ -132,14 +165,14 @@ export class DataGrid extends Component {
                     </tbody>
                     <tfoot>
                         <tr className="grant-total">
-                            <th colSpan="2">Grand total</th>
+                            <th className="text-center" colSpan="2">Total</th>
                             <th></th>
-                            <th className="text-right">{this.getTotals('WLExpected')}</th>
-                            <th className="text-right">{this.getTotals('WLAccumulated')}</th>
-                            <th className="text-right">{this.getTotals('WLRemaining')}</th>
-                            <th className="text-right">{this.getTotals('TOExpected')}</th>
-                            <th className="text-right">{this.getTotals('TOAccumulated')}</th>
-                            <th className="text-right">{this.getTotals('TORemaining')}</th>
+                            <th className="text-right">{this.getTotals('WLExpected').toLocaleString('en')}</th>
+                            <th className="text-right">{this.getTotals('WLAccumulated').toLocaleString('en')}</th>
+                            <th className="text-right">{this.getTotals('WLRemaining').toLocaleString('en')}</th>
+                            <th className="text-right">{this.getTotals('TOExpected').toLocaleString('en')}</th>
+                            <th className="text-right">{this.getTotals('TOAccumulated').toLocaleString('en')}</th>
+                            <th className="text-right">{this.getTotals('TORemaining').toLocaleString('en')}</th>
                         </tr>
                     </tfoot>
             </table>

@@ -10,6 +10,8 @@
 
         ResultGridData<ProductVolumeControlSetting> GetVolumeControlSettingList(SearchVolumeControlSettingCriteria criteria);
 
+        ResultGridData<ProductVolumeControlSetting> GetVolumeControlAddSettingList(string brandCode);
+
         ResultInfo InsertOrUpdateVolumeControlSetting(InsUpdateVolumeControlSettingCriteria criteria);
     }
 }

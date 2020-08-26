@@ -30347,7 +30347,7 @@ var FormFilter = exports.FormFilter = function (_Component) {
                         null,
                         'Win Loss'
                     ),
-                    _react2.default.createElement('input', { type: 'number', className: 'text-right', maxLength: '50', name: 'winLoss', value: this.props.totalWinLoss, disabled: true, style: { width: 'auto' } }),
+                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '50', name: 'winLoss', value: this.props.totalWinLoss.toLocaleString('en'), disabled: true, style: { width: 'auto' } }),
                     _react2.default.createElement(
                         'span',
                         null,
@@ -30418,6 +30418,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
 
+        _this.onSubmit = function (e) {
+            e.preventDefault();
+
+            _this._insertData();
+        };
+
         _this.getTotals = function (data, key) {
             var total = 0;
             data.forEach(function (item) {
@@ -30430,10 +30436,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
             var gridData = _this.state.gridData;
 
             gridData.forEach(function (item) {
-                item['Percentage'] = 0;
+                item['ProductPercentage'] = 0;
                 item['WLExpected'] = 0;
                 item['TOExpected'] = 0;
             });
+
+            _this.props.changeTotalWinloss(0);
 
             // Trigger re-render
             _this.setState({ gridData: gridData });
@@ -30459,7 +30467,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
             var _this2 = this;
 
             this.props.toggleLoader(true);
-            _site2.default.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(function (response) {
+            _site2.default.fetchData({ brandCode: this.props.params['brandCode'] }, 'BetTicketVolumeControl/GetAddSettingList').then(function (response) {
                 if (!!response.data.Data) {
                     _this2.props.changeTotalWinloss(_this2.getTotals(response.data.Data, 'WLExpected'));
                     _this2.setState({ gridData: response.data.Data, totalItem: response.data.Data.length });
@@ -30470,9 +30478,29 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
         }
     }, {
+        key: '_insertData',
+        value: function _insertData() {
+            var _this3 = this;
+
+            this.props.toggleLoader(true);
+            var gridData = this.state.gridData.map(function (item) {
+                return _extends({}, item);
+            });
+            _site2.default.fetchData({ criteria: this.props.params, productSettingList: gridData }, 'BetTicketVolumeControl/Insert').then(function (response) {
+                if (!!response.data.IsSuccess) {
+                    window.location.href = window.rootUrl + 'BetTicketVolumeControl/Index';
+                } else {
+                    alert(response.data.Error);
+                }
+                _this3.props.toggleLoader(false);
+            }).catch(function (err) {
+                _this3.props.toggleLoader(false);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var totalItem = this.state.totalItem;
 
@@ -30529,17 +30557,17 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             var editField = function editField(value, key) {
 
                                 // Clone gridData data before mutation
-                                var gridData = _this3.state.gridData.map(function (item) {
+                                var gridData = _this4.state.gridData.map(function (item) {
                                     return _extends({}, item);
                                 });
 
                                 // Update field by index of current gridData
-                                gridData[index][key] = value;
+                                gridData[index][key] = parseFloat(value.split(',').join(""));
 
-                                _this3.props.changeTotalWinloss(_this3.getTotals(gridData, 'WLExpected'));
+                                _this4.props.changeTotalWinloss(_this4.getTotals(gridData, 'WLExpected'));
 
                                 // Trigger re-render
-                                _this3.setState({ gridData: gridData });
+                                _this4.setState({ gridData: gridData });
                             };
 
                             return _react2.default.createElement(
@@ -30553,21 +30581,21 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.Percentage ? item.Percentage : 0, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'WLPercentage');
+                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right', value: item.ProductPercentage ? item.ProductPercentage : 0, onChange: function onChange(e) {
+                                            return editField(e.target.value, 'ProductPercentage');
                                         } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.WLExpected ? item.WLExpected : 0, onChange: function onChange(e) {
+                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
                                             return editField(e.target.value, 'WLExpected');
                                         } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.TOExpected ? item.TOExpected : 0, onChange: function onChange(e) {
+                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.TOExpected ? item.TOExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
                                             return editField(e.target.value, 'TOExpected');
                                         } })
                                 )
@@ -30580,7 +30608,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     { style: { display: 'inline-block', float: 'right' } },
                     _react2.default.createElement(
                         'button',
-                        { type: 'button', className: 'btn btn-primary' },
+                        { type: 'button', className: 'btn btn-primary', onClick: this.onSubmit },
                         'Submit'
                     ),
                     _react2.default.createElement(

@@ -22,10 +22,31 @@ export class DataGrid extends Component {
 
     _getData() {
         this.props.toggleLoader(true);
-        Site.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(response => {
+        Site.fetchData({ brandCode: this.props.params['brandCode'] }, 'BetTicketVolumeControl/GetAddSettingList').then(response => {
             if (!!(response.data.Data)) {
                 this.props.changeTotalWinloss(this.getTotals(response.data.Data, 'WLExpected'));
                 this.setState({ gridData: response.data.Data, totalItem: response.data.Data.length });
+            }
+            this.props.toggleLoader(false);
+        }).catch(err => {
+            this.props.toggleLoader(false);
+        });
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        this._insertData();
+    }
+
+    _insertData() {
+        this.props.toggleLoader(true);
+        const gridData = this.state.gridData.map(item => ({ ...item }))
+        Site.fetchData({criteria: this.props.params, productSettingList: gridData }, 'BetTicketVolumeControl/Insert').then(response => {
+            if (!!response.data.IsSuccess) {
+                window.location.href = window.rootUrl + 'BetTicketVolumeControl/Index';
+            } else {
+                alert(response.data.Error);
             }
             this.props.toggleLoader(false);
         }).catch(err => {
@@ -44,10 +65,12 @@ export class DataGrid extends Component {
     resetData = () => {
         const { gridData } = this.state;
         gridData.forEach(item => {
-            item['Percentage'] = 0;
+            item['ProductPercentage'] = 0;
             item['WLExpected'] = 0;
             item['TOExpected'] = 0;
         });
+
+        this.props.changeTotalWinloss(0);
 
          // Trigger re-render
          this.setState({ gridData })
@@ -83,9 +106,9 @@ export class DataGrid extends Component {
 
                                 // Clone gridData data before mutation
                                 const gridData = this.state.gridData.map(item => ({ ...item }))
-                          
+
                                 // Update field by index of current gridData
-                                gridData[index][key] = value;
+                                gridData[index][key] = parseFloat(value.split(',').join(""));
 
                                 this.props.changeTotalWinloss(this.getTotals(gridData, 'WLExpected'));
 
@@ -96,9 +119,9 @@ export class DataGrid extends Component {
                             return (
                                 <tr key={item.ProductId}>
                                     <td>{item.ProductName}</td>
-                                    <td><input type="number" className="text-right" value={item.Percentage ? item.Percentage : 0} onChange={ e => editField(e.target.value, 'WLPercentage') }/></td>
-                                    <td><input type="number" className="text-right" value={item.WLExpected ? item.WLExpected : 0} onChange={ e => editField(e.target.value, 'WLExpected') }/></td>
-                                    <td><input type="number" className="text-right" value={item.TOExpected ? item.TOExpected : 0} onChange={ e => editField(e.target.value, 'TOExpected') }/></td>
+                                    <td><input type="number" min='0' max='100' className="text-right" value={item.ProductPercentage ? item.ProductPercentage : 0} onChange={ e => editField(e.target.value, 'ProductPercentage') }/></td>
+                                    <td><input type="text" className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'WLExpected') }/></td>
+                                    <td><input type="text" className="text-right" value={item.TOExpected ? item.TOExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'TOExpected') }/></td>
                                 </tr>
                             )
                         })
@@ -107,7 +130,7 @@ export class DataGrid extends Component {
             </table>
 
             <div style={{ display: 'inline-block', float: 'right' }}>
-                <button type="button" className="btn btn-primary">Submit</button>
+                <button type="button" className="btn btn-primary" onClick={this.onSubmit}>Submit</button>
                 <a className="btn-back" href={window.rootUrl + 'BetTicketVolumeControl/Index'}>Back To List</a>
                 <button type="button" className="btn-back" onClick={this.resetData}>Reset</button>
             </div>

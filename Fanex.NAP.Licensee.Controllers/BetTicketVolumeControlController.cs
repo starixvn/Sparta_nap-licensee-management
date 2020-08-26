@@ -42,11 +42,23 @@ namespace Fanex.NAP.Licensee.Controllers
         [HttpPost]
         [AjaxRequest]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
-        public JsonResult InsertOrUpdate(InsUpdateVolumeControlSettingCriteria criteria, List<ProductVolumeControlSetting> productSettingList)
+        public JsonResult Update(InsUpdateVolumeControlSettingCriteria criteria, ProductVolumeControlSetting productSetting)
+        {
+            criteria.ProductSettingXML = BuildProductSettingXml(new List<ProductVolumeControlSetting>() { productSetting });
+            //var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
+            //return Json(new { IsSuccess = result.IsOk, Error = result.Message });
+            return Json(new { IsSuccess = true, Error = "oke" });
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
+        public JsonResult Insert(InsUpdateVolumeControlSettingCriteria criteria, List<ProductVolumeControlSetting> productSettingList)
         {
             criteria.ProductSettingXML = BuildProductSettingXml(productSettingList);
-            var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
-            return Json(new { IsSuccess = result.IsOk, Error = result.Message });
+            //var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
+            //return Json(new { IsSuccess = result.IsOk, Error = result.Message });
+            return Json(new { IsSuccess = true, Error = "oke" });
         }
 
         [HttpPost]
@@ -55,6 +67,14 @@ namespace Fanex.NAP.Licensee.Controllers
         public JsonResult Search(SearchVolumeControlSettingCriteria criteria)
         {
             return Json(_betticketVolumeControlService.GetVolumeControlSettingList(criteria));
+        }
+
+        [HttpPost]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Read)]
+        public JsonResult GetAddSettingList(string brandCode)
+        {
+            return Json(_betticketVolumeControlService.GetVolumeControlAddSettingList(brandCode));
         }
 
         private SearchVolumeControlViewModel GetSearchViewModel()
@@ -67,18 +87,17 @@ namespace Fanex.NAP.Licensee.Controllers
 
         private string BuildProductSettingXml(List<ProductVolumeControlSetting> ProductSettings)
         {
-            var builder = new StringBuilder("<ROOT>");
-            var id = 1;
+            var builder = new StringBuilder("<VCSettings>");
 
             foreach (var product in ProductSettings)
             {
-                builder.Append($"<ProductSetting ID=\"{id}\" ProductId=\"{product.ProductId}\" ProductName=\"{product.ProductName}\" ProductPercentage=\"{product.ProductPercentage}\" "
-                + $"WLExpected=\"{product.WLExpected}\" WLAccumulated=\"{product.WLAccumulated}\"  WLRemaining=\"{product.WLRemaining}\" "
-                + $"TOExpected=\"{product.TOExpected}\" TOAccumulated=\"{product.TOAccumulated}\"  WLRemaining=\"{product.TORemaining}\" />");
-                id++;
+                builder.Append("<Product>");
+                builder.Append($"<ProductId>{product.ProductId}</ProductId><ProductName>{product.ProductName}</ProductName>"
+                + $"<ProductPercentage>{product.ProductPercentage}</ProductPercentage><TurnOverAmount>{product.TOExpected}</TurnOverAmount><WinlossAmount>{product.WLExpected}</WinlossAmount>");
+                builder.Append("</Product>");
             }
 
-            builder.Append("</ROOT>");
+            builder.Append("</VCSettings>");
             return builder.ToString();
         }
     }

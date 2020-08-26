@@ -40,6 +40,24 @@
             return result;
         }
 
+        public ResultGridData<ProductVolumeControlSetting> GetVolumeControlAddSettingList(string brandCode)
+        {
+            var result = new ResultGridData<ProductVolumeControlSetting>();
+            try
+            {
+                using (var db = _objectDbGenerator.Create("Plo_VolumeControl_BrandProduct_Sel"))
+                {
+                    result.Data = db.Query<ProductVolumeControlSetting>(new { BrandCode = brandCode });
+                }
+            }
+            catch
+            {
+                return result;
+            }
+
+            return result;
+        }
+
         public ResultInfo InsertOrUpdateVolumeControlSetting(InsUpdateVolumeControlSettingCriteria criteria)
         {
             var result = new ResultInfo();

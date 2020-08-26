@@ -30440,9 +30440,43 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
         }
     }, {
+        key: '_updateData',
+        value: function _updateData(item, index) {
+            var _this3 = this;
+
+            this.props.toggleLoader(true);
+            _site2.default.fetchData({ criteria: this.props.params, productSetting: item }, 'BetTicketVolumeControl/Update').then(function (response) {
+                var gridData = _this3.state.gridData.map(function (i) {
+                    return _extends({}, i, { editing: item.editing && i === item });
+                });
+                var dataItem = _this3.state.dataItem.map(function (item) {
+                    return _extends({}, item);
+                });
+                gridData[index].editing = false;
+                gridData[index].WLExpected = parseInt(item.WLExpected);
+                gridData[index].TOExpected = parseInt(item.TOExpected);
+                if (!!response.data.IsSuccess) {
+                    _this3.setState({
+                        gridData: gridData,
+                        clientIsEditing: false,
+                        dataItem: gridData
+                    });
+                } else {
+                    gridData[index] = dataItem[index];
+                    _this3.setState({
+                        gridData: gridData,
+                        clientIsEditing: false
+                    });
+                }
+                _this3.props.toggleLoader(false);
+            }).catch(function (err) {
+                _this3.props.toggleLoader(false);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var totalItem = this.state.totalItem;
 
@@ -30529,34 +30563,42 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             var editField = function editField(value, key) {
 
                                 // Clone gridData data before mutation
-                                var gridData = _this3.state.gridData.map(function (item) {
+                                var gridData = _this4.state.gridData.map(function (item) {
                                     return _extends({}, item);
                                 });
 
                                 // Update field by index of current gridData
-                                gridData[index][key] = value;
+                                // gridData[index][key] = value
+                                gridData[index][key] = parseFloat(value.split(',').join(""));
 
                                 // Trigger re-render
-                                _this3.setState({ gridData: gridData });
+                                _this4.setState({ gridData: gridData });
                             };
 
-                            var onAction = function onAction(isEdit) {
-                                var gridData = _this3.state.gridData.map(function (i) {
+                            var onEdit = function onEdit() {
+                                var gridData = _this4.state.gridData.map(function (i) {
                                     return _extends({}, i, { editing: item.editing && i === item });
                                 });
 
-                                gridData[index].editing = isEdit;
+                                gridData[index].editing = true;
 
                                 // Trigger re-render
-                                _this3.setState({
+                                _this4.setState({
                                     gridData: gridData,
-                                    clientIsEditing: isEdit
+                                    clientIsEditing: true
                                 });
                             };
 
-                            var onCancel = function onCancel(dataItem) {
+                            var onSave = function onSave(item) {
+                                _this4._updateData(item, index);
+                            };
+
+                            var onCancel = function onCancel() {
                                 // Clone gridData data before mutation
-                                var gridData = _this3.state.gridData.map(function (item) {
+                                var gridData = _this4.state.gridData.map(function (item) {
+                                    return _extends({}, item);
+                                });
+                                var dataItem = _this4.state.dataItem.map(function (item) {
                                     return _extends({}, item);
                                 });
 
@@ -30565,7 +30607,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 gridData[index].editing = false;
 
                                 // Trigger re-render
-                                _this3.setState({
+                                _this4.setState({
                                     gridData: gridData,
                                     clientIsEditing: false
                                 });
@@ -30586,67 +30628,67 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         'span',
                                         null,
                                         _react2.default.createElement('i', { className: 'icon-checked', onClick: function onClick(e) {
-                                                return onAction(false);
+                                                return onSave(item);
                                             } }),
                                         _react2.default.createElement('i', { className: 'icon-cancel', onClick: function onClick(e) {
-                                                return onCancel(_this3.state.dataItem);
+                                                return onCancel();
                                             } })
-                                    ) : !!!_this3.state.clientIsEditing ? _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick(e) {
-                                            return onAction(true);
+                                    ) : !!!_this4.state.clientIsEditing ? _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick(e) {
+                                            return onEdit();
                                         } }) : _react2.default.createElement('i', { className: 'icon-edit' })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.WLPercentage, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'Percent');
+                                    item.editing ? _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.ProductPercentage, onChange: function onChange(e) {
+                                            return editField(e.target.value, 'ProductPercentage');
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,
-                                        item.WLPercentage
+                                        item.ProductPercentage
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.WLExpected, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'ExpectedWL');
+                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
+                                            return editField(e.target.value, 'WLExpected');
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,
-                                        item.WLExpected
+                                        item.WLExpected.toLocaleString('en')
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.WLAccumulated
+                                    item.WLAccumulated.toLocaleString('en')
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.WLRemaining
+                                    item.WLRemaining.toLocaleString('en')
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.TOExpected, onChange: function onChange(e) {
+                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.TOExpected.toLocaleString('en'), onChange: function onChange(e) {
                                             return editField(e.target.value, 'TOExpected');
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,
-                                        item.TOExpected
+                                        item.TOExpected.toLocaleString('en')
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.TOAccumulated
+                                    item.TOAccumulated.toLocaleString('en')
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.TORemaining
+                                    item.TORemaining.toLocaleString('en')
                                 )
                             );
                         })
@@ -30659,39 +30701,39 @@ var DataGrid = exports.DataGrid = function (_Component) {
                             { className: 'grant-total' },
                             _react2.default.createElement(
                                 'th',
-                                { colSpan: '2' },
-                                'Grand total'
+                                { className: 'text-center', colSpan: '2' },
+                                'Total'
                             ),
                             _react2.default.createElement('th', null),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('WLExpected')
+                                this.getTotals('WLExpected').toLocaleString('en')
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('WLAccumulated')
+                                this.getTotals('WLAccumulated').toLocaleString('en')
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('WLRemaining')
+                                this.getTotals('WLRemaining').toLocaleString('en')
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('TOExpected')
+                                this.getTotals('TOExpected').toLocaleString('en')
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('TOAccumulated')
+                                this.getTotals('TOAccumulated').toLocaleString('en')
                             ),
                             _react2.default.createElement(
                                 'th',
                                 { className: 'text-right' },
-                                this.getTotals('TORemaining')
+                                this.getTotals('TORemaining').toLocaleString('en')
                             )
                         )
                     )
