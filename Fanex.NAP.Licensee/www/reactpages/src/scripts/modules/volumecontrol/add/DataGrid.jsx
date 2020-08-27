@@ -8,8 +8,8 @@ export class DataGrid extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            gridData: [], 
+        this.state = {
+            gridData: [],
             totalItem: 0
         };
     }
@@ -41,7 +41,7 @@ export class DataGrid extends Component {
 
     _insertData() {
         this.props.toggleLoader(true);
-        const gridData = this.state.gridData.map(item => ({ ...item }))
+        const gridData = this.state.gridData.map(item => ({ ...item }));
         Site.fetchData({criteria: this.props.params, productSettingList: gridData }, 'BetTicketVolumeControl/Insert').then(response => {
             if (!!response.data.IsSuccess) {
                 window.location.href = window.rootUrl + 'BetTicketVolumeControl/Index';
@@ -57,7 +57,7 @@ export class DataGrid extends Component {
     getTotals = (data,key) => {
         let total = 0;
         data.forEach(item => {
-          total += item[key] ? parseInt(item[key]) : 0;
+          total += item[key] ? Number(item[key]) : 0;
         });
         return total;
     };
@@ -73,7 +73,7 @@ export class DataGrid extends Component {
         this.props.changeTotalWinloss(0);
 
          // Trigger re-render
-         this.setState({ gridData })
+         this.setState({ gridData });
     }
 
     render() {
@@ -82,7 +82,7 @@ export class DataGrid extends Component {
         if ( totalItem === 0) {
             return (
                 <a className="btn-back" href={window.rootUrl + 'BetTicketVolumeControl/Index'}>Back To List</a>
-            )
+            );
         }
 
         const { gridData } = this.state;
@@ -105,25 +105,35 @@ export class DataGrid extends Component {
                             const editField = (value, key) => {
 
                                 // Clone gridData data before mutation
-                                const gridData = this.state.gridData.map(item => ({ ...item }))
+                                const gridData = this.state.gridData.map(item => ({ ...item }));
 
                                 // Update field by index of current gridData
-                                gridData[index][key] = parseFloat(value.split(',').join(""));
+                                gridData[index][key] = parseFloat(value.split(',').join(''));
 
                                 this.props.changeTotalWinloss(this.getTotals(gridData, 'WLExpected'));
 
                                 // Trigger re-render
-                                this.setState({ gridData })
+                                this.setState({ gridData });
                             }
 
                             return (
                                 <tr key={item.ProductId}>
                                     <td>{item.ProductName}</td>
-                                    <td><input type="number" min='0' max='100' className="text-right" value={item.ProductPercentage ? item.ProductPercentage : 0} onChange={ e => editField(e.target.value, 'ProductPercentage') }/></td>
-                                    <td><input type="text" className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'WLExpected') }/></td>
-                                    <td><input type="text" className="text-right" value={item.TOExpected ? item.TOExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'TOExpected') }/></td>
+                                    <td><input type="number" min='0' max='100' className="text-right"
+                                        value={item.ProductPercentage ? item.ProductPercentage : 0}
+                                        onFocus={e => e.target.select()}
+                                        onChange={ e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false }/>
+                                    </td>
+                                    <td><input type="text" className="text-right" maxLength='15'
+                                        value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
+                                        onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'WLExpected') }/>
+                                    </td>
+                                    <td><input type="text" className="text-right" maxLength='15'
+                                        value={item.TOExpected ? item.TOExpected.toLocaleString('en') : 0}
+                                        onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'TOExpected') }/>
+                                    </td>
                                 </tr>
-                            )
+                            );
                         })
                     }
                     </tbody>
@@ -135,7 +145,7 @@ export class DataGrid extends Component {
                 <button type="button" className="btn-back" onClick={this.resetData}>Reset</button>
             </div>
         </div>
-        )
+        );
     }
 }
 
@@ -145,6 +155,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     const { params, totalWinLoss } = state;
     return { params, totalWinLoss };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);

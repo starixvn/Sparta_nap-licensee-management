@@ -30427,7 +30427,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
         _this.getTotals = function (data, key) {
             var total = 0;
             data.forEach(function (item) {
-                total += item[key] ? parseInt(item[key]) : 0;
+                total += item[key] ? Number(item[key]) : 0;
             });
             return total;
         };
@@ -30562,7 +30562,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 });
 
                                 // Update field by index of current gridData
-                                gridData[index][key] = parseFloat(value.split(',').join(""));
+                                gridData[index][key] = parseFloat(value.split(',').join(''));
 
                                 _this4.props.changeTotalWinloss(_this4.getTotals(gridData, 'WLExpected'));
 
@@ -30581,21 +30581,34 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right', value: item.ProductPercentage ? item.ProductPercentage : 0, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'ProductPercentage');
+                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right',
+                                        value: item.ProductPercentage ? item.ProductPercentage : 0,
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        },
+                                        onChange: function onChange(e) {
+                                            return e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false;
                                         } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
+                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
+                                        value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        }, onChange: function onChange(e) {
                                             return editField(e.target.value, 'WLExpected');
                                         } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.TOExpected ? item.TOExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
+                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
+                                        value: item.TOExpected ? item.TOExpected.toLocaleString('en') : 0,
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        }, onChange: function onChange(e) {
                                             return editField(e.target.value, 'TOExpected');
                                         } })
                                 )
@@ -30637,7 +30650,7 @@ function mapStateToProps(state) {
         totalWinLoss = state.totalWinLoss;
 
     return { params: params, totalWinLoss: totalWinLoss };
-};
+}
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 

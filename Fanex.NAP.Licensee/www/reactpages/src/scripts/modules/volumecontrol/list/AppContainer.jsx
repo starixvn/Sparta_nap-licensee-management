@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
 import FormFilter from './FormFilter'

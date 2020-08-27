@@ -30135,8 +30135,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(7);
 
-var _redux = __webpack_require__(3);
-
 var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
@@ -30403,9 +30401,13 @@ var DataGrid = exports.DataGrid = function (_Component) {
         var _this = _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
 
         _this.getTotals = function (key) {
+            // Clone gridData data before mutation
+            var gridData = _this.state.gridData.map(function (item) {
+                return _extends({}, item);
+            });
             var total = 0;
-            _this.state.gridData.forEach(function (item) {
-                total += item[key] ? parseInt(item[key]) : 0;
+            gridData.forEach(function (item) {
+                total += item[key] ? Number(item[key]) : 0;
             });
             return total;
         };
@@ -30453,8 +30455,10 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     return _extends({}, item);
                 });
                 gridData[index].editing = false;
-                gridData[index].WLExpected = parseInt(item.WLExpected);
-                gridData[index].TOExpected = parseInt(item.TOExpected);
+                gridData[index].ProductPercentage = Number(item.ProductPercentage);
+                gridData[index].WLExpected = Number(item.WLExpected);
+                gridData[index].WLRemaining = Number(item.WLRemaining);
+                gridData[index].TOExpected = Number(item.TOExpected);
                 if (!!response.data.IsSuccess) {
                     _this3.setState({
                         gridData: gridData,
@@ -30568,8 +30572,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 });
 
                                 // Update field by index of current gridData
-                                // gridData[index][key] = value
-                                gridData[index][key] = parseFloat(value.split(',').join(""));
+                                gridData[index][key] = Number(value.split(',').join(""));
+                                gridData[index].WLRemaining = gridData[index].WLExpected - gridData[index].WLAccumulated;
+                                gridData[index].TORemaining = gridData[index].TOExpected - gridData[index].TOAccumulated;
 
                                 // Trigger re-render
                                 _this4.setState({ gridData: gridData });
@@ -30640,8 +30645,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'number', className: 'text-right', value: item.ProductPercentage, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'ProductPercentage');
+                                    item.editing ? _react2.default.createElement('input', { type: 'number', max: '100', className: 'text-right',
+                                        value: item.ProductPercentage,
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        }, onChange: function onChange(e) {
+                                            return e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false;
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,
@@ -30651,8 +30660,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'WLExpected');
+                                    item.editing ? _react2.default.createElement('input', { type: 'text', maxLength: '15', className: 'text-right',
+                                        value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        }, onChange: function onChange(e) {
+                                            return Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false;
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,
@@ -30672,8 +30685,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', value: item.TOExpected.toLocaleString('en'), onChange: function onChange(e) {
-                                            return editField(e.target.value, 'TOExpected');
+                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
+                                        value: item.TOExpected.toLocaleString('en'),
+                                        onFocus: function onFocus(e) {
+                                            return e.target.select();
+                                        }, onChange: function onChange(e) {
+                                            return Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false;
                                         } }) : _react2.default.createElement(
                                         'span',
                                         null,

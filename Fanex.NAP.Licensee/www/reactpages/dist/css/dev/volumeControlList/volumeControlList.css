@@ -571,7 +571,7 @@ table {
   width: 100%;
   border-collapse: collapse; }
 
-input[type="number"] {
+input[type="number"], input[type="text"] {
   width: 100%;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;

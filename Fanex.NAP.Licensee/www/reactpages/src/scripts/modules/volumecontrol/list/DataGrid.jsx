@@ -38,8 +38,10 @@ export class DataGrid extends Component {
             const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }))
             const dataItem = this.state.dataItem.map(item => ({ ...item }))
             gridData[index].editing = false;
-            gridData[index].WLExpected = parseInt(item.WLExpected);
-            gridData[index].TOExpected = parseInt(item.TOExpected);
+            gridData[index].ProductPercentage = Number(item.ProductPercentage);
+            gridData[index].WLExpected = Number(item.WLExpected);
+            gridData[index].WLRemaining = Number(item.WLRemaining);
+            gridData[index].TOExpected = Number(item.TOExpected);
             if (!!response.data.IsSuccess) {
                 this.setState({
                     gridData,
@@ -60,9 +62,11 @@ export class DataGrid extends Component {
     }
 
     getTotals = (key) => {
+        // Clone gridData data before mutation
+        const gridData = this.state.gridData.map(item => ({ ...item }))
         let total = 0;
-        this.state.gridData.forEach(item => {
-          total += item[key] ? parseInt(item[key]) : 0;
+        gridData.forEach(item => {
+          total += item[key] ? Number(item[key]) : 0;
         });
         return total;
     };
@@ -105,9 +109,10 @@ export class DataGrid extends Component {
                                 const gridData = this.state.gridData.map(item => ({ ...item }))
 
                                 // Update field by index of current gridData
-                                // gridData[index][key] = value
-                                gridData[index][key] = parseFloat(value.split(',').join(""));
-                          
+                                gridData[index][key] = Number(value.split(',').join(""));
+                                gridData[index].WLRemaining = gridData[index].WLExpected - gridData[index].WLAccumulated;
+                                gridData[index].TORemaining = gridData[index].TOExpected - gridData[index].TOAccumulated;
+
                                 // Trigger re-render
                                 this.setState({ gridData })
                             }
@@ -151,11 +156,26 @@ export class DataGrid extends Component {
                                         {item.editing ? <span><i className="icon-checked" onClick={e => onSave(item)}/><i className="icon-cancel" onClick={e => onCancel()}/></span> 
                                         : !!!this.state.clientIsEditing ? <i className="icon-edit" onClick={e => onEdit()}/> : <i className="icon-edit"/>}
                                     </td>
-                                    <td className="text-right">{item.editing ? <input type="number" className="text-right" value={item.ProductPercentage} onChange={ e => editField(e.target.value, 'ProductPercentage') }/> : <span>{item.ProductPercentage}</span>}</td>
-                                    <td className="text-right">{item.editing ? <input type="text" className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0} onChange={ e => editField(e.target.value, 'WLExpected') }/> : <span>{item.WLExpected.toLocaleString('en')}</span>}</td>
+                                    <td className="text-right">{item.editing ? <input type="number" max='100' className="text-right"
+                                        value={item.ProductPercentage}
+                                        onFocus={e => e.target.select()} onChange={e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false}/> : <span>{item.ProductPercentage}</span>}
+                                    </td>
+                                    <td className="text-right">
+                                        {
+                                            item.editing ? <input type="text" maxLength='15' className="text-right"
+                                            value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
+                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false}/> : <span>{item.WLExpected.toLocaleString('en')}</span>
+                                        }
+                                    </td>
                                     <td className="text-right">{item.WLAccumulated.toLocaleString('en')}</td>
                                     <td className="text-right">{item.WLRemaining.toLocaleString('en')}</td>
-                                    <td className="text-right">{item.editing ? <input type="text" className="text-right" value={item.TOExpected.toLocaleString('en')} onChange={ e => editField(e.target.value, 'TOExpected') }/> : <span>{item.TOExpected.toLocaleString('en')}</span>}</td>
+                                    <td className="text-right">
+                                        {
+                                            item.editing ? <input type="text" className="text-right" maxLength='15'
+                                            value={item.TOExpected.toLocaleString('en')}
+                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false}/> : <span>{item.TOExpected.toLocaleString('en')}</span>
+                                        }
+                                    </td>
                                     <td className="text-right">{item.TOAccumulated.toLocaleString('en')}</td>
                                     <td className="text-right">{item.TORemaining.toLocaleString('en')}</td>
                                 </tr>

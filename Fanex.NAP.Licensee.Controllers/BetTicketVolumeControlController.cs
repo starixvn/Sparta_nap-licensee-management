@@ -44,7 +44,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
         public JsonResult Update(InsUpdateVolumeControlSettingCriteria criteria, ProductVolumeControlSetting productSetting)
         {
-            criteria.ProductSettingXML = BuildProductSettingXml(new List<ProductVolumeControlSetting>() { productSetting });
+            criteria.ProductSettingXML = BuildProductSettingXml(new List<ProductVolumeControlSetting>{ productSetting });
             //var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
             //return Json(new { IsSuccess = result.IsOk, Error = result.Message });
             return Json(new { IsSuccess = true, Error = "oke" });
@@ -85,7 +85,7 @@ namespace Fanex.NAP.Licensee.Controllers
             };
         }
 
-        private string BuildProductSettingXml(List<ProductVolumeControlSetting> ProductSettings)
+        private static string BuildProductSettingXml(List<ProductVolumeControlSetting> ProductSettings)
         {
             var builder = new StringBuilder("<VCSettings>");
 
