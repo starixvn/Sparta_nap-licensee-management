@@ -30455,23 +30455,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     return _extends({}, item);
                 });
                 gridData[index].editing = false;
-                gridData[index].ProductPercentage = Number(item.ProductPercentage);
-                gridData[index].WLExpected = Number(item.WLExpected);
-                gridData[index].WLRemaining = Number(item.WLRemaining);
-                gridData[index].TOExpected = Number(item.TOExpected);
-                if (!!response.data.IsSuccess) {
-                    _this3.setState({
-                        gridData: gridData,
-                        clientIsEditing: false,
-                        dataItem: gridData
-                    });
-                } else {
-                    gridData[index] = dataItem[index];
-                    _this3.setState({
-                        gridData: gridData,
-                        clientIsEditing: false
-                    });
-                }
+                !!response.data.IsSuccess ? dataItem[index] = gridData[index] : gridData[index] = dataItem[index];
+                _this3.setState({
+                    gridData: gridData,
+                    clientIsEditing: false,
+                    dataItem: dataItem
+                });
                 _this3.props.toggleLoader(false);
             }).catch(function (err) {
                 _this3.props.toggleLoader(false);
@@ -30489,7 +30478,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
                 return false;
             }
 
-            var gridData = this.state.gridData;
+            var _state = this.state,
+                gridData = _state.gridData,
+                clientIsEditing = _state.clientIsEditing;
 
 
             return _react2.default.createElement(
@@ -30628,7 +30619,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'td',
-                                    null,
+                                    { className: 'text-center' },
                                     item.editing ? _react2.default.createElement(
                                         'span',
                                         null,
@@ -30638,39 +30629,37 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         _react2.default.createElement('i', { className: 'icon-cancel', onClick: function onClick(e) {
                                                 return onCancel();
                                             } })
-                                    ) : !!!_this4.state.clientIsEditing ? _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick(e) {
-                                            return onEdit();
-                                        } }) : _react2.default.createElement('i', { className: 'icon-edit' })
+                                    ) : _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick(e) {
+                                            return clientIsEditing ? false : onEdit();
+                                        } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'number', max: '100', className: 'text-right',
-                                        value: item.ProductPercentage,
+                                    !item.editing ? _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        item.ProductPercentage
+                                    ) : _react2.default.createElement('input', { type: 'number', max: '100', className: item.ProductPercentage == 0 ? "text-right has-error" : "text-right", value: item.ProductPercentage,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
                                         }, onChange: function onChange(e) {
                                             return e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false;
-                                        } }) : _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        item.ProductPercentage
-                                    )
+                                        } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'text', maxLength: '15', className: 'text-right',
-                                        value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
+                                    !item.editing ? _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        item.WLExpected.toLocaleString('en')
+                                    ) : _react2.default.createElement('input', { type: 'text', maxLength: '15', className: item.WLExpected == 0 ? "text-right has-error" : "text-right", value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
                                         }, onChange: function onChange(e) {
                                             return Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false;
-                                        } }) : _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        item.WLExpected.toLocaleString('en')
-                                    )
+                                        } })
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -30685,17 +30674,16 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     { className: 'text-right' },
-                                    item.editing ? _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
-                                        value: item.TOExpected.toLocaleString('en'),
+                                    !item.editing ? _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        item.TOExpected.toLocaleString('en')
+                                    ) : _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15', value: item.TOExpected.toLocaleString('en'),
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
                                         }, onChange: function onChange(e) {
                                             return Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false;
-                                        } }) : _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        item.TOExpected.toLocaleString('en')
-                                    )
+                                        } })
                                 ),
                                 _react2.default.createElement(
                                     'td',

@@ -25,16 +25,10 @@
         public ResultGridData<ProductVolumeControlSetting> GetVolumeControlSettingList(SearchVolumeControlSettingCriteria criteria)
         {
             var result = new ResultGridData<ProductVolumeControlSetting>();
-            try
+
+            using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_Sel"))
             {
-                using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_Sel"))
-                {
-                    result.Data = db.Query<ProductVolumeControlSetting>(criteria);
-                }
-            }
-            catch
-            {
-                return result;
+                result.Data = db.Query<ProductVolumeControlSetting>(criteria);
             }
 
             return result;
@@ -43,16 +37,9 @@
         public ResultGridData<ProductVolumeControlSetting> GetVolumeControlAddSettingList(string brandCode)
         {
             var result = new ResultGridData<ProductVolumeControlSetting>();
-            try
+            using (var db = _objectDbGenerator.Create("Plo_VolumeControl_BrandProduct_Sel"))
             {
-                using (var db = _objectDbGenerator.Create("Plo_VolumeControl_BrandProduct_Sel"))
-                {
-                    result.Data = db.Query<ProductVolumeControlSetting>(new { BrandCode = brandCode });
-                }
-            }
-            catch
-            {
-                return result;
+                result.Data = db.Query<ProductVolumeControlSetting>(new { BrandCode = brandCode });
             }
 
             return result;
@@ -61,18 +48,11 @@
         public ResultInfo InsertOrUpdateVolumeControlSetting(InsUpdateVolumeControlSettingCriteria criteria)
         {
             var result = new ResultInfo();
-            try
+            using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_Sel"))
             {
-                using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_Sel"))
-                {
-                    db.ExecuteNonQuery(criteria);
-                    result.IsOk = criteria.ErrorCode.Equals(0);
-                    result.Message = criteria.Message;
-                }
-            }
-            catch
-            {
-                return result;
+                db.ExecuteNonQuery(criteria);
+                result.IsOk = criteria.ErrorCode.Equals(0);
+                result.Message = criteria.Message;
             }
 
             return result;

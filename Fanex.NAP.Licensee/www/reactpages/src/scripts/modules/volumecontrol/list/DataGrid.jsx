@@ -35,26 +35,15 @@ export class DataGrid extends Component {
     _updateData(item, index) {
         this.props.toggleLoader(true);
         Site.fetchData({criteria: this.props.params, productSetting: item }, 'BetTicketVolumeControl/Update').then(response => {
-            const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }))
-            const dataItem = this.state.dataItem.map(item => ({ ...item }))
+            const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }));
+            const dataItem = this.state.dataItem.map(item => ({ ...item }));
             gridData[index].editing = false;
-            gridData[index].ProductPercentage = Number(item.ProductPercentage);
-            gridData[index].WLExpected = Number(item.WLExpected);
-            gridData[index].WLRemaining = Number(item.WLRemaining);
-            gridData[index].TOExpected = Number(item.TOExpected);
-            if (!!response.data.IsSuccess) {
-                this.setState({
-                    gridData,
-                    clientIsEditing: false,
-                    dataItem: gridData,
-                });
-            } else {
-                gridData[index] = dataItem[index];
-                this.setState({
-                    gridData,
-                    clientIsEditing: false
-                });
-            }
+            !!(response.data.IsSuccess) ? dataItem[index] = gridData[index] : gridData[index] = dataItem[index];
+            this.setState({
+                gridData,
+                clientIsEditing: false,
+                dataItem
+            });
             this.props.toggleLoader(false);
         }).catch(err => {
             this.props.toggleLoader(false);
@@ -78,7 +67,7 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { gridData } = this.state;
+        const { gridData, clientIsEditing} = this.state;
 
         return (
             <div>
@@ -152,28 +141,33 @@ export class DataGrid extends Component {
                             return (
                                 <tr key={item.ProductId} className={item.editing ? 'editing' : ''}>
                                     <td>{item.ProductName}</td>
-                                    <td>
-                                        {item.editing ? <span><i className="icon-checked" onClick={e => onSave(item)}/><i className="icon-cancel" onClick={e => onCancel()}/></span> 
-                                        : !!!this.state.clientIsEditing ? <i className="icon-edit" onClick={e => onEdit()}/> : <i className="icon-edit"/>}
-                                    </td>
-                                    <td className="text-right">{item.editing ? <input type="number" max='100' className="text-right"
-                                        value={item.ProductPercentage}
-                                        onFocus={e => e.target.select()} onChange={e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false}/> : <span>{item.ProductPercentage}</span>}
+                                    <td className="text-center">
+                                        {
+                                            item.editing ? <span><i className="icon-checked" onClick={e => onSave(item)}/><i className="icon-cancel" onClick={e => onCancel()}/></span>
+                                            : <i className="icon-edit" onClick={e => clientIsEditing ? false : onEdit()}/>
+                                        }
                                     </td>
                                     <td className="text-right">
                                         {
-                                            item.editing ? <input type="text" maxLength='15' className="text-right"
-                                            value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
-                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false}/> : <span>{item.WLExpected.toLocaleString('en')}</span>
+                                            !item.editing ? <span>{item.ProductPercentage}</span>
+                                            : <input type="number" max='100' className={item.ProductPercentage == 0 ? "text-right has-error" : "text-right"} value={item.ProductPercentage}
+                                            onFocus={e => e.target.select()} onChange={e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false}/>
+                                        }
+                                    </td>
+                                    <td className="text-right">
+                                        {
+                                            !item.editing ? <span>{item.WLExpected.toLocaleString('en')}</span>
+                                            : <input type="text" maxLength='15' className={item.WLExpected == 0 ? "text-right has-error" : "text-right"} value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
+                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false}/>
                                         }
                                     </td>
                                     <td className="text-right">{item.WLAccumulated.toLocaleString('en')}</td>
                                     <td className="text-right">{item.WLRemaining.toLocaleString('en')}</td>
                                     <td className="text-right">
                                         {
-                                            item.editing ? <input type="text" className="text-right" maxLength='15'
-                                            value={item.TOExpected.toLocaleString('en')}
-                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false}/> : <span>{item.TOExpected.toLocaleString('en')}</span>
+                                            !item.editing ? <span>{item.TOExpected.toLocaleString('en')}</span>
+                                            : <input type="text" className="text-right" maxLength='15' value={item.TOExpected.toLocaleString('en')}
+                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false}/>
                                         }
                                     </td>
                                     <td className="text-right">{item.TOAccumulated.toLocaleString('en')}</td>

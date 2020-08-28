@@ -30581,7 +30581,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right',
+                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: item.ProductPercentage == 0 ? "text-right has-error" : "text-right",
                                         value: item.ProductPercentage ? item.ProductPercentage : 0,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
@@ -30593,7 +30593,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
+                                    _react2.default.createElement('input', { type: 'text', className: item.WLExpected == 0 ? "text-right has-error" : "text-right", maxLength: '15',
                                         value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();

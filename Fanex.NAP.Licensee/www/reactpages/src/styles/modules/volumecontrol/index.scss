@@ -14,10 +14,13 @@ table {
 }
 
  input[type="number"], input[type="text"] {
-     width: 100%; 
-     box-sizing: border-box;
-     -webkit-box-sizing:border-box;
-     -moz-box-sizing: border-box;
+  &.has-error {
+    border: 1px solid $red;
+  }
+  width: 100%; 
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -47,7 +50,7 @@ input[type=number] {
 
 .arrow-icon.left-arrow {
   border-color: transparent #2c2c2c transparent transparent; }
-  
+
 .arrow-icon.left-arrow.disable {
   border-color: transparent rgba(0, 0, 0, 0.26) transparent transparent; }
 

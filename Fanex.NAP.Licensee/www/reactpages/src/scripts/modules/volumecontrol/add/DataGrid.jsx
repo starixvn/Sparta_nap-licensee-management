@@ -119,12 +119,12 @@ export class DataGrid extends Component {
                             return (
                                 <tr key={item.ProductId}>
                                     <td>{item.ProductName}</td>
-                                    <td><input type="number" min='0' max='100' className="text-right"
+                                    <td><input type="number" min='0' max='100' className={item.ProductPercentage == 0 ? "text-right has-error" : "text-right"}
                                         value={item.ProductPercentage ? item.ProductPercentage : 0}
                                         onFocus={e => e.target.select()}
                                         onChange={ e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false }/>
                                     </td>
-                                    <td><input type="text" className="text-right" maxLength='15'
+                                    <td><input type="text" className={item.WLExpected == 0 ? "text-right has-error" : "text-right"} maxLength='15'
                                         value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
                                         onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'WLExpected') }/>
                                     </td>
