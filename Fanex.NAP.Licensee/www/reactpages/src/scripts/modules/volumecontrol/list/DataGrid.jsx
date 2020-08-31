@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
+import ConfirmBox from '../../../components/ConfirmBox';
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -12,13 +13,27 @@ export class DataGrid extends Component {
             gridData: [],
             dataItem: [],
             totalItem: 0,
-            clientIsEditing:false
+            clientIsEditing:false,
+            isShowConfirmBox: false,
+            indexToUpdate: -1
         };
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.params.TimeStamp !== this.props.params.TimeStamp) {
             this._getData();
+        }
+    }
+
+    _showConfirmBox(isShow, index) {
+        this.setState({ isShowConfirmBox: isShow, indexToUpdate: index });
+    }
+
+    onConfirm = (value) => {
+        this._showConfirmBox(false);
+        const { indexToUpdate } = this.state;
+        if (value) {
+            this._updateData(indexToUpdate);
         }
     }
 
@@ -32,11 +47,11 @@ export class DataGrid extends Component {
         });
     }
 
-    _updateData(item, index) {
+    _updateData(index) {
         this.props.toggleLoader(true);
-        Site.fetchData({criteria: this.props.params, productSetting: item }, 'BetTicketVolumeControl/Update').then(response => {
-            const gridData = this.state.gridData.map(i => ({ ...i, editing: item.editing && i === item }));
-            const dataItem = this.state.dataItem.map(item => ({ ...item }));
+        const gridData = this.state.gridData.map(item => ({ ...item }));
+        const dataItem = this.state.dataItem.map(item => ({ ...item }));
+        Site.fetchData({criteria: this.props.params, productSetting: gridData[index] }, 'BetTicketVolumeControl/Update').then(response => {
             gridData[index].editing = false;
             !!(response.data.IsSuccess) ? dataItem[index] = gridData[index] : gridData[index] = dataItem[index];
             this.setState({
@@ -67,7 +82,7 @@ export class DataGrid extends Component {
             return false;
         }
 
-        const { gridData, clientIsEditing} = this.state;
+        const { gridData, clientIsEditing, isShowConfirmBox } = this.state;
 
         return (
             <div>
@@ -118,8 +133,8 @@ export class DataGrid extends Component {
                                 });
                             }
 
-                            const onSave = (item) => {
-                                this._updateData(item, index);
+                            const onSave = (index) => {
+                                this._showConfirmBox(true, index);
                             }
 
                             const onCancel = () => {
@@ -143,21 +158,21 @@ export class DataGrid extends Component {
                                     <td>{item.ProductName}</td>
                                     <td className="text-center">
                                         {
-                                            item.editing ? <span><i className="icon-checked" onClick={e => onSave(item)}/><i className="icon-cancel" onClick={e => onCancel()}/></span>
+                                            item.editing ? <span><i className="icon-checked" onClick={e => onSave(index)}/><i className="icon-cancel" onClick={e => onCancel()}/></span>
                                             : <i className="icon-edit" onClick={e => clientIsEditing ? false : onEdit()}/>
                                         }
                                     </td>
                                     <td className="text-right">
                                         {
                                             !item.editing ? <span>{item.ProductPercentage}</span>
-                                            : <input type="number" max='100' className={item.ProductPercentage == 0 ? "text-right has-error" : "text-right"} value={item.ProductPercentage}
+                                            : <input type="number" min='0' max='100' className="text-right" value={item.ProductPercentage}
                                             onFocus={e => e.target.select()} onChange={e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false}/>
                                         }
                                     </td>
                                     <td className="text-right">
                                         {
                                             !item.editing ? <span>{item.WLExpected.toLocaleString('en')}</span>
-                                            : <input type="text" maxLength='15' className={item.WLExpected == 0 ? "text-right has-error" : "text-right"} value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
+                                            : <input type="text" maxLength='15' className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
                                             onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false}/>
                                         }
                                     </td>
@@ -190,6 +205,11 @@ export class DataGrid extends Component {
                         </tr>
                     </tfoot>
             </table>
+            <ConfirmBox isShow={isShowConfirmBox}
+                        title='Confirmation'
+                        message='Do you want to update?'
+                        style={{ height: '150px', width: '295px' }}
+                        onClose={this.onConfirm} /> 
         </div>
         )
     }

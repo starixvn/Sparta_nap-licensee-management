@@ -48,11 +48,11 @@
         public ResultInfo InsertOrUpdateVolumeControlSetting(InsUpdateVolumeControlSettingCriteria criteria)
         {
             var result = new ResultInfo();
-            using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_Sel"))
+            using (var db = _objectDbGenerator.Create("Plo_VolumeControl_Setting_InsUpd"))
             {
                 db.ExecuteNonQuery(criteria);
                 result.IsOk = criteria.ErrorCode.Equals(0);
-                result.Message = criteria.Message;
+                result.Message = criteria.ErrorMessage;
             }
 
             return result;

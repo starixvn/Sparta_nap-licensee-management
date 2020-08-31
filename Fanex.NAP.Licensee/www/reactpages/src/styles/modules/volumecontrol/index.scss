@@ -1,5 +1,6 @@
 ﻿@import "../../components/react-select/react-select.main";
 @import "../../components/pager";
+@import "../../components/popup";
 @import "../../components/common";
 @import "../../components/month-picker";
 @import "../../components/_variable";
@@ -8,15 +9,7 @@
   background: $bisque;
 }
 
-table {
-  width:100%;
-  border-collapse: collapse;
-}
-
- input[type="number"], input[type="text"] {
-  &.has-error {
-    border: 1px solid $red;
-  }
+input[type="number"], input[type="text"] {
   width: 100%; 
   box-sizing: border-box;
   -webkit-box-sizing:border-box;

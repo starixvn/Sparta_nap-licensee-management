@@ -10,12 +10,12 @@
 
         public DateTime MonthDate { get; set; }
 
-        public string ProductSettingXML { get; set; }
+        public string ProductSetting { get; set; }
 
         public int BaseCurrencyID { get; set; }
 
         public int ErrorCode { get; set; }
 
-        public string Message { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

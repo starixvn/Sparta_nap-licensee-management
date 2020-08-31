@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams, changeTotalWinloss } from './action';
 import Site from '../../../lib/site';
+import ConfirmBox from '../../../components/ConfirmBox';
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -10,13 +11,26 @@ export class DataGrid extends Component {
 
         this.state = {
             gridData: [],
-            totalItem: 0
+            totalItem: 0,
+            isShowConfirmBox: false
         };
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.params.TimeStamp !== this.props.params.TimeStamp) {
            this._getData();
+        }
+    }
+
+    _showConfirmBox(isShow) {
+        this.setState({ isShowConfirmBox: isShow });
+    }
+
+    onConfirm = (value) => {
+        this._showConfirmBox(false);
+
+        if (value) {
+            this._insertData();
         }
     }
 
@@ -35,8 +49,7 @@ export class DataGrid extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-
-        this._insertData();
+        this._showConfirmBox(true);
     }
 
     _insertData() {
@@ -85,7 +98,7 @@ export class DataGrid extends Component {
             );
         }
 
-        const { gridData } = this.state;
+        const { gridData, isShowConfirmBox} = this.state;
 
         return (
             <div className="data-container">
@@ -119,12 +132,12 @@ export class DataGrid extends Component {
                             return (
                                 <tr key={item.ProductId}>
                                     <td>{item.ProductName}</td>
-                                    <td><input type="number" min='0' max='100' className={item.ProductPercentage == 0 ? "text-right has-error" : "text-right"}
+                                    <td><input type="number" min='0' max='100' className="text-right"
                                         value={item.ProductPercentage ? item.ProductPercentage : 0}
                                         onFocus={e => e.target.select()}
                                         onChange={ e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false }/>
                                     </td>
-                                    <td><input type="text" className={item.WLExpected == 0 ? "text-right has-error" : "text-right"} maxLength='15'
+                                    <td><input type="text" className="text-right" maxLength='15'
                                         value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
                                         onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'WLExpected') }/>
                                     </td>
@@ -144,6 +157,11 @@ export class DataGrid extends Component {
                 <a className="btn-back" href={window.rootUrl + 'BetTicketVolumeControl/Index'}>Back To List</a>
                 <button type="button" className="btn-back" onClick={this.resetData}>Reset</button>
             </div>
+            <ConfirmBox isShow={isShowConfirmBox}
+                        title='Confirmation'
+                        message='Do you want to add this setting?'
+                        style={{ height: '150px', width: '295px' }}
+                        onClose={this.onConfirm} /> 
         </div>
         );
     }

@@ -13997,7 +13997,107 @@ thunk.withExtraArgument = createThunkMiddleware;
 /* harmony default export */ __webpack_exports__["default"] = (thunk);
 
 /***/ }),
-/* 90 */,
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(4);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Popup = function (_React$Component) {
+    _inherits(Popup, _React$Component);
+
+    function Popup(props) {
+        _classCallCheck(this, Popup);
+
+        var _this = _possibleConstructorReturn(this, (Popup.__proto__ || Object.getPrototypeOf(Popup)).call(this, props));
+
+        _this.zIndex = props.zIndex ? props.zIndex : 50;
+        return _this;
+    }
+
+    _createClass(Popup, [{
+        key: '_onClose',
+        value: function _onClose(callBack) {
+            callBack && callBack();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                title = _props.title,
+                style = _props.style,
+                content = _props.content,
+                onClose = _props.onClose,
+                noShowCloseButton = _props.noShowCloseButton,
+                isShow = _props.isShow,
+                className = _props.className;
+
+            var combinedStyle = Object.assign({}, style, { zIndex: this.zIndex + 1 });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'popup ' + (isShow ? 'show' : '') },
+                isShow && _react2.default.createElement('div', { className: 'popup-block-body', style: { zIndex: this.zIndex } }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'popup-container ' + className, style: combinedStyle },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-title' },
+                        _react2.default.createElement(
+                            'p',
+                            { title: title },
+                            title
+                        ),
+                        !noShowCloseButton && _react2.default.createElement(
+                            'a',
+                            { className: 'popup-close', href: 'javascript:;', onClick: function onClick() {
+                                    return _this2._onClose(onClose);
+                                } },
+                            '\xD7'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'popup-content' },
+                        content
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Popup;
+}(_react2.default.Component);
+
+exports.default = Popup;
+;
+
+/***/ }),
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14024,7 +14124,118 @@ var toggleLoader = exports.toggleLoader = function toggleLoader(show) {
 /* 94 */,
 /* 95 */,
 /* 96 */,
-/* 97 */,
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(4);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Popup = __webpack_require__(90);
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ConfirmBox = function (_React$Component) {
+    _inherits(ConfirmBox, _React$Component);
+
+    function ConfirmBox(props) {
+        _classCallCheck(this, ConfirmBox);
+
+        var _this = _possibleConstructorReturn(this, (ConfirmBox.__proto__ || Object.getPrototypeOf(ConfirmBox)).call(this, props));
+
+        _this.zIndex = props.zIndex ? props.zIndex : 60;
+        return _this;
+    }
+
+    _createClass(ConfirmBox, [{
+        key: '_onCick',
+        value: function _onCick(value, callBack) {
+            callBack && callBack(value);
+        }
+    }, {
+        key: '_buildContent',
+        value: function _buildContent(msg, onClose) {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'confirm-popup' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    msg
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-red', onClick: function onClick() {
+                                return _this2._onCick(false, onClose);
+                            } },
+                        'No'
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: function onClick() {
+                                return _this2._onCick(true, onClose);
+                            } },
+                        'Yes'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                title = _props.title,
+                message = _props.message,
+                isShow = _props.isShow,
+                onClose = _props.onClose,
+                style = _props.style;
+
+
+            return _react2.default.createElement(_Popup2.default, _defineProperty({ isShow: isShow,
+                title: title,
+                content: this._buildContent(message, onClose),
+                style: { height: '300px', width: '600px' },
+                noShowCloseButton: true,
+                zIndex: this.zIndex
+            }, 'style', style));
+        }
+    }]);
+
+    return ConfirmBox;
+}(_react2.default.Component);
+
+exports.default = ConfirmBox;
+;
+
+/***/ }),
 /* 98 */,
 /* 99 */,
 /* 100 */,
@@ -30402,6 +30613,10 @@ var _site = __webpack_require__(19);
 
 var _site2 = _interopRequireDefault(_site);
 
+var _ConfirmBox = __webpack_require__(97);
+
+var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30418,10 +30633,17 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (DataGrid.__proto__ || Object.getPrototypeOf(DataGrid)).call(this, props));
 
+        _this.onConfirm = function (value) {
+            _this._showConfirmBox(false);
+
+            if (value) {
+                _this._insertData();
+            }
+        };
+
         _this.onSubmit = function (e) {
             e.preventDefault();
-
-            _this._insertData();
+            _this._showConfirmBox(true);
         };
 
         _this.getTotals = function (data, key) {
@@ -30449,7 +30671,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
         _this.state = {
             gridData: [],
-            totalItem: 0
+            totalItem: 0,
+            isShowConfirmBox: false
         };
         return _this;
     }
@@ -30460,6 +30683,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
             if (prevProps.params.TimeStamp !== this.props.params.TimeStamp) {
                 this._getData();
             }
+        }
+    }, {
+        key: '_showConfirmBox',
+        value: function _showConfirmBox(isShow) {
+            this.setState({ isShowConfirmBox: isShow });
         }
     }, {
         key: '_getData',
@@ -30513,7 +30741,9 @@ var DataGrid = exports.DataGrid = function (_Component) {
                 );
             }
 
-            var gridData = this.state.gridData;
+            var _state = this.state,
+                gridData = _state.gridData,
+                isShowConfirmBox = _state.isShowConfirmBox;
 
 
             return _react2.default.createElement(
@@ -30581,7 +30811,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: item.ProductPercentage == 0 ? "text-right has-error" : "text-right",
+                                    _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right',
                                         value: item.ProductPercentage ? item.ProductPercentage : 0,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
@@ -30593,7 +30823,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', className: item.WLExpected == 0 ? "text-right has-error" : "text-right", maxLength: '15',
+                                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '15',
                                         value: item.WLExpected ? item.WLExpected.toLocaleString('en') : 0,
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
@@ -30634,7 +30864,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         { type: 'button', className: 'btn-back', onClick: this.resetData },
                         'Reset'
                     )
-                )
+                ),
+                _react2.default.createElement(_ConfirmBox2.default, { isShow: isShowConfirmBox,
+                    title: 'Confirmation',
+                    message: 'Do you want to add this setting?',
+                    style: { height: '150px', width: '295px' },
+                    onClose: this.onConfirm })
             );
         }
     }]);

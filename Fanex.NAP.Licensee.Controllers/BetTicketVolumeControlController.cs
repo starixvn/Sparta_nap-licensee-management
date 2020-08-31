@@ -44,10 +44,10 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
         public JsonResult Update(InsUpdateVolumeControlSettingCriteria criteria, ProductVolumeControlSetting productSetting)
         {
-            criteria.ProductSettingXML = BuildProductSettingXml(new List<ProductVolumeControlSetting>{ productSetting });
-            //var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
-            //return Json(new { IsSuccess = result.IsOk, Error = result.Message });
-            return Json(new { IsSuccess = true, Error = "oke" });
+            criteria.ProductSetting = BuildProductSettingXml(new List<ProductVolumeControlSetting>{ productSetting });
+            criteria.UserID = CurrentSession.UserId;
+            var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
+            return Json(new { IsSuccess = result.IsOk, Error = result.Message });
         }
 
         [HttpPost]
@@ -55,10 +55,10 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
         public JsonResult Insert(InsUpdateVolumeControlSettingCriteria criteria, List<ProductVolumeControlSetting> productSettingList)
         {
-            criteria.ProductSettingXML = BuildProductSettingXml(productSettingList);
-            //var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
-            //return Json(new { IsSuccess = result.IsOk, Error = result.Message });
-            return Json(new { IsSuccess = true, Error = "oke" });
+            criteria.ProductSetting = BuildProductSettingXml(productSettingList);
+            criteria.UserID = CurrentSession.UserId;
+            var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
+            return Json(new { IsSuccess = result.IsOk, Error = result.Message });
         }
 
         [HttpPost]
@@ -87,17 +87,17 @@ namespace Fanex.NAP.Licensee.Controllers
 
         private static string BuildProductSettingXml(List<ProductVolumeControlSetting> ProductSettings)
         {
-            var builder = new StringBuilder("<VCSettings>");
+            var builder = new StringBuilder("<vcsettings>");
 
             foreach (var product in ProductSettings)
             {
-                builder.Append("<Product>");
-                builder.Append($"<ProductId>{product.ProductId}</ProductId><ProductName>{product.ProductName}</ProductName>"
-                + $"<ProductPercentage>{product.ProductPercentage}</ProductPercentage><TurnOverAmount>{product.TOExpected}</TurnOverAmount><WinlossAmount>{product.WLExpected}</WinlossAmount>");
-                builder.Append("</Product>");
+                builder.Append("<p>");
+                builder.Append($"<pid>{product.ProductId}</pid><pname>{product.ProductName}</pname>"
+                + $"<pper>{product.ProductPercentage}</pper><toa>{product.TOExpected}</toa><wla>{product.WLExpected}</wla>");
+                builder.Append("</p>");
             }
 
-            builder.Append("</VCSettings>");
+            builder.Append("</vcsettings>");
             return builder.ToString();
         }
     }
