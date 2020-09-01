@@ -542,7 +542,7 @@ tr.disable {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
 
 .month-picked {
-  padding: 3px 0;
+  line-height: 22px !important;
   text-align: center;
   border: 1px solid #c3c0c2;
   width: 120px;

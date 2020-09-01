@@ -16,8 +16,8 @@ const cssPaths = {
 	product: './www/reactpages/src/styles/modules/product/index.scss',
 	'function': './www/reactpages/src/styles/modules/function/index.scss',
 	userList: './www/reactpages/src/styles/modules/user/index.scss',
-    user: './www/reactpages/src/styles/modules/user/item.scss',
-    volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
+	user: './www/reactpages/src/styles/modules/user/item.scss',
+	volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
 };
 
 const scriptPaths = {

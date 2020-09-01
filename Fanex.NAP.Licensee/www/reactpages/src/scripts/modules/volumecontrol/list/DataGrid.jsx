@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
 import ConfirmBox from '../../../components/ConfirmBox';
+import Utility from '../../../lib/utility';
+
+const maxValue = 999999999999999;
 
 export class DataGrid extends Component {
     constructor(props) {
@@ -24,17 +27,17 @@ export class DataGrid extends Component {
             this._getData();
         }
     }
-
-    _showConfirmBox(isShow, index) {
-        this.setState({ isShowConfirmBox: isShow, indexToUpdate: index });
-    }
-
+    
     onConfirm = (value) => {
         this._showConfirmBox(false);
         const { indexToUpdate } = this.state;
         if (value) {
             this._updateData(indexToUpdate);
         }
+    }
+
+    _showConfirmBox(isShow, index) {
+        this.setState({ isShowConfirmBox: isShow, indexToUpdate: index });
     }
 
     _getData() {
@@ -65,15 +68,15 @@ export class DataGrid extends Component {
         });
     }
 
-    getTotals = (key) => {
+    _getTotals = (key) => {
         // Clone gridData data before mutation
         const gridData = this.state.gridData.map(item => ({ ...item }))
         let total = 0;
         gridData.forEach(item => {
-          total += item[key] ? Number(item[key]) : 0;
+          total += item[key] ? isNaN(Number(item[key])) ? 0 : Number(item[key]) : 0;
         });
         return total;
-    };
+    }
 
     render() {
         const { totalItem } = this.state;
@@ -108,12 +111,14 @@ export class DataGrid extends Component {
                     {
                         gridData.map((item, index) => {
                             const editField = (value, key) => {
-
                                 // Clone gridData data before mutation
                                 const gridData = this.state.gridData.map(item => ({ ...item }))
 
+                                let tempValue = Number(value.split(',').join(''));
+                                let numberVaule = isNaN(tempValue) ? gridData[index][key] : tempValue > maxValue ? gridData[index][key] : tempValue;
+
                                 // Update field by index of current gridData
-                                gridData[index][key] = Number(value.split(',').join(""));
+                                gridData[index][key] = numberVaule;
                                 gridData[index].WLRemaining = gridData[index].WLExpected - gridData[index].WLAccumulated;
                                 gridData[index].TORemaining = gridData[index].TOExpected - gridData[index].TOAccumulated;
 
@@ -134,16 +139,20 @@ export class DataGrid extends Component {
                             }
 
                             const onSave = (index) => {
-                                this._showConfirmBox(true, index);
+                                if (item.WLExpected < item.WLAccumulated || item.TOExpected < item.TOAccumulated) {
+                                    Utility.showWarningMessage("Expected is greater than or equal to Accumulated");
+                                } else {
+                                    this._showConfirmBox(true, index);
+                                }
                             }
 
                             const onCancel = () => {
                                 // Clone gridData data before mutation
-                                const gridData = this.state.gridData.map(item => ({ ...item }))
-                                const dataItem = this.state.dataItem.map(item => ({ ...item }))
+                                const gridData = this.state.gridData.map(item => ({ ...item }));
+                                const dataItem = this.state.dataItem.map(item => ({ ...item }));
                           
                                 // Update field by index of current gridData
-                                gridData[index] = dataItem[index]
+                                gridData[index] = dataItem[index];
                                 gridData[index].editing = false;
                           
                                 // Trigger re-render
@@ -164,29 +173,31 @@ export class DataGrid extends Component {
                                     </td>
                                     <td className="text-right">
                                         {
-                                            !item.editing ? <span>{item.ProductPercentage}</span>
+                                            !item.editing ? <span>{item.ProductPercentage.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</span>
                                             : <input type="number" min='0' max='100' className="text-right" value={item.ProductPercentage}
                                             onFocus={e => e.target.select()} onChange={e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false}/>
                                         }
                                     </td>
                                     <td className="text-right">
                                         {
-                                            !item.editing ? <span>{item.WLExpected.toLocaleString('en')}</span>
-                                            : <input type="text" maxLength='15' className="text-right" value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
-                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'WLExpected') : false}/>
+                                            !item.editing ? <span>{item.WLExpected.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</span>
+                                            : <input type="text" maxLength='24' className= {"text-right"}
+                                              value={item.WLExpected ? item.WLExpected.toLocaleString('en', {maximumFractionDigits: 0}) : 0}
+                                              onFocus={e => e.target.select()} onChange={e => editField(e.target.value, 'WLExpected')}/>
                                         }
                                     </td>
-                                    <td className="text-right">{item.WLAccumulated.toLocaleString('en')}</td>
-                                    <td className="text-right">{item.WLRemaining.toLocaleString('en')}</td>
+                                    <td className="text-right">{item.WLAccumulated.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</td>
+                                    <td className="text-right">{item.WLRemaining.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</td>
                                     <td className="text-right">
                                         {
-                                            !item.editing ? <span>{item.TOExpected.toLocaleString('en')}</span>
-                                            : <input type="text" className="text-right" maxLength='15' value={item.TOExpected.toLocaleString('en')}
-                                            onFocus={e => e.target.select()} onChange={e => Number(e.target.value.split(',').join("")) >= item.WLAccumulated ? editField(e.target.value, 'TOExpected') : false}/>
+                                            !item.editing ? <span>{item.TOExpected.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</span>
+                                            : <input type="text" maxLength='24' className= {"text-right"}
+                                              value={item.TOExpected ? item.TOExpected.toLocaleString('en', {maximumFractionDigits: 0}) : 0}
+                                              onFocus={e => e.target.select()} onChange={e => editField(e.target.value, 'TOExpected')}/>
                                         }
                                     </td>
-                                    <td className="text-right">{item.TOAccumulated.toLocaleString('en')}</td>
-                                    <td className="text-right">{item.TORemaining.toLocaleString('en')}</td>
+                                    <td className="text-right">{item.TOAccumulated.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</td>
+                                    <td className="text-right">{item.TORemaining.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</td>
                                 </tr>
                             )
                         })
@@ -196,12 +207,12 @@ export class DataGrid extends Component {
                         <tr className="grant-total">
                             <th className="text-center" colSpan="2">Total</th>
                             <th></th>
-                            <th className="text-right">{this.getTotals('WLExpected').toLocaleString('en')}</th>
-                            <th className="text-right">{this.getTotals('WLAccumulated').toLocaleString('en')}</th>
-                            <th className="text-right">{this.getTotals('WLRemaining').toLocaleString('en')}</th>
-                            <th className="text-right">{this.getTotals('TOExpected').toLocaleString('en')}</th>
-                            <th className="text-right">{this.getTotals('TOAccumulated').toLocaleString('en')}</th>
-                            <th className="text-right">{this.getTotals('TORemaining').toLocaleString('en')}</th>
+                            <th className="text-right">{this._getTotals('WLExpected').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
+                            <th className="text-right">{this._getTotals('WLAccumulated').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
+                            <th className="text-right">{this._getTotals('WLRemaining').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
+                            <th className="text-right">{this._getTotals('TOExpected').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
+                            <th className="text-right">{this._getTotals('TOAccumulated').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
+                            <th className="text-right">{this._getTotals('TORemaining').toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}</th>
                         </tr>
                     </tfoot>
             </table>

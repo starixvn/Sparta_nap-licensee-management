@@ -5,6 +5,8 @@ import { toggleLoader, setParams, changeTotalWinloss } from './action';
 import Site from '../../../lib/site';
 import ConfirmBox from '../../../components/ConfirmBox';
 
+const maxValue = 999999999999999;
+
 export class DataGrid extends Component {
     constructor(props) {
         super(props);
@@ -22,10 +24,6 @@ export class DataGrid extends Component {
         }
     }
 
-    _showConfirmBox(isShow) {
-        this.setState({ isShowConfirmBox: isShow });
-    }
-
     onConfirm = (value) => {
         this._showConfirmBox(false);
 
@@ -34,22 +32,26 @@ export class DataGrid extends Component {
         }
     }
 
+    onSubmit = (e) => {
+        e.preventDefault();
+        this._showConfirmBox(true);
+    }
+
+    _showConfirmBox(isShow) {
+        this.setState({ isShowConfirmBox: isShow });
+    }
+
     _getData() {
         this.props.toggleLoader(true);
         Site.fetchData({ brandCode: this.props.params['brandCode'] }, 'BetTicketVolumeControl/GetAddSettingList').then(response => {
             if (!!(response.data.Data)) {
-                this.props.changeTotalWinloss(this.getTotals(response.data.Data, 'WLExpected'));
+                this.props.changeTotalWinloss(this._getTotals(response.data.Data, 'WLExpected'));
                 this.setState({ gridData: response.data.Data, totalItem: response.data.Data.length });
             }
             this.props.toggleLoader(false);
         }).catch(err => {
             this.props.toggleLoader(false);
         });
-    }
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        this._showConfirmBox(true);
     }
 
     _insertData() {
@@ -67,15 +69,15 @@ export class DataGrid extends Component {
         });
     }
 
-    getTotals = (data,key) => {
+    _getTotals = (data,key) => {
         let total = 0;
         data.forEach(item => {
-          total += item[key] ? Number(item[key]) : 0;
+           total += item[key] ? isNaN(Number(item[key])) ? 0 : Number(item[key]) : 0;
         });
         return total;
     };
 
-    resetData = () => {
+    _resetData = () => {
         const { gridData } = this.state;
         gridData.forEach(item => {
             item['ProductPercentage'] = 0;
@@ -98,7 +100,7 @@ export class DataGrid extends Component {
             );
         }
 
-        const { gridData, isShowConfirmBox} = this.state;
+        const { gridData, isShowConfirmBox } = this.state;
 
         return (
             <div className="data-container">
@@ -116,17 +118,19 @@ export class DataGrid extends Component {
                     {
                         gridData.map((item, index) => {
                             const editField = (value, key) => {
-
                                 // Clone gridData data before mutation
-                                const gridData = this.state.gridData.map(item => ({ ...item }));
+                                const gridData = this.state.gridData.map(item => ({ ...item }))
+
+                                let tempValue = Number(value.split(',').join(''));
+                                let numberVaule = isNaN(tempValue) ? gridData[index][key] : tempValue > maxValue ? gridData[index][key] : tempValue;
 
                                 // Update field by index of current gridData
-                                gridData[index][key] = parseFloat(value.split(',').join(''));
+                                gridData[index][key] = numberVaule;
 
-                                this.props.changeTotalWinloss(this.getTotals(gridData, 'WLExpected'));
+                                this.props.changeTotalWinloss(this._getTotals(gridData, 'WLExpected'));
 
                                 // Trigger re-render
-                                this.setState({ gridData });
+                                this.setState({ gridData })
                             }
 
                             return (
@@ -137,12 +141,12 @@ export class DataGrid extends Component {
                                         onFocus={e => e.target.select()}
                                         onChange={ e => e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false }/>
                                     </td>
-                                    <td><input type="text" className="text-right" maxLength='15'
-                                        value={item.WLExpected ? item.WLExpected.toLocaleString('en') : 0}
+                                    <td><input type="text" maxLength='24' className= {"text-right"}
+                                        value={item.WLExpected.toLocaleString('en', {maximumFractionDigits: 2})}
                                         onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'WLExpected') }/>
                                     </td>
-                                    <td><input type="text" className="text-right" maxLength='15'
-                                        value={item.TOExpected ? item.TOExpected.toLocaleString('en') : 0}
+                                    <td><input type="text" maxLength='24' className= {"text-right"}
+                                        value={item.TOExpected.toLocaleString('en', {maximumFractionDigits: 2})}
                                         onFocus={e => e.target.select()} onChange={ e => editField(e.target.value, 'TOExpected') }/>
                                     </td>
                                 </tr>
@@ -155,7 +159,7 @@ export class DataGrid extends Component {
             <div style={{ display: 'inline-block', float: 'right' }}>
                 <button type="button" className="btn btn-primary" onClick={this.onSubmit}>Submit</button>
                 <a className="btn-back" href={window.rootUrl + 'BetTicketVolumeControl/Index'}>Back To List</a>
-                <button type="button" className="btn-back" onClick={this.resetData}>Reset</button>
+                <button type="button" className="btn-back" onClick={this._resetData}>Reset</button>
             </div>
             <ConfirmBox isShow={isShowConfirmBox}
                         title='Confirmation'

@@ -34,7 +34,7 @@
         var dateConstraint = {
             minDate: '@minDate.ToString("MM/dd/yyyy")',
             maxDate: '@today.AddMonths(12).ToString("MM/dd/yyyy")',
-            currentDate: '@today.ToString("MM/dd/yyyy")'
+            currentDate: '@today.AddMonths(1).ToString("MM/dd/yyyy")'
         }
     </script>
 

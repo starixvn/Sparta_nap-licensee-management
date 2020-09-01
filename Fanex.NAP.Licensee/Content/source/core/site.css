@@ -738,7 +738,7 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form .form-group label {
-  margin: 1px 5px 2px 0;
+  margin: 4px 5px 2px 0;
   font-weight: normal;
   vertical-align: middle;
   float: left;
@@ -1045,6 +1045,7 @@ input[type="submit"].btn-ok,
 .table tfoot > tr > td {
   min-height: 25px;
   padding: 5px;
+  vertical-align: middle;
 }
 /********************************************************/
 /*					    Group                           */

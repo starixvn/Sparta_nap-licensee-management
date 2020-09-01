@@ -83,7 +83,7 @@ export class FormFilter extends Component {
 
             <div className="form-group">
                 <button type="button" className="btn btn-primary" onClick={this.onSubmit}>Submit</button>
-                <a className="btn btn-green" href={window.rootUrl + 'BetTicketVolumeControl/Add'}>+ Add Setting</a>
+                <a className="btn btn-green" href={window.rootUrl + 'BetTicketVolumeControl/Add'}>Add Setting</a>
             </div>
         </div>
         )

@@ -82,7 +82,7 @@ export class FormFilter extends Component {
                 </div>
                 <div className="form-group">
                     <label>Win Loss</label>
-                    <input type="text" className="text-right" maxLength='50' name='winLoss' value={this.props.totalWinLoss.toLocaleString('en')} disabled={true} style={{width: 'auto'}}/><span> USD</span>
+                    <input type="text" className="text-right" maxLength='50' name='winLoss' value={this.props.totalWinLoss.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})} disabled={true} style={{width: '180px'}}/><span> USD</span>
                 </div>
             </div>
         )
