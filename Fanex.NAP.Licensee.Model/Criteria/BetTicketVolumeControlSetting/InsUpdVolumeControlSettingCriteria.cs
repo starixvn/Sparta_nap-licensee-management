@@ -4,6 +4,8 @@
 
     public class InsUpdateVolumeControlSettingCriteria
     {
+        public string Action { get; set; }
+
         public string BrandCode { get; set; }
 
         public int UserID { get; set; }

@@ -18,6 +18,8 @@ namespace Fanex.NAP.Licensee.Controllers
     [CheckUMFilter]
     public class BetTicketVolumeControlController : BaseController
     {
+        private const string EditAction = "EDIT";
+        private const string AddAction = "ADD";
         private readonly IBetTicketVolumeControlService _betticketVolumeControlService;
 
         public BetTicketVolumeControlController()
@@ -44,6 +46,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
         public JsonResult Update(InsUpdateVolumeControlSettingCriteria criteria, ProductVolumeControlSetting productSetting)
         {
+            criteria.Action = EditAction;
             criteria.ProductSetting = BuildProductSettingXml(new List<ProductVolumeControlSetting>{ productSetting });
             criteria.UserID = CurrentSession.UserId;
             var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
@@ -55,6 +58,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.BetTicketVolumeControl, Policy = Constant.Policy.Host)]
         public JsonResult Insert(InsUpdateVolumeControlSettingCriteria criteria, List<ProductVolumeControlSetting> productSettingList)
         {
+            criteria.Action = AddAction;
             criteria.ProductSetting = BuildProductSettingXml(productSettingList);
             criteria.UserID = CurrentSession.UserId;
             var result = _betticketVolumeControlService.InsertOrUpdateVolumeControlSetting(criteria);
