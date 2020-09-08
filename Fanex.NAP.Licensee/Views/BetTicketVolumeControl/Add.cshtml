@@ -13,7 +13,7 @@
     var siteNameList = Model.SiteNameList.Select(x => new { label = x.LicenseeName, value = x.BrandCode }).ToList();
 
     var today = DateTime.Now.Date.AddDays(-DateTime.Now.Date.Day + 1);
-    var minDate = today.AddMonths(-12);
+    var minDate = DateTime.Parse(@"09/01/2019");
 }
 
 @section Headline {
@@ -33,7 +33,7 @@
         }
         var dateConstraint = {
             minDate: '@minDate.ToString("MM/dd/yyyy")',
-            maxDate: '@today.AddMonths(12).ToString("MM/dd/yyyy")',
+            maxDate: '@today.AddYears(2).ToString("MM/dd/yyyy")',
             currentDate: '@today.AddMonths(1).ToString("MM/dd/yyyy")'
         }
     </script>

@@ -1,9 +1,9 @@
-﻿import React from 'react'
+﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import AppContainer from './AppContainer'
-import { Provider } from 'react-redux'
-import reducer from './reducer'
-import Store from '../../../lib/store'
+import AppContainer from './AppContainer';
+import { Provider } from 'react-redux';
+import reducer from './reducer';
+import Store from '../../../lib/store';
 
 const store = Store.createStore(reducer, { isLoading: false, params: {}, totalWinLoss: 0 });
 
@@ -21,4 +21,4 @@ export default class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById("app-container"));
+ReactDOM.render(<App />, document.getElementById('app-container'));

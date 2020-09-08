@@ -1,9 +1,9 @@
-﻿import React, { Component } from 'react'
-import { connect } from 'react-redux'
+﻿import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Loader from '../../../components/Loader'
-import FormFilter from './FormFilter'
-import DataGrid from './DataGrid'
+import Loader from '../../../components/Loader';
+import FormFilter from './FormFilter';
+import DataGrid from './DataGrid';
 
 export class AppContainer extends Component {
     constructor(props) {
@@ -17,11 +17,11 @@ export class AppContainer extends Component {
                 <FormFilter />
                 <DataGrid />
             </div>
-        )
+        );
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     const { isLoading } = state;
     return { isLoading };
 };

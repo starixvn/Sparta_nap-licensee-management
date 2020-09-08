@@ -14284,8 +14284,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var wrapperClasses = {
-    OVERLAY: "overlay",
-    OVERLAY_OPEN: "overlay-open"
+    OVERLAY: 'overlay',
+    OVERLAY_OPEN: 'overlay-open'
 };
 
 var Overlay = function (_Component) {
@@ -14328,7 +14328,7 @@ var Overlay = function (_Component) {
 
     _createClass(Overlay, [{
         key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
+        value: function componentDidUpdate(prevProps) {
             var _this2 = this;
 
             if (this.props.isOpening !== prevProps.isOpening) {
@@ -14379,7 +14379,7 @@ var Overlay = function (_Component) {
 
             var mergedClassName = (0, _classnames2.default)(wrapperClasses.OVERLAY, _defineProperty({}, wrapperClasses.OVERLAY_OPEN, this.state.isOpening), className);
             var style = {
-                display: this.state.isOpening ? "block" : "none"
+                display: this.state.isOpening ? 'block' : 'none'
             };
 
             return _react2.default.createElement(
@@ -29259,7 +29259,6 @@ MonthPicker.propTypes = {
 };
 MonthPicker.defaultProps = {
     label: 'View data in month',
-    onChange: function onChange() {},
     fromDateOption: {
         label: 'From'
     },
@@ -29367,6 +29366,11 @@ var Month = function (_Component) {
     }
 
     _createClass(Month, [{
+        key: 'handleClick',
+        value: function handleClick(value) {
+            this._onChange(value);
+        }
+    }, {
         key: '_onChange',
         value: function _onChange(value) {
             this.props.onChange(value);
@@ -29376,6 +29380,16 @@ var Month = function (_Component) {
         key: '_formatString',
         value: function _formatString(month, year) {
             return this.shortMonths[month] + ' ' + year;
+        }
+    }, {
+        key: 'getMinMonth',
+        value: function getMinMonth(year, min) {
+            return year === min.year ? min.month : 0;
+        }
+    }, {
+        key: 'getMaxMonth',
+        value: function getMaxMonth(year, max) {
+            return year === max.year ? max.month : 11;
         }
     }, {
         key: '_renderOption',
@@ -29397,28 +29411,21 @@ var Month = function (_Component) {
                         )
                     ));
 
-                    var minMonth = i === min.year ? min.month : 0;
-                    var maxMonth = i === max.year ? max.month : 11;
-
-                    var _loop2 = function _loop2(j) {
+                    var minMonth = _this2.getMinMonth(i, min);
+                    var maxMonth = _this2.getMaxMonth(i, max);
+                    for (var j = minMonth; j <= maxMonth; j++) {
                         var isSelected = i === value.year && j === value.month;
                         var valueItem = { year: i, month: j };
 
                         options.push(_react2.default.createElement(
                             'li',
-                            { key: '' + j + i, className: 'month-option', onClick: function onClick() {
-                                    return _this2._onChange(valueItem);
-                                } },
+                            { key: '' + j + i, className: 'month-option', data: valueItem, onClick: _this2.handleClick.bind(_this2, valueItem) },
                             _react2.default.createElement(
                                 'a',
                                 { href: 'javascript:;', className: '' + (isSelected ? 'selected' : '') },
                                 _this2.fullMonths[j]
                             )
                         ));
-                    };
-
-                    for (var j = minMonth; j <= maxMonth; j++) {
-                        _loop2(j);
                     }
                 } else {
                     options.push(_react2.default.createElement(
@@ -29474,8 +29481,11 @@ var Month = function (_Component) {
                 min = _props.min,
                 max = _props.max;
 
+            if (year > min.year && year < max.year) {
+                return true;
+            }
 
-            return year > min.year && year < max.year || year === min.year && month >= min.month || year === max.year && month <= max.month;
+            return year === min.year && month >= min.month || year === max.year && month <= max.month;
         }
     }, {
         key: '_goToMonth',
@@ -29570,8 +29580,7 @@ Month.propTypes = {
     onChange: _propTypes2.default.func
 };
 Month.defaultProps = {
-    label: 'View data in month',
-    onChange: function onChange() {}
+    label: 'View data in month'
 };
 exports.default = Month;
 
@@ -29678,7 +29687,7 @@ var Day = function (_Component) {
 
     _createClass(Day, [{
         key: '_renderOption',
-        value: function _renderOption(min, max, value) {
+        value: function _renderOption(min, max) {
             var _this2 = this;
 
             var options = [];
@@ -29776,9 +29785,6 @@ Day.propTypes = {
     min: _propTypes2.default.number.isRequired,
     max: _propTypes2.default.number.isRequired,
     onChange: _propTypes2.default.func
-};
-Day.defaultProps = {
-    onChange: function onChange() {}
 };
 exports.default = Day;
 
@@ -30324,7 +30330,7 @@ var App = function (_React$Component) {
 exports.default = App;
 
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
 /* 404 */
@@ -30391,7 +30397,7 @@ var AppContainer = exports.AppContainer = function (_Component) {
     return AppContainer;
 }(_react.Component);
 
-function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state) {
     var isLoading = state.isLoading;
 
     return { isLoading: isLoading };
@@ -30417,12 +30423,6 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(7);
-
-var _redux = __webpack_require__(3);
-
-var _action = __webpack_require__(301);
-
 var _reactSelect = __webpack_require__(56);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
@@ -30430,6 +30430,12 @@ var _reactSelect2 = _interopRequireDefault(_reactSelect);
 var _index = __webpack_require__(277);
 
 var _index2 = _interopRequireDefault(_index);
+
+var _reactRedux = __webpack_require__(7);
+
+var _redux = __webpack_require__(3);
+
+var _action = __webpack_require__(301);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30439,8 +30445,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var defaultState = Object.assign({}, window.initialState);
 var defaultDateConstraint = Object.assign({}, window.dateConstraint);
+var defaultState = Object.assign({}, window.initialState);
 
 var FormFilter = exports.FormFilter = function (_Component) {
     _inherits(FormFilter, _Component);
@@ -30473,8 +30479,8 @@ var FormFilter = exports.FormFilter = function (_Component) {
         };
 
         _this.state = {
-            selectedBrandCode: defaultState.selectedBrandCode,
-            selectedMonth: defaultDateConstraint.currentDate
+            selectedMonth: defaultDateConstraint.currentDate,
+            selectedBrandCode: defaultState.selectedBrandCode
         };
         return _this;
     }
@@ -30554,10 +30560,11 @@ var FormFilter = exports.FormFilter = function (_Component) {
     return FormFilter;
 }(_react.Component);
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ setParams: _action.setParams }, dispatch);
-}
-function mapStateToProps(state) {
+};
+
+var mapStateToProps = function mapStateToProps(state) {
     var params = state.params;
 
     return { params: params };
@@ -30637,9 +30644,72 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
             var total = 0;
             gridData.forEach(function (item) {
-                total += item[key] ? isNaN(Number(item[key])) ? 0 : Number(item[key]) : 0;
+                total += isNaN(Number(item[key])) ? 0 : Number(item[key]);
             });
             return total;
+        };
+
+        _this.editField = function (value, key, index) {
+            // Clone gridData data before mutation
+            var myGridData = _this.state.gridData.map(function (rowData) {
+                return _extends({}, rowData);
+            });
+            var numberValue = Number(value.split(',').join(''));
+
+            if (!(isNaN(numberValue) || numberValue > maxValue)) {
+                // Update field by index of current gridData
+                myGridData[index][key] = numberValue;
+                myGridData[index].WLRemaining = myGridData[index].WLExpected - myGridData[index].WLAccumulated;
+                myGridData[index].TORemaining = myGridData[index].TOExpected - myGridData[index].TOAccumulated;
+
+                // Trigger re-render
+                _this.setState({ gridData: myGridData });
+            }
+        };
+
+        _this.onEdit = function (index, item) {
+            if (_this.state.clientIsEditing) {
+                return;
+            }
+            var myGridData = _this.state.gridData.map(function (i) {
+                return _extends({}, i, { editing: item.editing && i === item });
+            });
+
+            myGridData[index].editing = true;
+
+            // Trigger re-render
+            _this.setState({
+                gridData: myGridData,
+                clientIsEditing: true
+            });
+        };
+
+        _this.onSave = function (rowIndex, item) {
+            if (item.WLExpected < item.WLAccumulated || item.TOExpected < item.TOAccumulated) {
+                _utility2.default.showWarningMessage('Expected is greater than or equal to Accumulated');
+                return;
+            }
+            _this._showConfirmBox(true, rowIndex);
+        };
+
+        _this.onCancel = function (index) {
+            // Clone gridData data before mutation
+            var myGridData = _this.state.gridData.map(function (rowData) {
+                return _extends({}, rowData);
+            });
+            var dataItem = _this.state.dataItem.map(function (rowData) {
+                return _extends({}, rowData);
+            });
+
+            // Update field by index of current gridData
+            myGridData[index] = dataItem[index];
+            myGridData[index].editing = false;
+
+            // Trigger re-render
+            _this.setState({
+                gridData: myGridData,
+                clientIsEditing: false
+            });
         };
 
         _this.state = {
@@ -30674,7 +30744,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
             _site2.default.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(function (response) {
                 _this2.setState({ gridData: response.data.Data, dataItem: response.data.Data, totalItem: !!response.data.Data ? response.data.Data.length : 0, clientIsEditing: false });
                 _this2.props.toggleLoader(false);
-            }).catch(function (err) {
+            }).catch(function () {
                 _this2.props.toggleLoader(false);
             });
         }
@@ -30692,14 +30762,18 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
             _site2.default.fetchData({ criteria: this.props.params, productSetting: gridData[index] }, 'BetTicketVolumeControl/Update').then(function (response) {
                 gridData[index].editing = false;
-                !!response.data.IsSuccess ? dataItem[index] = gridData[index] : gridData[index] = dataItem[index];
+                if (response.data.IsSuccess) {
+                    dataItem[index] = gridData[index];
+                } else {
+                    gridData[index] = dataItem[index];
+                }
                 _this3.setState({
                     gridData: gridData,
                     clientIsEditing: false,
                     dataItem: dataItem
                 });
                 _this3.props.toggleLoader(false);
-            }).catch(function (err) {
+            }).catch(function () {
                 _this3.props.toggleLoader(false);
             });
         }
@@ -30717,7 +30791,6 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
             var _state = this.state,
                 gridData = _state.gridData,
-                clientIsEditing = _state.clientIsEditing,
                 isShowConfirmBox = _state.isShowConfirmBox;
 
 
@@ -30793,66 +30866,6 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         'tbody',
                         null,
                         gridData.map(function (item, index) {
-                            var editField = function editField(value, key) {
-                                // Clone gridData data before mutation
-                                var gridData = _this4.state.gridData.map(function (item) {
-                                    return _extends({}, item);
-                                });
-
-                                var tempValue = Number(value.split(',').join(''));
-                                var numberVaule = isNaN(tempValue) ? gridData[index][key] : tempValue > maxValue ? gridData[index][key] : tempValue;
-
-                                // Update field by index of current gridData
-                                gridData[index][key] = numberVaule;
-                                gridData[index].WLRemaining = gridData[index].WLExpected - gridData[index].WLAccumulated;
-                                gridData[index].TORemaining = gridData[index].TOExpected - gridData[index].TOAccumulated;
-
-                                // Trigger re-render
-                                _this4.setState({ gridData: gridData });
-                            };
-
-                            var onEdit = function onEdit() {
-                                var gridData = _this4.state.gridData.map(function (i) {
-                                    return _extends({}, i, { editing: item.editing && i === item });
-                                });
-
-                                gridData[index].editing = true;
-
-                                // Trigger re-render
-                                _this4.setState({
-                                    gridData: gridData,
-                                    clientIsEditing: true
-                                });
-                            };
-
-                            var onSave = function onSave(index) {
-                                if (item.WLExpected < item.WLAccumulated || item.TOExpected < item.TOAccumulated) {
-                                    _utility2.default.showWarningMessage("Expected is greater than or equal to Accumulated");
-                                } else {
-                                    _this4._showConfirmBox(true, index);
-                                }
-                            };
-
-                            var onCancel = function onCancel() {
-                                // Clone gridData data before mutation
-                                var gridData = _this4.state.gridData.map(function (item) {
-                                    return _extends({}, item);
-                                });
-                                var dataItem = _this4.state.dataItem.map(function (item) {
-                                    return _extends({}, item);
-                                });
-
-                                // Update field by index of current gridData
-                                gridData[index] = dataItem[index];
-                                gridData[index].editing = false;
-
-                                // Trigger re-render
-                                _this4.setState({
-                                    gridData: gridData,
-                                    clientIsEditing: false
-                                });
-                            };
-
                             return _react2.default.createElement(
                                 'tr',
                                 { key: item.ProductId, className: item.editing ? 'editing' : '' },
@@ -30867,14 +30880,14 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                     item.editing ? _react2.default.createElement(
                                         'span',
                                         null,
-                                        _react2.default.createElement('i', { className: 'icon-checked', onClick: function onClick(e) {
-                                                return onSave(index);
+                                        _react2.default.createElement('i', { className: 'icon-checked', onClick: function onClick() {
+                                                return _this4.onSave(index, item);
                                             } }),
-                                        _react2.default.createElement('i', { className: 'icon-cancel', onClick: function onClick(e) {
-                                                return onCancel();
+                                        _react2.default.createElement('i', { className: 'icon-cancel', onClick: function onClick() {
+                                                return _this4.onCancel(index);
                                             } })
-                                    ) : _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick(e) {
-                                            return clientIsEditing ? false : onEdit();
+                                    ) : _react2.default.createElement('i', { className: 'icon-edit', onClick: function onClick() {
+                                            return _this4.onEdit(index, item);
                                         } })
                                 ),
                                 _react2.default.createElement(
@@ -30884,11 +30897,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         'span',
                                         null,
                                         item.ProductPercentage.toLocaleString('en', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-                                    ) : _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right', value: item.ProductPercentage,
-                                        onFocus: function onFocus(e) {
+                                    ) : _react2.default.createElement('input', { type: 'number', min: '0', max: '100', className: 'text-right', value: item.ProductPercentage, onFocus: function onFocus(e) {
                                             return e.target.select();
-                                        }, onChange: function onChange(e) {
-                                            return e.target.value <= 100 ? editField(e.target.value, 'ProductPercentage') : false;
+                                        },
+                                        onChange: function onChange(e) {
+                                            return e.target.value > 100 ? false : _this4.editField(e.target.value, 'ProductPercentage', index);
                                         } })
                                 ),
                                 _react2.default.createElement(
@@ -30898,12 +30911,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         'span',
                                         null,
                                         item.WLExpected.toLocaleString('en', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-                                    ) : _react2.default.createElement('input', { type: 'text', maxLength: '24', className: "text-right",
-                                        value: item.WLExpected ? item.WLExpected.toLocaleString('en', { maximumFractionDigits: 0 }) : 0,
+                                    ) : _react2.default.createElement('input', { type: 'text', maxLength: '24', className: 'text-right',
+                                        value: item.WLExpected.toLocaleString('en', { maximumFractionDigits: 0 }),
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
                                         }, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'WLExpected');
+                                            return _this4.editField(e.target.value, 'WLExpected', index);
                                         } })
                                 ),
                                 _react2.default.createElement(
@@ -30923,12 +30936,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                         'span',
                                         null,
                                         item.TOExpected.toLocaleString('en', { maximumFractionDigits: 2, minimumFractionDigits: 2 })
-                                    ) : _react2.default.createElement('input', { type: 'text', maxLength: '24', className: "text-right",
-                                        value: item.TOExpected ? item.TOExpected.toLocaleString('en', { maximumFractionDigits: 0 }) : 0,
+                                    ) : _react2.default.createElement('input', { type: 'text', maxLength: '24', className: 'text-right',
+                                        value: item.TOExpected.toLocaleString('en', { maximumFractionDigits: 0 }),
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
                                         }, onChange: function onChange(e) {
-                                            return editField(e.target.value, 'TOExpected');
+                                            return _this4.editField(e.target.value, 'TOExpected', index);
                                         } })
                                 ),
                                 _react2.default.createElement(
@@ -31001,10 +31014,11 @@ var DataGrid = exports.DataGrid = function (_Component) {
     return DataGrid;
 }(_react.Component);
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ toggleLoader: _action.toggleLoader, setParams: _action.setParams }, dispatch);
-}
-function mapStateToProps(state) {
+};
+
+var mapStateToProps = function mapStateToProps(state) {
     var params = state.params;
 
     return { params: params };

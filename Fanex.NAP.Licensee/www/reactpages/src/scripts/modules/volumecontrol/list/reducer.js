@@ -1,8 +1,8 @@
-﻿import { combineReducers } from 'redux'
-import { isLoading } from '../../../reducers/loaderReducer'
+﻿import { combineReducers } from 'redux';
+import { isLoading } from '../../../reducers/loaderReducer';
 
-import createReducer from '../../../lib/createReducer'
-import { SET_PARAMS } from './types'
+import createReducer from '../../../lib/createReducer';
+import { SET_PARAMS } from './types';
 
 const params = createReducer({}, {
     [SET_PARAMS](state, action) {

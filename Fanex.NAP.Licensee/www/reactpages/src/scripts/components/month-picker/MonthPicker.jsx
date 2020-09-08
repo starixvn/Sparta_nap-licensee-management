@@ -27,7 +27,7 @@ class MonthPicker extends Component {
             month: currentMonth,
             from: fromDate.date(),
             to: toDate.date()
-        }
+        };
     }
 
     static propTypes = {
@@ -44,7 +44,6 @@ class MonthPicker extends Component {
 
     static defaultProps = {
         label: 'View data in month',
-        onChange: function () { },
         fromDateOption: {
             label: 'From'
         },
@@ -54,10 +53,10 @@ class MonthPicker extends Component {
         showDate: true
     }
 
-    _onMonthChange = (value)  => {
+    _onMonthChange = value  => {
         const minDate = value.year === this.min.year && value.month === this.min.month ? this.min.date : 1;
         const maxDate = value.year === this.max.year && value.month === this.max.month ? this.max.date : moment({ year: value.year, month: value.month}).daysInMonth();
-      
+
         this.setState({
             month: value,
             minDate: minDate,
@@ -76,7 +75,7 @@ class MonthPicker extends Component {
         return `${month < 9 ? '0'+ (month + 1) : month + 1}/${date < 10 ? '0'+ date : date}/${year}`;
     }
 
-    _onFromDateChange = (value) => {
+    _onFromDateChange = value => {
         this.setState({ from: value });
 
         this.props.onChange({
@@ -85,7 +84,7 @@ class MonthPicker extends Component {
         });
     }
 
-    _onToDateChange = (value) => {
+    _onToDateChange = value => {
         this.setState({ to: value });
 
         this.props.onChange({

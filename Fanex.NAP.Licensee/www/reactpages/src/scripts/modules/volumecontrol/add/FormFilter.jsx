@@ -15,14 +15,14 @@ export class FormFilter extends Component {
         this.state = {
             selectedBrandCode: defaultState.selectedBrandCode,
             selectedMonth: defaultDateConstraint.currentDate
-        }
+        };
     }
 
     componentDidMount() {
         this._submit();
     }
 
-    _monthPickerHandle = async (item) => {
+    _monthPickerHandle = async item => {
         if (item === null) {
             await this.setState({ selectedMonth: defaultDateConstraint.currentDate });
         }
@@ -32,7 +32,7 @@ export class FormFilter extends Component {
         this._submit();
     }
 
-    _handleSiteNameChange = async (item) => {
+    _handleSiteNameChange = async item => {
         if (item === null) {
             await this.setState({ selectedBrandCode: defaultState.selectedBrandCode });
         }
@@ -66,7 +66,7 @@ export class FormFilter extends Component {
                     <Select instanceId="ddlSiteName"
                         value={selectedBrandCode}
                         options={defaultState.siteNameList}
-                        onChange={this._handleSiteNameChange} 
+                        onChange={this._handleSiteNameChange}
                     />
                 </div>
                 <div className="form-group">
@@ -82,17 +82,19 @@ export class FormFilter extends Component {
                 </div>
                 <div className="form-group">
                     <label>Win Loss</label>
-                    <input type="text" className="text-right" maxLength='50' name='winLoss' value={this.props.totalWinLoss.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})} disabled={true} style={{width: '180px'}}/><span> USD</span>
+                    <input type="text" className="text-right" maxLength='50' name='winLoss'
+                        value={this.props.totalWinLoss.toLocaleString('en', {maximumFractionDigits: 2, minimumFractionDigits: 2})}
+                        disabled={true} style={{width: '180px'}}/>
+                    <span> USD</span>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setParams }, dispatch);
-}
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => bindActionCreators({ setParams }, dispatch);
+
+const mapStateToProps = state => {
     const { params } = state;
     return { params };
 };

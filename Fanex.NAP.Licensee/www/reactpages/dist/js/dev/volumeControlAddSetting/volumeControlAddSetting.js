@@ -14284,8 +14284,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var wrapperClasses = {
-    OVERLAY: "overlay",
-    OVERLAY_OPEN: "overlay-open"
+    OVERLAY: 'overlay',
+    OVERLAY_OPEN: 'overlay-open'
 };
 
 var Overlay = function (_Component) {
@@ -14328,7 +14328,7 @@ var Overlay = function (_Component) {
 
     _createClass(Overlay, [{
         key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
+        value: function componentDidUpdate(prevProps) {
             var _this2 = this;
 
             if (this.props.isOpening !== prevProps.isOpening) {
@@ -14379,7 +14379,7 @@ var Overlay = function (_Component) {
 
             var mergedClassName = (0, _classnames2.default)(wrapperClasses.OVERLAY, _defineProperty({}, wrapperClasses.OVERLAY_OPEN, this.state.isOpening), className);
             var style = {
-                display: this.state.isOpening ? "block" : "none"
+                display: this.state.isOpening ? 'block' : 'none'
             };
 
             return _react2.default.createElement(
@@ -29259,7 +29259,6 @@ MonthPicker.propTypes = {
 };
 MonthPicker.defaultProps = {
     label: 'View data in month',
-    onChange: function onChange() {},
     fromDateOption: {
         label: 'From'
     },
@@ -29367,6 +29366,11 @@ var Month = function (_Component) {
     }
 
     _createClass(Month, [{
+        key: 'handleClick',
+        value: function handleClick(value) {
+            this._onChange(value);
+        }
+    }, {
         key: '_onChange',
         value: function _onChange(value) {
             this.props.onChange(value);
@@ -29376,6 +29380,16 @@ var Month = function (_Component) {
         key: '_formatString',
         value: function _formatString(month, year) {
             return this.shortMonths[month] + ' ' + year;
+        }
+    }, {
+        key: 'getMinMonth',
+        value: function getMinMonth(year, min) {
+            return year === min.year ? min.month : 0;
+        }
+    }, {
+        key: 'getMaxMonth',
+        value: function getMaxMonth(year, max) {
+            return year === max.year ? max.month : 11;
         }
     }, {
         key: '_renderOption',
@@ -29397,28 +29411,21 @@ var Month = function (_Component) {
                         )
                     ));
 
-                    var minMonth = i === min.year ? min.month : 0;
-                    var maxMonth = i === max.year ? max.month : 11;
-
-                    var _loop2 = function _loop2(j) {
+                    var minMonth = _this2.getMinMonth(i, min);
+                    var maxMonth = _this2.getMaxMonth(i, max);
+                    for (var j = minMonth; j <= maxMonth; j++) {
                         var isSelected = i === value.year && j === value.month;
                         var valueItem = { year: i, month: j };
 
                         options.push(_react2.default.createElement(
                             'li',
-                            { key: '' + j + i, className: 'month-option', onClick: function onClick() {
-                                    return _this2._onChange(valueItem);
-                                } },
+                            { key: '' + j + i, className: 'month-option', data: valueItem, onClick: _this2.handleClick.bind(_this2, valueItem) },
                             _react2.default.createElement(
                                 'a',
                                 { href: 'javascript:;', className: '' + (isSelected ? 'selected' : '') },
                                 _this2.fullMonths[j]
                             )
                         ));
-                    };
-
-                    for (var j = minMonth; j <= maxMonth; j++) {
-                        _loop2(j);
                     }
                 } else {
                     options.push(_react2.default.createElement(
@@ -29474,8 +29481,11 @@ var Month = function (_Component) {
                 min = _props.min,
                 max = _props.max;
 
+            if (year > min.year && year < max.year) {
+                return true;
+            }
 
-            return year > min.year && year < max.year || year === min.year && month >= min.month || year === max.year && month <= max.month;
+            return year === min.year && month >= min.month || year === max.year && month <= max.month;
         }
     }, {
         key: '_goToMonth',
@@ -29570,8 +29580,7 @@ Month.propTypes = {
     onChange: _propTypes2.default.func
 };
 Month.defaultProps = {
-    label: 'View data in month',
-    onChange: function onChange() {}
+    label: 'View data in month'
 };
 exports.default = Month;
 
@@ -29678,7 +29687,7 @@ var Day = function (_Component) {
 
     _createClass(Day, [{
         key: '_renderOption',
-        value: function _renderOption(min, max, value) {
+        value: function _renderOption(min, max) {
             var _this2 = this;
 
             var options = [];
@@ -29776,9 +29785,6 @@ Day.propTypes = {
     min: _propTypes2.default.number.isRequired,
     max: _propTypes2.default.number.isRequired,
     onChange: _propTypes2.default.func
-};
-Day.defaultProps = {
-    onChange: function onChange() {}
 };
 exports.default = Day;
 
@@ -30338,7 +30344,7 @@ var App = function (_React$Component) {
 exports.default = App;
 
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
 /* 409 */
@@ -30405,7 +30411,7 @@ var AppContainer = exports.AppContainer = function (_Component) {
     return AppContainer;
 }(_react.Component);
 
-function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state) {
     var isLoading = state.isLoading,
         totalWinLoss = state.totalWinLoss;
 
@@ -30558,7 +30564,9 @@ var FormFilter = exports.FormFilter = function (_Component) {
                         null,
                         'Win Loss'
                     ),
-                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '50', name: 'winLoss', value: this.props.totalWinLoss.toLocaleString('en', { maximumFractionDigits: 2, minimumFractionDigits: 2 }), disabled: true, style: { width: '180px' } }),
+                    _react2.default.createElement('input', { type: 'text', className: 'text-right', maxLength: '50', name: 'winLoss',
+                        value: this.props.totalWinLoss.toLocaleString('en', { maximumFractionDigits: 2, minimumFractionDigits: 2 }),
+                        disabled: true, style: { width: '180px' } }),
                     _react2.default.createElement(
                         'span',
                         null,
@@ -30572,10 +30580,11 @@ var FormFilter = exports.FormFilter = function (_Component) {
     return FormFilter;
 }(_react.Component);
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ setParams: _action.setParams }, dispatch);
-}
-function mapStateToProps(state) {
+};
+
+var mapStateToProps = function mapStateToProps(state) {
     var params = state.params;
 
     return { params: params };
@@ -30617,6 +30626,10 @@ var _ConfirmBox = __webpack_require__(96);
 
 var _ConfirmBox2 = _interopRequireDefault(_ConfirmBox);
 
+var _utility = __webpack_require__(10);
+
+var _utility2 = _interopRequireDefault(_utility);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30626,6 +30639,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var maxValue = 999999999999999;
+var pathIndex = 'BetTicketVolumeControl/Index';
 
 var DataGrid = exports.DataGrid = function (_Component) {
     _inherits(DataGrid, _Component);
@@ -30651,7 +30665,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
         _this._getTotals = function (data, key) {
             var total = 0;
             data.forEach(function (item) {
-                total += item[key] ? isNaN(Number(item[key])) ? 0 : Number(item[key]) : 0;
+                total += isNaN(Number(item[key])) ? 0 : Number(item[key]);
             });
             return total;
         };
@@ -30703,7 +30717,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     _this2.setState({ gridData: response.data.Data, totalItem: response.data.Data.length });
                 }
                 _this2.props.toggleLoader(false);
-            }).catch(function (err) {
+            }).catch(function () {
                 _this2.props.toggleLoader(false);
             });
         }
@@ -30718,12 +30732,12 @@ var DataGrid = exports.DataGrid = function (_Component) {
             });
             _site2.default.fetchData({ criteria: this.props.params, productSettingList: gridData }, 'BetTicketVolumeControl/Insert').then(function (response) {
                 if (!!response.data.IsSuccess) {
-                    window.location.href = window.rootUrl + 'BetTicketVolumeControl/Index';
+                    window.location.href = window.rootUrl + pathIndex;
                 } else {
-                    alert(response.data.Error);
+                    _utility2.default.showMessage(response.data.Error);
                 }
                 _this3.props.toggleLoader(false);
-            }).catch(function (err) {
+            }).catch(function () {
                 _this3.props.toggleLoader(false);
             });
         }
@@ -30738,7 +30752,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
             if (totalItem === 0) {
                 return _react2.default.createElement(
                     'a',
-                    { className: 'btn-back', href: window.rootUrl + 'BetTicketVolumeControl/Index' },
+                    { className: 'btn-back', href: window.rootUrl + pathIndex },
                     'Back To List'
                 );
             }
@@ -30788,20 +30802,20 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         gridData.map(function (item, index) {
                             var editField = function editField(value, key) {
                                 // Clone gridData data before mutation
-                                var gridData = _this4.state.gridData.map(function (item) {
-                                    return _extends({}, item);
+                                var myGridData = _this4.state.gridData.map(function (rowData) {
+                                    return _extends({}, rowData);
                                 });
+                                var numberValue = Number(value.split(',').join(''));
 
-                                var tempValue = Number(value.split(',').join(''));
-                                var numberVaule = isNaN(tempValue) ? gridData[index][key] : tempValue > maxValue ? gridData[index][key] : tempValue;
+                                if (!(isNaN(numberValue) || numberValue > maxValue)) {
+                                    // Update field by index of current gridData
+                                    myGridData[index][key] = numberValue;
 
-                                // Update field by index of current gridData
-                                gridData[index][key] = numberVaule;
+                                    _this4.props.changeTotalWinloss(_this4._getTotals(myGridData, 'WLExpected'));
 
-                                _this4.props.changeTotalWinloss(_this4._getTotals(gridData, 'WLExpected'));
-
-                                // Trigger re-render
-                                _this4.setState({ gridData: gridData });
+                                    // Trigger re-render
+                                    _this4.setState({ gridData: myGridData });
+                                }
                             };
 
                             return _react2.default.createElement(
@@ -30827,7 +30841,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', maxLength: '24', className: "text-right",
+                                    _react2.default.createElement('input', { type: 'text', maxLength: '24', className: 'text-right',
                                         value: item.WLExpected.toLocaleString('en', { maximumFractionDigits: 2 }),
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
@@ -30838,7 +30852,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    _react2.default.createElement('input', { type: 'text', maxLength: '24', className: "text-right",
+                                    _react2.default.createElement('input', { type: 'text', maxLength: '24', className: 'text-right',
                                         value: item.TOExpected.toLocaleString('en', { maximumFractionDigits: 2 }),
                                         onFocus: function onFocus(e) {
                                             return e.target.select();
@@ -30860,7 +30874,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'a',
-                        { className: 'btn-back', href: window.rootUrl + 'BetTicketVolumeControl/Index' },
+                        { className: 'btn-back', href: window.rootUrl + pathIndex },
                         'Back To List'
                     ),
                     _react2.default.createElement(
@@ -30881,15 +30895,16 @@ var DataGrid = exports.DataGrid = function (_Component) {
     return DataGrid;
 }(_react.Component);
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ toggleLoader: _action.toggleLoader, setParams: _action.setParams, changeTotalWinloss: _action.changeTotalWinloss }, dispatch);
-}
-function mapStateToProps(state) {
+};
+
+var mapStateToProps = function mapStateToProps(state) {
     var params = state.params,
         totalWinLoss = state.totalWinLoss;
 
     return { params: params, totalWinLoss: totalWinLoss };
-}
+};
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 

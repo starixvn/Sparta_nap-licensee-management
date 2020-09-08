@@ -17,12 +17,8 @@ class Day extends Component {
         onChange: PropTypes.func
     }
 
-    static defaultProps = {
-        onChange: function() {}
-    }
-
-    _renderOption(min, max, value) {
-        let options =[];
+    _renderOption(min, max) {
+        const options =[];
 
         for (let i = min; i <= max; i++) {
             options.push(

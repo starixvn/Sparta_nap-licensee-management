@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const wrapperClasses = {
-    OVERLAY: "overlay",
-    OVERLAY_OPEN: "overlay-open"
-}
+    OVERLAY: 'overlay',
+    OVERLAY_OPEN: 'overlay-open'
+};
 
 export default class Overlay extends Component {
     constructor(props) {
@@ -14,12 +14,12 @@ export default class Overlay extends Component {
 
         this.containerElement = null;
         this.refHandlers = {
-            container: (ref) => { this.containerElement = ref }
-        }
+            container: ref => { this.containerElement = ref; }
+        };
 
         this.state = {
             isOpening: this.props.isOpening
-        }
+        };
     }
 
     static propTypes = {
@@ -34,7 +34,7 @@ export default class Overlay extends Component {
         isOpening: false
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (this.props.isOpening !== prevProps.isOpening) {
             const { onOpen } = this.props;
             this.props.isOpening && onOpen && onOpen();
@@ -71,7 +71,7 @@ export default class Overlay extends Component {
         }
     }
 
-    _handleClickOutSide = (event) => {
+    _handleClickOutSide = event => {
         const clickOutside = this.containerElement && !this.containerElement.contains(event.target);
 
         if (clickOutside && this.state.isOpening) {
@@ -94,13 +94,13 @@ export default class Overlay extends Component {
             className
         );
         const style = {
-            display: this.state.isOpening ? "block" : "none"
-        }
+            display: this.state.isOpening ? 'block' : 'none'
+        };
 
         return (
             <div className={mergedClassName} style={style} ref={this.refHandlers.container}>
                 {children}
             </div>
-        )
+        );
     }
 }

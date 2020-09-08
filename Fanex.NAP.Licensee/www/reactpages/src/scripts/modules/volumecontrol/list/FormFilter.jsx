@@ -1,24 +1,24 @@
 ﻿import React, { Component } from 'react';
+import Select from 'react-select';
+import MonthPicker from '../../../components/month-picker/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setParams } from './action';
-import Select from 'react-select';
-import MonthPicker from '../../../components/month-picker/index';
 
-const defaultState = Object.assign({}, window.initialState);
 const defaultDateConstraint = Object.assign({}, window.dateConstraint);
+const defaultState = Object.assign({}, window.initialState);
 
 export class FormFilter extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            selectedBrandCode: defaultState.selectedBrandCode,
-            selectedMonth: defaultDateConstraint.currentDate
-        }
+            selectedMonth: defaultDateConstraint.currentDate,
+            selectedBrandCode: defaultState.selectedBrandCode
+        };
     }
 
-    _monthPickerHandle = (item) => {
+    _monthPickerHandle = item => {
         if (item === null) {
             this.setState({ selectedMonth: defaultDateConstraint.currentDate });
         }
@@ -27,7 +27,7 @@ export class FormFilter extends Component {
         }
     }
 
-    _handleSiteNameChange = (item) => {
+    _handleSiteNameChange = item => {
         if (item === null) {
             this.setState({ selectedBrandCode: defaultState.selectedBrandCode });
         }
@@ -36,7 +36,7 @@ export class FormFilter extends Component {
         }
     }
 
-    onSubmit = (e) => {
+    onSubmit = e => {
         e.preventDefault();
 
         this._submit();
@@ -86,14 +86,13 @@ export class FormFilter extends Component {
                 <a className="btn btn-green" href={window.rootUrl + 'BetTicketVolumeControl/Add'}>Add Setting</a>
             </div>
         </div>
-        )
+        );
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ setParams }, dispatch);
-}
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => bindActionCreators({ setParams }, dispatch);
+
+const mapStateToProps = state => {
     const { params } = state;
     return { params };
 };
