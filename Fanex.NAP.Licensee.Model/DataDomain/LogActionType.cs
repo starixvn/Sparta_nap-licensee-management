@@ -1,14 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="LogActionType.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.DataDomain
+﻿namespace Fanex.NAP.Licensee.Model.DataDomain
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public enum LogActionType : int
     {
         /// <summary>

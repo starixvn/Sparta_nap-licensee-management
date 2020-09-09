@@ -1,13 +1,6 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SettingConfigurationService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
     using System.Collections.Generic;
-    using System.Data;
     using System.Linq;
     using Data;
     using Fanex.Common;
@@ -15,9 +8,6 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class SettingConfigurationService : ISettingConfigurationService
     {
         public string GetPositionTaking(int custId, int productId)

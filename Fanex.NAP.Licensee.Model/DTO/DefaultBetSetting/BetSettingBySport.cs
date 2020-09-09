@@ -1,17 +1,8 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="BetSettingBySport.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
     using System;
     using Fanex.NAP.Licensee.Model.DataDomain;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [Serializable]
     public class BetSettingBySport
     {

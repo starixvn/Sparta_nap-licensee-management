@@ -1,17 +1,8 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="GetSingleDefaultBetSettingCriteria.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting
 {
     using System;
     using Data.Repository;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [Serializable]
     public class GetSingleDefaultBetSettingCriteria : CriteriaBase
     {

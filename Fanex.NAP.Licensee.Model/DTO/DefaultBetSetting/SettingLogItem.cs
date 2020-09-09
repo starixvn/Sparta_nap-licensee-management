@@ -1,19 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SettingLogItem.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [Serializable]
     public class SettingLogItem
     {

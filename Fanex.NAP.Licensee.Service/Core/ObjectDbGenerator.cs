@@ -1,16 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ObjectDbGenerator.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Service.Core
+﻿namespace Fanex.NAP.Licensee.Service.Core
 {
     using Fanex.Data;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ObjectDbGenerator : IObjectDbGenerator
     {
         #region IObjectDbWrapper Members

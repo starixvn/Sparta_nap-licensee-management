@@ -8,9 +8,6 @@
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [Serializable]
     public class SingleDefaultBetSettingViewModel
     {

@@ -4,9 +4,6 @@
     using System.CodeDom.Compiler;
     using System.Web;
 
-    /// <summary>
-    ///     TODO: Update summary.
-    /// </summary>
     [GeneratedCodeAttribute("T4", "1.0.0.0")]
     public static class SessionManager
     {

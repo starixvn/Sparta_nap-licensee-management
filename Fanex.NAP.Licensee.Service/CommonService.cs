@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CommonService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -13,9 +7,6 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CommonService : ICommonService
     {
         private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";

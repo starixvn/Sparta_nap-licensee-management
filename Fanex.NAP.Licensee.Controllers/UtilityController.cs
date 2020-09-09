@@ -3,9 +3,6 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UtilityController : BaseController
     {
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed")]
