@@ -29,6 +29,7 @@
     <TargetFrameworkProfile />
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <CodeAnalysisRuleSet>..\.sonarlint\nap_licensee_managementcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\.sonarlint\nap_licensee_managementcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\.sonarlint\nap_licensee_managementcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -351,6 +354,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <AdditionalFiles Include="..\.sonarlint\nap_licensee_management\CSharp\SonarLint.xml">
+      <Link>SonarLint.xml</Link>
+    </AdditionalFiles>
     <Content Include="Content\build\images\icon_cancel.gif" />
     <Content Include="Content\build\images\icon_checked.gif" />
     <Content Include="Content\source\core\images\sprites.png" />
@@ -592,6 +598,9 @@
     <Content Include="www\reactpages\dist\css\dev\createUser\createUser.css.map" />
     <Content Include="www\reactpages\dist\css\dev\createUser\createUser.js.map" />
     <Content Include="App_Data\FunctionPermission.json" />
+    <Content Include="..\.sonarlint\nap_licensee_managementcsharp.ruleset">
+      <Link>nap_licensee_managementcsharp.ruleset</Link>
+    </Content>
     <None Include="SiteConfig\Web.AppSettings.config.txt">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

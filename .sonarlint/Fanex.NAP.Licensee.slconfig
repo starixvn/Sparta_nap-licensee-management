@@ -1,0 +1,12 @@
+{
+  "ServerUri": "https://sonarqube.nexdev.net/",
+  "Organization": null,
+  "ProjectKey": "NAP_Licensee_Management",
+  "ProjectName": "Legion / NAP Licensee Management",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "cs-sonar-way-80515",
+      "ProfileTimestamp": "2019-10-01T06:55:11Z"
+    }
+  }
+}
