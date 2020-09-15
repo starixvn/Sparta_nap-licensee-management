@@ -13,7 +13,7 @@
     var siteNameList = Model.SiteNameList.Select(x => new { label = x.LicenseeName, value = x.BrandCode}).ToList();
 
     var today = DateTime.Now.Date.AddDays(-DateTime.Now.Date.Day + 1);
-    var minDate = DateTime.Parse(@"09/01/2019");
+    var minDate = DateTime.Parse(@"12/01/2019");
 }
 
 @section Headline {
@@ -30,6 +30,7 @@
         var initialState = {
             siteNameList: @Html.Raw(serializer.Serialize(siteNameList)),
             selectedBrandCode: @Html.Raw(serializer.Serialize(siteNameList.First().value)),
+            selectedBrandName: @Html.Raw(serializer.Serialize(siteNameList.First().label))
         }
         var dateConstraint = {
             minDate: '@minDate.ToString("MM/dd/yyyy")',

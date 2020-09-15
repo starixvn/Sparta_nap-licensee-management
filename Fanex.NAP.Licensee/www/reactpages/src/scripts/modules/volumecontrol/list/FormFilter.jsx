@@ -14,7 +14,8 @@ export class FormFilter extends Component {
 
         this.state = {
             selectedMonth: defaultDateConstraint.currentDate,
-            selectedBrandCode: defaultState.selectedBrandCode
+            selectedBrandCode: defaultState.selectedBrandCode,
+            selectedBrandName: defaultState.selectedBrandName
         };
     }
 
@@ -29,10 +30,10 @@ export class FormFilter extends Component {
 
     _handleSiteNameChange = item => {
         if (item === null) {
-            this.setState({ selectedBrandCode: defaultState.selectedBrandCode });
+            this.setState({ selectedBrandCode: defaultState.selectedBrandCode, selectedBrandName: defaultState.selectedBrandName });
         }
         else {
-            this.setState({ selectedBrandCode: item.value });
+            this.setState({ selectedBrandCode: item.value, selectedBrandName: item.label });
         }
     }
 
@@ -46,6 +47,7 @@ export class FormFilter extends Component {
         const params = {
             monthDate: this.state.selectedMonth,
             brandCode: this.state.selectedBrandCode,
+            brandName: this.state.selectedBrandName,
             TimeStamp: new Date().getTime()
         };
 

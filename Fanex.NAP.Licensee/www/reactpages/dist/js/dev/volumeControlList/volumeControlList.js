@@ -30286,7 +30286,7 @@ var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(407);
+var _reducer = __webpack_require__(408);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -30466,9 +30466,9 @@ var FormFilter = exports.FormFilter = function (_Component) {
 
         _this._handleSiteNameChange = function (item) {
             if (item === null) {
-                _this.setState({ selectedBrandCode: defaultState.selectedBrandCode });
+                _this.setState({ selectedBrandCode: defaultState.selectedBrandCode, selectedBrandName: defaultState.selectedBrandName });
             } else {
-                _this.setState({ selectedBrandCode: item.value });
+                _this.setState({ selectedBrandCode: item.value, selectedBrandName: item.label });
             }
         };
 
@@ -30480,7 +30480,8 @@ var FormFilter = exports.FormFilter = function (_Component) {
 
         _this.state = {
             selectedMonth: defaultDateConstraint.currentDate,
-            selectedBrandCode: defaultState.selectedBrandCode
+            selectedBrandCode: defaultState.selectedBrandCode,
+            selectedBrandName: defaultState.selectedBrandName
         };
         return _this;
     }
@@ -30491,6 +30492,7 @@ var FormFilter = exports.FormFilter = function (_Component) {
             var params = {
                 monthDate: this.state.selectedMonth,
                 brandCode: this.state.selectedBrandCode,
+                brandName: this.state.selectedBrandName,
                 TimeStamp: new Date().getTime()
             };
 
@@ -30601,6 +30603,10 @@ var _action = __webpack_require__(301);
 var _site = __webpack_require__(19);
 
 var _site2 = _interopRequireDefault(_site);
+
+var _HeaderTitle = __webpack_require__(407);
+
+var _HeaderTitle2 = _interopRequireDefault(_HeaderTitle);
 
 var _ConfirmBox = __webpack_require__(96);
 
@@ -30718,7 +30724,8 @@ var DataGrid = exports.DataGrid = function (_Component) {
             totalItem: 0,
             clientIsEditing: false,
             isShowConfirmBox: false,
-            indexToUpdate: -1
+            indexToUpdate: -1,
+            isFirstLoad: true
         };
         return _this;
     }
@@ -30742,7 +30749,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
 
             this.props.toggleLoader(true);
             _site2.default.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(function (response) {
-                _this2.setState({ gridData: response.data.Data, dataItem: response.data.Data, totalItem: !!response.data.Data ? response.data.Data.length : 0, clientIsEditing: false });
+                _this2.setState({ gridData: response.data.Data, dataItem: response.data.Data, totalItem: response.data.Data.length, clientIsEditing: false, isFirstLoad: false });
                 _this2.props.toggleLoader(false);
             }).catch(function () {
                 _this2.props.toggleLoader(false);
@@ -30782,17 +30789,39 @@ var DataGrid = exports.DataGrid = function (_Component) {
         value: function render() {
             var _this4 = this;
 
-            var totalItem = this.state.totalItem;
-
-
-            if (totalItem === 0) {
-                return false;
-            }
-
             var _state = this.state,
+                isFirstLoad = _state.isFirstLoad,
+                totalItem = _state.totalItem,
                 gridData = _state.gridData,
                 isShowConfirmBox = _state.isShowConfirmBox;
 
+            var monthDate = new Date(this.props.params['monthDate']);
+            var headerTitle = 'Volume Control, ' + this.props.params['brandName'] + ' , ' + monthDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+            if (isFirstLoad) {
+                return false;
+            }
+
+            if (totalItem === 0) {
+                return _react2.default.createElement(
+                    'table',
+                    { className: 'table table-bordered table-hover' },
+                    _react2.default.createElement(_HeaderTitle2.default, { title: headerTitle }),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        _react2.default.createElement(
+                            'tr',
+                            null,
+                            _react2.default.createElement(
+                                'td',
+                                { className: 'text-center' },
+                                'There is no information'
+                            )
+                        )
+                    )
+                );
+            }
 
             return _react2.default.createElement(
                 'div',
@@ -30800,6 +30829,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                 _react2.default.createElement(
                     'table',
                     { className: 'table table-bordered table-hover' },
+                    _react2.default.createElement(_HeaderTitle2.default, { cols: 9, title: headerTitle }),
                     _react2.default.createElement(
                         'thead',
                         null,
@@ -30868,7 +30898,7 @@ var DataGrid = exports.DataGrid = function (_Component) {
                         gridData.map(function (item, index) {
                             return _react2.default.createElement(
                                 'tr',
-                                { key: item.ProductId, className: item.editing ? 'editing' : '' },
+                                { key: item.ProductId },
                                 _react2.default.createElement(
                                     'td',
                                     null,
@@ -31028,6 +31058,65 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 /* 407 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.HeaderTitle = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeaderTitle = exports.HeaderTitle = function (_Component) {
+    _inherits(HeaderTitle, _Component);
+
+    function HeaderTitle(props) {
+        _classCallCheck(this, HeaderTitle);
+
+        return _possibleConstructorReturn(this, (HeaderTitle.__proto__ || Object.getPrototypeOf(HeaderTitle)).call(this, props));
+    }
+
+    _createClass(HeaderTitle, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'thead',
+                null,
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'th',
+                        { colSpan: this.props.cols, style: { textAlign: 'left' } },
+                        this.props.title
+                    )
+                )
+            );
+        }
+    }]);
+
+    return HeaderTitle;
+}(_react.Component);
+
+exports.default = HeaderTitle;
+
+/***/ }),
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

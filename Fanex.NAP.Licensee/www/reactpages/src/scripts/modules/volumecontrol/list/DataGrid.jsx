@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams } from './action';
 import Site from '../../../lib/site';
+import HeaderTitle from './HeaderTitle';
 import ConfirmBox from '../../../components/ConfirmBox';
 import Utility from '../../../lib/utility';
 
@@ -18,7 +19,8 @@ export class DataGrid extends Component {
             totalItem: 0,
             clientIsEditing:false,
             isShowConfirmBox: false,
-            indexToUpdate: -1
+            indexToUpdate: -1,
+            isFirstLoad: true
         };
     }
 
@@ -43,7 +45,7 @@ export class DataGrid extends Component {
     _getData() {
         this.props.toggleLoader(true);
         Site.fetchData(this.props.params, 'BetTicketVolumeControl/Search').then(response => {
-            this.setState({gridData: response.data.Data, dataItem: response.data.Data, totalItem: !!(response.data.Data) ? response.data.Data.length : 0, clientIsEditing: false});
+            this.setState({gridData: response.data.Data, dataItem: response.data.Data, totalItem: response.data.Data.length, clientIsEditing: false, isFirstLoad: false});
             this.props.toggleLoader(false);
         }).catch(() => {
             this.props.toggleLoader(false);
@@ -138,17 +140,27 @@ export class DataGrid extends Component {
     };
 
     render() {
-        const { totalItem } = this.state;
+        const { isFirstLoad, totalItem, gridData, isShowConfirmBox } = this.state;
+        const monthDate = new Date(this.props.params['monthDate']);
+        const headerTitle = `Volume Control, ${this.props.params['brandName']} , ${monthDate.toLocaleString('default', { month: 'long', year: 'numeric' })}`;
 
-        if (totalItem === 0) {
+        if (isFirstLoad) {
             return false;
         }
 
-        const { gridData, isShowConfirmBox } = this.state;
+        if (totalItem === 0) {
+            return (
+                <table className='table table-bordered table-hover'>
+                    <HeaderTitle title={headerTitle}/>
+                    <tbody><tr>< td className='text-center'>There is no information</td></tr></tbody>
+                </table>
+            );
+        }
 
         return (
             <div>
                 <table className='table table-bordered table-hover'>
+                    <HeaderTitle cols={9} title={headerTitle}/>
                     <thead>
                         <tr>
                             <th rowSpan='2' colSpan='2'>Product</th>
@@ -170,7 +182,7 @@ export class DataGrid extends Component {
                     {
                         gridData.map((item, index) => {
                             return (
-                                <tr key={item.ProductId} className={item.editing ? 'editing' : ''}>
+                                <tr key={item.ProductId}>
                                     <td>{item.ProductName}</td>
                                     <td className='text-center'>
                                         {

@@ -30274,7 +30274,8 @@ var CHANGE_TOTALWINLOSS = exports.CHANGE_TOTALWINLOSS = "CHANGE_TOTALWINLOSS";
 /* 405 */,
 /* 406 */,
 /* 407 */,
-/* 408 */
+/* 408 */,
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30294,13 +30295,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(409);
+var _AppContainer = __webpack_require__(410);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(412);
+var _reducer = __webpack_require__(413);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -30347,7 +30348,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 409 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30370,11 +30371,11 @@ var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(410);
+var _FormFilter = __webpack_require__(411);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(411);
+var _DataGrid = __webpack_require__(412);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -30421,7 +30422,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 410 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30593,7 +30594,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 411 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30909,7 +30910,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 412 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30944,5 +30945,5 @@ var totalWinLoss = (0, _createReducer4.default)({}, _defineProperty({}, _types.C
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading, totalWinLoss: totalWinLoss });
 
 /***/ })
-],[408]);
+],[409]);
 //# sourceMappingURL=volumeControlAddSetting.js.map
