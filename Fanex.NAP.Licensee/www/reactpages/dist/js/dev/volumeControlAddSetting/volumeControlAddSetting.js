@@ -3,7 +3,7 @@ webpackJsonp([1],[
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
-//! version : 2.27.0
+//! version : 2.29.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -2093,7 +2093,7 @@ webpackJsonp([1],[
             try {
                 oldLocale = globalLocale._abbr;
                 aliasedRequire = require;
-                __webpack_require__(283)("./" + name);
+                __webpack_require__(285)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {
                 // mark as not found to avoid repeating expensive file require call causing high CPU
@@ -2544,8 +2544,7 @@ webpackJsonp([1],[
     hooks.createFromInputFallback = deprecate(
         'value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), ' +
             'which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are ' +
-            'discouraged and will be removed in an upcoming major release. Please refer to ' +
-            'http://momentjs.com/guides/#/warnings/js-date/ for more info.',
+            'discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.',
         function (config) {
             config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
         }
@@ -3730,7 +3729,10 @@ webpackJsonp([1],[
     function calendar$1(time, formats) {
         // Support for single parameter, formats only overload to the calendar function
         if (arguments.length === 1) {
-            if (isMomentInput(arguments[0])) {
+            if (!arguments[0]) {
+                time = undefined;
+                formats = undefined;
+            } else if (isMomentInput(arguments[0])) {
                 time = arguments[0];
                 formats = undefined;
             } else if (isCalendarSpec(arguments[0])) {
@@ -4408,7 +4410,7 @@ webpackJsonp([1],[
             eras = this.localeData().eras();
         for (i = 0, l = eras.length; i < l; ++i) {
             // truncate time
-            val = this.startOf('day').valueOf();
+            val = this.clone().startOf('day').valueOf();
 
             if (eras[i].since <= val && val <= eras[i].until) {
                 return eras[i].name;
@@ -4428,7 +4430,7 @@ webpackJsonp([1],[
             eras = this.localeData().eras();
         for (i = 0, l = eras.length; i < l; ++i) {
             // truncate time
-            val = this.startOf('day').valueOf();
+            val = this.clone().startOf('day').valueOf();
 
             if (eras[i].since <= val && val <= eras[i].until) {
                 return eras[i].narrow;
@@ -4448,7 +4450,7 @@ webpackJsonp([1],[
             eras = this.localeData().eras();
         for (i = 0, l = eras.length; i < l; ++i) {
             // truncate time
-            val = this.startOf('day').valueOf();
+            val = this.clone().startOf('day').valueOf();
 
             if (eras[i].since <= val && val <= eras[i].until) {
                 return eras[i].abbr;
@@ -4471,7 +4473,7 @@ webpackJsonp([1],[
             dir = eras[i].since <= eras[i].until ? +1 : -1;
 
             // truncate time
-            val = this.startOf('day').valueOf();
+            val = this.clone().startOf('day').valueOf();
 
             if (
                 (eras[i].since <= val && val <= eras[i].until) ||
@@ -5622,7 +5624,7 @@ webpackJsonp([1],[
 
     //! moment.js
 
-    hooks.version = '2.27.0';
+    hooks.version = '2.29.1';
 
     setHookCallback(createLocal);
 
@@ -5671,7 +5673,7 @@ webpackJsonp([1],[
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(282)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(284)(module)))
 
 /***/ }),
 /* 1 */
@@ -14511,16 +14513,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '١',
-            '2': '٢',
-            '3': '٣',
-            '4': '٤',
-            '5': '٥',
-            '6': '٦',
-            '7': '٧',
-            '8': '٨',
-            '9': '٩',
-            '0': '٠',
+            1: '١',
+            2: '٢',
+            3: '٣',
+            4: '٤',
+            5: '٥',
+            6: '٦',
+            7: '٧',
+            8: '٨',
+            9: '٩',
+            0: '٠',
         },
         numberMap = {
             '١': '1',
@@ -14956,16 +14958,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '1',
-            '2': '2',
-            '3': '3',
-            '4': '4',
-            '5': '5',
-            '6': '6',
-            '7': '7',
-            '8': '8',
-            '9': '9',
-            '0': '0',
+            1: '1',
+            2: '2',
+            3: '3',
+            4: '4',
+            5: '5',
+            6: '6',
+            7: '7',
+            8: '8',
+            9: '9',
+            0: '0',
         },
         pluralForm = function (n) {
             return n === 0
@@ -15187,8 +15189,8 @@ exports.default = Overlay;
             yy: '%d سنوات',
         },
         week: {
-            dow: 6, // Saturday is the first day of the week.
-            doy: 12, // The week that contains Jan 12th is the first week of the year.
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
         },
     });
 
@@ -15214,16 +15216,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '١',
-            '2': '٢',
-            '3': '٣',
-            '4': '٤',
-            '5': '٥',
-            '6': '٦',
-            '7': '٧',
-            '8': '٨',
-            '9': '٩',
-            '0': '٠',
+            1: '١',
+            2: '٢',
+            3: '٣',
+            4: '٤',
+            5: '٥',
+            6: '٦',
+            7: '٧',
+            8: '٨',
+            9: '٩',
+            0: '٠',
         },
         numberMap = {
             '١': '1',
@@ -15454,7 +15456,7 @@ exports.default = Overlay;
         relativeTime: {
             future: '%s sonra',
             past: '%s əvvəl',
-            s: 'birneçə saniyə',
+            s: 'bir neçə saniyə',
             ss: '%d saniyə',
             m: 'bir dəqiqə',
             mm: '%d dəqiqə',
@@ -15726,6 +15728,8 @@ exports.default = Overlay;
             hh: '%d часа',
             d: 'ден',
             dd: '%d дена',
+            w: 'седмица',
+            ww: '%d седмици',
             M: 'месец',
             MM: '%d месеца',
             y: 'година',
@@ -15846,16 +15850,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '১',
-            '2': '২',
-            '3': '৩',
-            '4': '৪',
-            '5': '৫',
-            '6': '৬',
-            '7': '৭',
-            '8': '৮',
-            '9': '৯',
-            '0': '০',
+            1: '১',
+            2: '২',
+            3: '৩',
+            4: '৪',
+            5: '৫',
+            6: '৬',
+            7: '৭',
+            8: '৮',
+            9: '৯',
+            0: '০',
         },
         numberMap = {
             '১': '1',
@@ -15968,6 +15972,150 @@ exports.default = Overlay;
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
+//! locale : Bengali (Bangladesh) [bn-bd]
+//! author : Asraf Hossain Patoary : https://github.com/ashwoolford
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(0)) :
+   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+   factory(global.moment)
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var symbolMap = {
+            1: '১',
+            2: '২',
+            3: '৩',
+            4: '৪',
+            5: '৫',
+            6: '৬',
+            7: '৭',
+            8: '৮',
+            9: '৯',
+            0: '০',
+        },
+        numberMap = {
+            '১': '1',
+            '২': '2',
+            '৩': '3',
+            '৪': '4',
+            '৫': '5',
+            '৬': '6',
+            '৭': '7',
+            '৮': '8',
+            '৯': '9',
+            '০': '0',
+        };
+
+    var bnBd = moment.defineLocale('bn-bd', {
+        months: 'জানুয়ারি_ফেব্রুয়ারি_মার্চ_এপ্রিল_মে_জুন_জুলাই_আগস্ট_সেপ্টেম্বর_অক্টোবর_নভেম্বর_ডিসেম্বর'.split(
+            '_'
+        ),
+        monthsShort: 'জানু_ফেব্রু_মার্চ_এপ্রিল_মে_জুন_জুলাই_আগস্ট_সেপ্ট_অক্টো_নভে_ডিসে'.split(
+            '_'
+        ),
+        weekdays: 'রবিবার_সোমবার_মঙ্গলবার_বুধবার_বৃহস্পতিবার_শুক্রবার_শনিবার'.split(
+            '_'
+        ),
+        weekdaysShort: 'রবি_সোম_মঙ্গল_বুধ_বৃহস্পতি_শুক্র_শনি'.split('_'),
+        weekdaysMin: 'রবি_সোম_মঙ্গল_বুধ_বৃহ_শুক্র_শনি'.split('_'),
+        longDateFormat: {
+            LT: 'A h:mm সময়',
+            LTS: 'A h:mm:ss সময়',
+            L: 'DD/MM/YYYY',
+            LL: 'D MMMM YYYY',
+            LLL: 'D MMMM YYYY, A h:mm সময়',
+            LLLL: 'dddd, D MMMM YYYY, A h:mm সময়',
+        },
+        calendar: {
+            sameDay: '[আজ] LT',
+            nextDay: '[আগামীকাল] LT',
+            nextWeek: 'dddd, LT',
+            lastDay: '[গতকাল] LT',
+            lastWeek: '[গত] dddd, LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: '%s পরে',
+            past: '%s আগে',
+            s: 'কয়েক সেকেন্ড',
+            ss: '%d সেকেন্ড',
+            m: 'এক মিনিট',
+            mm: '%d মিনিট',
+            h: 'এক ঘন্টা',
+            hh: '%d ঘন্টা',
+            d: 'এক দিন',
+            dd: '%d দিন',
+            M: 'এক মাস',
+            MM: '%d মাস',
+            y: 'এক বছর',
+            yy: '%d বছর',
+        },
+        preparse: function (string) {
+            return string.replace(/[১২৩৪৫৬৭৮৯০]/g, function (match) {
+                return numberMap[match];
+            });
+        },
+        postformat: function (string) {
+            return string.replace(/\d/g, function (match) {
+                return symbolMap[match];
+            });
+        },
+
+        meridiemParse: /রাত|ভোর|সকাল|দুপুর|বিকাল|সন্ধ্যা|রাত/,
+        meridiemHour: function (hour, meridiem) {
+            if (hour === 12) {
+                hour = 0;
+            }
+            if (meridiem === 'রাত') {
+                return hour < 4 ? hour : hour + 12;
+            } else if (meridiem === 'ভোর') {
+                return hour;
+            } else if (meridiem === 'সকাল') {
+                return hour;
+            } else if (meridiem === 'দুপুর') {
+                return hour >= 3 ? hour : hour + 12;
+            } else if (meridiem === 'বিকাল') {
+                return hour + 12;
+            } else if (meridiem === 'সন্ধ্যা') {
+                return hour + 12;
+            }
+        },
+
+        meridiem: function (hour, minute, isLower) {
+            if (hour < 4) {
+                return 'রাত';
+            } else if (hour < 6) {
+                return 'ভোর';
+            } else if (hour < 12) {
+                return 'সকাল';
+            } else if (hour < 15) {
+                return 'দুপুর';
+            } else if (hour < 18) {
+                return 'বিকাল';
+            } else if (hour < 20) {
+                return 'সন্ধ্যা';
+            } else {
+                return 'রাত';
+            }
+        },
+        week: {
+            dow: 0, // Sunday is the first day of the week.
+            doy: 6, // The week that contains Jan 6th is the first week of the year.
+        },
+    });
+
+    return bnBd;
+
+})));
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//! moment.js locale configuration
 //! locale : Tibetan [bo]
 //! author : Thupten N. Chakrishar : https://github.com/vajradog
 
@@ -15980,16 +16128,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '༡',
-            '2': '༢',
-            '3': '༣',
-            '4': '༤',
-            '5': '༥',
-            '6': '༦',
-            '7': '༧',
-            '8': '༨',
-            '9': '༩',
-            '0': '༠',
+            1: '༡',
+            2: '༢',
+            3: '༣',
+            4: '༤',
+            5: '༥',
+            6: '༦',
+            7: '༧',
+            8: '༨',
+            9: '༩',
+            0: '༠',
         },
         numberMap = {
             '༡': '1',
@@ -16102,7 +16250,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16283,7 +16431,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16448,7 +16596,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16561,7 +16709,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16748,7 +16896,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16826,7 +16974,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16939,7 +17087,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17008,7 +17156,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17102,7 +17250,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17197,7 +17345,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17289,7 +17437,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17395,7 +17543,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17515,7 +17663,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17599,7 +17747,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17679,7 +17827,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17763,7 +17911,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17847,7 +17995,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17927,7 +18075,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18011,7 +18159,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18095,7 +18243,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18179,7 +18327,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18263,7 +18411,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18363,6 +18511,8 @@ exports.default = Overlay;
             hh: '%d horas',
             d: 'un día',
             dd: '%d días',
+            w: 'una semana',
+            ww: '%d semanas',
             M: 'un mes',
             MM: '%d meses',
             y: 'un año',
@@ -18374,7 +18524,7 @@ exports.default = Overlay;
             dow: 1, // Monday is the first day of the week.
             doy: 4, // The week that contains Jan 4th is the first week of the year.
         },
-        invalidDate: 'Fecha invalida',
+        invalidDate: 'Fecha inválida',
     });
 
     return es;
@@ -18383,7 +18533,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18482,6 +18632,8 @@ exports.default = Overlay;
             hh: '%d horas',
             d: 'un día',
             dd: '%d días',
+            w: 'una semana',
+            ww: '%d semanas',
             M: 'un mes',
             MM: '%d meses',
             y: 'un año',
@@ -18501,7 +18653,129 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 149 */
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Spanish (Mexico) [es-mx]
+//! author : JC Franco : https://github.com/jcfranco
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(0)) :
+   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
+   factory(global.moment)
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var monthsShortDot = 'ene._feb._mar._abr._may._jun._jul._ago._sep._oct._nov._dic.'.split(
+            '_'
+        ),
+        monthsShort = 'ene_feb_mar_abr_may_jun_jul_ago_sep_oct_nov_dic'.split('_'),
+        monthsParse = [
+            /^ene/i,
+            /^feb/i,
+            /^mar/i,
+            /^abr/i,
+            /^may/i,
+            /^jun/i,
+            /^jul/i,
+            /^ago/i,
+            /^sep/i,
+            /^oct/i,
+            /^nov/i,
+            /^dic/i,
+        ],
+        monthsRegex = /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i;
+
+    var esMx = moment.defineLocale('es-mx', {
+        months: 'enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre'.split(
+            '_'
+        ),
+        monthsShort: function (m, format) {
+            if (!m) {
+                return monthsShortDot;
+            } else if (/-MMM-/.test(format)) {
+                return monthsShort[m.month()];
+            } else {
+                return monthsShortDot[m.month()];
+            }
+        },
+        monthsRegex: monthsRegex,
+        monthsShortRegex: monthsRegex,
+        monthsStrictRegex: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i,
+        monthsShortStrictRegex: /^(ene\.?|feb\.?|mar\.?|abr\.?|may\.?|jun\.?|jul\.?|ago\.?|sep\.?|oct\.?|nov\.?|dic\.?)/i,
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: monthsParse,
+        weekdays: 'domingo_lunes_martes_miércoles_jueves_viernes_sábado'.split('_'),
+        weekdaysShort: 'dom._lun._mar._mié._jue._vie._sáb.'.split('_'),
+        weekdaysMin: 'do_lu_ma_mi_ju_vi_sá'.split('_'),
+        weekdaysParseExact: true,
+        longDateFormat: {
+            LT: 'H:mm',
+            LTS: 'H:mm:ss',
+            L: 'DD/MM/YYYY',
+            LL: 'D [de] MMMM [de] YYYY',
+            LLL: 'D [de] MMMM [de] YYYY H:mm',
+            LLLL: 'dddd, D [de] MMMM [de] YYYY H:mm',
+        },
+        calendar: {
+            sameDay: function () {
+                return '[hoy a la' + (this.hours() !== 1 ? 's' : '') + '] LT';
+            },
+            nextDay: function () {
+                return '[mañana a la' + (this.hours() !== 1 ? 's' : '') + '] LT';
+            },
+            nextWeek: function () {
+                return 'dddd [a la' + (this.hours() !== 1 ? 's' : '') + '] LT';
+            },
+            lastDay: function () {
+                return '[ayer a la' + (this.hours() !== 1 ? 's' : '') + '] LT';
+            },
+            lastWeek: function () {
+                return (
+                    '[el] dddd [pasado a la' +
+                    (this.hours() !== 1 ? 's' : '') +
+                    '] LT'
+                );
+            },
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: 'en %s',
+            past: 'hace %s',
+            s: 'unos segundos',
+            ss: '%d segundos',
+            m: 'un minuto',
+            mm: '%d minutos',
+            h: 'una hora',
+            hh: '%d horas',
+            d: 'un día',
+            dd: '%d días',
+            w: 'una semana',
+            ww: '%d semanas',
+            M: 'un mes',
+            MM: '%d meses',
+            y: 'un año',
+            yy: '%d años',
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}º/,
+        ordinal: '%dº',
+        week: {
+            dow: 0, // Sunday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+        invalidDate: 'Fecha inválida',
+    });
+
+    return esMx;
+
+})));
+
+
+/***/ }),
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18602,6 +18876,8 @@ exports.default = Overlay;
             hh: '%d horas',
             d: 'un día',
             dd: '%d días',
+            w: 'una semana',
+            ww: '%d semanas',
             M: 'un mes',
             MM: '%d meses',
             y: 'un año',
@@ -18621,7 +18897,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 150 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18715,7 +18991,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 151 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18794,7 +19070,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 152 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18810,16 +19086,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '۱',
-            '2': '۲',
-            '3': '۳',
-            '4': '۴',
-            '5': '۵',
-            '6': '۶',
-            '7': '۷',
-            '8': '۸',
-            '9': '۹',
-            '0': '۰',
+            1: '۱',
+            2: '۲',
+            3: '۳',
+            4: '۴',
+            5: '۵',
+            6: '۶',
+            7: '۷',
+            8: '۸',
+            9: '۹',
+            0: '۰',
         },
         numberMap = {
             '۱': '1',
@@ -18920,7 +19196,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 153 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19057,7 +19333,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 154 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19131,7 +19407,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 155 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19203,7 +19479,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 156 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19281,6 +19557,8 @@ exports.default = Overlay;
             hh: '%d heures',
             d: 'un jour',
             dd: '%d jours',
+            w: 'une semaine',
+            ww: '%d semaines',
             M: 'un mois',
             MM: '%d mois',
             y: 'un an',
@@ -19321,7 +19599,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 157 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19406,7 +19684,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 158 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19495,7 +19773,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 159 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19588,7 +19866,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 160 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19699,7 +19977,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 161 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19810,7 +20088,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 162 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19900,7 +20178,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 163 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20001,8 +20279,8 @@ exports.default = Overlay;
             }
         },
         week: {
-            dow: 1, // Monday is the first day of the week.
-            doy: 4, // The week that contains Jan 4th is the first week of the year.
+            dow: 0, // Sunday is the first day of the week
+            doy: 3, // The week that contains Jan 4th is the first week of the year (7 + 0 - 4)
         },
         meridiemParse: /राती|सकाळीं|दनपारां|सांजे/,
         meridiemHour: function (hour, meridiem) {
@@ -20040,7 +20318,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 164 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20141,8 +20419,8 @@ exports.default = Overlay;
             }
         },
         week: {
-            dow: 1, // Monday is the first day of the week.
-            doy: 4, // The week that contains Jan 4th is the first week of the year.
+            dow: 0, // Sunday is the first day of the week
+            doy: 3, // The week that contains Jan 4th is the first week of the year (7 + 0 - 4)
         },
         meridiemParse: /rati|sokallim|donparam|sanje/,
         meridiemHour: function (hour, meridiem) {
@@ -20180,7 +20458,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 165 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20196,16 +20474,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '૧',
-            '2': '૨',
-            '3': '૩',
-            '4': '૪',
-            '5': '૫',
-            '6': '૬',
-            '7': '૭',
-            '8': '૮',
-            '9': '૯',
-            '0': '૦',
+            1: '૧',
+            2: '૨',
+            3: '૩',
+            4: '૪',
+            5: '૫',
+            6: '૬',
+            7: '૭',
+            8: '૮',
+            9: '૯',
+            0: '૦',
         },
         numberMap = {
             '૧': '1',
@@ -20317,7 +20595,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 166 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20427,7 +20705,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 167 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20443,16 +20721,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '१',
-            '2': '२',
-            '3': '३',
-            '4': '४',
-            '5': '५',
-            '6': '६',
-            '7': '७',
-            '8': '८',
-            '9': '९',
-            '0': '०',
+            1: '१',
+            2: '२',
+            3: '३',
+            4: '४',
+            5: '५',
+            6: '६',
+            7: '७',
+            8: '८',
+            9: '९',
+            0: '०',
         },
         numberMap = {
             '१': '1',
@@ -20465,16 +20743,48 @@ exports.default = Overlay;
             '८': '8',
             '९': '9',
             '०': '0',
-        };
+        },
+        monthsParse = [
+            /^जन/i,
+            /^फ़र|फर/i,
+            /^मार्च/i,
+            /^अप्रै/i,
+            /^मई/i,
+            /^जून/i,
+            /^जुल/i,
+            /^अग/i,
+            /^सितं|सित/i,
+            /^अक्टू/i,
+            /^नव|नवं/i,
+            /^दिसं|दिस/i,
+        ],
+        shortMonthsParse = [
+            /^जन/i,
+            /^फ़र/i,
+            /^मार्च/i,
+            /^अप्रै/i,
+            /^मई/i,
+            /^जून/i,
+            /^जुल/i,
+            /^अग/i,
+            /^सित/i,
+            /^अक्टू/i,
+            /^नव/i,
+            /^दिस/i,
+        ];
 
     var hi = moment.defineLocale('hi', {
-        months: 'जनवरी_फ़रवरी_मार्च_अप्रैल_मई_जून_जुलाई_अगस्त_सितम्बर_अक्टूबर_नवम्बर_दिसम्बर'.split(
-            '_'
-        ),
+        months: {
+            format: 'जनवरी_फ़रवरी_मार्च_अप्रैल_मई_जून_जुलाई_अगस्त_सितम्बर_अक्टूबर_नवम्बर_दिसम्बर'.split(
+                '_'
+            ),
+            standalone: 'जनवरी_फरवरी_मार्च_अप्रैल_मई_जून_जुलाई_अगस्त_सितंबर_अक्टूबर_नवंबर_दिसंबर'.split(
+                '_'
+            ),
+        },
         monthsShort: 'जन._फ़र._मार्च_अप्रै._मई_जून_जुल._अग._सित._अक्टू._नव._दिस.'.split(
             '_'
         ),
-        monthsParseExact: true,
         weekdays: 'रविवार_सोमवार_मंगलवार_बुधवार_गुरूवार_शुक्रवार_शनिवार'.split('_'),
         weekdaysShort: 'रवि_सोम_मंगल_बुध_गुरू_शुक्र_शनि'.split('_'),
         weekdaysMin: 'र_सो_मं_बु_गु_शु_श'.split('_'),
@@ -20486,6 +20796,19 @@ exports.default = Overlay;
             LLL: 'D MMMM YYYY, A h:mm बजे',
             LLLL: 'dddd, D MMMM YYYY, A h:mm बजे',
         },
+
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: shortMonthsParse,
+
+        monthsRegex: /^(जनवरी|जन\.?|फ़रवरी|फरवरी|फ़र\.?|मार्च?|अप्रैल|अप्रै\.?|मई?|जून?|जुलाई|जुल\.?|अगस्त|अग\.?|सितम्बर|सितंबर|सित\.?|अक्टूबर|अक्टू\.?|नवम्बर|नवंबर|नव\.?|दिसम्बर|दिसंबर|दिस\.?)/i,
+
+        monthsShortRegex: /^(जनवरी|जन\.?|फ़रवरी|फरवरी|फ़र\.?|मार्च?|अप्रैल|अप्रै\.?|मई?|जून?|जुलाई|जुल\.?|अगस्त|अग\.?|सितम्बर|सितंबर|सित\.?|अक्टूबर|अक्टू\.?|नवम्बर|नवंबर|नव\.?|दिसम्बर|दिसंबर|दिस\.?)/i,
+
+        monthsStrictRegex: /^(जनवरी?|फ़रवरी|फरवरी?|मार्च?|अप्रैल?|मई?|जून?|जुलाई?|अगस्त?|सितम्बर|सितंबर|सित?\.?|अक्टूबर|अक्टू\.?|नवम्बर|नवंबर?|दिसम्बर|दिसंबर?)/i,
+
+        monthsShortStrictRegex: /^(जन\.?|फ़र\.?|मार्च?|अप्रै\.?|मई?|जून?|जुल\.?|अग\.?|सित\.?|अक्टू\.?|नव\.?|दिस\.?)/i,
+
         calendar: {
             sameDay: '[आज] LT',
             nextDay: '[कल] LT',
@@ -20562,7 +20885,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 168 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20732,12 +21055,13 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 169 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 //! locale : Hungarian [hu]
 //! author : Adam Brunner : https://github.com/adambrunner
+//! author : Peter Viszt  : https://github.com/passatgt
 
 ;(function (global, factory) {
     true ? factory(__webpack_require__(0)) :
@@ -20797,9 +21121,10 @@ exports.default = Overlay;
         months: 'január_február_március_április_május_június_július_augusztus_szeptember_október_november_december'.split(
             '_'
         ),
-        monthsShort: 'jan_feb_márc_ápr_máj_jún_júl_aug_szept_okt_nov_dec'.split(
+        monthsShort: 'jan._feb._márc._ápr._máj._jún._júl._aug._szept._okt._nov._dec.'.split(
             '_'
         ),
+        monthsParseExact: true,
         weekdays: 'vasárnap_hétfő_kedd_szerda_csütörtök_péntek_szombat'.split('_'),
         weekdaysShort: 'vas_hét_kedd_sze_csüt_pén_szo'.split('_'),
         weekdaysMin: 'v_h_k_sze_cs_p_szo'.split('_'),
@@ -20864,7 +21189,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 170 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20972,7 +21297,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 171 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21064,7 +21389,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21219,7 +21544,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21320,6 +21645,8 @@ exports.default = Overlay;
             hh: '%d ore',
             d: 'un giorno',
             dd: '%d giorni',
+            w: 'una settimana',
+            ww: '%d settimane',
             M: 'un mese',
             MM: '%d mesi',
             y: 'un anno',
@@ -21339,7 +21666,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21419,7 +21746,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 175 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21583,7 +21910,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 176 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21675,7 +22002,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21783,7 +22110,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21881,7 +22208,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21897,16 +22224,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '១',
-            '2': '២',
-            '3': '៣',
-            '4': '៤',
-            '5': '៥',
-            '6': '៦',
-            '7': '៧',
-            '8': '៨',
-            '9': '៩',
-            '0': '០',
+            1: '១',
+            2: '២',
+            3: '៣',
+            4: '៤',
+            5: '៥',
+            6: '៦',
+            7: '៧',
+            8: '៨',
+            9: '៩',
+            0: '០',
         },
         numberMap = {
             '១': '1',
@@ -21999,7 +22326,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22015,16 +22342,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '೧',
-            '2': '೨',
-            '3': '೩',
-            '4': '೪',
-            '5': '೫',
-            '6': '೬',
-            '7': '೭',
-            '8': '೮',
-            '9': '೯',
-            '0': '೦',
+            1: '೧',
+            2: '೨',
+            3: '೩',
+            4: '೪',
+            5: '೫',
+            6: '೬',
+            7: '೭',
+            8: '೮',
+            9: '೯',
+            0: '೦',
         },
         numberMap = {
             '೧': '1',
@@ -22138,7 +22465,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22229,7 +22556,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22245,16 +22572,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '١',
-            '2': '٢',
-            '3': '٣',
-            '4': '٤',
-            '5': '٥',
-            '6': '٦',
-            '7': '٧',
-            '8': '٨',
-            '9': '٩',
-            '0': '٠',
+            1: '١',
+            2: '٢',
+            3: '٣',
+            4: '٤',
+            5: '٥',
+            6: '٦',
+            7: '٧',
+            8: '٨',
+            9: '٩',
+            0: '٠',
         },
         numberMap = {
             '١': '1',
@@ -22363,7 +22690,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22463,7 +22790,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22614,7 +22941,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22695,7 +23022,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22834,7 +23161,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22943,7 +23270,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23077,7 +23404,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23152,7 +23479,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23254,7 +23581,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23350,7 +23677,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23465,7 +23792,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23482,16 +23809,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '१',
-            '2': '२',
-            '3': '३',
-            '4': '४',
-            '5': '५',
-            '6': '६',
-            '7': '७',
-            '8': '८',
-            '9': '९',
-            '0': '०',
+            1: '१',
+            2: '२',
+            3: '३',
+            4: '४',
+            5: '५',
+            6: '६',
+            7: '७',
+            8: '८',
+            9: '९',
+            0: '०',
         },
         numberMap = {
             '१': '1',
@@ -23683,7 +24010,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23774,7 +24101,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23866,7 +24193,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23937,7 +24264,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23955,16 +24282,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '၁',
-            '2': '၂',
-            '3': '၃',
-            '4': '၄',
-            '5': '၅',
-            '6': '၆',
-            '7': '၇',
-            '8': '၈',
-            '9': '၉',
-            '0': '၀',
+            1: '၁',
+            2: '၂',
+            3: '၃',
+            4: '၄',
+            5: '၅',
+            6: '၆',
+            7: '၇',
+            8: '၈',
+            9: '၉',
+            0: '၀',
         },
         numberMap = {
             '၁': '1',
@@ -24044,7 +24371,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24100,6 +24427,8 @@ exports.default = Overlay;
             hh: '%d timer',
             d: 'en dag',
             dd: '%d dager',
+            w: 'en uke',
+            ww: '%d uker',
             M: 'en måned',
             MM: '%d måneder',
             y: 'ett år',
@@ -24119,7 +24448,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24135,16 +24464,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '१',
-            '2': '२',
-            '3': '३',
-            '4': '४',
-            '5': '५',
-            '6': '६',
-            '7': '७',
-            '8': '८',
-            '9': '९',
-            '0': '०',
+            1: '१',
+            2: '२',
+            3: '३',
+            4: '४',
+            5: '५',
+            6: '६',
+            7: '७',
+            8: '८',
+            9: '९',
+            0: '०',
         },
         numberMap = {
             '१': '1',
@@ -24255,7 +24584,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24349,6 +24678,8 @@ exports.default = Overlay;
             hh: '%d uur',
             d: 'één dag',
             dd: '%d dagen',
+            w: 'één week',
+            ww: '%d weken',
             M: 'één maand',
             MM: '%d maanden',
             y: 'één jaar',
@@ -24373,7 +24704,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24491,7 +24822,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 202 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24546,6 +24877,8 @@ exports.default = Overlay;
             hh: '%d timar',
             d: 'ein dag',
             dd: '%d dagar',
+            w: 'ei veke',
+            ww: '%d veker',
             M: 'ein månad',
             MM: '%d månader',
             y: 'eit år',
@@ -24565,7 +24898,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 203 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24664,7 +24997,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 204 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24680,16 +25013,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '੧',
-            '2': '੨',
-            '3': '੩',
-            '4': '੪',
-            '5': '੫',
-            '6': '੬',
-            '7': '੭',
-            '8': '੮',
-            '9': '੯',
-            '0': '੦',
+            1: '੧',
+            2: '੨',
+            3: '੩',
+            4: '੪',
+            5: '੫',
+            6: '੬',
+            7: '੭',
+            8: '੮',
+            9: '੯',
+            0: '੦',
         },
         numberMap = {
             '੧': '1',
@@ -24801,7 +25134,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24821,7 +25154,21 @@ exports.default = Overlay;
         ),
         monthsSubjective = 'stycznia_lutego_marca_kwietnia_maja_czerwca_lipca_sierpnia_września_października_listopada_grudnia'.split(
             '_'
-        );
+        ),
+        monthsParse = [
+            /^sty/i,
+            /^lut/i,
+            /^mar/i,
+            /^kwi/i,
+            /^maj/i,
+            /^cze/i,
+            /^lip/i,
+            /^sie/i,
+            /^wrz/i,
+            /^paź/i,
+            /^lis/i,
+            /^gru/i,
+        ];
     function plural(n) {
         return n % 10 < 5 && n % 10 > 1 && ~~(n / 10) % 10 !== 1;
     }
@@ -24838,6 +25185,8 @@ exports.default = Overlay;
                 return withoutSuffix ? 'godzina' : 'godzinę';
             case 'hh':
                 return result + (plural(number) ? 'godziny' : 'godzin');
+            case 'ww':
+                return result + (plural(number) ? 'tygodnie' : 'tygodni');
             case 'MM':
                 return result + (plural(number) ? 'miesiące' : 'miesięcy');
             case 'yy':
@@ -24849,17 +25198,6 @@ exports.default = Overlay;
         months: function (momentToFormat, format) {
             if (!momentToFormat) {
                 return monthsNominative;
-            } else if (format === '') {
-                // Hack: if format empty we know this is used to generate
-                // RegExp by moment. Give then back both valid forms of months
-                // in RegExp ready format.
-                return (
-                    '(' +
-                    monthsSubjective[momentToFormat.month()] +
-                    '|' +
-                    monthsNominative[momentToFormat.month()] +
-                    ')'
-                );
             } else if (/D MMMM/.test(format)) {
                 return monthsSubjective[momentToFormat.month()];
             } else {
@@ -24867,6 +25205,9 @@ exports.default = Overlay;
             }
         },
         monthsShort: 'sty_lut_mar_kwi_maj_cze_lip_sie_wrz_paź_lis_gru'.split('_'),
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: monthsParse,
         weekdays: 'niedziela_poniedziałek_wtorek_środa_czwartek_piątek_sobota'.split(
             '_'
         ),
@@ -24927,6 +25268,8 @@ exports.default = Overlay;
             hh: translate,
             d: '1 dzień',
             dd: '%d dni',
+            w: 'tydzień',
+            ww: translate,
             M: 'miesiąc',
             MM: translate,
             y: 'rok',
@@ -24946,7 +25289,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25003,6 +25346,8 @@ exports.default = Overlay;
             hh: '%d horas',
             d: 'um dia',
             dd: '%d dias',
+            w: 'uma semana',
+            ww: '%d semanas',
             M: 'um mês',
             MM: '%d meses',
             y: 'um ano',
@@ -25022,7 +25367,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25086,6 +25431,7 @@ exports.default = Overlay;
         },
         dayOfMonthOrdinalParse: /\d{1,2}º/,
         ordinal: '%dº',
+        invalidDate: 'Data inválida',
     });
 
     return ptBr;
@@ -25094,7 +25440,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25117,6 +25463,7 @@ exports.default = Overlay;
                 mm: 'minute',
                 hh: 'ore',
                 dd: 'zile',
+                ww: 'săptămâni',
                 MM: 'luni',
                 yy: 'ani',
             },
@@ -25165,6 +25512,8 @@ exports.default = Overlay;
             hh: relativeTimeWithPlural,
             d: 'o zi',
             dd: relativeTimeWithPlural,
+            w: 'o săptămână',
+            ww: relativeTimeWithPlural,
             M: 'o lună',
             MM: relativeTimeWithPlural,
             y: 'un an',
@@ -25182,7 +25531,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25213,6 +25562,7 @@ exports.default = Overlay;
             mm: withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
             hh: 'час_часа_часов',
             dd: 'день_дня_дней',
+            ww: 'неделя_недели_недель',
             MM: 'месяц_месяца_месяцев',
             yy: 'год_года_лет',
         };
@@ -25353,6 +25703,8 @@ exports.default = Overlay;
             hh: relativeTimeWithPlural,
             d: 'день',
             dd: relativeTimeWithPlural,
+            w: 'неделя',
+            ww: relativeTimeWithPlural,
             M: 'месяц',
             MM: relativeTimeWithPlural,
             y: 'год',
@@ -25401,7 +25753,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25498,7 +25850,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25571,7 +25923,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25655,7 +26007,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25815,7 +26167,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26001,7 +26353,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 215 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26082,12 +26434,13 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 216 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 //! locale : Serbian [sr]
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
+//! author : Stefan Crnjaković <stefan@hotmail.rs> : https://github.com/crnjakovic
 
 ;(function (global, factory) {
     true ? factory(__webpack_require__(0)) :
@@ -26147,10 +26500,10 @@ exports.default = Overlay;
         longDateFormat: {
             LT: 'H:mm',
             LTS: 'H:mm:ss',
-            L: 'DD.MM.YYYY',
-            LL: 'D. MMMM YYYY',
-            LLL: 'D. MMMM YYYY H:mm',
-            LLLL: 'dddd, D. MMMM YYYY H:mm',
+            L: 'D. M. YYYY.',
+            LL: 'D. MMMM YYYY.',
+            LLL: 'D. MMMM YYYY. H:mm',
+            LLLL: 'dddd, D. MMMM YYYY. H:mm',
         },
         calendar: {
             sameDay: '[danas u] LT',
@@ -26215,12 +26568,13 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 217 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 //! locale : Serbian Cyrillic [sr-cyrl]
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
+//! author : Stefan Crnjaković <stefan@hotmail.rs> : https://github.com/crnjakovic
 
 ;(function (global, factory) {
     true ? factory(__webpack_require__(0)) :
@@ -26278,10 +26632,10 @@ exports.default = Overlay;
         longDateFormat: {
             LT: 'H:mm',
             LTS: 'H:mm:ss',
-            L: 'DD.MM.YYYY',
-            LL: 'D. MMMM YYYY',
-            LLL: 'D. MMMM YYYY H:mm',
-            LLLL: 'dddd, D. MMMM YYYY H:mm',
+            L: 'D. M. YYYY.',
+            LL: 'D. MMMM YYYY.',
+            LLL: 'D. MMMM YYYY. H:mm',
+            LLLL: 'dddd, D. MMMM YYYY. H:mm',
         },
         calendar: {
             sameDay: '[данас у] LT',
@@ -26336,7 +26690,7 @@ exports.default = Overlay;
         ordinal: '%d.',
         week: {
             dow: 1, // Monday is the first day of the week.
-            doy: 7, // The week that contains Jan 7th is the first week of the year.
+            doy: 7, // The week that contains Jan 1st is the first week of the year.
         },
     });
 
@@ -26346,7 +26700,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 218 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26445,7 +26799,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 219 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26529,7 +26883,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 220 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26599,7 +26953,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26615,16 +26969,16 @@ exports.default = Overlay;
     //! moment.js locale configuration
 
     var symbolMap = {
-            '1': '௧',
-            '2': '௨',
-            '3': '௩',
-            '4': '௪',
-            '5': '௫',
-            '6': '௬',
-            '7': '௭',
-            '8': '௮',
-            '9': '௯',
-            '0': '௦',
+            1: '௧',
+            2: '௨',
+            3: '௩',
+            4: '௪',
+            5: '௫',
+            6: '௬',
+            7: '௭',
+            8: '௮',
+            9: '௯',
+            0: '௦',
         },
         numberMap = {
             '௧': '1',
@@ -26744,7 +27098,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26846,7 +27200,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26930,7 +27284,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26971,9 +27325,14 @@ exports.default = Overlay;
     };
 
     var tg = moment.defineLocale('tg', {
-        months: 'январ_феврал_март_апрел_май_июн_июл_август_сентябр_октябр_ноябр_декабр'.split(
-            '_'
-        ),
+        months: {
+            format: 'январи_феврали_марти_апрели_майи_июни_июли_августи_сентябри_октябри_ноябри_декабри'.split(
+                '_'
+            ),
+            standalone: 'январ_феврал_март_апрел_май_июн_июл_август_сентябр_октябр_ноябр_декабр'.split(
+                '_'
+            ),
+        },
         monthsShort: 'янв_фев_мар_апр_май_июн_июл_авг_сен_окт_ноя_дек'.split('_'),
         weekdays: 'якшанбе_душанбе_сешанбе_чоршанбе_панҷшанбе_ҷумъа_шанбе'.split(
             '_'
@@ -26983,14 +27342,14 @@ exports.default = Overlay;
         longDateFormat: {
             LT: 'HH:mm',
             LTS: 'HH:mm:ss',
-            L: 'DD/MM/YYYY',
+            L: 'DD.MM.YYYY',
             LL: 'D MMMM YYYY',
             LLL: 'D MMMM YYYY HH:mm',
             LLLL: 'dddd, D MMMM YYYY HH:mm',
         },
         calendar: {
             sameDay: '[Имрӯз соати] LT',
-            nextDay: '[Пагоҳ соати] LT',
+            nextDay: '[Фардо соати] LT',
             lastDay: '[Дирӯз соати] LT',
             nextWeek: 'dddd[и] [ҳафтаи оянда соати] LT',
             lastWeek: 'dddd[и] [ҳафтаи гузашта соати] LT',
@@ -27057,7 +27416,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27122,6 +27481,8 @@ exports.default = Overlay;
             hh: '%d ชั่วโมง',
             d: '1 วัน',
             dd: '%d วัน',
+            w: '1 สัปดาห์',
+            ww: '%d สัปดาห์',
             M: '1 เดือน',
             MM: '%d เดือน',
             y: '1 ปี',
@@ -27135,11 +27496,11 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
-//! locale : Turkmen [trk]
+//! locale : Turkmen [tk]
 //! author : Atamyrat Abdyrahmanov : https://github.com/atamyratabdy
 
 ;(function (global, factory) {
@@ -27242,7 +27603,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27315,7 +27676,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27456,7 +27817,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27541,6 +27902,8 @@ exports.default = Overlay;
             hh: '%d saat',
             d: 'bir gün',
             dd: '%d gün',
+            w: 'bir hafta',
+            ww: '%d hafta',
             M: 'bir ay',
             MM: '%d ay',
             y: 'bir yıl',
@@ -27576,7 +27939,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27681,7 +28044,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27750,7 +28113,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27819,10 +28182,10 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-//! moment.js language configuration
+//! moment.js locale configuration
 //! locale : Uyghur (China) [ug-cn]
 //! author: boyaq : https://github.com/boyaq
 
@@ -27832,7 +28195,7 @@ exports.default = Overlay;
    factory(global.moment)
 }(this, (function (moment) { 'use strict';
 
-    //! moment.js language configuration
+    //! moment.js locale configuration
 
     var ugCn = moment.defineLocale('ug-cn', {
         months: 'يانۋار_فېۋرال_مارت_ئاپرېل_ماي_ئىيۇن_ئىيۇل_ئاۋغۇست_سېنتەبىر_ئۆكتەبىر_نويابىر_دېكابىر'.split(
@@ -27945,7 +28308,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28124,7 +28487,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28222,7 +28585,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28289,7 +28652,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 237 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28358,7 +28721,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 238 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28430,6 +28793,8 @@ exports.default = Overlay;
             hh: '%d giờ',
             d: 'một ngày',
             dd: '%d ngày',
+            w: 'một tuần',
+            ww: '%d tuần',
             M: 'một tháng',
             MM: '%d tháng',
             y: 'một năm',
@@ -28451,7 +28816,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 239 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28538,7 +28903,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 240 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28607,7 +28972,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 241 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28723,6 +29088,8 @@ exports.default = Overlay;
             hh: '%d 小时',
             d: '1 天',
             dd: '%d 天',
+            w: '1 周',
+            ww: '%d 周',
             M: '1 个月',
             MM: '%d 个月',
             y: '1 年',
@@ -28741,7 +29108,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 242 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28858,7 +29225,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28974,7 +29341,7 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29089,8 +29456,6 @@ exports.default = Overlay;
 
 
 /***/ }),
-/* 245 */,
-/* 246 */,
 /* 247 */,
 /* 248 */,
 /* 249 */,
@@ -29121,7 +29486,9 @@ exports.default = Overlay;
 /* 274 */,
 /* 275 */,
 /* 276 */,
-/* 277 */
+/* 277 */,
+/* 278 */,
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29131,7 +29498,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _MonthPicker = __webpack_require__(278);
+var _MonthPicker = __webpack_require__(280);
 
 var _MonthPicker2 = _interopRequireDefault(_MonthPicker);
 
@@ -29140,7 +29507,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _MonthPicker2.default;
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29158,11 +29525,11 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Month = __webpack_require__(279);
+var _Month = __webpack_require__(281);
 
 var _Month2 = _interopRequireDefault(_Month);
 
-var _Day = __webpack_require__(281);
+var _Day = __webpack_require__(283);
 
 var _Day2 = _interopRequireDefault(_Day);
 
@@ -29311,7 +29678,7 @@ var _initialiseProps = function _initialiseProps() {
 exports.default = MonthPicker;
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29331,7 +29698,7 @@ var _Overlay = __webpack_require__(111);
 
 var _Overlay2 = _interopRequireDefault(_Overlay);
 
-var _langHelper = __webpack_require__(280);
+var _langHelper = __webpack_require__(282);
 
 var _langHelper2 = _interopRequireDefault(_langHelper);
 
@@ -29585,7 +29952,7 @@ Month.defaultProps = {
 exports.default = Month;
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29641,7 +30008,7 @@ LangHelper.languageKeys = {
 exports.default = LangHelper;
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29789,7 +30156,7 @@ Day.propTypes = {
 exports.default = Day;
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -29817,7 +30184,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -29846,247 +30213,251 @@ var map = {
 	"./bm": 123,
 	"./bm.js": 123,
 	"./bn": 124,
+	"./bn-bd": 125,
+	"./bn-bd.js": 125,
 	"./bn.js": 124,
-	"./bo": 125,
-	"./bo.js": 125,
-	"./br": 126,
-	"./br.js": 126,
-	"./bs": 127,
-	"./bs.js": 127,
-	"./ca": 128,
-	"./ca.js": 128,
-	"./cs": 129,
-	"./cs.js": 129,
-	"./cv": 130,
-	"./cv.js": 130,
-	"./cy": 131,
-	"./cy.js": 131,
-	"./da": 132,
-	"./da.js": 132,
-	"./de": 133,
-	"./de-at": 134,
-	"./de-at.js": 134,
-	"./de-ch": 135,
-	"./de-ch.js": 135,
-	"./de.js": 133,
-	"./dv": 136,
-	"./dv.js": 136,
-	"./el": 137,
-	"./el.js": 137,
-	"./en-au": 138,
-	"./en-au.js": 138,
-	"./en-ca": 139,
-	"./en-ca.js": 139,
-	"./en-gb": 140,
-	"./en-gb.js": 140,
-	"./en-ie": 141,
-	"./en-ie.js": 141,
-	"./en-il": 142,
-	"./en-il.js": 142,
-	"./en-in": 143,
-	"./en-in.js": 143,
-	"./en-nz": 144,
-	"./en-nz.js": 144,
-	"./en-sg": 145,
-	"./en-sg.js": 145,
-	"./eo": 146,
-	"./eo.js": 146,
-	"./es": 147,
-	"./es-do": 148,
-	"./es-do.js": 148,
-	"./es-us": 149,
-	"./es-us.js": 149,
-	"./es.js": 147,
-	"./et": 150,
-	"./et.js": 150,
-	"./eu": 151,
-	"./eu.js": 151,
-	"./fa": 152,
-	"./fa.js": 152,
-	"./fi": 153,
-	"./fi.js": 153,
-	"./fil": 154,
-	"./fil.js": 154,
-	"./fo": 155,
-	"./fo.js": 155,
-	"./fr": 156,
-	"./fr-ca": 157,
-	"./fr-ca.js": 157,
-	"./fr-ch": 158,
-	"./fr-ch.js": 158,
-	"./fr.js": 156,
-	"./fy": 159,
-	"./fy.js": 159,
-	"./ga": 160,
-	"./ga.js": 160,
-	"./gd": 161,
-	"./gd.js": 161,
-	"./gl": 162,
-	"./gl.js": 162,
-	"./gom-deva": 163,
-	"./gom-deva.js": 163,
-	"./gom-latn": 164,
-	"./gom-latn.js": 164,
-	"./gu": 165,
-	"./gu.js": 165,
-	"./he": 166,
-	"./he.js": 166,
-	"./hi": 167,
-	"./hi.js": 167,
-	"./hr": 168,
-	"./hr.js": 168,
-	"./hu": 169,
-	"./hu.js": 169,
-	"./hy-am": 170,
-	"./hy-am.js": 170,
-	"./id": 171,
-	"./id.js": 171,
-	"./is": 172,
-	"./is.js": 172,
-	"./it": 173,
-	"./it-ch": 174,
-	"./it-ch.js": 174,
-	"./it.js": 173,
-	"./ja": 175,
-	"./ja.js": 175,
-	"./jv": 176,
-	"./jv.js": 176,
-	"./ka": 177,
-	"./ka.js": 177,
-	"./kk": 178,
-	"./kk.js": 178,
-	"./km": 179,
-	"./km.js": 179,
-	"./kn": 180,
-	"./kn.js": 180,
-	"./ko": 181,
-	"./ko.js": 181,
-	"./ku": 182,
-	"./ku.js": 182,
-	"./ky": 183,
-	"./ky.js": 183,
-	"./lb": 184,
-	"./lb.js": 184,
-	"./lo": 185,
-	"./lo.js": 185,
-	"./lt": 186,
-	"./lt.js": 186,
-	"./lv": 187,
-	"./lv.js": 187,
-	"./me": 188,
-	"./me.js": 188,
-	"./mi": 189,
-	"./mi.js": 189,
-	"./mk": 190,
-	"./mk.js": 190,
-	"./ml": 191,
-	"./ml.js": 191,
-	"./mn": 192,
-	"./mn.js": 192,
-	"./mr": 193,
-	"./mr.js": 193,
-	"./ms": 194,
-	"./ms-my": 195,
-	"./ms-my.js": 195,
-	"./ms.js": 194,
-	"./mt": 196,
-	"./mt.js": 196,
-	"./my": 197,
-	"./my.js": 197,
-	"./nb": 198,
-	"./nb.js": 198,
-	"./ne": 199,
-	"./ne.js": 199,
-	"./nl": 200,
-	"./nl-be": 201,
-	"./nl-be.js": 201,
-	"./nl.js": 200,
-	"./nn": 202,
-	"./nn.js": 202,
-	"./oc-lnc": 203,
-	"./oc-lnc.js": 203,
-	"./pa-in": 204,
-	"./pa-in.js": 204,
-	"./pl": 205,
-	"./pl.js": 205,
-	"./pt": 206,
-	"./pt-br": 207,
-	"./pt-br.js": 207,
-	"./pt.js": 206,
-	"./ro": 208,
-	"./ro.js": 208,
-	"./ru": 209,
-	"./ru.js": 209,
-	"./sd": 210,
-	"./sd.js": 210,
-	"./se": 211,
-	"./se.js": 211,
-	"./si": 212,
-	"./si.js": 212,
-	"./sk": 213,
-	"./sk.js": 213,
-	"./sl": 214,
-	"./sl.js": 214,
-	"./sq": 215,
-	"./sq.js": 215,
-	"./sr": 216,
-	"./sr-cyrl": 217,
-	"./sr-cyrl.js": 217,
-	"./sr.js": 216,
-	"./ss": 218,
-	"./ss.js": 218,
-	"./sv": 219,
-	"./sv.js": 219,
-	"./sw": 220,
-	"./sw.js": 220,
-	"./ta": 221,
-	"./ta.js": 221,
-	"./te": 222,
-	"./te.js": 222,
-	"./tet": 223,
-	"./tet.js": 223,
-	"./tg": 224,
-	"./tg.js": 224,
-	"./th": 225,
-	"./th.js": 225,
-	"./tk": 226,
-	"./tk.js": 226,
-	"./tl-ph": 227,
-	"./tl-ph.js": 227,
-	"./tlh": 228,
-	"./tlh.js": 228,
-	"./tr": 229,
-	"./tr.js": 229,
-	"./tzl": 230,
-	"./tzl.js": 230,
-	"./tzm": 231,
-	"./tzm-latn": 232,
-	"./tzm-latn.js": 232,
-	"./tzm.js": 231,
-	"./ug-cn": 233,
-	"./ug-cn.js": 233,
-	"./uk": 234,
-	"./uk.js": 234,
-	"./ur": 235,
-	"./ur.js": 235,
-	"./uz": 236,
-	"./uz-latn": 237,
-	"./uz-latn.js": 237,
-	"./uz.js": 236,
-	"./vi": 238,
-	"./vi.js": 238,
-	"./x-pseudo": 239,
-	"./x-pseudo.js": 239,
-	"./yo": 240,
-	"./yo.js": 240,
-	"./zh-cn": 241,
-	"./zh-cn.js": 241,
-	"./zh-hk": 242,
-	"./zh-hk.js": 242,
-	"./zh-mo": 243,
-	"./zh-mo.js": 243,
-	"./zh-tw": 244,
-	"./zh-tw.js": 244
+	"./bo": 126,
+	"./bo.js": 126,
+	"./br": 127,
+	"./br.js": 127,
+	"./bs": 128,
+	"./bs.js": 128,
+	"./ca": 129,
+	"./ca.js": 129,
+	"./cs": 130,
+	"./cs.js": 130,
+	"./cv": 131,
+	"./cv.js": 131,
+	"./cy": 132,
+	"./cy.js": 132,
+	"./da": 133,
+	"./da.js": 133,
+	"./de": 134,
+	"./de-at": 135,
+	"./de-at.js": 135,
+	"./de-ch": 136,
+	"./de-ch.js": 136,
+	"./de.js": 134,
+	"./dv": 137,
+	"./dv.js": 137,
+	"./el": 138,
+	"./el.js": 138,
+	"./en-au": 139,
+	"./en-au.js": 139,
+	"./en-ca": 140,
+	"./en-ca.js": 140,
+	"./en-gb": 141,
+	"./en-gb.js": 141,
+	"./en-ie": 142,
+	"./en-ie.js": 142,
+	"./en-il": 143,
+	"./en-il.js": 143,
+	"./en-in": 144,
+	"./en-in.js": 144,
+	"./en-nz": 145,
+	"./en-nz.js": 145,
+	"./en-sg": 146,
+	"./en-sg.js": 146,
+	"./eo": 147,
+	"./eo.js": 147,
+	"./es": 148,
+	"./es-do": 149,
+	"./es-do.js": 149,
+	"./es-mx": 150,
+	"./es-mx.js": 150,
+	"./es-us": 151,
+	"./es-us.js": 151,
+	"./es.js": 148,
+	"./et": 152,
+	"./et.js": 152,
+	"./eu": 153,
+	"./eu.js": 153,
+	"./fa": 154,
+	"./fa.js": 154,
+	"./fi": 155,
+	"./fi.js": 155,
+	"./fil": 156,
+	"./fil.js": 156,
+	"./fo": 157,
+	"./fo.js": 157,
+	"./fr": 158,
+	"./fr-ca": 159,
+	"./fr-ca.js": 159,
+	"./fr-ch": 160,
+	"./fr-ch.js": 160,
+	"./fr.js": 158,
+	"./fy": 161,
+	"./fy.js": 161,
+	"./ga": 162,
+	"./ga.js": 162,
+	"./gd": 163,
+	"./gd.js": 163,
+	"./gl": 164,
+	"./gl.js": 164,
+	"./gom-deva": 165,
+	"./gom-deva.js": 165,
+	"./gom-latn": 166,
+	"./gom-latn.js": 166,
+	"./gu": 167,
+	"./gu.js": 167,
+	"./he": 168,
+	"./he.js": 168,
+	"./hi": 169,
+	"./hi.js": 169,
+	"./hr": 170,
+	"./hr.js": 170,
+	"./hu": 171,
+	"./hu.js": 171,
+	"./hy-am": 172,
+	"./hy-am.js": 172,
+	"./id": 173,
+	"./id.js": 173,
+	"./is": 174,
+	"./is.js": 174,
+	"./it": 175,
+	"./it-ch": 176,
+	"./it-ch.js": 176,
+	"./it.js": 175,
+	"./ja": 177,
+	"./ja.js": 177,
+	"./jv": 178,
+	"./jv.js": 178,
+	"./ka": 179,
+	"./ka.js": 179,
+	"./kk": 180,
+	"./kk.js": 180,
+	"./km": 181,
+	"./km.js": 181,
+	"./kn": 182,
+	"./kn.js": 182,
+	"./ko": 183,
+	"./ko.js": 183,
+	"./ku": 184,
+	"./ku.js": 184,
+	"./ky": 185,
+	"./ky.js": 185,
+	"./lb": 186,
+	"./lb.js": 186,
+	"./lo": 187,
+	"./lo.js": 187,
+	"./lt": 188,
+	"./lt.js": 188,
+	"./lv": 189,
+	"./lv.js": 189,
+	"./me": 190,
+	"./me.js": 190,
+	"./mi": 191,
+	"./mi.js": 191,
+	"./mk": 192,
+	"./mk.js": 192,
+	"./ml": 193,
+	"./ml.js": 193,
+	"./mn": 194,
+	"./mn.js": 194,
+	"./mr": 195,
+	"./mr.js": 195,
+	"./ms": 196,
+	"./ms-my": 197,
+	"./ms-my.js": 197,
+	"./ms.js": 196,
+	"./mt": 198,
+	"./mt.js": 198,
+	"./my": 199,
+	"./my.js": 199,
+	"./nb": 200,
+	"./nb.js": 200,
+	"./ne": 201,
+	"./ne.js": 201,
+	"./nl": 202,
+	"./nl-be": 203,
+	"./nl-be.js": 203,
+	"./nl.js": 202,
+	"./nn": 204,
+	"./nn.js": 204,
+	"./oc-lnc": 205,
+	"./oc-lnc.js": 205,
+	"./pa-in": 206,
+	"./pa-in.js": 206,
+	"./pl": 207,
+	"./pl.js": 207,
+	"./pt": 208,
+	"./pt-br": 209,
+	"./pt-br.js": 209,
+	"./pt.js": 208,
+	"./ro": 210,
+	"./ro.js": 210,
+	"./ru": 211,
+	"./ru.js": 211,
+	"./sd": 212,
+	"./sd.js": 212,
+	"./se": 213,
+	"./se.js": 213,
+	"./si": 214,
+	"./si.js": 214,
+	"./sk": 215,
+	"./sk.js": 215,
+	"./sl": 216,
+	"./sl.js": 216,
+	"./sq": 217,
+	"./sq.js": 217,
+	"./sr": 218,
+	"./sr-cyrl": 219,
+	"./sr-cyrl.js": 219,
+	"./sr.js": 218,
+	"./ss": 220,
+	"./ss.js": 220,
+	"./sv": 221,
+	"./sv.js": 221,
+	"./sw": 222,
+	"./sw.js": 222,
+	"./ta": 223,
+	"./ta.js": 223,
+	"./te": 224,
+	"./te.js": 224,
+	"./tet": 225,
+	"./tet.js": 225,
+	"./tg": 226,
+	"./tg.js": 226,
+	"./th": 227,
+	"./th.js": 227,
+	"./tk": 228,
+	"./tk.js": 228,
+	"./tl-ph": 229,
+	"./tl-ph.js": 229,
+	"./tlh": 230,
+	"./tlh.js": 230,
+	"./tr": 231,
+	"./tr.js": 231,
+	"./tzl": 232,
+	"./tzl.js": 232,
+	"./tzm": 233,
+	"./tzm-latn": 234,
+	"./tzm-latn.js": 234,
+	"./tzm.js": 233,
+	"./ug-cn": 235,
+	"./ug-cn.js": 235,
+	"./uk": 236,
+	"./uk.js": 236,
+	"./ur": 237,
+	"./ur.js": 237,
+	"./uz": 238,
+	"./uz-latn": 239,
+	"./uz-latn.js": 239,
+	"./uz.js": 238,
+	"./vi": 240,
+	"./vi.js": 240,
+	"./x-pseudo": 241,
+	"./x-pseudo.js": 241,
+	"./yo": 242,
+	"./yo.js": 242,
+	"./zh-cn": 243,
+	"./zh-cn.js": 243,
+	"./zh-hk": 244,
+	"./zh-hk.js": 244,
+	"./zh-mo": 245,
+	"./zh-mo.js": 245,
+	"./zh-tw": 246,
+	"./zh-tw.js": 246
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -30102,11 +30473,9 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 283;
+webpackContext.id = 285;
 
 /***/ }),
-/* 284 */,
-/* 285 */,
 /* 286 */,
 /* 287 */,
 /* 288 */,
@@ -30124,7 +30493,9 @@ webpackContext.id = 283;
 /* 300 */,
 /* 301 */,
 /* 302 */,
-/* 303 */
+/* 303 */,
+/* 304 */,
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30135,7 +30506,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toggleLoader = exports.changeTotalWinloss = exports.setParams = undefined;
 
-var _types = __webpack_require__(304);
+var _types = __webpack_require__(306);
 
 var _loaderAction = __webpack_require__(91);
 
@@ -30158,7 +30529,7 @@ exports.changeTotalWinloss = changeTotalWinloss;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 304 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30171,8 +30542,6 @@ var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 var CHANGE_TOTALWINLOSS = exports.CHANGE_TOTALWINLOSS = "CHANGE_TOTALWINLOSS";
 
 /***/ }),
-/* 305 */,
-/* 306 */,
 /* 307 */,
 /* 308 */,
 /* 309 */,
@@ -30275,7 +30644,9 @@ var CHANGE_TOTALWINLOSS = exports.CHANGE_TOTALWINLOSS = "CHANGE_TOTALWINLOSS";
 /* 406 */,
 /* 407 */,
 /* 408 */,
-/* 409 */
+/* 409 */,
+/* 410 */,
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30295,13 +30666,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(410);
+var _AppContainer = __webpack_require__(412);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(413);
+var _reducer = __webpack_require__(415);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -30348,7 +30719,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 410 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30371,11 +30742,11 @@ var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(411);
+var _FormFilter = __webpack_require__(413);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(412);
+var _DataGrid = __webpack_require__(414);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -30422,7 +30793,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 411 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30443,13 +30814,13 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(303);
+var _action = __webpack_require__(305);
 
 var _reactSelect = __webpack_require__(56);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _index = __webpack_require__(277);
+var _index = __webpack_require__(279);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -30594,7 +30965,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 412 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30617,7 +30988,7 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(303);
+var _action = __webpack_require__(305);
 
 var _site = __webpack_require__(19);
 
@@ -30910,7 +31281,7 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 413 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30928,7 +31299,7 @@ var _createReducer3 = __webpack_require__(31);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _types = __webpack_require__(304);
+var _types = __webpack_require__(306);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30945,5 +31316,5 @@ var totalWinLoss = (0, _createReducer4.default)({}, _defineProperty({}, _types.C
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading, totalWinLoss: totalWinLoss });
 
 /***/ })
-],[409]);
+],[411]);
 //# sourceMappingURL=volumeControlAddSetting.js.map
