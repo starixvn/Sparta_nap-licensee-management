@@ -45,6 +45,7 @@
 	<add key="SentryDSN" value="https://0b2c97ed84804804ae23e4f29b4dbf02@sentry.nexdev.net/74" />
 	<add key="RedisConnectionString" value="ha.nexdev.net:16379, password=foo1@bared, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 				<#
 				break;
@@ -66,8 +67,9 @@
 	<add key="HangfireUserName" value="starix41" />
 	<add key="RedisPrefix" value="LM-Hangfire:" />
 	<add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@10.99.99.51:801/95" />
-	<add key="RedisConnectionString" value="10.99.99.101:6379, password=, name=LMApp" />
+	<add key="RedisConnectionString" value="10.99.99.101:6379, password=foo1@bared, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 
 				<#
@@ -92,6 +94,7 @@
 	<add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@10.99.99.51:801/95" />
 	<add key="RedisConnectionString" value="10.99.99.51:16379, password=foo1@bared, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 
 				<#
@@ -116,6 +119,7 @@
 	<add key="SentryDSN" value="http://6880691f2ec146faba2e64f72463c653@172.16.4.109:800/42" />
 	<add key="RedisConnectionString" value="172.16.4.106:6379, password=, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 <#
 break;
@@ -139,6 +143,7 @@ break;
 	<add key="SentryDSN" value="http://f75a9f8b67b841a69c240e49e5c18f13@10.11.200.202:800/25" />
 	<add key="RedisConnectionString" value="10.40.40.202:6379, password=, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 				<#
 				break;

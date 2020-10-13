@@ -18,7 +18,7 @@ class BundleVersionPlugin {
                     });
 
                     if (isChanged) {
-                        fs.writeFile(filePath, newContent);
+                        fs.writeFileSync(filePath, newContent);
                     }
                 });
         })
