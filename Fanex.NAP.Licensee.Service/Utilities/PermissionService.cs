@@ -1,19 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="PermissionService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Service.Utilities
+﻿namespace Fanex.NAP.Licensee.Service.Utilities
 {
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.Core.Business;
     using NAP.Core.Models.ValueObject;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class PermissionService
     {
         /// <summary>

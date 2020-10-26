@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SettingItemHelper.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
     using System;
     using System.Collections.Generic;
@@ -14,9 +8,6 @@ namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
     using Fanex.NAP.Licensee.Model.DTO.XmlLog;
     using Fanex.RemotingRef;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     internal static class SettingItemHelper
     {
         private const string XMLHEADER = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";

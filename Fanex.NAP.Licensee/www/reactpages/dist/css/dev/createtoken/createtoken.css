@@ -31,6 +31,7 @@
     .card .card-body .card-body-content {
       margin: 25px; }
 
+/* z-index */
 .add-form input[type=text] {
   border-radius: 3px;
   border: 1px solid #9d9d9d;

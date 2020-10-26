@@ -1,0 +1,2 @@
+﻿export const SET_PARAMS = "SET_PARAMS";
+export const CHANGE_TOTALWINLOSS = "CHANGE_TOTALWINLOSS";

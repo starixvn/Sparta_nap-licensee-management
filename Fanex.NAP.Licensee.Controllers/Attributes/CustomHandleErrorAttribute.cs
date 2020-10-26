@@ -4,9 +4,6 @@
     using System.Web;
     using System.Web.Mvc;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class CustomHandleErrorAttribute : HandleErrorAttribute
     {

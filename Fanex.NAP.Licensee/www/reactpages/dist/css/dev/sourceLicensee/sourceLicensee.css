@@ -1,3 +1,4 @@
+/* z-index */
 .Select {
   position: relative; }
 
@@ -474,6 +475,7 @@
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
 
+/* z-index */
 .green {
   color: #A1C46B; }
 

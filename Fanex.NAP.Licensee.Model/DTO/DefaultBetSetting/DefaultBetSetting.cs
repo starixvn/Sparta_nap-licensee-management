@@ -1,14 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="DefaultBetSetting.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
+﻿namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class DefaultBetSetting
     {
         public string Licensee { get; set; }

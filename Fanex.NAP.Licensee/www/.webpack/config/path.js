@@ -16,7 +16,8 @@ const cssPaths = {
 	product: './www/reactpages/src/styles/modules/product/index.scss',
 	'function': './www/reactpages/src/styles/modules/function/index.scss',
 	userList: './www/reactpages/src/styles/modules/user/index.scss',
-	user: './www/reactpages/src/styles/modules/user/item.scss'
+	user: './www/reactpages/src/styles/modules/user/item.scss',
+	volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
 };
 
 const scriptPaths = {
@@ -42,7 +43,9 @@ const scriptPaths = {
     'function': './www/reactpages/src/scripts/modules/function/item',
     userList: './www/reactpages/src/scripts/modules/user/list',
     editUser: './www/reactpages/src/scripts/modules/user/edit',
-    addUser: './www/reactpages/src/scripts/modules/user/add'
+    addUser: './www/reactpages/src/scripts/modules/user/add',
+    volumeControlList: './www/reactpages/src/scripts/modules/volumecontrol/list',
+    volumeControlAddSetting: './www/reactpages/src/scripts/modules/volumecontrol/add',
 };
 
 module.exports = {

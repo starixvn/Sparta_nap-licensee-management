@@ -131,4 +131,11 @@
     <Setting Key="Nap_LM_ITUser_Update" SpName="Nap_LM_ITUser_Update" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
     <Setting Key="Nap_LM_ITUser_ResetPassword" SpName="Nap_LM_ITUser_ResetPassword" DbName="DBCUST.bodb_licensee.bodbLicenseeNet"></Setting>
   </Function>
+
+  <Function Name="Site.Nap.Licensee.BetTicketVolumeControlSetting">
+    <Setting Key="Plo_VolumeControl_Brand_Sel" SpName="Plo_VolumeControl_Brand_Sel" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
+    <Setting Key="Plo_VolumeControl_Setting_Sel" SpName="Plo_VolumeControl_Setting_Sel" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
+    <Setting Key="Plo_VolumeControl_BrandProduct_Sel" SpName="Plo_VolumeControl_BrandProduct_Sel" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
+    <Setting Key="Plo_VolumeControl_Setting_InsUpd" SpName="Plo_VolumeControl_Setting_InsUpd" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
+  </Function>
 </Functions>

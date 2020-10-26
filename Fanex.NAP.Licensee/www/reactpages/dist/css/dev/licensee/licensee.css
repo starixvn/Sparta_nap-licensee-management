@@ -446,6 +446,8 @@
 .popup .no-scroll .popup-content {
   overflow-y: hidden !important; }
 
+/* z-index */
+/* z-index */
 .green {
   color: #A1C46B; }
 
@@ -461,6 +463,7 @@ tr.disable {
 .red {
   color: #a94442; }
 
+/* z-index */
 .collapsible-panel-title {
   background-color: #EDECEA;
   border: 1px solid #CECCCD;

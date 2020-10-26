@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ProductTypeItem
     {
         public ProductTypeItem(int id, string name, IList<string> lstFunctions)

@@ -2,9 +2,6 @@
 {
     using System;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [Serializable]
     public class SportOrGameItem
     {

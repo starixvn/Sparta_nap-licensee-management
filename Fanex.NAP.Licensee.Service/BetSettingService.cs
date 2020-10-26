@@ -15,10 +15,7 @@ namespace Fanex.NAP.Licensee.Service
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
     using Fanex.NAP.Licensee.Service.Core;
-   
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+
     public class BetSettingService : IBetSettingService
     {
         private const int SuccessCode = 0;
