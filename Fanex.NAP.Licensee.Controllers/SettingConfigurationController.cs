@@ -72,7 +72,7 @@ namespace Fanex.NAP.Licensee.Controllers
             {
                 ProductName = _commonService.GetProductTypeList.Where(n => n.Id == settingConfigVM.ProdId).First().Name,
                 PositionTakings = _commonService.GetPositionTakingList,
-                SelectedPositionTaking = curPT.ToString("0.###")
+                SelectedPositionTaking = curPT.ToString("0.####")
             };
 
             return Json(editPTVm, JsonRequestBehavior.AllowGet);

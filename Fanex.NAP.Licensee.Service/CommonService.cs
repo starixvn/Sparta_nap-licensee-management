@@ -12,6 +12,7 @@
         private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";
 
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly float PTNumberToInterval = 10000f;
 
         /// <summary>
         /// Gets licensee list.
@@ -97,9 +98,9 @@
         {
             get
             {
-                List<int> lstInts = Enumerable.Range(0, 1001).Where(n => n % 5 == 0).ToList();
+                List<int> lstInts = Enumerable.Range(0, 10001).Where(n => n % 5 == 0).ToList();
                 IList<string> lstPTs = new List<string>();
-                lstInts.ForEach(n => lstPTs.Add((n / 1000f).ToString("0.###")));
+                lstInts.ForEach(n => lstPTs.Add((n / PTNumberToInterval).ToString("0.####")));
 
                 return lstPTs;
             }
