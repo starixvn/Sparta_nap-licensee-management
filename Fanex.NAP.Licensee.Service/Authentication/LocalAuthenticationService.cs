@@ -61,6 +61,7 @@
                 {
                     Expires = DateTime.Now.AddDays(-1)
                 };
+                tokenCookie.HttpOnly = true;
 
                 HttpContext.Current.Response.Cookies.Add(tokenCookie);
             }

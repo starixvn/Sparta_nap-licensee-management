@@ -96,7 +96,6 @@ export default class ImportPage extends Component {
 
     render() {
         const { isLoading, file, fileValue, errors, result } = this.state;
-        console.log(result);
         return (
             <div className="import-page">
                 <Loader isLoading={isLoading} />
