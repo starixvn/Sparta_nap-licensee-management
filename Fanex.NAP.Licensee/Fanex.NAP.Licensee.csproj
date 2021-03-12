@@ -97,6 +97,9 @@
     <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.RabbitMQ.1.0.1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Logging.Sentry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Sentry.1.0.0\lib\net461\Fanex.Logging.Sentry.dll</HintPath>
     </Reference>
@@ -604,6 +607,9 @@
     <Content Include="..\.sonarlint\nap_licensee_managementcsharp.ruleset">
       <Link>nap_licensee_managementcsharp.ruleset</Link>
     </Content>
+    <Content Include="SiteConfig\Web.AppSettings.AWS.config">
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </Content>
     <None Include="SiteConfig\Web.AppSettings.config.txt">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -616,6 +622,12 @@
     <Content Include="www\reactpages\dist\js\dev\volumeControlList\volumeControlList.js.map" />
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.css.map" />
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.js.map" />
+    <Content Include="SiteConfig\Web.AWS.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.AWS.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </Content>
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />

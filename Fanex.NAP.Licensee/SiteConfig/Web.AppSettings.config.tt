@@ -16,7 +16,7 @@
 <#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#
     var manager = TemplateFileManager.Create(this);
-	List<string> sites = new List<string>() {"LOCAL","UAT","BACKUPMNL","PRO","SIT"};
+	List<string> sites = new List<string>() {"LOCAL","UAT","BACKUPMNL","PRO","SIT", "AWS" };
     foreach(var site in sites)
     {
         var x = site.ToString();
@@ -142,6 +142,31 @@ break;
 	<add key="RedisPrefix" value="LM-Hangfire:" />
 	<add key="SentryDSN" value="http://f75a9f8b67b841a69c240e49e5c18f13@10.11.200.202:800/25" />
 	<add key="RedisConnectionString" value="10.40.40.202:6379, password=, name=LMApp" />
+	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
+</appSettings>
+<#
+				break;
+			case "AWS":
+				#>
+				<appSettings>
+    <clear />
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="IsLocalTest" value="0"/>
+	<add key="Fanex.RemotingRef.Service.Url" value="http://10.2.27.16:7258/" />
+    <add key="Glimpse:DisableAsyncSupport" value="true" />
+    <add key="BundlesVersion" value="0" />
+	<add key="LogCategory" value="NAP-LM" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="HangfireUserName" value="starix41" />
+	<add key="RedisPrefix" value="LM-Hangfire:" />
+	<add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@10.99.99.51:801/95" />
+	<add key="RabbitMQ-ConnectionString" value="host=10.2.27.25:5672;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=" />
+	<add key="RedisConnectionString" value="10.2.27.27:16379, password=foo1@bared, name=LMApp" />
 	<add key="StoredProcedurePath" value="App_Data" />
 	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>

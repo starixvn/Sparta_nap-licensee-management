@@ -4,7 +4,7 @@
     using Data.SqlServer;
 
     using Extension;
-
+    using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry;
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
@@ -27,12 +27,20 @@
     {
         protected void Application_Start()
         {
-            LogManager
-             .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
-             .Use(new SentryLogging(new SentryOptions
-             {
-                 Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
-             }));
+            var logMananger = LogManager.SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"]);
+            var sentryConfig = ConfigurationManager.AppSettings["SentryDSN"];
+            if (!string.IsNullOrEmpty(sentryConfig))
+            {
+                logMananger.Use(new SentryLogging(new SentryOptions
+                {
+                    Dsn = new Dsn(sentryConfig)
+                }));
+            }
+            var rabbitConfig = ConfigurationManager.AppSettings["RabbitMQ-ConnectionString"];
+            if (!string.IsNullOrEmpty(rabbitConfig))
+            {
+                logMananger.Use(new RabbitMQLogging(rabbitConfig));
+            }
 
             DbSettingProviderManager
                .StartNewSession()

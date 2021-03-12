@@ -22,6 +22,10 @@
         {
             SiteEnvironment = SiteEnvironment.SIT
         },
+         new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.AWS
+        },
     };
 #>
 <#+
@@ -31,7 +35,8 @@
         UAT,
 		BACKUPMNL,
         PRO,
-		SIT
+		SIT, 
+        AWS
     }
 
 	class SiteInfo
@@ -54,7 +59,9 @@
 				    case SiteEnvironment.SIT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.127:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.99.99.52:42424\" />";
+                    case SiteEnvironment.AWS:
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.27.19:42424\" />";
                     default:
                         return string.Empty;
                 }
