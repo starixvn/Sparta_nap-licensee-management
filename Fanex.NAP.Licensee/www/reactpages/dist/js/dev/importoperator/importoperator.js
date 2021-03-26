@@ -1824,7 +1824,6 @@ var ImportPage = function (_Component) {
                 errors = _state.errors,
                 result = _state.result;
 
-            console.log(result);
             return _react2.default.createElement(
                 'div',
                 { className: 'import-page' },
