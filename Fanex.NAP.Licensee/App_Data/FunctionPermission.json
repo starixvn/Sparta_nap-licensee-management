@@ -102,6 +102,18 @@
     ]
   },
   {
+    "DisplayKey": "lblBetList",
+    "Settings": [
+      {
+        "DisplayKey": "lblBetListViewIpvn",
+        "FunctionKey": "bl_view_ipvn",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
+      }
+    ]
+  },
+  {
     "DisplayKey": "lblNotification",
     "Settings": [
       {

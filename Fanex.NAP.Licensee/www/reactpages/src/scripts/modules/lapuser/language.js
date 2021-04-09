@@ -13,6 +13,8 @@ export const language = {
     "lblBalance": "Balance",
     "lblBetLimitController": "Bet Limit Controller",
     "lblBettingTicketCenter": "Betting Ticket Center",
+    "lblBetList": "Bet List",
+    "lblBetListViewIpvn": "View IP from VN",
     "lblBONTeamToScore": "B/O/N Team To Score",
     "lblBonus": "Bonus",
     "lblBonusAdjustment": "Bonus Adjustment",
