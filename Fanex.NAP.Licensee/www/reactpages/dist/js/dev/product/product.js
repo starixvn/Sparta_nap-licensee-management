@@ -9364,6 +9364,8 @@ var _action = __webpack_require__(252);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -9384,6 +9386,38 @@ var FormFilter = exports.FormFilter = function (_Component) {
             e.preventDefault();
 
             _this._submit();
+        };
+
+        _this.onChangeLicensee = function (value) {
+            _this.setState({ selectedLicensee: value });
+        };
+
+        _this.onLicenseeInputChange = function (inputValue) {
+            _this.setState({ inputValue: inputValue }, function () {
+                var selectedLicensee = _this.state.selectedLicensee;
+
+                var listInput = inputValue.toLowerCase().split(',').map(function (item) {
+                    return item.trim();
+                });
+                var selectedList = defaultState.licenseeList.filter(function (x) {
+                    return listInput.includes(x.label.toLowerCase());
+                });
+
+                if (selectedList.length <= 0) return;
+
+                if (selectedLicensee && selectedLicensee.length > 0) {
+                    var codes = new Set(selectedLicensee.map(function (d) {
+                        return d.value;
+                    }));
+                    var mergedSelectedLicensee = [].concat(_toConsumableArray(selectedLicensee), _toConsumableArray(selectedList.filter(function (d) {
+                        return !codes.has(d.value);
+                    })));
+
+                    _this.onChangeLicensee(mergedSelectedLicensee);
+                } else if (selectedList.length > 0) {
+                    _this.onChangeLicensee(selectedList);
+                }
+            });
         };
 
         _this.state = {
@@ -9439,11 +9473,12 @@ var FormFilter = exports.FormFilter = function (_Component) {
                             'Licensee'
                         ),
                         _react2.default.createElement(_reactSelect2.default, { instanceId: 'ddlLicensee',
+                            onInputChange: this.onLicenseeInputChange,
                             value: selectedLicensee,
                             className: 'col-md-5 col-sm-4 col-xs-12',
                             options: defaultState.licenseeList,
                             onChange: function onChange(item) {
-                                return _this2.setState({ selectedLicensee: item });
+                                return _this2.onChangeLicensee(item);
                             },
                             multi: true })
                     ),
