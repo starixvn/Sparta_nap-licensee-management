@@ -381,6 +381,14 @@
         "Level": [ 0, 1, 101 ]
       },
       {
+        "DisplayKey": "lblGodOfFortuneWinLoss",
+        "FunctionKey": "GodOfFortuneWinLoss",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      },
+      {
         "DisplayKey": "lblLiveReport",
         "FunctionKey": "LiveReport38",
         "Enable": false,
