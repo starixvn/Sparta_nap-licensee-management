@@ -40,6 +40,31 @@ export class FormFilter extends Component {
         this.props.setParams(params);
     }
 
+    onChangeLicensee = (value) => {
+        this.setState({ selectedLicensee: value });
+    };
+
+    onLicenseeInputChange = (inputValue) => {
+        this.setState({ inputValue }, () => {
+            const { selectedLicensee } = this.state;
+            const listInput = inputValue.toLowerCase().split(',').map(function (item) {
+                return item.trim();
+            });
+            let selectedList = defaultState.licenseeList.filter(x => listInput.includes(x.label.toLowerCase()));
+
+            if (selectedList.length <= 0) return;
+
+            if (selectedLicensee && selectedLicensee.length > 0) {
+                var codes = new Set(selectedLicensee.map(d => d.value));
+                var mergedSelectedLicensee = [...selectedLicensee, ...selectedList.filter(d => !codes.has(d.value))];
+
+                this.onChangeLicensee(mergedSelectedLicensee);
+            } else if (selectedList.length > 0) {
+                this.onChangeLicensee(selectedList);
+            }
+        });
+    };
+
     render() {
         const { selectedLicensee, selectedProduct } = this.state;
 
@@ -49,10 +74,11 @@ export class FormFilter extends Component {
                     <div className="col-xs-12 form-group row">
                         <label className="col-md-1 col-sm-2 col-xs-12">Licensee</label>
                         <Select instanceId="ddlLicensee"
+                            onInputChange={this.onLicenseeInputChange}
                             value={selectedLicensee}
                             className="col-md-5 col-sm-4 col-xs-12"  
                             options={defaultState.licenseeList}
-                            onChange={(item) => this.setState({ selectedLicensee: item })}
+                            onChange={(item) => this.onChangeLicensee(item)}
                             multi={true} />
                     </div>
 
