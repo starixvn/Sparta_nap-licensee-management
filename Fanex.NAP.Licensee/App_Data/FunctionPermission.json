@@ -64,6 +64,13 @@
         "Enable": false,
         "Type": 3,
         "Mode": 1
+      },
+      {
+        "DisplayKey": "lblDashboardSportsbookTab",
+        "FunctionKey": "db_sportsbook_tab",
+        "Enable": false,
+        "Type": 3,
+        "Mode": 1
       }
     ]
   },
