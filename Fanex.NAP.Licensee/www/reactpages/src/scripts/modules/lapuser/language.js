@@ -158,5 +158,6 @@ export const language = {
     "lblProblemManagement": "Problem Management",
     "lblVIPManagement": "VIP Management",
     "lblPlayerDetailTransaction": "Detail Transaction",
+    "lblGodOfFortuneWinLoss": "God Of Fortune Win Loss",
     "lblSabaVirtualSportsWinLoss": "Saba Virtual Sports Win Loss"
 }
