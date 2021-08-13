@@ -108,6 +108,7 @@ export const language = {
     "lblPlayerAdmin": "Player Administration",
     "lblPlayerAdminBetLimit": "Bet Limit",
     "lblPlayerAdminBetList": "Bet List",
+    "lblPlayerAdminBetSetting": "Bet Setting",
     "lblPlayerAdminFundTransfer": "Fund Transfer",
     "lblPlayerAdminLog": "Log",
     "lblPlayerAdminMessage": "Message",
