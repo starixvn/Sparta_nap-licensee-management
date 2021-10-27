@@ -535,7 +535,20 @@
             "FunctionKey": "PlayerSegmentation_VIPManagement",
             "Enable": false,
             "Type": 1,
-            "Mode": 1
+            "Mode": 1,
+            "InputBoxType": "radio",
+            "SubFunctionKeys": [
+              {
+                "DisplayKey": "ReadOnly",
+                "FunctionKey": "PlayerSegmentation_VIPManagement_Read",
+                "Mode": 1
+              },
+              {
+                "DisplayKey": "Write",
+                "FunctionKey": "PlayerSegmentation_VIPManagement_Write",
+                "Mode": 1
+              }
+            ]
           }
         ]
       },
@@ -617,7 +630,7 @@
             ]
           },
           {
-            "DisplayKey": "lblPlayerAdminBetLimit",
+            "DisplayKey": "lblPlayerAdminBetSetting",
             "FunctionKey": "pa_bet_lm",
             "Enable": false,
             "Type": 1,
