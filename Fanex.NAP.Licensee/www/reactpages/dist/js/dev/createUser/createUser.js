@@ -5937,7 +5937,8 @@ var language = exports.language = {
     "lblVIPManagement": "VIP Management",
     "lblPlayerDetailTransaction": "Detail Transaction",
     "lblGodOfFortuneWinLoss": "God Of Fortune Win Loss",
-    "lblSabaVirtualSportsWinLoss": "Saba Virtual Sports Win Loss"
+    "lblSabaVirtualSportsWinLoss": "Saba Virtual Sports Win Loss",
+    "lblLeagueWinLoss": "Win Loss By League"
 };
 
 /***/ }),
