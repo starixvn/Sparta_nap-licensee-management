@@ -5,7 +5,39 @@ editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = {};
-    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
+    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName; 
+
+    function getAgentsHeader() {
+        var res = "";
+        var agentId = shareSettingsService.getWorkingContext().AgentId;
+        var agentName = shareSettingsService.getWorkingContext().AgentName;
+        var agentList = shareSettingsService.getWorkingContext().AgentList;
+
+        if (agentId === 0) {
+            if (agentList.length >= 7) {
+                for (var i = 1; i < 7; i++) {
+                    res += agentList[i].Name + ", ";
+                }
+                res += "...";
+            }
+            else {
+                for (var j = 1; j < agentList.length; j++) {
+                    if (j === agentList.length - 1) {
+                        res += agentList[j].Name;
+                    }
+                    else {
+                        res += agentList[j].Name + ", ";
+                    }
+                }
+            }
+        }
+        else {
+            res = agentName;
+        }
+        return res;
+    }
+
+    $scope.header = getAgentsHeader();
 
     function getAjaxHeader() {
         return {
@@ -20,7 +52,8 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
         {
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
-                prodId: shareSettingsService.getWorkingContext().ProdId
+                prodId: shareSettingsService.getWorkingContext().ProdId,
+                agentId: shareSettingsService.getWorkingContext().AgentId
             },
             headers: getAjaxHeader()
         })
@@ -33,6 +66,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             $scope.editBS = data;
         }
     });
+
 };
 editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
 // Navigator function
@@ -87,6 +121,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: orgBSRows[index].MinBet,
                 MaxBet: orgBSRows[index].MaxBet,
                 MaxPerMatch: orgBSRows[index].MaxPerMatch,
+                AgentMinBet: orgBSRows[index].AgentMinBet,
+                AgentMaxBet: orgBSRows[index].AgentMaxBet,
+                AgentMaxPerMatch: orgBSRows[index].AgentMaxPerMatch,
                 MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
@@ -96,6 +133,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: curBSRows[index].MinBet,
                 MaxBet: curBSRows[index].MaxBet,
                 MaxPerMatch: curBSRows[index].MaxPerMatch,
+                AgentMinBet: curBSRows[index].AgentMinBet,
+                AgentMaxBet: curBSRows[index].AgentMaxBet,
+                AgentMaxPerMatch: curBSRows[index].AgentMaxPerMatch,
                 MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
@@ -107,7 +147,6 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             else {
                 arrValidRows.push(false);
             }
-
             if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
                 curBSRows[index].IsDownlineChecked = false;
             }
@@ -119,6 +158,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
             curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
             curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
+            curBSRows[index].AgentMinBet = orgBSRows[index].AgentMinBet;
+            curBSRows[index].AgentMaxBet = orgBSRows[index].AgentMaxBet;
+            curBSRows[index].AgentMaxPerMatch = orgBSRows[index].AgentMaxPerMatch;
         }
     });
 
@@ -142,7 +184,6 @@ var editCheckedRows = function (curBSRows) {
 };
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
-
     $scope.isCopyAll = false;
     $scope.listener = null;
 
@@ -182,9 +223,9 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
         if ($scope.isCopyAll === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.MinBet = firstRowData.MinBet;
-                element.MaxBet = firstRowData.MaxBet;
-                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.AgentMinBet = firstRowData.AgentMinBet;
+                element.AgentMaxBet = firstRowData.AgentMaxBet;
+                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
             });
         }
     };
@@ -212,9 +253,9 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
         if ($scope.isCopyAll === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.MinBet = firstRowData.MinBet;
-                element.MaxBet = firstRowData.MaxBet;
-                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.AgentMinBet = firstRowData.AgentMinBet;
+                element.AgentMaxBet = firstRowData.AgentMaxBet;
+                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
             });
         }
     };
@@ -228,7 +269,6 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
-
             if ($scope.isCopyAll === true) {
                 editCheckedRows($scope.editBS.BSRows);
                 $scope.buttonStatus.isNextEnabled = true;
@@ -258,12 +298,15 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         // Check constraints on submit
         var hasError = false;
         var curBSRows = $scope.editBS.BSRows;
+        
         $.each(curBSRows, function (index, element) {
             if (element.IsRowSelected === true) {
 
                 // Check is dirty
                 if (parseFloat(getValidNumber(curBSRows[index].MinBet)) > parseFloat(getValidNumber(curBSRows[index].MaxBet))
-                || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))) {
+                    || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
+                    || parseFloat(getValidNumber(curBSRows[index].AgentMinBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxBet))
+                    || parseFloat(getValidNumber(curBSRows[index].AgentMaxBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch))) {
                     hasError = true;
                     return false;
                 }

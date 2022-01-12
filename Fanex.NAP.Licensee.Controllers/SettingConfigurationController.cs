@@ -126,15 +126,15 @@ namespace Fanex.NAP.Licensee.Controllers
             switch (settingConfigVM.ProdId)
             {
                 case SportType.SportBook:
-                    IList<BSSportbookItem> lstSportbookItems = _settingConfigurationService.GetBetSetting<BSSportbookItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
+                    BSSportbookItemWithSuperInfo lstSportbookItems = _settingConfigurationService.GetBSSportbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
                     return Json(sportBookVM, JsonRequestBehavior.AllowGet);
                 case SportType.NumberGame:
-                    IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
+                    IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
                     return Json(numberGameVM, JsonRequestBehavior.AllowGet);
                 case SportType.Keno:
-                    IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId);
+                    IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
                     return Json(kenoVm, JsonRequestBehavior.AllowGet);
                 default:
@@ -175,10 +175,16 @@ namespace Fanex.NAP.Licensee.Controllers
                 sportbookVM.CustId,
                 sportbookVM.SportBetSetting.SportTypeId,
                 sportbookVM.SportBetSetting.BetTypeId,
-                Converter.ToDecimal(sportbookVM.SportBetSetting.MinBet),
-                Converter.ToDecimal(sportbookVM.SportBetSetting.MaxBet),
-                Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPerMatch),
-                sportbookVM.IsApplyExistingMemberChecked);
+                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMinBet),
+                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxBet),
+                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxPerMatch),
+                sportbookVM.IsApplyExistingMemberChecked,
+                sportbookVM.AgentId,
+                sportbookVM.IsAgentOnly,
+                true,
+                true,
+                true
+                );
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
@@ -272,11 +278,18 @@ namespace Fanex.NAP.Licensee.Controllers
             {
                 LicenseeList = licensees,
                 SuperLicenseeList = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name),
-                ProductTypeList = _commonService.GetProductTypeList
+                ProductTypeList = _commonService.GetProductTypeList,
+                AgentList = _commonService.GetLicenseeAgentList(_commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name).FirstOrDefault().Id)
             },
-            JsonRequestBehavior.AllowGet);
+            JsonRequestBehavior.AllowGet);;
         }
 
+        [HttpGet]
+        [AjaxRequest]
+        public ActionResult GetLicenseeAgentList(int sRecommend)
+        {
+            return Json(_commonService.GetLicenseeAgentList(sRecommend), JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

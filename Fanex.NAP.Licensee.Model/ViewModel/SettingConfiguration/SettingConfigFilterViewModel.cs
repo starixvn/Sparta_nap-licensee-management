@@ -13,5 +13,7 @@
         public int CustId { get; set; }
 
         public int ProdId { get; set; }
+
+        public int AgentId { get; set; }
     }
 }

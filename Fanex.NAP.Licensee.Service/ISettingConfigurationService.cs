@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
     public interface ISettingConfigurationService
     {
@@ -10,8 +11,10 @@
 
         ResultInfo UpdatePositionTaking(int custId, int productId, float positionTakingValue);
 
-        IList<T> GetBetSetting<T>(int custId, int productId);
+        IList<T> GetBetSetting<T>(int custId, int productId, int agentId);
 
         ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem);
+
+        BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId);
     }
 }

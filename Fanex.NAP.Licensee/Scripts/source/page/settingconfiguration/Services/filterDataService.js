@@ -5,8 +5,8 @@ var servicesModule = angular.module("settingConfiguration.services", []);
 
 // Filter data service
 servicesModule.service('filterDataService', [
-"$http", "GetLicenseeListUrl", "GetProductTypeListUrl",
-function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
+    "$http", "GetLicenseeListUrl", "GetProductTypeListUrl", "GetLicenseeAgentListUrl",
+function ($http, GetLicenseeListUrl, GetProductTypeListUrl, GetLicenseeAgentListUrl) {
     this.getLicensees = function () {
         $http.get(GetLicenseeListUrl)
         .success(function (data) {
@@ -25,6 +25,16 @@ function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
         .error(function (error) {
             alert(error);
         });
+    };
+
+    this.getAgents = function (sRecommend) {
+        $http.get(GetLicenseeAgentListUrl, { sRecommend: sRecommend})
+            .success(function (data) {
+                return data;
+            })
+            .error(function (error) {
+                alert(error);
+            });
     };
 }
 ]);

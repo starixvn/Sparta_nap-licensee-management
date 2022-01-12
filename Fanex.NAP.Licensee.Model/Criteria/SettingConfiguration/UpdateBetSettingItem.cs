@@ -39,6 +39,28 @@
             decimal minBet,
             decimal maxBet,
             decimal maxPermatch,
+            bool isApplyExistingMemberChecked,
+            int agentId, 
+            bool isAgentOnly,
+            bool updateMinBet,
+            bool updateMaxBet,
+            bool updateMBM)
+            : this(custId, sportTypeId, betTypeId, minBet, maxBet, maxPermatch, isApplyExistingMemberChecked)
+        {
+            AgentId = agentId;
+            UpdateMinBet = updateMinBet;
+            UpdateMaxBet = updateMaxBet;
+            UpdateMPM = updateMBM;
+            IsAgentOnly = isAgentOnly;
+        }
+
+        public UpdateBetSettingItem(
+            int custId,
+            int sportTypeId,
+            int betTypeId,
+            decimal minBet,
+            decimal maxBet,
+            decimal maxPermatch,
             bool isSuperChecked,
             bool isDownlineChecked,
             bool isApplyExistingMemberChecked)
@@ -63,6 +85,16 @@
         public decimal MaxPerBall { get; set; }
 
         public bool ExistedMember { get; set; }
+
+        public bool IsAgentOnly { get; set; }
+
+        public int AgentId { get; set; }
+
+        public bool UpdateMinBet { get; set; }
+
+        public bool UpdateMaxBet { get; set; }
+
+        public bool UpdateMPM { get; set; }
 
         public bool Enable { get; set; }
 

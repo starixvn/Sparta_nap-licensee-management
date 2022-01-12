@@ -88,12 +88,35 @@
             }
         }
 
-        public IList<T> GetBetSetting<T>(int custId, int productId)
+        public IList<T> GetBetSetting<T>(int custId, int productId, int agentId)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingSel"))
             {
-                return db.Query<T>(new { CustID = custId, Product = productId }).ToList();
+                return db.Query<T>(new { CustID = custId, Product = productId, AgentID = agentId }).ToList();
             }
+        }
+
+        public BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId)
+        {
+            IEnumerable<BSSportbookItem> bSSupers;
+            IEnumerable<BSSportbookItem> bSAgents;
+
+            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingSel"))
+            {
+                using (var multi = db.QueryMultiple(new { CustID = custId, Product = productId, AgentID = agentId }))
+                {
+                    bSSupers = multi.Read<BSSportbookItem>();
+                    bSAgents = multi.Read<BSSportbookItem>();
+                }
+            }
+
+            var result = new BSSportbookItemWithSuperInfo
+            {
+                AgentItems = (List<BSSportbookItem>)bSAgents,
+                SuperItems = (List<BSSportbookItem>)bSSupers
+            };
+
+            return result;
         }
 
         /// <summary>

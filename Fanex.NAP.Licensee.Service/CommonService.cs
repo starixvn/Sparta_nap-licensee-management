@@ -4,6 +4,7 @@
     using System.Linq;
     using Fanex.Caching;
     using Fanex.Data;
+    using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
@@ -186,6 +187,17 @@
             using (var db = ObjectDbFactory.CreateInstance("Nap_LM_LicenseeCurrency_Select"))
             {
                 return db.Query<CurrencyItem>(new { LicenseeId = licenseeId }).ToList();
+            }
+        }
+
+        public IList<LicenseeAgent> GetLicenseeAgentList(int SRecommend)
+        {
+            var criteria = new GetLicenseeAgentList();
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                IList<LicenseeAgent> result = new List<LicenseeAgent>();
+                result.Add(new LicenseeAgent { Id = 0, Name = "All" });
+                return result.Concat(db.Query<LicenseeAgent>(new { SRecommend }).OrderBy(item => item.Name).ToList()).ToList();
             }
         }
     }

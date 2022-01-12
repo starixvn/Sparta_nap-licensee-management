@@ -170,6 +170,7 @@
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
     <Compile Include="Criteria\PageModel.cs" />
+    <Compile Include="Criteria\SettingConfiguration\GetLicenseeAgentList.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SuspendSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\NewSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
@@ -191,6 +192,8 @@
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
+    <Compile Include="DTO\LicenseeAgent.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSSportbookItemWithSuperInfo.cs" />
     <Compile Include="DTO\VolumeControlSetting\ProductVolumeControlSetting.cs" />
     <Compile Include="DTO\ITUserLicensee.cs" />
     <Compile Include="DTO\ITUserCurrency.cs" />
