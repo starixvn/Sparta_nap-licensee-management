@@ -491,6 +491,14 @@
         "Level": [ 0, 1, 101 ]
       },
       {
+        "DisplayKey": "lblNewCashOutWinLoss",
+        "FunctionKey": "NewCashOutWinLoss",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      },
+      {
         "DisplayKey": "lblCashOutWinLoss",
         "FunctionKey": "CashOutWinLoss72",
         "Enable": false,

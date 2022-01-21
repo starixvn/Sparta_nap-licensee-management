@@ -5662,6 +5662,7 @@ var language = exports.language = {
     "lblBonusAdjustmentreport": "Bonus Adjustment Report",
     "lblBonusCodeList": "Bonus Code List",
     "lblBonusReport": "Bonus Report",
+    "lblNewCashOutWinLoss": "New Cash Out Win Loss",
     "lblCashOutWinLoss": "Cash Out Win Loss",
     "lblCasinoTurnover": "Casino Turnover",
     "lblChangeMemberDetail": "Change Customer Detail",
