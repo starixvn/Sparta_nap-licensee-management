@@ -43,6 +43,10 @@
     </Setting>.
     <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet" TimeOut="300">
     </Setting>
+	  <Setting Key="NAP_LM_LicenseeSelAgentList" SpName="NAP_LM_LicenseeSelAgentList" DbName="DBCUST.CustDB.bodbLicenseeNet">
+		  <Mapping DataField="CustID" ObjectProperty="Id" />
+		  <Mapping DataField="username" ObjectProperty="Name" />
+	  </Setting>
   </Function>
 
   <Function Name="Site.Nap.Licensee.VendorInfoManagement">

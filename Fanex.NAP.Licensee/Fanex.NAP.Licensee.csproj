@@ -361,6 +361,9 @@
     <Content Include="Content\build\images\icon_checked.gif" />
     <Content Include="Content\source\core\images\sprites.png" />
     <Content Include="Content\source\core\site.css" />
+    <Content Include="Content\source\selectwithsearch\selectwithsearch.css" />
+    <Content Include="Scripts\source\selectwithsearch\selectwithsearch.js" />
+    <Content Include="Content\source\selectwithsearch\selectwithsearch.min.css" />
     <Content Include="SimpleParameterTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>

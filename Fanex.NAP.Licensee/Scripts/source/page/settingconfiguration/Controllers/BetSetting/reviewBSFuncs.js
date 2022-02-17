@@ -6,12 +6,45 @@
 var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
     $scope.reviewBS = shareSettingsService.getCurSettings();
+
+    function getAgentsHeader() {
+        var res = "";
+        var agentId = shareSettingsService.getWorkingContext().AgentId;
+        var agentName = shareSettingsService.getWorkingContext().AgentName;
+        var agentList = shareSettingsService.getWorkingContext().AgentList;
+
+        if (agentId === 0) {
+            if (agentList.length >= 7) {
+                for (var i = 1; i < 7; i++) {
+                    res += agentList[i].Name + ", ";
+                }
+                res += "...";
+            }
+            else {
+                for (var j = 1; j < agentList.length; j++) {
+                    if (j === agentList.length - 1) {
+                        res += agentList[j].Name;
+                    }
+                    else {
+                        res += agentList[j].Name + ", ";
+                    }
+                }
+            }
+        }
+        else {
+            res = agentName;
+        }
+        return res;
+    }
+
+    $scope.header = getAgentsHeader();
     $http.get(
             "GetEditBetSettingData",
             {
                 params: {
                     custId: shareSettingsService.getWorkingContext().CustId,
-                    prodId: shareSettingsService.getWorkingContext().ProdId
+                    prodId: shareSettingsService.getWorkingContext().ProdId,
+                    agentId: shareSettingsService.getWorkingContext().AgentId
                 }
             })
         .success(function (data) {

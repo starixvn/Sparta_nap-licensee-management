@@ -15,5 +15,15 @@
         public int ProdId { get; set; }
 
         public bool IsApplyExistingMemberChecked { get; set; }
+
+        public bool IsAgentOnly { get; set; }
+
+        public int AgentId { get; set; }
+
+        public bool UpdateMinBet { get; set; }
+
+        public bool UpdateMaxBet { get; set; }
+
+        public bool UpdateMPM { get; set; }
     }
 }

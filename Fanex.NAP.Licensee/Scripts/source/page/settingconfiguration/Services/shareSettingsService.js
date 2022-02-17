@@ -12,7 +12,11 @@ servicesModule.factory("shareSettingsService", function () {
         SportTypeId: -1,
         ProdId: -1,
         IsBack: false,
-        Url: ""
+        IsAgentOnly: false,
+        Url: "",
+        AgentId: -1,
+        AgentName: "",
+        AgentList: []
     };
     var settings = {
         OrgSettings: {},

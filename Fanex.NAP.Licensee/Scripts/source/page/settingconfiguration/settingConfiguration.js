@@ -3,13 +3,15 @@
 var settingConfigurationApp = settingConfigurationApp || {};
 // Module
 settingConfigurationApp = angular.module("settingConfiguration",
-    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives"]);
+    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives", "fanex.selectwithsearch"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
 settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
 settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
 settingConfigurationApp.constant("GetSettingsUrl", "GetSettings");
+settingConfigurationApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList");
+
 
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {

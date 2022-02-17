@@ -27,5 +27,7 @@
         IList<LicenseeItem> GetSuperLicenseeList(string siteName);
 
         IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId);
+
+        IList<LicenseeAgent> GetLicenseeAgentList(int SRecommend);
     }
 }

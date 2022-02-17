@@ -3,13 +3,15 @@
 var settingConfigurationApp = settingConfigurationApp || {};
 // Module
 settingConfigurationApp = angular.module("settingConfiguration",
-    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives"]);
+    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives", "fanex.selectwithsearch"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
 settingConfigurationApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList");
 settingConfigurationApp.constant("GetProductTypeListUrl", "GetProductTypeList");
 settingConfigurationApp.constant("GetSettingsUrl", "GetSettings");
+settingConfigurationApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList");
+
 
 // Routing
 settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
@@ -67,7 +69,39 @@ editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = {};
-    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
+    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName; 
+
+    function getAgentsHeader() {
+        var res = "";
+        var agentId = shareSettingsService.getWorkingContext().AgentId;
+        var agentName = shareSettingsService.getWorkingContext().AgentName;
+        var agentList = shareSettingsService.getWorkingContext().AgentList;
+
+        if (agentId === 0) {
+            if (agentList.length >= 7) {
+                for (var i = 1; i < 7; i++) {
+                    res += agentList[i].Name + ", ";
+                }
+                res += "...";
+            }
+            else {
+                for (var j = 1; j < agentList.length; j++) {
+                    if (j === agentList.length - 1) {
+                        res += agentList[j].Name;
+                    }
+                    else {
+                        res += agentList[j].Name + ", ";
+                    }
+                }
+            }
+        }
+        else {
+            res = agentName;
+        }
+        return res;
+    }
+
+    $scope.header = getAgentsHeader();
 
     function getAjaxHeader() {
         return {
@@ -82,7 +116,8 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
         {
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
-                prodId: shareSettingsService.getWorkingContext().ProdId
+                prodId: shareSettingsService.getWorkingContext().ProdId,
+                agentId: shareSettingsService.getWorkingContext().AgentId
             },
             headers: getAjaxHeader()
         })
@@ -95,6 +130,7 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             $scope.editBS = data;
         }
     });
+
 };
 editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
 // Navigator function
@@ -149,6 +185,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: orgBSRows[index].MinBet,
                 MaxBet: orgBSRows[index].MaxBet,
                 MaxPerMatch: orgBSRows[index].MaxPerMatch,
+                AgentMinBet: orgBSRows[index].AgentMinBet,
+                AgentMaxBet: orgBSRows[index].AgentMaxBet,
+                AgentMaxPerMatch: orgBSRows[index].AgentMaxPerMatch,
                 MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
@@ -158,6 +197,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: curBSRows[index].MinBet,
                 MaxBet: curBSRows[index].MaxBet,
                 MaxPerMatch: curBSRows[index].MaxPerMatch,
+                AgentMinBet: curBSRows[index].AgentMinBet,
+                AgentMaxBet: curBSRows[index].AgentMaxBet,
+                AgentMaxPerMatch: curBSRows[index].AgentMaxPerMatch,
                 MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
@@ -169,7 +211,6 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             else {
                 arrValidRows.push(false);
             }
-
             if (curBSRows[index].IsSuperChecked !== undefined && !curBSRows[index].IsSuperChecked) {
                 curBSRows[index].IsDownlineChecked = false;
             }
@@ -181,6 +222,9 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
             curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
             curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
+            curBSRows[index].AgentMinBet = orgBSRows[index].AgentMinBet;
+            curBSRows[index].AgentMaxBet = orgBSRows[index].AgentMaxBet;
+            curBSRows[index].AgentMaxPerMatch = orgBSRows[index].AgentMaxPerMatch;
         }
     });
 
@@ -204,7 +248,6 @@ var editCheckedRows = function (curBSRows) {
 };
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
-
     $scope.isCopyAll = false;
     $scope.listener = null;
 
@@ -244,9 +287,9 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
         if ($scope.isCopyAll === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.MinBet = firstRowData.MinBet;
-                element.MaxBet = firstRowData.MaxBet;
-                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.AgentMinBet = firstRowData.AgentMinBet;
+                element.AgentMaxBet = firstRowData.AgentMaxBet;
+                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
             });
         }
     };
@@ -274,9 +317,9 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
         if ($scope.isCopyAll === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.MinBet = firstRowData.MinBet;
-                element.MaxBet = firstRowData.MaxBet;
-                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.AgentMinBet = firstRowData.AgentMinBet;
+                element.AgentMaxBet = firstRowData.AgentMaxBet;
+                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
             });
         }
     };
@@ -290,7 +333,6 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
-
             if ($scope.isCopyAll === true) {
                 editCheckedRows($scope.editBS.BSRows);
                 $scope.buttonStatus.isNextEnabled = true;
@@ -320,12 +362,15 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         // Check constraints on submit
         var hasError = false;
         var curBSRows = $scope.editBS.BSRows;
+        
         $.each(curBSRows, function (index, element) {
             if (element.IsRowSelected === true) {
 
                 // Check is dirty
                 if (parseFloat(getValidNumber(curBSRows[index].MinBet)) > parseFloat(getValidNumber(curBSRows[index].MaxBet))
-                || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))) {
+                    || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
+                    || parseFloat(getValidNumber(curBSRows[index].AgentMinBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxBet))
+                    || parseFloat(getValidNumber(curBSRows[index].AgentMaxBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch))) {
                     hasError = true;
                     return false;
                 }
@@ -442,12 +487,45 @@ settingConfigurationApp.controller("editBSSportbookCtrl", ['$scope', '$injector'
 var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
     $scope.reviewBS = shareSettingsService.getCurSettings();
+
+    function getAgentsHeader() {
+        var res = "";
+        var agentId = shareSettingsService.getWorkingContext().AgentId;
+        var agentName = shareSettingsService.getWorkingContext().AgentName;
+        var agentList = shareSettingsService.getWorkingContext().AgentList;
+
+        if (agentId === 0) {
+            if (agentList.length >= 7) {
+                for (var i = 1; i < 7; i++) {
+                    res += agentList[i].Name + ", ";
+                }
+                res += "...";
+            }
+            else {
+                for (var j = 1; j < agentList.length; j++) {
+                    if (j === agentList.length - 1) {
+                        res += agentList[j].Name;
+                    }
+                    else {
+                        res += agentList[j].Name + ", ";
+                    }
+                }
+            }
+        }
+        else {
+            res = agentName;
+        }
+        return res;
+    }
+
+    $scope.header = getAgentsHeader();
     $http.get(
             "GetEditBetSettingData",
             {
                 params: {
                     custId: shareSettingsService.getWorkingContext().CustId,
-                    prodId: shareSettingsService.getWorkingContext().ProdId
+                    prodId: shareSettingsService.getWorkingContext().ProdId,
+                    agentId: shareSettingsService.getWorkingContext().AgentId
                 }
             })
         .success(function (data) {
@@ -650,9 +728,10 @@ function ($scope, $http, $location, $route, shareSettingsService, ContextFunc) {
 
 settingConfigurationApp.controller("settingConfigurationCtrl", [
 '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
- 'GetSuperLicenseeListUrl', 'ContextFunc', 'GetSettingsUrl',
-function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, ContextFunc, GetSettingsUrl) {
+    'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl',
+    function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl) {
     $scope.isButtonEnable = true;
+    $scope.isAgentOnly = false;
 
     // Load data for ddls
     $scope.filterData = {
@@ -671,10 +750,11 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
         isUpdated: false,
         isButtonEnable: true,
         isSuccess: true
-    };
+        };
 
     $scope.selectedProductTypeChanged = function () {
         $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
+        $scope.isEnableAgentListSelectAndAgentOnlyCheckbox = $scope.filterData.selectedProductType.Id === 1 && $scope.filterData.selectedFunction === "Bet setting";
     };
 
     $scope.selectedLicenseeChanged = function () {
@@ -687,13 +767,66 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
         .success(function (data) {
             $scope.filterData.superLicensees = data;
             $scope.filterData.selectedSuperLicensee = data[0];
+            $scope.superLicenseeRequiredSettings = { Require: false };
+            $scope.superLicenseeSettings = {
+                idMember: "Id",
+                nameMember: "Name",
+                sourceData: data
+            }
+            $http.get(
+                GetLicenseeAgentListUrl,
+                {
+                    params: { SRecommend: $scope.filterData.selectedSuperLicensee.Id }
+                }
+            )
+                .success(function (data1) {
+                    $scope.filterData.agents = data1
+                    $scope.filterData.selectedAgent = data1[0];
+                    $scope.agentRequiredSettings = { Require: false };
+                    $scope.agentSettings = {
+                        idMember: "Id",
+                        nameMember: "Name",
+                        sourceData: data1
+                    }
+                });
         });
     };
+
+    $scope.selectedSuperLicenseeChanged = function (SRecommend) {
+
+
+        $http.get(
+            GetLicenseeAgentListUrl,
+            {
+                params: { SRecommend: SRecommend  }
+            }
+        )
+            .success(function (data) {
+                $scope.filterData.agents = data;
+                $scope.filterData.selectedAgent = data[0];
+                $scope.agentRequiredSettings = { Require: false };
+                $scope.agentSettings = {
+                    idMember: "Id",
+                    nameMember: "Name",
+                    sourceData: data
+                }
+            });
+    };
+
+    $scope.selectedFunctionChanged = function () {
+        $scope.isEnableAgentListSelectAndAgentOnlyCheckbox = $scope.filterData.selectedProductType.Id === 1 && $scope.filterData.selectedFunction === "Bet setting";
+        };
 
     $http.get(GetSettingsUrl)
         .success(function (data) {
             $scope.filterData.licensees = data.LicenseeList;
             $scope.filterData.selectedLicensee = data.LicenseeList[0];
+            $scope.licenseeRequiredSettings = { Require: false };
+            $scope.licenseeSettings = {
+                idMember: "Id",
+                nameMember: "Name",
+                sourceData: data.LicenseeList
+            }
 
             $scope.filterData.productTypes = data.ProductTypeList;
             $scope.filterData.selectedProductType = data.ProductTypeList[0];
@@ -701,6 +834,23 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
 
             $scope.filterData.superLicensees = data.SuperLicenseeList;
             $scope.filterData.selectedSuperLicensee = data.SuperLicenseeList[0];
+            $scope.superLicenseeRequiredSettings = { Require: false };
+            $scope.superLicenseeSettings = {
+                idMember: "Id",
+                nameMember: "Name",
+                sourceData: data.SuperLicenseeList
+            }
+
+            $scope.filterData.agents = data.AgentList;
+            $scope.filterData.selectedAgent = data.AgentList[0];
+            $scope.agentRequiredSettings = { Require: false };
+            $scope.agentSettings = {
+                idMember: "Id",
+                nameMember: "Name",
+                sourceData: data.AgentList
+            }
+
+            $scope.isEnableAgentListSelectAndAgentOnlyCheckbox = $scope.filterData.selectedProductType.Id === 1 && $scope.filterData.selectedFunction === "Bet setting";
         });
 
 
@@ -710,7 +860,11 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
             FuncName: ContextFunc.PT,
             CustName: $scope.filterData.selectedSuperLicensee.Name,
             CustId: $scope.filterData.selectedSuperLicensee.Id,
-            ProdId: $scope.filterData.selectedProductType.Id
+            ProdId: $scope.filterData.selectedProductType.Id,
+            AgentId: $scope.filterData.selectedAgent.Id,
+            AgentName: $scope.filterData.selectedAgent.Name,
+            AgentList: $scope.filterData.agents,
+            IsAgentOnly: $scope.isAgentOnly
         });
 
         // Refresh button on page.
@@ -778,13 +932,16 @@ function ($scope, $http, $location, $route, $routeParams, shareSettingsService, 
     var postBetSetting = function (BSRows, rowIndex) {
         var bsRow = BSRows[rowIndex];
         bsRow.Status = shareSettingsService.getStatus().Loading;
+
         var updatedParams = {
             CustId: shareSettingsService.getWorkingContext().CustId,
             ProdId: shareSettingsService.getWorkingContext().ProdId,
             SportBetSetting: bsRow,
             IsApplyExistingMemberChecked: bsRow.IsRowSelected ? shareSettingsService.getCurSettings().IsApplyExistingMemberChecked : false,
             IsEnableChecked: shareSettingsService.getCurSettings().IsEnableChecked,
-            IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked
+            IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked,
+            AgentId: shareSettingsService.getWorkingContext().AgentId,
+            IsAgentOnly: shareSettingsService.getWorkingContext().IsAgentOnly
         };
 
         $http.post(shareSettingsService.getWorkingContext().Url, updatedParams)
@@ -906,8 +1063,8 @@ var servicesModule = angular.module("settingConfiguration.services", []);
 
 // Filter data service
 servicesModule.service('filterDataService', [
-"$http", "GetLicenseeListUrl", "GetProductTypeListUrl",
-function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
+    "$http", "GetLicenseeListUrl", "GetProductTypeListUrl", "GetLicenseeAgentListUrl",
+function ($http, GetLicenseeListUrl, GetProductTypeListUrl, GetLicenseeAgentListUrl) {
     this.getLicensees = function () {
         $http.get(GetLicenseeListUrl)
         .success(function (data) {
@@ -927,6 +1084,16 @@ function ($http, GetLicenseeListUrl, GetProductTypeListUrl) {
             alert(error);
         });
     };
+
+    this.getAgents = function (sRecommend) {
+        $http.get(GetLicenseeAgentListUrl, { sRecommend: sRecommend})
+            .success(function (data) {
+                return data;
+            })
+            .error(function (error) {
+                alert(error);
+            });
+    };
 }
 ]);
 ﻿"use strict";
@@ -943,7 +1110,11 @@ servicesModule.factory("shareSettingsService", function () {
         SportTypeId: -1,
         ProdId: -1,
         IsBack: false,
-        Url: ""
+        IsAgentOnly: false,
+        Url: "",
+        AgentId: -1,
+        AgentName: "",
+        AgentList: []
     };
     var settings = {
         OrgSettings: {},

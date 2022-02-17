@@ -39,6 +39,37 @@
             IsRowDisabled = false;
         }
 
+        public BSRowBaseViewModel(
+            int sportTypeId,
+            string sportTypeName,
+            int betTypeId,
+            string betTypeName,
+            string minBet,
+            string maxBet,
+            string maxPerMatch,
+            string agentMinBet,
+            string agentMaxBet,
+            string agentMaxPerMatch,
+            bool isRowSelected)
+        {
+            SportTypeId = sportTypeId;
+            SportTypeName = sportTypeName;
+
+            BetTypeId = betTypeId;
+            BetTypeName = betTypeName;
+
+            MinBet = minBet;
+            MaxBet = maxBet;
+            MaxPerMatch = maxPerMatch;
+
+            AgentMinBet = agentMinBet;
+            AgentMaxBet = agentMaxBet;
+            AgentMaxPerMatch = agentMaxPerMatch;
+
+            IsRowSelected = isRowSelected;
+
+            IsRowDisabled = false;
+        }
         public int SportTypeId { get; set; }
 
         public string SportTypeName { get; set; }
@@ -56,5 +87,11 @@
         public bool IsRowSelected { get; set; }
 
         public bool IsRowDisabled { get; set; }
+
+        public string AgentMinBet { get; set; }
+
+        public string AgentMaxBet { get; set; }
+
+        public string AgentMaxPerMatch { get; set; }
     }
 }
