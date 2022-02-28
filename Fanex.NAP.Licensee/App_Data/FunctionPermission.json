@@ -1398,5 +1398,17 @@
         "Mode": 1
       }
     ]
+  },
+  {
+    "DisplayKey": "lblContacts",
+    "Settings": [
+      {
+        "DisplayKey": "lblLicenseeContacts",
+        "FunctionKey": "LicenseeContacts",
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      }
+    ]
   }
 ]
