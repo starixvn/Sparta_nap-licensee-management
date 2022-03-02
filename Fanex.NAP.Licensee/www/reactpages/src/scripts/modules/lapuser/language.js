@@ -163,5 +163,7 @@ export const language = {
     "lblGodOfFortuneWinLoss": "God Of Fortune Win Loss",
     "lblSabaVirtualSportsWinLoss": "Saba Virtual Sports Win Loss",
     "lblLeagueWinLoss": "Win Loss By League",
-    "lblExtraPayout": "Extra Payout"
+    "lblExtraPayout": "Extra Payout",
+    lblContacts: "Contacts",
+    lblLicenseeContacts: "Licensee Contacts"
 }
