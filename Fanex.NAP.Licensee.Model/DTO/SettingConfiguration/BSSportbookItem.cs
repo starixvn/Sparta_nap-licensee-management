@@ -10,5 +10,6 @@
     /// </summary>
     public class BSSportbookItem : BSBaseItem
     {
+        public decimal MaxPayoutPerMatch { get; set; }
     }
 }

@@ -19,6 +19,9 @@
                 <th class="width-150">
                     Max Per Match
                 </th>
+                <th class="width-150">
+                    Max Payout Per Match
+                </th>
                 <th>
                     Updated
                 </th>
@@ -43,6 +46,9 @@
                 </td>
                 <td>
                     {{item.AgentMaxPerMatch | number}}
+                </td>
+                <td>
+                    {{item.AgentMaxPayoutPerMatch | number}}
                 </td>
                 <td>
                     {{item.IsRowSelected === true? 'X': ''}}

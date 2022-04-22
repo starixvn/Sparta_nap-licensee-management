@@ -22,58 +22,64 @@
 
             foreach (var key in dctGameType.Keys)
             {
-                BSRowBaseViewModel sportbookRowVM;
-                BSSportbookItem item = lstItems.SuperItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
-                BSSportbookItem itemAgent = lstItems.AgentItems.Where(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId).FirstOrDefault();
+
+                BSSportbookItem item = lstItems.SuperItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSSportbookItem itemAgent = lstItems.AgentItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSRowBaseViewModel sportbookRowVM = new BSRowBaseViewModel
+                {
+                    SportTypeId = key.SportTypeId,
+                    SportTypeName = dctGameType[key],
+                    BetTypeId = key.BetTypeId,
+                    BetTypeName = dctGameType[key],
+                    MinBet = string.Empty,
+                    MaxBet = string.Empty,
+                    MaxPerMatch = string.Empty,
+                    MaxPayoutPerMatch = string.Empty,
+                    AgentMinBet = string.Empty,
+                    AgentMaxBet = string.Empty,
+                    AgentMaxPerMatch = string.Empty,
+                    AgentMaxPayoutPerMatch = string.Empty,
+                    IsRowSelected = false,
+                    IsRowDisabled = false
+                };
 
                 if (item != null)
                 {
-                    if (itemAgent != null)
-                    {
-                        sportbookRowVM = new BSRowBaseViewModel(
-                            key.SportTypeId,
-                            dctGameType[key],
-                            key.BetTypeId,
-                            dctGameType[key],
-                            item.MinBet.ToString("0"),
-                            item.MaxBet.ToString("0"),
-                            item.MaxPerMatch.ToString("0"),
-                            itemAgent.MinBet.ToString("0"),
-                            itemAgent.MaxBet.ToString("0"),
-                            itemAgent.MaxPerMatch.ToString("0"),
-                            false);
-                    }
-                    else
-                    {
-                            sportbookRowVM = new BSRowBaseViewModel(
-                            key.SportTypeId,
-                            dctGameType[key],
-                            key.BetTypeId,
-                            dctGameType[key],
-                            item.MinBet.ToString("0"),
-                            item.MaxBet.ToString("0"),
-                            item.MaxPerMatch.ToString("0"),
-                            "0",
-                            "0",
-                            "0",
-                            false);
-                    }
-                    
-                }
-                else
-                {
-                    sportbookRowVM = new BSRowBaseViewModel(
-                        key.SportTypeId,
-                        dctGameType[key],
-                        key.BetTypeId,
-                        dctGameType[key],
-                        string.Empty,
-                        string.Empty,
-                        string.Empty,
-                        string.Empty,
-                        string.Empty,
-                        string.Empty,
-                        false);
+                    sportbookRowVM = itemAgent != null
+                        ? new BSRowBaseViewModel
+                        {
+                            SportTypeId = key.SportTypeId,
+                            SportTypeName = dctGameType[key],
+                            BetTypeId = key.BetTypeId,
+                            BetTypeName = dctGameType[key],
+                            MinBet = item.MinBet.ToString("0"),
+                            MaxBet = item.MaxBet.ToString("0"),
+                            MaxPerMatch = item.MaxPerMatch.ToString("0"),
+                            MaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
+                            AgentMinBet = itemAgent.MinBet.ToString("0"),
+                            AgentMaxBet = itemAgent.MaxBet.ToString("0"),
+                            AgentMaxPerMatch = itemAgent.MaxPerMatch.ToString("0"),
+                            AgentMaxPayoutPerMatch = itemAgent.MaxPayoutPerMatch.ToString("0"),
+                            IsRowSelected = false,
+                            IsRowDisabled = false,
+                        }
+                        : new BSRowBaseViewModel
+                        {
+                            SportTypeId = key.SportTypeId,
+                            SportTypeName = dctGameType[key],
+                            BetTypeId = key.BetTypeId,
+                            BetTypeName = dctGameType[key],
+                            MinBet = item.MinBet.ToString("0"),
+                            MaxBet = item.MaxBet.ToString("0"),
+                            MaxPerMatch = item.MaxPerMatch.ToString("0"),
+                            MaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
+                            AgentMinBet = "0",
+                            AgentMaxBet = "0",
+                            AgentMaxPerMatch = "0",
+                            AgentMaxPayoutPerMatch = "0",
+                            IsRowSelected = false,
+                            IsRowDisabled = false
+                        };
                 }
 
                 BSRows.Add(sportbookRowVM);

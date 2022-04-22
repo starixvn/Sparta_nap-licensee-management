@@ -11,5 +11,7 @@
         public string MaxPerMatch { get; set; }
 
         public string MaxPerBall { get; set; }
+
+        public string MaxPayoutPerMatch { get; set; }
     }
 }

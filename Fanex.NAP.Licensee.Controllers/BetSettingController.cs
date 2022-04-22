@@ -7,6 +7,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Model.Comparer;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.DTO;
@@ -24,8 +25,6 @@
     {
         private readonly ICommonService _commonService;
         private readonly IBetSettingService _betSettingService;
-        private const int ESportId = 43;
-        private const float TempESportId = 2.5f;
 
         public BetSettingController()
             : base()
@@ -208,14 +207,14 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => i.SportOrGame.Id == ESportId ? TempESportId : i.SportOrGame.Id).ToList();
+            var orderedList = betSettings.OrderBy(i => i , new SportComparer()).ToList();
 
             return orderedList;
         }
 
         private static IList<DefaultBetSetting> SortBetSettingByProduct(IList<DefaultBetSetting> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => i.SportType == ESportId ? TempESportId : i.SportType)
+            var orderedList = betSettings.OrderBy(i => i, new SportComparer())
                 .GroupBy(x => new { x.Currency, x.AgentID })
                 .SelectMany(group => group).ToList();
 

@@ -25,6 +25,9 @@
                 <th>
                     Max Per Match
                 </th>
+                <th>
+                    Max Payout Per Match
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +48,11 @@
                 </td>
                 <td>
                     <input name="AgentMaxPerMatch" type="text" ng-attr-min="{{item.AgentMaxBet}}" ng-attr-max="*" bs-validation ng-model="item.AgentMaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
-                    <input style="border: none !important; text-align: left !important; background: none;" name="MaxBet" type="text" ng-attr-min="0" ng-attr-max="*" ng-attr-max2="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="true" />
+                    <input style="border: none !important; text-align: left !important; background: none;" name="MaxPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" ng-attr-max2="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="true" />
+                </td>
+                <td>
+                    <input name="AgentMaxPayoutPerMatch" type="text" ng-attr-min="{{item.AgentMaxPerMatch}}" ng-attr-max="*" bs-validation ng-model="item.AgentMaxPayoutPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input style="border: none !important; text-align: left !important; background: none;" name="MaxPayoutPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" ng-attr-max2="*" bs-validation ng-model="item.MaxPayoutPerMatch" ng-disabled="true" />
                 </td>
             </tr>
             <tr>

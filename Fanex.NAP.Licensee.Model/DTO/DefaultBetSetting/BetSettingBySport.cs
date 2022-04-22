@@ -2,9 +2,10 @@
 {
     using System;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Model.MetaModel;
 
     [Serializable]
-    public class BetSettingBySport
+    public class BetSettingBySport : ISportGameMetaModel
     {
         private SportOrGameItem _sportOrGame;
 
@@ -19,6 +20,10 @@
         public decimal? MaxPerMatch { get; set; }
 
         public decimal? MaxPerBall { get; set; }
+
+        public decimal? MaxPayoutPerMatch { get; set; }
+
+        public int SportGameTypeId => _sportOrGame.Id;
 
         public int BetType { get; set; }
 

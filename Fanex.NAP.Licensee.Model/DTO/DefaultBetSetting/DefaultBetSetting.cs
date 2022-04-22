@@ -1,6 +1,8 @@
-﻿namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
+﻿using Fanex.NAP.Licensee.Model.MetaModel;
+
+namespace Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting
 {
-    public class DefaultBetSetting
+    public class DefaultBetSetting : ISportGameMetaModel
     {
         public string Licensee { get; set; }
 
@@ -23,5 +25,11 @@
         public decimal? MaxPerMatch { get; set; }
 
         public decimal? MaxPerBall { get; set; }
+
+        public decimal? MaxPayoutPerMatch { get; set; }
+
+        public int SportGameTypeId => SportType;
+
+        public int BetType { get; set; }
     }
 }

@@ -129,8 +129,11 @@
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
                 dctGameType.Add(new BSKeyPair(1, 1), "Soccer");
+                dctGameType.Add(new BSKeyPair(9901, 1), "Saba Soccer");
                 dctGameType.Add(new BSKeyPair(1, 9), "Soccer Parlay");
+                dctGameType.Add(new BSKeyPair(43, 1), "ESport");
                 dctGameType.Add(new BSKeyPair(2, 1), "BasketBall");
+                dctGameType.Add(new BSKeyPair(9902, 1), "Saba Basketball");
                 dctGameType.Add(new BSKeyPair(3, 1), "Football");
                 dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
                 dctGameType.Add(new BSKeyPair(8, 1), "Baseball");
