@@ -1,0 +1,1 @@
+export const DecimalRadixNumber = 10;

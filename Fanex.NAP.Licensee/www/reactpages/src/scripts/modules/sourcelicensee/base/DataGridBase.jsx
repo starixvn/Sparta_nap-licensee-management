@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { toggleLoader, setParams, setCheckedList } from './action';
 import Site from '../../../lib/site';
 import Pager from '../../../components/Pager';
+import { DecimalRadixNumber } from '../../../lib/constant';
 
 export class DataGridBase extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ export class DataGridBase extends Component {
     }
 
     onItemChecked = (e) => {
-        const value = parseInt(e.target.value);
+        const value = parseInt(e.target.value, DecimalRadixNumber);
         const { checkedList } = this.props;
         const { activeItems } = this.state;
         let newCheckedList = [];

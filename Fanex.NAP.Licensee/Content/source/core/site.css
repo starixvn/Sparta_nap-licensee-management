@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /********************************************************/
 /*					      Common                        */
 /********************************************************/
@@ -255,7 +255,7 @@
 .ng-hide:not(.ng-hide-animate) {
   display: none !important;
 }
-ng\:form {
+[ng\:form] {
   display: block;
 }
 /********************************************************/
@@ -263,7 +263,6 @@ ng\:form {
 /********************************************************/
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  tap-highlight-color: rgba(0, 0, 0, 0);
   border: 0;
 }
 body {
@@ -326,8 +325,6 @@ a:hover {
 }
 .header {
   background-color: #486CB8;
-  background: -moz-linear-gradient(center top, #7A97D1 1px, #5A7DC1 1px, #486CB8 100%);
-  background: -webkit-linear-gradient(center top, #7A97D1 1px, #5A7DC1 1px, #486CB8 100%);
   border: 1px solid #3C5B9B;
   border-width: 1px 0;
   position: relative;
@@ -738,7 +735,7 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form .form-group label {
-  margin: 4px 5px 2px 0;
+  margin: 1px 5px 2px 0;
   font-weight: normal;
   vertical-align: middle;
   float: left;
@@ -899,16 +896,6 @@ input[type="submit"].btn-ok,
 .icon-edit:hover {
   background-position: -55px -1px;
 }
-.icon-list {
-  background: url(images/sprites.png) no-repeat scroll -63px -103px;
-  cursor: pointer;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-}
-.icon-list:hover {
-  background-position: -87px -103px;
-}
 .icon-delete {
   background: url(images/sprites.png) no-repeat scroll -96px -26px;
   cursor: pointer;
@@ -940,20 +927,6 @@ input[type="submit"].btn-ok,
   bottom: 0;
   right: 0;
   margin: auto;
-}
-.icon-checked {
-  background: url(images/icon_checked.gif) no-repeat;
-  height: 15px;
-  width: 15px;
-  margin: 4px 10px 0 auto;
-  display: inline-block;
-}
-.icon-cancel {
-  background: url(images/icon_cancel.gif) no-repeat;
-  height: 15px;
-  width: 15px;
-  margin: 4px 10px 0 auto;
-  display: inline-block;
 }
 /********************************************************/
 /*					    Table                           */
@@ -1045,7 +1018,6 @@ input[type="submit"].btn-ok,
 .table tfoot > tr > td {
   min-height: 25px;
   padding: 5px;
-  vertical-align: middle;
 }
 /********************************************************/
 /*					    Group                           */

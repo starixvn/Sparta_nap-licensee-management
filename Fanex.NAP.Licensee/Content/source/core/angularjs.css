@@ -19,6 +19,6 @@
 .ng-hide:not(.ng-hide-animate) {
   display: none !important;
 }
-ng\:form {
+[ng\:form] {
   display: block;
 }
