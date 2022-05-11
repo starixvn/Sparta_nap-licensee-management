@@ -8644,8 +8644,20 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
-/* 97 */,
-/* 98 */
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var DecimalRadixNumber = exports.DecimalRadixNumber = 10;
+
+/***/ }),
+/* 98 */,
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8664,6 +8676,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _constant = __webpack_require__(97);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8684,7 +8698,7 @@ var Pager = function (_React$Component) {
         _this.onKeyUpHandle = function (e, totalPage) {
             var code = e.keyCode ? e.keyCode : e.which;
             if (code === 13) {
-                var value = parseInt(_this.state.pageInput);
+                var value = parseInt(_this.state.pageInput, _constant.DecimalRadixNumber);
                 if (value > 0 && value <= totalPage) {
                     _this.goToPage(value, _this.props.pageSize);
                 }
@@ -8824,7 +8838,7 @@ var Pager = function (_React$Component) {
                 totalItem = _props.totalItem,
                 pageList = _props.pageList;
 
-            var isDisable = isNaN(parseInt(pageInput));
+            var isDisable = isNaN(parseInt(pageInput, _constant.DecimalRadixNumber));
             var totalPage = Math.ceil(totalItem / pageSize);
             var isShow = totalItem > pageList[0];
 
@@ -8861,7 +8875,6 @@ exports.default = Pager;
 ;
 
 /***/ }),
-/* 99 */,
 /* 100 */,
 /* 101 */,
 /* 102 */,
@@ -9014,7 +9027,8 @@ exports.default = Pager;
 /* 249 */,
 /* 250 */,
 /* 251 */,
-/* 252 */
+/* 252 */,
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9025,7 +9039,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setCheckedList = exports.toggleLoader = exports.setParams = undefined;
 
-var _types = __webpack_require__(299);
+var _types = __webpack_require__(300);
 
 var _loaderAction = __webpack_require__(91);
 
@@ -9048,7 +9062,6 @@ exports.toggleLoader = _loaderAction.toggleLoader;
 exports.setCheckedList = setCheckedList;
 
 /***/ }),
-/* 253 */,
 /* 254 */,
 /* 255 */,
 /* 256 */,
@@ -9094,7 +9107,8 @@ exports.setCheckedList = setCheckedList;
 /* 296 */,
 /* 297 */,
 /* 298 */,
-/* 299 */
+/* 299 */,
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9110,7 +9124,6 @@ var GET_PRODUCT_LIST = exports.GET_PRODUCT_LIST = "GET_PRODUCT_LIST";
 var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 
 /***/ }),
-/* 300 */,
 /* 301 */,
 /* 302 */,
 /* 303 */,
@@ -9182,7 +9195,8 @@ var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 /* 369 */,
 /* 370 */,
 /* 371 */,
-/* 372 */
+/* 372 */,
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9202,13 +9216,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(373);
+var _AppContainer = __webpack_require__(374);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(377);
+var _reducer = __webpack_require__(378);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -9255,7 +9269,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9280,15 +9294,15 @@ var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(374);
+var _FormFilter = __webpack_require__(375);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(375);
+var _DataGrid = __webpack_require__(376);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
-var _Button = __webpack_require__(376);
+var _Button = __webpack_require__(377);
 
 var _Button2 = _interopRequireDefault(_Button);
 
@@ -9335,7 +9349,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9360,7 +9374,7 @@ var _reactSelect = __webpack_require__(56);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(252);
+var _action = __webpack_require__(253);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9529,7 +9543,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9550,13 +9564,13 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(252);
+var _action = __webpack_require__(253);
 
 var _site = __webpack_require__(19);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _Pager = __webpack_require__(98);
+var _Pager = __webpack_require__(99);
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
@@ -9769,7 +9783,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9790,7 +9804,7 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(252);
+var _action = __webpack_require__(253);
 
 var _utility = __webpack_require__(10);
 
@@ -10110,7 +10124,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Button);
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10128,7 +10142,7 @@ var _createReducer4 = __webpack_require__(31);
 
 var _createReducer5 = _interopRequireDefault(_createReducer4);
 
-var _types = __webpack_require__(299);
+var _types = __webpack_require__(300);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10149,5 +10163,5 @@ var checkedList = (0, _createReducer5.default)({}, _defineProperty({}, _types.SE
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading, productList: productList, checkedList: checkedList });
 
 /***/ })
-],[372]);
+],[373]);
 //# sourceMappingURL=product.js.map
