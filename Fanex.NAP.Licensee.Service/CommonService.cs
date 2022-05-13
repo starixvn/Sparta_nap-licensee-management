@@ -64,7 +64,7 @@
                         {
                             while (reader.Read())
                             {
-                                result.Add(int.Parse(reader["GameTypeID"].ToString()), reader["GameTypeName"].ToString());
+                                result.Add(int.Parse(reader["IBCBettypeID"].ToString()), reader["GameTypeName"].ToString());
                             }
                         }
 
