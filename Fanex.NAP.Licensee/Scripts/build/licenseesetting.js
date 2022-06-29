@@ -392,9 +392,9 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
                     }
                 }
 
-                // If MaxPerBall exists => Check
+                // If MaxPayoutPerMatch exists => Check
                 if (curBSRows[index].MaxPayoutPerMatch !== undefined) {
-                    if (parseFloat(getValidNumber(curBSRows[index].MaxPerMatch)) > parseFloat(getValidNumber(curBSRows[index].MaxPayoutPerMatch))) 
+                    if (parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPayoutPerMatch))) 
                     {
                         hasError = true;
                         return false;
