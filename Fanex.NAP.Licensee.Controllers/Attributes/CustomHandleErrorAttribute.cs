@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers.Attributes
 {
+    using Fanex.NAP.Licensee.Extension;
     using System;
     using System.Web;
     using System.Web.Mvc;
@@ -23,7 +24,7 @@
                 AssignResultNormalRequest(filterContext);
             }
 
-            Logging.LogService.Error(filterContext.Exception.Message, filterContext.Exception);
+            Logging.LogService.Error(LogMessageHelper.GenerateMessage(filterContext.Exception), filterContext.Exception);
             UpdateFilterContext(filterContext);
         }
 
