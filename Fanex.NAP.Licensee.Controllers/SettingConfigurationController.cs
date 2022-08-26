@@ -178,9 +178,11 @@ namespace Fanex.NAP.Licensee.Controllers
                 Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMinBet),
                 Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxBet),
                 Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxPerMatch),
+                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxPayoutPerMatch),
                 sportbookVM.IsApplyExistingMemberChecked,
                 sportbookVM.AgentId,
                 sportbookVM.IsAgentOnly,
+                true,
                 true,
                 true,
                 true

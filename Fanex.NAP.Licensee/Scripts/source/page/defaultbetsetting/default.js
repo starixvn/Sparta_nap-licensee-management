@@ -18,6 +18,7 @@ var defaultSetting = (function () { // jshint ignore:line
             { HeaderText: "Max Bet", Width: 150, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Match", Width: 150, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Ball", Width: 150, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: "Max Payout Per Match", Width: 150, Name: "MaxPayoutPerMatch", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Action", Width: 132, Name: "Action", HeaderAlign: "center", CellAlign: "center" },
         ],
         bodyRows: [],
@@ -193,7 +194,8 @@ var defaultSetting = (function () { // jshint ignore:line
                     { Name: "SportGameType", Value: data[index]["SportGameType"] === null ? data[index]["SportGameType"] : data[index]["SportGameType"].toLocaleString('en') },
                     { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"]: data[index]["MaxBet"].toLocaleString('en')},
                     { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] === null ? data[index]["MaxPerMatch"] : data[index]["MaxPerMatch"].toLocaleString('en') },
-                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') }
+                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') },
+                    { Name: "MaxPayoutPerMatch", Value: data[index]["MaxPayoutPerMatch"] === null ? data[index]["MaxPayoutPerMatch"] : data[index]["MaxPayoutPerMatch"].toLocaleString('en') }
                 ]);
 
             if (actionMerRowNumber === 0) {

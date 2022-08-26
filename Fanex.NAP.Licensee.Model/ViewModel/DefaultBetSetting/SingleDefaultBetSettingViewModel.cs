@@ -13,6 +13,7 @@
     {
         private readonly string _xmlParameterPattern = "<setting sporttype=\"{0}\" bettype=\"{1}\" {2} ></setting>";
         private readonly string _xmlSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\"";
+        private readonly string _xmlSBSettingPatter = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxpayoutpermatch=\"{2}\"";
         private readonly string _xmlNumberGameSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxperball=\"{2}\"";
         private readonly string _xmlNoneMaxperMatchNumberGameSettingPattern = "maxbet=\"{0}\" maxperball=\"{1}\"";
 
@@ -77,7 +78,7 @@
                 result.Append("<settings>");
                 foreach (var sb in Sportbook)
                 {
-                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSettingPattern, sb.MaxBet, sb.MaxPerMatch) : string.Empty;
+                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSBSettingPatter, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));
                 }
 

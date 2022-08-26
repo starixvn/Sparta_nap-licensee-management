@@ -9751,9 +9751,12 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
                             chara = _keydown.shifts[code];
                         }
 
-                        if (chara == '') chara = String.fromCharCode(code);
+                        if (chara == '')
+                        {
+                            chara = String.fromCharCode(code);
+                        }
                         //	    				}
-                        ;
+                        // ;
                         // Stop executing if the user didn't type a number key, a decimal character, or backspace.
                         if (code !== 8 && (chara != dec_point || (code !== 46 && dec_point === chara)) && !chara.match(/[0-9]/)) {
                             // We need the original keycode now...
@@ -9797,6 +9800,9 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
                                 // Reset the cursor position.
                                 data.init = (decimals > 0 ? -1 : 0);
                                 data.c = (decimals > 0 ? -(decimals) : 0);
+                            }
+                            else{
+                                data.c = 0;
                             }
                         }
 
@@ -13122,12 +13128,51 @@ var site = (function () {
 
         return error;
     };
+
+    var verifySportBookBetSetting = function($row) {
+        var error = 0;
+        var maxPayoutPerMatch = $row.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
+        var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
+        var maxPerMatch = $row.find("input[data-key=\"MaxPerMatch\"]").val();
+
+        error = site.verifyBetSetting($row);
+
+        if (!site.isNumber(maxPayoutPerMatch) && maxPayoutPerMatch.length > 0) {
+            $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
+            error++;
+        }
+
+        if (maxPerMatch.length !== maxPayoutPerMatch.length) {
+            if (maxPerMatch.length === 0) {
+                $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+                error++;
+            }
+            if (maxPayoutPerMatch.length === 0) {
+                $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
+                error++;
+            }
+        }
+
+        if (!site.isNumber(maxBet) && !site.isNumber(maxPayoutPerMatch) && site.isNumber(maxPerMatch)) {
+            $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
+            error++;
+        }
+
+        if (parseInt(maxPerMatch) > parseInt(maxPayoutPerMatch)) {
+            $row.find("input[data-key=\"MaxPerMatch\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
+            error++;
+        }
+
+        return error;
+    }
+
     me.verifyInputData = function () {
         /*sportbook,Virtual sport,Keno*/
         /*reset*/
         var error = 0;
 
-        var productCodes = ['#sb', '#vs', '#kn'];
+        var productCodes = ['#vs', '#kn'];
         for (var i = 0; i < productCodes.length; i++) {
             if ($(productCodes[i] + "-area").length > 0) {
                 /*reset*/
@@ -13147,6 +13192,20 @@ var site = (function () {
                 }
             }
         }
+        /*sport book*/
+        if($('#sb-area').length > 0){
+            var sbtable = $('#sb-table');
+            sbtable.find("tbody input[data-key=\"MaxPerMatch\"]").removeClass("warning");
+            sbtable.find("tbody input[data-key=\"MaxBet\"]").removeClass("warning");
+            sbtable.find("tbody input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
+
+            var sbrows = sbtable.find("tbody tr");
+            var numOfRows = sbrows.length;
+            for (var k = 0; k < numOfRows; k++) {
+                error += verifySportBookBetSetting($(sbrows[k]));
+            }
+        }
+
         /*number game*/
         if ($("#ng-area").length > 0) {
             /*reset*/
@@ -13177,6 +13236,7 @@ var site = (function () {
                 MaxBet: $row.find("input[data-key=\"MaxBet\"]").val(),
                 MaxPerMatch: $row.find("input[data-key=\"MaxPerMatch\"]").val(),
                 MaxPerBall: code === "ng" ? $row.find("input[data-key=\"MaxPerBall\"]").val() : null,
+                MaxPayoutPerMatch: code === "sb" ? $row.find("input[data-key=\"MaxPayoutPerMatch\"]").val() : null,
                 Bettype: $row.attr("data-bettype")
             });
         }
@@ -13190,28 +13250,34 @@ var site = (function () {
             var code = $(this).attr("data-code");
             var isCheck = $("#copy-" + code).is(":checked");
             if (isCheck) {
-                var error = site.verifyBetSetting($(this));
+                var error = code === "sb" ? verifySportBookBetSetting(this) : site.verifyBetSetting($(this));
                 if (error === 0) {
                     var table = $("#" + code + "-table");
                     var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
                     var maxPerMatch = $(this).find("input[data-key=\"MaxPerMatch\"]").val();
+                    var maxPayoutPerMatch = $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").val();
+                    console.log(maxPayoutPerMatch);
 
                     table.find("tr[class!='first'] input[data-key=\"MaxBet\"]").val(maxBet);
                     table.find("tr[class!='first'] input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
+                    table.find("tr[class!='first'] input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
                     $(this).find("input[data-key=\"MaxBet\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
+                    $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
                 }
             }
         });
     };
     me.copySetting = function (table, checkbox) {
         var firstRow = table.find("tbody tr:eq(0)");
+        var code = $(firstRow).attr("data-code");
         /*reset*/
         var error = 0;
         firstRow.find("input[data-key=\"MaxBet\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
+        firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
         /*copy*/
-        error = site.verifyBetSetting(firstRow);
+        error = code === 'sb' ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
 
         if (error > 0) {
             checkbox.prop("checked", false);
@@ -13221,9 +13287,12 @@ var site = (function () {
             /*update*/
             var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
             var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
+            var maxPayoutPerMatch = firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
+            console.log(maxPayoutPerMatch);
 
             table.find("input[data-key=\"MaxBet\"]").val(maxBet);
             table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
+            table.find("input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
 
             site.enableOrDisable(table, false);
         }

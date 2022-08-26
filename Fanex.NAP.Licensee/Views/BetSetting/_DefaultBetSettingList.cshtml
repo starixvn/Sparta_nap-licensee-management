@@ -5,7 +5,8 @@
     var sbCount = 0;
     <div class="row group">
         <div class="col-sm-12 title-group" id="sb-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Sportbook</div>
+            <i class="icon-collapse" data-key="area-icon"></i>Sportbook
+        </div>
         <div class="col-sm-12 content" data-key="area-content">
             <label class="checkbox-inline">
                 <input type="checkbox" id="copy-sb" data-key="#sb-table">
@@ -17,16 +18,19 @@
                         <th class="col20">
                             Sport Type
                         </th>
-                        <th class="col40">
+                        <th class="col20">
                             Max Bet
                         </th>
-                        <th class="col40">
+                        <th class="col30">
                             Max Per Match
+                        </th>
+                        <th class="col30">
+                            Max Payout Per Match
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                   
+
                     @foreach (var sb in Model.Sportbook)
                     {
                         <tr class="@(sbCount == 0 ? "first" : string.Empty)" data-code="@(sbCount == 0 ? "sb" : string.Empty)" data-sport="@sb.SportOrGame.Id" data-bettype="@sb.BetType">
@@ -38,6 +42,9 @@
                             </td>
                             <td>
                                 <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                            </td>
+                            <td>
+                                <input data-key="MaxPayoutPerMatch" maxlength="12" type="text" value="@(sb.MaxPayoutPerMatch.HasValue ? sb.MaxPayoutPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                             </td>
                         </tr>
                         sbCount++;
@@ -51,7 +58,8 @@
 {
     <div class="row group">
         <div class="col-sm-12 title-group" id="ng-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Number Game</div>
+            <i class="icon-collapse" data-key="area-icon"></i>Number Game
+        </div>
         <div class="col-sm-12 content" data-key="area-content">
             <table class="table table-bordered table-setting" id="ng-table">
                 <thead>
@@ -73,7 +81,7 @@
 
                     @foreach (var ng in Model.NumberGame)
                     {
-                        <tr  data-sport="@ng.SportOrGame.Id" data-bettype="@ng.BetType">
+                        <tr data-sport="@ng.SportOrGame.Id" data-bettype="@ng.BetType">
                             <td>
                                 @ng.SportOrGame.Name
                             </td>
@@ -87,7 +95,7 @@
                                 <input data-key="MaxPerBall" maxlength="12" type="text" value="@(ng.MaxPerBall.HasValue ? ng.MaxPerBall.Value.ToString() : string.Empty)" class="width-240 txt-max" />
                             </td>
                         </tr>
-                        
+
                     }
                 </tbody>
             </table>
@@ -99,7 +107,8 @@
     var vsCount = 0;
     <div class="row group">
         <div class="col-sm-12 title-group" id="vs-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Virtual Sports</div>
+            <i class="icon-collapse" data-key="area-icon"></i>Virtual Sports
+        </div>
         <div class="col-sm-12 content" data-key="area-content">
             <label class="checkbox-inline">
                 <input type="checkbox" id="copy-vs" data-key="#vs-table">
@@ -122,7 +131,7 @@
                 <tbody>
                     @foreach (var vs in Model.VirtualSport)
                     {
-                        <tr  class="@(vsCount == 0 ? "first" : string.Empty)" data-code="@(vsCount == 0 ? "vs" : string.Empty)" data-sport="@vs.SportOrGame.Id" data-bettype="@vs.BetType">
+                        <tr class="@(vsCount == 0 ? "first" : string.Empty)" data-code="@(vsCount == 0 ? "vs" : string.Empty)" data-sport="@vs.SportOrGame.Id" data-bettype="@vs.BetType">
                             <td>
                                 @vs.SportOrGame.Name
                             </td>
@@ -146,7 +155,8 @@
 
     <div class="row group">
         <div class="col-sm-12 title-group" id="kn-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Keno</div>
+            <i class="icon-collapse" data-key="area-icon"></i>Keno
+        </div>
         <div class="col-sm-12 content" data-key="area-content">
             @if (Model.Keno.Count > 1)
             {

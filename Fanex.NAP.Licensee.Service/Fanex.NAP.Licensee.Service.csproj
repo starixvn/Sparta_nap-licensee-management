@@ -192,6 +192,7 @@
     <Compile Include="BetTicketVolumeControlSettingService.cs" />
     <Compile Include="CommonService.cs" />
     <Compile Include="Core\ObjectDbGenerator.cs" />
+    <Compile Include="Extenstion\DictionaryExtension.cs" />
     <Compile Include="Helpers\AuthencationHelper.cs" />
     <Compile Include="Helpers\LAPUserHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
@@ -249,6 +250,7 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

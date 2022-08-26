@@ -5,7 +5,7 @@ editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = {};
-    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName; 
+    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
 
     function getAgentsHeader() {
         var res = "";
@@ -57,15 +57,15 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             },
             headers: getAjaxHeader()
         })
-    .success(function (data) {
-        shareSettingsService.saveOrgSettings(angular.copy(data));
-        if ($scope.buttonStatus.IsBack) {
-            $scope.editBS = shareSettingsService.getCurSettings();
-        }
-        else {
-            $scope.editBS = data;
-        }
-    });
+        .success(function (data) {
+            shareSettingsService.saveOrgSettings(angular.copy(data));
+            if ($scope.buttonStatus.IsBack) {
+                $scope.editBS = shareSettingsService.getCurSettings();
+            }
+            else {
+                $scope.editBS = data;
+            }
+        });
 
 };
 editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
@@ -121,9 +121,11 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: orgBSRows[index].MinBet,
                 MaxBet: orgBSRows[index].MaxBet,
                 MaxPerMatch: orgBSRows[index].MaxPerMatch,
+                MaxPayoutPerMatch: orgBSRows[index].MaxPayoutPerMatch,
                 AgentMinBet: orgBSRows[index].AgentMinBet,
                 AgentMaxBet: orgBSRows[index].AgentMaxBet,
                 AgentMaxPerMatch: orgBSRows[index].AgentMaxPerMatch,
+                AgentMaxPayoutPerMatch: orgBSRows[index].AgentMaxPayoutPerMatch,
                 MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
@@ -133,9 +135,11 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MinBet: curBSRows[index].MinBet,
                 MaxBet: curBSRows[index].MaxBet,
                 MaxPerMatch: curBSRows[index].MaxPerMatch,
+                MaxPayoutPerMatch: curBSRows[index].MaxPayoutPerMatch,
                 AgentMinBet: curBSRows[index].AgentMinBet,
                 AgentMaxBet: curBSRows[index].AgentMaxBet,
                 AgentMaxPerMatch: curBSRows[index].AgentMaxPerMatch,
+                AgentMaxPayoutPerMatch: curBSRows[index].AgentMaxPayoutPerMatch,
                 MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
@@ -156,11 +160,13 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             curBSRows[index].MaxBet = orgBSRows[index].MaxBet;
             curBSRows[index].MaxPerMatch = orgBSRows[index].MaxPerMatch;
             curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
+            curBSRows[index].MaxPayoutPerMatch = orgBSRows[index].MaxPayoutPerMatch;
             curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
             curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
             curBSRows[index].AgentMinBet = orgBSRows[index].AgentMinBet;
             curBSRows[index].AgentMaxBet = orgBSRows[index].AgentMaxBet;
             curBSRows[index].AgentMaxPerMatch = orgBSRows[index].AgentMaxPerMatch;
+            curBSRows[index].AgentMaxPayoutPerMatch = orgBSRows[index].AgentMaxPayoutPerMatch;
         }
     });
 
@@ -226,6 +232,7 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
                 element.AgentMinBet = firstRowData.AgentMinBet;
                 element.AgentMaxBet = firstRowData.AgentMaxBet;
                 element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
+                element.AgentMaxPayoutPerMatch = firstRowData.AgentMaxPayoutPerMatch;
             });
         }
     };
@@ -256,6 +263,7 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
                 element.AgentMinBet = firstRowData.AgentMinBet;
                 element.AgentMaxBet = firstRowData.AgentMaxBet;
                 element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
+                element.AgentMaxPayoutPerMatch = firstRowData.AgentMaxPayoutPerMatch;
             });
         }
     };
@@ -298,7 +306,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         // Check constraints on submit
         var hasError = false;
         var curBSRows = $scope.editBS.BSRows;
-        
+
         $.each(curBSRows, function (index, element) {
             if (element.IsRowSelected === true) {
 
@@ -314,7 +322,16 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
                 // If MaxPerBall exists => Check
                 if (curBSRows[index].MaxPerBall !== undefined) {
                     if (parseFloat(getValidNumber(curBSRows[index].MaxPerBall)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
-                    || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerBall))) {
+                        || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerBall))) {
+                        hasError = true;
+                        return false;
+                    }
+                }
+
+                // If MaxPayoutPerMatch exists => Check
+                if (curBSRows[index].MaxPayoutPerMatch !== undefined) {
+                    if (parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPayoutPerMatch))) 
+                    {
                         hasError = true;
                         return false;
                     }
@@ -351,8 +368,8 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             var curBSRows = $scope.editBS.BSRows;
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             $scope.buttonStatus.isNextEnabled = ($scope.editBS.IsEnableChecked && !$scope.editBS.IsEnableDisabled)
-                                                || $scope.editBS.IsApplyExistingMemberChecked
-                                                || getNextEnable($scope, curBSRows, orgBSRows);
+                || $scope.editBS.IsApplyExistingMemberChecked
+                || getNextEnable($scope, curBSRows, orgBSRows);
         }
     };
 };

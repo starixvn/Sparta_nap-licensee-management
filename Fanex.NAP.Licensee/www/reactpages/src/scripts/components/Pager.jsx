@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import { DecimalRadixNumber } from '../lib/constant';
 
 export default class Pager extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class Pager extends React.Component {
     onKeyUpHandle = (e, totalPage) => {
         const code = e.keyCode ? e.keyCode : e.which;
         if (code === 13) {
-            var value = parseInt(this.state.pageInput);
+            var value = parseInt(this.state.pageInput, DecimalRadixNumber);
             if (value > 0 && value <= totalPage) {
                 this.goToPage(value, this.props.pageSize);
             }
@@ -91,7 +92,7 @@ export default class Pager extends React.Component {
     render() {
         const { pageInput } = this.state;
         const { pageIndex, pageSize, totalItem, pageList } = this.props;
-        const isDisable = isNaN(parseInt(pageInput));
+        const isDisable = isNaN(parseInt(pageInput, DecimalRadixNumber));
         const totalPage = Math.ceil(totalItem / pageSize);
         const isShow = totalItem > pageList[0];
 

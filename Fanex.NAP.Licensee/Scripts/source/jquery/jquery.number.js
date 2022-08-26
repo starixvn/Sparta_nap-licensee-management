@@ -185,9 +185,12 @@
                             chara = _keydown.shifts[code];
                         }
 
-                        if (chara == '') chara = String.fromCharCode(code);
+                        if (chara == '')
+                        {
+                            chara = String.fromCharCode(code);
+                        }
                         //	    				}
-                        ;
+                        // ;
                         // Stop executing if the user didn't type a number key, a decimal character, or backspace.
                         if (code !== 8 && (chara != dec_point || (code !== 46 && dec_point === chara)) && !chara.match(/[0-9]/)) {
                             // We need the original keycode now...
@@ -231,6 +234,9 @@
                                 // Reset the cursor position.
                                 data.init = (decimals > 0 ? -1 : 0);
                                 data.c = (decimals > 0 ? -(decimals) : 0);
+                            }
+                            else{
+                                data.c = 0;
                             }
                         }
 

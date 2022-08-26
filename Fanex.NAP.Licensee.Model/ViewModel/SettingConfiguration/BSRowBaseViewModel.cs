@@ -84,6 +84,8 @@
 
         public string MaxPerMatch { get; set; }
 
+        public string MaxPayoutPerMatch { get; set; }
+
         public bool IsRowSelected { get; set; }
 
         public bool IsRowDisabled { get; set; }
@@ -93,5 +95,7 @@
         public string AgentMaxBet { get; set; }
 
         public string AgentMaxPerMatch { get; set; }
+
+        public string AgentMaxPayoutPerMatch { get; set; }
     }
 }

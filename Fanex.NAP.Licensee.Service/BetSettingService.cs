@@ -150,6 +150,7 @@ namespace Fanex.NAP.Licensee.Service
                 MaxBet = reader["MaxBet"] != DBNull.Value ? decimal.Parse(reader["MaxBet"].ToString()) : new decimal?(),
                 MaxPerMatch = reader["MaxPerMatch"] != DBNull.Value ? decimal.Parse(reader["MaxPerMatch"].ToString()) : new decimal?(),
                 MaxPerBall = reader["MaxPerBall"] != DBNull.Value ? decimal.Parse(reader["MaxPerBall"].ToString()) : new decimal?(),
+                MaxPayoutPerMatch = reader["MaxPayoutPerMatch"] != DBNull.Value ? decimal.Parse(reader["MaxPayoutPerMatch"].ToString()) : new decimal?(),
             };
         }
 

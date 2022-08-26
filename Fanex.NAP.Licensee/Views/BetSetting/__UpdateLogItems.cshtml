@@ -1,4 +1,6 @@
 ﻿@using Fanex.NAP.Licensee.Model.DataDomain
+@using Fanex.NAP.Licensee.Service.Extenstion
+
 @model Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.SettingLogItem
 <table class="table table-bordered child-setting">
     <thead>
@@ -15,8 +17,17 @@
             <th colspan="2">
                 Max Per Ball
             </th>
+            <th colspan="2">
+                Max Payout Per Match
+            </th>
         </tr>
         <tr>
+            <th>
+                Old
+            </th>
+            <th>
+                New
+            </th>
             <th>
                 Old
             </th>
@@ -49,68 +60,82 @@
             Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.BetSettingBySport oldValue = Model.OldSettings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
             Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting.BetSettingBySport newValue = Model.Settings.SingleOrDefault(i => i.SportOrGame.Id == item.SportId && i.BetType == item.Bettype);
 
-            <tr>
-                <td>
-                    @if (oldValue != null)
-                    {
-                        @oldValue.SportOrGame.Name
-                    }
-                    else if (newValue != null)
-                    {
-                        @newValue.SportOrGame.Name
-                    }
-                    @if (oldValue != null && oldValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
-                    {
-                        @Html.Raw("&nbsp;-&nbsp;")@kenoGameType[oldValue.BetType]
-                    }
-                    else if (newValue!=null && newValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
-                    {
-                        @Html.Raw("&nbsp;-&nbsp;")@kenoGameType[newValue.BetType]
-                    }
-                </td>
-                <td class="width-10 text-right">
-                    @if (oldValue != null && oldValue.MaxBet.HasValue)
-                    {
+        <tr>
+            <td>
+                @if (oldValue != null)
+                {
+                    @oldValue.SportOrGame.Name
+                }
+                else if (newValue != null)
+                {
+                    @newValue.SportOrGame.Name
+                }
+                @if (oldValue != null && oldValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                {
+                    @Html.Raw("&nbsp;-&nbsp;")@kenoGameType.GetValueOrDefault(oldValue.BetType, "Bettype " + oldValue.BetType);
+                }
+                else if (newValue != null && newValue.SportOrGame.Id == StaticSiteValue.KENOSPORT)
+                {
+                    @Html.Raw("&nbsp;-&nbsp;")@kenoGameType.GetValueOrDefault(newValue.BetType, "Bettype " + newValue.BetType);
+                }
+            </td>
+            <td class="width-10 text-right">
+                @if (oldValue != null && oldValue.MaxBet.HasValue)
+                {
 
-                        @oldValue.MaxBet.Value
+                    @oldValue.MaxBet.Value
 
-                    }
-                </td>
-                <td class="width-10 lbl-new text-right">
-                    @if (newValue != null && newValue.MaxBet.HasValue)
-                    {
-                        @newValue.MaxBet.Value
-                    }
-                </td>
-                <td class="width-10 text-right">
-                    @if (oldValue != null && oldValue.MaxPerMatch.HasValue)
-                    {
+                }
+            </td>
+            <td class="width-10 lbl-new text-right">
+                @if (newValue != null && newValue.MaxBet.HasValue)
+                {
+                    @newValue.MaxBet.Value
+                }
+            </td>
+            <td class="width-10 text-right">
+                @if (oldValue != null && oldValue.MaxPerMatch.HasValue)
+                {
 
-                        @oldValue.MaxPerMatch.Value
+                    @oldValue.MaxPerMatch.Value
 
-                    }
-                </td>
-                <td class="width-10 text-right lbl-new">
-                    @if (newValue != null && newValue.MaxPerMatch.HasValue)
-                    {
-                        @newValue.MaxPerMatch.Value
-                    }
-                </td>
-                <td class="width-10 text-right">
-                    @if (oldValue != null && oldValue.MaxPerBall.HasValue)
-                    {
+                }
+            </td>
+            <td class="width-10 text-right lbl-new">
+                @if (newValue != null && newValue.MaxPerMatch.HasValue)
+                {
+                    @newValue.MaxPerMatch.Value
+                }
+            </td>
+            <td class="width-10 text-right">
+                @if (oldValue != null && oldValue.MaxPerBall.HasValue)
+                {
 
-                        @oldValue.MaxPerBall.Value
+                    @oldValue.MaxPerBall.Value
 
-                    }
-                </td>
-                <td class="width-10 text-right lbl-new">
-                    @if (newValue != null && newValue.MaxPerBall.HasValue)
-                    {
-                        @newValue.MaxPerBall.Value
-                    }
-                </td>
-            </tr>
+                }
+            </td>
+            <td class="width-10 text-right lbl-new">
+                @if (newValue != null && newValue.MaxPerBall.HasValue)
+                {
+                    @newValue.MaxPerBall.Value
+                }
+            </td>
+            <td class="width-10 text-right">
+                @if (oldValue != null && oldValue.MaxPayoutPerMatch.HasValue)
+                {
+
+                    @oldValue.MaxPayoutPerMatch.Value
+
+                }
+            </td>
+            <td class="width-10 text-right lbl-new">
+                @if (newValue != null && newValue.MaxPayoutPerMatch.HasValue)
+                {
+                    @newValue.MaxPayoutPerMatch.Value
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -5,6 +5,7 @@
     "build": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.dev.conf.js",
     "build-watch": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.dev.conf.js --watch",
     "build-pro": "webpack --config Fanex.NAP.Licensee\\www\\.webpack\\build\\webpack.pro.conf.js",
+    "build-grunt": "grunt build",
     "version": "node --version"
   },
   "devDependencies": {

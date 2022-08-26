@@ -8533,8 +8533,20 @@ exports.default = NumericInput;
 /* 94 */,
 /* 95 */,
 /* 96 */,
-/* 97 */,
-/* 98 */
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var DecimalRadixNumber = exports.DecimalRadixNumber = 10;
+
+/***/ }),
+/* 98 */,
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8553,6 +8565,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _constant = __webpack_require__(97);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8573,7 +8587,7 @@ var Pager = function (_React$Component) {
         _this.onKeyUpHandle = function (e, totalPage) {
             var code = e.keyCode ? e.keyCode : e.which;
             if (code === 13) {
-                var value = parseInt(_this.state.pageInput);
+                var value = parseInt(_this.state.pageInput, _constant.DecimalRadixNumber);
                 if (value > 0 && value <= totalPage) {
                     _this.goToPage(value, _this.props.pageSize);
                 }
@@ -8713,7 +8727,7 @@ var Pager = function (_React$Component) {
                 totalItem = _props.totalItem,
                 pageList = _props.pageList;
 
-            var isDisable = isNaN(parseInt(pageInput));
+            var isDisable = isNaN(parseInt(pageInput, _constant.DecimalRadixNumber));
             var totalPage = Math.ceil(totalItem / pageSize);
             var isShow = totalItem > pageList[0];
 
@@ -8750,9 +8764,9 @@ exports.default = Pager;
 ;
 
 /***/ }),
-/* 99 */,
 /* 100 */,
-/* 101 */
+/* 101 */,
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8896,10 +8910,10 @@ var RedmineConfirmForm = function (_Component) {
 exports.default = RedmineConfirmForm;
 
 /***/ }),
-/* 102 */,
 /* 103 */,
 /* 104 */,
-/* 105 */
+/* 105 */,
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8910,7 +8924,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toggleLoader = exports.setCheckedList = exports.setParams = undefined;
 
-var _types = __webpack_require__(108);
+var _types = __webpack_require__(109);
 
 var _loaderAction = __webpack_require__(91);
 
@@ -8933,9 +8947,9 @@ exports.setCheckedList = setCheckedList;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 106 */,
 /* 107 */,
-/* 108 */
+/* 108 */,
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8949,7 +8963,6 @@ var SET_PARAMS = exports.SET_PARAMS = 'SET_PARAMS';
 var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 
 /***/ }),
-/* 109 */,
 /* 110 */,
 /* 111 */,
 /* 112 */,
@@ -9089,7 +9102,8 @@ var SET_CHECKED_LIST = exports.SET_CHECKED_LIST = 'SET_CHECKED_LIST';
 /* 246 */,
 /* 247 */,
 /* 248 */,
-/* 249 */
+/* 249 */,
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9114,7 +9128,7 @@ var _reactSelect = __webpack_require__(56);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(105);
+var _action = __webpack_require__(106);
 
 var _utility = __webpack_require__(10);
 
@@ -9411,7 +9425,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilterBase);
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9432,15 +9446,17 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(105);
+var _action = __webpack_require__(106);
 
 var _site = __webpack_require__(19);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _Pager = __webpack_require__(98);
+var _Pager = __webpack_require__(99);
 
 var _Pager2 = _interopRequireDefault(_Pager);
+
+var _constant = __webpack_require__(97);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9461,7 +9477,7 @@ var DataGridBase = exports.DataGridBase = function (_Component) {
         var _this = _possibleConstructorReturn(this, (DataGridBase.__proto__ || Object.getPrototypeOf(DataGridBase)).call(this, props));
 
         _this.onItemChecked = function (e) {
-            var value = parseInt(e.target.value);
+            var value = parseInt(e.target.value, _constant.DecimalRadixNumber);
             var checkedList = _this.props.checkedList;
             var activeItems = _this.state.activeItems;
 
@@ -9641,7 +9657,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGridBase);
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9659,7 +9675,7 @@ var _createReducer3 = __webpack_require__(31);
 
 var _createReducer4 = _interopRequireDefault(_createReducer3);
 
-var _types = __webpack_require__(108);
+var _types = __webpack_require__(109);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9676,7 +9692,6 @@ var checkedList = (0, _createReducer4.default)({}, _defineProperty({}, _types.SE
 exports.default = (0, _redux.combineReducers)({ params: params, checkedList: checkedList, isLoading: _loaderReducer.isLoading });
 
 /***/ }),
-/* 252 */,
 /* 253 */,
 /* 254 */,
 /* 255 */,
@@ -9793,7 +9808,8 @@ exports.default = (0, _redux.combineReducers)({ params: params, checkedList: che
 /* 366 */,
 /* 367 */,
 /* 368 */,
-/* 369 */
+/* 369 */,
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9813,13 +9829,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(370);
+var _AppContainer = __webpack_require__(371);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(251);
+var _reducer = __webpack_require__(252);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -9866,7 +9882,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app-container'));
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9891,15 +9907,15 @@ var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilterBase = __webpack_require__(249);
+var _FormFilterBase = __webpack_require__(250);
 
 var _FormFilterBase2 = _interopRequireDefault(_FormFilterBase);
 
-var _DataGridBase = __webpack_require__(250);
+var _DataGridBase = __webpack_require__(251);
 
 var _DataGridBase2 = _interopRequireDefault(_DataGridBase);
 
-var _Action = __webpack_require__(371);
+var _Action = __webpack_require__(372);
 
 var _Action2 = _interopRequireDefault(_Action);
 
@@ -10008,7 +10024,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10029,7 +10045,7 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(105);
+var _action = __webpack_require__(106);
 
 var _utility = __webpack_require__(10);
 
@@ -10039,7 +10055,7 @@ var _site = __webpack_require__(19);
 
 var _site2 = _interopRequireDefault(_site);
 
-var _RedmineConfirmForm = __webpack_require__(101);
+var _RedmineConfirmForm = __webpack_require__(102);
 
 var _RedmineConfirmForm2 = _interopRequireDefault(_RedmineConfirmForm);
 
@@ -10369,5 +10385,5 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Action);
 
 /***/ })
-],[369]);
+],[370]);
 //# sourceMappingURL=sourceLicensee.js.map

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
+    using Fanex.NAP.Licensee.Model.Comparer;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO.XmlLog;
     using Fanex.RemotingRef;
@@ -16,16 +17,21 @@
         private const string MAXBET = "maxbet";
         private const string MAXPERMATCH = "maxpermatch";
         private const string MAXPERBALL = "maxperball";
+        private const string MAXPAYOUTPERMATCH = "maxpayoutpermatch";
+        private const string MAX_PAYOUT_PER_MATCH_TEMPLATE = "mppm";
         private const string ENGLISHLANGCODE = "en";
         private const int MIXPARLAYBETTYPE = 9;
         private const int ORTHERSPORT = 99;
         private const string MIXPARLAYSPORTNAME = "Mix Sports Parlay";
         private const string ORTHERSPORTNAME = "Other Sports";
-        private const int ESportId = 43;
-        private const float TempESportId = 2.5f;
         private const int SoccerId = 1;
         private const int SoccerParlay = 9;
         private const string SOCCERPARLAYNAME = "Soccer Parlay";
+
+        private const int SABA_SOCCER = 9901;
+        private const int SABA_BASKETBALL = 9902;
+        private const string SABA_SOCCER_NAME = "Saba Soccer";
+        private const string SABA_BASKETBALL_NAME = "Saba BasketBall";
 
         /// <summary>
         /// Convert xml content to .NET object.
@@ -49,6 +55,7 @@
                         MaxBet = GetDecXMlAttribute(setting, template.MaxBet),
                         MaxPerBall = GetDecXMlAttribute(setting, template.MaxPerBall),
                         MaxPerMatch = GetDecXMlAttribute(setting, template.MaxPerMatch),
+                        MaxPayoutPerMatch = GetDecXMlAttribute(setting, MAX_PAYOUT_PER_MATCH_TEMPLATE),
                         SportOrGame = GetSportOrGame(setting, template)
                     });
                 }
@@ -61,7 +68,7 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => i.SportOrGame.Id == ESportId ? TempESportId : i.SportOrGame.Id).ToList();
+            var orderedList = betSettings.OrderBy(i => i, new SportComparer()).ToList();
 
             return orderedList;
         }
@@ -99,6 +106,15 @@
                 else
                 {
                     result.Name = new RemotingRefService().GetSportName(sport.ToString(), ENGLISHLANGCODE);
+                }
+
+                if (sport == SABA_SOCCER)
+                {
+                    result.Name = SABA_SOCCER_NAME;
+                }
+                if (sport == SABA_BASKETBALL)
+                {
+                    result.Name = SABA_BASKETBALL_NAME;
                 }
             }
 
@@ -141,7 +157,9 @@
 
                     case MAXPERBALL:
                         result.MaxPerBall = alias;
-
+                        break;
+                    case MAXPAYOUTPERMATCH:
+                        result.MaxPayoutPerMatch = alias;
                         break;
                 }
             }
@@ -159,7 +177,7 @@
         {
             try
             {
-                return row.Attribute(attributeName).Value;
+                return row.Attribute(attributeName)?.Value;
             }
             catch (ArgumentNullException)
             {

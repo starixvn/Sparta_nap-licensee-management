@@ -8561,8 +8561,20 @@ exports.default = ConfirmBox;
 ;
 
 /***/ }),
-/* 97 */,
-/* 98 */
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var DecimalRadixNumber = exports.DecimalRadixNumber = 10;
+
+/***/ }),
+/* 98 */,
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8581,6 +8593,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _constant = __webpack_require__(97);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8601,7 +8615,7 @@ var Pager = function (_React$Component) {
         _this.onKeyUpHandle = function (e, totalPage) {
             var code = e.keyCode ? e.keyCode : e.which;
             if (code === 13) {
-                var value = parseInt(_this.state.pageInput);
+                var value = parseInt(_this.state.pageInput, _constant.DecimalRadixNumber);
                 if (value > 0 && value <= totalPage) {
                     _this.goToPage(value, _this.props.pageSize);
                 }
@@ -8741,7 +8755,7 @@ var Pager = function (_React$Component) {
                 totalItem = _props.totalItem,
                 pageList = _props.pageList;
 
-            var isDisable = isNaN(parseInt(pageInput));
+            var isDisable = isNaN(parseInt(pageInput, _constant.DecimalRadixNumber));
             var totalPage = Math.ceil(totalItem / pageSize);
             var isShow = totalItem > pageList[0];
 
@@ -8778,7 +8792,6 @@ exports.default = Pager;
 ;
 
 /***/ }),
-/* 99 */,
 /* 100 */,
 /* 101 */,
 /* 102 */,
@@ -8971,7 +8984,8 @@ exports.default = Pager;
 /* 289 */,
 /* 290 */,
 /* 291 */,
-/* 292 */
+/* 292 */,
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8982,7 +8996,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toggleLoader = exports.setParams = undefined;
 
-var _types = __webpack_require__(293);
+var _types = __webpack_require__(294);
 
 var _loaderAction = __webpack_require__(91);
 
@@ -8997,7 +9011,7 @@ exports.setParams = setParams;
 exports.toggleLoader = _loaderAction.toggleLoader;
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9009,7 +9023,6 @@ Object.defineProperty(exports, "__esModule", {
 var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 
 /***/ }),
-/* 294 */,
 /* 295 */,
 /* 296 */,
 /* 297 */,
@@ -9052,7 +9065,8 @@ var SET_PARAMS = exports.SET_PARAMS = "SET_PARAMS";
 /* 334 */,
 /* 335 */,
 /* 336 */,
-/* 337 */
+/* 337 */,
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9072,13 +9086,13 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _AppContainer = __webpack_require__(338);
+var _AppContainer = __webpack_require__(339);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
 var _reactRedux = __webpack_require__(7);
 
-var _reducer = __webpack_require__(341);
+var _reducer = __webpack_require__(342);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -9125,7 +9139,7 @@ exports.default = App;
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("app-container"));
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9150,11 +9164,11 @@ var _Loader = __webpack_require__(55);
 
 var _Loader2 = _interopRequireDefault(_Loader);
 
-var _FormFilter = __webpack_require__(339);
+var _FormFilter = __webpack_require__(340);
 
 var _FormFilter2 = _interopRequireDefault(_FormFilter);
 
-var _DataGrid = __webpack_require__(340);
+var _DataGrid = __webpack_require__(341);
 
 var _DataGrid2 = _interopRequireDefault(_DataGrid);
 
@@ -9215,7 +9229,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AppContainer);
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9240,7 +9254,7 @@ var _reactSelect = __webpack_require__(56);
 
 var _reactSelect2 = _interopRequireDefault(_reactSelect);
 
-var _action = __webpack_require__(292);
+var _action = __webpack_require__(293);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9428,7 +9442,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FormFilter);
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9449,7 +9463,7 @@ var _reactRedux = __webpack_require__(7);
 
 var _redux = __webpack_require__(3);
 
-var _action = __webpack_require__(292);
+var _action = __webpack_require__(293);
 
 var _site = __webpack_require__(19);
 
@@ -9463,7 +9477,7 @@ var _utility = __webpack_require__(10);
 
 var _utility2 = _interopRequireDefault(_utility);
 
-var _Pager = __webpack_require__(98);
+var _Pager = __webpack_require__(99);
 
 var _Pager2 = _interopRequireDefault(_Pager);
 
@@ -9709,7 +9723,7 @@ function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataGrid);
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9727,7 +9741,7 @@ var _createReducer2 = __webpack_require__(31);
 
 var _createReducer3 = _interopRequireDefault(_createReducer2);
 
-var _types = __webpack_require__(293);
+var _types = __webpack_require__(294);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9740,5 +9754,5 @@ var params = (0, _createReducer3.default)({}, _defineProperty({}, _types.SET_PAR
 exports.default = (0, _redux.combineReducers)({ params: params, isLoading: _loaderReducer.isLoading });
 
 /***/ })
-],[337]);
+],[338]);
 //# sourceMappingURL=operatorlist.js.map
