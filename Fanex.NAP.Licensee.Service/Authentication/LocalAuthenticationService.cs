@@ -28,7 +28,7 @@
         }
 
         public LocalAuthenticationService(
-            IUserService userService, 
+            IUserService userService,
             ISecurityService securityService,
             IGroupService groupService,
             ICurrentContext currentContext)
@@ -110,14 +110,14 @@
         {
             return _userService
                 .GetSiteLevel(user.Id, loginUser.Environment)
-                .FirstOrDefault(s => s.Site.Id == loginUser.SiteId && s.IsActive) != null;
+                .FirstOrDefault(s => s.SiteId == loginUser.SiteId && s.IsActive) != null;
         }
 
         private bool IsExistNapGroup(User user)
         {
-            if (user.Group != null)
+            if (user.GroupId != 0)
             {
-                var group = _groupService.Get(user.Group.Id);
+                var group = _groupService.Get(user.GroupId);
 
                 if (group != null && !group.IsActive)
                 {
@@ -130,7 +130,7 @@
 
         private bool IsExistMenuItems(User user, LoginUser loginUser)
         {
-            return _userService.GetMenuItem(user.Id, loginUser.SiteId, loginUser.Environment, true).Any(m => m.Parent == null);
+            return _userService.GetMenuItem(user.Id, loginUser.SiteId, loginUser.Environment, true).Any(m => m.ParentId == 0);
         }
 
         private NapLoginStatus ProcessLogin(User user, LoginUser loginUser, ICurrentSession napCurrentSession)

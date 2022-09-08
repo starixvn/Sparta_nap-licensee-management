@@ -45,11 +45,6 @@
                 return RecheckInStatus.UnderMaintenance;
             }
 
-            if (!_siteService.IsActivated(settings.SiteId))
-            {
-                return RecheckInStatus.InvalidSite;
-            }
-
             if (currentSession == null || currentSession.OnUserId == 0)
             {
                 return RecheckInStatus.KickOut;
