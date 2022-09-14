@@ -507,7 +507,7 @@ input[type="submit"], .btn-primary {
         float: left;
 
         label {
-            margin: 1px 5px 2px 0;
+            margin: 4px 5px 2px 0;
             font-weight: normal;
             vertical-align: middle;
             float: left;
@@ -677,7 +677,16 @@ input[type="submit"], .btn-primary {
         background-position: -55px -1px;
     }
 }
-
+.icon-list {
+    background: url(images/sprites.png) no-repeat scroll -63px -103px;
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    &:hover {
+        background-position: -87px -103px;
+    }
+}
 .icon-delete {
     .icon;
     background-position: -35px -26px;
@@ -688,6 +697,20 @@ input[type="submit"], .btn-primary {
         background-position: -55px -26px;
     }
 }
+.icon-checked {
+    background: url(images/icon_checked.gif) no-repeat;
+    height: 15px;
+    width: 15px;
+    margin: 4px 10px 0 auto;
+    display: inline-block;
+  }
+  .icon-cancel {
+    background: url(images/icon_cancel.gif) no-repeat;
+    height: 15px;
+    width: 15px;
+    margin: 4px 10px 0 auto;
+    display: inline-block;
+  }
 
 .blockui {
     background-color: #000;
@@ -820,6 +843,7 @@ input[type="submit"], .btn-primary {
     thead > tr > td, tbody > tr > td, tfoot > tr > td {
         min-height: 25px;
         padding: 5px;
+        vertical-align: middle;
     }
 }
 
