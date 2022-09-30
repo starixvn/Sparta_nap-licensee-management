@@ -48,13 +48,13 @@
                     case SiteEnvironment.LOCAL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" stateConnectionString=\"tcpip=ha.nexdev.net:42424\" />";
                     case SiteEnvironment.UAT:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.99.99.101:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.190.41:42424\" />";
                     case SiteEnvironment.BACKUPMNL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.98.2:42424\" />";
 				    case SiteEnvironment.SIT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.40.40.127:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.27.8:42424\" />";
                     default:
                         return string.Empty;
                 }

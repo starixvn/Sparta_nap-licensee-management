@@ -40,7 +40,7 @@
 		{
 		 case "LOCAL":
 		 #>
-	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://ha.nexdev.net:7221/nap-sc-local3" ServiceUrls="http://nap-api.nexdev.net/api" AccessKey="8VWXgdj1dqISn5o5cE/PT/YfjDUu3OCJObGKAeDw5SQ=">
+	<NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="90" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://ha.nexdev.net:7221/nap-sc-local3" ServiceUrls="http://nap_api_netcore.nexdev.net:8787/">
 		<Domain>
 			<add Name="localhost:54840/" Path="/" />
 		</Domain>
@@ -53,12 +53,12 @@
 	 break;
 	  case "UAT":
 	  #>
-	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.99.99.101:1710/main/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.2.190.41:8788/">
 		<Domain>
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.99.99.101:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://10.2.190.41:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
@@ -66,7 +66,7 @@
 	 break;
 	  case "BACKUPMNL":
 	  #>
-	 <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-hub.ibcbk.com" ServiceUrls="http://10.40.40.202:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	 <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-hub.ibcbk.com" ServiceUrls="http://10.40.40.202:1710/api">
 		<Domain>
 			<add Name="http://nap-lm.ibcbk.com" Path="/" />
 		</Domain>
@@ -79,7 +79,7 @@
 	break;
 	  case "PRO":
 	  #>
-	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://123.51.196.23/NapHub/Sites/UserSites/Sites" ServiceUrls="http://10.99.99.51:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://123.51.196.23/NapHub/Sites/UserSites/Sites" ServiceUrls="http://10.2.27.8:8788/">
 		<Domain>
 			<add Name="http://123.51.196.23/NAPLM" Path="/" />
 		</Domain>
@@ -92,7 +92,7 @@
 	break;
 	case "SIT":
 	  #>
-	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.4.106:1710/api" AccessKey="F7bddTyedTmuFFPvg4wBJNyP8Xfg89q2i+2xvE1h82E=">
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.2.44:8788/">
 		<Domain>
 			<add Name="http://nap-lm.playthefun.com" Path="/" />
 		</Domain>
