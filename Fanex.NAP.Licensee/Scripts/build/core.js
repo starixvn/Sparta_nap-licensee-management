@@ -13249,8 +13249,9 @@ var site = (function () {
         $("body").on("blur", "table tbody tr.first", function () {
             var code = $(this).attr("data-code");
             var isCheck = $("#copy-" + code).is(":checked");
+            var firstRow = $("#" + code + "-table tbody tr:eq(0)");
             if (isCheck) {
-                var error = code === "sb" ? verifySportBookBetSetting(this) : site.verifyBetSetting($(this));
+                var error = code === "sb" ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
                 if (error === 0) {
                     var table = $("#" + code + "-table");
                     var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
@@ -13288,7 +13289,6 @@ var site = (function () {
             var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
             var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
             var maxPayoutPerMatch = firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
-            console.log(maxPayoutPerMatch);
 
             table.find("input[data-key=\"MaxBet\"]").val(maxBet);
             table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
