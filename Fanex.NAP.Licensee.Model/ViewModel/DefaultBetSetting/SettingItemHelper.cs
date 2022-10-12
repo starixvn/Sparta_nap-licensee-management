@@ -30,8 +30,10 @@
 
         private const int SABA_SOCCER = 9901;
         private const int SABA_BASKETBALL = 9902;
+        private const int SABA_CRICKET = 9907;
         private const string SABA_SOCCER_NAME = "Saba Soccer";
         private const string SABA_BASKETBALL_NAME = "Saba BasketBall";
+        private const string SABA_CRICKET_NAME = "Saba Cricket";
 
         /// <summary>
         /// Convert xml content to .NET object.
@@ -116,6 +118,10 @@
                 {
                     result.Name = SABA_BASKETBALL_NAME;
                 }
+                if (sport == SABA_CRICKET)
+                {
+                    result.Name = SABA_CRICKET_NAME;
+                }
             }
 
             return result;
@@ -158,6 +164,7 @@
                     case MAXPERBALL:
                         result.MaxPerBall = alias;
                         break;
+
                     case MAXPAYOUTPERMATCH:
                         result.MaxPayoutPerMatch = alias;
                         break;
