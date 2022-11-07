@@ -573,6 +573,26 @@
                 "Mode": 1
               }
             ]
+          },
+          {
+            "DisplayKey": "lblMonitoredPlayer",
+            "FunctionKey": "PlayerSegmentation_MonitoredPlayer",
+            "Enable": false,
+            "Type": 1,
+            "Mode": 1,
+            "InputBoxType": "radio",
+            "SubFunctionKeys": [
+              {
+                "DisplayKey": "ReadOnly",
+                "FunctionKey": "PlayerSegmentation_MonitoredPlayer",
+                "Mode": 1
+              },
+              {
+                "DisplayKey": "Write",
+                "FunctionKey": "PlayerSegmentation_MonitoredPlayer_Write",
+                "Mode": 1
+              }
+            ]
           }
         ]
       },
