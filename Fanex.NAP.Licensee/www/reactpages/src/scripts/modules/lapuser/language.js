@@ -165,5 +165,6 @@ export const language = {
     "lblLeagueWinLoss": "Win Loss By League",
     "lblExtraPayout": "Extra Payout",
     lblContacts: "Contacts",
-    lblLicenseeContacts: "Licensee Contacts"
+    lblLicenseeContacts: "Licensee Contacts",
+    "lblMonitoredPlayer": "Threshold Monitoring Setting"
 }
