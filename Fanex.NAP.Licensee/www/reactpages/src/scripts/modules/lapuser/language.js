@@ -166,5 +166,6 @@ export const language = {
     "lblExtraPayout": "Extra Payout",
     lblContacts: "Contacts",
     lblLicenseeContacts: "Licensee Contacts",
-    "lblMonitoredPlayer": "Threshold Monitoring Setting"
+    "lblMonitoredPlayer": "Threshold Monitoring Setting",
+    "lblSabaVirtualSetting": "Saba Virtual Setting"
 }
