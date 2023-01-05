@@ -164,6 +164,8 @@ export const language = {
     "lblSabaVirtualSportsWinLoss": "Saba Virtual Sports Win Loss",
     "lblLeagueWinLoss": "Win Loss By League",
     "lblExtraPayout": "Extra Payout",
+    "lblBell": "Bell",
+    "lblAbnormalBet": "Abnormal Bet",
     lblContacts: "Contacts",
     lblLicenseeContacts: "Licensee Contacts",
     "lblMonitoredPlayer": "Threshold Monitoring Setting",
