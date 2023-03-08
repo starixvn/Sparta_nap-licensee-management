@@ -143,7 +143,7 @@ export class Button extends Component {
                             <input type='checkbox'
                                 checked={isRemovePullService}
                                 onChange={(e) => this.setState({ isRemovePullService: e.target.checked })} />
-                            <i>(Apply for "Gold Deluxe" and "AG Casino")</i>
+                            <i>(Apply for "AG Casino")</i>
                         </div>
                     </div>
                 }
