@@ -96,7 +96,7 @@
             }
         }
 
-        public BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId)
+        public BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId, bool option)
         {
             IEnumerable<BSSportbookItem> bSSupers;
             IEnumerable<BSSportbookItem> bSAgents;
@@ -108,6 +108,11 @@
                     bSSupers = multi.Read<BSSportbookItem>();
                     bSAgents = multi.Read<BSSportbookItem>();
                 }
+            }
+
+            if (option && agentId != 0)
+            {
+                bSSupers = bSAgents;
             }
 
             var result = new BSSportbookItemWithSuperInfo
@@ -134,6 +139,35 @@
                 {
                     IsOk = Converter.ToInt(updBSItem.ErrCode) == 0,
                     Message = updBSItem.ErrMsg
+                };
+            }
+        }
+
+        public ResultInfo CheckBetSettingSportsbook(BetSettingSportsbookItem item)
+        {
+            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingCheck"))
+            {
+                db.ExecuteNonQuery(item);
+
+                return new ResultInfo
+                {
+                    Code = Converter.ToInt(item.ErrCode),
+                    IsOk = Converter.ToInt(item.ErrCode) == 0,
+                    Message = item.ErrMsg
+                };
+            }
+        }
+
+        public ResultInfo UpdateBetSettingSportsbook(BetSettingSportsbookItem item)
+        {
+            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetLimitUpd"))
+            {
+                db.ExecuteNonQuery(item);
+
+                return new ResultInfo
+                {
+                    IsOk = Converter.ToInt(item.ErrCode) == 0,
+                    Message = item.ErrMsg
                 };
             }
         }

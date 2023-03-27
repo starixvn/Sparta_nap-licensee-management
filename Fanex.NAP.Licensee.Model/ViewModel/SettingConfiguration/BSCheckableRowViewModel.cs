@@ -1,10 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Bet setting checkable row view model.
     /// </summary>
@@ -34,8 +29,8 @@
             RowSpan = rowSpan;
 
             // Derived props
-            IsSuperDisabled = IsSuperChecked == true ? true : false;
-            IsDownlineDisabled = IsDownlineChecked == true ? true : false;
+            IsSuperDisabled = IsSuperChecked;
+            IsDownlineDisabled = IsDownlineChecked;
         }
 
         public bool IsSuperChecked { get; set; }

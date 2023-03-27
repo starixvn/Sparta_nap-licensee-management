@@ -360,9 +360,7 @@
     <Content Include="Content\build\images\icon_checked.gif" />
     <Content Include="Content\source\core\images\sprites.png" />
     <Content Include="Content\source\core\site.css" />
-    <Content Include="Content\source\selectwithsearch\selectwithsearch.css" />
-    <Content Include="Scripts\source\selectwithsearch\selectwithsearch.js" />
-    <Content Include="Content\source\selectwithsearch\selectwithsearch.min.css" />
+    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editDBSSportbookCtrl.js" />
     <Content Include="SimpleParameterTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
@@ -615,6 +613,7 @@
     <Content Include="www\reactpages\dist\js\dev\volumeControlList\volumeControlList.js.map" />
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.css.map" />
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.js.map" />
+    <Content Include="Views\SettingConfiguration\BetSetting\EditDBSSportbook.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />
@@ -773,6 +772,9 @@
     <Content Include="Content\source\core\images\loading.gif" />
     <Content Include="Content\source\core\images\user.png" />
     <Content Include="Content\source\core\site.min.css" />
+    <Content Include="Content\source\selectwithsearch\selectwithsearch.css" />
+    <Content Include="Scripts\source\selectwithsearch\selectwithsearch.js" />
+    <Content Include="Content\source\selectwithsearch\selectwithsearch.min.css" />
     <Content Include="Content\source\fanex.grid\Fanex.Grid.css" />
     <Content Include="Content\source\fanex.grid\Fanex.Grid.min.css" />
     <Content Include="Content\source\fanex.grid\Fanex.Pagination.css" />

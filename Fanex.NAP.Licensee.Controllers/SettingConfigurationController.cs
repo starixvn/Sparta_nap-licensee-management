@@ -6,14 +6,12 @@
 
 namespace Fanex.NAP.Licensee.Controllers
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Model.Comparer;
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.DTO;
@@ -21,6 +19,10 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
     using ONEbook.UM.Filters;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Setting Configuration Controller.
@@ -32,18 +34,21 @@ namespace Fanex.NAP.Licensee.Controllers
     {
         private readonly ICommonService _commonService;
         private readonly ISettingConfigurationService _settingConfigurationService;
+        private readonly IBetSettingService _betSettingService;
 
         public SettingConfigurationController()
             : base()
         {
             _commonService = new CommonService();
             _settingConfigurationService = new SettingConfigurationService();
+            _betSettingService = new BetSettingService();
         }
 
-        public SettingConfigurationController(ICommonService commonService, ISettingConfigurationService settingConfigurationService)
+        public SettingConfigurationController(ICommonService commonService, ISettingConfigurationService settingConfigurationService, IBetSettingService betSettingService)
         {
             _commonService = commonService;
             _settingConfigurationService = settingConfigurationService;
+            _betSettingService = betSettingService;
         }
 
         public ActionResult Index()
@@ -117,6 +122,52 @@ namespace Fanex.NAP.Licensee.Controllers
         }
 
         /// <summary>
+        /// Edit default bet setting.
+        /// </summary>
+        /// <param name="productType">Product type.</param>
+        /// <returns>Partial view.</returns>
+        public PartialViewResult EditDefaultBetSetting(int productType)
+        {
+            const string rootPath = "BetSetting/";
+            switch (productType)
+            {
+                case SportType.SportBook:
+                    return PartialView(rootPath + "EditDBSSportbook");
+                case SportType.NumberGame:
+                    return PartialView(rootPath + "EditDBSNumberGame");
+                case SportType.Keno:
+                    return PartialView(rootPath + "EditDBSKeno");
+                default:
+                    return PartialView(rootPath + "UnsupportedFunction");
+            }
+        }
+
+        public JsonResult GetDefaultBetSetting(GetDefaultBetSettingViewModel model)
+        {
+            var superLicensee = _commonService.GetSuperLicenseeList(model.LicenseeName).SingleOrDefault(_ => _.Id == model.CustId);
+
+            if (superLicensee == null)
+            {
+                return Json("Unknown Default Bet Setting!", JsonRequestBehavior.AllowGet);
+            }
+
+            var currencyId = superLicensee.ExchangeId;
+            var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(model.LicenseeName, currencyId, model.AgentId));
+
+            switch (model.ProductTypeId)
+            {
+                case SportType.SportBook:
+                    return Json(viewModel.Sportbook.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                case SportType.NumberGame:
+                    return Json(viewModel.NumberGame.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                case SportType.Keno:
+                    return Json(viewModel.Keno.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                default:
+                    return Json("Unknown Default Bet Setting!", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
         /// Get edit setting data.
         /// </summary>
         /// <param name="settingConfigVM">Setting config filter view model.</param>
@@ -126,8 +177,9 @@ namespace Fanex.NAP.Licensee.Controllers
             switch (settingConfigVM.ProdId)
             {
                 case SportType.SportBook:
-                    BSSportbookItemWithSuperInfo lstSportbookItems = _settingConfigurationService.GetBSSportbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
-                    BSSportbookViewModel sportBookVM = new BSSportbookViewModel(lstSportbookItems, _commonService.GetSportbookGameTypeList);
+                    BSSportbookItemWithSuperInfo sportBookItems = _settingConfigurationService
+                                                                    .GetBSSportbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId, settingConfigVM.Option);
+                    BSSportbookViewModel sportBookVM = new BSSportbookViewModel(sportBookItems, _commonService.GetSportbookGameTypeList);
                     return Json(sportBookVM, JsonRequestBehavior.AllowGet);
                 case SportType.NumberGame:
                     IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
@@ -171,26 +223,44 @@ namespace Fanex.NAP.Licensee.Controllers
         [HttpPost]
         public JsonResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
         {
-            var updItem = new UpdateBetSettingItem(
-                sportbookVM.CustId,
-                sportbookVM.SportBetSetting.SportTypeId,
-                sportbookVM.SportBetSetting.BetTypeId,
-                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMinBet),
-                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxBet),
-                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxPerMatch),
-                Converter.ToDecimal(sportbookVM.SportBetSetting.AgentMaxPayoutPerMatch),
-                sportbookVM.IsApplyExistingMemberChecked,
-                sportbookVM.AgentId,
-                sportbookVM.IsAgentOnly,
-                true,
-                true,
-                true,
-                true
-                );
+            var updateItem = new BetSettingSportsbookItem
+            {
+                CustId = sportbookVM.CustId,
+                SportTypeId = sportbookVM.SportBetSetting.SportTypeId,
+                BetTypeId = sportbookVM.SportBetSetting.BetTypeId,
+                MinBet = Converter.ToDecimal(sportbookVM.SportBetSetting.MinBet),
+                MaxBet = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxBet),
+                MaxPerMatch = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPerMatch),
+                ExistedMember = sportbookVM.ExistedMember,
+                AgentId = sportbookVM.AgentId,
+                MaxPayoutPerMatch = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPayoutPerMatch),
+                Option = sportbookVM.Option,
+                IsNewMember = sportbookVM.IsNewMember,
+                DBSRows = sportbookVM.DBSRows
+            };
 
-            ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
+            ResultInfo result = _settingConfigurationService.UpdateBetSettingSportsbook(updateItem);
 
             return new JsonResult { Data = new UpdateBSResultViewModel(sportbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+        }
+
+        [HttpPost]
+        public JsonResult CheckBetSettingSportbook(BSSportbookViewModel sportbookVM)
+        {
+            var updateItem = new BetSettingSportsbookItem
+            {
+                CustId = sportbookVM.CustId,
+                AgentId = sportbookVM.AgentId,
+                Option = sportbookVM.Option,
+                IsNewMember = sportbookVM.IsNewMember,
+                ExistedMember = sportbookVM.ExistedMember,
+                DBSRows = sportbookVM.DBSRows,
+                BSRows = sportbookVM.BSRows
+            };
+
+            ResultInfo result = _settingConfigurationService.CheckBetSettingSportsbook(updateItem);
+
+            return new JsonResult { Data = result };
         }
 
         /// <summary>
@@ -209,7 +279,7 @@ namespace Fanex.NAP.Licensee.Controllers
                 MaxBet = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxBet),
                 MaxPerMatch = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxPerMatch),
                 MaxPerBall = Converter.ToDecimal(numberGameVM.SportBetSetting.MaxPerBall),
-                ExistedMember = numberGameVM.IsApplyExistingMemberChecked
+                ExistedMember = numberGameVM.ExistedMember
             };
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
@@ -234,7 +304,7 @@ namespace Fanex.NAP.Licensee.Controllers
                 Converter.ToDecimal(kenoVM.SportBetSetting.MaxPerMatch),
                 kenoVM.IsEnableChecked,
                 kenoVM.IsDownlineChecked,
-                kenoVM.IsApplyExistingMemberChecked);
+                kenoVM.ExistedMember);
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
@@ -257,7 +327,14 @@ namespace Fanex.NAP.Licensee.Controllers
         [AjaxRequest]
         public ActionResult GetSuperLicenseeList(string siteName)
         {
-            return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
+            var superLicenseeItems = _commonService.GetSuperLicenseeList(siteName);
+
+            foreach (var item in superLicenseeItems)
+            {
+                item.Name = $"{item.CurrencyName} ({item.Name})";
+            }
+
+            return Json(superLicenseeItems, JsonRequestBehavior.AllowGet);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
@@ -283,7 +360,7 @@ namespace Fanex.NAP.Licensee.Controllers
                 ProductTypeList = _commonService.GetProductTypeList,
                 AgentList = _commonService.GetLicenseeAgentList(_commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name).FirstOrDefault().Id)
             },
-            JsonRequestBehavior.AllowGet);;
+            JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

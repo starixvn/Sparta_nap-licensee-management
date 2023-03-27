@@ -39,32 +39,6 @@
             decimal minBet,
             decimal maxBet,
             decimal maxPermatch,
-            decimal maxPayoutPerMatch,
-            bool isApplyExistingMemberChecked,
-            int agentId, 
-            bool isAgentOnly,
-            bool updateMinBet,
-            bool updateMaxBet,
-            bool updateMaxPayoutPM,
-            bool updateMBM)
-            : this(custId, sportTypeId, betTypeId, minBet, maxBet, maxPermatch, isApplyExistingMemberChecked)
-        {
-            AgentId = agentId;
-            MaxPayoutPerMatch = maxPayoutPerMatch;
-            UpdateMinBet = updateMinBet;
-            UpdateMaxBet = updateMaxBet;
-            UpdateMPM = updateMBM;
-            UpdateMaxPayoutPM = updateMaxPayoutPM;
-            IsAgentOnly = isAgentOnly;
-        }
-
-        public UpdateBetSettingItem(
-            int custId,
-            int sportTypeId,
-            int betTypeId,
-            decimal minBet,
-            decimal maxBet,
-            decimal maxPermatch,
             bool isSuperChecked,
             bool isDownlineChecked,
             bool isApplyExistingMemberChecked)
@@ -91,18 +65,6 @@
         public decimal MaxPayoutPerMatch { get; set; }
 
         public bool ExistedMember { get; set; }
-
-        public bool IsAgentOnly { get; set; }
-
-        public int AgentId { get; set; }
-
-        public bool UpdateMinBet { get; set; }
-
-        public bool UpdateMaxBet { get; set; }
-
-        public bool UpdateMPM { get; set; }
-
-        public bool UpdateMaxPayoutPM { get; set; }
 
         public bool Enable { get; set; }
 

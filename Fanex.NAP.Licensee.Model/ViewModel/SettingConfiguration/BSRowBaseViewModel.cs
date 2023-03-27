@@ -1,10 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Bet setting row base view model.
     /// </summary>
@@ -47,9 +42,9 @@
             string minBet,
             string maxBet,
             string maxPerMatch,
-            string agentMinBet,
-            string agentMaxBet,
-            string agentMaxPerMatch,
+            string upLineMinBet,
+            string upLineMaxBet,
+            string upLineMaxPerMatch,
             bool isRowSelected)
         {
             SportTypeId = sportTypeId;
@@ -62,9 +57,9 @@
             MaxBet = maxBet;
             MaxPerMatch = maxPerMatch;
 
-            AgentMinBet = agentMinBet;
-            AgentMaxBet = agentMaxBet;
-            AgentMaxPerMatch = agentMaxPerMatch;
+            UpLineMinBet = upLineMinBet;
+            UpLineMaxBet = upLineMaxBet;
+            UpLineMaxPerMatch = upLineMaxPerMatch;
 
             IsRowSelected = isRowSelected;
 
@@ -90,12 +85,12 @@
 
         public bool IsRowDisabled { get; set; }
 
-        public string AgentMinBet { get; set; }
+        public string UpLineMinBet { get; set; }
 
-        public string AgentMaxBet { get; set; }
+        public string UpLineMaxBet { get; set; }
 
-        public string AgentMaxPerMatch { get; set; }
+        public string UpLineMaxPerMatch { get; set; }
 
-        public string AgentMaxPayoutPerMatch { get; set; }
+        public string UpLineMaxPayoutPerMatch { get; set; }
     }
 }

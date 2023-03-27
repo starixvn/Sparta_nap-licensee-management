@@ -4,6 +4,8 @@
     {
         public bool IsOk { get; set; }
 
+        public int Code { get; set; }
+
         public string Message { get; set; }
     }
 }

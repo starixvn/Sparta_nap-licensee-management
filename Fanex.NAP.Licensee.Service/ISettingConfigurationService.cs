@@ -15,6 +15,10 @@
 
         ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem);
 
-        BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId);
+        ResultInfo UpdateBetSettingSportsbook(BetSettingSportsbookItem item);
+
+        ResultInfo CheckBetSettingSportsbook(BetSettingSportsbookItem item);
+
+        BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId, bool option);
     }
 }

@@ -28,9 +28,10 @@
   </Function>
   <Function Name="Site.Nap.Licensee.SettingConfiguration">
 
-    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList " DbName="DBCUST.CustDB.bodbLicenseeNet">
+    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCUST.CustDB.bodbLicenseeNet">
       <Mapping DataField="custid" ObjectProperty="Id" />
       <Mapping DataField="username" ObjectProperty="Name" />
+      <Mapping DataField="currency" ObjectProperty="CurrencyName" />
     </Setting>
 
     <Setting Key="NAP_LM_LicenseePositionTakingSel" SpName="NAP_LM_LicenseePositionTakingSel" DbName="DBCUST.CustDB.bodbLicenseeNet">
@@ -42,6 +43,10 @@
     <Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>.
     <Setting Key="NAP_LM_LicenseeBetSettingUpd" SpName="NAP_LM_LicenseeBetSettingUpd" DbName="DBCUST.CustDB.bodbLicenseeNet" TimeOut="300">
+    </Setting>
+    <Setting Key="NAP_LM_LicenseeBetLimitUpd" SpName="NAP_LM_LicenseeBetLimitUpd" DbName="DBCUST.CustDB.bodbLicenseeNet">
+    </Setting>
+    <Setting Key="NAP_LM_LicenseeBetSettingCheck" SpName="NAP_LM_LicenseeBetSettingCheck" DbName="DBCUST.CustDB.bodbLicenseeNet">
     </Setting>
 	  <Setting Key="NAP_LM_LicenseeSelAgentList" SpName="NAP_LM_LicenseeSelAgentList" DbName="DBCUST.CustDB.bodbLicenseeNet">
 		  <Mapping DataField="CustID" ObjectProperty="Id" />

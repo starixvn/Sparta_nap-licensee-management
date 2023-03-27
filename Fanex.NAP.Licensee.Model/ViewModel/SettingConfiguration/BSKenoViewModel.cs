@@ -1,11 +1,8 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Edit bet setting keno view model.
@@ -32,9 +29,8 @@
                 IsDownlineChecked = false;
             }
 
-            IsEnableDisabled = IsEnableChecked == true ? true : false;
-            IsDownlineDisabled = IsDownlineChecked == true ? true : false;
-            IsApplyExistingMemberChecked = false;
+            IsEnableDisabled = IsEnableChecked;
+            IsDownlineDisabled = IsDownlineChecked;
         }
 
         public bool IsEnableChecked { get; set; }

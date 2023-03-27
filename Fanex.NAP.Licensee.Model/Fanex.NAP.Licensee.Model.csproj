@@ -171,7 +171,9 @@
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
     <Compile Include="Criteria\PageModel.cs" />
+    <Compile Include="Criteria\SettingConfiguration\BetSettingSportsbookItem.cs" />
     <Compile Include="Criteria\SettingConfiguration\GetLicenseeAgentList.cs" />
+    <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SuspendSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\NewSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
@@ -233,7 +235,6 @@
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
     <Compile Include="DTO\SettingConfiguration\NumberGameItem.cs" />
-    <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
     <Compile Include="DTO\SSOLogin.cs" />
     <Compile Include="DTO\LicenseeVendor.cs" />
     <Compile Include="DTO\SystemItem.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\BetTicketVolumeControl\SearchVolumeControlViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\GetDefaultBetSettingViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

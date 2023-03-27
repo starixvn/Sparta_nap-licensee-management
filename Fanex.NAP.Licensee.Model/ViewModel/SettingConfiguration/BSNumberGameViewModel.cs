@@ -1,10 +1,8 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
-    using System;
+    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
 
     /// <summary>
     /// Bet setting number game view model.
@@ -51,8 +49,6 @@
 
                 BSRows.Add(numberGameRowVM);
             }
-
-            IsApplyExistingMemberChecked = false;
         }
 
         public IList<BSNumberGameRowViewModel> BSRows { get; set; }

@@ -84,11 +84,12 @@
         {
             get
             {
-                IList<string> betPT = new List<string>() { "Bet setting", "PT" };
+                IList<string> betPT = new List<string> { "Currency Bet Setting", "PT" };
+                IList<string> betSettingSportsbook = new List<string> { "Currency Bet Setting", "Player Bet Setting" };
 
-                return new List<ProductTypeItem>()
+                return new List<ProductTypeItem>
                 {
-                    new ProductTypeItem(1, "Sportsbook", betPT),
+                    new ProductTypeItem(1, "Sportsbook", betSettingSportsbook),
                     new ProductTypeItem(161, "Number Game", betPT),
                     new ProductTypeItem(202, "Keno", betPT),
                 };
