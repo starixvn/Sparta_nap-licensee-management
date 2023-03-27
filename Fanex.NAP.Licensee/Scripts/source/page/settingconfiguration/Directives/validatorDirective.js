@@ -4,6 +4,10 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
     return {
         require: 'ngModel',
         restrict: 'A',
+        scope: {
+            agentId: "=",
+            isDefault: "="
+        },
         link: function (scope, elem, attrs, ngModel) {
 
             function formatNumber(value) {
@@ -14,40 +18,46 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
             }
 
             var validFn = function (value) {
+                if (value === "") {
+                    return false;
+                }
                 var min = parseInt(formatNumber(attrs['min']));
                 var max = parseInt(formatNumber(attrs['max']));
+                var uplinemin = parseInt(formatNumber(attrs['uplinemin']));
+                var uplinemax = parseInt(formatNumber(attrs['uplinemax']));
 
                 var numValue = parseInt(formatNumber(value));
-                return numValue >= min && (numValue <= max || attrs['max'] === "*");
+                return numValue >= min
+                    && (numValue <= max || attrs['max'] === "*")
+                    && (numValue >= uplinemin || attrs['uplinemin'] === "*")
+                    && (numValue <= uplinemax || attrs['uplinemax'] === "*");
             };
 
-            attrs.$observe('min', function (newValue) {
+            var setValidation = function (newValue) {
                 var valid = validFn($(elem).val());
 
                 ngModel.$setValidity('bsValidation', valid);
 
                 if (!valid) {
                     ngModel.$setDirty(true);
-
                 }
+
                 return newValue;
+            }
 
-            });
+            attrs.$observe('min', setValidation);
 
-            attrs.$observe('max', function (newValue) {
-                var valid = validFn($(elem).val());
+            attrs.$observe('max', setValidation);
 
-                ngModel.$setValidity('bsValidation', valid);
+            attrs.$observe('uplinemin', setValidation);
 
-                if (!valid) {
-                    ngModel.$setDirty(true);
-
-                }
-                return newValue;
-
-            });
+            attrs.$observe('uplinemax', setValidation);
 
             ngModel.$parsers.unshift(function (inputValue) {
+                if (inputValue === "") {
+                    return "";
+                }
+
                 var number = formatNumber(inputValue);
                 var el = elem[0];
 
@@ -75,8 +85,16 @@ angular.module('settingConfiguration.directives', []).directive('bsValidation', 
 
             //For model -> DOM validation
             ngModel.$formatters.unshift(function (value) {
+                if (scope.agentId === 0 && !scope.isDefault) {
+                    return "";
+                }
                 var valid = validFn(value);
                 ngModel.$setValidity('bsValidation', valid);
+
+                if (value === "") {
+                    return "";
+                }
+
                 var number = formatNumber(value);
 
                 return $filter('number')(number);

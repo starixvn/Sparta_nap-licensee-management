@@ -1,4 +1,4 @@
-﻿/* global settingConfigurationApp, editBSNavigatorFunc, editBSModelFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* global settingConfigurationApp, editBSNavigatorFunc, editBSModelFunc, editBSApplyForPlayerFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
 
@@ -8,6 +8,8 @@ settingConfigurationApp.controller("editBSNumberGameCtrl",['$scope','$injector',
     $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSModelFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
 

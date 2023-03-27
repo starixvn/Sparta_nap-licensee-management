@@ -1,19 +1,19 @@
-﻿/* exported editBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc, 
-editBSNextFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
+﻿/* exported editBSModelFunc, editDBSModelFunc, editBSNavigatorFunc, editBSAllSportFunc, editBSRowCheckableFunc, editBSRowCheckableSuperDownlineFunc,
+editBSNextFunc, editBSNextEnabilityFunc, editBSApplyForPlayerFunc, editBSNextConstraintsFunc */
 "use strict";
 // Model function
-var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) {
+var editBSModelFunc = function ($scope, $http, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = {};
+    $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
     $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
 
     function getAgentsHeader() {
         var res = "";
-        var agentId = shareSettingsService.getWorkingContext().AgentId;
         var agentName = shareSettingsService.getWorkingContext().AgentName;
         var agentList = shareSettingsService.getWorkingContext().AgentList;
 
-        if (agentId === 0) {
+        if ($scope.agentId === 0) {
             if (agentList.length >= 7) {
                 for (var i = 1; i < 7; i++) {
                     res += agentList[i].Name + ", ";
@@ -53,7 +53,8 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
                 prodId: shareSettingsService.getWorkingContext().ProdId,
-                agentId: shareSettingsService.getWorkingContext().AgentId
+                agentId: $scope.agentId,
+                option: $scope.option
             },
             headers: getAjaxHeader()
         })
@@ -61,22 +62,87 @@ var editBSModelFunc = function ($scope, $http, $location, shareSettingsService) 
             shareSettingsService.saveOrgSettings(angular.copy(data));
             if ($scope.buttonStatus.IsBack) {
                 $scope.editBS = shareSettingsService.getCurSettings();
+                $scope.editBS.DBSRows = {};
+                if ($scope.editBS.isCopyAllFromOne === true) {
+                    $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
+                }
             }
             else {
-                $scope.editBS = data;
+                angular.extend($scope.editBS, data);
             }
         });
-
 };
-editBSModelFunc.$inject = ['$scope', '$http', '$location', 'shareSettingsService'];
+editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
+
+var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
+    $scope.editBS = {};
+    $scope.isDBS = true;
+    $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
+
+    function getAjaxHeader() {
+        return {
+            'FROM-ANGULAR': 'true',
+            'X-Requested-With': 'XMLHttpRequest',
+            'If-Modified-Since': '0'
+        };
+    }
+
+    $http.get(
+        "GetDefaultBetSetting",
+        {
+            params: {
+                licenseeName: shareSettingsService.getWorkingContext().LicenseeName,
+                custId: shareSettingsService.getWorkingContext().CustId,
+                agentId: $scope.agentId === 0 ? null : $scope.agentId,
+                productTypeId: shareSettingsService.getWorkingContext().ProdId
+            },
+            headers: getAjaxHeader()
+        })
+        .success(function (data) {
+            var bsRows = {
+                BSRows: []
+            };
+
+            $.each(data, function (index, element) {
+                bsRows.BSRows.push({
+                    MinBet: element.MinBet || '',
+                    MaxBet: element.MaxBet || '',
+                    MaxPerMatch: element.MaxPerMatch || '',
+                    MaxPerBall: element.MaxPerBall || '',
+                    MaxPayoutPerMatch: element.MaxPayoutPerMatch || '',
+                    SportTypeId: element.SportTypeId,
+                    BetTypeId: element.BetType,
+                    SportTypeId: element.SportOrGame.Id,
+                    SportTypeName: element.SportOrGame.Name,
+                    IsRowDisabled: false,
+                    IsRowSelected: false,
+                    UpLineMaxBet: shareSettingsService.getCurSettings().BSRows[index].MaxBet,
+                    UpLineMaxPayoutPerMatch: shareSettingsService.getCurSettings().BSRows[index].MaxPayoutPerMatch,
+                    UpLineMaxPerMatch: shareSettingsService.getCurSettings().BSRows[index].MaxPerMatch,
+                    UpLineMinBet: shareSettingsService.getCurSettings().BSRows[index].MinBet
+                });
+            });
+            shareSettingsService.saveOrgSettings(angular.copy(bsRows));
+
+            angular.extend($scope.editBS, bsRows);
+        });
+}
+editDBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
+
 // Navigator function
 var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
     // Redirect if wrong context
     var selectedContext = shareSettingsService.getWorkingContext();
-    if (selectedContext.FuncName !== ContextFunc.BetSetting) {
+    if (selectedContext.FuncName !== ContextFunc.BetSetting && selectedContext.FuncName !== ContextFunc.DefaultBetSetting) {
         $location.path('/');
         return;
     }
+
+    $scope.backEditBS = function () {
+        $scope.buttonStatus.IsBack = true;
+        shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
+        $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
+    };
 };
 editBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService', 'ContextFunc'];
 // AllSport function
@@ -122,10 +188,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MaxBet: orgBSRows[index].MaxBet,
                 MaxPerMatch: orgBSRows[index].MaxPerMatch,
                 MaxPayoutPerMatch: orgBSRows[index].MaxPayoutPerMatch,
-                AgentMinBet: orgBSRows[index].AgentMinBet,
-                AgentMaxBet: orgBSRows[index].AgentMaxBet,
-                AgentMaxPerMatch: orgBSRows[index].AgentMaxPerMatch,
-                AgentMaxPayoutPerMatch: orgBSRows[index].AgentMaxPayoutPerMatch,
+                UpLineMinBet: orgBSRows[index].UpLineMinBet,
+                UpLineMaxBet: orgBSRows[index].UpLineMaxBet,
+                UpLineMaxPerMatch: orgBSRows[index].UpLineMaxPerMatch,
+                UpLineMaxPayoutPerMatch: orgBSRows[index].UpLineMaxPayoutPerMatch,
                 MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: orgBSRows[index].IsSuperChecked !== undefined ? orgBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: orgBSRows[index].IsDownlineChecked !== undefined ? orgBSRows[index].IsDownlineChecked : undefined
@@ -136,10 +202,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 MaxBet: curBSRows[index].MaxBet,
                 MaxPerMatch: curBSRows[index].MaxPerMatch,
                 MaxPayoutPerMatch: curBSRows[index].MaxPayoutPerMatch,
-                AgentMinBet: curBSRows[index].AgentMinBet,
-                AgentMaxBet: curBSRows[index].AgentMaxBet,
-                AgentMaxPerMatch: curBSRows[index].AgentMaxPerMatch,
-                AgentMaxPayoutPerMatch: curBSRows[index].AgentMaxPayoutPerMatch,
+                UpLineMinBet: curBSRows[index].UpLineMinBet,
+                UpLineMaxBet: curBSRows[index].UpLineMaxBet,
+                UpLineMaxPerMatch: curBSRows[index].UpLineMaxPerMatch,
+                UpLineMaxPayoutPerMatch: curBSRows[index].UpLineMaxPayoutPerMatch,
                 MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
                 IsSuperChecked: curBSRows[index].IsSuperChecked !== undefined ? curBSRows[index].IsSuperChecked : undefined,
                 IsDownlineChecked: curBSRows[index].IsDownlineChecked !== undefined ? curBSRows[index].IsDownlineChecked : undefined
@@ -163,10 +229,10 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
             curBSRows[index].MaxPayoutPerMatch = orgBSRows[index].MaxPayoutPerMatch;
             curBSRows[index].IsSuperChecked = orgBSRows[index].IsSuperChecked;
             curBSRows[index].IsDownlineChecked = orgBSRows[index].IsDownlineChecked;
-            curBSRows[index].AgentMinBet = orgBSRows[index].AgentMinBet;
-            curBSRows[index].AgentMaxBet = orgBSRows[index].AgentMaxBet;
-            curBSRows[index].AgentMaxPerMatch = orgBSRows[index].AgentMaxPerMatch;
-            curBSRows[index].AgentMaxPayoutPerMatch = orgBSRows[index].AgentMaxPayoutPerMatch;
+            curBSRows[index].UpLineMinBet = orgBSRows[index].UpLineMinBet;
+            curBSRows[index].UpLineMaxBet = orgBSRows[index].UpLineMaxBet;
+            curBSRows[index].UpLineMaxPerMatch = orgBSRows[index].UpLineMaxPerMatch;
+            curBSRows[index].UpLineMaxPayoutPerMatch = orgBSRows[index].UpLineMaxPayoutPerMatch;
         }
     });
 
@@ -177,7 +243,7 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 hasError = true;
             }
         });
-        return scope.editBS.IsApplyExistingMemberChecked || !hasError;
+        return scope.editBS.IsApplyForMembersChecked || !hasError;
     }
     return false;
 };
@@ -190,34 +256,36 @@ var editCheckedRows = function (curBSRows) {
 };
 // Row is checkable
 var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
-    $scope.isCopyAll = false;
-    $scope.listener = null;
+    $scope.editBS.isCopyAllFromOne = false;
 
     $scope.copyAllFromOne = function () {
-        if ($scope.isCopyAll === true) {
-            // Reset AllSport
-            $scope.isAllSportChecked = true;
+        $scope.editBS.isCopyAllFromOne = !$scope.editBS.isCopyAllFromOne;
+        $scope.isAllSportChecked = $scope.editBS.isCopyAllFromOne;
+
+        var copyElem = angular.element(document.querySelector('#copy_setting_icon'));
+        if ($scope.editBS.isCopyAllFromOne === true) {
+            copyElem.addClass('icon-copy-setting-checked');
             // TODO: Why ng-change not raised?
             $scope.checkAllSports();
             $.each($scope.editBS.BSRows, function (index, element) {
-                // Disable all checkboxes 1 -> n
+                // Disable all checkboxes 0 -> n
                 if (index === 0) {
-                    element.IsRowSelected = true;
-                    $scope.listener = $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
+                    element.IsRowDisabled = false;
+                    $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
                 }
                 else {
-                    element.IsRowSelected = true;
                     element.IsRowDisabled = true;
                     element.IsSuperDisabled = element.IsSuperChecked;
                 }
+                element.IsRowSelected = true;
             });
         }
         else {
             // Reset AllSport
-            $scope.isAllSportChecked = false;
+            copyElem.removeClass('icon-copy-setting-checked');
             $.each($scope.editBS.BSRows, function (index, element) {
                 if (index === 0) {
-                    $scope.listener();
+                    $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
                 }
                 element.IsRowSelected = false;
                 element.IsRowDisabled = false;
@@ -226,26 +294,14 @@ var editBSRowCheckableFunc = function ($scope, shareSettingsService) {
     };
 
     $scope.copyBS = function () {
-        if ($scope.isCopyAll === true) {
+        if ($scope.isAllSportChecked === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.AgentMinBet = firstRowData.AgentMinBet;
-                element.AgentMaxBet = firstRowData.AgentMaxBet;
-                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
-                element.AgentMaxPayoutPerMatch = firstRowData.AgentMaxPayoutPerMatch;
+                element.MinBet = firstRowData.MinBet;
+                element.MaxBet = firstRowData.MaxBet;
+                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.MaxPayoutPerMatch = firstRowData.MaxPayoutPerMatch;
             });
-        }
-    };
-
-    $scope.applyExistingMembers = function () {
-        var curBSRows = $scope.editBS.BSRows;
-        var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
-        var nextEnable = getNextEnable($scope, curBSRows, orgBSRows);
-        if ($scope.editBS.BSRows.length === 1) {
-            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || nextEnable;
-        }
-        else {
-            $scope.buttonStatus.isNextEnabled = nextEnable;
         }
     };
 };
@@ -257,18 +313,19 @@ var editBSRowCheckableSuperDownlineFunc = function ($scope, $injector) {
 
     // Override
     $scope.copyBS = function () {
-        if ($scope.isCopyAll === true) {
+        if ($scope.isAllSportChecked === true) {
             var firstRowData = $scope.editBS.BSRows[0];
             $.each($scope.editBS.BSRows, function (index, element) {
-                element.AgentMinBet = firstRowData.AgentMinBet;
-                element.AgentMaxBet = firstRowData.AgentMaxBet;
-                element.AgentMaxPerMatch = firstRowData.AgentMaxPerMatch;
-                element.AgentMaxPayoutPerMatch = firstRowData.AgentMaxPayoutPerMatch;
+                element.MinBet = firstRowData.MinBet;
+                element.MaxBet = firstRowData.MaxBet;
+                element.MaxPerMatch = firstRowData.MaxPerMatch;
+                element.MaxPayoutPerMatch = firstRowData.MaxPayoutPerMatch;
             });
         }
     };
 };
 editBSRowCheckableSuperDownlineFunc.$inject = ['$scope', '$injector'];
+
 var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService) {
     // Private functions
     var checkDirty = function () {
@@ -277,7 +334,7 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
-            if ($scope.isCopyAll === true) {
+            if ($scope.isAllSportChecked === true) {
                 editCheckedRows($scope.editBS.BSRows);
                 $scope.buttonStatus.isNextEnabled = true;
                 return;
@@ -291,59 +348,132 @@ var editBSNextEnabilityFunc = function ($scope, $location, shareSettingsService)
     $scope.$watch("editBS.BSRows", checkDirty, true);
 };
 editBSNextEnabilityFunc.$inject = ['$scope', '$location', 'shareSettingsService'];
-// Check Next constraints
-var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsService) {
-    var getValidNumber = function (strValue) {
-        if (strValue === null || strValue === "") {
-            return "0";
+
+var editBSApplyForPlayerFunc = function ($scope, shareSettingsService) {
+    $scope.editBS.IsApplyForMembersChecked = $scope.option ? true : false;
+    $scope.editBS.applyForMember = $scope.option ? 1 : null;
+    $scope.editBS.existedMember = false;
+    $scope.editBS.isNewMember = false;
+
+    $scope.applyForMembers = function () {
+        if ($scope.editBS.IsApplyForMembersChecked) {
+            $scope.editBS.applyForMember = 1;
+        } else {
+            $scope.editBS.applyForMember = null;
+        }
+        var curBSRows = $scope.editBS.BSRows;
+        var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+        var nextEnable = getNextEnable($scope, curBSRows, orgBSRows);
+        if ($scope.editBS.BSRows.length === 1) {
+            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyForMembersChecked || nextEnable;
         }
         else {
-            return strValue;
+            $scope.buttonStatus.isNextEnabled = nextEnable;
         }
     };
+
+    var checkApplyForMember = function () {
+        if ($scope.editBS.applyForMember == 1) {
+            $scope.editBS.existedMember = true;
+            $scope.editBS.isNewMember = true;
+        } else if ($scope.editBS.applyForMember == 2) {
+            $scope.editBS.existedMember = false;
+            $scope.editBS.isNewMember = true;
+        } else {
+            $scope.editBS.existedMember = false;
+            $scope.editBS.isNewMember = false;
+        }
+    }
+    $scope.$watch("editBS.applyForMember", checkApplyForMember, true);
+}
+editBSApplyForPlayerFunc.$inject = ['$scope', 'shareSettingsService'];
+
+// Check Next constraints
+var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsService) {
 
     $scope.nextReviewBS = function () {
         // Check constraints on submit
         var hasError = false;
         var curBSRows = $scope.editBS.BSRows;
 
-        $.each(curBSRows, function (index, element) {
-            if (element.IsRowSelected === true) {
+        for (var index = 0; index < curBSRows.length; index++) {
+            // Check DBS
+            if (($scope.isDBS === true && $scope.editBS.isCopyAllFromOne)
+                && curBSRows[index].MinBet === ""
+                && curBSRows[index].MaxBet === ""
+                && curBSRows[index].MaxPerMatch === ""
+                && curBSRows[index].MaxPayoutPerMatch === "") {
+                break;
+            }
 
+            // Check valid data
+            if (curBSRows[index].MinBet === ""
+                || curBSRows[index].MaxBet === ""
+                || curBSRows[index].MaxPerMatch === ""
+            ) {
+                hasError = true;
+                break;
+            }
+
+            if (curBSRows[index].IsRowSelected === true) {
                 // Check is dirty
-                if (parseFloat(getValidNumber(curBSRows[index].MinBet)) > parseFloat(getValidNumber(curBSRows[index].MaxBet))
-                    || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
-                    || parseFloat(getValidNumber(curBSRows[index].AgentMinBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxBet))
-                    || parseFloat(getValidNumber(curBSRows[index].AgentMaxBet)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch))) {
+                if (parseFloat(curBSRows[index].MinBet) > parseFloat(curBSRows[index].MaxBet)
+                    || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerMatch)) {
                     hasError = true;
-                    return false;
+                    break;
+                }
+
+                // If Product = Sportsbook && agentId != 0 => Check
+                if ($scope.agentId !== 0
+                    && shareSettingsService.getWorkingContext().ProdId === 1
+                    && parseFloat(curBSRows[index].MinBet) < parseFloat(curBSRows[index].UpLineMinBet)
+                    || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].UpLineMaxBet)
+                    || parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].UpLineMaxPerMatch)
+                    || parseFloat(curBSRows[index].MaxPayoutPerMatch) > parseFloat(curBSRows[index].UpLineMaxPayoutPerMatch)
+                ) {
+                    hasError = true;
+                    break;
                 }
 
                 // If MaxPerBall exists => Check
-                if (curBSRows[index].MaxPerBall !== undefined) {
-                    if (parseFloat(getValidNumber(curBSRows[index].MaxPerBall)) > parseFloat(getValidNumber(curBSRows[index].MaxPerMatch))
-                        || parseFloat(getValidNumber(curBSRows[index].MaxBet)) > parseFloat(getValidNumber(curBSRows[index].MaxPerBall))) {
+                if (curBSRows[index].MaxPerBall) {
+                    if (curBSRows[index].MaxPerBall === ""
+                        || parseFloat(curBSRows[index].MaxPerBall) > parseFloat(curBSRows[index].MaxPerMatch)
+                        || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerBall)
+                    ) {
                         hasError = true;
-                        return false;
+                        break;
                     }
                 }
 
                 // If MaxPayoutPerMatch exists => Check
-                if (curBSRows[index].MaxPayoutPerMatch !== undefined) {
-                    if (parseFloat(getValidNumber(curBSRows[index].AgentMaxPerMatch)) > parseFloat(getValidNumber(curBSRows[index].AgentMaxPayoutPerMatch))) 
-                    {
+                if (curBSRows[index].MaxPayoutPerMatch) {
+                    if (curBSRows[index].MaxPayoutPerMatch === "" || parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].MaxPayoutPerMatch)
+                    ) {
                         hasError = true;
-                        return false;
+                        break;
                     }
                 }
             }
-        });
+        }
 
         if (hasError === true) {
             return;
         }
-        shareSettingsService.saveCurSettings($scope.editBS);
-        $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
+
+        if ($scope.isDBS === true) {
+            angular.extend(shareSettingsService.getCurSettings(), { DBSRows: angular.copy($scope.editBS.BSRows) });
+        } else {
+            shareSettingsService.saveCurSettings($scope.editBS);
+        }
+
+        if (shareSettingsService.getWorkingContext().ProdId === 1) {
+            shareSettingsService.getWorkingContext().Url = 'CheckBetSettingSportbook';
+
+            $scope.checkBS();
+        } else {
+            $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
+        }
     };
 
     $scope.changeNextButtonStatus = function () {
@@ -356,7 +486,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             $scope.editBS.IsDownlineDisabled = true;
             $scope.editBS.IsDownlineChecked = false;
-            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyExistingMemberChecked || getNextEnable($scope, curBSRows, orgBSRows);
+            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyForMembersChecked || getNextEnable($scope, curBSRows, orgBSRows);
         }
     };
 
@@ -368,7 +498,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
             var curBSRows = $scope.editBS.BSRows;
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             $scope.buttonStatus.isNextEnabled = ($scope.editBS.IsEnableChecked && !$scope.editBS.IsEnableDisabled)
-                || $scope.editBS.IsApplyExistingMemberChecked
+                || $scope.editBS.IsApplyForMembersChecked
                 || getNextEnable($scope, curBSRows, orgBSRows);
         }
     };

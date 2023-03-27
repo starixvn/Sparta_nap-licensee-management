@@ -1,7 +1,7 @@
 ﻿<div ng-controller="editBSNumberGameCtrl" class="filter-form">
     <h4>Edit Bet Setting Number Game <span class="text-highlight">({{supperUserName}})</span></h4>
     <label class="checkbox-inline">
-        <input ng-change="applyExistingMembers()" ng-model="editBS.IsApplyExistingMemberChecked" type="checkbox">
+        <input ng-change="applyForMembers()" ng-model="editBS.IsApplyForMembersChecked" type="checkbox">
         Apply existing members
     </label>
     <table class="table table-bordered table-setting">
@@ -24,16 +24,16 @@
         <tbody>
             <tr ng-repeat="item in editBS.BSRows">
                 <td>
-                    <input type="text" ng-attr-min="0" ng-attr-max="{{item.MaxBet}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-attr-uplinemin="*" ng-attr-uplinemax="*" ng-attr-min="0" ng-attr-max="{{item.MaxBet | number}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MinBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-attr-uplinemin="*" ng-attr-uplinemax="*" ng-attr-min="{{item.MinBet | number}}" ng-attr-max="{{item.MaxPerMatch | number}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MaxPerBall}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-attr-uplinemin="*" ng-attr-uplinemax="*" ng-attr-min="{{item.MaxPerBall | number}}" ng-attr-max="*" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
                 <td>
-                    <input type="text" ng-attr-min="{{item.MaxBet}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                    <input type="text" ng-attr-uplinemin="*" ng-attr-uplinemax="*" ng-attr-min="{{item.MaxBet | number}}" ng-attr-max="{{item.MaxPerMatch}}" bs-validation ng-model="item.MaxPerBall" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
                 </td>
             </tr>
             <tr>

@@ -3,7 +3,7 @@
 var settingConfigurationApp = settingConfigurationApp || {};
 // Module
 settingConfigurationApp = angular.module("settingConfiguration",
-    ["ngRoute", "ngAnimate","settingConfiguration.services", "settingConfiguration.directives", "fanex.selectwithsearch"]);
+    ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives", "fanex.selectwithsearch"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
@@ -38,12 +38,16 @@ settingConfigurationApp.config(['$routeProvider', function ($routeProvider) {
             return 'EditBetSetting/?sportType=' + params.sportType;
         }
     });
+    $routeProvider.when('/EditDefaultBetSetting/:productType', {
+        templateUrl: function (params) {
+            return 'EditDefaultBetSetting/?productType=' + params.productType;
+        }
+    });
     $routeProvider.when('/ReviewBetSetting/:sportType', {
         templateUrl: function (params) {
             return 'ReviewBetSetting/?sportType=' + params.sportType;
         }
     });
-
     $routeProvider.otherwise({
         redirectTo: '/'
     });
@@ -55,7 +59,10 @@ settingConfigurationApp.config(['$httpProvider', function ($httpProvider) {
 } ]);
 
 settingConfigurationApp.value("ContextFunc", {
-    BetSetting: "Bet setting",
+    BetSetting: "Bet Setting",
+    CurrencyBetSetting: "Currency Bet Setting",
+    PlayerBetSetting: "Player Bet Setting",
+    DefaultBetSetting: "DefaultBetSetting",
     Comm: "Comm",
     PT: "PT"
 });

@@ -7,6 +7,9 @@
         <li>Bet Setting</li>
         <li class="current">Licensee Setting</li>
     </ul>
+        <div class="pull-left">
+       <a class="btn-green" href="/BetSetting/abc"><i class="list-icon"></i>View Log</a>
+    </div>
 }
 @section HeadCss
 {
@@ -16,7 +19,7 @@
 <div ng-app="settingConfiguration" ng-controller="settingConfigurationCtrl">
     <div class="col-md-12 filter-form">
         <div class="row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <div class="row">
                     <label class="col-md-5">
                         Licensee
@@ -31,10 +34,10 @@
                     </selectwithsearch>
                 </div>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <div class="row">
                     <label class="col-md-5">
-                        Super Username
+                        Currentcy (Super)
                     </label>
                     <selectwithsearch 
                                       id="super-username"
@@ -51,31 +54,24 @@
             <div class="form-group col-md-3">
                 <div class="row">
                     <label class="col-md-5">
-                        Select Agent List
+                        Subsidiary
                     </label>
                     <selectwithsearch name="agentList"
                                       class="col-md-5"
                                       data-ng-model="filterData.selectedAgent"
                                       data-settings="agentSettings"
                                       required-settings="agentRequiredSettings"
-                                      data-ng-disabled="!isEnableAgentListSelectAndAgentOnlyCheckbox"
                                       data-ng-style="{ 'padding': 0}"
                                       >
                     </selectwithsearch>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="checkbox-inline">
-                    <input type="checkbox" id="agent-only" ng-disabled="!isEnableAgentListSelectAndAgentOnlyCheckbox" ng-model="isAgentOnly" />
-                    Agent only
-                </label>
-            </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <div class="row">
                     <label class="col-md-5">
-                        Select Product
+                        Product
                     </label>
                     <select ng-options="item.Name for item in filterData.productTypes track by item.Id"
                             ng-model="filterData.selectedProductType" ng-change="selectedProductTypeChanged()"
@@ -83,10 +79,10 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <div class="row">
                     <label class="col-md-5">
-                        Select Function
+                        Option
                     </label>
                     <select ng-options="item for item in filterData.selectedProductType.Functions track by item"
                             ng-model="filterData.selectedFunction" ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
