@@ -165,7 +165,7 @@ namespace Fanex.NAP.Licensee.Service
             switch (group)
             {
                 case SB:
-                    result.Sportbook.Add(ReadBetSettingBySport(reader));
+                    result.Sportsbook.Add(ReadBetSettingBySport(reader));
                     break;
 
                 case VS:

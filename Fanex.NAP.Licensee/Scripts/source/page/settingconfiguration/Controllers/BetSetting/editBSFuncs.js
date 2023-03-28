@@ -468,7 +468,7 @@ var editBSNextConstraintsFunc = function ($scope, $location, shareSettingsServic
         }
 
         if (shareSettingsService.getWorkingContext().ProdId === 1) {
-            shareSettingsService.getWorkingContext().Url = 'CheckBetSettingSportbook';
+            shareSettingsService.getWorkingContext().Url = 'CheckBetSettingSportsbook';
 
             $scope.checkBS();
         } else {

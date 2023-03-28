@@ -13129,7 +13129,7 @@ var site = (function () {
         return error;
     };
 
-    var verifySportBookBetSetting = function($row) {
+    var verifySportsBookBetSetting = function($row) {
         var error = 0;
         var maxPayoutPerMatch = $row.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
@@ -13168,7 +13168,7 @@ var site = (function () {
     }
 
     me.verifyInputData = function () {
-        /*sportbook,Virtual sport,Keno*/
+        /*sportsbook,Virtual sport,Keno*/
         /*reset*/
         var error = 0;
 
@@ -13192,7 +13192,7 @@ var site = (function () {
                 }
             }
         }
-        /*sport book*/
+        /*sports book*/
         if($('#sb-area').length > 0){
             var sbtable = $('#sb-table');
             sbtable.find("tbody input[data-key=\"MaxPerMatch\"]").removeClass("warning");
@@ -13202,7 +13202,7 @@ var site = (function () {
             var sbrows = sbtable.find("tbody tr");
             var numOfRows = sbrows.length;
             for (var k = 0; k < numOfRows; k++) {
-                error += verifySportBookBetSetting($(sbrows[k]));
+                error += verifySportsBookBetSetting($(sbrows[k]));
             }
         }
 
@@ -13251,7 +13251,7 @@ var site = (function () {
             var isCheck = $("#copy-" + code).is(":checked");
             var firstRow = $("#" + code + "-table tbody tr:eq(0)");
             if (isCheck) {
-                var error = code === "sb" ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+                var error = code === "sb" ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
                 if (error === 0) {
                     var table = $("#" + code + "-table");
                     var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
@@ -13278,7 +13278,7 @@ var site = (function () {
         firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
         /*copy*/
-        error = code === 'sb' ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+        error = code === 'sb' ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
 
         if (error > 0) {
             checkbox.prop("checked", false);
@@ -13335,7 +13335,7 @@ var site = (function () {
                     Id: $("#agent").val() === '' ? null : $("#agent").val(),
                     Name: $("#agent").text()
                 },
-                Sportbook: site.getInputValue("sb"),
+                Sportsbook: site.getInputValue("sb"),
                 NumberGame: site.getInputValue("ng"),
                 VirtualSport: site.getInputValue("vs"),
                 Keno: site.getInputValue("kn")

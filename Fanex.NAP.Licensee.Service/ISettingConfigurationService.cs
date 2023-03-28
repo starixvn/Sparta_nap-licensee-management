@@ -19,6 +19,6 @@
 
         ResultInfo CheckBetSettingSportsbook(BetSettingSportsbookItem item);
 
-        BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId, bool option);
+        BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(int custId, int productId, int agentId, bool option);
     }
 }

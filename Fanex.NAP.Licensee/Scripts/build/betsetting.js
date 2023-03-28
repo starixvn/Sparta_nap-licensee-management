@@ -315,7 +315,7 @@ var defaultSetting = (function () { // jshint ignore:line
         var criteria = {
             Licensee: currentSelectedLicensee,
             Currency: currentSelectedCurrency.join(),
-            ShowSportBook: showSB,
+            ShowSportsBook: showSB,
             ShowNumberGame: showNG,
             ShowVirtualSport: showVS,
             ShowKeno: showKN

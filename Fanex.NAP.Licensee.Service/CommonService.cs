@@ -121,10 +121,10 @@
         }
 
         /// <summary>
-        /// Gets sport book game type list.
+        /// Gets sports book game type list.
         /// </summary>
         /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetSportbookGameTypeList
+        public IDictionary<BSKeyPair, string> GetSportsbookGameTypeList
         {
             get
             {

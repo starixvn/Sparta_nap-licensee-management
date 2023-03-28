@@ -4,7 +4,7 @@ editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextC
 "use strict";
 
 // Edit PT controller
-settingConfigurationApp.controller("editDBSSportbookCtrl", ['$scope', '$injector', function ($scope, $injector) {
+settingConfigurationApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector', function ($scope, $injector) {
     // Inherit
     $injector.invoke(editBSNavigatorFunc, this, { $scope: $scope });
 

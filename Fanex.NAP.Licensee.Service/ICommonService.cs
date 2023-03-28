@@ -18,7 +18,7 @@
 
         IList<string> GetCommList { get; }
 
-        IDictionary<BSKeyPair, string> GetSportbookGameTypeList { get; }
+        IDictionary<BSKeyPair, string> GetSportsbookGameTypeList { get; }
 
         IDictionary<BSKeyPair, string> GetNumberGameTypeList { get; }
 

@@ -92,7 +92,7 @@
             if (criteria.IsValid())
             {
                 viewModel = _betSettingService.SingleSetting(criteria);
-                viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
+                viewModel.Sportsbook = SortBetSettingByProduct(viewModel.Sportsbook);
             }
 
             return View("~/Views/BetSetting/_DefaultBetSettingList.cshtml", viewModel);
@@ -108,7 +108,7 @@
         public ActionResult Edit(string licensee, int? currencyId, int? agentId)
         {
             var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(licensee, currencyId.Value, agentId));
-            viewModel.Sportbook = SortBetSettingByProduct(viewModel.Sportbook);
+            viewModel.Sportsbook = SortBetSettingByProduct(viewModel.Sportsbook);
 
             return View(viewModel);
         }

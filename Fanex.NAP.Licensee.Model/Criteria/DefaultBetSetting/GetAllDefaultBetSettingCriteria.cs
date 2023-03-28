@@ -10,7 +10,7 @@
 
         public string Currency { get; set; }
 
-        public bool ShowSportBook { get; set; }
+        public bool ShowSportsBook { get; set; }
 
         public bool ShowNumberGame { get; set; }
 
@@ -26,7 +26,7 @@
         public override bool IsValid()
         {
             return !string.IsNullOrEmpty(Licensee) && !string.IsNullOrEmpty(Currency)
-                && (ShowSportBook || ShowNumberGame || ShowVirtualSport || ShowKeno);
+                && (ShowSportsBook || ShowNumberGame || ShowVirtualSport || ShowKeno);
         }
     }
 }

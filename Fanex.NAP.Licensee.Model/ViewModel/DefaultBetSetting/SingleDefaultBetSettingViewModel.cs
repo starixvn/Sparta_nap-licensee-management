@@ -19,7 +19,7 @@
 
         public SingleDefaultBetSettingViewModel()
         {
-            this.Sportbook = new List<BetSettingBySport>();
+            this.Sportsbook = new List<BetSettingBySport>();
             this.NumberGame = new List<BetSettingBySport>();
             this.VirtualSport = new List<BetSettingBySport>();
             this.Keno = new List<BetSettingBySport>();
@@ -37,7 +37,7 @@
 
         public AgentItem Agent { get; set; }
 
-        public IList<BetSettingBySport> Sportbook { get; set; }
+        public IList<BetSettingBySport> Sportsbook { get; set; }
 
         public IList<BetSettingBySport> NumberGame { get; set; }
 
@@ -49,7 +49,7 @@
         {
             get
             {
-                return !string.IsNullOrEmpty(Licensee) && Currency != null && Currency.Id > 0 && !Sportbook.Any(i => !i.IsValid)
+                return !string.IsNullOrEmpty(Licensee) && Currency != null && Currency.Id > 0 && !Sportsbook.Any(i => !i.IsValid)
                     && !NumberGame.Any(i => !i.IsValid) && !VirtualSport.Any(i => !i.IsValid) && !Keno.Any(i => !i.IsValid);
             }
         }
@@ -76,7 +76,7 @@
             {
                 var result = new StringBuilder();
                 result.Append("<settings>");
-                foreach (var sb in Sportbook)
+                foreach (var sb in Sportsbook)
                 {
                     var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSBSettingPatter, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));

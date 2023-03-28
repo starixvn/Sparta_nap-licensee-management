@@ -1,11 +1,11 @@
 ﻿@model Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting.SingleDefaultBetSettingViewModel
 <input type="hidden" id="has-setting" value="@Model.HasSetting.ToString()" />
-@if (Model.Sportbook.Count > 0)
+@if (Model.Sportsbook.Count > 0)
 {
     var sbCount = 0;
     <div class="row group">
         <div class="col-sm-12 title-group" id="sb-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Sportbook
+            <i class="icon-collapse" data-key="area-icon"></i>Sportsbook
         </div>
         <div class="col-sm-12 content" data-key="area-content">
             <label class="checkbox-inline">
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var sb in Model.Sportbook)
+                    @foreach (var sb in Model.Sportsbook)
                     {
                         <tr class="@(sbCount == 0 ? "first" : string.Empty)" data-code="@(sbCount == 0 ? "sb" : string.Empty)" data-sport="@sb.SportOrGame.Id" data-bettype="@sb.BetType">
                             <td>

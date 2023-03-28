@@ -110,8 +110,8 @@ namespace Fanex.NAP.Licensee.Controllers
             string rootPath = "BetSetting/";
             switch (sportType)
             {
-                case SportType.SportBook:
-                    return PartialView(rootPath + "EditBSSportbook");
+                case SportType.SportsBook:
+                    return PartialView(rootPath + "EditBSSportsbook");
                 case SportType.NumberGame:
                     return PartialView(rootPath + "EditBSNumberGame");
                 case SportType.Keno:
@@ -131,8 +131,8 @@ namespace Fanex.NAP.Licensee.Controllers
             const string rootPath = "BetSetting/";
             switch (productType)
             {
-                case SportType.SportBook:
-                    return PartialView(rootPath + "EditDBSSportbook");
+                case SportType.SportsBook:
+                    return PartialView(rootPath + "EditDBSSportsbook");
                 case SportType.NumberGame:
                     return PartialView(rootPath + "EditDBSNumberGame");
                 case SportType.Keno:
@@ -156,8 +156,8 @@ namespace Fanex.NAP.Licensee.Controllers
 
             switch (model.ProductTypeId)
             {
-                case SportType.SportBook:
-                    return Json(viewModel.Sportbook.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                case SportType.SportsBook:
+                    return Json(viewModel.Sportsbook.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
                 case SportType.NumberGame:
                     return Json(viewModel.NumberGame.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
                 case SportType.Keno:
@@ -176,11 +176,11 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             switch (settingConfigVM.ProdId)
             {
-                case SportType.SportBook:
-                    BSSportbookItemWithSuperInfo sportBookItems = _settingConfigurationService
-                                                                    .GetBSSportbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId, settingConfigVM.Option);
-                    BSSportbookViewModel sportBookVM = new BSSportbookViewModel(sportBookItems, _commonService.GetSportbookGameTypeList);
-                    return Json(sportBookVM, JsonRequestBehavior.AllowGet);
+                case SportType.SportsBook:
+                    BSSportsbookItemWithSuperInfo sportsBookItems = _settingConfigurationService
+                                                                    .GetBSSportsbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId, settingConfigVM.Option);
+                    BSSportsbookViewModel sportsBookVM = new BSSportsbookViewModel(sportsBookItems, _commonService.GetSportsbookGameTypeList);
+                    return Json(sportsBookVM, JsonRequestBehavior.AllowGet);
                 case SportType.NumberGame:
                     IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
@@ -204,8 +204,8 @@ namespace Fanex.NAP.Licensee.Controllers
             string rootPath = "BetSetting/";
             switch (sportType)
             {
-                case SportType.SportBook:
-                    return PartialView(rootPath + "ReviewBSSportbook");
+                case SportType.SportsBook:
+                    return PartialView(rootPath + "ReviewBSSportsbook");
                 case SportType.NumberGame:
                     return PartialView(rootPath + "ReviewBSNumberGame");
                 case SportType.Keno:
@@ -216,46 +216,46 @@ namespace Fanex.NAP.Licensee.Controllers
         }
 
         /// <summary>
-        /// Update bet setting sport book.
+        /// Update bet setting sports book.
         /// </summary>
-        /// <param name="sportbookVM">Bet setting sport book view model.</param>
+        /// <param name="sportsbookVM">Bet setting sports book view model.</param>
         /// <returns>Partial view.</returns>
         [HttpPost]
-        public JsonResult UpdateBetSettingSportbook(BSSportbookViewModel sportbookVM)
+        public JsonResult UpdateBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
         {
             var updateItem = new BetSettingSportsbookItem
             {
-                CustId = sportbookVM.CustId,
-                SportTypeId = sportbookVM.SportBetSetting.SportTypeId,
-                BetTypeId = sportbookVM.SportBetSetting.BetTypeId,
-                MinBet = Converter.ToDecimal(sportbookVM.SportBetSetting.MinBet),
-                MaxBet = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxBet),
-                MaxPerMatch = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPerMatch),
-                ExistedMember = sportbookVM.ExistedMember,
-                AgentId = sportbookVM.AgentId,
-                MaxPayoutPerMatch = Converter.ToDecimal(sportbookVM.SportBetSetting.MaxPayoutPerMatch),
-                Option = sportbookVM.Option,
-                IsNewMember = sportbookVM.IsNewMember,
-                DBSRows = sportbookVM.DBSRows
+                CustId = sportsbookVM.CustId,
+                SportTypeId = sportsbookVM.SportBetSetting.SportTypeId,
+                BetTypeId = sportsbookVM.SportBetSetting.BetTypeId,
+                MinBet = Converter.ToDecimal(sportsbookVM.SportBetSetting.MinBet),
+                MaxBet = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxBet),
+                MaxPerMatch = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxPerMatch),
+                ExistedMember = sportsbookVM.ExistedMember,
+                AgentId = sportsbookVM.AgentId,
+                MaxPayoutPerMatch = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxPayoutPerMatch),
+                Option = sportsbookVM.Option,
+                IsNewMember = sportsbookVM.IsNewMember,
+                DBSRows = sportsbookVM.DBSRows
             };
 
             ResultInfo result = _settingConfigurationService.UpdateBetSettingSportsbook(updateItem);
 
-            return new JsonResult { Data = new UpdateBSResultViewModel(sportbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+            return new JsonResult { Data = new UpdateBSResultViewModel(sportsbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         [HttpPost]
-        public JsonResult CheckBetSettingSportbook(BSSportbookViewModel sportbookVM)
+        public JsonResult CheckBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
         {
             var updateItem = new BetSettingSportsbookItem
             {
-                CustId = sportbookVM.CustId,
-                AgentId = sportbookVM.AgentId,
-                Option = sportbookVM.Option,
-                IsNewMember = sportbookVM.IsNewMember,
-                ExistedMember = sportbookVM.ExistedMember,
-                DBSRows = sportbookVM.DBSRows,
-                BSRows = sportbookVM.BSRows
+                CustId = sportsbookVM.CustId,
+                AgentId = sportsbookVM.AgentId,
+                Option = sportsbookVM.Option,
+                IsNewMember = sportsbookVM.IsNewMember,
+                ExistedMember = sportsbookVM.ExistedMember,
+                DBSRows = sportsbookVM.DBSRows,
+                BSRows = sportsbookVM.BSRows
             };
 
             ResultInfo result = _settingConfigurationService.CheckBetSettingSportsbook(updateItem);

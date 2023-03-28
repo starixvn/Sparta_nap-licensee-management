@@ -196,7 +196,7 @@
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
     <Compile Include="DTO\LicenseeAgent.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSSportbookItemWithSuperInfo.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSSportsbookItemWithSuperInfo.cs" />
     <Compile Include="DTO\VolumeControlSetting\ProductVolumeControlSetting.cs" />
     <Compile Include="DTO\ITUserLicensee.cs" />
     <Compile Include="DTO\ITUserCurrency.cs" />
@@ -230,7 +230,7 @@
     <Compile Include="DTO\SettingConfiguration\BSBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKenoItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSNumberGameItem.cs" />
-    <Compile Include="DTO\SettingConfiguration\BSSportbookItem.cs" />
+    <Compile Include="DTO\SettingConfiguration\BSSportsbookItem.cs" />
     <Compile Include="DTO\SettingConfiguration\CommItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSSuperDownlineBaseItem.cs" />
     <Compile Include="DTO\SettingConfiguration\BSKeyPair.cs" />
@@ -287,10 +287,14 @@
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameRowViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRowBaseViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\BSSportbookViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSSportsbookViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\CommRowViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\SettingConfigFilterViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdateBSResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
     <Compile Include="ViewModel\DefaultBetSetting\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>

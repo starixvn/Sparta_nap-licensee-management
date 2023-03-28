@@ -96,17 +96,17 @@
             }
         }
 
-        public BSSportbookItemWithSuperInfo GetBSSportbookItemWithSuperInfo(int custId, int productId, int agentId, bool option)
+        public BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(int custId, int productId, int agentId, bool option)
         {
-            IEnumerable<BSSportbookItem> bSSupers;
-            IEnumerable<BSSportbookItem> bSAgents;
+            IEnumerable<BSSportsbookItem> bSSupers;
+            IEnumerable<BSSportsbookItem> bSAgents;
 
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingSel"))
             {
                 using (var multi = db.QueryMultiple(new { CustID = custId, Product = productId, AgentID = agentId }))
                 {
-                    bSSupers = multi.Read<BSSportbookItem>();
-                    bSAgents = multi.Read<BSSportbookItem>();
+                    bSSupers = multi.Read<BSSportsbookItem>();
+                    bSAgents = multi.Read<BSSportsbookItem>();
                 }
             }
 
@@ -115,10 +115,10 @@
                 bSSupers = bSAgents;
             }
 
-            var result = new BSSportbookItemWithSuperInfo
+            var result = new BSSportsbookItemWithSuperInfo
             {
-                AgentItems = (List<BSSportbookItem>)bSAgents,
-                SuperItems = (List<BSSportbookItem>)bSSupers
+                AgentItems = (List<BSSportsbookItem>)bSAgents,
+                SuperItems = (List<BSSportsbookItem>)bSSupers
             };
 
             return result;

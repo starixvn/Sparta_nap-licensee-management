@@ -1,9 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Model.DTO.SettingConfiguration
 {
     /// <summary>
-    /// Bet setting sport book item.
+    /// Bet setting sports book item.
     /// </summary>
-    public class BSSportbookItem : BSBaseItem
+    public class BSSportsbookItem : BSBaseItem
     {
         public decimal MaxPayoutPerMatch { get; set; }
     }
