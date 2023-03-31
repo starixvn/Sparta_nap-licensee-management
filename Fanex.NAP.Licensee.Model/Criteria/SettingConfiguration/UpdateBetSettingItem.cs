@@ -62,8 +62,6 @@
 
         public decimal MaxPerBall { get; set; }
 
-        public decimal MaxPayoutPerMatch { get; set; }
-
         public bool ExistedMember { get; set; }
 
         public bool Enable { get; set; }

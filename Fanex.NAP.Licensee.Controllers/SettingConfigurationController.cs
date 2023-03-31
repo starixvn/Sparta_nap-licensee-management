@@ -32,6 +32,8 @@ namespace Fanex.NAP.Licensee.Controllers
     [CheckUMFilter]
     public class SettingConfigurationController : BaseController
     {
+        private const int DBSErrorCode = 103;
+
         private readonly ICommonService _commonService;
         private readonly ISettingConfigurationService _settingConfigurationService;
         private readonly IBetSettingService _betSettingService;
@@ -100,32 +102,25 @@ namespace Fanex.NAP.Licensee.Controllers
 
         #region Bet setting
 
-        /// <summary>
-        /// Edit bet setting.
-        /// </summary>
-        /// <param name="sportType">Sport type.</param>
-        /// <returns>Partial view.</returns>
         public PartialViewResult EditBetSetting(int sportType)
         {
-            string rootPath = "BetSetting/";
+            const string rootPath = "BetSetting/";
             switch (sportType)
             {
                 case SportType.SportsBook:
                     return PartialView(rootPath + "EditBSSportsbook");
+
                 case SportType.NumberGame:
                     return PartialView(rootPath + "EditBSNumberGame");
+
                 case SportType.Keno:
                     return PartialView(rootPath + "EditBSKeno");
+
                 default:
                     return PartialView(rootPath + "UnsupportedFunction");
             }
         }
 
-        /// <summary>
-        /// Edit default bet setting.
-        /// </summary>
-        /// <param name="productType">Product type.</param>
-        /// <returns>Partial view.</returns>
         public PartialViewResult EditDefaultBetSetting(int productType)
         {
             const string rootPath = "BetSetting/";
@@ -133,10 +128,13 @@ namespace Fanex.NAP.Licensee.Controllers
             {
                 case SportType.SportsBook:
                     return PartialView(rootPath + "EditDBSSportsbook");
+
                 case SportType.NumberGame:
                     return PartialView(rootPath + "EditDBSNumberGame");
+
                 case SportType.Keno:
                     return PartialView(rootPath + "EditDBSKeno");
+
                 default:
                     return PartialView(rootPath + "UnsupportedFunction");
             }
@@ -144,34 +142,30 @@ namespace Fanex.NAP.Licensee.Controllers
 
         public JsonResult GetDefaultBetSetting(GetDefaultBetSettingViewModel model)
         {
-            var superLicensee = _commonService.GetSuperLicenseeList(model.LicenseeName).SingleOrDefault(_ => _.Id == model.CustId);
-
-            if (superLicensee == null)
+            if (model.CurrencyId == -1 || model.LicenseeName == null)
             {
-                return Json("Unknown Default Bet Setting!", JsonRequestBehavior.AllowGet);
+                return Json("Can't get Default Bet Setting!", JsonRequestBehavior.AllowGet);
             }
 
-            var currencyId = superLicensee.ExchangeId;
-            var viewModel = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(model.LicenseeName, currencyId, model.AgentId));
+            var dbsItems = _betSettingService.SingleSetting(new GetSingleDefaultBetSettingCriteria(model.LicenseeName, model.CurrencyId, model.AgentId));
 
             switch (model.ProductTypeId)
             {
                 case SportType.SportsBook:
-                    return Json(viewModel.Sportsbook.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                    var dbsSportsbookItems = dbsItems.Sportsbook.OrderBy(i => i, new SportComparer()).ToList();
+                    return Json(new BSSportsbookViewModel(dbsSportsbookItems), JsonRequestBehavior.AllowGet);
+
                 case SportType.NumberGame:
-                    return Json(viewModel.NumberGame.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                    return Json(dbsItems.NumberGame.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+
                 case SportType.Keno:
-                    return Json(viewModel.Keno.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+                    return Json(dbsItems.Keno.OrderBy(i => i, new SportComparer()).ToList(), JsonRequestBehavior.AllowGet);
+
                 default:
                     return Json("Unknown Default Bet Setting!", JsonRequestBehavior.AllowGet);
             }
         }
 
-        /// <summary>
-        /// Get edit setting data.
-        /// </summary>
-        /// <param name="settingConfigVM">Setting config filter view model.</param>
-        /// <returns>String result.</returns>
         public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel settingConfigVM)
         {
             switch (settingConfigVM.ProdId)
@@ -181,93 +175,88 @@ namespace Fanex.NAP.Licensee.Controllers
                                                                     .GetBSSportsbookItemWithSuperInfo(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId, settingConfigVM.Option);
                     BSSportsbookViewModel sportsBookVM = new BSSportsbookViewModel(sportsBookItems, _commonService.GetSportsbookGameTypeList);
                     return Json(sportsBookVM, JsonRequestBehavior.AllowGet);
+
                 case SportType.NumberGame:
                     IList<BSNumberGameItem> lstNumberGameItems = _settingConfigurationService.GetBetSetting<BSNumberGameItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSNumberGameViewModel numberGameVM = new BSNumberGameViewModel(lstNumberGameItems, _commonService.GetNumberGameTypeList);
                     return Json(numberGameVM, JsonRequestBehavior.AllowGet);
+
                 case SportType.Keno:
                     IList<BSKenoItem> lstKenoItems = _settingConfigurationService.GetBetSetting<BSKenoItem>(settingConfigVM.CustId, settingConfigVM.ProdId, settingConfigVM.AgentId);
                     BSKenoViewModel kenoVm = new BSKenoViewModel(lstKenoItems, _commonService.GetKenoGameTypeList);
                     return Json(kenoVm, JsonRequestBehavior.AllowGet);
+
                 default:
                     return Json("Unknown Bet Setting!", JsonRequestBehavior.AllowGet);
             }
         }
 
-        /// <summary>
-        /// Review bet setting.
-        /// </summary>
-        /// <param name="sportType">Sport type.</param>
-        /// <returns>Partial view.</returns>
         public PartialViewResult ReviewBetSetting(int sportType)
         {
-            string rootPath = "BetSetting/";
+            const string rootPath = "BetSetting/";
             switch (sportType)
             {
                 case SportType.SportsBook:
                     return PartialView(rootPath + "ReviewBSSportsbook");
+
                 case SportType.NumberGame:
                     return PartialView(rootPath + "ReviewBSNumberGame");
+
                 case SportType.Keno:
                     return PartialView(rootPath + "ReviewBSKeno");
+
                 default:
                     return PartialView(rootPath + "UnsupportedFunction");
             }
         }
 
-        /// <summary>
-        /// Update bet setting sports book.
-        /// </summary>
-        /// <param name="sportsbookVM">Bet setting sports book view model.</param>
-        /// <returns>Partial view.</returns>
         [HttpPost]
         public JsonResult UpdateBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
         {
-            var updateItem = new BetSettingSportsbookItem
-            {
-                CustId = sportsbookVM.CustId,
-                SportTypeId = sportsbookVM.SportBetSetting.SportTypeId,
-                BetTypeId = sportsbookVM.SportBetSetting.BetTypeId,
-                MinBet = Converter.ToDecimal(sportsbookVM.SportBetSetting.MinBet),
-                MaxBet = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxBet),
-                MaxPerMatch = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxPerMatch),
-                ExistedMember = sportsbookVM.ExistedMember,
-                AgentId = sportsbookVM.AgentId,
-                MaxPayoutPerMatch = Converter.ToDecimal(sportsbookVM.SportBetSetting.MaxPayoutPerMatch),
-                Option = sportsbookVM.Option,
-                IsNewMember = sportsbookVM.IsNewMember,
-                DBSRows = sportsbookVM.DBSRows
-            };
+            var updateItem = new UpdateBetSettingSportsbookItem();
+
+            FormatBetSettingSportsbookItem(updateItem, sportsbookVM);
+            updateItem.UpdNewMember = updateItem.ToXmlSetting(sportsbookVM.DBSRows);
+            updateItem.UpdBetLimit = updateItem.ToXmlSetting(Enumerable.Repeat(sportsbookVM.SportBetSetting, 1));
+            updateItem.UserId = CurrentSession.UserId;
+            updateItem.IP = Request.UserHostAddress;
 
             ResultInfo result = _settingConfigurationService.UpdateBetSettingSportsbook(updateItem);
 
-            return new JsonResult { Data = new UpdateBSResultViewModel(sportsbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+            return new JsonResult { Data = new BSResultViewModel(sportsbookVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
         [HttpPost]
         public JsonResult CheckBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
         {
-            var updateItem = new BetSettingSportsbookItem
+            var updateItem = new CheckBetSettingSportsbookItem();
+            var dbsViolatedItems = new List<CheckBSResultViewModel>();
+
+            FormatBetSettingSportsbookItem(updateItem, sportsbookVM);
+            updateItem.UpdNewMember = updateItem.ToXmlSetting(sportsbookVM.DBSRows);
+
+            foreach (var item in sportsbookVM.BSRows)
             {
-                CustId = sportsbookVM.CustId,
-                AgentId = sportsbookVM.AgentId,
-                Option = sportsbookVM.Option,
-                IsNewMember = sportsbookVM.IsNewMember,
-                ExistedMember = sportsbookVM.ExistedMember,
-                DBSRows = sportsbookVM.DBSRows,
-                BSRows = sportsbookVM.BSRows
-            };
+                updateItem.UpdBetLimit = updateItem.ToXmlSetting(Enumerable.Repeat(item, 1));
+                var result = _settingConfigurationService.CheckBetSettingSportsbook(updateItem);
 
-            ResultInfo result = _settingConfigurationService.CheckBetSettingSportsbook(updateItem);
+                if (!result.IsOk)
+                {
+                    if (result.Code == DBSErrorCode)
+                    {
+                        dbsViolatedItems.Add(new CheckBSResultViewModel(item.BetTypeName, result.IsOk, result.Message, result.Code));
+                    }
+                    else
+                    {
+                        return new JsonResult { Data = new CheckBSResultViewModel(item.BetTypeName, result.IsOk, result.Message, result.Code) };
+                    }
+                }
+            }
 
-            return new JsonResult { Data = result };
+            return dbsViolatedItems.Count != 0 ? new JsonResult { Data = dbsViolatedItems[0] }
+                                               : new JsonResult { Data = new CheckBSResultViewModel(string.Empty, true, string.Empty, 0) };
         }
 
-        /// <summary>
-        /// Review bet setting number game.
-        /// </summary>
-        /// <param name="numberGameVM">Bet setting number game view model.</param>
-        /// <returns>Partial view.</returns>
         [HttpPost]
         public JsonResult UpdateBetSettingNumberGame(BSNumberGameViewModel numberGameVM)
         {
@@ -284,14 +273,9 @@ namespace Fanex.NAP.Licensee.Controllers
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-            return new JsonResult { Data = new UpdateBSResultViewModel(numberGameVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+            return new JsonResult { Data = new BSResultViewModel(numberGameVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
         }
 
-        /// <summary>
-        /// Review bet setting.
-        /// </summary>
-        /// <param name="kenoVM">Bet setting keno view model.</param>
-        /// <returns>Partial view.</returns>
         [HttpPost]
         public JsonResult UpdateBetSettingKeno(BSKenoViewModel kenoVM)
         {
@@ -308,7 +292,16 @@ namespace Fanex.NAP.Licensee.Controllers
 
             ResultInfo result = _settingConfigurationService.UpdateBetSetting(updItem);
 
-            return new JsonResult { Data = new UpdateBSResultViewModel(kenoVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+            return new JsonResult { Data = new BSResultViewModel(kenoVM.SportBetSetting.BetTypeName, result.IsOk, result.Message) };
+        }
+
+        public void FormatBetSettingSportsbookItem(BetSettingSportsbookItemBase updateItem, BSSportsbookViewModel sportsbookVM)
+        {
+            updateItem.CustId = sportsbookVM.CustId;
+            updateItem.ExistedMember = sportsbookVM.ExistedMember;
+            updateItem.AgentId = sportsbookVM.AgentId;
+            updateItem.Option = sportsbookVM.Option;
+            updateItem.IsNewMember = sportsbookVM.IsNewMember;
         }
 
         #endregion
@@ -327,14 +320,7 @@ namespace Fanex.NAP.Licensee.Controllers
         [AjaxRequest]
         public ActionResult GetSuperLicenseeList(string siteName)
         {
-            var superLicenseeItems = _commonService.GetSuperLicenseeList(siteName);
-
-            foreach (var item in superLicenseeItems)
-            {
-                item.Name = $"{item.CurrencyName} ({item.Name})";
-            }
-
-            return Json(superLicenseeItems, JsonRequestBehavior.AllowGet);
+            return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]

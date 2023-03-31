@@ -171,9 +171,11 @@
     <Compile Include="Criteria\LicenseeSetting\LicenseeCriteria.cs" />
     <Compile Include="Criteria\LicenseeSetting\SetUpNewLicenseeCriteria.cs" />
     <Compile Include="Criteria\PageModel.cs" />
-    <Compile Include="Criteria\SettingConfiguration\BetSettingSportsbookItem.cs" />
+    <Compile Include="Criteria\SettingConfiguration\BetSettingSportsbookItemBase.cs" />
+    <Compile Include="Criteria\SettingConfiguration\CheckBetSettingSportsbookItem.cs" />
     <Compile Include="Criteria\SettingConfiguration\GetLicenseeAgentList.cs" />
     <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingItem.cs" />
+    <Compile Include="Criteria\SettingConfiguration\UpdateBetSettingSportsbookItem.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SuspendSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\NewSourceLicenseeCriteria.cs" />
     <Compile Include="Criteria\SourceLicenseeSetting\SearchSourceLicenseeCriteria.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\Agent.cs" />
+    <Compile Include="DTO\SuperLicenseeAndCurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\DefaultBetSetting.cs" />
@@ -262,6 +265,7 @@
     <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\BetTicketVolumeControl\SearchVolumeControlViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\CheckBSResultViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\GetDefaultBetSettingViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>
@@ -292,7 +296,7 @@
     <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\SettingConfigFilterViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\UpdateBSResultViewModel.cs" />
+    <Compile Include="ViewModel\SettingConfiguration\BSResultViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />

@@ -3,9 +3,9 @@
     /// <summary>
     /// Update bet setting keno view model.
     /// </summary>
-    public class UpdateBSResultViewModel
+    public class BSResultViewModel
     {
-        public UpdateBSResultViewModel(string sportOrBetTypeName, bool isOk, string message)
+        public BSResultViewModel(string sportOrBetTypeName, bool isOk, string message)
         {
             SportOrBetTypeName = sportOrBetTypeName;
             IsOk = isOk;

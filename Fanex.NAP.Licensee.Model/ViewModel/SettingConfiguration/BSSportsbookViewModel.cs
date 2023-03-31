@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration
 {
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
     using System.Collections.Generic;
     using System.Linq;
@@ -21,8 +22,8 @@
             foreach (var key in dctGameType.Keys)
             {
 
-                BSSportsbookItem item = items.SuperItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
-                BSSportsbookItem itemAgent = items.AgentItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSSportsbookItem uplineItem = items.SuperItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSSportsbookItem item = items.AgentItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
                 BSRowBaseViewModel sportsbookRowVM = new BSRowBaseViewModel
                 {
                     SportTypeId = key.SportTypeId,
@@ -41,23 +42,23 @@
                     IsRowDisabled = false
                 };
 
-                if (item != null)
+                if (uplineItem != null)
                 {
-                    sportsbookRowVM = itemAgent != null
+                    sportsbookRowVM = item != null
                         ? new BSRowBaseViewModel
                         {
                             SportTypeId = key.SportTypeId,
                             SportTypeName = dctGameType[key],
                             BetTypeId = key.BetTypeId,
                             BetTypeName = dctGameType[key],
-                            UpLineMinBet = item.MinBet.ToString("0"),
-                            UpLineMaxBet = item.MaxBet.ToString("0"),
-                            UpLineMaxPerMatch = item.MaxPerMatch.ToString("0"),
-                            UpLineMaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
-                            MinBet = itemAgent.MinBet.ToString("0"),
-                            MaxBet = itemAgent.MaxBet.ToString("0"),
-                            MaxPerMatch = itemAgent.MaxPerMatch.ToString("0"),
-                            MaxPayoutPerMatch = itemAgent.MaxPayoutPerMatch.ToString("0"),
+                            UpLineMinBet = uplineItem.MinBet.ToString("0"),
+                            UpLineMaxBet = uplineItem.MaxBet.ToString("0"),
+                            UpLineMaxPerMatch = uplineItem.MaxPerMatch.ToString("0"),
+                            UpLineMaxPayoutPerMatch = uplineItem.MaxPayoutPerMatch.ToString("0"),
+                            MinBet = item.MinBet.ToString("0"),
+                            MaxBet = item.MaxBet.ToString("0"),
+                            MaxPerMatch = item.MaxPerMatch.ToString("0"),
+                            MaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
                             IsRowSelected = false,
                             IsRowDisabled = false,
                         }
@@ -67,10 +68,10 @@
                             SportTypeName = dctGameType[key],
                             BetTypeId = key.BetTypeId,
                             BetTypeName = dctGameType[key],
-                            UpLineMinBet = item.MinBet.ToString("0"),
-                            UpLineMaxBet = item.MaxBet.ToString("0"),
-                            UpLineMaxPerMatch = item.MaxPerMatch.ToString("0"),
-                            UpLineMaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
+                            UpLineMinBet = uplineItem.MinBet.ToString("0"),
+                            UpLineMaxBet = uplineItem.MaxBet.ToString("0"),
+                            UpLineMaxPerMatch = uplineItem.MaxPerMatch.ToString("0"),
+                            UpLineMaxPayoutPerMatch = uplineItem.MaxPayoutPerMatch.ToString("0"),
                             MinBet = "0",
                             MaxBet = "0",
                             MaxPerMatch = "0",
@@ -81,6 +82,28 @@
                 }
 
                 BSRows.Add(sportsbookRowVM);
+            }
+        }
+
+        public BSSportsbookViewModel(IList<BetSettingBySport> dbsItems)
+        {
+            BSRows = new List<BSRowBaseViewModel>();
+            foreach (var item in dbsItems)
+            {
+                var dbsSportsbookRowVM = new BSRowBaseViewModel
+                {
+                    SportTypeId = item.SportGameTypeId,
+                    SportTypeName = item.SportOrGame.Name,
+                    BetTypeId = item.BetType,
+                    BetTypeName = item.SportOrGame.Name,
+                    MinBet = item.MinBet.HasValue ? item.MinBet.Value.ToString("0") : string.Empty,
+                    MaxBet = item.MaxBet.HasValue ? item.MaxBet.Value.ToString("0") : string.Empty,
+                    MaxPerMatch = item.MaxPerMatch.HasValue ? item.MaxPerMatch.Value.ToString("0") : string.Empty,
+                    MaxPayoutPerMatch = item.MaxPayoutPerMatch.HasValue ? item.MaxPayoutPerMatch.Value.ToString("0") : string.Empty,
+                    IsRowDisabled = false,
+                    IsRowSelected = false
+                };
+                BSRows.Add(dbsSportsbookRowVM);
             }
         }
 

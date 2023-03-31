@@ -8,6 +8,7 @@ servicesModule.factory("shareSettingsService", function () {
     var workingContext = {
         FuncName: "",
         CustId: -1,
+        CurrencyId: -1,
         CustName: "",
         LicenseeName: "",
         SportTypeId: -1,

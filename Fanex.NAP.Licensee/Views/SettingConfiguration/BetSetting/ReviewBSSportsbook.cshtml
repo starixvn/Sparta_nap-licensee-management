@@ -7,8 +7,10 @@
     <div ng-style="!option && {'margin-left': '20px'}">
         <input ng-model="reviewBS.applyForMember" disabled type="radio" id="allPlayers" name="players" value="1" />
         <label style="font-weight: normal;" for="allPlayers">All players (Existing and New players)</label><br>
-        <input ng-model="reviewBS.applyForMember" disabled type="radio" id="newPlayers" name="players" value="2" />
-        <label style="font-weight: normal;" for="newPlayers">New players only</label>
+        <input ng-if="!option" ng-model="reviewBS.applyForMember" disabled type="radio" id="newPlayers" name="players" value="2" />
+        <label ng-if="!option" style="font-weight: normal;" for="newPlayers">New players only</label>
+        <input ng-if="option" ng-model="reviewBS.applyForMember" disabled type="radio" id="existingPlayers" name="players" value="3" />
+        <label ng-if="option" style="font-weight: normal;" for="existingPlayers">Existing player only</label>
     </div>
     <table class="table table-bordered table-setting">
         <thead>
@@ -66,6 +68,12 @@
                 {{item.Message}}
             </td>
         </tr>
+        <tr ng-if="!isShowDBS()">
+            <td colspan="7">
+                <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
+                <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
+            </td>
+        </tr>
         </tbody>
     </table>
     <div ng-if="isShowDBS()">
@@ -109,9 +117,13 @@
                     {{item.MaxPayoutPerMatch | number}}
                 </td>
             </tr>
+            <tr ng-if="isShowDBS()">
+                <td colspan="7">
+                    <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
+                    <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
-    <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
-    <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
 </div>

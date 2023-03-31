@@ -24,7 +24,7 @@
 
         IDictionary<BSKeyPair, string> GetKenoGameTypeList { get; }
 
-        IList<LicenseeItem> GetSuperLicenseeList(string siteName);
+        IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName);
 
         IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId);
 

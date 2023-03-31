@@ -434,6 +434,9 @@ window.alert = function (message, fallback, callback) {
                 }
                 $(this).remove;
             },
+            create: function () {
+                $(this).css('maxWidth', 720);
+            },
             draggable: true,
             modal: true,
             resizable: false,

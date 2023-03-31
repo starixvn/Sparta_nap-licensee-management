@@ -10,6 +10,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
     function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl) {
         $scope.isButtonEnable = true;
         $scope.option = false;
+        $scope.SportOrBetTypeName = '';
 
         // Load data for ddls
         $scope.filterData = {
@@ -30,8 +31,17 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             isSuccess: true
         };
 
+        $scope.TextSettings = {
+            Filter: 'Search'
+        };
+
         $scope.selectedProductTypeChanged = function () {
             $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
+            $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
+        };
+
+        $scope.selectedFunctionChanged = function () {
+            $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
         };
 
         $scope.selectedLicenseeChanged = function () {
@@ -43,11 +53,15 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             )
                 .success(function (data) {
                     $scope.filterData.superLicensees = data;
-                    $scope.superLicenseeRequiredSettings = { Require: false };
+                    $scope.filterData.selectedSuperLicensee = data[0];
                     $scope.superLicenseeSettings = {
                         idMember: "Id",
-                        nameMember: "Name",
-                        sourceData: data
+                        nameMember: "CurrencyWithSuper",
+                        sourceData: data,
+                        hasToolbar: false,
+                        hasFilter: true,
+                        hasEnter: false,
+                        width: '100%',
                     }
                     $http.get(
                         GetLicenseeAgentListUrl,
@@ -58,11 +72,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                         .success(function (data1) {
                             $scope.filterData.agents = data1
                             $scope.filterData.selectedAgent = data1[0];
-                            $scope.agentRequiredSettings = { Require: false };
                             $scope.agentSettings = {
                                 idMember: "Id",
                                 nameMember: "Name",
-                                sourceData: data1
+                                sourceData: data1,
+                                hasToolbar: false,
+                                hasFilter: true,
+                                hasEnter: false,
+                                width: '100%',
                             }
                         });
                 });
@@ -79,11 +96,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                 .success(function (data) {
                     $scope.filterData.agents = data;
                     $scope.filterData.selectedAgent = data[0];
-                    $scope.agentRequiredSettings = { Require: false };
                     $scope.agentSettings = {
                         idMember: "Id",
                         nameMember: "Name",
-                        sourceData: data
+                        sourceData: data,
+                        hasToolbar: false,
+                        hasFilter: true,
+                        hasEnter: false,
+                        width: '100%',
                     }
                 });
         };
@@ -92,11 +112,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             .success(function (data) {
                 $scope.filterData.licensees = data.LicenseeList;
                 $scope.filterData.selectedLicensee = data.LicenseeList[0];
-                $scope.licenseeRequiredSettings = { Require: false };
                 $scope.licenseeSettings = {
                     idMember: "Id",
                     nameMember: "Name",
-                    sourceData: data.LicenseeList
+                    sourceData: data.LicenseeList,
+                    hasToolbar: false,
+                    hasFilter: true,
+                    hasEnter: false,
+                    width: '100%',
                 }
 
                 $scope.filterData.productTypes = data.ProductTypeList;
@@ -105,21 +128,29 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
                 $scope.filterData.superLicensees = data.SuperLicenseeList;
                 $scope.filterData.selectedSuperLicensee = data.SuperLicenseeList[0];
-                $scope.superLicenseeRequiredSettings = { Require: false };
                 $scope.superLicenseeSettings = {
                     idMember: "Id",
-                    nameMember: "Name",
-                    sourceData: data.SuperLicenseeList
+                    nameMember: "CurrencyWithSuper",
+                    sourceData: data.SuperLicenseeList,
+                    hasToolbar: false,
+                    hasFilter: true,
+                    hasEnter: false,
+                    width: '100%',
                 }
 
                 $scope.filterData.agents = data.AgentList;
                 $scope.filterData.selectedAgent = data.AgentList[0];
-                $scope.agentRequiredSettings = { Require: false };
                 $scope.agentSettings = {
                     idMember: "Id",
                     nameMember: "Name",
-                    sourceData: data.AgentList
+                    sourceData: data.AgentList,
+                    hasToolbar: false,
+                    hasFilter: true,
+                    hasEnter: false,
+                    width: '100%',
                 }
+
+                $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
             });
 
         $scope.selectEventHandler = function () {
@@ -135,6 +166,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                 CustName: $scope.filterData.selectedSuperLicensee.Name,
                 LicenseeName: $scope.filterData.selectedLicensee.Name,
                 CustId: $scope.filterData.selectedSuperLicensee.Id,
+                CurrencyId: $scope.filterData.selectedSuperLicensee.CurrencyId,
                 ProdId: $scope.filterData.selectedProductType.Id,
                 AgentId: $scope.filterData.selectedAgent.Id,
                 AgentName: $scope.filterData.selectedAgent.Name,
@@ -155,6 +187,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                     $route.reload();
                 }
                 $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
+            } else if ($scope.filterData.selectedFunction === ContextFunc.Comm) {
+                shareSettingsService.getWorkingContext().FuncName = ContextFunc.Comm;
+
+                if (curPath === "/EditComm") {
+                    $route.reload();
+                    return;
+                }
+                $location.path("/EditComm");
             } else if ($scope.filterData.selectedFunction === ContextFunc.PT) {
                 shareSettingsService.getWorkingContext().FuncName = ContextFunc.PT;
 
@@ -179,7 +219,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             var BSRows = shareSettingsService.getCurSettings().BSRows;
 
             var rows = [];
-            for (var index = -1; index < BSRows.length; index ++) {
+            for (var index = -1; index < BSRows.length; index++) {
                 var rowIndex = getRowIndex(BSRows, index);
                 if (rowIndex !== undefined) {
                     rows.push(angular.copy(BSRows[rowIndex]));
@@ -228,7 +268,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             $("#confirm-box").dialog({
                 resizable: false,
                 height: 200,
-                width: 420,
+                width: 540,
                 modal: true,
                 buttons: {
                     "OK": {
@@ -256,21 +296,24 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
         var checkBetSetting = function (BSRows) {
             var param = updatedParams();
+            var dbsErrorCode = 103;
             param.BSRows = BSRows;
+
             $http.post(shareSettingsService.getWorkingContext().Url, param)
                 .success(function (data) {
                     if (data.IsOk) {
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
                     }
                     else {
-                        if (data.Code === 103) {
+                        if (data.Code === dbsErrorCode) {
+                            $scope.SportOrBetTypeName = data.SportOrBetTypeName;
                             goToEditDBPage(shareSettingsService.getWorkingContext(), ContextFunc);
                         } else {
-                            alert(data.Message);
+                            alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
                         }
                     }
                 }).error(function (data) {
-                    alert(data.Message);
+                    alert(data);
                 })
         }
 

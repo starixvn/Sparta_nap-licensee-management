@@ -130,10 +130,10 @@
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
                 dctGameType.Add(new BSKeyPair(1, 1), "Soccer");
-                dctGameType.Add(new BSKeyPair(9901, 1), "Saba Soccer");
                 dctGameType.Add(new BSKeyPair(1, 9), "Soccer Parlay");
-                dctGameType.Add(new BSKeyPair(43, 1), "ESport");
-                dctGameType.Add(new BSKeyPair(2, 1), "BasketBall");
+                dctGameType.Add(new BSKeyPair(9901, 1), "Saba Soccer");
+                dctGameType.Add(new BSKeyPair(43, 1), "E-Sports");
+                dctGameType.Add(new BSKeyPair(2, 1), "Basketball");
                 dctGameType.Add(new BSKeyPair(9902, 1), "Saba Basketball");
                 dctGameType.Add(new BSKeyPair(3, 1), "Football");
                 dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
@@ -141,8 +141,8 @@
                 dctGameType.Add(new BSKeyPair(10, 1), "Golf");
                 dctGameType.Add(new BSKeyPair(50, 1), "Cricket");
                 dctGameType.Add(new BSKeyPair(9907, 1), "Saba Cricket");
-                dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
-                dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
+                dctGameType.Add(new BSKeyPair(11, 1), "Motorsports");
+                dctGameType.Add(new BSKeyPair(99, 1), "Other Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
 
                 return dctGameType;
@@ -180,11 +180,11 @@
         /// </summary>
         /// <param name="siteName">Site name.</param>
         /// <returns>List of licensee items.</returns>
-        public IList<LicenseeItem> GetSuperLicenseeList(string siteName)
+        public IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeSuperList"))
             {
-                return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
+                return db.Query<SuperLicenseeAndCurrencyItem>(new { Site = siteName }).ToList();
             }
         }
 

@@ -42,9 +42,11 @@
             string minBet,
             string maxBet,
             string maxPerMatch,
+            string maxPayoutPerMatch,
             string upLineMinBet,
             string upLineMaxBet,
             string upLineMaxPerMatch,
+            string upLineMaxPayoutPerMatch,
             bool isRowSelected)
         {
             SportTypeId = sportTypeId;
@@ -56,10 +58,12 @@
             MinBet = minBet;
             MaxBet = maxBet;
             MaxPerMatch = maxPerMatch;
+            MaxPayoutPerMatch = maxPayoutPerMatch;
 
             UpLineMinBet = upLineMinBet;
             UpLineMaxBet = upLineMaxBet;
             UpLineMaxPerMatch = upLineMaxPerMatch;
+            UpLineMaxPayoutPerMatch = upLineMaxPayoutPerMatch;
 
             IsRowSelected = isRowSelected;
 

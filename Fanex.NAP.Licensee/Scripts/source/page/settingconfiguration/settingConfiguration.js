@@ -3,7 +3,7 @@
 var settingConfigurationApp = settingConfigurationApp || {};
 // Module
 settingConfigurationApp = angular.module("settingConfiguration",
-    ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives", "fanex.selectwithsearch"]);
+    ["ngRoute", "ngAnimate", "settingConfiguration.services", "settingConfiguration.directives", "fanex.dropdowntreesingle"]);
 
 // Constant
 settingConfigurationApp.constant("GetLicenseeListUrl", "GetLicenseeList");
@@ -66,5 +66,3 @@ settingConfigurationApp.value("ContextFunc", {
     Comm: "Comm",
     PT: "PT"
 });
-
-

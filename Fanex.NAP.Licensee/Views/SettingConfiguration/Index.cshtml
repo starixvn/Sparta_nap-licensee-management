@@ -7,8 +7,8 @@
         <li>Bet Setting</li>
         <li class="current">Licensee Setting</li>
     </ul>
-        <div class="pull-left">
-       <a class="btn-green" href="/BetSetting/abc"><i class="list-icon"></i>View Log</a>
+    <div class="pull-left">
+        <a class="btn-green"><i class="list-icon"></i>View Log</a>
     </div>
 }
 @section HeadCss
@@ -19,58 +19,57 @@
 <div ng-app="settingConfiguration" ng-controller="settingConfigurationCtrl">
     <div class="col-md-12 filter-form">
         <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <div class="row">
-                    <label class="col-md-5">
+                    <label class="col-md-3">
                         Licensee
                     </label>
-                    <selectwithsearch name="licensee"
-                                      class="col-md-5"
-                                      data-ng-model="filterData.selectedLicensee"
-                                      data-settings="licenseeSettings"
-                                      required-settings="licenseeRequiredSettings"
-                                      data-ng-change="selectedLicenseeChanged()"
-                                      data-ng-style="{ 'padding': 0}">
-                    </selectwithsearch>
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                <div class="row">
-                    <label class="col-md-5">
-                        Currency (Super)
-                    </label>
-                    <selectwithsearch 
-                                      id="super-username"
-                                      name="super-username"
-                                      class="col-md-3 width-160"
-                                      data-ng-model="filterData.selectedSuperLicensee"
-                                      data-settings="superLicenseeSettings"
-                                      required-settings="superLicenseeRequiredSettings"
-                                      data-ng-change="selectedSuperLicenseeChanged(filterData.selectedSuperLicensee.Id)"
-                                      data-ng-style="{ 'padding': 0}">
-                    </selectwithsearch>
+                    <dropdowntreesingle name="licensee"
+                                        class="col-md-7"
+                                        data-ng-model="filterData.selectedLicensee"
+                                        data-settings="licenseeSettings"
+                                        text-settings="TextSettings"
+                                        data-ng-change="selectedLicenseeChanged()"
+                                        data-ng-style="{ 'padding': 0}">
+                    </dropdowntreesingle>
                 </div>
             </div>
             <div class="form-group col-md-3">
                 <div class="row">
-                    <label class="col-md-5">
+                    <label class="col-md-4">
+                        Currency (Super)
+                    </label>
+                    <dropdowntreesingle id="super-username"
+                                        name="super-username"
+                                        class="col-md-7"
+                                        data-ng-model="filterData.selectedSuperLicensee"
+                                        data-settings="superLicenseeSettings"
+                                        text-settings="TextSettings"
+                                        data-ng-change="selectedSuperLicenseeChanged(filterData.selectedSuperLicensee.Id)"
+                                        data-ng-style="{ 'padding': 0}">
+                    </dropdowntreesingle>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="row">
+                    <label class="col-md-4">
                         Subsidiary
                     </label>
-                    <selectwithsearch name="agentList"
-                                      class="col-md-5"
-                                      data-ng-model="filterData.selectedAgent"
-                                      data-settings="agentSettings"
-                                      required-settings="agentRequiredSettings"
-                                      data-ng-style="{ 'padding': 0}"
-                                      >
-                    </selectwithsearch>
+                    <dropdowntreesingle name="agentList"
+                                        class="col-md-7"
+                                        data-ng-model="filterData.selectedAgent"
+                                        data-settings="agentSettings"
+                                        text-settings="TextSettings"
+                                        data-ng-disabled="!isEnableAgentListSelect"
+                                        data-ng-style="{ 'padding': 0}">
+                    </dropdowntreesingle>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <div class="row">
-                    <label class="col-md-5">
+                    <label class="col-md-3">
                         Product
                     </label>
                     <select ng-options="item.Name for item in filterData.productTypes track by item.Id"
@@ -79,9 +78,9 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <div class="row">
-                    <label class="col-md-5">
+                    <label class="col-md-4">
                         Option
                     </label>
                     <select ng-options="item for item in filterData.selectedProductType.Functions track by item"
@@ -101,40 +100,55 @@
     <!--Dynamic View-->
     <div ng-view class="fade-in">
     </div>
-    <script type="text/ng-template" id="selectwithsearch.template.html">
-                <div class="dropdown">
-            <button type="button" class="btn" data-ng-click="toggleSelect()" data-ng-disabled="disabled" data-ng-class="{'ng-invalid': !valid()}">
+    <div id="confirm-box" class="confirm-message hidden" title="Confirmation"><b>{{SportOrBetTypeName}}</b>: The value bet setting you just input is violating its Default Bet Setting. Please review and update again!</div>
+    <script type="text/ng-template" id="fanex.directive.dropdowntreesingle.template.html">
+        <div class="dropdown">
+            <button type="button" class="btn" data-ng-click="toggleSelect()" data-ng-disabled="disabled" data-ng-class="{'ng-invalid': !valid(), 'disabled': disabled}">
                 <span class="pull-left">{{header}}</span> <span class="caret pull-right">
                 </span>
             </button>
             <ul data-ng-if="items.length > 0" class="dropdown-menu" data-ng-style="{ 'width': _settings.width}">
                 <li data-ng-if="_settings.hasFilter">
                     <div>
-                        <input type="text" class="filter" data-ng-model="searchText.value" autofocus="autofocus"
+                        <input type="text" class="filter" data-ng-model="searchText.value" ng-change="changeSearchText()" autofocus="autofocus"
                                placeholder="{{_textSettings.Filter}}">
+                        <span class="selectsearch"><button data-ng-click="selectSearchText($event);" placeholder="Select all search text">Check</button></span>
+                        <span class="searchclear glyphicon glyphicon-remove-circle" data-ng-click="clearSearchText();"></span>
                     </div>
                 </li>
-
+                <li data-ng-if="_settings.hasToolbar" class="toolbar">
+                    <div class="input-group input-group-sm">
+                        <span></span>
+                        <span class="input-group-btn" style="cursor: pointer">
+                            <span data-ng-click="toggleCollapseExpanse();" title="{{_textSettings.CollapseExpanse}}"
+                                  class="glyphicon" data-ng-class="{'glyphicon-save': collapsedAll, 'glyphicon-open': !collapsedAll}"></span>
+                        </span>
+                    </div>
+                </li>
                 <li class="divider"></li>
                 <li>
                     <div class="tree">
                         <ul>
-                            <li data-ng-if="_requiredSettings.Require">
-                                <a data-ng-click="checkNA();">
-                                    <span class="group-text">Please select ...</span>
-                                </a>
-                            </li>
-                            <li data-ng-repeat="item1 in items | filter:filterSearchText">
-                                <a data-ng-class="getItemClass(item1);" data-ng-attr-id="item-{{item1.id}}"
-                                   data-ng-click="checkItem(item1);">
-                                    <span class="group-text">{{item1.label | itemFormatFilter:item1:0:_settings.itemFormatter}}</span>
-                                </a>
+                            <li data-ng-repeat="item in items | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
                             </li>
                         </ul>
                     </div>
                 </li>
             </ul>
         </div>
+    </script>
+    <script type="text/ng-template" id="dropdowntreesingle.template.html">
+        <span title="{{_textSettings.CollapseBranch}}" data-ng-click="item.showChildren = !item.showChildren">
+            <i class="nodehanbler glyphicon" data-ng-class="getCollapseExpandClass(item)"></i>
+        </span>
+        <a data-ng-class="getItemClass(item);"
+           data-ng-click="selectItem(item);" data-ng-attr-id="item-{{item.id}}" style="text-decoration: none;">
+            <span>{{item.label | itemFormatFilter:item:0:_settings.itemFormatter}}</span><span data-ng-class="getExtendItemClass(item)">{{item.subInfoText}}</span>
+        </a>
+        <ul class="list-unstyled" data-ng-if="item.showChildren && item.children.length > 0" style="padding-left: 40px">
+            <li data-ng-repeat="item in item.children | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
+            </li>
+        </ul>
     </script>
 
 </div>

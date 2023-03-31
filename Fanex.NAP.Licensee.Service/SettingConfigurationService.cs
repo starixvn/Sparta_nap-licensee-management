@@ -143,7 +143,7 @@
             }
         }
 
-        public ResultInfo CheckBetSettingSportsbook(BetSettingSportsbookItem item)
+        public ResultInfo CheckBetSettingSportsbook(CheckBetSettingSportsbookItem item)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingCheck"))
             {
@@ -158,7 +158,7 @@
             }
         }
 
-        public ResultInfo UpdateBetSettingSportsbook(BetSettingSportsbookItem item)
+        public ResultInfo UpdateBetSettingSportsbook(UpdateBetSettingSportsbookItem item)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetLimitUpd"))
             {
