@@ -601,6 +601,7 @@
     <Content Include="..\.sonarlint\nap_licensee_managementcsharp.ruleset">
       <Link>nap_licensee_managementcsharp.ruleset</Link>
     </Content>
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="SiteConfig\Web.AppSettings.config.txt">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -772,9 +773,8 @@
     <Content Include="Content\source\core\images\loading.gif" />
     <Content Include="Content\source\core\images\user.png" />
     <Content Include="Content\source\core\site.min.css" />
-    <Content Include="Content\source\selectwithsearch\selectwithsearch.css" />
-    <Content Include="Scripts\source\selectwithsearch\selectwithsearch.js" />
-    <Content Include="Content\source\selectwithsearch\selectwithsearch.min.css" />
+    <Content Include="Content\source\dropdowntree\dropdowntree.css" />
+    <Content Include="Scripts\source\dropdowntree\dropdowntreesingle.js" />
     <Content Include="Content\source\fanex.grid\Fanex.Grid.css" />
     <Content Include="Content\source\fanex.grid\Fanex.Grid.min.css" />
     <Content Include="Content\source\fanex.grid\Fanex.Pagination.css" />

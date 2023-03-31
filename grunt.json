@@ -34,7 +34,8 @@
     "Fanex.NAP.Licensee/Scripts/source/jquery/numeric.js",
     "Fanex.NAP.Licensee/Scripts/source/plugin/multi-select-control.js",
     "Fanex.NAP.Licensee/Scripts/source/bootstrap/bootstrap.js",
-    "Fanex.NAP.Licensee/Scripts/source/core/site.js"
+    "Fanex.NAP.Licensee/Scripts/source/core/site.js",
+    "Fanex.NAP.Licensee/Scripts/source/dropdowntree/dropdowntreesingle.js"
   ],
   "cssCore": [
     "Fanex.NAP.Licensee/Content/source/bootstrap/bootstrap1.css",
@@ -44,13 +45,12 @@
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.theme.min.css",
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.structure.min.css",
     "Fanex.NAP.Licensee/Content/source/core/site.css",
-    "Fanex.NAP.Licensee/Content/source/selectwithsearch/selectwithsearch.css"
+    "Fanex.NAP.Licensee/Content/source/dropdowntree/dropdowntree.css"
   ],
   "jsAngular": [
     "Fanex.NAP.Licensee/Scripts/source/angular/angular.js",
     "Fanex.NAP.Licensee/Scripts/source/angular/angular-animate.js",
-    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js",
-    "Fanex.NAP.Licensee/Scripts/source/selectwithsearch/selectwithsearch.js"
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js"
   ],
   "jsRecheckIn": [
     "Fanex.NAP.Licensee/Areas/UserLogin/scripts/ReCheckIn.js"
