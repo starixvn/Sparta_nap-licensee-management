@@ -880,13 +880,7 @@
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSFuncs.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSFuncs.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSSportsbookCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSNumberGameCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\reviewBSKenoCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSKenoCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSNumberGameCtrl.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editBSSportsbookCtrl.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\PT\editPTController.js" />
-    <Content Include="Scripts\source\page\settingconfiguration\Controllers\PT\reviewPTController.js" />
     <Content Include="Scripts\source\page\settingconfiguration\settingConfiguration.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\settingConfigurationController.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Directives\validatorDirective.js" />
@@ -983,13 +977,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\SettingConfiguration\Index.cshtml" />
-    <Content Include="Views\SettingConfiguration\PT\EditPT.cshtml" />
-    <Content Include="Views\SettingConfiguration\PT\ReviewPT.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSSportsbook.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\EditBSNumberGame.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\EditBSKeno.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSKeno.cshtml" />
-    <Content Include="Views\SettingConfiguration\BetSetting\ReviewBSNumberGame.cshtml" />
     <Content Include="Views\Error\UnsupportedFunction.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditBSSportsbook.cshtml" />
     <Content Include="Views\SettingConfiguration\BetSetting\UpdateBSResult.cshtml" />

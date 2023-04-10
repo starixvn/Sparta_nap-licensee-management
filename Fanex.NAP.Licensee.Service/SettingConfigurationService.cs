@@ -10,43 +10,6 @@
 
     public class SettingConfigurationService : ISettingConfigurationService
     {
-        public string GetPositionTaking(int custId, int productId)
-        {
-            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseePositionTakingSel"))
-            {
-                return db.ExecuteScalar(new { CustID = custId, Product = productId }).ToString();
-            }
-        }
-
-        /// <summary>
-        /// Update position taking.
-        /// </summary>
-        /// <param name="custId">Customer Id.</param>
-        /// <param name="productId">Product Id.</param>
-        /// <param name="positionTakingValue">Position taking value.</param>
-        /// <returns>Result info.</returns>
-        public ResultInfo UpdatePositionTaking(int custId, int productId, float positionTakingValue)
-        {
-            var parameters = new
-            {
-                CustID = custId,
-                Sporttype = productId,
-                ptVALUE = positionTakingValue,
-                @errcode = 0,
-                @errmsg = string.Empty
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseePositionTakingUpd"))
-            {
-                db.ExecuteNonQuery(parameters);
-
-                return new ResultInfo
-                {
-                    IsOk = Converter.ToInt(parameters.@errcode) == 0,
-                    Message = parameters.@errmsg
-                };
-            }
-        }
 
         public IList<CommItem> GetCommList(int custId)
         {
@@ -88,14 +51,6 @@
             }
         }
 
-        public IList<T> GetBetSetting<T>(int custId, int productId, int agentId)
-        {
-            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingSel"))
-            {
-                return db.Query<T>(new { CustID = custId, Product = productId, AgentID = agentId }).ToList();
-            }
-        }
-
         public BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(int custId, int productId, int agentId, bool option)
         {
             IEnumerable<BSSportsbookItem> bSSupers;
@@ -122,25 +77,6 @@
             };
 
             return result;
-        }
-
-        /// <summary>
-        /// Update bet setting.
-        /// </summary>
-        /// <param name="updBSItem">Update bet setting item.</param>
-        /// <returns>Result info.</returns>
-        public ResultInfo UpdateBetSetting(UpdateBetSettingItem updBSItem)
-        {
-            using (var db = ObjectDbFactory.CreateInstance(updBSItem.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(updBSItem);
-
-                return new ResultInfo
-                {
-                    IsOk = Converter.ToInt(updBSItem.ErrCode) == 0,
-                    Message = updBSItem.ErrMsg
-                };
-            }
         }
 
         public ResultInfo CheckBetSettingSportsbook(CheckBetSettingSportsbookItem item)

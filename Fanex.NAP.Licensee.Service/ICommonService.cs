@@ -14,15 +14,9 @@
 
         IList<ProductTypeItem> GetProductTypeList { get; }
 
-        IList<string> GetPositionTakingList { get; }
-
         IList<string> GetCommList { get; }
 
         IDictionary<BSKeyPair, string> GetSportsbookGameTypeList { get; }
-
-        IDictionary<BSKeyPair, string> GetNumberGameTypeList { get; }
-
-        IDictionary<BSKeyPair, string> GetKenoGameTypeList { get; }
 
         IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName);
 

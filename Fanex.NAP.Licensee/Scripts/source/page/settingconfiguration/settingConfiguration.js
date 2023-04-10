@@ -61,8 +61,5 @@ settingConfigurationApp.config(['$httpProvider', function ($httpProvider) {
 settingConfigurationApp.value("ContextFunc", {
     BetSetting: "Bet Setting",
     CurrencyBetSetting: "Currency Bet Setting",
-    PlayerBetSetting: "Player Bet Setting",
-    DefaultBetSetting: "DefaultBetSetting",
-    Comm: "Comm",
-    PT: "PT"
+    PlayerBetSetting: "Player Bet Setting"
 });

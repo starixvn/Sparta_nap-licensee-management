@@ -13,7 +13,6 @@
         private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";
 
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private readonly float PTNumberToInterval = 10000f;
 
         /// <summary>
         /// Gets licensee list.
@@ -84,27 +83,12 @@
         {
             get
             {
-                IList<string> betPT = new List<string> { "Currency Bet Setting", "PT" };
                 IList<string> betSettingSportsbook = new List<string> { "Currency Bet Setting", "Player Bet Setting" };
 
                 return new List<ProductTypeItem>
                 {
-                    new ProductTypeItem(1, "Sportsbook", betSettingSportsbook),
-                    new ProductTypeItem(161, "Number Game", betPT),
-                    new ProductTypeItem(202, "Keno", betPT),
+                    new ProductTypeItem(1, "Sportsbook", betSettingSportsbook)
                 };
-            }
-        }
-
-        public IList<string> GetPositionTakingList
-        {
-            get
-            {
-                List<int> lstInts = Enumerable.Range(0, 10001).Where(n => n % 5 == 0).ToList();
-                IList<string> lstPTs = new List<string>();
-                lstInts.ForEach(n => lstPTs.Add((n / PTNumberToInterval).ToString("0.####")));
-
-                return lstPTs;
             }
         }
 
@@ -144,32 +128,6 @@
                 dctGameType.Add(new BSKeyPair(11, 1), "Motorsports");
                 dctGameType.Add(new BSKeyPair(99, 1), "Other Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
-
-                return dctGameType;
-            }
-        }
-
-        public IDictionary<BSKeyPair, string> GetNumberGameTypeList
-        {
-            get
-            {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(161, 81), "Number Game");
-
-                return dctGameType;
-            }
-        }
-
-        /// <summary>
-        /// Gets keno game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetKenoGameTypeList
-        {
-            get
-            {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(202, 1501), "Australia Acttab");
 
                 return dctGameType;
             }

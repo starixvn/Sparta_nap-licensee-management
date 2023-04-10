@@ -3,8 +3,7 @@
 "use strict";
 
 // Model function
-var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
-    $scope.supperUserName = shareSettingsService.getWorkingContext().CustName;
+var reviewBSModelFunc = function ($scope, shareSettingsService) {
     $scope.reviewBS = shareSettingsService.getCurSettings();
 
     $scope.isShowDBS = function () {
@@ -13,7 +12,15 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
             return false;
         }
 
-        if (DBSRows[0].MinBet === '' && DBSRows[0].MaxBet === '' && DBSRows[0].MaxPerMatch === '' && DBSRows[0].MaxPayoutPerMatch === '') {
+        var isValidDBSData = DBSRows.every(function (_) {
+            return (_.MinBet === ""
+                && _.MaxBet === ""
+                && _.MaxPerMatch === ""
+                && (_.MaxPerBall === "" || _.MaxPerBall === null || _.MaxPerBall === undefined)
+                && (_.MaxPayoutPerMatch === "" || _.MaxPayoutPerMatch === null || _.MaxPayoutPerMatch === undefined));
+        });
+
+        if (isValidDBSData) {
             return false;
         }
 
@@ -51,41 +58,28 @@ var reviewBSModelFunc = function ($scope, $http, shareSettingsService) {
     }
 
     $scope.header = getAgentsHeader();
-    $http.get(
-            "GetEditBetSettingData",
-            {
-                params: {
-                    custId: shareSettingsService.getWorkingContext().CustId,
-                    prodId: shareSettingsService.getWorkingContext().ProdId,
-                    agentId: shareSettingsService.getWorkingContext().AgentId
-                }
-            })
-        .success(function (data) {
-            shareSettingsService.saveOrgSettings(angular.copy(data));
-            $scope.editBS = data;
-        });
 };
-    reviewBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
+reviewBSModelFunc.$inject = ['$scope', 'shareSettingsService'];
 // Navigator function
-    var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
-        // Redirect if wrong context
-        var selectedContext = shareSettingsService.getWorkingContext();
-        if (selectedContext.FuncName === "" || (selectedContext.FuncName !== ContextFunc.BetSetting && selectedContext.FuncName !== ContextFunc.DefaultBetSetting)) {
-            $location.path('/');
-            return;
+var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, ContextFunc) {
+    // Redirect if wrong context
+    var selectedContext = shareSettingsService.getWorkingContext();
+    if (selectedContext.FuncName !== ContextFunc.BetSetting) {
+        $location.path('/');
+        return;
+    }
+
+    $scope.backEditBS = function () {
+        if ($scope.buttonStatus.isUpdated) {
+            $scope.buttonStatus.isUpdated = false;
+            $scope.buttonStatus.isNextEnabled = false;
+            $scope.buttonStatus.IsBack = false;
+        }
+        else {
+            $scope.buttonStatus.IsBack = true;
         }
 
-        $scope.backEditBS = function () {
-            if ($scope.buttonStatus.isUpdated) {
-                $scope.buttonStatus.isUpdated = false;
-                $scope.buttonStatus.isNextEnabled = false;
-                $scope.buttonStatus.IsBack = false;
-            }
-            else {
-                $scope.buttonStatus.IsBack = true;
-            }
-            shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
-            $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
-        };
+        $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
     };
+};
 reviewBSNavigatorFunc.$inject = ['$scope', '$location', 'shareSettingsService', 'ContextFunc'];

@@ -162,8 +162,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
             // Save working context
             shareSettingsService.saveWorkingContext({
-                FuncName: ContextFunc.PT,
-                CustName: $scope.filterData.selectedSuperLicensee.Name,
+                FuncName: ContextFunc.BetSetting,
                 LicenseeName: $scope.filterData.selectedLicensee.Name,
                 CustId: $scope.filterData.selectedSuperLicensee.Id,
                 CurrencyId: $scope.filterData.selectedSuperLicensee.CurrencyId,
@@ -180,29 +179,12 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
             var curPath = $location.path();
 
-            if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
-                shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting
+            shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting
 
-                if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
-                    $route.reload();
-                }
-                $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
-            } else if ($scope.filterData.selectedFunction === ContextFunc.Comm) {
-                shareSettingsService.getWorkingContext().FuncName = ContextFunc.Comm;
-
-                if (curPath === "/EditComm") {
-                    $route.reload();
-                    return;
-                }
-                $location.path("/EditComm");
-            } else if ($scope.filterData.selectedFunction === ContextFunc.PT) {
-                shareSettingsService.getWorkingContext().FuncName = ContextFunc.PT;
-
-                if (curPath === "/EditPT") {
-                    $route.reload();
-                }
-                $location.path("/EditPT");
+            if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
+                $route.reload();
             }
+            $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
         };
 
         $scope.updateBS = function () {
@@ -263,7 +245,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             }
         };
 
-        var goToEditDBPage = function (workingContext, contextFunc) {
+        var goToEditDBPage = function (workingContext) {
             $("#confirm-box").removeClass("hidden");
             $("#confirm-box").dialog({
                 resizable: false,
@@ -277,8 +259,8 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                         click: function () {
                             $("#confirm-box").addClass("hidden");
                             $(this).dialog("close");
-                            if (workingContext.FuncName !== contextFunc.DefaultBetSetting) {
-                                workingContext.FuncName = contextFunc.DefaultBetSetting;
+                            var curPath = location.pathname;
+                            if (curPath !== "/EditDefaultBetSetting/" + workingContext.ProdId) {
                                 location.href = "/SettingConfiguration/Index#/EditDefaultBetSetting/" + workingContext.ProdId;
                             }
                         }
@@ -299,7 +281,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             var dbsErrorCode = 103;
             param.BSRows = BSRows;
 
-            $http.post(shareSettingsService.getWorkingContext().Url, param)
+            $http.post('CheckBetSettingSportsbook', param)
                 .success(function (data) {
                     if (data.IsOk) {
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
@@ -307,7 +289,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                     else {
                         if (data.Code === dbsErrorCode) {
                             $scope.SportOrBetTypeName = data.SportOrBetTypeName;
-                            goToEditDBPage(shareSettingsService.getWorkingContext(), ContextFunc);
+                            goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
                             alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
                         }
