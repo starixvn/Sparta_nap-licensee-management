@@ -286,13 +286,9 @@
     <Compile Include="ViewModel\SettingConfiguration\BSNumberGameViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSRowBaseViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\BSSportbookViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\CommRowViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\CommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\PTViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\SettingConfigFilterViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdateBSResultViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\UpdateCommResultViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\UpdateCommViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\UpdatePTViewModel.cs" />
     <Compile Include="ViewModel\DefaultBetSetting\SingleDefaultBetSettingViewModel.cs" />
   </ItemGroup>

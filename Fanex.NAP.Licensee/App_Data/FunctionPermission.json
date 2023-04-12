@@ -341,15 +341,6 @@
         "Mode": 1
       },
       {
-        "DisplayKey": "lblGoldDeluxeWinloss",
-        "FunctionKey": "GoldDeluxeWinloss65",
-        "Enable": false,
-        "Type": 1,
-        "Mode": 1,
-        "Level": [ 0, 1, 101 ]
-      },
-
-      {
         "DisplayKey": "lblLastBetsMonitoring",
         "FunctionKey": "LastBetsMonitoring26",
         "Enable": false,
@@ -491,24 +482,8 @@
         "Mode": 1
       },
       {
-        "DisplayKey": "lblColossusBetsWinLoss",
-        "FunctionKey": "ColossusBetsWinLoss71",
-        "Enable": false,
-        "Type": 1,
-        "Mode": 1,
-        "Level": [ 0, 1, 101 ]
-      },
-      {
         "DisplayKey": "lblNewCashOutWinLoss",
         "FunctionKey": "NewCashOutWinLoss",
-        "Enable": false,
-        "Type": 1,
-        "Mode": 1,
-        "Level": [ 0, 1, 101 ]
-      },
-      {
-        "DisplayKey": "lblCashOutWinLoss",
-        "FunctionKey": "CashOutWinLoss72",
         "Enable": false,
         "Type": 1,
         "Mode": 1,

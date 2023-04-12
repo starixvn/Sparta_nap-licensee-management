@@ -10058,7 +10058,7 @@ var Button = exports.Button = function (_Component) {
                         _react2.default.createElement(
                             'i',
                             null,
-                            '(Apply for "Gold Deluxe" and "AG Casino")'
+                            '(Apply for "AG Casino")'
                         )
                     )
                 ),

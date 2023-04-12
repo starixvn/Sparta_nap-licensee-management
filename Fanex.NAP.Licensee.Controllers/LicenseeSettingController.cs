@@ -25,8 +25,7 @@
 
         private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
         {
-            { ProductCode.AGCasino, "AGCasino_VersionKey" },
-            { ProductCode.GoldDeluxe, "GoldDeluxe_VersionKey" },
+            { ProductCode.AGCasino, "AGCasino_VersionKey" }
         };
 
         public LicenseeSettingController()
