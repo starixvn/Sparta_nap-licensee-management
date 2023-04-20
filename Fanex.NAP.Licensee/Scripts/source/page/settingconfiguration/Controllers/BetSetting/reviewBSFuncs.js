@@ -16,8 +16,7 @@ var reviewBSModelFunc = function ($scope, shareSettingsService) {
             return (_.MinBet === ""
                 && _.MaxBet === ""
                 && _.MaxPerMatch === ""
-                && (_.MaxPerBall === "" || _.MaxPerBall === null || _.MaxPerBall === undefined)
-                && (_.MaxPayoutPerMatch === "" || _.MaxPayoutPerMatch === null || _.MaxPayoutPerMatch === undefined));
+                && (_.MaxPayoutPerMatch === ""));
         });
 
         if (isValidDBSData) {
@@ -34,7 +33,7 @@ var reviewBSModelFunc = function ($scope, shareSettingsService) {
         var agentList = shareSettingsService.getWorkingContext().AgentList;
 
         if (agentId === 0) {
-            if (agentList.length >= 7) {
+            if (agentList.length >= 8) {
                 for (var i = 1; i < 7; i++) {
                     res += agentList[i].Name + ", ";
                 }

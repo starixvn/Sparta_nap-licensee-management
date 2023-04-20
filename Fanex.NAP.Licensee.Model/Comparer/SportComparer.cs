@@ -12,12 +12,13 @@ namespace Fanex.NAP.Licensee.Model.Comparer
         private const int SabaBasketBall = 9902;
         private const int SabaCricket = 9907;
 
-        public const float ESportValue = 2.9f;
+        public const float ESportValue = 1.9f;
         public const float CricketValue = 10.1f;
         public const float SabaCricketValue = 10.2f;
         public const float ParlaySoccerValue = 1.5f;
         public const float SabaSoccerValue = 1.6f;
         public const float SabaBasketBallValue = 2.1f;
+
 
         public const int ParlayBetType = 9;
 

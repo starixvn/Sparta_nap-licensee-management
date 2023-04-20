@@ -114,7 +114,5 @@
         public IList<BSRowBaseViewModel> BSRows { get; set; }
 
         public IList<BSRowBaseViewModel> DBSRows { get; set; }
-
-        public BSRowBaseViewModel SportBetSetting { get; set; }
     }
 }

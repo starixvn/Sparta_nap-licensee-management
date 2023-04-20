@@ -260,7 +260,6 @@
     <Compile Include="ViewModel\LrfFunction\LrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\BetTicketVolumeControl\SearchVolumeControlViewModel.cs" />
-    <Compile Include="ViewModel\SettingConfiguration\CheckBSResultViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\GetDefaultBetSettingViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>

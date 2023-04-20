@@ -13,7 +13,7 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
         var agentList = shareSettingsService.getWorkingContext().AgentList;
 
         if ($scope.agentId === 0) {
-            if (agentList.length >= 7) {
+            if (agentList.length >= 8) {
                 for (var i = 1; i < 7; i++) {
                     res += agentList[i].Name + ", ";
                 }
@@ -61,7 +61,7 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             shareSettingsService.saveOrgSettings(angular.copy(data));
             if ($scope.buttonStatus.IsBack) {
                 $scope.editBS = shareSettingsService.getCurSettings();
-                $scope.editBS.DBSRows = {};
+                $scope.editBS.DBSRows = null;
                 if ($scope.editBS.isCopyAllFromOne === true) {
                     $scope.listener = $scope.$watch("editBS.BSRows[0]", $scope.copyBS, true);
                 }
@@ -221,8 +221,49 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
                 hasError = true;
             }
         });
-        return scope.editBS.IsApplyForMembersChecked || !hasError;
+
+        /* check constraints */
+        var hasViolate = false;
+
+        $.each(curBSRows, function (index, element) {
+            if (element.IsRowSelected === true) {
+                // Check valid data
+                if (element.MinBet === ""
+                    || element.MaxBet === ""
+                    || element.MaxPerMatch === ""
+                    || element.MaxPayoutPerMatch === ""
+                ) {
+                    hasViolate = true;
+                    return false;
+                }
+
+                // Check is dirty
+                if (parseFloat(element.MinBet) > parseFloat(element.MaxBet)
+                    || parseFloat(element.MaxBet) > parseFloat(element.MaxPerMatch)
+                    || parseFloat(element.MaxPerMatch) > parseFloat(element.MaxPayoutPerMatch)
+                ) {
+                    hasViolate = true;
+                    return false;
+                }
+            }
+        });
+
+        var isValidDBSData = curBSRows.every(function (_) {
+            return (_.MinBet === ""
+                && _.MaxBet === ""
+                && _.MaxPerMatch === ""
+                && (_.MaxPayoutPerMatch === ""));
+        });
+
+        // All rows DBS = ""
+        if (scope.isDBS && isValidDBSData) {
+            hasViolate = false;
+        }
+        /*end check constrants*/
+
+        return !hasError && !hasViolate;
     }
+
     return false;
 };
 
@@ -315,15 +356,6 @@ var editBSApplyForPlayerFunc = function ($scope, shareSettingsService) {
         } else {
             $scope.editBS.applyForMember = null;
         }
-        var curBSRows = $scope.editBS.BSRows;
-        var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
-        var nextEnable = getNextEnable($scope, curBSRows, orgBSRows);
-        if ($scope.editBS.BSRows.length === 1) {
-            $scope.buttonStatus.isNextEnabled = $scope.editBS.IsApplyForMembersChecked || nextEnable;
-        }
-        else {
-            $scope.buttonStatus.isNextEnabled = nextEnable;
-        }
     };
 
     var checkApplyForMember = function () {
@@ -349,82 +381,6 @@ editBSApplyForPlayerFunc.$inject = ['$scope', 'shareSettingsService'];
 var editBSNextConstraintsFunc = function ($scope, shareSettingsService) {
 
     $scope.nextReviewBS = function () {
-        // Check constraints on submit
-        var hasError = false;
-        var curBSRows = $scope.editBS.BSRows;
-
-        var isValidDBSData = curBSRows.every(function (_) {
-            return (_.MinBet === ""
-                && _.MaxBet === ""
-                && _.MaxPerMatch === ""
-                && (_.MaxPerBall === "" || _.MaxPerBall === null || _.MaxPerBall === undefined)
-                && (_.MaxPayoutPerMatch === "" || _.MaxPayoutPerMatch === null || _.MaxPayoutPerMatch === undefined));
-        });
-
-        for (var index = 0; index < curBSRows.length; index++) {
-
-            // All rows DBS = ""
-            if ($scope.isDBS === true && isValidDBSData === true) {
-                break;
-            }
-
-            if (curBSRows[index].IsRowSelected === true) {
-                // Check valid data
-                if ((curBSRows[index].MinBet === "")
-                    || curBSRows[index].MaxBet === ""
-                    || curBSRows[index].MaxPerMatch === ""
-                ) {
-                    hasError = true;
-                    break;
-                }
-
-                // Check is dirty
-                if (parseFloat(curBSRows[index].MinBet) > parseFloat(curBSRows[index].MaxBet)
-                    || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerMatch)
-                ) {
-                    hasError = true;
-                    break;
-                }
-
-                // If isDBS = true && Product = Sportsbook => Check
-                if ($scope.isDBS === true
-                    && shareSettingsService.getWorkingContext().ProdId === 1
-                    && (parseFloat(curBSRows[index].MinBet) < parseFloat(curBSRows[index].UplineMinBet)
-                        || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].UplineMaxBet)
-                        || parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].UplineMaxPerMatch))
-                ) {
-                    hasError = true;
-                    break;
-                }
-
-                // If MaxPerBall exists => Check
-                if (curBSRows[index].MaxPerBall !== null && curBSRows[index].MaxPerBall !== undefined) {
-                    if (curBSRows[index].MaxPerBall === ""
-                        || parseFloat(curBSRows[index].MaxPerBall) > parseFloat(curBSRows[index].MaxPerMatch)
-                        || parseFloat(curBSRows[index].MaxBet) > parseFloat(curBSRows[index].MaxPerBall)
-                    ) {
-                        hasError = true;
-                        break;
-                    }
-                }
-
-                // If MaxPayoutPerMatch exists => Check
-                if (curBSRows[index].MaxPayoutPerMatch !== null && curBSRows[index].MaxPayoutPerMatch !== undefined) {
-                    if (curBSRows[index].MaxPayoutPerMatch === ""
-                        || parseFloat(curBSRows[index].MaxPerMatch) > parseFloat(curBSRows[index].MaxPayoutPerMatch)
-                        || ($scope.isDBS === true && parseFloat(curBSRows[index].MaxPayoutPerMatch) > parseFloat(curBSRows[index].UplineMaxPayoutPerMatch))
-                    ) {
-                        hasError = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (hasError === true) {
-            return;
-        }
-
         if ($scope.isDBS === true) {
             angular.extend(shareSettingsService.getCurSettings(), { DBSRows: angular.copy($scope.editBS.BSRows) });
         } else {

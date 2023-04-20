@@ -9,8 +9,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
     'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl',
     function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl) {
         $scope.isButtonEnable = true;
-        $scope.option = false;
+        $scope.option = 0;
         $scope.SportOrBetTypeName = '';
+
+        var dbsErrorCode = 103;
 
         // Load data for ddls
         $scope.filterData = {
@@ -37,11 +39,6 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
         $scope.selectedProductTypeChanged = function () {
             $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
-            $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
-        };
-
-        $scope.selectedFunctionChanged = function () {
-            $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
         };
 
         $scope.selectedLicenseeChanged = function () {
@@ -149,15 +146,13 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                     hasEnter: false,
                     width: '100%',
                 }
-
-                $scope.isEnableAgentListSelect = $scope.filterData.selectedProductType.Id === 1 && ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting);
             });
 
         $scope.selectEventHandler = function () {
             if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting) {
-                $scope.option = false;
+                $scope.option = 0; // Currency Bet Setting
             } else {
-                $scope.option = true;
+                $scope.option = 1; // Player Bet Setting
             }
 
             // Save working context
@@ -191,57 +186,57 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             $scope.buttonStatus.isUpdated = true;
             $scope.buttonStatus.isButtonEnable = false;
             var BSRows = shareSettingsService.getCurSettings().BSRows;
-            var rowIndex = getRowIndex(BSRows, -1);
-            if (rowIndex !== undefined) {
-                postBetSetting(BSRows, rowIndex);
-            }
+            var DBSRows = shareSettingsService.getCurSettings().DBSRows;
+
+            var editedRows = getEditedRows(BSRows, DBSRows);
+            var editedBSRows = editedRows.BSRows;
+            var editedDBSRows = editedRows.DBSRows;
+
+            var startIndex = 0;
+            postBetSetting(editedBSRows, editedDBSRows, startIndex);
         };
 
         $scope.checkBS = function () {
             var BSRows = shareSettingsService.getCurSettings().BSRows;
+            var DBSRows = shareSettingsService.getCurSettings().DBSRows;
 
-            var rows = [];
-            for (var index = -1; index < BSRows.length; index++) {
-                var rowIndex = getRowIndex(BSRows, index);
-                if (rowIndex !== undefined) {
-                    rows.push(angular.copy(BSRows[rowIndex]));
-                    index = rowIndex - 1;
-                }
-            };
+            var editedRows = getEditedRows(BSRows, DBSRows);
+            var editedBSRows = editedRows.BSRows;
+            var editedDBSRows = editedRows.DBSRows;
 
-            checkBetSetting(rows);
+            checkBetSetting(editedBSRows, editedDBSRows);
         }
 
-        var getRowIndex = function (BSRows, rowIndex) {
-            var setting = shareSettingsService.getCurSettings();
+        var getEditedRows = function (bsRows, dbsRows) {
+            var result = {
+                BSRows: [],
+                DBSRows: []
+            };
 
-            // only one row and check apply exist member
-            if (BSRows.length === 1 && setting.IsApplyForMembersChecked) {
-                return 0;
-            }
-
-            for (var index = rowIndex + 1; index < BSRows.length; index++) {
-                if (BSRows[index].IsRowSelected
-                    || (setting.IsEnableChecked && !setting.IsEnableDisabled)
-                    || (setting.IsDownlineChecked && !setting.IsDownlineDisabled)) {
-                    return index;
+            for (var i = 0; i < bsRows.length; i++) {
+                if (bsRows[i].IsRowSelected || (dbsRows != null && dbsRows[i].IsRowSelected)) {
+                    bsRows[i].Index = i;
+                    result.BSRows.push(bsRows[i]);
+                    if (dbsRows !== null) {
+                        dbsRows[i].Index = i;
+                        result.DBSRows.push(dbsRows[i]);
+                    }
                 }
             }
-            return undefined;
-        };
 
-        var updatedParams = function (bsRow) {
+            return result;
+        }
+
+        var updatedParams = function () {
             return {
                 CustId: shareSettingsService.getWorkingContext().CustId,
                 ProdId: shareSettingsService.getWorkingContext().ProdId,
-                SportBetSetting: bsRow,
-                IsEnableChecked: shareSettingsService.getCurSettings().IsEnableChecked,
-                IsDownlineChecked: shareSettingsService.getCurSettings().IsDownlineChecked,
                 AgentId: shareSettingsService.getWorkingContext().AgentId,
                 Option: $scope.option,
                 ExistedMember: shareSettingsService.getCurSettings().existedMember,
-                IsNewMember: shareSettingsService.getCurSettings().isNewMember,
-                DBSRows: shareSettingsService.getCurSettings().DBSRows
+                IsNewMember: shareSettingsService.getCurSettings().isNewMember
+                // BSRows
+                // DBRows
             }
         };
 
@@ -261,7 +256,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                             $(this).dialog("close");
                             var curPath = location.pathname;
                             if (curPath !== "/EditDefaultBetSetting/" + workingContext.ProdId) {
-                                location.href = "/SettingConfiguration/Index#/EditDefaultBetSetting/" + workingContext.ProdId;
+                                location.href = window.rootUrl + "SettingConfiguration/Index#/EditDefaultBetSetting/" + workingContext.ProdId;
                             }
                         }
                     },
@@ -276,10 +271,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
             });
         };
 
-        var checkBetSetting = function (BSRows) {
+        var checkBetSetting = function (editedBSRows, editedDBSRows) {
             var param = updatedParams();
-            var dbsErrorCode = 103;
-            param.BSRows = BSRows;
+            param.BSRows = editedBSRows;
+            param.DBSRows = editedDBSRows;
 
             $http.post('CheckBetSettingSportsbook', param)
                 .success(function (data) {
@@ -299,32 +294,50 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                 })
         }
 
-        var postBetSetting = function (BSRows, rowIndex) {
-            var bsRow = BSRows[rowIndex];
-            bsRow.Status = shareSettingsService.getStatus().Loading;
+        var postBetSetting = function (editedBSRows, editedDBSRows, index) {
 
-            $http.post(shareSettingsService.getWorkingContext().Url, updatedParams(bsRow))
+            var BSRows = shareSettingsService.getCurSettings().BSRows;
+            var DBSRows = shareSettingsService.getCurSettings().DBSRows;
+
+            var bsRow = editedBSRows[index].IsRowSelected ? BSRows[editedBSRows[index].Index] : {};
+            var dbsRow = (editedDBSRows.length > 0 && editedDBSRows[index].IsRowSelected) ? DBSRows[editedDBSRows[index].Index] : {};
+
+            var param = updatedParams();
+            param.BSRows = angular.equals({}, bsRow) ? null : [bsRow];
+            param.DBSRows = angular.equals({}, dbsRow) ? null : [dbsRow];
+
+            bsRow.Status = shareSettingsService.getStatus().Loading;
+            dbsRow.Status = shareSettingsService.getStatus().Loading;
+
+            $http.post(shareSettingsService.getWorkingContext().Url, param)
                 .success(function (data) {
-                    bsRow.Message = data.Message;
-                    rowIndex = getRowIndex(BSRows, rowIndex);
 
                     if (data.IsOk) {
                         bsRow.Status = shareSettingsService.getStatus().Success;
-                    }
-                    else {
+                        dbsRow.Status = shareSettingsService.getStatus().Success;
+                    } else {
                         bsRow.Status = shareSettingsService.getStatus().Fail;
-                    }
+                        dbsRow.Status = shareSettingsService.getStatus().Fail;
 
-                    if (rowIndex !== undefined && BSRows.length > 1) {
-                        postBetSetting(BSRows, rowIndex);
+                        bsRow.Message = data.Message;
+                        if (data.Code === dbsErrorCode) {
+                            dbsRow.Message = data.Message;
+                        }
                     }
-                    else {
-                        $scope.buttonStatus.isButtonEnable = true;
+                    $scope.buttonStatus.isButtonEnable = true;
+
+                    if (index < editedBSRows.length - 1) {
+                        postBetSetting(editedBSRows, editedDBSRows, index + 1);
                     }
                 })
                 .error(function (data) {
+                    var message = 'Please re-update this row as soon as possible!'
+
                     bsRow.Status = shareSettingsService.getStatus().Fail;
-                    bsRow.Message = data;
+                    bsRow.Message = message;
+
+                    dbsRow.Status = shareSettingsService.getStatus().Fail;
+                    dbsRow.Message = message;
                 });
         };
     }]);

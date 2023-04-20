@@ -147,6 +147,7 @@ namespace Fanex.NAP.Licensee.Service
                     Name = ColumnExisted(reader, "SportName") ? reader["SportName"].ToString() : string.Empty
                 },
                 BetType = int.Parse(reader["Bettype"].ToString()),
+                MinBet = reader["MinBet"] != DBNull.Value ? decimal.Parse(reader["MinBet"].ToString()) : new decimal?(),
                 MaxBet = reader["MaxBet"] != DBNull.Value ? decimal.Parse(reader["MaxBet"].ToString()) : new decimal?(),
                 MaxPerMatch = reader["MaxPerMatch"] != DBNull.Value ? decimal.Parse(reader["MaxPerMatch"].ToString()) : new decimal?(),
                 MaxPerBall = reader["MaxPerBall"] != DBNull.Value ? decimal.Parse(reader["MaxPerBall"].ToString()) : new decimal?(),

@@ -12,10 +12,10 @@
     public class SingleDefaultBetSettingViewModel
     {
         private readonly string _xmlParameterPattern = "<setting sporttype=\"{0}\" bettype=\"{1}\" {2} ></setting>";
-        private readonly string _xmlSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\"";
-        private readonly string _xmlSBSettingPatter = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxpayoutpermatch=\"{2}\"";
-        private readonly string _xmlNumberGameSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxperball=\"{2}\"";
-        private readonly string _xmlNoneMaxperMatchNumberGameSettingPattern = "maxbet=\"{0}\" maxperball=\"{1}\"";
+        private readonly string _xmlSettingPattern = "minbet=\"{0}\" maxbet=\"{1}\" maxpermatch=\"{2}\"";
+        private readonly string _xmlSBSettingPatter = "minbet\"{0}\" maxbet=\"{1}\" maxpermatch=\"{2}\" maxpayoutpermatch=\"{3}\"";
+        private readonly string _xmlNumberGameSettingPattern = "minbet=\"{0}\" maxbet=\"{1}\" maxpermatch=\"{2}\" maxperball=\"{3}\"";
+        private readonly string _xmlNoneMaxperMatchNumberGameSettingPattern = "minbet=\"{0}\" maxbet=\"{1}\" maxperball=\"{2}\"";
 
         public SingleDefaultBetSettingViewModel()
         {
@@ -78,20 +78,20 @@
                 result.Append("<settings>");
                 foreach (var sb in Sportsbook)
                 {
-                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSBSettingPatter, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
+                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSBSettingPatter, sb.MinBet, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));
                 }
 
                 foreach (var vs in VirtualSport)
                 {
-                    var settingAttributes = vs.MaxBet != null ? string.Format(_xmlSettingPattern, vs.MaxBet, vs.MaxPerMatch) : string.Empty;
+                    var settingAttributes = vs.MaxBet != null ? string.Format(_xmlSettingPattern, vs.MinBet, vs.MaxBet, vs.MaxPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, vs.SportOrGame.Id, vs.BetType, settingAttributes));
                 }
 
                 foreach (var ng in NumberGame)
                 {
                     var settingAttributes = ng.MaxBet != null ?
-                        ng.MaxPerMatch != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) :
+                        ng.MaxPerMatch != null ? string.Format(_xmlNumberGameSettingPattern, ng.MinBet, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) :
                         string.Format(_xmlNoneMaxperMatchNumberGameSettingPattern, ng.MaxBet, ng.MaxPerBall)
                         : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, ng.SportOrGame.Id, ng.BetType, settingAttributes));
@@ -99,7 +99,7 @@
 
                 foreach (var kn in Keno)
                 {
-                    var settingAttributes = kn.MaxBet != null ? string.Format(_xmlSettingPattern, kn.MaxBet, kn.MaxPerMatch) : string.Empty;
+                    var settingAttributes = kn.MaxBet != null ? string.Format(_xmlSettingPattern, kn.MinBet, kn.MaxBet, kn.MaxPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, kn.SportOrGame.Id, kn.BetType, settingAttributes));
                 }
 

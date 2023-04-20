@@ -60,7 +60,6 @@
                                         data-ng-model="filterData.selectedAgent"
                                         data-settings="agentSettings"
                                         text-settings="TextSettings"
-                                        data-ng-disabled="!isEnableAgentListSelect"
                                         data-ng-style="{ 'padding': 0}">
                     </dropdowntreesingle>
                 </div>
@@ -85,8 +84,7 @@
                     </label>
                     <select ng-options="item for item in filterData.selectedProductType.Functions track by item"
                             ng-model="filterData.selectedFunction" ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
-                            id="product-function" class="col-md-3 width-160"
-                            ng-change="selectedFunctionChanged()">
+                            id="product-function" class="col-md-3 width-160">
                     </select>
                 </div>
             </div>

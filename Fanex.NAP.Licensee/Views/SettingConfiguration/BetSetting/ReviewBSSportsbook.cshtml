@@ -10,7 +10,7 @@
         <input ng-if="!option" ng-model="reviewBS.applyForMember" disabled type="radio" id="newPlayers" name="players" value="2" />
         <label ng-if="!option" style="font-weight: normal;" for="newPlayers">New players only</label>
         <input ng-if="option" ng-model="reviewBS.applyForMember" disabled type="radio" id="existingPlayers" name="players" value="3" />
-        <label ng-if="option" style="font-weight: normal;" for="existingPlayers">Existing player only</label>
+        <label ng-if="option" style="font-weight: normal;" for="existingPlayers">Existing players only</label>
     </div>
     <table class="table table-bordered table-setting">
         <thead>
@@ -97,6 +97,15 @@
                 <th class="width-150">
                     Max Payout Per Match
                 </th>
+                <th>
+                    Updated
+                </th>
+                <th ng-if="buttonStatus.isUpdated">
+                    Status
+                </th>
+                <th ng-if="buttonStatus.isUpdated">
+                    Message
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -105,16 +114,25 @@
                     {{item.SportTypeName}}
                 </td>
                 <td>
-                    {{item.MinBet | number}}
+                    {{item.MinBet === '' ? '' : (item.MinBet | number)}}
                 </td>
                 <td>
-                    {{item.MaxBet | number}}
+                    {{item.MaxBet === '' ? '' : (item.MaxBet | number)}}
                 </td>
                 <td>
-                    {{item.MaxPerMatch | number}}
+                    {{item.MaxPerMatch === '' ? '' : (item.MaxPerMatch | number)}}
                 </td>
                 <td>
-                    {{item.MaxPayoutPerMatch | number}}
+                    {{item.MaxPayoutPerMatch === '' ? '' : (item.MaxPayoutPerMatch | number)}}
+                </td>
+                <td>
+                    {{item.IsRowSelected === true? 'X': ''}}
+                </td>
+                <td ng-if="buttonStatus.isUpdated">
+                    <span class="glyphicon {{item.Status}}"></span>
+                </td>
+                <td ng-if="buttonStatus.isUpdated">
+                    {{item.Message}}
                 </td>
             </tr>
             <tr ng-if="isShowDBS()">
