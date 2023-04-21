@@ -19,12 +19,15 @@
                             Sport Type
                         </th>
                         <th class="col20">
+                            Min Bet
+                        </th>
+                        <th class="col20">
                             Max Bet
                         </th>
-                        <th class="col30">
+                        <th class="col20">
                             Max Per Match
                         </th>
-                        <th class="col30">
+                        <th class="col20">
                             Max Payout Per Match
                         </th>
                     </tr>
@@ -38,13 +41,16 @@
                                 @sb.SportOrGame.Name
                             </td>
                             <td>
-                                <input data-key="MaxBet" maxlength="12" type="text" value="@(sb.MaxBet.HasValue ? sb.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                <input data-key="MinBet" maxlength="12" type="text" value="@(sb.MinBet.HasValue ? sb.MinBet.Value.ToString() : string.Empty)" class="txt-max" />
                             </td>
                             <td>
-                                <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                <input data-key="MaxBet" maxlength="12" type="text" value="@(sb.MaxBet.HasValue ? sb.MaxBet.Value.ToString() : string.Empty)" class="txt-max" />
                             </td>
                             <td>
-                                <input data-key="MaxPayoutPerMatch" maxlength="12" type="text" value="@(sb.MaxPayoutPerMatch.HasValue ? sb.MaxPayoutPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
+                                <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(sb.MaxPerMatch.HasValue ? sb.MaxPerMatch.Value.ToString() : string.Empty)" class="txt-max" />
+                            </td>
+                            <td>
+                                <input data-key="MaxPayoutPerMatch" maxlength="12" type="text" value="@(sb.MaxPayoutPerMatch.HasValue ? sb.MaxPayoutPerMatch.Value.ToString() : string.Empty)" class="txt-max" />
                             </td>
                         </tr>
                         sbCount++;
