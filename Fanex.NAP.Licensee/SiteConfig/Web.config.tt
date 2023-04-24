@@ -49,6 +49,33 @@
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	  </ONEbook.UM>
+      <system.web>
+		<trust level="Full" />
+        <compilation debug="false" targetFramework="4.6.1" />
+        <customErrors mode="Off" defaultRedirect="~/Utility/Error">
+			<error statusCode="403" redirect="~/Utility/Error?err=403" />
+			<error statusCode="404" redirect="~/Utility/Error?err=404" />
+		</customErrors>
+        <authentication mode="Forms">
+            <forms loginUrl="~/UserLogin/Login" cookieless="UseCookies" timeout="2880" name=".NAPLMFORMSAUTH" defaultUrl="~/Home/Index" path="/" />
+        </authentication>
+        <authorization>
+            <allow users="*" />
+        </authorization>
+	<#=site.SessionState#>
+    <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
+         <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web" />
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>        
+    </system.web>
 	 <#
 	 break;
 	  case "UAT":
@@ -62,6 +89,33 @@
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
+    <system.web>
+		<trust level="Full" />
+        <compilation debug="false" targetFramework="4.6.1" />
+        <customErrors mode="Off" defaultRedirect="~/Utility/Error">
+			<error statusCode="403" redirect="~/Utility/Error?err=403" />
+			<error statusCode="404" redirect="~/Utility/Error?err=404" />
+		</customErrors>
+        <authentication mode="Forms">
+            <forms loginUrl="~/UserLogin/Login" cookieless="UseCookies" timeout="2880" name=".NAPLMFORMSAUTH" defaultUrl="~/Home/Index" path="/" />
+        </authentication>
+        <authorization>
+            <allow users="*" />
+        </authorization>
+	<#=site.SessionState#>
+    <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
+         <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web" />
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>        
+    </system.web>
 	<#
 	 break;
 	  case "PRO":
@@ -75,24 +129,6 @@
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
-	<#
-	break;
-	case "SIT":
-	  #>
-	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.2.44:8788/">
-		<Domain>
-			<add Name="http://nap-lm.playthefun.com" Path="/" />
-		</Domain>
-	</NapSettings>
-	<ONEbook.UM ServiceUris="http://172.16.4.106:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	</ONEbook.UM>
-	<#
-	break;
-
-	}
-	#>
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -118,10 +154,53 @@
         <add namespace="System.Web.Routing" />
         <add namespace="System.Web.WebPages" />
       </namespaces>
-    </pages>
-
-        
+    </pages>        
     </system.web>
+	<#
+	break;
+	case "SIT":
+	  #>
+	  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.2.44:8788/">
+		<Domain>
+			<add Name="http://nap-lm.playthefun.com" Path="/" />
+		</Domain>
+	</NapSettings>
+	<ONEbook.UM ServiceUris="http://172.16.4.106:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+		<AllowedIPs AllowAll="true">
+		</AllowedIPs>
+	</ONEbook.UM>
+    <system.web>
+		<trust level="Full" />
+        <compilation debug="false" targetFramework="4.6.1" />
+        <customErrors mode="Off" defaultRedirect="~/Utility/Error">
+			<error statusCode="403" redirect="~/Utility/Error?err=403" />
+			<error statusCode="404" redirect="~/Utility/Error?err=404" />
+		</customErrors>
+        <authentication mode="Forms">
+            <forms loginUrl="~/UserLogin/Login" cookieless="UseCookies" timeout="2880" name=".NAPLMFORMSAUTH" defaultUrl="~/Home/Index" path="/" />
+        </authentication>
+        <authorization>
+            <allow users="*" />
+        </authorization>
+	<#=site.SessionState#>
+    <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
+         <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web" />
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>        
+    </system.web>
+	<#
+	break;
+
+	}
+	#>
 
     <system.webServer>
         <httpProtocol>
