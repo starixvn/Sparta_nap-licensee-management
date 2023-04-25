@@ -138,6 +138,8 @@
                 dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
                 dctGameType.Add(new BSKeyPair(8, 1), "Baseball");
                 dctGameType.Add(new BSKeyPair(10, 1), "Golf");
+                dctGameType.Add(new BSKeyPair(50, 1), "Cricket");
+                dctGameType.Add(new BSKeyPair(9907, 1), "Saba Cricket");
                 dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
                 dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
