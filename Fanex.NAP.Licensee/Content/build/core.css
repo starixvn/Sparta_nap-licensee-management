@@ -13474,164 +13474,228 @@ input[type="submit"].btn-ok,
   word-wrap: break-word;
 }
 
-﻿.glyphicon-none:before
-{
+﻿.glyphicon-none:before {
     content: "\2122";
     color: transparent !important;
 }
-selectwithsearch
-{
+
+dropdowntree, dropdowntreesingle {
     display: block;
     min-width: 150px;
 }
-selectwithsearch .filter {
-  display: block;
-  width: 100%;
-  height: 30px;
-  padding: 6px 12px;
-  color: #555;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-selectwithsearch .toolbar{
-    margin-left: 15px;
-    line-height: 20px;
-    margin-top: 5px;
-}
-selectwithsearch .toolbar .input-group{
-    width: 100%;
-}
-selectwithsearch .searchclear
-{
-    position: absolute;
-    display: block;
-    top: 9px;
-    font-size: 16px;
-    right: 0px;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    color: #ccc;
-    z-index: 100;
-}
-selectwithsearch button .caret
-{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-}
-selectwithsearch span, selectwithsearch a
-{
-    font-size: 9pt;
-    color: #4f4f4f;
-    line-height: 9pt;
-}
-selectwithsearch .dropdown-menu .glyphicon
-{
-    margin-right: 5px;
-}
-selectwithsearch .btn, selectwithsearch .btn:hover, selectwithsearch .btn:focus
-{
-    background: #FFF;
-    border: 1px solid #b1b1b1;
-    width: 100%;
-}
-selectwithsearch .btn span{
-    font-size: 10pt;
-}
-selectwithsearch .dropdown
-{
-    border: 1px solid #e5e5e5;
-    border-radius: 1px;
-}
-selectwithsearch .dropdown-menu
-{
-    min-width: 150px;
-    max-height: 600px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 2px;
-}
-selectwithsearch .dropdown-menu .disabled, selectwithsearch .dropdown-menu .disabled *
-{
-    color: #aaa;
-}
-selectwithsearch .dropdown-menu a
-{
-    cursor: pointer;
-    text-decoration: none;
-}
-selectwithsearch .dropdown-menu .nodehanbler
-{
-    cursor: pointer;
-}
-selectwithsearch .dropdown-menu .divider
-{
-    margin: 1px;
-}
-selectwithsearch .tree
-{
-    max-height: 500px;
-    min-height: 50px;
-    overflow-y: auto;
-    padding-bottom: 30px;
-}
-selectwithsearch .tree ul
-{
-    padding-left: 5px;
-}
-selectwithsearch .tree li
-{
-    list-style-type: none;
-    margin: 0;
-    padding: 10px 5px 0 5px;
-    position: relative;
-    line-height: 9pt;
-}
-selectwithsearch .tree li.divider
-{
-    height: 1px;
-    padding: 1px;
-}
-selectwithsearch .tree li::before, .tree li::after
-{
-    content: '';
-    left: -20px;
-    position: absolute;
-    right: auto;
-}
-selectwithsearch .tree li span
-{
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-}
-selectwithsearch .tree li.parent_li > span
-{
-    cursor: pointer;
-}
-selectwithsearch .tree > ul > li::before, .tree > ul > li::after
-{
-    border: 0;
-}
-selectwithsearch .tree li:last-child::before
-{
-    height: 30px;
-}
-selectwithsearch .tree li.parent_li > span:hover, .tree li.parent_li > span:hover + ul li span
-{
-    background: #eee;
-    border: 1px solid #94a0b4;
-}
 
-selectwithsearch .group-text{
-    margin-left: 10px;
-}
+    dropdowntreesingle .pull-left {
+        color: #000;
+    }
 
-selectwithsearch .pull-left {
-    color: #000;    
-}
+    dropdowntreesingle .group-text {
+        margin-left: 10px;
+    }
 
+    dropdowntree .filter,
+    dropdowntreesingle .filter {
+        display: block;
+        width: 100%;
+        height: 30px;
+        padding: 6px 30px 6px 12px;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    dropdowntree .toolbar,
+    dropdowntreesingle .toolbar {
+        margin-left: 15px;
+        line-height: 20px;
+        margin-top: 5px;
+    }
+
+        dropdowntree .toolbar .input-group,
+        dropdowntreesingle .toolbar .input-group {
+            width: 100%;
+        }
+
+    dropdowntree .searchclear,
+    dropdowntreesingle .searchclear {
+        position: absolute;
+        display: block;
+        top: 9px;
+        font-size: 16px;
+        right: 0px;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        color: #ccc;
+        z-index: 100;
+    }
+
+    dropdowntree .selectsearch,
+    dropdowntreesingle .selectsearch {
+        position: absolute;
+        top: 7px;
+        right: 25px;
+        cursor: pointer;
+        z-index: 100;
+        visibility: hidden;
+    }
+
+        dropdowntree .selectsearch input,
+        dropdowntreesingle .selectsearch input {
+            cursor: pointer;
+        }
+
+    dropdowntree button .caret, dropdowntreesingle button .caret {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+    }
+
+    dropdowntree span, dropdowntree a, dropdowntreesingle span, dropdowntreesingle a {
+        font-size: 9pt;
+        color: #4f4f4f;
+        line-height: 9pt;
+    }
+
+    dropdowntree .dropdown-menu .glyphicon,
+    dropdowntreesingle .dropdown-menu .glyphicon {
+        margin-right: 5px;
+    }
+
+    dropdowntree .btn, dropdowntree .btn:hover, dropdowntree .btn:focus,
+    dropdowntreesingle .btn, dropdowntreesingle .btn:hover, dropdowntreesingle .btn:focus {
+        background: #FFF;
+        border: 1px solid #b1b1b1;
+        width: 100%;
+    }
+
+        dropdowntreesingle .btn.disabled {
+            background-color: #eee;
+            opacity: 1;
+            cursor: not-allowed;
+        }
+
+    dropdowntree .dropdown,
+    dropdowntreesingle .dropdown {
+        border: 1px solid #e5e5e5;
+        border-radius: 1px;
+    }
+
+    dropdowntree .dropdown-menu,
+    dropdowntreesingle .dropdown-menu {
+        min-width: 150px;
+        max-height: 600px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2px;
+    }
+
+        dropdowntree .dropdown-menu .disabled, dropdowntree .dropdown-menu .disabled *,
+        dropdowntreesingle .dropdown-menu .disabled, dropdowntreesingle .dropdown-menu .disabled * {
+            color: #aaa;
+        }
+
+        dropdowntree .dropdown-menu a,
+        dropdowntreesingle .dropdown-menu a {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        dropdowntree .dropdown-menu .nodehanbler,
+        dropdowntreesingle .dropdown-menu .nodehanbler {
+            cursor: pointer;
+        }
+
+        dropdowntree .dropdown-menu .divider,
+        dropdowntreesingle .dropdown-menu .divider {
+            margin: 1px;
+        }
+
+    dropdowntree .tree, dropdowntreesingle .tree {
+        max-height: 500px;
+        min-height: 50px;
+        overflow-y: auto;
+        padding-bottom: 30px;
+    }
+
+        dropdowntree .tree ul,
+        dropdowntreesingle .tree ul {
+            padding-left: 5px;
+        }
+
+        dropdowntree .tree li,
+        dropdowntreesingle .tree li {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px 5px 0 5px;
+            position: relative;
+            line-height: 9pt;
+            white-space: nowrap;
+        }
+
+            dropdowntree .tree li.divider,
+            dropdowntreesingle .tree li.divider {
+                height: 1px;
+                padding: 1px;
+            }
+
+            dropdowntree .tree li::before, .tree li::after,
+            dropdowntreesingle .tree li::before {
+                content: '';
+                left: -20px;
+                position: absolute;
+                right: auto;
+            }
+
+            dropdowntree .tree li::before,
+            dropdowntreesingle .tree li::before {
+                border-left: 1px solid #999;
+                bottom: 50px;
+                height: 100%;
+                top: 0;
+                width: 1px;
+            }
+
+            dropdowntree .tree li::after,
+            dropdowntreesingle .tree li::after {
+                border-top: 1px solid #999;
+                height: 20px;
+                top: 17px;
+                width: 25px;
+            }
+
+            dropdowntree .tree li span,
+            dropdowntreesingle .tree li span {
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                display: inline-block;
+                text-decoration: none;
+            }
+
+            dropdowntree .tree li.parent_li > span,
+            dropdowntreesingle .tree li.parent_li > span {
+                cursor: pointer;
+            }
+
+        dropdowntree .tree > ul > li::before, .tree > ul > li::after,
+        dropdowntreesingle .tree > ul > li::before {
+            border: 0;
+        }
+
+        dropdowntree .tree li:last-child::before,
+        dropdowntreesingle .tree li:last-child::before {
+            height: 30px;
+        }
+
+        dropdowntree .tree li.parent_li > span:hover, .tree li.parent_li > span:hover + ul li span,
+        dropdowntreesingle .tree li.parent_li > span:hover {
+            background: #eee;
+            border: 1px solid #94a0b4;
+        }
+
+
+.upcoming-licensee {
+    color: #558ED5;
+    font-style: italic;
+    margin-left: 5px;
+}
