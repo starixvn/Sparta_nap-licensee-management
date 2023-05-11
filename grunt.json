@@ -77,6 +77,6 @@
     "!*.min.js"
   ],
   "cssLicenseeSetting": [
-    "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.min.css"
+    "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.css"
   ]
 }

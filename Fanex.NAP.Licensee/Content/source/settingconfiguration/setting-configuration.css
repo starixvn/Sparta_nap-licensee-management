@@ -32,6 +32,15 @@ input.ng-valid-bs-validation {
 input.ng-invalid-bs-validation {
   border: 1px solid #d94747;
 }
+input.value {
+  border: none !important;
+  text-align: left !important;
+  background: none;
+}
+input.symbol {
+  border: none !important;
+  background: none;
+}
 .alert {
   padding-left: 0;
 }
