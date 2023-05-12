@@ -9,6 +9,7 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
+    using Fanex.NAP.Licensee.Controllers.Constants;
     using Fanex.NAP.Licensee.Model.Comparer;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
@@ -30,7 +31,6 @@ namespace Fanex.NAP.Licensee.Controllers
     [CheckUMFilter]
     public class SettingConfigurationController : BaseController
     {
-        private const int DBSErrorCode = 103;
         private const string BSPattern = "<BL SportType=\"{0}\" Bettype=\"{1}\" MinBet=\"{2}\" MaxBet=\"{3}\" MaxPerMatch=\"{4}\" MaxPerNumber=\"{5}\" MaxPayoutPerMatch=\"{6}\"/>";
 
         private readonly ICommonService _commonService;
@@ -157,9 +157,14 @@ namespace Fanex.NAP.Licensee.Controllers
                 {
                     violatedResultItems.Add(new BSResultViewModel(bsRows[i].BetTypeName, result.Code, result.IsOk, result.Message));
                 }
+
+                updateItem.ErrCode = 0;
+                updateItem.ErrMsg = null;
             }
 
-            return violatedResultItems.OrderBy(_ => _.Code == DBSErrorCode).ToList();
+            return violatedResultItems.OrderBy(_ => SettingConfigurationConstants.AgentDBSErrorCodes.Split(',').Contains(_.Code.ToString())
+                                                    || SettingConfigurationConstants.CurrencyDBSErrorCodes.Split(',').Contains(_.Code.ToString()))
+                .ToList();
         }
 
         private static void FormatBetSettingSportsbookItem(BetSettingSportsbookItemBase updateItem, BSSportsbookViewModel sportsbookVM)

@@ -141,7 +141,6 @@ editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.editBS = {};
     $scope.isDBS = true;
-    $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
 
     function getAjaxHeader() {
         return {
@@ -157,7 +156,7 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             params: {
                 licenseeName: shareSettingsService.getWorkingContext().LicenseeName,
                 currencyId: shareSettingsService.getWorkingContext().CurrencyId,
-                agentId: $scope.agentId === 0 ? null : $scope.agentId,
+                agentId: $scope.agentIdByErrorCode === 0 ? null : $scope.agentIdByErrorCode,
                 productTypeId: shareSettingsService.getWorkingContext().ProdId
             },
             headers: getAjaxHeader()
@@ -620,8 +619,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
         $scope.isButtonEnable = true;
         $scope.option = 0;
         $scope.SportOrBetTypeName = '';
+        $scope.agentIdByErrorCode = -1; // to get DBS
 
-        var dbsErrorCode = 103;
+        var AgentDBSErrorCode = 103;
+        var CurrencyDBSErrorCode = 106;
 
         // Load data for ddls
         $scope.filterData = {
@@ -891,8 +892,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
                     }
                     else {
-                        if (data.Code === dbsErrorCode) {
+                        if (data.Code === AgentDBSErrorCode || data.Code === CurrencyDBSErrorCode) {
                             $scope.SportOrBetTypeName = data.SportOrBetTypeName;
+                            $scope.agentIdByErrorCode = data.Code === CurrencyDBSErrorCode ? 0 : shareSettingsService.getWorkingContext().AgentId;
+
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
                             alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);

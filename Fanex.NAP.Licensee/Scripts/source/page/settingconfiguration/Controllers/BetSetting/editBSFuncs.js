@@ -76,7 +76,6 @@ editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.editBS = {};
     $scope.isDBS = true;
-    $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
 
     function getAjaxHeader() {
         return {
@@ -92,7 +91,7 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             params: {
                 licenseeName: shareSettingsService.getWorkingContext().LicenseeName,
                 currencyId: shareSettingsService.getWorkingContext().CurrencyId,
-                agentId: $scope.agentId === 0 ? null : $scope.agentId,
+                agentId: $scope.agentIdByErrorCode === 0 ? null : $scope.agentIdByErrorCode,
                 productTypeId: shareSettingsService.getWorkingContext().ProdId
             },
             headers: getAjaxHeader()

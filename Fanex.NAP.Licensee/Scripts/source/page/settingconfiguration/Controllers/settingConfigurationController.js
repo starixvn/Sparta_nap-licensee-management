@@ -11,8 +11,12 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
         $scope.isButtonEnable = true;
         $scope.option = 0;
         $scope.SportOrBetTypeName = '';
+        $scope.agentIdByErrorCode = -1; // to get DBS
 
-        var dbsErrorCode = 103;
+        var DBSErrCode = {
+            AgentCode: '103',
+            CurrencyCode: '106,107'
+        }
 
         // Load data for ddls
         $scope.filterData = {
@@ -282,8 +286,11 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
                     }
                     else {
-                        if (data.Code === dbsErrorCode) {
+                        data.Code = data.Code.toString();
+                        if (DBSErrCode.AgentCode.split(',').includes(data.Code) || DBSErrCode.CurrencyCode.split(',').includes(data.Code)) {
                             $scope.SportOrBetTypeName = data.SportOrBetTypeName;
+                            $scope.agentIdByErrorCode = DBSErrCode.CurrencyCode.split(',').includes(data.Code) ? 0 : shareSettingsService.getWorkingContext().AgentId;
+
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
                             alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
