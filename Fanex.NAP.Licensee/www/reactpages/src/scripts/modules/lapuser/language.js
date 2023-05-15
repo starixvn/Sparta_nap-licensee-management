@@ -166,5 +166,6 @@ export const language = {
     lblContacts: "Contacts",
     lblLicenseeContacts: "Licensee Contacts",
     "lblMonitoredPlayer": "Threshold Monitoring Setting",
-    "lblSabaVirtualSetting": "Saba Virtual Setting"
+    "lblSabaVirtualSetting": "Saba Virtual Setting",
+    "lblGrossGamingRevenue": "Gross Gaming Revenue"
 }

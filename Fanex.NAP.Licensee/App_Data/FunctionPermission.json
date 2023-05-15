@@ -356,6 +356,13 @@
         "Level": [ 0, 1, 101 ]
       },
       {
+        "DisplayKey": "lblGrossGamingRevenue",
+        "FunctionKey": "GrossGamingRevenue",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
+      },
+      {
         "DisplayKey": "lblDailyBets",
         "FunctionKey": "DailyBets81",
         "Enable": false,
