@@ -5817,7 +5817,6 @@ var language = exports.language = {
     "lblWinLossReport": "Reports",
     "lblWithdrawalInformation": "Withdrawal Information",
     "lblPlayerSegmentation": "Player Segmentation",
-    "lblProblemManagement": "Problem Management",
     "lblVIPManagement": "VIP Management",
     "lblPlayerDetailTransaction": "Detail Transaction",
     "lblGodOfFortuneWinLoss": "God Of Fortune Win Loss",
@@ -5830,7 +5829,8 @@ var language = exports.language = {
     lblLicenseeContacts: "Licensee Contacts",
     "lblMonitoredPlayer": "Threshold Monitoring Setting",
     "lblSabaVirtualSetting": "Saba Virtual Setting",
-    "lblGrossGamingRevenue": "Gross Gaming Revenue"
+    "lblGrossGamingRevenue": "Gross Gaming Revenue",
+    "lblSabaIntelligence": "Saba Intelligence"
 };
 
 /***/ }),
