@@ -3,6 +3,8 @@ module.exports = function (grunt) {
     "use strict";
 
     var configs = grunt.file.readJSON('grunt.json');
+    var webpackDevelopment = require('./Fanex.NAP.Licensee/www/.webpack/build/webpack.dev.conf.js');
+    var webpackProduction = require('./Fanex.NAP.Licensee/www/.webpack/build/webpack.pro.conf.js');
 
     function buildCss(grunt, srcFiles, destPath) {
         srcFiles.forEach(function (file) {
@@ -138,6 +140,10 @@ module.exports = function (grunt) {
                 files: configs.cssFilters,
                 tasks: ['csslint:all']
             }
+        },
+        webpack: {
+            dev: webpackDevelopment,
+            pro: webpackProduction,
         }
     });
 
@@ -206,6 +212,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-webpack');
 
     // Default task(s).
     grunt.registerTask("default", ["watch"]);
@@ -239,4 +246,7 @@ module.exports = function (grunt) {
         "buildcsslogsetting",
         "buildjslogsetting"]);
 
+    grunt.registerTask("build-react-dev", ['webpack:dev']);
+    grunt.registerTask("build-react-pro", ['webpack:pro']);
+    grunt.registerTask("build-react-both", ['webpack:dev', 'webpack:pro']);
 };
