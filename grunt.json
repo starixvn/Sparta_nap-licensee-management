@@ -35,6 +35,7 @@
     "Fanex.NAP.Licensee/Scripts/source/plugin/multi-select-control.js",
     "Fanex.NAP.Licensee/Scripts/source/bootstrap/bootstrap.js",
     "Fanex.NAP.Licensee/Scripts/source/core/site.js",
+    "Fanex.NAP.Licensee/Scripts/source/core/lm.grid.js",
     "Fanex.NAP.Licensee/Scripts/source/dropdowntree/dropdowntreesingle.js"
   ],
   "cssCore": [
@@ -69,7 +70,7 @@
   "jsBetSetting": [
     "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
   ],
-  "cssBetSetting": [ ],
+  "cssBetSetting": [],
   "jsLicenseeSetting": [
     "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/*.js",
     "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/*.js",
@@ -78,5 +79,14 @@
   ],
   "cssLicenseeSetting": [
     "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.css"
+  ],
+  "cssLogSetting": [
+    "Fanex.NAP.Licensee/Content/source/log/log.css"
+  ],
+  "jsLogSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/log/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/log/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/log/**/**/*.js",
+    "!*.min.js"
   ]
 }

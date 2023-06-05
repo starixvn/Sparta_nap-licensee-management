@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.Licensee.Controllers.Constants
+﻿namespace Fanex.NAP.Licensee.Service.Constants
 {
     public static class SettingConfigurationConstants
     {

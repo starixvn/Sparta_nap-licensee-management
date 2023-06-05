@@ -358,9 +358,21 @@
     </AdditionalFiles>
     <Content Include="Content\build\images\icon_cancel.gif" />
     <Content Include="Content\build\images\icon_checked.gif" />
+    <Content Include="Content\build\log.css" />
+    <Content Include="Content\build\log.min.css" />
     <Content Include="Content\source\core\images\sprites.png" />
     <Content Include="Content\source\core\site.css" />
+    <Content Include="Scripts\build\logSetting.js" />
+    <Content Include="Scripts\build\logSetting.min.js" />
+    <Content Include="Scripts\source\core\lm.grid.js" />
+    <Content Include="Scripts\source\page\log\Configs\logSettings.js" />
+    <Content Include="Scripts\source\page\log\Configs\logConfig.js" />
+    <Content Include="Scripts\source\page\log\Controllers\DefaultBetSetting\dbsLogCtrl.js" />
+    <Content Include="Scripts\source\page\log\Directives\logDirective.js" />
+    <Content Include="Scripts\source\page\log\logSettingsApp.js" />
+    <Content Include="Scripts\source\page\log\Service\logService.js" />
     <Content Include="Scripts\source\page\settingconfiguration\Controllers\BetSetting\editDBSSportsbookCtrl.js" />
+    <Content Include="Scripts\source\page\log\Controllers\BetSetting\licenseeSettingLogCtrl.js" />
     <Content Include="SimpleParameterTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
@@ -602,6 +614,8 @@
       <Link>nap_licensee_managementcsharp.ruleset</Link>
     </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\source\log\log.less" />
+    <Content Include="Scripts\build\logSetting.min.js.map" />
     <None Include="SiteConfig\Web.AppSettings.config.txt">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -615,6 +629,9 @@
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.css.map" />
     <Content Include="www\reactpages\dist\css\dev\volumeControlList\volumeControlList.js.map" />
     <Content Include="Views\SettingConfiguration\BetSetting\EditDBSSportsbook.cshtml" />
+    <Content Include="Views\Shared\_Template.cshtml" />
+    <Content Include="Views\SettingConfiguration\Logs.cshtml" />
+    <Content Include="Views\Shared\_LogTemplate.cshtml" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />

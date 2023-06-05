@@ -193,6 +193,8 @@
     <Compile Include="DataDomain\SportType.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\Agent.cs" />
+    <Compile Include="DTO\PagedList.cs" />
+    <Compile Include="DTO\LogField.cs" />
     <Compile Include="DTO\SuperLicenseeAndCurrencyItem.cs" />
     <Compile Include="DTO\DefaultBetSetting\AgentItem.cs" />
     <Compile Include="DTO\CurrencyItem.cs" />
@@ -261,6 +263,8 @@
     <Compile Include="ViewModel\LrfFunction\SearchLrfFunctionViewModel.cs" />
     <Compile Include="ViewModel\BetTicketVolumeControl\SearchVolumeControlViewModel.cs" />
     <Compile Include="ViewModel\SettingConfiguration\GetDefaultBetSettingViewModel.cs" />
+    <Compile Include="Criteria\SettingConfiguration\GetSettingLogCriteria.cs" />
+    <Compile Include="ViewModel\Log\GetSettingLogViewModel.cs" />
     <Compile Include="ViewModel\SourceLicenseeSetting\SearchSourceLicenseeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

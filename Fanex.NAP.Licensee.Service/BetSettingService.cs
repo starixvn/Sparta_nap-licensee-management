@@ -6,15 +6,16 @@
 
 namespace Fanex.NAP.Licensee.Service
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Service.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
 
     public class BetSettingService : IBetSettingService
     {
@@ -124,11 +125,11 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
-        public IList<SettingLogItem> GetLogs(GetSettingLogCriteria criteria)
+        public IList<LogField> GetLogs(GetSettingLogCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                return db.Query<SettingLogItem>(criteria).ToList();
+                return db.Query<LogField>(criteria).ToList();
             }
         }
 

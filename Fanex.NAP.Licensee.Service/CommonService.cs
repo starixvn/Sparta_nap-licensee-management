@@ -133,6 +133,26 @@
             }
         }
 
+        public IDictionary<BSKeyPair, string> GetGameTypeList
+        {
+            get
+            {
+                var gameType = (Dictionary<BSKeyPair, string>)GetSportsbookGameTypeList;
+
+                gameType.Add(new BSKeyPair(161, 1), "Number Game");
+                gameType.Add(new BSKeyPair(180, 1), "Virtual Soccer");
+                gameType.Add(new BSKeyPair(181, 1), "Virtual Horse Racing");
+                gameType.Add(new BSKeyPair(182, 1), "Virtual Greyhounds");
+                gameType.Add(new BSKeyPair(183, 1), "Virtual Speedway");
+                gameType.Add(new BSKeyPair(184, 1), "Virtual Motorsports");
+                gameType.Add(new BSKeyPair(185, 1), "Virtual Cycling");
+                gameType.Add(new BSKeyPair(186, 1), "Virtual Tennis");
+                gameType.Add(new BSKeyPair(202, 1501), "RNG Keno");
+
+                return gameType;
+            }
+        }
+
         /// <summary>
         /// Gets super licensee list.
         /// </summary>

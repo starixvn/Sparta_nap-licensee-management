@@ -169,7 +169,6 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="BetSettingController.cs" />
     <Compile Include="BetTicketVolumeControlController.cs" />
-    <Compile Include="Constants\SettingConfigurationConstants.cs" />
     <Compile Include="Extension\LogMessageHelper.cs" />
     <Compile Include="ITUserManagementController.cs" />
     <Compile Include="LAPUserManagementController.cs" />

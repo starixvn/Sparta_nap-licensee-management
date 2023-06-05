@@ -13046,6 +13046,10 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form .form-group label.lbl {
+  width: 100px;
+  text-align: right;
+}
+.filter-form .form-group label.lbl-date {
   width: 50px;
   text-align: right;
 }
@@ -13060,6 +13064,7 @@ input[type="submit"].btn-ok,
   vertical-align: middle;
 }
 .filter-form .form-group input[type="text"],
+.filter-form .form-group input[type="date"],
 .filter-form .form-group select {
   border: 1px solid #CECCCD;
   height: 25px;
@@ -13095,7 +13100,7 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form.filter-logs .btn-generate {
-  margin-left: 17px;
+  margin-left: 30px;
 }
 .filter-form.form-add-setting {
   width: 665px;

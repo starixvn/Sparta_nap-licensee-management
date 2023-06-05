@@ -191,6 +191,8 @@
     <Compile Include="BetSettingService.cs" />
     <Compile Include="BetTicketVolumeControlSettingService.cs" />
     <Compile Include="CommonService.cs" />
+    <Compile Include="Constants\DateTimeConstants.cs" />
+    <Compile Include="Constants\SettingConfigurationConstants.cs" />
     <Compile Include="Core\ObjectDbGenerator.cs" />
     <Compile Include="Extenstion\DictionaryExtension.cs" />
     <Compile Include="Helpers\AuthencationHelper.cs" />

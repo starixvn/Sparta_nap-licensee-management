@@ -9,14 +9,16 @@ namespace Fanex.NAP.Licensee.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
-    using Fanex.NAP.Licensee.Controllers.Constants;
     using Fanex.NAP.Licensee.Model.Comparer;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DataDomain;
+    using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Model.ViewModel.SettingConfiguration;
     using Fanex.NAP.Licensee.Service;
+    using Fanex.NAP.Licensee.Service.Constants;
     using ONEbook.UM.Filters;
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -243,5 +245,38 @@ namespace Fanex.NAP.Licensee.Controllers
         }
 
         #endregion Filter
+
+        #region Logs
+
+        [HttpGet]
+        public ActionResult Logs()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetReport(GetSettingLogViewModel model)
+        {
+            return Json(_settingConfigurationService.GetLogs(model), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetLogSettings()
+        {
+            var licensees = _commonService.GetLicenseeList;
+            var superWithCurrencies = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault()?.Name);
+            var currentDate = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
+
+            return Json(new
+            {
+                CurrentDate = currentDate,
+                Licensees = licensees,
+                SuperWithCurrencies = superWithCurrencies,
+                Agents = _commonService.GetLicenseeAgentList(superWithCurrencies.FirstOrDefault().Id),
+                SportNames = new { _commonService.GetGameTypeList.Keys, _commonService.GetGameTypeList.Values }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion Logs
     }
 }

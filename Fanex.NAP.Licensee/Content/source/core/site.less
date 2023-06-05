@@ -513,6 +513,11 @@ input[type="submit"], .btn-primary {
             float: left;
 
             &.lbl {
+                width: 100px;
+                text-align: right;
+            }
+
+            &.lbl-date {
                 width: 50px;
                 text-align: right;
             }
@@ -530,7 +535,7 @@ input[type="submit"], .btn-primary {
             vertical-align: middle;
         }
 
-        input[type="text"], select {
+        input[type="text"], input[type="date"], select {
             border: 1px solid @border-color;
             height: 25px;
             padding: 2px;
@@ -577,7 +582,7 @@ input[type="submit"], .btn-primary {
 
     &.filter-logs {
         .btn-generate {
-            margin-left: 17px;
+            margin-left: 30px;
         }
     }
 

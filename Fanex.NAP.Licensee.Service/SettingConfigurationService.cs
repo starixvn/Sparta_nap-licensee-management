@@ -1,12 +1,15 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Data;
     using Fanex.Common;
     using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.ViewModel.Log;
+    using Fanex.NAP.Licensee.Service.Constants;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class SettingConfigurationService : ISettingConfigurationService
     {
@@ -77,6 +80,39 @@
             };
 
             return result;
+        }
+
+        public PagedList<LogField> GetLogs(GetSettingLogViewModel model)
+        {
+            var criteria = new GetSettingLogCriteria
+            {
+                CustId = model.CustId,
+                AgentId = model.AgentId,
+                FromDate = Convert.ToDateTime($"{model.FromDate} {DateTimeConstants.StartOfDayTime}"),
+                ToDate = Convert.ToDateTime($"{model.ToDate} {DateTimeConstants.EndOfDayTime}"),
+                PageSize = model.PageSize == 0 ? 10 : model.PageSize,
+                PageIndex = model.PageIndex == 0 ? 0 : model.PageIndex,
+                ActionTypeId = 3,
+                IsInternal = true,
+                LowerActionId = 5574,
+                UpperActionId = 5575
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                var data = db.Query<LogField>(criteria);
+                var outputParams = db.GetOutputParams();
+
+                var result = new PagedList<LogField>
+                {
+                    Data = data,
+                    TotalItem = Converter.ToInt(outputParams["TotalItems"]),
+                    PageSize = model.PageSize == 0 ? 10 : model.PageSize,
+                    PageIndex = model.PageIndex == 0 ? 0 : model.PageIndex,
+                };
+
+                return result;
+            }
         }
 
         public ResultInfo CheckBetSettingSportsbook(CheckBetSettingSportsbookItem item)

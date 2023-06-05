@@ -18,6 +18,8 @@
 
         IDictionary<BSKeyPair, string> GetSportsbookGameTypeList { get; }
 
+        IDictionary<BSKeyPair, string> GetGameTypeList { get; }
+
         IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName);
 
         IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId);

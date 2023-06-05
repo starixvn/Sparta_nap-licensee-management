@@ -1,9 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
@@ -13,8 +9,15 @@
     using Fanex.NAP.Licensee.Model.DTO;
     using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Service;
+    using Fanex.NAP.Licensee.Service.Constants;
     using ONEbook.UM.Filters;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Bet setting controller.
@@ -132,19 +135,41 @@
             return View();
         }
 
-        [HttpPost]
-        [AjaxRequest]
+        [HttpGet]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ViewLogs, Policy = Constant.Policy.Read)]
-        public ActionResult Logs(GetSettingLogCriteria criteria)
+        public ActionResult GetLogSettings()
         {
-            IList<SettingLogItem> viewModel = new List<SettingLogItem>();
-            if (criteria.IsValid())
-            {
-                viewModel = _betSettingService.GetLogs(criteria);
-            }
+            var licensees = _commonService.GetLicenseeList;
+            var superWithCurrencies = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault()?.Name);
+            var currentDate = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
 
-            ViewData[StaticSiteValue.KENOGAMETYPE] = _commonService.GetKenoGameType;
-            return View("~/Views/BetSetting/_LogItems.cshtml", viewModel);
+            return Json(new
+            {
+                Licensees = licensees,
+                CurrentDate = currentDate,
+                SuperWithCurrencies = superWithCurrencies,
+                Agents = _commonService.GetLicenseeAgentList(superWithCurrencies.FirstOrDefault().Id),
+                SportNames = new { _commonService.GetGameTypeList.Keys, _commonService.GetGameTypeList.Values }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.ViewLogs, Policy = Constant.Policy.Read)]
+        public JsonResult GetReport(GetSettingLogViewModel model)
+        {
+            var criteria = new GetSettingLogCriteria();
+            FormatSettingLogCriteria(model, criteria);
+            return Json(new { Data = _betSettingService.GetLogs(criteria) }, JsonRequestBehavior.AllowGet);
+        }
+
+        private void FormatSettingLogCriteria(GetSettingLogViewModel model, GetSettingLogCriteria criteria)
+        {
+            var licensee = _commonService.GetLicenseeList.First(_ => _.Id == model.LicenseeId);
+            criteria.CurrencyID = _commonService.GetSuperLicenseeList(licensee.Name).First(_ => _.Id == model.CustId).CurrencyId;
+            criteria.AgentID = model.AgentId > 0 ? model.AgentId : (int?)null;
+            criteria.LicenseeID = model.LicenseeId;
+            criteria.FromDate = Convert.ToDateTime($"{model.FromDate} {DateTimeConstants.StartOfDayTime}");
+            criteria.ToDate = Convert.ToDateTime($"{model.ToDate} {DateTimeConstants.EndOfDayTime}");
         }
 
         #endregion Logs
@@ -167,6 +192,22 @@
         public ActionResult GetLicenseeList()
         {
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GetSuperLicenseeList(string siteName)
+        {
+            return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AjaxRequest]
+        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GetLicenseeAgentList(int sRecommend)
+        {
+            return Json(_commonService.GetLicenseeAgentList(sRecommend), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -207,7 +248,7 @@
 
         private static IList<BetSettingBySport> SortBetSettingByProduct(IList<BetSettingBySport> betSettings)
         {
-            var orderedList = betSettings.OrderBy(i => i , new SportComparer()).ToList();
+            var orderedList = betSettings.OrderBy(i => i, new SportComparer()).ToList();
 
             return orderedList;
         }

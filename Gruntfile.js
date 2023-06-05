@@ -187,8 +187,16 @@ module.exports = function (grunt) {
         buildJs(grunt, configs.jsLicenseeSetting, "Fanex.NAP.Licensee/Scripts/build/licenseesetting.js");
     });
 
+    grunt.registerTask("jsLogSetting", "", function () {
+        buildJs(grunt, configs.jsLogSetting, "Fanex.NAP.Licensee/Scripts/build/logSetting.js");
+    });
+
     grunt.registerTask("cssLicenseeSetting", "", function () {
         buildCss(grunt, configs.cssLicenseeSetting, "Fanex.NAP.Licensee/Content/build/licenseesetting.css");
+    });
+
+    grunt.registerTask("cssLogSetting", "", function () {
+        buildCss(grunt, configs.cssLogSetting, "Fanex.NAP.Licensee/Content/build/log.css");
     });
 
     grunt.loadNpmTasks("grunt-contrib-cssmin");
@@ -212,7 +220,9 @@ module.exports = function (grunt) {
     grunt.registerTask("buildjsbetsetting", ["jsBetSetting", "concat", "uglify"]);
     //grunt.registerTask("buildcssbetsetting", ["cssBetSetting", "concat", "cssmin"]);
     grunt.registerTask("buildjslicenseesetting", ["jsLicenseeSetting", "concat", "uglify"]);
+    grunt.registerTask("buildjslogsetting", ["jsLogSetting", "concat", "uglify"]);
     grunt.registerTask("buildcsslicenseesetting", ["cssLicenseeSetting", "concat", "cssmin"]);
+    grunt.registerTask("buildcsslogsetting", ["cssLogSetting", "concat", "cssmin"]);
 
     grunt.registerTask("build", [
         "buildjscore",
@@ -224,6 +234,7 @@ module.exports = function (grunt) {
         "buildcssfanexgrid",
         "buildjsbetsetting",
         "buildjslicenseesetting",
-        "buildcsslicenseesetting"]);
+        "buildcsslicenseesetting",
+        "buildjslogsetting"]);
 
 };

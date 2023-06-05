@@ -8,7 +8,7 @@
         <li class="current">Licensee Setting</li>
     </ul>
     <div class="pull-left">
-        <a class="btn-green"><i class="list-icon"></i>View Log</a>
+        <a href="logs" class="btn-green"><i class="list-icon"></i>View Log</a>
     </div>
 }
 @section HeadCss
@@ -89,56 +89,7 @@
     <div ng-view class="fade-in">
     </div>
     <div id="confirm-box" class="confirm-message hidden" title="Confirmation"><b>{{SportOrBetTypeName}}</b>: The value bet setting you just input is violating its Default Bet Setting. Please review and update again!</div>
-    <script type="text/ng-template" id="fanex.directive.dropdowntreesingle.template.html">
-        <div class="dropdown">
-            <button type="button" class="btn" data-ng-click="toggleSelect()" data-ng-disabled="disabled" data-ng-class="{'ng-invalid': !valid(), 'disabled': disabled}">
-                <span class="pull-left">{{header}}</span> <span class="caret pull-right">
-                </span>
-            </button>
-            <ul data-ng-if="items.length > 0" class="dropdown-menu" data-ng-style="{ 'width': _settings.width}">
-                <li data-ng-if="_settings.hasFilter">
-                    <div>
-                        <input type="text" class="filter" data-ng-model="searchText.value" ng-change="changeSearchText()" autofocus="autofocus"
-                               placeholder="{{_textSettings.Filter}}">
-                        <span class="selectsearch"><button data-ng-click="selectSearchText($event);" placeholder="Select all search text">Check</button></span>
-                        <span class="searchclear glyphicon glyphicon-remove-circle" data-ng-click="clearSearchText();"></span>
-                    </div>
-                </li>
-                <li data-ng-if="_settings.hasToolbar" class="toolbar">
-                    <div class="input-group input-group-sm">
-                        <span></span>
-                        <span class="input-group-btn" style="cursor: pointer">
-                            <span data-ng-click="toggleCollapseExpanse();" title="{{_textSettings.CollapseExpanse}}"
-                                  class="glyphicon" data-ng-class="{'glyphicon-save': collapsedAll, 'glyphicon-open': !collapsedAll}"></span>
-                        </span>
-                    </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <div class="tree">
-                        <ul>
-                            <li data-ng-repeat="item in items | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </script>
-    <script type="text/ng-template" id="dropdowntreesingle.template.html">
-        <span title="{{_textSettings.CollapseBranch}}" data-ng-click="item.showChildren = !item.showChildren">
-            <i class="nodehanbler glyphicon" data-ng-class="getCollapseExpandClass(item)"></i>
-        </span>
-        <a data-ng-class="getItemClass(item);"
-           data-ng-click="selectItem(item);" data-ng-attr-id="item-{{item.id}}" style="text-decoration: none;">
-            <span>{{item.label | itemFormatFilter:item:0:_settings.itemFormatter}}</span><span data-ng-class="getExtendItemClass(item)">{{item.subInfoText}}</span>
-        </a>
-        <ul class="list-unstyled" data-ng-if="item.showChildren && item.children.length > 0" style="padding-left: 40px">
-            <li data-ng-repeat="item in item.children | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
-            </li>
-        </ul>
-    </script>
-
+    @Html.Partial("_Template")
 </div>
 @section FooterJs
 {
