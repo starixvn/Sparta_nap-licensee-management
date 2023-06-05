@@ -20,7 +20,6 @@ namespace Fanex.NAP.Licensee.Controllers
     using ONEbook.UM.Filters;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
@@ -29,7 +28,7 @@ namespace Fanex.NAP.Licensee.Controllers
     /// Setting Configuration Controller.
     /// </summary>
     [CustomHandleError]
-    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.SettingConfiguration, Policy = Constant.Policy.Host)]
+    [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeBetSetting, Policy = Constant.Policy.Host)]
     [CheckUMFilter]
     public class SettingConfigurationController : BaseController
     {
@@ -61,12 +60,6 @@ namespace Fanex.NAP.Licensee.Controllers
 
         #region Bet setting
 
-        public PartialViewResult EditBetSetting(int sportType)
-        {
-            const string rootPath = "BetSetting/";
-            return sportType == SportType.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
-        }
-
         public PartialViewResult EditDefaultBetSetting(int productType)
         {
             const string rootPath = "BetSetting/";
@@ -89,6 +82,12 @@ namespace Fanex.NAP.Licensee.Controllers
             var dbsSportsbookItems = dbsItems.Sportsbook.OrderBy(i => i, new SportComparer()).ToList();
 
             return Json(new BSSportsbookViewModel(dbsSportsbookItems), JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult EditBetSetting(int sportType)
+        {
+            const string rootPath = "BetSetting/";
+            return sportType == SportType.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
         }
 
         public JsonResult GetEditBetSettingData(SettingConfigFilterViewModel settingConfigVm)
@@ -196,7 +195,6 @@ namespace Fanex.NAP.Licensee.Controllers
 
         #region Filter
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         public ActionResult GetLicenseeList()
@@ -211,7 +209,6 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         [HttpGet]
         [AjaxRequest]
         public ActionResult GetProductTypeList()
@@ -221,7 +218,6 @@ namespace Fanex.NAP.Licensee.Controllers
 
         [HttpGet]
         [AjaxRequest]
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
         public ActionResult GetSettings()
         {
             var licensees = _commonService.GetLicenseeList;

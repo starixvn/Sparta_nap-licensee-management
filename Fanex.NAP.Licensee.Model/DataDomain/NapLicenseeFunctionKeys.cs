@@ -21,7 +21,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
 		public const string AssignSiteToUser = "AssignSiteToUser";
 
-		public const string BetSetting = "BetSetting";
+		public const string LicenseeConfiguration = "BetSetting";
 
 		public const string BetTicketVolumeControl = "BetTicketVolumeControl";
 
@@ -57,7 +57,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 
 		public const string ManageUser = "ManageUser";
 
-		public const string SettingConfiguration = "SettingConfiguration";
+		public const string LicenseeBetSetting = "LicenseeBetSetting";
 
 		public const string SourceLicenseeSetting = "SourceLicenseeSetting";
 
