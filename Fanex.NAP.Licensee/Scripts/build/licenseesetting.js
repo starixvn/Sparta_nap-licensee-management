@@ -134,7 +134,10 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             else {
                 angular.extend($scope.editBS, data);
             }
-        });
+        })
+        .error(function (data) {
+            alert(site.requestErrMsg);
+        });;
 };
 editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 
@@ -174,6 +177,9 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             });
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
+        })
+        .error(function (data) {
+            alert(site.requestErrMsg);
         });
 }
 editDBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
@@ -408,7 +414,7 @@ var editBSNextEnabilityFunc = function ($scope, shareSettingsService) {
 };
 editBSNextEnabilityFunc.$inject = ['$scope', 'shareSettingsService'];
 
-var editBSApplyForPlayerFunc = function ($scope, shareSettingsService) {
+var editBSApplyForPlayerFunc = function ($scope) {
     $scope.editBS.IsApplyForMembersChecked = $scope.option ? true : false;
     $scope.editBS.applyForMember = $scope.option ? 1 : null;
     $scope.editBS.existedMember = false;
@@ -621,8 +627,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
         $scope.SportOrBetTypeName = '';
         $scope.agentIdByErrorCode = -1; // to get DBS
 
-        var AgentDBSErrorCode = 103;
-        var CurrencyDBSErrorCode = 106;
+        var DBSErrCode = {
+            AgentCode: '103',
+            CurrencyCode: '106,107'
+        }
 
         // Load data for ddls
         $scope.filterData = {
@@ -761,7 +769,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
         $scope.selectEventHandler = function () {
             if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting) {
                 $scope.option = 0; // Currency Bet Setting
-            } else {
+            } else if ($scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
                 $scope.option = 1; // Player Bet Setting
             }
 
@@ -784,12 +792,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
             var curPath = $location.path();
 
-            shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting
+            if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
+                shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
 
-            if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
-                $route.reload();
+                if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
+                    $route.reload();
+                }
+                $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
             }
-            $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
         };
 
         $scope.updateBS = function () {
@@ -892,18 +902,20 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
                     }
                     else {
-                        if (data.Code === AgentDBSErrorCode || data.Code === CurrencyDBSErrorCode) {
+                        data.Code = data.Code.toString();
+                        if (DBSErrCode.AgentCode.split(',').includes(data.Code) || DBSErrCode.CurrencyCode.split(',').includes(data.Code)) {
                             $scope.SportOrBetTypeName = data.SportOrBetTypeName;
-                            $scope.agentIdByErrorCode = data.Code === CurrencyDBSErrorCode ? 0 : shareSettingsService.getWorkingContext().AgentId;
+                            $scope.agentIdByErrorCode = DBSErrCode.CurrencyCode.split(',').includes(data.Code) ? 0 : shareSettingsService.getWorkingContext().AgentId;
 
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
                             alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
                         }
                     }
-                }).error(function (data) {
-                    alert(data);
                 })
+                .error(function (data) {
+                    alert(site.requestErrMsg);
+                });
         }
 
         var postBetSetting = function (editedBSRows, editedDBSRows, index) {

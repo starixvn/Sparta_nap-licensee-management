@@ -69,7 +69,10 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             else {
                 angular.extend($scope.editBS, data);
             }
-        });
+        })
+        .error(function (data) {
+            alert(site.requestErrMsg);
+        });;
 };
 editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 
@@ -109,6 +112,9 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             });
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
+        })
+        .error(function (data) {
+            alert(site.requestErrMsg);
         });
 }
 editDBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
@@ -343,7 +349,7 @@ var editBSNextEnabilityFunc = function ($scope, shareSettingsService) {
 };
 editBSNextEnabilityFunc.$inject = ['$scope', 'shareSettingsService'];
 
-var editBSApplyForPlayerFunc = function ($scope, shareSettingsService) {
+var editBSApplyForPlayerFunc = function ($scope) {
     $scope.editBS.IsApplyForMembersChecked = $scope.option ? true : false;
     $scope.editBS.applyForMember = $scope.option ? 1 : null;
     $scope.editBS.existedMember = false;

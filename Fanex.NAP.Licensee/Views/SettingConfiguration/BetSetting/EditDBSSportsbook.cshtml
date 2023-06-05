@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in editBS.BSRows">
+                <tr ng-if="option === 0" ng-repeat="item in editBS.BSRows">
                     <td>
                         <label style="font-weight: normal; display: inline;">
                             <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="$index === 0 && editBS.isCopyAllFromOne ? true : item.IsRowDisabled" />
@@ -56,11 +56,40 @@
                         <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMaxPayoutPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMaxPayoutPerMatch" ng-disabled="true" />
                     </td>
                 </tr>
+                <tr ng-if="option === 1" ng-repeat="item in editBS.BSRows">
+                    <td>
+                        <label style="font-weight: normal; display: inline;">
+                            <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="$index === 0 && editBS.isCopyAllFromOne ? true : item.IsRowDisabled" />
+                            {{item.SportTypeName}}
+                        </label>
+                    </td>
+                    <td>
+                        <input ng-trim="false" name="MinBet" type="text" ng-attr-uplinemin="0" ng-attr-uplinemax="{{item.UplineMinBet}}" ng-attr-min="0" ng-attr-max="{{item.MaxBet | number}}" bs-validation ng-model="item.MinBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                        <span class="symbol content-center">&lt;&equals;</span>
+                        <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMinBet" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMinBet" ng-disabled="true" />
+                    </td>
+
+                    <td>
+                        <input ng-trim="false" name="MaxBet" type="text" ng-attr-uplinemin="{{item.UplineMaxBet}}" ng-attr-uplinemax="*" ng-attr-min="{{item.MinBet | number}}" ng-attr-max="{{item.MaxPerMatch | number}}" bs-validation ng-model="item.MaxBet" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                        <span class="symbol content-center">&gt;&equals;</span>
+                        <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMaxBet" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMaxBet" ng-disabled="true" />
+                    </td>
+                    <td>
+                        <input ng-trim="false" name="MaxPerMatch" ng-attr-uplinemin="{{item.UplineMaxPerMatch}}" ng-attr-uplinemax="*" type="text" ng-attr-min="{{item.MaxBet | number}}" ng-attr-max="{{item.MaxPayoutPerMatch | number}}" bs-validation ng-model="item.MaxPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                        <span class="symbol content-center">&gt;&equals;</span>
+                        <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMaxPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMaxPerMatch" ng-disabled="true" />
+                    </td>
+                    <td>
+                        <input ng-trim="false" name="MaxPayoutPerMatch" ng-attr-uplinemin="{{item.UplineMaxPayoutPerMatch}}" ng-attr-uplinemax="*" type="text" ng-attr-min="{{item.MaxPerMatch | number}}" ng-attr-max="*" bs-validation ng-model="item.MaxPayoutPerMatch" ng-disabled="!item.IsRowSelected || item.IsRowDisabled" />
+                        <span class="symbol content-center">&gt;&equals;</span>
+                        <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMaxPayoutPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMaxPayoutPerMatch" ng-disabled="true" />
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <input ng-click="nextReviewBS()" type="button" value="Next" class="btn btn-primary"
                                ng-disabled="!buttonStatus.isNextEnabled" />
-                        <input ng-click="backEditBS()" type="button" value="Back" class="btn btn-primary"/>
+                        <input ng-click="backEditBS()" type="button" value="Back" class="btn btn-primary" />
 
                     </td>
                 </tr>

@@ -155,7 +155,7 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
         $scope.selectEventHandler = function () {
             if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting) {
                 $scope.option = 0; // Currency Bet Setting
-            } else {
+            } else if ($scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
                 $scope.option = 1; // Player Bet Setting
             }
 
@@ -178,12 +178,14 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
 
             var curPath = $location.path();
 
-            shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting
+            if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting || $scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
+                shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
 
-            if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
-                $route.reload();
+                if (curPath === "/EditBetSetting/" + $scope.filterData.selectedProductType.Id) {
+                    $route.reload();
+                }
+                $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
             }
-            $location.path("/EditBetSetting/" + $scope.filterData.selectedProductType.Id);
         };
 
         $scope.updateBS = function () {
@@ -296,9 +298,10 @@ settingConfigurationApp.controller("settingConfigurationCtrl", [
                             alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
                         }
                     }
-                }).error(function (data) {
-                    alert(data);
                 })
+                .error(function (data) {
+                    alert(site.requestErrMsg);
+                });
         }
 
         var postBetSetting = function (editedBSRows, editedDBSRows, index) {
