@@ -1431,9 +1431,15 @@
   },
   {
     "DisplayKey": "lblSabaIntelligence",
-    "FunctionKey": "SabaIntelligence",
-    "Type": 1,
-    "Mode": 1,
-    "Level": [ 0, 1, 101 ]
+    "Settings": [
+      {
+        "DisplayKey": "lblSabaIntelligence",
+        "FunctionKey": "SabaIntelligence",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      }
+    ]
   }
 ]
