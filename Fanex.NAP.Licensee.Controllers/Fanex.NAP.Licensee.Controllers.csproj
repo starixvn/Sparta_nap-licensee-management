@@ -167,7 +167,7 @@
     <Compile Include="Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="Attributes\CustomValidateAntiForgeryAttribute.cs" />
     <Compile Include="BaseController.cs" />
-    <Compile Include="BetSettingController.cs" />
+    <Compile Include="DefaultBetSettingController.cs" />
     <Compile Include="BetTicketVolumeControlController.cs" />
     <Compile Include="Extension\LogMessageHelper.cs" />
     <Compile Include="ITUserManagementController.cs" />
@@ -176,7 +176,7 @@
     <Compile Include="ManageLrfFunctionController.cs" />
     <Compile Include="ManageOperatorController.cs" />
     <Compile Include="LicenseeSettingController.cs" />
-    <Compile Include="SettingConfigurationController.cs">
+    <Compile Include="LicenseeBetSettingController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="SourceLicenseeSettingController.cs" />

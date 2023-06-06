@@ -28,7 +28,7 @@ var defaultSetting = (function () { // jshint ignore:line
         showDistinctRow: false,
         autoResizeColumn: true, showHighlightRow: false
     };
-    var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
+    var actionLinkTpl = "<a href=" + window.rootUrl + "DefaultBetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
 
     var currencyListControl;
     var currentGrid;
@@ -109,7 +109,7 @@ var defaultSetting = (function () { // jshint ignore:line
 
         $.ajax({
             type: "POST",
-            url: window.rootUrl + "BetSetting/Default",
+            url: window.rootUrl + "DefaultBetSetting/Default",
             data: JSON.stringify(criteria),
             datatype: "json",
             contentType: "application/json; charset=utf-8",

@@ -20,7 +20,7 @@
 		<Setting Key="NAP_SpecialCustSettingGameType_Sel" SpName="NAP_SpecialCustSettingGameType_Sel" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
 		<Setting Key="WriteLog_UserLog_UserControl" SpName="WriteLog_UserLog_UserControl" DbName="DBLOG.bodb_CustomerLog.bodbLicenseeNet"></Setting>
 	</Function>
-	<Function Name="Site.Nap.Licensee.SettingConfiguration">
+	<Function Name="Site.Nap.Licensee.LicenseeBetSetting">
 		<Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCUST.CustDB.bodbLicenseeNet">
 			<Mapping DataField="custid" ObjectProperty="Id" />
 			<Mapping DataField="username" ObjectProperty="Name" />

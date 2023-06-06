@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "AddNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Licensee Configuration</li>
+        <li class="current">Add Default Bet Setting</li>
+    </ul>
+    <div class="pull-left">
+        <a class="btn-back" href="default">← Back To List</a>
+    </div>
+}
+<form role="form" action="#" class="form-inline col-sm-12 filter-form form-add-new-setting">
+<div class="form-group">
+    <label for="licensee">
+        Site</label>
+    <select id="licensee" class="width-160">
+    </select>
+</div>
+<div class="form-group">
+    <label for="currency">
+        Currency</label>
+    <select id="currency" class="width-160">
+    </select>
+</div>
+<div class="form-group">
+    <label for="agent">
+        Agent</label>
+    <select id="agent" class="width-160">
+    </select>
+</div>
+<div class="form-group">
+    <input type="button" id="btn-loadtemplate" value="Load template" class="btn-primary" />
+</div>
+</form>
+<div class="col-sm-12" id="template-content">
+</div>
+<div class="col-sm-12 hidden" id="footer-control">
+    <button class="btn-primary" id="btn-submit">
+        Submit</button>
+    <button class="btn-back">
+        Back to List</button>
+</div>
+<div id="confirm-box" class="confirm-message hidden" title="Confirmation">Existing data, do you want to edit this default bet setting?</div>
+
+@section FooterJs
+{
+    <script src="@Url.Content("~/Scripts/build/defaultbetsetting.min.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            addNew.setup();
+        });
+    </script>
+}

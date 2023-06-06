@@ -12967,7 +12967,7 @@ var site = (function () {
     me.requestSuccess = "Successful";
     /* filter componenet*/
     me.renderSingleAgentList = function (licensee, currency, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -12980,7 +12980,7 @@ var site = (function () {
         });
     };
     me.renderSingleCurrencyList = function (callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -12995,7 +12995,7 @@ var site = (function () {
     me.renderCurrencyList = function (selectedParentIdList) {
         var currencyControl = new MultiSelectControl();
 
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var currencies = [];
             for (var i = 0; i < data.length; i++) {
                 var cur = {
@@ -13027,7 +13027,7 @@ var site = (function () {
     };
 
     me.renderLicenseeList = function (currentSelectedLicensee, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetLicenseeList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 var selected = data[i].Name.toLowerCase() === currentSelectedLicensee ? "selected = \"selected\"" : "";
@@ -13388,7 +13388,7 @@ var site = (function () {
         }
     };
     me.backToList = function () {
-        location.href = window.rootUrl + "BetSetting/Default";
+        location.href = window.rootUrl + "DefaultBetSetting/Default";
 
         return false;
     };

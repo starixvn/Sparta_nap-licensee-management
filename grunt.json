@@ -67,18 +67,18 @@
     "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.min.css",
     "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.min.css"
   ],
-  "jsBetSetting": [
+  "jsDefaultBetSetting": [
     "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
   ],
-  "cssBetSetting": [],
-  "jsLicenseeSetting": [
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/*.js",
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/*.js",
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/**/*.js",
+  "cssDefaultBetSetting": [],
+  "jsLicenseeBetSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/**/**/*.js",
     "!*.min.js"
   ],
-  "cssLicenseeSetting": [
-    "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.css"
+  "cssLicenseeBetSetting": [
+    "Fanex.NAP.Licensee/Content/source/licenseebetsetting/licenseebetsetting.css"
   ],
   "cssLogSetting": [
     "Fanex.NAP.Licensee/Content/source/log/log.css"

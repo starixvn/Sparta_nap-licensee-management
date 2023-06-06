@@ -1,12 +1,13 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Caching;
     using Fanex.Data;
-    using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.Criteria.LicenseeBetSetting;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.DTO.LicenseeBetSetting;
+    using System.Collections.Generic;
+    using System.Linq;
+
 
     public class CommonService : ICommonService
     {
@@ -14,10 +15,6 @@
 
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
-        /// <summary>
-        /// Gets licensee list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<LicenseeItem> GetLicenseeList
         {
             get
@@ -29,10 +26,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets currency list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<CurrencyItem> GetCurrencyList
         {
             get
@@ -75,10 +68,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets product list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<ProductTypeItem> GetProductTypeList
         {
             get
@@ -104,10 +93,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets sports book game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IDictionary<BSKeyPair, string> GetSportsbookGameTypeList
         {
             get
@@ -153,11 +138,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets super licensee list.
-        /// </summary>
-        /// <param name="siteName">Site name.</param>
-        /// <returns>List of licensee items.</returns>
         public IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeSuperList"))

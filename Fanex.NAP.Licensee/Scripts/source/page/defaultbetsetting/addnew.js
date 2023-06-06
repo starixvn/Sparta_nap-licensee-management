@@ -64,7 +64,7 @@ var addNew = (function () {
             };
             $.ajax({
                 type: "POST",
-                url: window.rootUrl + "BetSetting/LoadTeamplate",
+                url: window.rootUrl + "DefaultBetSetting/LoadTeamplate",
                 data: criteria,
                 datatype: "html",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -108,7 +108,7 @@ var addNew = (function () {
 
                     $.ajax({
                         type: "POST",
-                        url: window.rootUrl + "BetSetting/AddNew",
+                        url: window.rootUrl + "DefaultBetSetting/AddNew",
                         data: JSON.stringify(criteria),
                         datatype: "json",
                         contentType: "application/json; charset=utf-8",
@@ -152,7 +152,7 @@ var addNew = (function () {
                     'class': 'btn-primary btn-ok',
                     click: function () {
                         $(this).dialog("close");
-                        location.href = window.rootUrl + "BetSetting/Edit?licensee=" + criteria.Licensee
+                        location.href = window.rootUrl + "DefaultBetSetting/Edit?licensee=" + criteria.Licensee
                         + "&currencyId=" + criteria.CurrencyID + "&agentid=" + criteria.AgentID;
                     }
                 },
