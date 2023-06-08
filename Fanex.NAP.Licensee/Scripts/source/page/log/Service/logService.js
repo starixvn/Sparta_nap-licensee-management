@@ -51,17 +51,7 @@
             };
         }
 
-        function configDropdowns(vm) {
-            licenseeSetting(vm);
-            superWithCurrencySetting(vm);
-            agentSetting(vm);
-
-            vm.TextSettings = {
-                Filter: 'Search'
-            };
-        }
-
-        var setGenerateButtonStatus = function (disable) {
+        function setGenerateButtonStatus (disable) {
             if (disable) {
                 $("#generate").attr("disabled", "disabled");
             } else {
@@ -117,17 +107,6 @@
                 .success(function (superWithCurrencies) {
                     vm.SuperWithCurrencies = superWithCurrencies;
                     superWithCurrencySetting(vm);
-
-                    $http.get(
-                        'GetLicenseeAgentList',
-                        {
-                            params: { SRecommend: vm.criteria.SuperWithCurrency.Id }
-                        }
-                    )
-                        .success(function (agents) {
-                            vm.Agents = agents;
-                            agentSetting(vm);
-                        });
                 });
         }
 
@@ -148,8 +127,6 @@
             $http.get('GetLogSettings')
                 .success(function (data) {
                     vm.Licensees = data.Licensees;
-                    vm.SuperWithCurrencies = data.SuperWithCurrencies;
-                    vm.Agents = data.Agents;
                     vm.SportNames = data.SportNames;
 
                     data.CurrentDate = new Date(data.CurrentDate);
@@ -157,11 +134,11 @@
                     vm.criteria.FromDate = data.CurrentDate;
                     vm.criteria.ToDate = data.CurrentDate;
 
-                    configDropdowns(vm);
-                })
-                .error(function (data) {
-                    alert(data);
-                })
+                    licenseeSetting(vm);
+                    vm.TextSettings = {
+                        Filter: 'Search'
+                    };
+                });
         }
 
         this.handleLogData = function (data, Func) {

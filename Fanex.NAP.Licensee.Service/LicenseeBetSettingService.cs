@@ -13,39 +13,6 @@
 
     public class LicenseeBetSettingService : ILicenseeBetSettingService
     {
-
-        public IList<CommItem> GetCommList(int custId)
-        {
-            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeCommissionSel"))
-            {
-                return db.Query<CommItem>(new { CustID = custId }).ToList();
-            }
-        }
-
-        public ResultInfo UpdateComm(int custId, int sportTypeId, int betTypeId, float commValue)
-        {
-            var parameters = new
-            {
-                CustID = custId,
-                Sporttype = sportTypeId,
-                Bettype = betTypeId,
-                Discount = commValue,
-                @errcode = 0,
-                @errmsg = string.Empty
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeCommissionUpd"))
-            {
-                db.ExecuteNonQuery(parameters);
-
-                return new ResultInfo
-                {
-                    IsOk = Converter.ToInt(parameters.@errcode) == 0,
-                    Message = parameters.@errmsg
-                };
-            }
-        }
-
         public BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(int custId, int productId, int agentId, bool option)
         {
             IEnumerable<BSSportsbookItem> bSSupers;
@@ -76,14 +43,17 @@
 
         public PagedList<LogField> GetLogs(GetSettingLogViewModel model)
         {
+            var pageSize = model.PageSize == 0 ? 10 : model.PageSize;
+            var pageIndex = model.PageIndex == 0 ? 0 : model.PageIndex;
+
             var criteria = new GetSettingLogCriteria
             {
                 CustId = model.CustId,
                 AgentId = model.AgentId,
                 FromDate = Convert.ToDateTime($"{model.FromDate} {DateTimeConstants.StartOfDayTime}"),
                 ToDate = Convert.ToDateTime($"{model.ToDate} {DateTimeConstants.EndOfDayTime}"),
-                PageSize = model.PageSize == 0 ? 10 : model.PageSize,
-                PageIndex = model.PageIndex == 0 ? 0 : model.PageIndex,
+                PageSize = pageSize,
+                PageIndex = pageIndex,
                 ActionTypeId = 3,
                 IsInternal = true,
                 LowerActionId = 5574,
@@ -99,8 +69,8 @@
                 {
                     Data = data,
                     TotalItem = Converter.ToInt(outputParams["TotalItems"]),
-                    PageSize = model.PageSize == 0 ? 10 : model.PageSize,
-                    PageIndex = model.PageIndex == 0 ? 0 : model.PageIndex,
+                    PageSize = pageSize,
+                    PageIndex = pageIndex
                 };
 
                 return result;

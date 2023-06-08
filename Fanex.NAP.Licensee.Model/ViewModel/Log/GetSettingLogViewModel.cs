@@ -1,7 +1,5 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.Log
 {
-    using System;
-
     public class GetSettingLogViewModel
     {
         public int LicenseeId { get; set; }

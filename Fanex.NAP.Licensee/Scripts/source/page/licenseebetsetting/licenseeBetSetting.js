@@ -15,37 +15,19 @@ licenseeBetSettingApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList"
 
 // Routing
 licenseeBetSettingApp.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/EditPT', {
-        templateUrl: "EditPT",
-        controller: "editPTCtrl"
-    });
-    $routeProvider.when('/ReviewPT', {
-        templateUrl: "ReviewPT",
-        controller: 'reviewPTCtrl'
-    });
-
-    $routeProvider.when('/EditComm', {
-        templateUrl: 'EditComm',
-        controller: 'editCommCtrl'
-    });
-    $routeProvider.when('/ReviewComm', {
-        templateUrl: 'ReviewComm',
-        controller: 'reviewCommCtrl'
-    });
-
-    $routeProvider.when('/EditBetSetting/:sportType', {
+    $routeProvider.when('/EditBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'EditBetSetting/?sportType=' + params.sportType;
+            return 'EditBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
-    $routeProvider.when('/EditDefaultBetSetting/:productType', {
+    $routeProvider.when('/EditDefaultBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'EditDefaultBetSetting/?productType=' + params.productType;
+            return 'EditDefaultBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
-    $routeProvider.when('/ReviewBetSetting/:sportType', {
+    $routeProvider.when('/ReviewBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'ReviewBetSetting/?sportType=' + params.sportType;
+            return 'ReviewBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
     $routeProvider.otherwise({

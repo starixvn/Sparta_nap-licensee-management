@@ -51,10 +51,10 @@
 
         #region Bet setting
 
-        public PartialViewResult EditDefaultBetSetting(int productType)
+        public PartialViewResult EditDefaultBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productType == SportType.SportsBook ? PartialView(rootPath + "EditDBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditDBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
         }
 
         public JsonResult GetDefaultBetSetting(GetDefaultBetSettingViewModel model)
@@ -64,7 +64,7 @@
                 return Json("Can't get Default Bet Setting!", JsonRequestBehavior.AllowGet);
             }
 
-            if (model.ProductTypeId != SportType.SportsBook)
+            if (model.ProductTypeId != ProductTypeId.SportsBook)
             {
                 return Json("Unknown Default Bet Setting!", JsonRequestBehavior.AllowGet);
             }
@@ -75,30 +75,30 @@
             return Json(new BSSportsbookViewModel(dbsSportsbookItems), JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult EditBetSetting(int sportType)
+        public PartialViewResult EditBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return sportType == SportType.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
         }
 
         public JsonResult GetEditBetSettingData(LicenseeBetSettingFilterViewModel vm)
         {
-            if (vm.ProdId != SportType.SportsBook)
+            if (vm.ProductTypeId != ProductTypeId.SportsBook)
             {
                 return Json("Unknown Bet Setting!", JsonRequestBehavior.AllowGet);
             }
 
             var sportsBookItems = _licenseeBetSettingService
-                .GetBSSportsbookItemWithSuperInfo(vm.CustId, vm.ProdId, vm.AgentId, vm.Option);
+                .GetBSSportsbookItemWithSuperInfo(vm.CustId, vm.ProductTypeId, vm.AgentId, vm.Option);
             var sportsBookVm = new BSSportsbookViewModel(sportsBookItems, _commonService.GetSportsbookGameTypeList);
 
             return Json(sportsBookVm, JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult ReviewBetSetting(int sportType)
+        public PartialViewResult ReviewBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return sportType == SportType.SportsBook ? PartialView(rootPath + "ReviewBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "ReviewBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
         }
 
         [HttpPost]
@@ -211,15 +211,11 @@
         [AjaxRequest]
         public ActionResult GetSettings()
         {
-            var licensees = _commonService.GetLicenseeList;
-
             return Json(
             new
             {
-                LicenseeList = licensees,
-                SuperLicenseeList = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name),
-                ProductTypeList = _commonService.GetProductTypeList,
-                AgentList = _commonService.GetLicenseeAgentList(_commonService.GetSuperLicenseeList(licensees.FirstOrDefault().Name).FirstOrDefault().Id)
+                LicenseeList = _commonService.GetLicenseeList,
+                ProductTypeList = _commonService.GetProductTypeList
             },
             JsonRequestBehavior.AllowGet);
         }
@@ -250,16 +246,12 @@
         [HttpGet]
         public ActionResult GetLogSettings()
         {
-            var licensees = _commonService.GetLicenseeList;
-            var superWithCurrencies = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault()?.Name);
             var currentDate = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
 
             return Json(new
             {
+                Licensees = _commonService.GetLicenseeList,
                 CurrentDate = currentDate,
-                Licensees = licensees,
-                SuperWithCurrencies = superWithCurrencies,
-                Agents = _commonService.GetLicenseeAgentList(superWithCurrencies.FirstOrDefault().Id),
                 SportNames = new { _commonService.GetGameTypeList.Keys, _commonService.GetGameTypeList.Values }
             }, JsonRequestBehavior.AllowGet);
         }

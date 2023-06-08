@@ -51,7 +51,7 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
         {
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
-                prodId: shareSettingsService.getWorkingContext().ProdId,
+                productTypeId: shareSettingsService.getWorkingContext().ProdId,
                 agentId: $scope.agentId,
                 option: $scope.option
             },

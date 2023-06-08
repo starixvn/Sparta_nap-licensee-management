@@ -1,11 +1,11 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('logSettingsApp').controller('licenseeSettingLogCtrl', licenseeSettingLogCtrl);
+    angular.module('logSettingsApp').controller('licenseeBetSettingLogCtrl', licenseeBetSettingLogCtrl);
 
-    licenseeSettingLogCtrl.$inject = ['$http', 'logService'];
+    licenseeBetSettingLogCtrl.$inject = ['$http', 'logService'];
 
-    function licenseeSettingLogCtrl($http, logService) {
+    function licenseeBetSettingLogCtrl($http, logService) {
         var vm = this;
 
         vm.criteria = {};

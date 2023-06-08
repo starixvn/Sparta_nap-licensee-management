@@ -372,7 +372,7 @@
     <Content Include="Scripts\source\page\log\logSettingsApp.js" />
     <Content Include="Scripts\source\page\log\Service\logService.js" />
     <Content Include="Scripts\source\page\licenseebetsetting\Controllers\BetSetting\editDBSSportsbookCtrl.js" />
-    <Content Include="Scripts\source\page\log\Controllers\BetSetting\licenseeSettingLogCtrl.js" />
+    <Content Include="Scripts\source\page\log\Controllers\LicenseeBetSetting\licenseeBetSettingLogCtrl.js" />
     <Content Include="SimpleParameterTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>

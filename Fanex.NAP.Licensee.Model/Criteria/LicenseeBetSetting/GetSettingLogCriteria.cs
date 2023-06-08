@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeBetSetting
 {
-    using System;
     using Fanex.Data.Repository;
+    using System;
 
     public class GetSettingLogCriteria : CriteriaBase
     {
@@ -25,18 +25,8 @@
 
         public int PageSize { get; set; }
 
-        public override string GetSettingKey()
-        {
-            return "NAP_LM_LicenseeUserLog_RunSPSel";
-        }
+        public override string GetSettingKey() => "NAP_LM_LicenseeUserLog_RunSPSel";
 
-        public override bool IsValid()
-        {
-            return CustId > 0
-                   && AgentId >= 0 
-                   && FromDate <= ToDate 
-                   && FromDate > DateTime.MinValue 
-                   && ToDate > DateTime.MinValue;
-        }
+        public override bool IsValid() => true;
     }
 }

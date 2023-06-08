@@ -64,7 +64,7 @@ var addNew = (function () {
             };
             $.ajax({
                 type: "POST",
-                url: window.rootUrl + "DefaultBetSetting/LoadTeamplate",
+                url: window.rootUrl + "DefaultBetSetting/LoadTemplate",
                 data: criteria,
                 datatype: "html",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",

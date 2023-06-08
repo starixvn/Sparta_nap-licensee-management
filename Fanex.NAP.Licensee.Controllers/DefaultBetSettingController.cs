@@ -86,7 +86,7 @@
         [HttpPost]
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Host)]
         [AjaxRequest]
-        public ActionResult LoadTeamplate(GetSingleDefaultBetSettingCriteria criteria)
+        public ActionResult LoadTemplate(GetSingleDefaultBetSettingCriteria criteria)
         {
             var viewModel = new SingleDefaultBetSettingViewModel();
             if (criteria.IsValid())
@@ -136,16 +136,12 @@
         [NapAuth(FunctionKey = NapLicenseeFunctionKeys.DefaultBetSetting, Policy = Constant.Policy.Read)]
         public ActionResult GetLogSettings()
         {
-            var licensees = _commonService.GetLicenseeList;
-            var superWithCurrencies = _commonService.GetSuperLicenseeList(licensees.FirstOrDefault()?.Name);
             var currentDate = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
 
             return Json(new
             {
-                Licensees = licensees,
+                Licensees = _commonService.GetLicenseeList,
                 CurrentDate = currentDate,
-                SuperWithCurrencies = superWithCurrencies,
-                Agents = _commonService.GetLicenseeAgentList(superWithCurrencies.FirstOrDefault().Id),
                 SportNames = new { _commonService.GetGameTypeList.Keys, _commonService.GetGameTypeList.Values }
             }, JsonRequestBehavior.AllowGet);
         }

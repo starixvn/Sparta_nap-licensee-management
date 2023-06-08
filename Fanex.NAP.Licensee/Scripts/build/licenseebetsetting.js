@@ -15,37 +15,19 @@ licenseeBetSettingApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList"
 
 // Routing
 licenseeBetSettingApp.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/EditPT', {
-        templateUrl: "EditPT",
-        controller: "editPTCtrl"
-    });
-    $routeProvider.when('/ReviewPT', {
-        templateUrl: "ReviewPT",
-        controller: 'reviewPTCtrl'
-    });
-
-    $routeProvider.when('/EditComm', {
-        templateUrl: 'EditComm',
-        controller: 'editCommCtrl'
-    });
-    $routeProvider.when('/ReviewComm', {
-        templateUrl: 'ReviewComm',
-        controller: 'reviewCommCtrl'
-    });
-
-    $routeProvider.when('/EditBetSetting/:sportType', {
+    $routeProvider.when('/EditBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'EditBetSetting/?sportType=' + params.sportType;
+            return 'EditBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
-    $routeProvider.when('/EditDefaultBetSetting/:productType', {
+    $routeProvider.when('/EditDefaultBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'EditDefaultBetSetting/?productType=' + params.productType;
+            return 'EditDefaultBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
-    $routeProvider.when('/ReviewBetSetting/:sportType', {
+    $routeProvider.when('/ReviewBetSetting/:productTypeId', {
         templateUrl: function (params) {
-            return 'ReviewBetSetting/?sportType=' + params.sportType;
+            return 'ReviewBetSetting/?productTypeId=' + params.productTypeId;
         }
     });
     $routeProvider.otherwise({
@@ -116,7 +98,7 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
         {
             params: {
                 custId: shareSettingsService.getWorkingContext().CustId,
-                prodId: shareSettingsService.getWorkingContext().ProdId,
+                productTypeId: shareSettingsService.getWorkingContext().ProdId,
                 agentId: $scope.agentId,
                 option: $scope.option
             },
@@ -675,25 +657,6 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         hasEnter: false,
                         width: '100%',
                     }
-                    $http.get(
-                        GetLicenseeAgentListUrl,
-                        {
-                            params: { SRecommend: $scope.filterData.selectedSuperLicensee.Id }
-                        }
-                    )
-                        .success(function (data1) {
-                            $scope.filterData.agents = data1
-                            $scope.filterData.selectedAgent = data1[0];
-                            $scope.agentSettings = {
-                                idMember: "Id",
-                                nameMember: "Name",
-                                sourceData: data1,
-                                hasToolbar: false,
-                                hasFilter: true,
-                                hasEnter: false,
-                                width: '100%',
-                            }
-                        });
                 });
         };
 
@@ -737,30 +700,6 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                 $scope.filterData.productTypes = data.ProductTypeList;
                 $scope.filterData.selectedProductType = data.ProductTypeList[0];
                 $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
-
-                $scope.filterData.superLicensees = data.SuperLicenseeList;
-                $scope.filterData.selectedSuperLicensee = data.SuperLicenseeList[0];
-                $scope.superLicenseeSettings = {
-                    idMember: "Id",
-                    nameMember: "CurrencyWithSuper",
-                    sourceData: data.SuperLicenseeList,
-                    hasToolbar: false,
-                    hasFilter: true,
-                    hasEnter: false,
-                    width: '100%',
-                }
-
-                $scope.filterData.agents = data.AgentList;
-                $scope.filterData.selectedAgent = data.AgentList[0];
-                $scope.agentSettings = {
-                    idMember: "Id",
-                    nameMember: "Name",
-                    sourceData: data.AgentList,
-                    hasToolbar: false,
-                    hasFilter: true,
-                    hasEnter: false,
-                    width: '100%',
-                }
             });
 
         $scope.selectEventHandler = function () {

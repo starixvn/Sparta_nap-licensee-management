@@ -340,11 +340,98 @@ var logSettings = (function () {
 ﻿(function () {
     'use strict';
 
-    angular.module('logSettingsApp').controller('licenseeSettingLogCtrl', licenseeSettingLogCtrl);
+    angular.module('logSettingsApp').controller('dbsLogCtrl', dbsLogCtrl);
 
-    licenseeSettingLogCtrl.$inject = ['$http', 'logService'];
+    dbsLogCtrl.$inject = ['$http', 'logService'];
 
-    function licenseeSettingLogCtrl($http, logService) {
+    function dbsLogCtrl($http, logService) {
+        var vm = this;
+
+        vm.criteria = {};
+        vm.formData = {};
+
+        vm.gridOptions = logService.configGridOptions();
+        vm.gridOptions.fullHeight = false;
+        vm.gridOptions.gridHeight = '100%';
+
+        function setSportNames(arr) {
+            $.each(arr, function (index, settings) {
+                if (index > 0 && settings !== null) {
+                    var sportTypeId = settings.content[0].value;
+                    var betTypeId = settings.content[1].value;
+
+                    var length = vm.SportNames.Keys.length;
+                    for (var i = 0; i < length; i++) {
+                        if (sportTypeId == vm.SportNames.Keys[i].SportTypeId && betTypeId == vm.SportNames.Keys[i].BetTypeId) {
+                            settings.content.unshift({
+                                key: 'Sport/Game',
+                                value: vm.SportNames.Values[i]
+                            })
+                        }
+                    }
+                }
+            });
+        }
+
+        function getNormalizedFilter() {
+            return {
+                LicenseeId: isNull(vm.criteria.Licensee.Id, -1),
+                CustId: isNull(vm.criteria.SuperWithCurrency.Id, -1),
+                AgentId: vm.criteria.Agent.Id,
+                FromDate: logService.formatDateString(vm.criteria.FromDate),
+                ToDate: logService.formatDateString(vm.criteria.ToDate),
+            }
+        }
+
+        function isNull(value, defaultValue) {
+            return value !== null ? value : defaultValue;
+        }
+
+        function getReport() {
+            logService.invokeLoadingMsg(true);
+            $http.get('GetReport', { params: vm.formData })
+                .success(function (data) {
+                    logService.handleLogData(data, setSportNames);
+                    vm.report = data;
+                    logService.invokeLoadingMsg(false);
+                })
+                .error(function (data) {
+                    logService.invokeLoadingMsg(false);
+                    alert(data);
+                });
+        }
+
+        vm.selectedLicenseeChange = function () {
+            logService.getSelectedLicenseeChange(vm);
+        };
+
+        vm.selectedSuperWithCurrencyChange = function () {
+            logService.getSelectedSuperWithCurrencyChange(vm);
+        }
+
+        vm.getReport = function () {;
+            vm.formData = getNormalizedFilter();
+
+            getReport();
+        }
+
+
+        function initialize() {
+            logService.getSettings(vm);
+        }
+
+        initialize();
+    }
+})();
+
+﻿(function () {
+    'use strict';
+
+    angular.module('logSettingsApp').controller('licenseeBetSettingLogCtrl', licenseeBetSettingLogCtrl);
+
+    licenseeBetSettingLogCtrl.$inject = ['$http', 'logService'];
+
+    function licenseeBetSettingLogCtrl($http, logService) {
         var vm = this;
 
         vm.criteria = {};
@@ -424,93 +511,6 @@ var logSettings = (function () {
 
             getReport();
         }
-
-        function initialize() {
-            logService.getSettings(vm);
-        }
-
-        initialize();
-    }
-})();
-
-﻿(function () {
-    'use strict';
-
-    angular.module('logSettingsApp').controller('dbsLogCtrl', dbsLogCtrl);
-
-    dbsLogCtrl.$inject = ['$http', 'logService'];
-
-    function dbsLogCtrl($http, logService) {
-        var vm = this;
-
-        vm.criteria = {};
-        vm.formData = {};
-
-        vm.gridOptions = logService.configGridOptions();
-        vm.gridOptions.fullHeight = false;
-        vm.gridOptions.gridHeight = '100%';
-
-        function setSportNames(arr) {
-            $.each(arr, function (index, settings) {
-                if (index > 0 && settings !== null) {
-                    var sportTypeId = settings.content[0].value;
-                    var betTypeId = settings.content[1].value;
-
-                    var length = vm.SportNames.Keys.length;
-                    for (var i = 0; i < length; i++) {
-                        if (sportTypeId == vm.SportNames.Keys[i].SportTypeId && betTypeId == vm.SportNames.Keys[i].BetTypeId) {
-                            settings.content.unshift({
-                                key: 'Sport/Game',
-                                value: vm.SportNames.Values[i]
-                            })
-                        }
-                    }
-                }
-            });
-        }
-
-        function getNormalizedFilter() {
-            return {
-                LicenseeId: isNull(vm.criteria.Licensee.Id, -1),
-                CustId: isNull(vm.criteria.SuperWithCurrency.Id, -1),
-                AgentId: vm.criteria.Agent.Id,
-                FromDate: logService.formatDateString(vm.criteria.FromDate),
-                ToDate: logService.formatDateString(vm.criteria.ToDate),
-            }
-        }
-
-        function isNull(value, defaultValue) {
-            return value !== null ? value : defaultValue;
-        }
-
-        function getReport() {
-            logService.invokeLoadingMsg(true);
-            $http.get('GetReport', { params: vm.formData })
-                .success(function (data) {
-                    logService.handleLogData(data, setSportNames);
-                    vm.report = data;
-                    logService.invokeLoadingMsg(false);
-                })
-                .error(function (data) {
-                    logService.invokeLoadingMsg(false);
-                    alert(data);
-                });
-        }
-
-        vm.selectedLicenseeChange = function () {
-            logService.getSelectedLicenseeChange(vm);
-        };
-
-        vm.selectedSuperWithCurrencyChange = function () {
-            logService.getSelectedSuperWithCurrencyChange(vm);
-        }
-
-        vm.getReport = function () {;
-            vm.formData = getNormalizedFilter();
-
-            getReport();
-        }
-
 
         function initialize() {
             logService.getSettings(vm);
@@ -650,17 +650,7 @@ var logSettings = (function () {
             };
         }
 
-        function configDropdowns(vm) {
-            licenseeSetting(vm);
-            superWithCurrencySetting(vm);
-            agentSetting(vm);
-
-            vm.TextSettings = {
-                Filter: 'Search'
-            };
-        }
-
-        var setGenerateButtonStatus = function (disable) {
+        function setGenerateButtonStatus (disable) {
             if (disable) {
                 $("#generate").attr("disabled", "disabled");
             } else {
@@ -716,17 +706,6 @@ var logSettings = (function () {
                 .success(function (superWithCurrencies) {
                     vm.SuperWithCurrencies = superWithCurrencies;
                     superWithCurrencySetting(vm);
-
-                    $http.get(
-                        'GetLicenseeAgentList',
-                        {
-                            params: { SRecommend: vm.criteria.SuperWithCurrency.Id }
-                        }
-                    )
-                        .success(function (agents) {
-                            vm.Agents = agents;
-                            agentSetting(vm);
-                        });
                 });
         }
 
@@ -747,8 +726,6 @@ var logSettings = (function () {
             $http.get('GetLogSettings')
                 .success(function (data) {
                     vm.Licensees = data.Licensees;
-                    vm.SuperWithCurrencies = data.SuperWithCurrencies;
-                    vm.Agents = data.Agents;
                     vm.SportNames = data.SportNames;
 
                     data.CurrentDate = new Date(data.CurrentDate);
@@ -756,11 +733,11 @@ var logSettings = (function () {
                     vm.criteria.FromDate = data.CurrentDate;
                     vm.criteria.ToDate = data.CurrentDate;
 
-                    configDropdowns(vm);
-                })
-                .error(function (data) {
-                    alert(data);
-                })
+                    licenseeSetting(vm);
+                    vm.TextSettings = {
+                        Filter: 'Search'
+                    };
+                });
         }
 
         this.handleLogData = function (data, Func) {

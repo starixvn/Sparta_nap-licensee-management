@@ -190,7 +190,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="DataDomain\RoleType.cs" />
-    <Compile Include="DataDomain\SportType.cs" />
+    <Compile Include="DataDomain\ProductTypeId.cs" />
     <Compile Include="DataDomain\StaticSiteValue.cs" />
     <Compile Include="DTO\Agent.cs" />
     <Compile Include="DTO\PagedList.cs" />
