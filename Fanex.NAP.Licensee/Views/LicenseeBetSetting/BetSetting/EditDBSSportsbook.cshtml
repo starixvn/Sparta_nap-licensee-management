@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-if="option === 0" ng-repeat="item in editBS.BSRows">
+                <tr ng-if="!invertedSymbol" ng-repeat="item in editBS.BSRows">
                     <td>
                         <label style="font-weight: normal; display: inline;">
                             <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="$index === 0 && editBS.isCopyAllFromOne ? true : item.IsRowDisabled" />
@@ -56,7 +56,7 @@
                         <input class="value" ng-attr-uplinemin="*" ng-attr-uplinemax="*" name="UplineMaxPayoutPerMatch" type="text" ng-attr-min="0" ng-attr-max="*" bs-validation agent-id="agentId" is-default="isDBS" ng-model="item.UplineMaxPayoutPerMatch" ng-disabled="true" />
                     </td>
                 </tr>
-                <tr ng-if="option === 1" ng-repeat="item in editBS.BSRows">
+                <tr ng-if="invertedSymbol" ng-repeat="item in editBS.BSRows">
                     <td>
                         <label style="font-weight: normal; display: inline;">
                             <input type="checkbox" ng-model="item.IsRowSelected" ng-disabled="$index === 0 && editBS.isCopyAllFromOne ? true : item.IsRowDisabled" />

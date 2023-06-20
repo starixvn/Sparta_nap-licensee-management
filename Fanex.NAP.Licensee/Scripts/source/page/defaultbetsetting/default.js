@@ -25,8 +25,10 @@ var defaultSetting = (function () { // jshint ignore:line
         bodyRows: [],
         gridExpandHeight: 150,
         bodyRowHeight: 30,
+        minWidth: 800,
         showDistinctRow: false,
-        autoResizeColumn: true, showHighlightRow: false
+        autoResizeColumn: true,
+        showHighlightRow: false
     };
     var actionLinkTpl = "<a href=" + window.rootUrl + "DefaultBetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
 

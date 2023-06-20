@@ -154,8 +154,8 @@
                 updateItem.ErrMsg = null;
             }
 
-            return violatedResultItems.OrderBy(_ => LicenseeBetSettingConstants.AgentDBSErrorCodes.Split(',').Contains(_.Code.ToString())
-                                                    || LicenseeBetSettingConstants.CurrencyDBSErrorCodes.Split(',').Contains(_.Code.ToString()))
+            return violatedResultItems
+                .OrderBy(_ => LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').Any(code => code == _.Code.ToString()))
                 .ToList();
         }
 

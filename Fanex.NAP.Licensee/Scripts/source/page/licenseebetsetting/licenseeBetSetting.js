@@ -11,7 +11,12 @@ licenseeBetSettingApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList"
 licenseeBetSettingApp.constant("GetProductTypeListUrl", "GetProductTypeList");
 licenseeBetSettingApp.constant("GetSettingsUrl", "GetSettings");
 licenseeBetSettingApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList");
-
+licenseeBetSettingApp.constant("SportsbookDBSErrCode", {
+    Currency_Agent_NotIncludePlayer_ViolatedAgentDBSCode: 103,
+    Currency_Agent_NotIncludePlayer_ViolatedCurrencyDBSCode: 106,
+    Player_Agent_IncludePlayer_ViolatedCurrencyDBSCode: 107,
+    Currency_Agent_IncludePlayer_ViolatedCurrencyDBSCode: 108
+});
 
 // Routing
 licenseeBetSettingApp.config(['$routeProvider', function ($routeProvider) {

@@ -11,7 +11,12 @@ licenseeBetSettingApp.constant("GetSuperLicenseeListUrl", "GetSuperLicenseeList"
 licenseeBetSettingApp.constant("GetProductTypeListUrl", "GetProductTypeList");
 licenseeBetSettingApp.constant("GetSettingsUrl", "GetSettings");
 licenseeBetSettingApp.constant("GetLicenseeAgentListUrl", "GetLicenseeAgentList");
-
+licenseeBetSettingApp.constant("SportsbookDBSErrCode", {
+    Currency_Agent_NotIncludePlayer_ViolatedAgentDBSCode: 103,
+    Currency_Agent_NotIncludePlayer_ViolatedCurrencyDBSCode: 106,
+    Player_Agent_IncludePlayer_ViolatedCurrencyDBSCode: 107,
+    Currency_Agent_IncludePlayer_ViolatedCurrencyDBSCode: 108
+});
 
 // Routing
 licenseeBetSettingApp.config(['$routeProvider', function ($routeProvider) {
@@ -599,17 +604,13 @@ licenseeBetSettingApp.controller("reviewBSSportsbookCtrl", ['$scope', '$injector
 
 licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
     '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
-    'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl',
-    function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl) {
+    'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl', 'SportsbookDBSErrCode',
+    function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl, SportsbookDBSErrCode) {
         $scope.isButtonEnable = true;
         $scope.option = 0;
         $scope.SportOrBetTypeName = '';
         $scope.agentIdByErrorCode = -1; // to get DBS
-
-        var DBSErrCode = {
-            AgentCode: '103',
-            CurrencyCode: '106,107'
-        }
+        $scope.invertedSymbol = false; // to set DBS UI
 
         // Load data for ddls
         $scope.filterData = {
@@ -827,6 +828,50 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             });
         };
 
+        var isViolatedDBS = function (errCode) {
+            var result = false;
+            Object.values(SportsbookDBSErrCode).forEach(function (value) {
+                if (value === errCode) {
+                    result = true;
+                }
+            });
+
+            return result;
+        }
+
+        var isLoadCurrencyDBS = function (errCode) {
+            var result = false;
+            var errCodes = [
+                SportsbookDBSErrCode.Currency_Agent_NotIncludePlayer_ViolatedCurrencyDBSCode,
+                SportsbookDBSErrCode.Player_Agent_IncludePlayer_ViolatedCurrencyDBSCode,
+                SportsbookDBSErrCode.Currency_Agent_IncludePlayer_ViolatedCurrencyDBSCode
+            ];
+
+            angular.forEach(errCodes, function (value) {
+                if (value === errCode) {
+                    result = true;
+                }
+            });
+
+            return result;
+        }
+
+        var invertedSymbol = function (errCode) {
+            var result = false;
+            var errCodes = [
+                SportsbookDBSErrCode.Player_Agent_IncludePlayer_ViolatedCurrencyDBSCode,
+                SportsbookDBSErrCode.Currency_Agent_IncludePlayer_ViolatedCurrencyDBSCode
+            ];
+
+            angular.forEach(errCodes, function (value) {
+                if (value === errCode) {
+                    result = true;
+                }
+            });
+
+            return result;
+        }
+
         var checkBetSetting = function (editedBSRows, editedDBSRows) {
             var param = updatedParams();
             param.BSRows = editedBSRows;
@@ -838,10 +883,15 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
                     }
                     else {
-                        data.Code = data.Code.toString();
-                        if (DBSErrCode.AgentCode.split(',').includes(data.Code) || DBSErrCode.CurrencyCode.split(',').includes(data.Code)) {
+                        if (isViolatedDBS(data.Code)) {
                             $scope.SportOrBetTypeName = data.SportOrBetTypeName;
-                            $scope.agentIdByErrorCode = DBSErrCode.CurrencyCode.split(',').includes(data.Code) ? 0 : shareSettingsService.getWorkingContext().AgentId;
+                            $scope.agentIdByErrorCode = shareSettingsService.getWorkingContext().AgentId;
+
+                            if (isLoadCurrencyDBS(data.Code)) {
+                                $scope.agentIdByErrorCode = 0;
+                            }
+
+                            $scope.invertedSymbol = invertedSymbol(data.Code);
 
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
@@ -880,7 +930,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         dbsRow.Status = shareSettingsService.getStatus().Fail;
 
                         bsRow.Message = data.Message;
-                        if (data.Code === dbsErrorCode) {
+                        if (isViolatedDBS(data.Code)) {
                             dbsRow.Message = data.Message;
                         }
                     }
