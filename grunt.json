@@ -57,15 +57,14 @@
     "Fanex.NAP.Licensee/Areas/UserLogin/scripts/ReCheckIn.js"
   ],
   "jsFanexGrid": [
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Language/Fanex.Gird.Lang.en-US.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Grid.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Pagination.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/moment.min.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/numeral.min.js"
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/**/**/*.js",
+    "!*.min.js"
   ],
   "cssFanexGrid": [
-    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.min.css",
-    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.min.css"
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.css",
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.css"
   ],
   "jsDefaultBetSetting": [
     "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
