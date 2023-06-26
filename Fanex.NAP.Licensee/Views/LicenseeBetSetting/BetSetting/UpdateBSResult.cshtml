@@ -1,0 +1,14 @@
+﻿@model IList<Fanex.NAP.Licensee.Model.ViewModel.LicenseeBetSetting.BSResultViewModel>
+<h2>Update Result</h2>
+@foreach (var item in Model)
+{
+    <div>
+        @item.SportOrBetTypeName : @(item.IsOk == true ? "Successful" : "Failed")
+        @if (item.IsOk == false)
+        {
+            <div>
+                Reason: @item.Message
+            </div>
+        }
+    </div>
+}

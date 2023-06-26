@@ -10,7 +10,7 @@ var site = (function () {
     me.requestSuccess = "Successful";
     /* filter componenet*/
     me.renderSingleAgentList = function (licensee, currency, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -23,7 +23,7 @@ var site = (function () {
         });
     };
     me.renderSingleCurrencyList = function (callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -38,7 +38,7 @@ var site = (function () {
     me.renderCurrencyList = function (selectedParentIdList) {
         var currencyControl = new MultiSelectControl();
 
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var currencies = [];
             for (var i = 0; i < data.length; i++) {
                 var cur = {
@@ -70,7 +70,7 @@ var site = (function () {
     };
 
     me.renderLicenseeList = function (currentSelectedLicensee, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetLicenseeList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 var selected = data[i].Name.toLowerCase() === currentSelectedLicensee ? "selected = \"selected\"" : "";
@@ -172,13 +172,36 @@ var site = (function () {
         return error;
     };
 
-    var verifySportBookBetSetting = function($row) {
+    var verifySportsBookBetSetting = function($row) {
         var error = 0;
+        var minBet = $row.find("input[data-key=\"MinBet\"]").val();
         var maxPayoutPerMatch = $row.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
         var maxPerMatch = $row.find("input[data-key=\"MaxPerMatch\"]").val();
 
         error = site.verifyBetSetting($row);
+
+        if (!site.isNumber(minBet) && minBet.length > 0) {
+            $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+            error++;
+        }
+
+        if (minBet.length !== maxBet.length) {
+            if (minBet.length === 0) {
+                $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+                error++;
+            }
+            if (maxBet.length === 0) {
+                $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+                error++;
+            }
+        }
+
+        if (parseInt(minBet) > parseInt(maxBet)) {
+            $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            error++;
+        }
 
         if (!site.isNumber(maxPayoutPerMatch) && maxPayoutPerMatch.length > 0) {
             $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
@@ -211,7 +234,7 @@ var site = (function () {
     }
 
     me.verifyInputData = function () {
-        /*sportbook,Virtual sport,Keno*/
+        /*sportsbook,Virtual sport,Keno*/
         /*reset*/
         var error = 0;
 
@@ -235,9 +258,10 @@ var site = (function () {
                 }
             }
         }
-        /*sport book*/
+        /*sports book*/
         if($('#sb-area').length > 0){
             var sbtable = $('#sb-table');
+            sbtable.find("tbody input[data-key=\"MinBet\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxPerMatch\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxBet\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
@@ -245,7 +269,7 @@ var site = (function () {
             var sbrows = sbtable.find("tbody tr");
             var numOfRows = sbrows.length;
             for (var k = 0; k < numOfRows; k++) {
-                error += verifySportBookBetSetting($(sbrows[k]));
+                error += verifySportsBookBetSetting($(sbrows[k]));
             }
         }
 
@@ -276,6 +300,7 @@ var site = (function () {
                     Id: $row.attr("data-sport"),
                     Name: ""
                 },
+                MinBet: $row.find("input[data-key=\"MinBet\"]").val() || null,
                 MaxBet: $row.find("input[data-key=\"MaxBet\"]").val(),
                 MaxPerMatch: $row.find("input[data-key=\"MaxPerMatch\"]").val(),
                 MaxPerBall: code === "ng" ? $row.find("input[data-key=\"MaxPerBall\"]").val() : null,
@@ -294,17 +319,19 @@ var site = (function () {
             var isCheck = $("#copy-" + code).is(":checked");
             var firstRow = $("#" + code + "-table tbody tr:eq(0)");
             if (isCheck) {
-                var error = code === "sb" ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+                var error = code === "sb" ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
                 if (error === 0) {
                     var table = $("#" + code + "-table");
+                    var minBet = $(this).find("input[data-key=\"MinBet\"]").val();
                     var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
                     var maxPerMatch = $(this).find("input[data-key=\"MaxPerMatch\"]").val();
                     var maxPayoutPerMatch = $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").val();
-                    console.log(maxPayoutPerMatch);
 
+                    table.find("tr[class!='first'] input[data-key=\"MinBet\"]").val(minBet);
                     table.find("tr[class!='first'] input[data-key=\"MaxBet\"]").val(maxBet);
                     table.find("tr[class!='first'] input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
                     table.find("tr[class!='first'] input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
+                    $(this).find("input[data-key=\"MinBet\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxBet\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
@@ -317,11 +344,12 @@ var site = (function () {
         var code = $(firstRow).attr("data-code");
         /*reset*/
         var error = 0;
+        firstRow.find("input[data-key=\"MinBet\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxBet\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
         /*copy*/
-        error = code === 'sb' ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+        error = code === 'sb' ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
 
         if (error > 0) {
             checkbox.prop("checked", false);
@@ -329,10 +357,12 @@ var site = (function () {
         }
         else {
             /*update*/
+            var minBet = firstRow.find("input[data-key=\"MinBet\"]").val();
             var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
             var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
             var maxPayoutPerMatch = firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
 
+            table.find("input[data-key=\"MinBet\"]").val(minBet);
             table.find("input[data-key=\"MaxBet\"]").val(maxBet);
             table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
             table.find("input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
@@ -378,7 +408,7 @@ var site = (function () {
                     Id: $("#agent").val() === '' ? null : $("#agent").val(),
                     Name: $("#agent").text()
                 },
-                Sportbook: site.getInputValue("sb"),
+                Sportsbook: site.getInputValue("sb"),
                 NumberGame: site.getInputValue("ng"),
                 VirtualSport: site.getInputValue("vs"),
                 Keno: site.getInputValue("kn")
@@ -401,7 +431,7 @@ var site = (function () {
         }
     };
     me.backToList = function () {
-        location.href = window.rootUrl + "BetSetting/Default";
+        location.href = window.rootUrl + "DefaultBetSetting/Default";
 
         return false;
     };
@@ -433,6 +463,9 @@ window.alert = function (message, fallback, callback) {
                     callback();
                 }
                 $(this).remove;
+            },
+            create: function () {
+                $(this).css('maxWidth', 720);
             },
             draggable: true,
             modal: true,

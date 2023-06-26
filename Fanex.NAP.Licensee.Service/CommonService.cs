@@ -1,24 +1,20 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Caching;
     using Fanex.Data;
-    using Fanex.NAP.Licensee.Model.Criteria.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.Criteria.LicenseeBetSetting;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.DTO.LicenseeBetSetting;
+    using System.Collections.Generic;
+    using System.Linq;
+
 
     public class CommonService : ICommonService
     {
         private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";
 
         private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private readonly float PTNumberToInterval = 10000f;
 
-        /// <summary>
-        /// Gets licensee list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<LicenseeItem> GetLicenseeList
         {
             get
@@ -30,10 +26,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets currency list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<CurrencyItem> GetCurrencyList
         {
             get
@@ -76,34 +68,16 @@
             }
         }
 
-        /// <summary>
-        /// Gets product list.
-        /// </summary>
-        /// <value>A dictionary.</value>
         public IList<ProductTypeItem> GetProductTypeList
         {
             get
             {
-                IList<string> betPT = new List<string>() { "Bet setting", "PT" };
+                IList<string> betSettingSportsbook = new List<string> { "Currency Bet Setting", "Player Bet Setting" };
 
-                return new List<ProductTypeItem>()
+                return new List<ProductTypeItem>
                 {
-                    new ProductTypeItem(1, "Sportsbook", betPT),
-                    new ProductTypeItem(161, "Number Game", betPT),
-                    new ProductTypeItem(202, "Keno", betPT),
+                    new ProductTypeItem(1, "Sportsbook", betSettingSportsbook)
                 };
-            }
-        }
-
-        public IList<string> GetPositionTakingList
-        {
-            get
-            {
-                List<int> lstInts = Enumerable.Range(0, 10001).Where(n => n % 5 == 0).ToList();
-                IList<string> lstPTs = new List<string>();
-                lstInts.ForEach(n => lstPTs.Add((n / PTNumberToInterval).ToString("0.####")));
-
-                return lstPTs;
             }
         }
 
@@ -119,20 +93,16 @@
             }
         }
 
-        /// <summary>
-        /// Gets sport book game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetSportbookGameTypeList
+        public IDictionary<BSKeyPair, string> GetSportsbookGameTypeList
         {
             get
             {
                 IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
                 dctGameType.Add(new BSKeyPair(1, 1), "Soccer");
-                dctGameType.Add(new BSKeyPair(9901, 1), "Saba Soccer");
                 dctGameType.Add(new BSKeyPair(1, 9), "Soccer Parlay");
-                dctGameType.Add(new BSKeyPair(43, 1), "ESport");
-                dctGameType.Add(new BSKeyPair(2, 1), "BasketBall");
+                dctGameType.Add(new BSKeyPair(9901, 1), "Saba Soccer");
+                dctGameType.Add(new BSKeyPair(43, 1), "E-Sports");
+                dctGameType.Add(new BSKeyPair(2, 1), "Basketball");
                 dctGameType.Add(new BSKeyPair(9902, 1), "Saba Basketball");
                 dctGameType.Add(new BSKeyPair(3, 1), "Football");
                 dctGameType.Add(new BSKeyPair(5, 1), "Tennis");
@@ -140,50 +110,39 @@
                 dctGameType.Add(new BSKeyPair(10, 1), "Golf");
                 dctGameType.Add(new BSKeyPair(50, 1), "Cricket");
                 dctGameType.Add(new BSKeyPair(9907, 1), "Saba Cricket");
-                dctGameType.Add(new BSKeyPair(11, 1), "Mortorsports");
-                dctGameType.Add(new BSKeyPair(99, 1), "Orther Sports");
+                dctGameType.Add(new BSKeyPair(11, 1), "Motorsports");
+                dctGameType.Add(new BSKeyPair(99, 1), "Other Sports");
                 dctGameType.Add(new BSKeyPair(99, 9), "Mix Sports Parlay");
 
                 return dctGameType;
             }
         }
 
-        public IDictionary<BSKeyPair, string> GetNumberGameTypeList
+        public IDictionary<BSKeyPair, string> GetGameTypeList
         {
             get
             {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(161, 81), "Number Game");
+                var gameType = (Dictionary<BSKeyPair, string>)GetSportsbookGameTypeList;
 
-                return dctGameType;
+                gameType.Add(new BSKeyPair(161, 1), "Number Game");
+                gameType.Add(new BSKeyPair(180, 1), "Virtual Soccer");
+                gameType.Add(new BSKeyPair(181, 1), "Virtual Horse Racing");
+                gameType.Add(new BSKeyPair(182, 1), "Virtual Greyhounds");
+                gameType.Add(new BSKeyPair(183, 1), "Virtual Speedway");
+                gameType.Add(new BSKeyPair(184, 1), "Virtual Motorsports");
+                gameType.Add(new BSKeyPair(185, 1), "Virtual Cycling");
+                gameType.Add(new BSKeyPair(186, 1), "Virtual Tennis");
+                gameType.Add(new BSKeyPair(202, 1501), "RNG Keno");
+
+                return gameType;
             }
         }
 
-        /// <summary>
-        /// Gets keno game type list.
-        /// </summary>
-        /// <value>A dictionary.</value>
-        public IDictionary<BSKeyPair, string> GetKenoGameTypeList
-        {
-            get
-            {
-                IDictionary<BSKeyPair, string> dctGameType = new Dictionary<BSKeyPair, string>();
-                dctGameType.Add(new BSKeyPair(202, 1501), "Australia Acttab");
-
-                return dctGameType;
-            }
-        }
-
-        /// <summary>
-        /// Gets super licensee list.
-        /// </summary>
-        /// <param name="siteName">Site name.</param>
-        /// <returns>List of licensee items.</returns>
-        public IList<LicenseeItem> GetSuperLicenseeList(string siteName)
+        public IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName)
         {
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeSuperList"))
             {
-                return db.Query<LicenseeItem>(new { Site = siteName }).ToList();
+                return db.Query<SuperLicenseeAndCurrencyItem>(new { Site = siteName }).ToList();
             }
         }
 

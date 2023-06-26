@@ -60,7 +60,7 @@ var editingSetting = (function () {
                 var criteria = site.createNewViewModel();
                 $.ajax({
                     type: "POST",
-                    url: window.rootUrl + "BetSetting/Edit",
+                    url: window.rootUrl + "DefaultBetSetting/Edit",
                     data: JSON.stringify(criteria),
                     datatype: "json",
                     contentType: "application/json; charset=utf-8",

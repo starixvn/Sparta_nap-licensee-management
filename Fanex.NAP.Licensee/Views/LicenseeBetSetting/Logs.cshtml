@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section HeadCss {
+    <link href="@Url.Content("~/Content/build/fanexgrid.min.css")" rel='stylesheet' type='text/css' media='all' />
+    <link href="@Url.Content("~/Content/build/log.min.css")" rel='stylesheet' type='text/css' media='all' />
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li> Licensee Bet Setting</li>
+        <li class="current">View Logs</li>
+    </ul>
+    <div class="pull-left">
+        <a class="btn-back" href="Index">← Back To Licensee Setting</a>
+    </div>
+}
+
+<div data-ng-app="logSettingsApp" data-ng-controller="licenseeBetSettingLogCtrl as vm">
+    @Html.Partial("~/Views/Shared/_LogTemplate.cshtml")
+
+    @Html.Partial("_Template")
+</div>
+
+@section FooterJs
+{
+    <script src="@Url.Content("~/Scripts/build/fanexgrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/build/logSetting.min.js")"></script>
+}

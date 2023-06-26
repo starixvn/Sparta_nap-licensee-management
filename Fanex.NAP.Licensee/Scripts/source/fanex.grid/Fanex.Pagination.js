@@ -1,4 +1,3 @@
-/// <reference path="/@JSense.js" />
 /*global fanexGridCurrentLanguage*/
 (function ($) {
     $.fn.fanexPagination = function (maxentries, opts) {
@@ -192,14 +191,14 @@
                 panel.find(".go-to-page").bind("click", function () {
                     var pagelist = panel.find('.numberlist');
                     var offset = pagelist.offset();
-                    var jumpPage = panel.find('.gotopage_box');
-                    jumpPage.toggle();
+                    var goto = panel.find('.gotopage_box');
+                    goto.toggle();
                     var w = pagelist.width();
-                    var gotow = jumpPage.width();
+                    var gotow = goto.width();
                     //                goto.css("left", (offset.left + (w - gotow) / 2 - 10) + "px");
                     //                goto.css("top", "-25px");
-                    var gotoOffset = jumpPage.offset();
-                    jumpPage.offset({
+                    var gotoOffset = goto.offset();
+                    goto.offset({
                         top: offset.top - 25,
                         left: (offset.left + (w - gotow) / 2)
                     });

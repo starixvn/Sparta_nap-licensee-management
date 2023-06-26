@@ -7,10 +7,10 @@
 }
 #pagination a{ text-decoration:none;color:#616161; border-radius:2px;text-align:center;}
 #pagination a:hover, #pagination .current, #pagination .current.prev,#pagination .current.next{ font-weight:bold;background:#355391;color:#fff;border-radius:2px;margin-right: 2px;}
-#pagination a,#pagination span{display:block;float:left;margin-right:2px;line-height:14px;padding:0 2px}
+#pagination a,#pagination .numberlist span{display:block;float:left;margin-right:2px;line-height:14px;padding:0 2px}
 #pagination a.prev,#pagination a.next,#pagination span.prev,#pagination span.next{font-weight:bold;font-size:0.8em;}
 #itemperpage{float:left;padding:1px; border: 1px solid #969696;outline: 0 none;border-radius:3px;margin-left:6px;font-size:0.9em;}
-#pagination div.itemperpage{float:left;color:#3e5fa6;padding:0; margin-top:3px; font-weight:bold;}
+#pagination div.itemperpage{float:left;color:#3e5fa6;padding:0; font-weight:bold;}
 .numberlist{float:left;padding:2px;border: 1px solid #969696;border-radius:3px;margin-left:12px;}
 .numberlist ul
 {
@@ -34,7 +34,7 @@
 {
     background: none !important;
     }    
-#pagination div.detailtext{float:right;margin:0;padding:0; margin-top:3px;}
+#pagination div.detailtext{float:right;margin:0;padding:0;}
 
 #pagination .txt{width:40px !important;border: 1px solid #969696;padding:0 1px !important;font-size:0.9em !important;}
 
@@ -84,4 +84,25 @@
 #pagination #itemperpage 
 {
     cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    #pagination div.itemperpage {
+        display: none;
+    }
+
+    #pagination #itemperpage {
+        margin-left: 0;
+        width: 42px !important;
+    }
+
+    #pagination .numberlist {
+        margin-left: 4px;
+    }
+
+    #pagination .pager-detail-text {
+        display: none;
+    }
+
+    #pagination a,#pagination .numberlist span{padding:0 1px;}
 }

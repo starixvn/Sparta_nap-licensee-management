@@ -34,7 +34,9 @@
     "Fanex.NAP.Licensee/Scripts/source/jquery/numeric.js",
     "Fanex.NAP.Licensee/Scripts/source/plugin/multi-select-control.js",
     "Fanex.NAP.Licensee/Scripts/source/bootstrap/bootstrap.js",
-    "Fanex.NAP.Licensee/Scripts/source/core/site.js"
+    "Fanex.NAP.Licensee/Scripts/source/core/site.js",
+    "Fanex.NAP.Licensee/Scripts/source/core/lm.grid.js",
+    "Fanex.NAP.Licensee/Scripts/source/dropdowntree/dropdowntreesingle.js"
   ],
   "cssCore": [
     "Fanex.NAP.Licensee/Content/source/bootstrap/bootstrap1.css",
@@ -44,39 +46,46 @@
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.theme.min.css",
     "Fanex.NAP.Licensee/Content/source/jquery-ui/jquery-ui.structure.min.css",
     "Fanex.NAP.Licensee/Content/source/core/site.css",
-    "Fanex.NAP.Licensee/Content/source/selectwithsearch/selectwithsearch.css"
+    "Fanex.NAP.Licensee/Content/source/dropdowntree/dropdowntree.css"
   ],
   "jsAngular": [
     "Fanex.NAP.Licensee/Scripts/source/angular/angular.js",
     "Fanex.NAP.Licensee/Scripts/source/angular/angular-animate.js",
-    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js",
-    "Fanex.NAP.Licensee/Scripts/source/selectwithsearch/selectwithsearch.js"
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js"
   ],
   "jsRecheckIn": [
     "Fanex.NAP.Licensee/Areas/UserLogin/scripts/ReCheckIn.js"
   ],
   "jsFanexGrid": [
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Language/Fanex.Gird.Lang.en-US.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Grid.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/Fanex.Pagination.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/moment.min.js",
-    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/numeral.min.js"
-  ],
-  "cssFanexGrid": [
-    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.min.css",
-    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.min.css"
-  ],
-  "jsBetSetting": [
-    "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
-  ],
-  "cssBetSetting": [ ],
-  "jsLicenseeSetting": [
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/*.js",
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/*.js",
-    "Fanex.NAP.Licensee/Scripts/source/page/settingconfiguration/**/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/fanex.grid/**/**/*.js",
     "!*.min.js"
   ],
-  "cssLicenseeSetting": [
-    "Fanex.NAP.Licensee/Content/source/settingconfiguration/setting-configuration.min.css"
+  "cssFanexGrid": [
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Grid.css",
+    "Fanex.NAP.Licensee/Content/source/fanex.grid/Fanex.Pagination.css"
+  ],
+  "jsDefaultBetSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/defaultbetsetting/*.js"
+  ],
+  "cssDefaultBetSetting": [],
+  "jsLicenseeBetSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/licenseebetsetting/**/**/*.js",
+    "!*.min.js"
+  ],
+  "cssLicenseeBetSetting": [
+    "Fanex.NAP.Licensee/Content/source/licenseebetsetting/licenseebetsetting.css"
+  ],
+  "cssLogSetting": [
+    "Fanex.NAP.Licensee/Content/source/log/log.css"
+  ],
+  "jsLogSetting": [
+    "Fanex.NAP.Licensee/Scripts/source/page/log/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/log/**/*.js",
+    "Fanex.NAP.Licensee/Scripts/source/page/log/**/**/*.js",
+    "!*.min.js"
   ]
 }

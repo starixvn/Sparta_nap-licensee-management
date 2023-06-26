@@ -12967,7 +12967,7 @@ var site = (function () {
     me.requestSuccess = "Successful";
     /* filter componenet*/
     me.renderSingleAgentList = function (licensee, currency, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetAgents?Licensee=" + licensee + "&currencyid=" + currency, function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -12980,7 +12980,7 @@ var site = (function () {
         });
     };
     me.renderSingleCurrencyList = function (callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 items += "<option value=\"" + data[i].Id + "\">" + data[i].Name + "</option>";
@@ -12995,7 +12995,7 @@ var site = (function () {
     me.renderCurrencyList = function (selectedParentIdList) {
         var currencyControl = new MultiSelectControl();
 
-        $.getJSON(window.rootUrl + "BetSetting/GetCurrencyList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetCurrencyList", function (data) {
             var currencies = [];
             for (var i = 0; i < data.length; i++) {
                 var cur = {
@@ -13027,7 +13027,7 @@ var site = (function () {
     };
 
     me.renderLicenseeList = function (currentSelectedLicensee, callback) {
-        $.getJSON(window.rootUrl + "BetSetting/GetLicenseeList", function (data) {
+        $.getJSON(window.rootUrl + "DefaultBetSetting/GetLicenseeList", function (data) {
             var items = "";
             for (var i = 0; i < data.length; i++) {
                 var selected = data[i].Name.toLowerCase() === currentSelectedLicensee ? "selected = \"selected\"" : "";
@@ -13129,13 +13129,36 @@ var site = (function () {
         return error;
     };
 
-    var verifySportBookBetSetting = function($row) {
+    var verifySportsBookBetSetting = function($row) {
         var error = 0;
+        var minBet = $row.find("input[data-key=\"MinBet\"]").val();
         var maxPayoutPerMatch = $row.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
         var maxBet = $row.find("input[data-key=\"MaxBet\"]").val();
         var maxPerMatch = $row.find("input[data-key=\"MaxPerMatch\"]").val();
 
         error = site.verifyBetSetting($row);
+
+        if (!site.isNumber(minBet) && minBet.length > 0) {
+            $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+            error++;
+        }
+
+        if (minBet.length !== maxBet.length) {
+            if (minBet.length === 0) {
+                $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+                error++;
+            }
+            if (maxBet.length === 0) {
+                $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+                error++;
+            }
+        }
+
+        if (parseInt(minBet) > parseInt(maxBet)) {
+            $row.find("input[data-key=\"MinBet\"]").addClass("warning");
+            $row.find("input[data-key=\"MaxBet\"]").addClass("warning");
+            error++;
+        }
 
         if (!site.isNumber(maxPayoutPerMatch) && maxPayoutPerMatch.length > 0) {
             $row.find("input[data-key=\"MaxPayoutPerMatch\"]").addClass("warning");
@@ -13168,7 +13191,7 @@ var site = (function () {
     }
 
     me.verifyInputData = function () {
-        /*sportbook,Virtual sport,Keno*/
+        /*sportsbook,Virtual sport,Keno*/
         /*reset*/
         var error = 0;
 
@@ -13192,9 +13215,10 @@ var site = (function () {
                 }
             }
         }
-        /*sport book*/
+        /*sports book*/
         if($('#sb-area').length > 0){
             var sbtable = $('#sb-table');
+            sbtable.find("tbody input[data-key=\"MinBet\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxPerMatch\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxBet\"]").removeClass("warning");
             sbtable.find("tbody input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
@@ -13202,7 +13226,7 @@ var site = (function () {
             var sbrows = sbtable.find("tbody tr");
             var numOfRows = sbrows.length;
             for (var k = 0; k < numOfRows; k++) {
-                error += verifySportBookBetSetting($(sbrows[k]));
+                error += verifySportsBookBetSetting($(sbrows[k]));
             }
         }
 
@@ -13233,6 +13257,7 @@ var site = (function () {
                     Id: $row.attr("data-sport"),
                     Name: ""
                 },
+                MinBet: $row.find("input[data-key=\"MinBet\"]").val() || null,
                 MaxBet: $row.find("input[data-key=\"MaxBet\"]").val(),
                 MaxPerMatch: $row.find("input[data-key=\"MaxPerMatch\"]").val(),
                 MaxPerBall: code === "ng" ? $row.find("input[data-key=\"MaxPerBall\"]").val() : null,
@@ -13251,17 +13276,19 @@ var site = (function () {
             var isCheck = $("#copy-" + code).is(":checked");
             var firstRow = $("#" + code + "-table tbody tr:eq(0)");
             if (isCheck) {
-                var error = code === "sb" ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+                var error = code === "sb" ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
                 if (error === 0) {
                     var table = $("#" + code + "-table");
+                    var minBet = $(this).find("input[data-key=\"MinBet\"]").val();
                     var maxBet = $(this).find("input[data-key=\"MaxBet\"]").val();
                     var maxPerMatch = $(this).find("input[data-key=\"MaxPerMatch\"]").val();
                     var maxPayoutPerMatch = $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").val();
-                    console.log(maxPayoutPerMatch);
 
+                    table.find("tr[class!='first'] input[data-key=\"MinBet\"]").val(minBet);
                     table.find("tr[class!='first'] input[data-key=\"MaxBet\"]").val(maxBet);
                     table.find("tr[class!='first'] input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
                     table.find("tr[class!='first'] input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
+                    $(this).find("input[data-key=\"MinBet\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxBet\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
                     $(this).find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
@@ -13274,11 +13301,12 @@ var site = (function () {
         var code = $(firstRow).attr("data-code");
         /*reset*/
         var error = 0;
+        firstRow.find("input[data-key=\"MinBet\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxBet\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPerMatch\"]").removeClass("warning");
         firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").removeClass("warning");
         /*copy*/
-        error = code === 'sb' ? verifySportBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
+        error = code === 'sb' ? verifySportsBookBetSetting(firstRow) : site.verifyBetSetting(firstRow);
 
         if (error > 0) {
             checkbox.prop("checked", false);
@@ -13286,10 +13314,12 @@ var site = (function () {
         }
         else {
             /*update*/
+            var minBet = firstRow.find("input[data-key=\"MinBet\"]").val();
             var maxBet = firstRow.find("input[data-key=\"MaxBet\"]").val();
             var maxPerMatch = firstRow.find("input[data-key=\"MaxPerMatch\"]").val();
             var maxPayoutPerMatch = firstRow.find("input[data-key=\"MaxPayoutPerMatch\"]").val();
 
+            table.find("input[data-key=\"MinBet\"]").val(minBet);
             table.find("input[data-key=\"MaxBet\"]").val(maxBet);
             table.find("input[data-key=\"MaxPerMatch\"]").val(maxPerMatch);
             table.find("input[data-key=\"MaxPayoutPerMatch\"]").val(maxPayoutPerMatch);
@@ -13335,7 +13365,7 @@ var site = (function () {
                     Id: $("#agent").val() === '' ? null : $("#agent").val(),
                     Name: $("#agent").text()
                 },
-                Sportbook: site.getInputValue("sb"),
+                Sportsbook: site.getInputValue("sb"),
                 NumberGame: site.getInputValue("ng"),
                 VirtualSport: site.getInputValue("vs"),
                 Keno: site.getInputValue("kn")
@@ -13358,7 +13388,7 @@ var site = (function () {
         }
     };
     me.backToList = function () {
-        location.href = window.rootUrl + "BetSetting/Default";
+        location.href = window.rootUrl + "DefaultBetSetting/Default";
 
         return false;
     };
@@ -13391,9 +13421,656 @@ window.alert = function (message, fallback, callback) {
                 }
                 $(this).remove;
             },
+            create: function () {
+                $(this).css('maxWidth', 720);
+            },
             draggable: true,
             modal: true,
             resizable: false,
             width: 'auto'
         });
 };
+﻿
+var grid = (function (undefined) {
+    'use strict';
+
+    function isDefined(value) {
+        return value !== void (0);
+    }
+
+    function calculateColumnWidth(value) {
+        return !value ? 0 : value.toString().length * 10;
+    }
+
+    function rebuildGridOptions(options, undefined) {
+        if (!options.autoResizeColumn || !options.columns) {
+            return;
+        }
+
+        var columns = options.columns;
+        var numberColumns = columns.length;
+
+        for (var i = 0; i < numberColumns; i++) {
+            var column = columns[i];
+
+            if (!isDefined(column.CanResize)) {
+                column.CanResize = true;
+
+                if (!column.CalResizeFunction) {
+                    column.CalResizeFunction = calculateColumnWidth;
+                }
+            }
+        }
+    }
+
+    function genGridColumn(colIndex, rowIndex, rowIndexValue, record, columns, indexNumberColumn, tdClassFunction) {
+        var column = columns[colIndex];
+        var columnName = column.Name;
+        var columnFormatter = column.Formatter;
+
+        return {
+            Name: columnName,
+            Value: (indexNumberColumn === colIndex) ? rowIndexValue : record[columnName],
+            CustomCellRender: function (cell, cellFormated) {
+                if (columnFormatter) {
+                    return columnFormatter(rowIndex, record, cell, cellFormated);
+                } else if (column.HtmlEncode) {
+                    return encoder.htmlEncode(cellFormated);
+                } else {
+                    return cellFormated;
+                }
+            },
+            TdClass: tdClassFunction ? tdClassFunction(rowIndex, columnName, record) : undefined
+        };
+    }
+
+    function genGridRows(list, options) {
+        rebuildGridOptions(options);
+
+        var columns = options.columns;
+        var cssClassFunction = options.cssClassFunction;
+        var tdClassFunction = options.tdClassFunction;
+        var rowHeight = options.RowHeight;
+        var indexNumberColumn = options.indexNumberColumn;
+
+        var bodyRows = [];
+        var len = list.length;
+        var rowIndex = 0;
+        var rowIndexValue = rowIndex;
+        var pagerOption = options.pagerOption;
+
+        if (pagerOption) {
+            rowIndexValue = pagerOption.itemsPerPage * pagerOption.currentPage + 1;
+        }
+
+        for (var i = 0; i < len; i++) {
+            var record = list[i];
+            var dataColumns = [];
+
+            for (var j = 0; j < columns.length; j++) {
+                dataColumns.push(genGridColumn(j, rowIndex, rowIndexValue, record, columns, indexNumberColumn, tdClassFunction));
+            }
+
+            bodyRows.push({
+                Columns: dataColumns,
+                CssClass: cssClassFunction ? cssClassFunction(rowIndex, record) : undefined,
+                RowHeight: rowHeight ? rowHeight(rowIndex, record) : undefined
+            });
+
+            rowIndex++;
+            rowIndexValue++;
+        }
+
+        return bodyRows;
+    }
+
+    function setDefaultOptions(options) {
+        options.showHighlightRow = false;
+        options.bodyRowHeight = 21;
+        options.autoResizeColumn = true;
+    }
+
+    function setPaging(options, newOptions) {
+        options.showPager = options.showPager === undefined ? true : options.showPager;
+        options.customPager = true;
+        options.pagerOption = options.pagerOption || {};
+
+        var pagerOption = options.pagerOption;
+        pagerOption.currentPage = newOptions.PageIndex;
+        pagerOption.itemsPerPage = newOptions.PageSize;
+        pagerOption.totalItem = newOptions.TotalItem;
+        pagerOption.itemsPerPageArray = [10, 20, 50, 100, 500];
+    }
+
+    return {
+        setPaging: setPaging,
+        setDefaultOptions: setDefaultOptions,
+        genGridRows: genGridRows
+    };
+
+})();
+﻿/*global angular */
+(function () {
+    "use strict";
+    angular.module('fanex.dropdowntreesingle', [])
+        .filter("itemFormatFilter", function () {
+            return function (value, item, level, formatCallback) {
+                return formatCallback ? formatCallback(value, item.model, level) : value;
+            };
+        })
+        .provider('dropdowntreesingleConfig', function () {
+            var config = {
+                disabledParent: true,
+                collapsedAll: false, // temp setting, not 2 way binding
+                hasFilter: false, // default not support search
+                hasToolbar: true,
+                hasEnter: true,
+                idMember: "id",
+                nameMember: "name",
+                selectedMember: null,
+                dataMember: null,
+                childrenMember: "children",
+                itemFormatter: null,
+                templateUrl: "fanex.directive.dropdowntreesingle.template.html",
+                sourceData: null,
+                selectedFilter: null, // function to checked item
+                width: 250,
+                height: null, // auto
+                maxTextLength: 100,
+                selectedTextLength: 30
+            };
+            return {
+                set: function (options) {
+                    angular.extend(config, options);
+                },
+                $get: function () {
+                    return angular.extend({}, config);
+                }
+            };
+        })
+        .directive('dropdowntreesingle', ['$timeout', '$parse', '$compile', '$http', '$filter', 'dropdowntreesingleConfig',
+            function ($timeout, $parse, $compile, $http, $filter, dropdowntreeConfig) {
+                function containsText(item, searchText, correctSearch) {
+                    var found = containsAny(item, searchText, correctSearch);
+
+                    if (!found && item.children) {
+                        for (var i = 0; i < item.children.length; i++) {
+                            found = containsText(item.children[i], searchText, correctSearch);
+                            if (found) {
+                                break;
+                            }
+                        }
+                    }
+
+                    return found;
+                }
+
+                function containsAny(item, searchText, correctSearch) {
+                    var searchTexts = searchText.split(",");
+                    var found = false;
+                    for (var i = 0; i < searchTexts.length; i++) {
+                        if (correctSearch && searchTexts.length > 1) {
+                            found = item.label.toLowerCase() == searchTexts[i].trim().toLowerCase();
+                        } else {
+                            found = item.label.toLowerCase().indexOf(searchTexts[i].trim().toLowerCase()) > -1;
+                        }
+                        if (found) {
+                            break;
+                        }
+                    }
+
+                    return found;
+                }
+
+                function createDropDownModelItem(settings, modelItem) {
+                    var itemLabel = modelItem[settings.nameMember];
+                    var item = {
+                        id: settings.idMember ? modelItem[settings.idMember] : undefined,
+                        label: itemLabel ? itemLabel.substr(0, settings.maxTextLength) : '',
+                        model: modelItem,
+                        selected: modelItem.selected === true ||
+                            (settings.selectedFilter && settings.selectedFilter(modelItem)),
+                        disabled: modelItem.disabled === true,
+                        cssClass: modelItem.cssClass,
+                        showChildren: true,
+                        subInfoClass: modelItem.SubInfoClass,
+                        subInfoText: modelItem.SubInfoText
+                    };
+
+                    if (modelItem[settings.childrenMember]) {
+                        item.children = [];
+                        var children = modelItem[settings.childrenMember];
+                        var length = children.length;
+                        for (var i = 0; i < length; i++) {
+                            var child = createDropDownModelItem(settings, children[i]);
+                            child.parent = item;
+                            item.children.push(child);
+                        }
+                    }
+
+                    return item;
+                }
+
+                // RETURN
+                return {
+                    restrict: 'E',
+                    require: 'ngModel',
+                    scope: {
+                        selectedItemModel: "=ngModel",
+                        settings: "=?",
+                        textSettings: "=?",
+                        invalidSearch: "=?ngInvalidSearch",
+                        ngOnOpen: "&",
+                        ngOnClose: "&",
+                        ngChange: "&",
+                        disabled: '=ngDisabled'
+                    },
+                    link: function (scope, element, attrs, modelCtrl) {
+                        var required = attrs.required || attrs.ngRequired;
+                        var changeHandler = scope.ngChange || angular.noop; // $parse(attrs.change)(scope) || angular.noop;
+
+                        var _selectedItemLabel;
+
+                        scope._settings = scope._settings = angular.extend({}, dropdowntreeConfig);
+                        scope._textSettings = {};
+
+                        scope.searchText = {
+                            value: ""
+                        };
+                        scope.collapsedAll = false;
+                        scope.items = []; // dropdown model items
+                        scope.header = "";
+                        var _isWatchSelectedItem = true;
+                        var _isInnerSelectedItem = false;
+
+                        // scope.disabled = angular.isDefined(attrs.disabled) || $parse(attrs.ngDisabled)(scope);
+
+                        function getSelectedItem(items) {
+                            var selectedItemModel;
+                            var selectedItemLabel;
+
+                            var length = items ? items.length : 0;
+                            for (var i = 0; i < length; i++) {
+                                var item = items[i];
+                                if (item.selected) {
+                                    var cloneItem = angular.copy(item.model, {});
+                                    delete cloneItem[scope._settings.childrenMember];
+                                    selectedItemModel = scope._settings.selectedMember ?
+                                        cloneItem[scope._settings.selectedMember] :
+                                        cloneItem;
+                                    selectedItemLabel = cloneItem[scope._settings.nameMember]
+                                    break;
+                                }
+
+                                if (item.children && item.children.length > 0) {
+                                    var children = getSelectedItem(item.children);
+                                    if (children.itemModel && children.itemLabel) {
+                                        selectedItemModel = children.itemModel;
+                                        selectedItemLabel = children.itemLabel;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            return {
+                                itemLabel: selectedItemLabel,
+                                itemModel: selectedItemModel
+                            };
+                        }
+
+                        function parseSourceData(sourceData) {
+                            var items = [];
+                            if (!sourceData) {
+                                return;
+                            }
+                            var settings = scope._settings;
+                            var length = sourceData.length;
+                            for (var i = 0; i < length; i++) {
+                                var item = createDropDownModelItem(settings, sourceData[i]);
+                                items.push(item);
+                            }
+
+                            return items;
+                        }
+
+                        function getHeaderText() {
+                            if (angular.isArray(scope._settings.sourceData) === false || scope._settings.sourceData.length === 0) {
+                                return scope._textSettings.NoData;
+                            }
+                            if (_selectedItemLabel === undefined) {
+                                return scope._textSettings.NoItemSelected;
+                            }
+
+                            return _selectedItemLabel;
+                        }
+
+                        function refreshViewValue(isRefreshSelectedItem) {
+                            var data = getSelectedItem(scope.items);
+                            _selectedItemLabel = data.itemLabel;
+
+                            if (isRefreshSelectedItem) {
+                                scope.selectedItemModel = data.itemModel;
+                                modelCtrl.$setViewValue(scope.selectedItemModel);
+                            }
+                            modelCtrl.$render();
+                        }
+
+                        function parseData() {
+                            if (scope._settings.dataMember) {
+                                scope._settings.sourceData = scope._settings.sourceData[scope._settings.dataMember];
+                            }
+
+                            scope.items = parseSourceData(scope._settings.sourceData);
+
+                            if (angular.isDefined(scope.selectedItemModel)) {
+                                updateSelectedState(scope.items, scope.selectedItemModel);
+                            }
+
+                            var data = getSelectedItem(scope.items);
+                            _selectedItemLabel = data.itemLabel;
+                            scope.selectedItemModel = data.itemModel;
+                        }
+
+                        function updateSelectedState(items, selectedItem) {
+                            var idMember = scope._settings.idMember;
+                            angular.forEach(items, function (item) {
+                                var selected = item.id === selectedItem[idMember] ? true : false;
+                                item.selected = selected;
+
+                                if (item.children && item.children.length > 0) {
+                                    updateSelectedState(item.children, selectedItem);
+                                }
+                            });
+                        }
+
+                        function validSearchText() {
+                            var searchTexts = [];
+                            angular.forEach(scope.searchText.value.split(","), function (text) {
+                                searchTexts.push(text.trim().toLowerCase());
+                            });
+
+                            if (searchTexts.length < 2) {
+                                modelCtrl.$setValidity('validSearch', true);
+                                return;
+                            }
+
+                            var foundTexts = [];
+
+                            angular.forEach(scope.items, function (item) {
+                                angular.forEach(item.children, function (child) {
+                                    if (searchTexts.includes(child.label.toLowerCase())) {
+                                        foundTexts.push(child.label.toLowerCase());
+                                    }
+                                });
+                            });
+
+                            var notFoundTexts = [];
+                            angular.forEach(searchTexts, function (text) {
+                                if (!foundTexts.includes(text)) {
+                                    notFoundTexts.push(text);
+                                }
+                            });
+                            var notFoundTextsStr = notFoundTexts.join(", ");
+                            modelCtrl.$setValidity('validSearch', notFoundTextsStr.length == 0);
+                            scope.invalidSearch = notFoundTextsStr;
+                        }
+
+                        function selectItemBySearchText(items, searchText) {
+                            var foundItem = false;
+                            angular.forEach(items, function (item) {
+                                if (item.label.toLowerCase() === searchText.toLowerCase() && (!scope._settings.disabledParent || item.children === undefined)) {
+                                    scope.selectItem(item);
+                                    foundItem = true;
+                                    return;
+                                }
+                                selectItemBySearchText(item.children, searchText);
+                            });
+                            return foundItem;
+                        }
+
+                        function startParseData() {
+                            $timeout(function () {
+                                parseData();
+                                scope.toggleCollapseExpanse(scope._settings.collapsedAll);
+                                scope.header = getHeaderText();
+                            }, 100);
+                        }
+
+                        // required validate
+                        attrs.$observe('required', function (newVal) {
+                            required = newVal;
+                        });
+
+                        scope.$watch("settings", function (newValue) {
+                            if (!newValue) {
+                                return;
+                            }
+
+                            scope._settings = angular.extend({}, dropdowntreeConfig, scope.settings);
+                            if (typeof scope._settings.itemFormatter === "string") {
+                                var filterInstance = $filter(scope._settings.itemFormatter);
+                                scope._settings.itemFormatter = function (value, item, level) {
+                                    return filterInstance(value, item, level);
+                                };
+                            }
+
+                            var sourceDataType = typeof scope._settings.sourceData;
+
+                            if (sourceDataType === "string") // url
+                            {
+                                $http.get(scope._settings.sourceData)
+                                    .success(function (response) {
+                                        scope._settings.sourceData = response;
+
+                                        startParseData();
+                                    });
+                            } else if (sourceDataType === "function") // function
+                            {
+                                scope._settings.sourceData = scope._settings.sourceData();
+                                startParseData();
+                            } else {
+                                startParseData();
+                            }
+                        });
+
+                        scope.$watch("textSettings", function () {
+                            var defaultTextSettings = {
+                                Filter: "Filter",
+                                CollapseExpanse: "Collapse/Expanse",
+                                CollapseBranch: "Collapse/Expanse this branch",
+                                NoItemSelected: "Please select ...",
+                                NoData: "(No Data)"
+                            };
+
+                            scope._textSettings = angular.extend(defaultTextSettings, scope.textSettings);
+                            scope.header = getHeaderText();
+                        }, true);
+
+                        //watch model change
+                        scope.$watch("selectedItemModel", function (newVal) {
+                            if (_isWatchSelectedItem === true && scope._settings && angular.isDefined(newVal)) {
+                                _isWatchSelectedItem = false;
+
+                                if (_isInnerSelectedItem === false) {
+                                    updateSelectedState(scope.items, newVal);
+                                    refreshViewValue();
+                                    validSearchText();
+                                }
+
+                                //changeHandler();
+
+                                scope.header = getHeaderText();
+                                modelCtrl.$setValidity('required', scope.valid());
+                                _isWatchSelectedItem = true;
+                            }
+                        });
+
+                        var popup = angular.element('<dropdowntreesingle-popup></dropdowntreesingle-popup>');
+                        element.append($compile(popup)(scope));
+
+                        scope.valid = function validModel() {
+                            if (!required) {
+                                return true;
+                            }
+                            var value = scope.selectedItemModel;
+                            return value !== undefined;
+                        };
+
+                        scope.selectItem = function (item) {
+                            var selectedItem = {};
+                            if (scope._settings.disabledParent && angular.isDefined(item.children)) {
+                                return;
+                            }
+
+                            selectedItem[scope._settings.idMember] = item.id;
+                            updateSelectedState(scope.items, selectedItem);
+
+                            var data = getSelectedItem(scope.items);
+                            _selectedItemLabel = data.itemLabel;
+                            scope.selectedItemModel = data.itemModel;
+                            modelCtrl.$setViewValue(scope.selectedItemModel);
+                            scope.toggleSelect();
+                        };
+
+                        scope.getCollapseExpandClass = function (item) {
+                            if (!item.children || item.children.length === 0) {
+                                return 'glyphicon-none';
+                            }
+                            return item.showChildren ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-right';
+                        };
+
+                        scope.getItemClass = function (item) {
+                            return item.disabled ? 'disabled' : item.cssClass;
+                        };
+
+                        scope.getExtendItemClass = function (item) {
+                            return item.subInfoClass;
+                        };
+
+                        scope.toggleCollapseExpanse = function (value) {
+                            if (typeof value === "boolean") {
+                                scope.collapsedAll = value;
+                            } else {
+                                scope.collapsedAll = !scope.collapsedAll;
+                            }
+
+                            angular.forEach(scope.items, function (item) {
+                                item.showChildren = !scope.collapsedAll;
+                            });
+
+                            refreshViewValue(true);
+                        };
+
+                        scope.filterSearchText = function (item) {
+                            var correctSearch = attrs.correctSearch;
+                            return scope.searchText.value ? containsText(item, scope.searchText.value, correctSearch) : true;
+                        };
+
+                        scope.selectSearchText = function (e) {
+                            e.preventDefault();
+
+                            if (!scope._settings.hasEnter) {
+                                return;
+                            }
+
+                            var searchTexts = [];
+                            angular.forEach(scope.searchText.value.split(","), function (text) {
+                                searchTexts.push(text.trim().toLowerCase());
+                            });
+
+                            var foundItem = selectItemBySearchText(scope.items, searchTexts[0]);
+
+                            var notFoundTextsStr = searchTexts.length > 1
+                                ? "don't support selected by searching multiple values"
+                                : foundItem ? "" : searchTexts[0];
+
+                            modelCtrl.$setValidity('validSearch', notFoundTextsStr.length == 0);
+                            scope.invalidSearch = notFoundTextsStr;
+
+                            refreshViewValue(true);
+                        }
+
+                        scope.clearSearchText = function () {
+                            scope.searchText.value = "";
+                            scope.focusSearchBox();
+                            modelCtrl.$setValidity('validSearch', true);
+                            scope.invalidSearch = "";
+                        };
+
+                        scope.touched = function () {
+                            modelCtrl.$setTouched();
+                        };
+                    }
+                };
+            }
+        ])
+
+        .directive('dropdowntreesinglePopup', ['$document',
+            function ($document) {
+                return {
+                    restrict: 'E',
+                    replace: true,
+                    scope: false,
+                    // templateUrl: 'fanex.dropdowntree.template.html',
+                    template: '<div><div ng-include="_settings.templateUrl"></div><div>',
+                    link: function (scope, element) {
+                        var onOpenHandler = scope.ngOnOpen || angular.noop;
+                        var onCloseHandler = scope.ngOnClose || angular.noop;
+                        var dropdownElement;
+
+                        function isElementInArray(element, elementArray) {
+                            for (var i = 0; i < elementArray.length; i++) {
+                                if (element === elementArray[i]) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                        function assignDropdownElement() {
+                            if (!dropdownElement) {
+                                dropdownElement = angular.element(element[0].querySelector('.dropdown'));
+                            }
+                        }
+
+                        scope.toggleSelect = function () {
+                            assignDropdownElement();
+                            if (dropdownElement.hasClass('open')) {
+                                dropdownElement.removeClass('open');
+                                $document.unbind('click', clickHandler);
+                                onCloseHandler();
+                            } else {
+                                dropdownElement.addClass('open');
+                                $document.bind('click', clickHandler);
+                                scope.focusSearchBox();
+                                onOpenHandler();
+                            }
+                        };
+
+                        function clickHandler(event) {
+                            if (isElementInArray(event.target, element.find(event.target.tagName))) {
+                                return;
+                            }
+                            dropdownElement.removeClass('open');
+                            $document.unbind('click', clickHandler);
+                            onCloseHandler();
+                            scope.$apply();
+                        }
+
+                        scope.focusSearchBox = function focusSearchBox() {
+                            var searchBox = dropdownElement.find('input')[0];
+                            if (searchBox) {
+                                searchBox.focus();
+                            }
+                        };
+
+                        scope.changeSearchText = function () {
+                            if (!scope._settings.hasEnter) {
+                                scope.searchText.value = scope.searchText.value.replace(/[, ]+/g, ",").trim().split(',').join(',');
+                            }
+                        };
+                    }
+                };
+            }
+        ]);
+}());

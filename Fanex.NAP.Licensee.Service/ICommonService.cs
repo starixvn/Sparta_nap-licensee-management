@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.Licensee.Service
 {
-    using System.Collections.Generic;
     using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.DTO.SettingConfiguration;
+    using Fanex.NAP.Licensee.Model.DTO.LicenseeBetSetting;
+    using System.Collections.Generic;
 
     public interface ICommonService
     {
@@ -14,17 +14,13 @@
 
         IList<ProductTypeItem> GetProductTypeList { get; }
 
-        IList<string> GetPositionTakingList { get; }
-
         IList<string> GetCommList { get; }
 
-        IDictionary<BSKeyPair, string> GetSportbookGameTypeList { get; }
+        IDictionary<BSKeyPair, string> GetSportsbookGameTypeList { get; }
 
-        IDictionary<BSKeyPair, string> GetNumberGameTypeList { get; }
+        IDictionary<BSKeyPair, string> GetGameTypeList { get; }
 
-        IDictionary<BSKeyPair, string> GetKenoGameTypeList { get; }
-
-        IList<LicenseeItem> GetSuperLicenseeList(string siteName);
+        IList<SuperLicenseeAndCurrencyItem> GetSuperLicenseeList(string siteName);
 
         IList<CurrencyItem> GetLicenseeCurrencyList(int licenseeId);
 

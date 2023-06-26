@@ -15,6 +15,8 @@
             set { _sportOrGame = value; }
         }
 
+        public decimal? MinBet { get; set; }
+
         public decimal? MaxBet { get; set; }
 
         public decimal? MaxPerMatch { get; set; }

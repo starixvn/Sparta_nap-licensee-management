@@ -1,25 +1,25 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.DefaultBetSetting
 {
+    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
+    using Fanex.NAP.Licensee.Model.DTO;
+    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
-    using Fanex.NAP.Licensee.Model.DTO;
-    using Fanex.NAP.Licensee.Model.DTO.DefaultBetSetting;
 
     [Serializable]
     public class SingleDefaultBetSettingViewModel
     {
         private readonly string _xmlParameterPattern = "<setting sporttype=\"{0}\" bettype=\"{1}\" {2} ></setting>";
         private readonly string _xmlSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\"";
-        private readonly string _xmlSBSettingPatter = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxpayoutpermatch=\"{2}\"";
+        private readonly string _xmlSBSettingPattern = "minbet=\"{0}\" maxbet=\"{1}\" maxpermatch=\"{2}\" maxpayoutpermatch=\"{3}\"";
         private readonly string _xmlNumberGameSettingPattern = "maxbet=\"{0}\" maxpermatch=\"{1}\" maxperball=\"{2}\"";
         private readonly string _xmlNoneMaxperMatchNumberGameSettingPattern = "maxbet=\"{0}\" maxperball=\"{1}\"";
 
         public SingleDefaultBetSettingViewModel()
         {
-            this.Sportbook = new List<BetSettingBySport>();
+            this.Sportsbook = new List<BetSettingBySport>();
             this.NumberGame = new List<BetSettingBySport>();
             this.VirtualSport = new List<BetSettingBySport>();
             this.Keno = new List<BetSettingBySport>();
@@ -37,7 +37,7 @@
 
         public AgentItem Agent { get; set; }
 
-        public IList<BetSettingBySport> Sportbook { get; set; }
+        public IList<BetSettingBySport> Sportsbook { get; set; }
 
         public IList<BetSettingBySport> NumberGame { get; set; }
 
@@ -49,8 +49,14 @@
         {
             get
             {
-                return !string.IsNullOrEmpty(Licensee) && Currency != null && Currency.Id > 0 && !Sportbook.Any(i => !i.IsValid)
-                    && !NumberGame.Any(i => !i.IsValid) && !VirtualSport.Any(i => !i.IsValid) && !Keno.Any(i => !i.IsValid);
+                var validSports = Sportsbook.All(i => i.IsValid)
+                                  && NumberGame.All(i => i.IsValid)
+                                  && VirtualSport.All(i => i.IsValid)
+                                  && Keno.All(i => i.IsValid);
+
+                return !string.IsNullOrEmpty(Licensee)
+                       && Currency != null && Currency.Id > 0
+                       && validSports;
             }
         }
 
@@ -76,9 +82,9 @@
             {
                 var result = new StringBuilder();
                 result.Append("<settings>");
-                foreach (var sb in Sportbook)
+                foreach (var sb in Sportsbook)
                 {
-                    var settingAttributes = sb.MaxBet != null ? string.Format(_xmlSBSettingPatter, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
+                    var settingAttributes = sb.MinBet != null ? string.Format(_xmlSBSettingPattern, sb.MinBet, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));
                 }
 
@@ -90,10 +96,15 @@
 
                 foreach (var ng in NumberGame)
                 {
-                    var settingAttributes = ng.MaxBet != null ?
-                        ng.MaxPerMatch != null ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall) :
-                        string.Format(_xmlNoneMaxperMatchNumberGameSettingPattern, ng.MaxBet, ng.MaxPerBall)
-                        : string.Empty;
+                    var settingAttributes = string.Empty;
+
+                    if (ng.MaxBet != null)
+                    {
+                        settingAttributes = ng.MaxPerMatch != null
+                            ? string.Format(_xmlNumberGameSettingPattern, ng.MaxBet, ng.MaxPerMatch, ng.MaxPerBall)
+                            : string.Format(_xmlNoneMaxperMatchNumberGameSettingPattern, ng.MaxBet, ng.MaxPerBall);
+                    }
+
                     result.Append(string.Format(_xmlParameterPattern, ng.SportOrGame.Id, ng.BetType, settingAttributes));
                 }
 

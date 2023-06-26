@@ -1,0 +1,63 @@
+﻿<div class="col-md-12 filter-form filter-logs">
+    <div class="row row-form">
+        <div class="form-group">
+            <label class="lbl">
+                Licensee
+            </label>
+            <dropdowntreesingle class="list-currency"
+                                data-ng-model="vm.criteria.Licensee"
+                                data-ng-change="vm.selectedLicenseeChange()"
+                                data-settings="vm.LicenseeSetting"
+                                text-settings="vm.TextSettings"
+                                data-ng-style="{ 'padding': 0}">
+            </dropdowntreesingle>
+        </div>
+        <div class="form-group">
+            <label class="lbl">
+                Currency (Super)
+            </label>
+            <dropdowntreesingle class="list-currency"
+                                data-ng-model="vm.criteria.SuperWithCurrency"
+                                data-ng-change="vm.selectedSuperWithCurrencyChange()"
+                                data-settings="vm.SuperWithCurrencySetting"
+                                text-settings="vm.TextSettings"
+                                data-ng-style="{ 'padding': 0}">
+            </dropdowntreesingle>
+        </div>
+        <div class="form-group">
+            <label class="lbl">
+                Subsidiary
+            </label>
+            <dropdowntreesingle class="list-currency"
+                                data-ng-model="vm.criteria.Agent"
+                                data-settings="vm.AgentSetting"
+                                text-settings="vm.TextSettings"
+                                data-ng-style="{ 'padding': 0}">
+            </dropdowntreesingle>
+        </div>
+    </div>
+    <div class="row row-form">
+        <div class="form-group">
+            <label for="from-date" class="lbl-date">
+                From
+            </label>
+            <input class="width-160 valid" type="date" id="from-date" data-ng-model="vm.criteria.FromDate">
+        </div>
+        <div class="form-group">
+            <label for="to-date" class="lbl-date">
+                To
+            </label>
+            <input class="width-160 valid" type="date" id="to-date" data-ng-model="vm.criteria.ToDate">
+        </div>
+        <div class="form-group">
+            <input id="generate" type="button" value="Select" class="btn btn-generate btn-primary" ng-click="vm.getReport()">
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 grid-container"
+     keep-scroll-bar="true"
+     data-report="vm.report"
+     data-options="vm.gridOptions"
+     logs-fanexgrid>
+    <div id="gridId" class="freegrid hide"></div>
+</div>

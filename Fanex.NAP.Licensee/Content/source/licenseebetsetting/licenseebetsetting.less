@@ -1,0 +1,79 @@
+h4 {
+	text-transform: capitalize;
+}
+
+.glyphicon-refresh {
+	color: #ed9c28;
+	&.glyphicon-refresh-animate {
+		-webkit-animation: spin .7s infinite linear;
+		-moz-animation: spin .7s infinite linear;
+		-o-animation: spin .7s infinite linear;
+		animation: spin .7s infinite linear;
+		-webkit-transform-origin: 50% 58%;
+		transform-origin:50% 58%;
+		-ms-transform-origin:50% 58%; /* IE 9 */
+	}
+}
+
+.glyphicon-refresh:before {
+	content: "\e031";
+}
+
+.glyphicon-ok {
+	color: #3c763d;
+}
+
+.glyphicon-remove {
+	color: #e70101;
+}
+
+input.ng-pristine {
+	border:1px solid #cccccc !important;	
+}
+
+input.ng-valid-bs-validation {
+	border: 1px solid #2fb53c;
+}
+input.ng-invalid-bs-validation {
+	border: 1px solid #d94747;
+}
+
+input.value {
+	border: none !important;
+	text-align: left !important;
+	background: none;
+}
+
+input.symbol {
+	border: none !important;
+	background: none;
+}
+
+.alert {
+	padding-left: 0;
+}
+
+.content-center {
+	text-align: center;
+}
+
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}

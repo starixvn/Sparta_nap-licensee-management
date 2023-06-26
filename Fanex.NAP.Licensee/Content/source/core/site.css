@@ -741,6 +741,10 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form .form-group label.lbl {
+  width: 100px;
+  text-align: right;
+}
+.filter-form .form-group label.lbl-date {
   width: 50px;
   text-align: right;
 }
@@ -755,6 +759,7 @@ input[type="submit"].btn-ok,
   vertical-align: middle;
 }
 .filter-form .form-group input[type="text"],
+.filter-form .form-group input[type="date"],
 .filter-form .form-group select {
   border: 1px solid #CECCCD;
   height: 25px;
@@ -790,7 +795,7 @@ input[type="submit"].btn-ok,
   float: left;
 }
 .filter-form.filter-logs .btn-generate {
-  margin-left: 17px;
+  margin-left: 30px;
 }
 .filter-form.form-add-setting {
   width: 665px;
@@ -951,6 +956,30 @@ input[type="submit"].btn-ok,
   bottom: 0;
   right: 0;
   margin: auto;
+}
+.icon-copy-setting {
+  background: url(images/sprites.png) no-repeat scroll -96px -26px;
+  display: inline-block;
+  background-position: -160px -1px;
+  cursor: pointer;
+  border: medium none;
+  float: right;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  margin-top: 2px;
+}
+.icon-copy-setting-checked {
+  background: url(images/sprites.png) no-repeat scroll -96px -26px;
+  display: inline-block;
+  background-position: -180px -1px;
+  cursor: pointer;
+  border: medium none;
+  float: right;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  margin-top: 2px;
 }
 /********************************************************/
 /*					    Table                           */

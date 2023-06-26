@@ -13,20 +13,22 @@
     @RenderSection("HeadCss", false)
     <link href="@Url.Content("~/Content/build/core.min.css")" rel='stylesheet' type='text/css' media='all' />
     <script type="text/javascript">
-        
+
         window.rootUrl = '@Url.Content("~/")';
-        
+
     </script>
 </head>
 <body>
     <div class="container-fluid page">
         <header class="row header">
-            <a class="logo" href="@Url.Action("Index", "Home")">Licensee <span>Management</span>
+            <a class="logo" href="@Url.Action("Index", "Home")">
+                Licensee <span>Management</span>
             </a>
             @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
             <div class="user-info">
-                <span class="info-bar">Howdy, <span class="account-name">@ViewBag.Session.Username</span><span
-                    class="caret"></span></span>
+                <span class="info-bar">
+                    Howdy, <span class="account-name">@ViewBag.Session.Username</span><span class="caret"></span>
+                </span>
                 <ul class="user-dropdown">
                     <li><a href="@Url.Content("~/UserLogin/Login/LogOut")">Sign Out</a></li>
                 </ul>
@@ -42,6 +44,7 @@
         </section>
     </div>
     @RenderSection("Foot", false)
+    <script src="@Url.Content("~/Scripts/build/angular.min.js")"></script>
     <script src="@Url.Content("~/Scripts/build/core.min.js")"></script>
     @if (NapSettings.Settings.EnableReCheckIn)
     {

@@ -15,6 +15,7 @@ var defaultSetting = (function () { // jshint ignore:line
             { HeaderText: "Currency", Width: 120, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Agent", Width: 150, Name: "Agent", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Sport Type / Game Type", Width: 200, Name: "SportGameType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Min Bet", Width: 150, Name: "MinBet", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Bet", Width: 150, Name: "MaxBet", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Match", Width: 150, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: "Max Per Ball", Width: 150, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "right" },
@@ -24,10 +25,12 @@ var defaultSetting = (function () { // jshint ignore:line
         bodyRows: [],
         gridExpandHeight: 150,
         bodyRowHeight: 30,
+        minWidth: 800,
         showDistinctRow: false,
-        autoResizeColumn: true, showHighlightRow: false
+        autoResizeColumn: true,
+        showHighlightRow: false
     };
-    var actionLinkTpl = "<a href=" + window.rootUrl + "BetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
+    var actionLinkTpl = "<a href=" + window.rootUrl + "DefaultBetSetting/Edit?licensee={lic}&currencyId={cur}&agentid={agt} class='icon-edit'></a>";
 
     var currencyListControl;
     var currentGrid;
@@ -100,7 +103,7 @@ var defaultSetting = (function () { // jshint ignore:line
         var criteria = {
             Licensee: currentSelectedLicensee,
             Currency: currentSelectedCurrency.join(),
-            ShowSportBook: showSB,
+            ShowSportsBook: showSB,
             ShowNumberGame: showNG,
             ShowVirtualSport: showVS,
             ShowKeno: showKN
@@ -108,7 +111,7 @@ var defaultSetting = (function () { // jshint ignore:line
 
         $.ajax({
             type: "POST",
-            url: window.rootUrl + "BetSetting/Default",
+            url: window.rootUrl + "DefaultBetSetting/Default",
             data: JSON.stringify(criteria),
             datatype: "json",
             contentType: "application/json; charset=utf-8",
@@ -192,7 +195,8 @@ var defaultSetting = (function () { // jshint ignore:line
             }
             currentColumms = currentColumms.concat([
                     { Name: "SportGameType", Value: data[index]["SportGameType"] === null ? data[index]["SportGameType"] : data[index]["SportGameType"].toLocaleString('en') },
-                    { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"]: data[index]["MaxBet"].toLocaleString('en')},
+                    { Name: "MinBet", Value: data[index]["MinBet"] === null ? data[index]["MinBet"] : data[index]["MinBet"].toLocaleString('en') },
+                    { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"] : data[index]["MaxBet"].toLocaleString('en') },
                     { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] === null ? data[index]["MaxPerMatch"] : data[index]["MaxPerMatch"].toLocaleString('en') },
                     { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') },
                     { Name: "MaxPayoutPerMatch", Value: data[index]["MaxPayoutPerMatch"] === null ? data[index]["MaxPayoutPerMatch"] : data[index]["MaxPayoutPerMatch"].toLocaleString('en') }
