@@ -6,7 +6,6 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
     '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
     'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl', 'SportsbookDBSErrCode',
     function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl, SportsbookDBSErrCode) {
-        $scope.isButtonEnable = true;
         $scope.option = 0;
         $scope.SportOrBetTypeName = '';
         $scope.agentIdByErrorCode = -1; // to get DBS
@@ -27,7 +26,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             isNextEnabled: false,
             isBack: false,
             isUpdated: false,
-            isButtonEnable: true,
+            isButtonEnable: false,
             isSuccess: true
         };
 
@@ -40,6 +39,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedLicenseeChanged = function () {
+            $scope.buttonStatus.isButtonEnable = false;
             $http.get(
                 GetSuperLicenseeListUrl,
                 {
@@ -62,7 +62,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedSuperLicenseeChanged = function (SRecommend) {
-
+            $scope.buttonStatus.isButtonEnable = false;
             $http.get(
                 GetLicenseeAgentListUrl,
                 {
@@ -80,7 +80,9 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         hasFilter: true,
                         hasEnter: false,
                         width: '100%',
-                    }
+                    };
+
+                    $scope.buttonStatus.isButtonEnable = true;
                 });
         };
 

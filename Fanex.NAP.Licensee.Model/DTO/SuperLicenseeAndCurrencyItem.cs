@@ -10,9 +10,9 @@
 
         public int CurrencyId { get; set; }
 
-        public string CurrencyName { get; set; }
+        public string CurrencyCode { get; set; }
 
         [SpParam(Ignored = true)]
-        public string CurrencyWithSuper => $"{CurrencyName} ({Name})";
+        public string CurrencyWithSuper => $"{CurrencyCode} ({Name})";
     }
 }

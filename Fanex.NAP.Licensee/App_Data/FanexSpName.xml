@@ -25,7 +25,6 @@
 			<Mapping DataField="custid" ObjectProperty="Id" />
 			<Mapping DataField="username" ObjectProperty="Name" />
 			<Mapping DataField="ExchangeId" ObjectProperty="CurrencyId" />
-			<Mapping DataField="currency" ObjectProperty="CurrencyName" />
 		</Setting>
 		<!--Bet setting-->
 		<Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
