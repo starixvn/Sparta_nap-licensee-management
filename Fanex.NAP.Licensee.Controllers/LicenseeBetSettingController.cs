@@ -54,7 +54,7 @@
         public PartialViewResult EditDefaultBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditDBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditDBSSportsbook") : PartialView("../Error/UnsupportedFunction");
         }
 
         public JsonResult GetDefaultBetSetting(GetDefaultBetSettingViewModel model)
@@ -78,7 +78,7 @@
         public PartialViewResult EditBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView("../Error/UnsupportedFunction");
         }
 
         public JsonResult GetEditBetSettingData(LicenseeBetSettingFilterViewModel vm)
@@ -98,7 +98,7 @@
         public PartialViewResult ReviewBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "ReviewBSSportsbook") : PartialView(rootPath + "UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "ReviewBSSportsbook") : PartialView("../Error/UnsupportedFunction");
         }
 
         [HttpPost]
