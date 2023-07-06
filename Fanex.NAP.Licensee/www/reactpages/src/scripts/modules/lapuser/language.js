@@ -167,6 +167,6 @@ export const language = {
     "lblMonitoredPlayer": "Threshold Monitoring Setting",
     "lblSabaVirtualSetting": "Saba Virtual Setting",
     "lblGrossGamingRevenue": "Gross Gaming Revenue",
-    "lblSabaIntelligence": "Saba Intelligence"
+    "lblSabaIntelligence": "Saba Intelligence",
     "lblWinlossAnalysis": "Win Loss Analysis"
 }
