@@ -18,6 +18,7 @@
     using System.Text;
     using System.Web.Mvc;
 
+    [NapSuperAuth]
     [CustomHandleError]
     [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeBetSetting, Policy = Constant.Policy.Host)]
     [CheckUMFilter]

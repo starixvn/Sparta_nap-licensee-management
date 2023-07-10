@@ -51,7 +51,8 @@
   "jsAngular": [
     "Fanex.NAP.Licensee/Scripts/source/angular/angular.js",
     "Fanex.NAP.Licensee/Scripts/source/angular/angular-animate.js",
-    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js"
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-route.js",
+    "Fanex.NAP.Licensee/Scripts/source/angular/angular-sanitize.js"
   ],
   "jsRecheckIn": [
     "Fanex.NAP.Licensee/Areas/UserLogin/scripts/ReCheckIn.js"

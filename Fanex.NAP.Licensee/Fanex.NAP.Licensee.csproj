@@ -365,6 +365,7 @@
     <Content Include="Scripts\build\logSetting.js" />
     <Content Include="Scripts\build\logSetting.min.js" />
     <Content Include="Content\source\fanex.grid\Fanex.Grid.css" />
+    <Content Include="Scripts\source\angular\angular-sanitize.js" />
     <Content Include="Scripts\source\fanex.grid\Fanex.Grid.js" />
     <Content Include="Content\source\fanex.grid\Fanex.Pagination.css" />
     <Content Include="Scripts\source\fanex.grid\Fanex.Pagination.js" />

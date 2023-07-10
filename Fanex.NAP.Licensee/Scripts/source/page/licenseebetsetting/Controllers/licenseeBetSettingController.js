@@ -7,9 +7,10 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
     'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl', 'SportsbookDBSErrCode',
     function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl, SportsbookDBSErrCode) {
         $scope.option = 0;
-        $scope.SportOrBetTypeName = '';
         $scope.agentIdByErrorCode = -1; // to get DBS
         $scope.invertedSymbol = false; // to set DBS UI
+        $scope.errMessage = '';
+        $scope.isLoading = true;
 
         // Load data for ddls
         $scope.filterData = {
@@ -20,6 +21,20 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             // selectedSuperLicensee
             // selectedProductType
             // selectedFunction
+        };
+
+        $scope.invokeLoadingMsg = function (visible) {
+            if (visible) {
+                if ($scope.isLoading) {
+                    $scope.isLoading = false;
+                }
+
+                $scope.buttonStatus.isButtonEnable = true;
+            }
+            else {
+                $scope.isLoading = true;
+                $scope.buttonStatus.isButtonEnable = false;
+            }
         };
 
         $scope.buttonStatus = {
@@ -39,7 +54,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedLicenseeChanged = function () {
-            $scope.buttonStatus.isButtonEnable = false;
+            $scope.invokeLoadingMsg(false);
             $http.get(
                 GetSuperLicenseeListUrl,
                 {
@@ -62,7 +77,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedSuperLicenseeChanged = function (SRecommend) {
-            $scope.buttonStatus.isButtonEnable = false;
+            $scope.invokeLoadingMsg(false);
             $http.get(
                 GetLicenseeAgentListUrl,
                 {
@@ -82,7 +97,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         width: '100%',
                     };
 
-                    $scope.buttonStatus.isButtonEnable = true;
+                    $scope.invokeLoadingMsg(true);
                 });
         };
 
@@ -127,7 +142,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             // Refresh button on page.
             $scope.buttonStatus.IsBack = false;
             $scope.buttonStatus.isUpdated = false;
-            $scope.buttonStatus.isButtonEnable = true;
+            $scope.invokeLoadingMsg(false);
 
             var curPath = $location.path();
 
@@ -144,10 +159,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         $scope.updateBS = function () {
             $scope.buttonStatus.isUpdated = true;
             $scope.buttonStatus.isButtonEnable = false;
-            var BSRows = shareSettingsService.getCurSettings().BSRows;
-            var DBSRows = shareSettingsService.getCurSettings().DBSRows;
 
-            var editedRows = getEditedRows(BSRows, DBSRows);
+            var editedRows = getEditedRows();
             var editedBSRows = editedRows.BSRows;
             var editedDBSRows = editedRows.DBSRows;
 
@@ -156,17 +169,16 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.checkBS = function () {
-            var BSRows = shareSettingsService.getCurSettings().BSRows;
-            var DBSRows = shareSettingsService.getCurSettings().DBSRows;
-
-            var editedRows = getEditedRows(BSRows, DBSRows);
+            var editedRows = getEditedRows();
             var editedBSRows = editedRows.BSRows;
             var editedDBSRows = editedRows.DBSRows;
 
             checkBetSetting(editedBSRows, editedDBSRows);
         }
 
-        var getEditedRows = function (bsRows, dbsRows) {
+        var getEditedRows = function () {
+            var bsRows = shareSettingsService.getCurSettings().BSRows;
+            var dbsRows = shareSettingsService.getCurSettings().DBSRows;
             var result = {
                 BSRows: [],
                 DBSRows: []
@@ -286,8 +298,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     }
                     else {
                         if (isViolatedDBS(data.Code)) {
-                            $scope.SportOrBetTypeName = data.SportOrBetTypeName;
                             $scope.agentIdByErrorCode = shareSettingsService.getWorkingContext().AgentId;
+                            $scope.errMessage = '<b>' + data.SportOrBetTypeName + '</b>:' + data.Message;
 
                             if (isLoadCurrencyDBS(data.Code)) {
                                 $scope.agentIdByErrorCode = 0;
@@ -301,7 +313,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         }
                     }
                 })
-                .error(function (data) {
+                .error(function () {
                     alert(site.requestErrMsg);
                 });
         }
@@ -336,13 +348,16 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                             dbsRow.Message = data.Message;
                         }
                     }
-                    $scope.buttonStatus.isButtonEnable = true;
 
                     if (index < editedBSRows.length - 1) {
                         postBetSetting(editedBSRows, editedDBSRows, index + 1);
+                    } else {
+                        $scope.buttonStatus.isButtonEnable = true;
                     }
                 })
-                .error(function (data) {
+                .error(function () {
+                    $scope.buttonStatus.isButtonEnable = true;
+
                     var message = 'Please re-update this row as soon as possible!'
 
                     bsRow.Status = shareSettingsService.getStatus().Fail;

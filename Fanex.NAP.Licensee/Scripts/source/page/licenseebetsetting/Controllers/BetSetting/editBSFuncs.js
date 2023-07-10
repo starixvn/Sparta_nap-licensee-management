@@ -69,8 +69,10 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             else {
                 angular.extend($scope.editBS, data);
             }
+            $scope.$parent.invokeLoadingMsg(true);
         })
-        .error(function (data) {
+        .error(function () {
+            $scope.$parent.invokeLoadingMsg(true);
             alert(site.requestErrMsg);
         });;
 };
@@ -112,8 +114,10 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             });
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
+            $scope.$parent.invokeLoadingMsg(true);
         })
-        .error(function (data) {
+        .error(function () {
+            $scope.$parent.invokeLoadingMsg(true);
             alert(site.requestErrMsg);
         });
 }
