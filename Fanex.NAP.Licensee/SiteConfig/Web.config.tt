@@ -80,12 +80,12 @@
 	 break;
 	  case "UAT":
 	  #>
-	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.2.190.41:8788/">
+	  <NapSettings Environment="UAT" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.starific.net/v1/User/Login" ServiceUrls="http://10.99.98.117:8788/">
 		<Domain>
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.2.190.41:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
+	<ONEbook.UM ServiceUris="http://10.99.98.117:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
 		<AllowedIPs AllowAll="true">
 		</AllowedIPs>
 	</ONEbook.UM>
