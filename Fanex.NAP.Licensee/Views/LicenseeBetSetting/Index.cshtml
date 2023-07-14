@@ -17,6 +17,7 @@
     <link href="@Url.Content("~/Content/build/core.min.css")" rel='stylesheet' type='text/css' media='all' />
 }
 <div ng-app="licenseeBetSetting" ng-controller="licenseeBetSettingCtrl">
+    <div id="loadingMsgBox" class="icon-loading" ng-hide="!isLoading"></div>
     <div class="col-md-12 filter-form">
         <div class="row">
             <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3">
@@ -82,13 +83,13 @@
             </div>
         </div>
         <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3">
-            <input style="text-align: right" type="button" id="Select" value="Select" class="btn btn-primary" ng-click="selectEventHandler()" ng-disabled="!buttonStatus.isButtonEnable" />
+            <input style="text-align: right" type="button" id="Select" value="Select" class="btn btn-primary" ng-click="selectEventHandler()" ng-disabled="!buttonStatus.isButtonEnable"/>
         </div>
     </div>
     <!--Dynamic View-->
     <div ng-view class="fade-in">
     </div>
-    <div id="confirm-box" class="confirm-message hidden" title="Confirmation"><b>{{SportOrBetTypeName}}</b>: The value bet setting you just input is violating its Default Bet Setting. Please review and update again!</div>
+    <div id="confirm-box" class="confirm-message hidden" ng-bind-html="errMessage"> title="Confirmation"></div>
     @Html.Partial("_Template")
 </div>
 @section FooterJs

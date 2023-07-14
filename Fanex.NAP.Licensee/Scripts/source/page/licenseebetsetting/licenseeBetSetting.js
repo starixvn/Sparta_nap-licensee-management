@@ -3,7 +3,7 @@
 var licenseeBetSettingApp = licenseeBetSettingApp || {};
 // Module
 licenseeBetSettingApp = angular.module("licenseeBetSetting",
-    ["ngRoute", "ngAnimate", "licenseeBetSetting.services", "licenseeBetSetting.directives", "fanex.dropdowntreesingle"]);
+    ["ngRoute", "ngAnimate", "ngSanitize", "licenseeBetSetting.services", "licenseeBetSetting.directives", "fanex.dropdowntreesingle"]);
 
 // Constant
 licenseeBetSettingApp.constant("GetLicenseeListUrl", "GetLicenseeList");

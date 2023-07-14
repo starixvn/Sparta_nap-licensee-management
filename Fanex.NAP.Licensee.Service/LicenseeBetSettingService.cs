@@ -9,7 +9,6 @@
     using Fanex.NAP.Licensee.Service.Constants;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class LicenseeBetSettingService : ILicenseeBetSettingService
     {

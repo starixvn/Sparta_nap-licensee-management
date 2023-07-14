@@ -12,8 +12,6 @@
         vm.formData = {};
 
         vm.gridOptions = logService.configGridOptions();
-        vm.gridOptions.fullHeight = false;
-        vm.gridOptions.gridHeight = '100%';
 
         function setSportNames(arr) {
             $.each(arr, function (index, settings) {

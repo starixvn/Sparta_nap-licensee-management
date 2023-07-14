@@ -18,7 +18,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
-
+    [NapSuperAuth]
     [CustomHandleError]
     [CheckUMFilter]
     public class DefaultBetSettingController : BaseController

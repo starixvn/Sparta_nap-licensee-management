@@ -43,7 +43,7 @@
                     case SiteEnvironment.LOCAL:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" stateConnectionString=\"tcpip=ha.nexdev.net:42424\" />";
                     case SiteEnvironment.UAT:
-                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.190.41:42424\" />";
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.99.98.117:42424\" />";
 				    case SiteEnvironment.SIT:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:

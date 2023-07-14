@@ -20,9 +20,10 @@
 
         function initEvent() {
             var gridHeight = $('#gridId').height();
+            var isCollapse = false;
 
             $(window).resize(function () {
-                gridHeight = $('#gridId').height();
+                calculateGridHeight(gridHeight);
             });
 
             $('body').unbind().on('click', '.panel-setting', function (event) {
@@ -31,17 +32,16 @@
                 calculateGridHeight(gridHeight);
             });
 
-            var count = 0;
             $('body').on('click', '.log-content', function (event) {
                 event.preventDefault();
 
-                if (count % 2 === 0) {
+                if (!isCollapse) {
                     $('.content-setting').hide();
                 } else {
                     $('.content-setting').show();
                 }
 
-                count++;
+                isCollapse = !isCollapse;
                 calculateGridHeight(gridHeight);
             });
         }
@@ -49,14 +49,21 @@
         function calculateGridHeight(gridHeight) {
             if ($('.content-container').height() + $('.grid-pager').height() >= gridHeight) {
                 $('#gridId').height(gridHeight);
-                $('.grid-container').height(gridHeight - $('.grid-pager').height());
+                $('.grid-container').height(gridHeight - $('.x-scrollbar').height() - $('.grid-pager').height());
             } else {
-                $('#gridId').height($('.content-container').height() + $('.grid-pager').height());
+                $('#gridId').height($('.content-container').height() + $('.x-scrollbar').height() + $('.grid-pager').height());
                 $('.grid-container').height($('.content-container').height());
             }
 
-            $('.grid-pager').css({ top: ($('.grid-container').height()) })
-            $('.scrollbar-y-content').height($('.content-container').height() - $('.grid-pager').height());
+            $('.free-bottom-right').css({ top: $('.grid-container').height() });
+            $('.x-scrollbar').css({ top: $('.grid-container').height() });
+            $('.grid-pager').css({ top: ($('.grid-container').height() + $('.x-scrollbar').height()) })
+            $('.y-scrollbar').height($('#gridId').height() - $('.grid-pager').height() - $('.row-headers-background').height());
+            $('.scrollbar-y-content').height($('.content-container').height() - $('.free-bottom-right').height());
+
+            if ($('.y-scrollbar').height() < $('.scrollbar-y-content').height()) {
+                $('.y-scrollbar').css("overflow-y", "scroll");
+            }
         }
 
         return {
