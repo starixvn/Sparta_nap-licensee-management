@@ -1,18 +1,15 @@
-﻿namespace Fanex.NAP.Licensee
+﻿using Fanex.NAP.Licensee.DbSettingConfig;
+
+namespace Fanex.NAP.Licensee
 {
     using Data;
     using Data.SqlServer;
-
     using Extension;
-
     using Fanex.Logging.Sentry;
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
-
     using Logging;
-
     using Sentry;
-
     using System;
     using System.Configuration;
     using System.Web;
@@ -28,15 +25,17 @@
         protected void Application_Start()
         {
             LogManager
-             .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
-             .Use(new SentryLogging(new SentryOptions
-             {
-                 Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
-             }));
+               .SetDefaultLogCategory(ConfigurationManager.AppSettings["LogCategory"])
+               .Use(new SentryLogging(new SentryOptions
+                {
+                    Dsn = new Dsn(ConfigurationManager.AppSettings["SentryDSN"])
+                }));
 
             DbSettingProviderManager
                .StartNewSession()
-               .WithSqlServer(resourcePath: "~/App_Data/")
+               .WithSqlServer()
+               .UseDefaultConnectionStringProvider()
+               .UseShardDbSettingProvider()
                .Run();
             AreaRegistration.RegisterAllAreas();
 
@@ -45,7 +44,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
-                .FromApplication("Fanex.NAP.LicenseeManagement");
+                                .FromApplication("Fanex.NAP.LicenseeManagement");
         }
 
         protected void Session_End(object sender, EventArgs e)
@@ -63,9 +62,9 @@
             //// Code that runs when an unhandled error occurs
             var exception = Server.GetLastError();
             var isIgnore = exception is HttpAntiForgeryException
-                || exception is HttpException
-                || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor)
-                && exception.TargetSite.Name == "ExtractParameterFromDictionary");
+                        || exception is HttpException
+                        || (exception.TargetSite.DeclaringType == typeof(ActionDescriptor)
+                         && exception.TargetSite.Name == "ExtractParameterFromDictionary");
 
             //// Exception when passing wrong data type to action method
             if (!isIgnore)

@@ -1,0 +1,24 @@
+﻿@using Fanex.NAP.Licensee.App_Start
+@{
+    ViewBag.Title = "Add New Licensee Subsidiary";
+    Layout = "~/Views/Shared/_ReactPageLayout.cshtml";
+}
+
+@section Headline {
+    <ul class="breadcrumb title">
+        <li>Licensee Configuration</li>
+        <li class="current">Create Licensee Subsidiaries</li>
+    </ul>
+}
+@section HeadCss{
+    @BundleManager.IncludeStylesByEnv("~/www/reactpages/dist/css/subsidiary/subsidiary.css")
+}
+@section FooterJs{
+    <script>
+
+    </script>
+
+    @BundleManager.IncludeScriptsByEnv("~/www/reactpages/dist/js/addSubsidiary/addSubsidiary.js")
+}
+
+<div id="app-container"></div>

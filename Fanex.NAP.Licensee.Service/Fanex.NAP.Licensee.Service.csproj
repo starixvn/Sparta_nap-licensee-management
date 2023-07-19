@@ -188,6 +188,7 @@
     <Compile Include="Authentication\ISSOAuthenticationService.cs" />
     <Compile Include="Authentication\LocalAuthenticationService.cs" />
     <Compile Include="Authentication\SSOAuthenticationService.cs" />
+    <Compile Include="Constants\ServiceConstant.cs" />
     <Compile Include="DefaultBetSettingService.cs" />
     <Compile Include="BetTicketVolumeControlSettingService.cs" />
     <Compile Include="CommonService.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="IITUserManagementService.cs" />
     <Compile Include="ILAPUserManagementService.cs" />
     <Compile Include="ILicenseeSettingService.cs" />
+    <Compile Include="ILicenseeSubsidiaryService.cs" />
     <Compile Include="ILogWriterService.cs" />
     <Compile Include="IManageLrfFunctionService.cs" />
     <Compile Include="IBetTicketVolumecontrolService.cs" />
@@ -214,12 +216,15 @@
     <Compile Include="IManageProductService.cs" />
     <Compile Include="ITUserManagementService.cs" />
     <Compile Include="LAPUserManagementService.cs" />
+    <Compile Include="LicenseeSubsidiaryService.cs" />
     <Compile Include="ManageProductService.cs" />
     <Compile Include="LicenseeSettingService.cs" />
     <Compile Include="ManageLrfFunctionService.cs" />
     <Compile Include="Redis\IRedisService.cs" />
     <Compile Include="Redis\RedisConnection.cs" />
     <Compile Include="Redis\RedisService.cs" />
+    <Compile Include="ShardDb\IShardInfoAccessor.cs" />
+    <Compile Include="ShardDb\ShardInfoAccessor.cs" />
     <Compile Include="SourceLicenseeSettingService.cs" />
     <Compile Include="LogWriterService.cs" />
     <Compile Include="ManageOperatorService.cs" />

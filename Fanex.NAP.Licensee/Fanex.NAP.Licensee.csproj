@@ -323,6 +323,8 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleManager.cs" />
+    <Compile Include="App_Start\DbSettingConfig\DbSettingProviderManagerExtension.cs" />
+    <Compile Include="App_Start\DbSettingConfig\ShardDbSettingProvider.cs" />
     <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
     <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
@@ -463,6 +465,8 @@
     <Content Include="www\reactpages\dist\css\dev\licensee\licensee.js" />
     <Content Include="www\reactpages\dist\css\dev\product\product.css" />
     <Content Include="www\reactpages\dist\css\dev\product\product.js" />
+    <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.css" />
+    <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.js" />
     <Content Include="www\reactpages\dist\css\dev\userList\userList.css" />
     <Content Include="www\reactpages\dist\css\dev\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\dev\user\user.css" />
@@ -490,6 +494,8 @@
     <Content Include="www\reactpages\dist\css\pro\operator\operator.js" />
     <Content Include="www\reactpages\dist\css\pro\product\product.css" />
     <Content Include="www\reactpages\dist\css\pro\product\product.js" />
+    <Content Include="www\reactpages\dist\css\pro\subsidiary\subsidiary.css" />
+    <Content Include="www\reactpages\dist\css\pro\subsidiary\subsidiary.js" />
     <Content Include="www\reactpages\dist\css\pro\userList\userList.css" />
     <Content Include="www\reactpages\dist\css\pro\userList\userList.js" />
     <Content Include="www\reactpages\dist\css\pro\user\user.css" />
@@ -521,6 +527,7 @@
     <Content Include="www\reactpages\dist\js\dev\volumeControlAddSetting\volumeControlAddSetting.js" />
     <Content Include="www\reactpages\dist\js\dev\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\dist\js\pro\addlicensee\addlicensee.js" />
+    <Content Include="www\reactpages\dist\js\pro\addSubsidiary\addSubsidiary.js" />
     <Content Include="www\reactpages\dist\js\pro\addUser\addUser.js" />
     <Content Include="www\reactpages\dist\js\pro\createToken\createToken.js" />
     <Content Include="www\reactpages\dist\js\pro\createUser\createUser.js" />
@@ -544,16 +551,33 @@
     <Content Include="www\reactpages\dist\js\pro\volumeControlList\volumeControlList.js" />
     <Content Include="www\reactpages\src\scripts\actions\loaderAction.js" />
     <Content Include="www\reactpages\src\scripts\actions\types.js" />
+    <Content Include="www\reactpages\src\scripts\components\dropdown\ContentBox.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\dropdown\DropDown.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\dropdown\PreviewBox.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\dropdown\SearchBox.jsx" />
+    <Content Include="www\reactpages\src\scripts\components\dropdown\store\DropdownContext.js" />
     <Content Include="www\reactpages\src\scripts\components\Loader.jsx" />
     <Content Include="www\reactpages\src\scripts\components\month-picker\Day.jsx" />
     <Content Include="www\reactpages\src\scripts\components\month-picker\index.js" />
     <Content Include="www\reactpages\src\scripts\components\month-picker\Month.jsx" />
     <Content Include="www\reactpages\src\scripts\components\month-picker\MonthPicker.jsx" />
     <Content Include="www\reactpages\src\scripts\components\Overlay.jsx" />
+    <Content Include="www\reactpages\src\scripts\lib\constant.js" />
     <Content Include="www\reactpages\src\scripts\lib\createReducer.js" />
     <Content Include="www\reactpages\src\scripts\lib\langHelper.js" />
     <Content Include="www\reactpages\src\scripts\lib\site.js" />
     <Content Include="www\reactpages\src\scripts\lib\store.js" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\action.js" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\AppContainer.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\constant\form.js" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\constant\grid.js" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\DataGrid.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\FormFilter.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\index.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\Message.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\reducer.js" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\Status.jsx" />
+    <Content Include="www\reactpages\src\scripts\modules\subsidiary\add\types.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\AppContainer.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\add\DataGrid.jsx" />
@@ -660,6 +684,9 @@
     <Content Include="Views\Shared\_Template.cshtml" />
     <Content Include="Views\LicenseeBetSetting\Logs.cshtml" />
     <Content Include="Views\Shared\_LogTemplate.cshtml" />
+    <Content Include="Views\LicenseeSubsidiary\Add.cshtml" />
+    <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.css.map" />
+    <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.js.map" />
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />
@@ -1083,9 +1110,12 @@
     <Content Include="www\reactpages\src\scripts\modules\user\edit\detail\ResetPasswordForm.jsx" />
     <Content Include="www\reactpages\src\styles\components\month-picker.scss" />
     <Content Include="www\reactpages\src\styles\modules\volumecontrol\index.scss" />
+    <Content Include="www\reactpages\src\styles\modules\subsidiary\index.scss" />
+    <Content Include="www\reactpages\src\styles\components\dropdown.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UserLogin\Models\" />
+    <Folder Include="www\reactpages\dist\js\dev\addSubsidiary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

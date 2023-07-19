@@ -125,4 +125,18 @@
 		<Setting Key="Plo_VolumeControl_BrandProduct_Sel" SpName="Plo_VolumeControl_BrandProduct_Sel" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
 		<Setting Key="Plo_VolumeControl_Setting_InsUpd" SpName="Plo_VolumeControl_Setting_InsUpd" DbName="DBPLO.bodb_Ploutos.bodbLicenseeNet"></Setting>
 	</Function>
+	<Function Name="Site.Nap.Licensee.Subsidiary">
+		<Setting Key="Acc_Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="DBEXT.bodb02.bodbLicenseeNet">
+			<Mapping DataField="LicenseeID" ObjectProperty="Id" />
+			<Mapping DataField="LicenseeName" ObjectProperty="Name" />
+		</Setting>
+		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
+		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCUST.CustDB.bodbAdminNet"></Setting>
+		<Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCUST.CustDB.bodbAdminNet"></Setting>
+		<Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.bodbAdminNet"></Setting>
+		<Setting Key="Nap_LM_LicVendorExclusionsPermission" SpName="Nap_LM_LicVendorExclusionsPermission" DbName="DBCUST.SiteConfig.bodbLicenseeNet"></Setting>
+	</Function>
+	<Function Name="Site.Nap.Licensee.CheckCustList">
+		<Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+	</Function>
 </Functions>

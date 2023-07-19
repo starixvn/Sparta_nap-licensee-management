@@ -64,5 +64,7 @@ namespace Fanex.NAP.Licensee.Model.DataDomain
 		public const string SystemConfiguration = "SystemConfiguration";
 
 		public const string ViewLogs = "ViewLogs";
+
+        public const string CreateLicenseeSubsidiaries = "CreateLicenseeSubsidiaries";
 	}
 }
