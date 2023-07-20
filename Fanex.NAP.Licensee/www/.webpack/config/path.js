@@ -17,7 +17,8 @@ const cssPaths = {
 	'function': './www/reactpages/src/styles/modules/function/index.scss',
 	userList: './www/reactpages/src/styles/modules/user/index.scss',
 	user: './www/reactpages/src/styles/modules/user/item.scss',
-	volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
+    volumeControlList: './www/reactpages/src/styles/modules/volumecontrol/index.scss',
+    subsidiary: './www/reactpages/src/styles/modules/subsidiary/index.scss'
 };
 
 const scriptPaths = {
@@ -46,6 +47,7 @@ const scriptPaths = {
     addUser: './www/reactpages/src/scripts/modules/user/add',
     volumeControlList: './www/reactpages/src/scripts/modules/volumecontrol/list',
     volumeControlAddSetting: './www/reactpages/src/scripts/modules/volumecontrol/add',
+    addSubsidiary: './www/reactpages/src/scripts/modules/subsidiary/add'
 };
 
 module.exports = {

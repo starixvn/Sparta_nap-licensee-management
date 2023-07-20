@@ -8,6 +8,7 @@ module.exports = merge(
     baseWebpackConfigGenerator('dev'),
     utils.setDefinePlugin('process.env.NODE_ENV', 'development'), {
         devtool: 'source-map',
+        watch: true,
         module: {
             rules: [loader.generateSassLoaders(false)]
         }

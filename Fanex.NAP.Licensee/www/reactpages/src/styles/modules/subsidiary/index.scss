@@ -1,0 +1,156 @@
+﻿@import "../../components/_variable";
+@import "../../components/react-select/react-select.main";
+@import "../../components/pager";
+@import "../../components/popup";
+@import "../../components/common.scss";
+@import "../../components/dropdown.scss";
+
+.filter-form {
+    width: 100%;
+
+    .form-group {
+        margin-right: 0 !important;
+    }
+
+    .label-group {
+        min-width: max-content;
+        
+        align-items: center;
+
+        .dropdown {
+            width: 200px;
+        }
+
+        .label {
+            width: max-content;
+        }
+
+        input {
+            width: 170px;
+        }
+
+
+    }
+
+    input {
+        width: max-content;
+        min-width: 100px;
+        padding-left: 10px;
+    }
+
+
+    label {
+        width: max-content;
+        word-wrap: hyphenate;
+
+        &.medium {
+            width: 85px
+        }
+
+        &.has-error {
+            width: max-content;
+            font-weight: bold;
+            color: red;
+        }
+
+        &.grid-error {
+            width: 100%;
+            font-weight: normal;
+            font-style: italic;
+            color: red;
+        }
+
+        &.success {
+            width: max-content;
+            font-weight: bold;
+            color: green;
+        }
+    }
+
+    th {
+        &.index {
+            width: 50px
+        }
+    }
+}
+
+.table {
+    border-collapse: separate;
+}
+
+.grid {
+    width: 80%;
+}
+
+.table-container {
+    margin-bottom: 10px;
+    max-height: 600px; 
+    overflow-y: auto;
+}
+
+thead {
+    position: sticky;
+    top: 0px;
+}
+
+
+
+input {
+    height: 25px;
+    display: inline-block;
+    border: 1px solid #CECCCD;
+    &.has-error {
+        border: 1px solid $red;
+    }
+}
+
+input[type=number] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    &[type="number"] {
+        -moz-appearance: textfield;
+    }
+}
+
+input[readonly] {
+    height: 25px;
+    display: inline-block;
+    border: 1px solid #CECCCD;
+    background-color: #dddddd;
+    color: black;
+}
+
+input[readonly].has-error {
+    border: 1px solid $red;
+}
+submit {
+    align-items: center
+}
+
+$status-colors: ( "Not Created": black, "Created": green, "Failed": red, "In Progress": black );
+
+.status {
+    font-weight: bold;
+
+    &.not-created {
+        color: map-get($status-colors, "Not Created");
+    }
+
+    &.created {
+        color: map-get($status-colors, "Created");
+    }
+
+    &.failed {
+        color: map-get($status-colors, "Failed");
+    }
+
+    &.in-progress {
+        color: map-get($status-colors, "In Progress");
+    }
+}
+
+$message-colors: ( "Success": green, "Failed": red )
