@@ -168,5 +168,6 @@ export const language = {
     "lblSabaVirtualSetting": "Saba Virtual Setting",
     "lblGrossGamingRevenue": "Gross Gaming Revenue",
     "lblSabaIntelligence": "Saba Intelligence",
-    "lblWinlossAnalysis": "Win Loss Analysis"
+    "lblWinlossAnalysis": "Win Loss Analysis",
+    "lblAudLicenseeWinLoss" : "Aud Licensee Win Loss"
 }
