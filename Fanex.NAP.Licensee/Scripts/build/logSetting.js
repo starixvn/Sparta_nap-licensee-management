@@ -374,7 +374,7 @@ var logSettings = (function () {
         function getNormalizedFilter() {
             return {
                 LicenseeId: isNull(vm.criteria.Licensee.Id, -1),
-                CustId: isNull(vm.criteria.SuperWithCurrency.Id, -1),
+                CustId: isNull(vm.criteria.SuperWithCurrency.CurrencyId, -1),
                 AgentId: vm.criteria.Agent.Id,
                 FromDate: logService.formatDateString(vm.criteria.FromDate),
                 ToDate: logService.formatDateString(vm.criteria.ToDate),
@@ -702,6 +702,7 @@ var logSettings = (function () {
         }
 
         this.getSelectedLicenseeChange = function (vm) {
+            setGenerateButtonStatus(true);
             $http.get(
                 'GetSuperLicenseeList',
                 {
@@ -711,10 +712,16 @@ var logSettings = (function () {
                 .success(function (superWithCurrencies) {
                     vm.SuperWithCurrencies = superWithCurrencies;
                     superWithCurrencySetting(vm);
+
+                    if (superWithCurrencies.length === 0) {
+                        vm.Agents = [];
+                        agentSetting(vm);
+                    }
                 });
         }
 
         this.getSelectedSuperWithCurrencyChange = function (vm) {
+            setGenerateButtonStatus(true);
             $http.get(
                 'GetLicenseeAgentList',
                 {
@@ -724,10 +731,12 @@ var logSettings = (function () {
                 .success(function (agents) {
                     vm.Agents = agents;
                     agentSetting(vm);
+                    setGenerateButtonStatus(false);
                 });
         }
 
         this.getSettings = function (vm) {
+            setGenerateButtonStatus(true);
             $http.get('GetLogSettings')
                 .success(function (data) {
                     vm.Licensees = data.Licensees;
@@ -739,6 +748,12 @@ var logSettings = (function () {
                     vm.criteria.ToDate = data.CurrentDate;
 
                     licenseeSetting(vm);
+
+                    if (data.Licensees.length === 0) {
+                        vm.SuperWithCurrencies = [];
+                        superWithCurrencySetting(vm);
+                    }
+
                     vm.TextSettings = {
                         Filter: 'Search'
                     };
@@ -755,14 +770,15 @@ var logSettings = (function () {
         }
 
         this.invokeLoadingMsg = function (visible) {
+            $.blockUI.defaults.overlayCSS.opacity = 0;
+            $.blockUI.defaults.css = {};
+
             if (visible) {
-                if ($("#loadingMsgBox").is(":hidden")) {
-                    $("#loadingMsgBox").removeClass("hidden");
-                    setGenerateButtonStatus(true);
-                }
+                $.blockUI({ message: '<div class="icon-loading"></div>' });
+                setGenerateButtonStatus(true);
             }
             else {
-                $("#loadingMsgBox").addClass("hidden");
+                $.unblockUI();
                 setGenerateButtonStatus(false);
             }
         };
