@@ -36,7 +36,8 @@
                     UplineMaxPerMatch = string.Empty,
                     UplineMaxPayoutPerMatch = string.Empty,
                     IsRowSelected = false,
-                    IsRowDisabled = false
+                    IsRowDisabled = false,
+                    IsRowUpdated = false
                 };
 
                 if (uplineItem != null)
@@ -58,6 +59,7 @@
                             MaxPayoutPerMatch = item.MaxPayoutPerMatch.ToString("0"),
                             IsRowSelected = false,
                             IsRowDisabled = false,
+                            IsRowUpdated = false
                         }
                         : new BSRowBaseViewModel
                         {
@@ -74,7 +76,8 @@
                             MaxPerMatch = "0",
                             MaxPayoutPerMatch = "0",
                             IsRowSelected = false,
-                            IsRowDisabled = false
+                            IsRowDisabled = false,
+                            IsRowUpdated = false
                         };
                 }
 
@@ -98,11 +101,16 @@
                     MaxPerMatch = item.MaxPerMatch.HasValue ? item.MaxPerMatch.Value.ToString("0") : string.Empty,
                     MaxPayoutPerMatch = item.MaxPayoutPerMatch.HasValue ? item.MaxPayoutPerMatch.Value.ToString("0") : string.Empty,
                     IsRowDisabled = false,
-                    IsRowSelected = false
+                    IsRowSelected = false,
+                    IsRowUpdated = false
                 };
                 BSRows.Add(dbsSportsbookRowVm);
             }
         }
+
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
 
         public bool Option { get; set; }
 

@@ -35,7 +35,7 @@
         function getNormalizedFilter() {
             return {
                 LicenseeId: isNull(vm.criteria.Licensee.Id, -1),
-                CustId: isNull(vm.criteria.SuperWithCurrency.Id, -1),
+                CustId: isNull(vm.criteria.SuperWithCurrency.CurrencyId, -1),
                 AgentId: vm.criteria.Agent.Id,
                 FromDate: logService.formatDateString(vm.criteria.FromDate),
                 ToDate: logService.formatDateString(vm.criteria.ToDate),

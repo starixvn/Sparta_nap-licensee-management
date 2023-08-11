@@ -1,22 +1,18 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
     using Fanex.NAP.Licensee.Model.Comparer;
     using Fanex.NAP.Licensee.Model.Criteria.DefaultBetSetting;
-    using Fanex.NAP.Licensee.Model.Criteria.LicenseeBetSetting;
     using Fanex.NAP.Licensee.Model.DataDomain;
     using Fanex.NAP.Licensee.Model.ViewModel.LicenseeBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Service;
-    using Fanex.NAP.Licensee.Service.Constants;
     using ONEbook.UM.Filters;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Web.Mvc;
 
     [NapSuperAuth]
     [CustomHandleError]
@@ -24,21 +20,21 @@
     [CheckUMFilter]
     public class LicenseeBetSettingController : BaseController
     {
-        private const string BSPattern = "<BL SportType=\"{0}\" Bettype=\"{1}\" MinBet=\"{2}\" MaxBet=\"{3}\" MaxPerMatch=\"{4}\" MaxPerNumber=\"{5}\" MaxPayoutPerMatch=\"{6}\"/>";
-
         private readonly ICommonService _commonService;
         private readonly ILicenseeBetSettingService _licenseeBetSettingService;
         private readonly IDefaultBetSettingService _betSettingService;
 
         public LicenseeBetSettingController()
-            : base()
         {
             _commonService = new CommonService();
             _licenseeBetSettingService = new LicenseeBetSettingService();
             _betSettingService = new DefaultBetSettingService();
         }
 
-        public LicenseeBetSettingController(ICommonService commonService, ILicenseeBetSettingService licenseeBetSettingService, IDefaultBetSettingService betSettingService)
+        public LicenseeBetSettingController(
+            ICommonService commonService, 
+            ILicenseeBetSettingService licenseeBetSettingService, 
+            IDefaultBetSettingService betSettingService)
         {
             _commonService = commonService;
             _licenseeBetSettingService = licenseeBetSettingService;
@@ -82,15 +78,14 @@
             return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView("../Error/UnsupportedFunction");
         }
 
-        public JsonResult GetEditBetSettingData(LicenseeBetSettingFilterViewModel vm)
+        public JsonResult GetEditBetSettingData(LicenseeBetSettingFilterViewModel model)
         {
-            if (vm.ProductTypeId != ProductTypeId.SportsBook)
+            if (model.ProductTypeId != ProductTypeId.SportsBook)
             {
                 return Json("Unknown Bet Setting!", JsonRequestBehavior.AllowGet);
             }
 
-            var sportsBookItems = _licenseeBetSettingService
-                .GetBSSportsbookItemWithSuperInfo(vm.CustId, vm.ProductTypeId, vm.AgentId, vm.Option);
+            var sportsBookItems = _licenseeBetSettingService.GetBSSportsbookItemWithSuperInfo(model);
             var sportsBookVm = new BSSportsbookViewModel(sportsBookItems, _commonService.GetSportsbookGameTypeList);
 
             return Json(sportsBookVm, JsonRequestBehavior.AllowGet);
@@ -103,84 +98,23 @@
         }
 
         [HttpPost]
-        public JsonResult UpdateBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
+        public JsonResult UpdateBetSettingSportsbook(BSSportsbookViewModel model)
         {
-            var updateItem = new UpdateBetSettingSportsbookItem();
-
-            FormatBetSettingSportsbookItem(updateItem, sportsbookVM);
-            updateItem.UserId = CurrentSession.UserId;
-            updateItem.IP = Request.UserHostAddress;
-
-            updateItem.UpdBetLimit = ToXmlSetting(sportsbookVM.BSRows.Count > 0 ? sportsbookVM.BSRows[0] : null);
-            updateItem.UpdNewMember = ToXmlSetting(sportsbookVM.DBSRows.Count > 0 ? sportsbookVM.DBSRows[0] : null);
-
-            var result = _licenseeBetSettingService.UpdateBetSettingSportsbook(updateItem);
+            model.UserId = CurrentSession.UserId;
+            model.IP = Request.UserHostAddress;
+            var result = _licenseeBetSettingService.UpdateBetSettingSportsbook(model);
 
             return new JsonResult { Data = new BSResultViewModel(string.Empty, result.Code, result.IsOk, result.Message) };
         }
 
         [HttpPost]
-        public JsonResult CheckBetSettingSportsbook(BSSportsbookViewModel sportsbookVM)
+        public JsonResult CheckBetSettingSportsbook(BSSportsbookViewModel model)
         {
-            var updateItem = new CheckBetSettingSportsbookItem();
-            FormatBetSettingSportsbookItem(updateItem, sportsbookVM);
-
-            var violatedResultItems = GetViolatedResultItems(updateItem, sportsbookVM);
+            var violatedResultItems = _licenseeBetSettingService.CheckBetSettingSportsbook(model);
 
             return violatedResultItems.Count == 0
-                ? new JsonResult { Data = new BSResultViewModel(string.Empty, 0, true, string.Empty) }
+                ? new JsonResult { Data = new BSResultViewModel() }
                 : new JsonResult { Data = violatedResultItems[0] };
-        }
-
-        private List<BSResultViewModel> GetViolatedResultItems(CheckBetSettingSportsbookItem updateItem, BSSportsbookViewModel viewModel)
-        {
-            var violatedResultItems = new List<BSResultViewModel>();
-
-            var bsRows = viewModel.BSRows;
-            var dbsRows = viewModel.DBSRows;
-
-            for (var i = 0; i < bsRows.Count; i++)
-            {
-                updateItem.UpdBetLimit = bsRows[i].IsRowSelected ? ToXmlSetting(bsRows[i]) : string.Empty;
-                updateItem.UpdNewMember = (dbsRows != null && dbsRows[i].IsRowSelected) ? ToXmlSetting(dbsRows[i]) : string.Empty;
-
-                var result = _licenseeBetSettingService.CheckBetSettingSportsbook(updateItem);
-
-                if (!result.IsOk)
-                {
-                    violatedResultItems.Add(new BSResultViewModel(bsRows[i].BetTypeName, result.Code, result.IsOk, result.Message));
-                }
-
-                updateItem.ErrCode = 0;
-                updateItem.ErrMsg = null;
-            }
-
-            return violatedResultItems
-                .OrderBy(_ => LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').Any(code => code == _.Code.ToString()))
-                .ToList();
-        }
-
-        private static void FormatBetSettingSportsbookItem(BetSettingSportsbookItemBase updateItem, BSSportsbookViewModel sportsbookVM)
-        {
-            updateItem.CustId = sportsbookVM.CustId;
-            updateItem.ExistedMember = sportsbookVM.ExistedMember;
-            updateItem.AgentId = sportsbookVM.AgentId;
-            updateItem.Option = sportsbookVM.Option;
-            updateItem.IsNewMember = sportsbookVM.IsNewMember;
-        }
-
-        private static string ToXmlSetting(BSRowBaseViewModel row)
-        {
-            if (row == null)
-            {
-                return string.Empty;
-            }
-
-            var xml = new StringBuilder("<ROOT>");
-            xml.Append(string.Format(BSPattern, row.SportTypeId, row.BetTypeId, row.MinBet, row.MaxBet, row.MaxPerMatch, null, row.MaxPayoutPerMatch));
-            xml.Append("</ROOT>");
-
-            return xml.ToString();
         }
 
         #endregion Bet setting

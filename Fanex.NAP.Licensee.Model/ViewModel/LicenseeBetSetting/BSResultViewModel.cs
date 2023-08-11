@@ -10,6 +10,13 @@
             Message = message;
         }
 
+        public BSResultViewModel()
+        {
+            Code = 0;
+            IsOk = true;
+            Message = string.Empty;
+        }
+
         public string SportOrBetTypeName { get; set; }
 
         public int Code { get; set; }

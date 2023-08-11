@@ -59,7 +59,7 @@
                 {{item.MaxPayoutPerMatch | number}}
             </td>
             <td>
-                {{item.IsRowSelected === true? 'X': ''}}
+                {{item.IsRowSelected && item.IsRowUpdated? 'X': ''}}
             </td>
             <td ng-if="buttonStatus.isUpdated">
                 <span class="glyphicon {{item.Status}}"></span>
@@ -126,7 +126,7 @@
                     {{item.MaxPayoutPerMatch === '' ? '' : (item.MaxPayoutPerMatch | number)}}
                 </td>
                 <td>
-                    {{item.IsRowSelected === true? 'X': ''}}
+                    {{item.IsRowSelected && item.IsRowUpdated? 'X': ''}}
                 </td>
                 <td ng-if="buttonStatus.isUpdated">
                     <span class="glyphicon {{item.Status}}"></span>

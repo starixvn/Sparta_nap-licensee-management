@@ -27,6 +27,6 @@
 
         public override string GetSettingKey() => "NAP_LM_LicenseeUserLog_RunSPSel";
 
-        public override bool IsValid() => true;
+        public override bool IsValid() => AgentId > 0 && CustId > 0 && FromDate <= ToDate && FromDate > DateTime.MinValue && ToDate > DateTime.MinValue;
     }
 }
