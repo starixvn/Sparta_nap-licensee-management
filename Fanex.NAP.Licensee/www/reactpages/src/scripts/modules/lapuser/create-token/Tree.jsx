@@ -11,6 +11,8 @@ class Tree extends Component {
         this.state = {
             nodes: props.nodes,
             selectedNode: props.selectedNode ? props.selectedNode : [],
+            isSelectedAllNode: false,
+            isSelectedAllMode: props.selectAllNode,
             defaultSelectedNode: props.defaultSelectedNode ? props.defaultSelectedNode : []
         };
     }
@@ -19,7 +21,7 @@ class Tree extends Component {
         const { nodes } = this.state;
 
         node.isOpen = !node.isOpen;
-        node.level = level
+        node.level = level;
 
         this.setState({ nodes });
     }
@@ -28,18 +30,73 @@ class Tree extends Component {
         const { nodes } = this.state;
 
         this._checkedChildNode(node, !node.isCheck, isSubChild);
-        this._checkedParentNode(parent, node.isCheck);
+        if (parent) {
+            this._checkedParentNode(parent);
+        }
 
         this.setState({ nodes });
     }
 
     _onRadioCheck = (parent, node) => {
+        if (parent.isDisable) {
+            return;
+        }
+
         const { nodes } = this.state;
 
         this._checkedRadioNode(parent, node);
-        this._checkedParentNode(parent, true);
+        if (parent) {
+            this._checkedParentNode(parent);
+        }
 
         this.setState({ nodes });
+    }
+
+    _onNodeSelectAll(isCheckedAll) {
+        const { nodes } = this.state;
+
+        nodes.forEach(node => {
+            this._checkAllChildNode(node, isCheckedAll, false);
+        });
+
+        this.setState({ isSelectedAllNode: isCheckedAll });
+    }
+
+    _checkAllChildNode(node, checked, isSubChild) {
+        const children = this._getChildNodes(node);
+        if (node.isDisable) {
+            if (children.length && node.InputBoxType === 'radio') {
+                return;
+            }
+
+            children.forEach(child => {
+                const hasSubChild = (node.SubFunctionKeys != null);
+                this._checkAllChildNode(child, checked, hasSubChild);
+            });
+
+            return;
+        }
+
+        node.isCheck = checked;
+
+        this._addNodeIntoSelectedFunc(node, isSubChild);
+
+        if (!children.length) {
+            return;
+        }
+
+        if (node.InputBoxType === 'radio') {
+            children.forEach(radioNode => this._checkAllChildNode(radioNode, false, false));
+
+            children[0].isCheck = checked;
+            this._addNodeIntoSelectedFunc(node, isSubChild);
+            return;
+        }
+
+        children.forEach(child => {
+            const hasSubChild = (node.SubFunctionKeys != null);
+            this._checkAllChildNode(child, node.isCheck, hasSubChild);
+        });
     }
 
     _getChildNodes(node) {
@@ -87,11 +144,11 @@ class Tree extends Component {
         }
 
         if (node.FunctionKeys) {
-            node = node.FunctionKeys[index]
+            node = node.FunctionKeys[index];
         }
 
         else if (node.SubFunctionKeys) {
-            node = node.SubFunctionKeys[index]
+            node = node.SubFunctionKeys[index];
         }
 
         return node;
@@ -101,7 +158,7 @@ class Tree extends Component {
         const { selectedFunc } = this.props;
 
         if (node.FunctionKey != null && !isSubChild) {
-            let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey)
+            let result = selectedFunc.find(n => n.FunctionKey === node.FunctionKey);
             if (node.isCheck === true && !node.Settings) {
                 if (result == null) {
                     selectedFunc.push(node);
@@ -125,30 +182,29 @@ class Tree extends Component {
             if (child.FunctionKey != node.FunctionKey) {
                 child.isCheck = false;
             }
-        })
+        });
 
         this.setState({ nodes });
     }
 
     _checkedParentNode(parent) {
-        if (parent) {
-            let flag = false;
-            this._getChildNodes(parent).forEach(child => {
-                if (child.isCheck == true) {
-                    flag = true;
+        let isChildrenChecked = false;
+        this._getChildNodes(parent)
+            .forEach(child => {
+                if (child.isCheck) {
+                    isChildrenChecked = true;
                 }
-            })
+            });
 
-            parent.isCheck = flag;
-            if (flag == true) {
-                this._addNodeIntoSelectedFunc(parent, false);
-            }
+        parent.isCheck = isChildrenChecked;
+        if (isChildrenChecked) {
+            this._addNodeIntoSelectedFunc(parent, false);
+        }
 
-            const parentLevel = [...parent.level];
-            const parentNode = this._getParentNode(parentLevel);
-            if (parentNode.length != 0) {
-                this._checkedParentNode(parentNode)
-            }
+        const parentLevel = [...parent.level];
+        const parentNode = this._getParentNode(parentLevel);
+        if (parentNode.length) {
+            this._checkedParentNode(parentNode);
         }
     }
 
@@ -160,18 +216,18 @@ class Tree extends Component {
         const children = this._getChildNodes(node);
         if (children.length != 0) {
             if (node.InputBoxType === "radio" && checked == true) {
-                this._checkedChildNode(children[0], node.isCheck, true)
+                this._checkedChildNode(children[0], node.isCheck, true);
             }
             else {
                 children.forEach(child => {
-                    const hasSubChild = (node.SubFunctionKeys != null)
-                    this._checkedChildNode(child, node.isCheck, hasSubChild)
-                })
+                    const hasSubChild = (node.SubFunctionKeys != null);
+                    this._checkedChildNode(child, node.isCheck, hasSubChild);
+                });
             }
         }
     }
 
-    _prepairListNodes() {
+    _prepareListNodes() {
         const { nodes } = this.state;
     
         nodes.map(node => {
@@ -188,14 +244,14 @@ class Tree extends Component {
 
             nodes.map(node => {
                 this._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, nextProps.isCheckGroup);
-            })
+            });
     
             return nodes;
         }
     }
 
     componentDidMount() {
-        this._prepairListNodes();
+        this._prepareListNodes();
     }
 
     _checkedNodeInStateIfExistInSelectedNode(node, parent) {
@@ -203,31 +259,34 @@ class Tree extends Component {
         const children = this._getChildNodes(node);
 
         selectedNode.map((selNode) => {
-            if (selNode.FunctionKey === node.FunctionKey) {
-                node.isCheck = true;
-                
-                if(parent) {
-                    parent.isCheck = true;
-                }
-                this._addNodeIntoSelectedFunc(node, false);
 
-                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
-                    selNode.SubFunctionKeys.map(selSubNode => {
-                        node.SubFunctionKeys.map(nodeSub => {
-                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
-                                nodeSub.isCheck = true;
-                            }
-                        })
-                    })
-                }
-            }          
-        })
+            if (selNode.FunctionKey !== node.FunctionKey) {
+                return;
+            }
 
-        if (children) {
-            children.map(child => this._checkedNodeInStateIfExistInSelectedNode(child, node))
+            node.isCheck = true;
+            if (parent) {
+                parent.isCheck = true;
+            }
+
+            this._addNodeIntoSelectedFunc(node, false);
+
+            if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                selNode.SubFunctionKeys.map(selSubNode => {
+                    node.SubFunctionKeys.map(nodeSub => {
+                        if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                            nodeSub.isCheck = true;
+                        }
+                    });
+                });
+            }
+        });
+
+        if (children && node.InputBoxType !== 'radio') {
+            children.map(child => this._checkedNodeInStateIfExistInSelectedNode(child, node));
         }
 
-        this.setState({ selectedNode })
+        this.setState({ selectedNode });
     }
 
     _checkedNodeInStateIfExistInDefaultSelectedNode(node, parent, isCheck) {
@@ -235,41 +294,72 @@ class Tree extends Component {
         const children = this._getChildNodes(node);
 
         defaultSelectedNode.map((selNode) => {
-            if (selNode.FunctionKey === node.FunctionKey) { 
-                node.isCheck = true;
-                node.isDisable = isCheck;
+            if (selNode.FunctionKey !== node.FunctionKey) {
+                return;
+            }
 
-                if(parent) {
-                    parent.isCheck = true;
-                    parent.isDisable = isCheck;
+            node.isCheck = true;
+            node.isDisable = isCheck;
+
+            if (parent) {
+                parent.isCheck = true;
+                parent.isDisable = isCheck;
+            }
+
+            this._addNodeIntoSelectedFunc(node, false);
+
+            if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                if (node.InputBoxType === 'radio') {
+                    node.SubFunctionKeys.map(nodeSub => {
+                        nodeSub.isCheck = false;
+                    });
                 }
-                this._addNodeIntoSelectedFunc(node, false);
 
-                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
-                    selNode.SubFunctionKeys.map(selSubNode => {
-                        node.SubFunctionKeys.map(nodeSub => {
-                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
-                                nodeSub.isCheck = true;
-                                nodeSub.isDisable = isCheck;
-                            }
-                        })
-                    })
-                }
-            }          
-        })
+                selNode.SubFunctionKeys.map(selSubNode => {
+                    node.SubFunctionKeys.map(nodeSub => {
+                        if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                            nodeSub.isCheck = true;
+                            nodeSub.isDisable = isCheck;
+                        }
+                    });
+                });
+            }
+        });
 
-        if (children) {
-            children.map(child => this._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck))
+        if (children && node.InputBoxType !== 'radio') {
+            children.map(child => this._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck));
         }
 
-        this.setState({ defaultSelectedNode })
+        this.setState({ defaultSelectedNode });
+    }
+
+
+    _renderSelectAllNode(selectedAllMode) {
+        const { isSelectedAllNode } = this.state;
+        return selectedAllMode &&
+            <div className="node">
+                <div>
+                    <i className="glyphicon" style={{ opacity: 0 }}></i>
+                </div>
+                <span>
+                    <input
+                        type="checkbox"
+                        checked={isSelectedAllNode}
+                        disabled={this.props.isDisableAll}
+                        onChange={() => this._onNodeSelectAll(!isSelectedAllNode)} />
+                </span>
+                <span role="button" onClick={() => this._onNodeSelectAll(!isSelectedAllNode)}>
+                    Select All
+                </span>
+            </div>;
     }
 
     render() {
-        const { nodes } = this.state;
+        const { nodes, isSelectedAllMode } = this.state;
 
         return (
             <div>
+                {this._renderSelectAllNode(isSelectedAllMode)}
                 {nodes.map((node, i) => (
                     <TreeNode
                         key={i}
