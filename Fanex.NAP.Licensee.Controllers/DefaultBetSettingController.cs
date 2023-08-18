@@ -1,5 +1,9 @@
 ﻿namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Licensee.Controllers.Attributes;
@@ -13,10 +17,6 @@
     using Fanex.NAP.Licensee.Service;
     using Fanex.NAP.Licensee.Service.Constants;
     using ONEbook.UM.Filters;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
 
     [NapSuperAuth]
     [CustomHandleError]
@@ -27,16 +27,15 @@
         private readonly IDefaultBetSettingService _defaultBetSettingService;
 
         public DefaultBetSettingController()
-            : base()
         {
-            this._commonService = new CommonService();
-            this._defaultBetSettingService = new DefaultBetSettingService();
+            _commonService = new CommonService();
+            _defaultBetSettingService = new DefaultBetSettingService();
         }
 
         public DefaultBetSettingController(ICommonService commonService, IDefaultBetSettingService defaultBetSettingService)
         {
-            this._commonService = commonService;
-            this._defaultBetSettingService = defaultBetSettingService;
+            _commonService = commonService;
+            _defaultBetSettingService = defaultBetSettingService;
         }
 
         #region Load default bet setting
@@ -155,10 +154,9 @@
             return Json(new { Data = _defaultBetSettingService.GetLogs(criteria) }, JsonRequestBehavior.AllowGet);
         }
 
-        private void FormatSettingLogCriteria(GetSettingLogViewModel model, GetSettingLogCriteria criteria)
+        private static void FormatSettingLogCriteria(GetSettingLogViewModel model, GetSettingLogCriteria criteria)
         {
-            var licensee = _commonService.GetLicenseeList.First(_ => _.Id == model.LicenseeId);
-            criteria.CurrencyID = _commonService.GetSuperLicenseeList(licensee.Name).First(_ => _.Id == model.CustId).CurrencyId;
+            criteria.CurrencyID = model.CustId;
             criteria.AgentID = model.AgentId > 0 ? model.AgentId : (int?)null;
             criteria.LicenseeID = model.LicenseeId;
             criteria.FromDate = Convert.ToDateTime($"{model.FromDate} {DateTimeConstants.StartOfDayTime}");

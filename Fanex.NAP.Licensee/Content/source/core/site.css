@@ -781,7 +781,9 @@ input[type="submit"].btn-ok,
   padding: 0 26px 2px 7px;
   height: 25px;
 }
-.filter-form .form-group .list-currency {
+.filter-form .form-group .list-licensee,
+.filter-form .form-group .list-currency,
+.filter-form .form-group .list-agent {
   float: left;
   width: 212px;
 }

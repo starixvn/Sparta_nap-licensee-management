@@ -6,7 +6,7 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
         restrict: 'A',
         scope: {
             agentId: "=",
-            isDefault: "="
+            isDbsPage: "="
         },
         link: function (scope, elem, attrs, ngModel) {
 
@@ -85,7 +85,7 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
 
             //For model -> DOM validation
             ngModel.$formatters.unshift(function (value) {
-                if (scope.agentId === 0 && !scope.isDefault) {
+                if (scope.agentId === 0 && !scope.isDbsPage) {
                     return "";
                 }
                 var valid = validFn(value);

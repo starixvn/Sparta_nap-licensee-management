@@ -121,10 +121,10 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             else {
                 angular.extend($scope.editBS, data);
             }
-            $scope.$parent.invokeLoadingMsg(true);
+            $scope.$parent.invokeLoadingMsg(false);
         })
         .error(function () {
-            $scope.$parent.invokeLoadingMsg(true);
+            $scope.$parent.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
         });;
 };
@@ -132,7 +132,7 @@ editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 
 var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.editBS = {};
-    $scope.isDBS = true;
+    $scope.isDbsPage = true;
 
     function getAjaxHeader() {
         return {
@@ -158,18 +158,36 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
                 return;
             }
 
+            var currentBSs = shareSettingsService.getCurSettings().BSRows;
+            var oldBSs = shareSettingsService.getOrgSettings().BSRows;
+            var applyForPlayers = shareSettingsService.getCurSettings().IsApplyForMembersChecked;
             $.each(data.BSRows, function (index, element) {
-                element.UplineMinBet = shareSettingsService.getCurSettings().BSRows[index].MinBet;
-                element.UplineMaxBet = shareSettingsService.getCurSettings().BSRows[index].MaxBet;
-                element.UplineMaxPayoutPerMatch = shareSettingsService.getCurSettings().BSRows[index].MaxPayoutPerMatch;
-                element.UplineMaxPerMatch = shareSettingsService.getCurSettings().BSRows[index].MaxPerMatch;
+                if (!applyForPlayers && currentBSs[index].IsRowSelected) {
+                    if (element.MinBet === '') {
+                        element.MinBet = oldBSs[index].MinBet;
+                        element.MaxBet = oldBSs[index].MaxBet;
+                        element.MaxPayoutPerMatch = oldBSs[index].MaxPayoutPerMatch;
+                        element.MaxPerMatch = oldBSs[index].MaxPerMatch;
+                        element.IsRowSelected = true;
+                        element.IsEmptyRow = true;
+                        element.IsRowUpdated = true;
+                    } else {
+                        element.IsRowReview = true;
+                    }
+                }
+
+                element.UplineMinBet = currentBSs[index].MinBet;
+                element.UplineMaxBet = currentBSs[index].MaxBet;
+                element.UplineMaxPayoutPerMatch = currentBSs[index].MaxPayoutPerMatch;
+                element.UplineMaxPerMatch = currentBSs[index].MaxPerMatch;
             });
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
-            $scope.$parent.invokeLoadingMsg(true);
+            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, $scope.editBS.BSRows, $scope.editBS.BSRows);
+            $scope.$parent.invokeLoadingMsg(false);
         })
         .error(function () {
-            $scope.$parent.invokeLoadingMsg(true);
+            $scope.$parent.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
         });
 }
@@ -229,49 +247,41 @@ editBSAllSportFunc.$inject = ['$scope'];
 
 var getNextEnable = function (scope, curBSRows, orgBSRows) {
     var arrValidRows = [];
+    var hasChangeValues = false;
     $.each(curBSRows, function (index, element) {
+        var orgRow = {
+            MinBet: orgBSRows[index].MinBet,
+            MaxBet: orgBSRows[index].MaxBet,
+            MaxPerMatch: orgBSRows[index].MaxPerMatch,
+            MaxPayoutPerMatch: orgBSRows[index].MaxPayoutPerMatch
+        };
+
+        var curRow = {
+            MinBet: curBSRows[index].MinBet,
+            MaxBet: curBSRows[index].MaxBet,
+            MaxPerMatch: curBSRows[index].MaxPerMatch,
+            MaxPayoutPerMatch: curBSRows[index].MaxPayoutPerMatch
+        };
+
         if (element.IsRowSelected === true) {
-            var orgRow = {
-                MinBet: orgBSRows[index].MinBet,
-                MaxBet: orgBSRows[index].MaxBet,
-                MaxPerMatch: orgBSRows[index].MaxPerMatch,
-                MaxPayoutPerMatch: orgBSRows[index].MaxPayoutPerMatch,
-                UplineMinBet: orgBSRows[index].UplineMinBet,
-                UplineMaxBet: orgBSRows[index].UplineMaxBet,
-                UplineMaxPerMatch: orgBSRows[index].UplineMaxPerMatch,
-                UplineMaxPayoutPerMatch: orgBSRows[index].UplineMaxPayoutPerMatch,
-                MaxPerBall: orgBSRows[index].MaxPerBall !== undefined ? orgBSRows[index].MaxPerBall : undefined,
-            };
-
-            var curRow = {
-                MinBet: curBSRows[index].MinBet,
-                MaxBet: curBSRows[index].MaxBet,
-                MaxPerMatch: curBSRows[index].MaxPerMatch,
-                MaxPayoutPerMatch: curBSRows[index].MaxPayoutPerMatch,
-                UplineMinBet: curBSRows[index].UplineMinBet,
-                UplineMaxBet: curBSRows[index].UplineMaxBet,
-                UplineMaxPerMatch: curBSRows[index].UplineMaxPerMatch,
-                UplineMaxPayoutPerMatch: curBSRows[index].UplineMaxPayoutPerMatch,
-                MaxPerBall: curBSRows[index].MaxPerBall !== undefined ? curBSRows[index].MaxPerBall : undefined,
-            };
-
-            if (angular.equals(curRow, orgRow)) {
+            if (angular.equals(curRow, orgRow) && !element.IsEmptyRow /* dbs is not empty */) {
                 arrValidRows.push(true);
             }
             else {
+                hasChangeValues = true;
                 arrValidRows.push(false);
             }
         }
         else {
-            curBSRows[index].MinBet = orgBSRows[index].MinBet;
-            curBSRows[index].MaxBet = orgBSRows[index].MaxBet;
-            curBSRows[index].MaxPerMatch = orgBSRows[index].MaxPerMatch;
-            curBSRows[index].MaxPerBall = orgBSRows[index].MaxPerBall;
-            curBSRows[index].MaxPayoutPerMatch = orgBSRows[index].MaxPayoutPerMatch;
-            curBSRows[index].UplineMinBet = orgBSRows[index].UplineMinBet;
-            curBSRows[index].UplineMaxBet = orgBSRows[index].UplineMaxBet;
-            curBSRows[index].UplineMaxPerMatch = orgBSRows[index].UplineMaxPerMatch;
-            curBSRows[index].UplineMaxPayoutPerMatch = orgBSRows[index].UplineMaxPayoutPerMatch;
+            if (element.IsRowReview) {
+                arrValidRows.push(false);
+            }
+            if (!angular.equals(curRow, orgRow)) {
+                curBSRows[index].MinBet = orgBSRows[index].MinBet;
+                curBSRows[index].MaxBet = orgBSRows[index].MaxBet;
+                curBSRows[index].MaxPerMatch = orgBSRows[index].MaxPerMatch;
+                curBSRows[index].MaxPayoutPerMatch = orgBSRows[index].MaxPayoutPerMatch;
+            }
         }
     });
 
@@ -317,10 +327,14 @@ var getNextEnable = function (scope, curBSRows, orgBSRows) {
         });
 
         // All rows DBS = ""
-        if (scope.isDBS && isValidDBSData) {
+        if (scope.isDbsPage && isValidDBSData) {
             hasViolate = false;
         }
-        /*end check constrants*/
+        /* end check constrants */
+
+        if (hasChangeValues && scope.editBS.isCopyAllFromOne) {
+            return !hasViolate;
+        }
 
         return !hasError && !hasViolate;
     }
@@ -342,7 +356,6 @@ var editBSRowCheckableFunc = function ($scope) {
             // Reset AllSport
             $scope.isAllSportChecked = true;
             // TODO: Why ng-change not raised?
-            $scope.checkAllSports();
             $.each($scope.editBS.BSRows, function (index, element) {
                 // Disable all checkboxes 0 -> n
                 if (index === 0) {
@@ -363,8 +376,9 @@ var editBSRowCheckableFunc = function ($scope) {
                 if (index === 0) {
                     $scope.listener();
                 }
-                element.IsRowSelected = false;
+
                 element.IsRowDisabled = false;
+                element.IsRowSelected = false;
             });
         }
     };
@@ -383,6 +397,21 @@ var editBSRowCheckableFunc = function ($scope) {
 };
 editBSRowCheckableFunc.$inject = ['$scope'];
 
+var editBSCheckboxState = function ($scope) {
+    $scope.disableCheckbox = function (rowData, rowIndex) {
+        if ($scope.isDbsPage && rowData.IsEmptyRow) {
+            return true;
+        }
+
+        if (rowIndex === 0 && $scope.editBS.isCopyAllFromOne) {
+            return true;
+        }
+
+        return rowData.IsRowDisabled;
+    }
+}
+editBSCheckboxState.$inject = ['$scope'];
+
 var editBSNextEnabilityFunc = function ($scope, shareSettingsService) {
     // Private functions
     var checkDirty = function () {
@@ -391,11 +420,13 @@ var editBSNextEnabilityFunc = function ($scope, shareSettingsService) {
         if ($scope.editBS.BSRows !== undefined) {
             var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
             var curBSRows = $scope.editBS.BSRows;
-            if ($scope.editBS.isCopyAllFromOne === true) {
-                $scope.buttonStatus.isNextEnabled = true;
-                return;
-            }
             $scope.buttonStatus.isNextEnabled = getNextEnable($scope, curBSRows, orgBSRows);
+
+            angular.forEach(curBSRows, function (row) {
+                if (row.IsEmptyRow && !row.IsRowSelected) {
+                    row.IsRowSelected = true;
+                }
+            });
         }
     };
 
@@ -442,13 +473,35 @@ editBSApplyForPlayerFunc.$inject = ['$scope', 'shareSettingsService'];
 var editBSNextConstraintsFunc = function ($scope, shareSettingsService) {
 
     $scope.nextReviewBS = function () {
-        if ($scope.isDBS === true) {
+        var orgBSRows = shareSettingsService.getOrgSettings().BSRows;
+        var curBSRows = $scope.editBS.BSRows;
+
+        $.each(curBSRows, function (index, row) {
+            if (row.IsRowSelected) {
+                if (row.MinBet === orgBSRows[index].MinBet
+                    && row.MaxBet === orgBSRows[index].MaxBet
+                    && row.MaxPerMatch === orgBSRows[index].MaxPerMatch
+                    && row.MaxPayoutPerMatch === orgBSRows[index].MaxPayoutPerMatch
+                    && !row.IsEmptyRow) {
+
+                    row.IsRowUpdated = false;
+                } else {
+                    row.IsRowUpdated = true;
+                }
+            } else {
+                if (row.IsRowUpdated) {
+                    row.IsRowUpdated = false;
+                }
+            }
+        });
+
+        if ($scope.isDbsPage === true) {
             angular.extend(shareSettingsService.getCurSettings(), { DBSRows: angular.copy($scope.editBS.BSRows) });
         } else {
             shareSettingsService.saveCurSettings($scope.editBS);
         }
 
-        $scope.checkBS();
+        $scope.checkBS($scope.isDbsPage);
     };
 };
 editBSNextConstraintsFunc.$inject = ['$scope', 'shareSettingsService'];
@@ -500,6 +553,8 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
+
+    $injector.invoke(editBSCheckboxState, this, { $scope: $scope });
 }]);
 
 ﻿/* exported reviewBSModelFunc, reviewBSNavigatorFunc */
@@ -607,14 +662,12 @@ licenseeBetSettingApp.controller("reviewBSSportsbookCtrl", ['$scope', '$injector
 // Main controller
 
 licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
-    '$scope', '$http', '$location', '$route', '$routeParams', 'shareSettingsService',
+    '$scope', '$http', '$location', '$route', 'shareSettingsService',
     'GetSuperLicenseeListUrl', 'GetLicenseeAgentListUrl', 'ContextFunc', 'GetSettingsUrl', 'SportsbookDBSErrCode',
-    function ($scope, $http, $location, $route, $routeParams, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl, SportsbookDBSErrCode) {
+    function ($scope, $http, $location, $route, shareSettingsService, GetSuperLicenseeListUrl, GetLicenseeAgentListUrl, ContextFunc, GetSettingsUrl, SportsbookDBSErrCode) {
         $scope.option = 0;
-        $scope.agentIdByErrorCode = -1; // to get DBS
         $scope.invertedSymbol = false; // to set DBS UI
-        $scope.errMessage = '';
-        $scope.isLoading = true;
+        $scope.agentIdByErrorCode = -1; // to get DBS
 
         // Load data for ddls
         $scope.filterData = {
@@ -628,16 +681,17 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.invokeLoadingMsg = function (visible) {
-            if (visible) {
-                if ($scope.isLoading) {
-                    $scope.isLoading = false;
-                }
+            $.blockUI.defaults.overlayCSS.opacity = 0;
+            $.blockUI.defaults.css = {};
 
-                $scope.buttonStatus.isButtonEnable = true;
+            if (visible) {
+                $.blockUI({ message: '<div class="icon-loading"></div>' });
+
+                $scope.buttonStatus.isButtonEnable = false;
             }
             else {
-                $scope.isLoading = true;
-                $scope.buttonStatus.isButtonEnable = false;
+                $.unblockUI();
+                $scope.buttonStatus.isButtonEnable = true;
             }
         };
 
@@ -658,7 +712,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedLicenseeChanged = function () {
-            $scope.invokeLoadingMsg(false);
+            $scope.invokeLoadingMsg(true);
             $http.get(
                 GetSuperLicenseeListUrl,
                 {
@@ -677,11 +731,24 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         hasEnter: false,
                         width: '100%',
                     }
+
+                    if (data.length === 0) {
+                        $scope.filterData.selectedAgent = undefined;
+                        $scope.agentSettings = {
+                            idMember: "Id",
+                            nameMember: "Name",
+                            sourceData: [],
+                            hasToolbar: false,
+                            hasFilter: true,
+                            hasEnter: false,
+                            width: '100%',
+                        };
+                    }
                 });
         };
 
         $scope.selectedSuperLicenseeChanged = function (SRecommend) {
-            $scope.invokeLoadingMsg(false);
+            $scope.invokeLoadingMsg(true);
             $http.get(
                 GetLicenseeAgentListUrl,
                 {
@@ -701,7 +768,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         width: '100%',
                     };
 
-                    $scope.invokeLoadingMsg(true);
+                    $scope.invokeLoadingMsg(false);
                 });
         };
 
@@ -717,6 +784,19 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     hasFilter: true,
                     hasEnter: false,
                     width: '100%',
+                }
+
+                if (data.LicenseeList.length === 0) {
+                    $scope.filterData.selectedSuperLicensee = undefined;
+                    $scope.superLicenseeSettings = {
+                        idMember: "Id",
+                        nameMember: "CurrencyWithSuper",
+                        sourceData: [],
+                        hasToolbar: false,
+                        hasFilter: true,
+                        hasEnter: false,
+                        width: '100%',
+                    }
                 }
 
                 $scope.filterData.productTypes = data.ProductTypeList;
@@ -746,7 +826,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             // Refresh button on page.
             $scope.buttonStatus.IsBack = false;
             $scope.buttonStatus.isUpdated = false;
-            $scope.invokeLoadingMsg(false);
+            $scope.invokeLoadingMsg(true);
 
             var curPath = $location.path();
 
@@ -772,12 +852,12 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             postBetSetting(editedBSRows, editedDBSRows, startIndex);
         };
 
-        $scope.checkBS = function () {
+        $scope.checkBS = function (isDbsPage) {
             var editedRows = getEditedRows();
             var editedBSRows = editedRows.BSRows;
             var editedDBSRows = editedRows.DBSRows;
 
-            checkBetSetting(editedBSRows, editedDBSRows);
+            checkBetSetting(editedBSRows, editedDBSRows, isDbsPage);
         }
 
         var getEditedRows = function () {
@@ -789,7 +869,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             };
 
             for (var i = 0; i < bsRows.length; i++) {
-                if (bsRows[i].IsRowSelected || (dbsRows != null && dbsRows[i].IsRowSelected)) {
+                if ((bsRows[i].IsRowSelected && bsRows[i].IsRowUpdated) || (dbsRows != null && dbsRows[i].IsRowSelected && dbsRows[i].IsRowUpdated)) {
                     bsRows[i].Index = i;
                     result.BSRows.push(bsRows[i]);
                     if (dbsRows !== null) {
@@ -831,6 +911,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                             $(this).dialog("close");
                             var curPath = location.pathname;
                             if (curPath !== "/EditDefaultBetSetting/" + workingContext.ProdId) {
+                                $scope.invokeLoadingMsg(true);
                                 location.href = window.rootUrl + "LicenseeBetSetting/Index#/EditDefaultBetSetting/" + workingContext.ProdId;
                             }
                         }
@@ -890,26 +971,41 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             return result;
         }
 
-        var checkBetSetting = function (editedBSRows, editedDBSRows) {
+        var checkBetSetting = function (editedBSRows, editedDBSRows, isDbsPage) {
+            $scope.errMessage = '';
+
             var param = updatedParams();
             param.BSRows = editedBSRows;
             param.DBSRows = editedDBSRows;
 
+            $scope.invokeLoadingMsg(true);
             $http.post('CheckBetSettingSportsbook', param)
                 .success(function (data) {
+                    $scope.invokeLoadingMsg(false);
+                    var reviewDBSMessage = 'Please check value of Default Bet Setting which is applied for new players!';
+                    var applyForPlayers = shareSettingsService.getCurSettings().IsApplyForMembersChecked;
+                    $scope.agentIdByErrorCode = shareSettingsService.getWorkingContext().AgentId;
+                    $scope.invertedSymbol = invertedSymbol(data.Code);
+
                     if (data.IsOk) {
-                        $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
+                        if (!applyForPlayers && !isDbsPage) {
+                            $scope.errMessage = reviewDBSMessage;
+                            goToEditDBPage(shareSettingsService.getWorkingContext());
+                        } else {
+                            $location.path("/ReviewBetSetting/" + shareSettingsService.getWorkingContext().ProdId);
+                        }
                     }
                     else {
-                        if (isViolatedDBS(data.Code)) {
-                            $scope.agentIdByErrorCode = shareSettingsService.getWorkingContext().AgentId;
-                            $scope.errMessage = '<b>' + data.SportOrBetTypeName + '</b>:' + data.Message;
+                        if (isViolatedDBS(data.Code) && !isDbsPage) {
+                            if (!applyForPlayers) {
+                                $scope.errMessage = reviewDBSMessage;
+                            } else {
+                                $scope.errMessage = '<b>' + data.SportOrBetTypeName + '</b>:' + data.Message;
+                            }
 
                             if (isLoadCurrencyDBS(data.Code)) {
                                 $scope.agentIdByErrorCode = 0;
                             }
-
-                            $scope.invertedSymbol = invertedSymbol(data.Code);
 
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
@@ -918,6 +1014,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     }
                 })
                 .error(function () {
+                    $scope.invokeLoadingMsg(false);
                     alert(site.requestErrMsg);
                 });
         }
@@ -927,8 +1024,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             var BSRows = shareSettingsService.getCurSettings().BSRows;
             var DBSRows = shareSettingsService.getCurSettings().DBSRows;
 
-            var bsRow = editedBSRows[index].IsRowSelected ? BSRows[editedBSRows[index].Index] : {};
-            var dbsRow = (editedDBSRows.length > 0 && editedDBSRows[index].IsRowSelected) ? DBSRows[editedDBSRows[index].Index] : {};
+            var bsRow = (editedBSRows[index].IsRowSelected && editedBSRows[index].IsRowUpdated) ? BSRows[editedBSRows[index].Index] : {};
+            var dbsRow = (editedDBSRows.length > 0 && editedDBSRows[index].IsRowSelected && editedDBSRows[index].IsRowUpdated) ? DBSRows[editedDBSRows[index].Index] : {};
 
             var param = updatedParams();
             param.BSRows = angular.equals({}, bsRow) ? null : [bsRow];
@@ -981,7 +1078,7 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
         restrict: 'A',
         scope: {
             agentId: "=",
-            isDefault: "="
+            isDbsPage: "="
         },
         link: function (scope, elem, attrs, ngModel) {
 
@@ -1060,7 +1157,7 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
 
             //For model -> DOM validation
             ngModel.$formatters.unshift(function (value) {
-                if (scope.agentId === 0 && !scope.isDefault) {
+                if (scope.agentId === 0 && !scope.isDbsPage) {
                     return "";
                 }
                 var valid = validFn(value);
