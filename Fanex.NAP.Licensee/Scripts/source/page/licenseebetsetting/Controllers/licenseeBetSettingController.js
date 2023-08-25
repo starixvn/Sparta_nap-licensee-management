@@ -21,26 +21,11 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             // selectedFunction
         };
 
-        $scope.invokeLoadingMsg = function (visible) {
-            $.blockUI.defaults.overlayCSS.opacity = 0;
-            $.blockUI.defaults.css = {};
-
-            if (visible) {
-                $.blockUI({ message: '<div class="icon-loading"></div>' });
-
-                $scope.buttonStatus.isButtonEnable = false;
-            }
-            else {
-                $.unblockUI();
-                $scope.buttonStatus.isButtonEnable = true;
-            }
-        };
-
         $scope.buttonStatus = {
             isNextEnabled: false,
             isBack: false,
             isUpdated: false,
-            isButtonEnable: false,
+            isButtonEnable: true,
             isSuccess: true
         };
 
@@ -53,15 +38,17 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.selectedLicenseeChanged = function () {
-            $scope.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
+            var licensee = $scope.filterData.selectedLicensee;
+            var licenseeName = licensee ? licensee.Name : '';
+
             $http.get(
                 GetSuperLicenseeListUrl,
                 {
-                    params: { siteName: $scope.filterData.selectedLicensee.Name }
+                    params: { siteName: licenseeName }
                 }
             )
                 .success(function (data) {
-                    $scope.filterData.superLicensees = data;
                     $scope.filterData.selectedSuperLicensee = data[0];
                     $scope.superLicenseeSettings = {
                         idMember: "Id",
@@ -74,22 +61,21 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     }
 
                     if (data.length === 0) {
-                        $scope.filterData.selectedAgent = undefined;
-                        $scope.agentSettings = {
-                            idMember: "Id",
-                            nameMember: "Name",
-                            sourceData: [],
-                            hasToolbar: false,
-                            hasFilter: true,
-                            hasEnter: false,
-                            width: '100%',
-                        };
+                        $scope.selectedSuperLicenseeChanged();
                     }
+                })
+                .error(function () {
+                    site.invokeLoadingMsg(false);
+                    $scope.buttonStatus.isButtonEnable = false;
+                    alert(site.requestErrMsg);
                 });
         };
 
-        $scope.selectedSuperLicenseeChanged = function (SRecommend) {
-            $scope.invokeLoadingMsg(true);
+        $scope.selectedSuperLicenseeChanged = function () {
+            site.invokeLoadingMsg(true);
+            var superLicensee = $scope.filterData.selectedSuperLicensee;
+            var SRecommend = superLicensee !== undefined ? superLicensee.Id : -1;
+
             $http.get(
                 GetLicenseeAgentListUrl,
                 {
@@ -97,7 +83,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                 }
             )
                 .success(function (data) {
-                    $scope.filterData.agents = data;
+                    data = superLicensee !== undefined ? data : [];
+                    $scope.filterData.agents = data
                     $scope.filterData.selectedAgent = data[0];
                     $scope.agentSettings = {
                         idMember: "Id",
@@ -109,43 +96,21 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                         width: '100%',
                     };
 
-                    $scope.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
+                    $scope.buttonStatus.isButtonEnable = data.length > 0;
+                })
+                .error(function () {
+                    site.invokeLoadingMsg(false);
+                    $scope.buttonStatus.isButtonEnable = false;
+                    alert(site.requestErrMsg);
                 });
         };
 
-        $http.get(GetSettingsUrl)
-            .success(function (data) {
-                $scope.filterData.licensees = data.LicenseeList;
-                $scope.filterData.selectedLicensee = data.LicenseeList[0];
-                $scope.licenseeSettings = {
-                    idMember: "Id",
-                    nameMember: "Name",
-                    sourceData: data.LicenseeList,
-                    hasToolbar: false,
-                    hasFilter: true,
-                    hasEnter: false,
-                    width: '100%',
-                }
-
-                if (data.LicenseeList.length === 0) {
-                    $scope.filterData.selectedSuperLicensee = undefined;
-                    $scope.superLicenseeSettings = {
-                        idMember: "Id",
-                        nameMember: "CurrencyWithSuper",
-                        sourceData: [],
-                        hasToolbar: false,
-                        hasFilter: true,
-                        hasEnter: false,
-                        width: '100%',
-                    }
-                }
-
-                $scope.filterData.productTypes = data.ProductTypeList;
-                $scope.filterData.selectedProductType = data.ProductTypeList[0];
-                $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
-            });
-
         $scope.selectEventHandler = function () {
+            if (!$scope.buttonStatus.isButtonEnable) {
+                return;
+            }
+
             if ($scope.filterData.selectedFunction === ContextFunc.CurrencyBetSetting) {
                 $scope.option = 0; // Currency Bet Setting
             } else if ($scope.filterData.selectedFunction === ContextFunc.PlayerBetSetting) {
@@ -167,7 +132,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             // Refresh button on page.
             $scope.buttonStatus.IsBack = false;
             $scope.buttonStatus.isUpdated = false;
-            $scope.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
 
             var curPath = $location.path();
 
@@ -182,6 +147,10 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         };
 
         $scope.updateBS = function () {
+            if ($scope.buttonStatus.isUpdated) {
+                return;
+            }
+
             $scope.buttonStatus.isUpdated = true;
             $scope.buttonStatus.isButtonEnable = false;
 
@@ -252,7 +221,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                             $(this).dialog("close");
                             var curPath = location.pathname;
                             if (curPath !== "/EditDefaultBetSetting/" + workingContext.ProdId) {
-                                $scope.invokeLoadingMsg(true);
+                                site.invokeLoadingMsg(true);
                                 location.href = window.rootUrl + "LicenseeBetSetting/Index#/EditDefaultBetSetting/" + workingContext.ProdId;
                             }
                         }
@@ -319,10 +288,10 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
             param.BSRows = editedBSRows;
             param.DBSRows = editedDBSRows;
 
-            $scope.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
             $http.post('CheckBetSettingSportsbook', param)
                 .success(function (data) {
-                    $scope.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                     var reviewDBSMessage = 'Please check value of Default Bet Setting which is applied for new players!';
                     var applyForPlayers = shareSettingsService.getCurSettings().IsApplyForMembersChecked;
                     $scope.agentIdByErrorCode = shareSettingsService.getWorkingContext().AgentId;
@@ -355,7 +324,7 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     }
                 })
                 .error(function () {
-                    $scope.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                     alert(site.requestErrMsg);
                 });
         }
@@ -409,4 +378,36 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
                     dbsRow.Message = message;
                 });
         };
+
+        function init() {
+            site.invokeLoadingMsg(true);
+            $http.get(GetSettingsUrl)
+                .success(function (data) {
+                    $scope.filterData.licensees = data.LicenseeList;
+                    $scope.filterData.selectedLicensee = data.LicenseeList[0];
+                    $scope.licenseeSettings = {
+                        idMember: "Id",
+                        nameMember: "Name",
+                        sourceData: data.LicenseeList,
+                        hasToolbar: false,
+                        hasFilter: true,
+                        hasEnter: false,
+                        width: '100%',
+                    }
+
+                    $scope.filterData.productTypes = data.ProductTypeList;
+                    $scope.filterData.selectedProductType = data.ProductTypeList[0];
+                    $scope.filterData.selectedFunction = $scope.filterData.selectedProductType.Functions[0];
+
+                    if (data.LicenseeList.length === 0) {
+                        $scope.selectedLicenseeChanged();
+                    }
+                })
+                .error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
+                });
+        }
+
+        init();
     }]);

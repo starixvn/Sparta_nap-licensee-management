@@ -1,4 +1,4 @@
-﻿/* global logSettings*/
+﻿/* global site, logSettings*/
 
 (function () {
     'use strict';
@@ -11,7 +11,6 @@
 
     function logService($http) {
 
-        /* private functions */
         function licenseeSetting(vm) {
             vm.criteria.Licensee = vm.Licensees[0];
             vm.LicenseeSetting = {
@@ -51,16 +50,7 @@
             };
         }
 
-        function setGenerateButtonStatus (disable) {
-            if (disable) {
-                $("#generate").attr("disabled", "disabled");
-            } else {
-                $("#generate").removeAttr("disabled");
-            }
-        };
-
-        /* public functions */
-        this.formatDateString = function (date) {
+        var formatDateString = function (date) {
             return date.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
@@ -68,7 +58,7 @@
             });
         }
 
-        this.configGridOptions = function () {
+        var configGridOptions = function () {
             return {
                 columns: [
                     {
@@ -97,12 +87,15 @@
             }
         }
 
-        this.getSelectedLicenseeChange = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSelectedLicenseeChange = function (vm) {
+            site.invokeLoadingMsg(true);
+            var licensee = vm.criteria.Licensee;
+            var licenseeName = licensee ? licensee.Name : '';
+
             $http.get(
                 'GetSuperLicenseeList',
                 {
-                    params: { siteName: vm.criteria.Licensee.Name }
+                    params: { siteName: licenseeName }
                 }
             )
                 .success(function (superWithCurrencies) {
@@ -110,29 +103,40 @@
                     superWithCurrencySetting(vm);
 
                     if (superWithCurrencies.length === 0) {
-                        vm.Agents = [];
-                        agentSetting(vm);
+                        getSelectedSuperWithCurrencyChange(vm);
                     }
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.getSelectedSuperWithCurrencyChange = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSelectedSuperWithCurrencyChange = function (vm) {
+            site.invokeLoadingMsg(true);
+            var superLicensee = vm.criteria.SuperWithCurrency;
+            var SRecommend = superLicensee !== undefined ? superLicensee.Id : -1;
+
             $http.get(
                 'GetLicenseeAgentList',
                 {
-                    params: { SRecommend: vm.criteria.SuperWithCurrency.Id }
+                    params: { SRecommend: SRecommend }
                 }
             )
                 .success(function (agents) {
+                    agents = superLicensee !== undefined ? agents : [];
                     vm.Agents = agents;
                     agentSetting(vm);
-                    setGenerateButtonStatus(false);
+                    site.invokeLoadingMsg(false);
+
+                    vm.buttonStatus.disableButton = agents.length <= 0;
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.getSettings = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSettings = function (vm) {
+            site.invokeLoadingMsg(true);
             $http.get('GetLogSettings')
                 .success(function (data) {
                     vm.Licensees = data.Licensees;
@@ -145,18 +149,20 @@
 
                     licenseeSetting(vm);
 
-                    if (data.Licensees.length === 0) {
-                        vm.SuperWithCurrencies = [];
-                        superWithCurrencySetting(vm);
-                    }
-
                     vm.TextSettings = {
                         Filter: 'Search'
                     };
+
+                    if (vm.Licensees.length === 0) {
+                        getSelectedSuperWithCurrencyChange(vm);
+                    }
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.handleLogData = function (data, Func) {
+        var handleLogData = function (data, Func) {
             angular.forEach(data.Data, function (item) {
                 var oldData = logSettings.formatData(item.OldData, item.ActionId, Func);
                 var newData = logSettings.formatData(item.Data, item.ActionId, Func);
@@ -165,18 +171,13 @@
             })
         }
 
-        this.invokeLoadingMsg = function (visible) {
-            $.blockUI.defaults.overlayCSS.opacity = 0;
-            $.blockUI.defaults.css = {};
-
-            if (visible) {
-                $.blockUI({ message: '<div class="icon-loading"></div>' });
-                setGenerateButtonStatus(true);
-            }
-            else {
-                $.unblockUI();
-                setGenerateButtonStatus(false);
-            }
-        };
+        return {
+            formatDateString: formatDateString,
+            configGridOptions: configGridOptions,
+            getSelectedLicenseeChange: getSelectedLicenseeChange,
+            getSelectedSuperWithCurrencyChange: getSelectedSuperWithCurrencyChange,
+            getSettings: getSettings,
+            handleLogData: handleLogData
+        }
     }
 })();

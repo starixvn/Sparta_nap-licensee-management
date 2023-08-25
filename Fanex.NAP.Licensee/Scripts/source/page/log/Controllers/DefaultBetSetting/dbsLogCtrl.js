@@ -10,7 +10,9 @@
 
         vm.criteria = {};
         vm.formData = {};
-
+        vm.buttonStatus = {
+            disableButton: false
+        };
         vm.gridOptions = logService.configGridOptions();
 
         function setSportNames(arr) {
@@ -47,15 +49,15 @@
         }
 
         function getReport() {
-            logService.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
             $http.get('GetReport', { params: vm.formData })
                 .success(function (data) {
                     logService.handleLogData(data, setSportNames);
                     vm.report = data;
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                 })
                 .error(function (data) {
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                     alert(data);
                 });
         }
@@ -68,7 +70,11 @@
             logService.getSelectedSuperWithCurrencyChange(vm);
         }
 
-        vm.getReport = function () {;
+        vm.getReport = function () {
+            if (vm.buttonStatus.disableButton) {
+                return;
+            }
+
             vm.formData = getNormalizedFilter();
 
             getReport();

@@ -50,7 +50,7 @@
             <input class="width-160 valid" type="date" id="to-date" data-ng-model="vm.criteria.ToDate">
         </div>
         <div class="form-group">
-            <input id="generate" type="button" value="Select" class="btn btn-generate btn-primary" ng-click="vm.getReport()">
+            <input id="generate" type="button" value="Select" class="btn btn-generate btn-primary" ng-click="vm.getReport()" ng-disabled="vm.buttonStatus.disableButton">
         </div>
     </div>
 </div>

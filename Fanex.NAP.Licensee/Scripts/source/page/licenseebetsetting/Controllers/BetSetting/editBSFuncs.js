@@ -69,10 +69,10 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             else {
                 angular.extend($scope.editBS, data);
             }
-            $scope.$parent.invokeLoadingMsg(false);
+            site.invokeLoadingMsg(false);
         })
         .error(function () {
-            $scope.$parent.invokeLoadingMsg(false);
+            site.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
         });;
 };
@@ -103,6 +103,7 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
         })
         .success(function (data) {
             if (typeof data !== 'object') {
+                $scope.$parent.invokeLoadingMsg(false);
                 return;
             }
 
@@ -132,10 +133,10 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS = data;
             $scope.buttonStatus.isNextEnabled = getNextEnable($scope, $scope.editBS.BSRows, $scope.editBS.BSRows);
-            $scope.$parent.invokeLoadingMsg(false);
+            site.invokeLoadingMsg(false);
         })
         .error(function () {
-            $scope.$parent.invokeLoadingMsg(false);
+            site.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
         });
 }

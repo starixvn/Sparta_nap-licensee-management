@@ -69,6 +69,10 @@ var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, C
     }
 
     $scope.backEditBS = function () {
+        if (!$scope.buttonStatus.isButtonEnable) {
+            return;
+        }
+
         if ($scope.buttonStatus.isUpdated) {
             $scope.buttonStatus.isUpdated = false;
             $scope.buttonStatus.isNextEnabled = false;
