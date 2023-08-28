@@ -5933,79 +5933,7 @@ var Form = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
-        _this._onGenerate = function () {
-            _this.props.toggleLoader(true);
-            var param = _this._getParams();
-            var extendTime = _this.state.extendTime;
-
-
-            _this.props.createToken(param).then(function (response) {
-                if (response.data.IsSuccess === true) {
-                    _this.setState({
-                        isSuccess: true,
-                        token: response.data.Data,
-                        expriedIn: _this._convertHourToSecond(extendTime)
-                    });
-                    if (response.data.Error) {
-                        _utility2.default.showWarningMessage(response.data.result.Error);
-                    }
-                } else {
-                    _utility2.default.showErrorMessage(response.data.Error);
-                }
-
-                _this.props.toggleLoader(false);
-            }).catch(function (err) {
-                _this.props.toggleLoader(false);
-            });
-
-            _this._setTimeControl();
-        };
-
-        _this._onCopy = function () {
-            _this.txtToken.select();
-            document.execCommand('copy');
-
-            _this.setState({
-                isCopy: true
-            });
-            setTimeout(function () {
-                _this.setState({ isCopy: false });
-            }, 500);
-        };
-
-        _this._handleChange = function (event, stateName) {
-            var _event$target = event.target,
-                value = _event$target.value,
-                min = _event$target.min,
-                max = _event$target.max;
-
-
-            if (!event.target.validity.valid) {
-                return;
-            }
-
-            if (value != '' && min && value < Number(min) || max && value > Number(max)) {
-                return;
-            }
-
-            _this.setState(_defineProperty({}, stateName, value));
-        };
-
-        _this._onCheck = function (value) {
-            var currencySelected = _this.state.currencySelected;
-
-
-            var index = currencySelected.indexOf(value.Id);
-            value.isCheck = !value.isCheck;
-
-            if (value.isCheck == true && index < 0) {
-                currencySelected.push(value.Id);
-            } else {
-                currencySelected.splice(index, 1);
-            }
-
-            _this.setState({ currencySelected: currencySelected });
-        };
+        _initialiseProps.call(_this);
 
         var _this$props = _this.props,
             timeRemaining = _this$props.timeRemaining,
@@ -6022,7 +5950,8 @@ var Form = function (_Component) {
             redmineID: '',
             expriedIn: timeRemaining,
             currency: currency,
-            currencySelected: oldCurrency ? oldCurrency : []
+            currencySelected: oldCurrency ? oldCurrency : [],
+            currencySelectedAll: false
         };
         return _this;
     }
@@ -6295,7 +6224,8 @@ var Form = function (_Component) {
                 extendTime = _state3.extendTime,
                 token = _state3.token,
                 currency = _state3.currency,
-                isSuccess = _state3.isSuccess;
+                isSuccess = _state3.isSuccess,
+                currencySelectedAll = _state3.currencySelectedAll;
             var _props = this.props,
                 user = _props.user,
                 isValid = _props.isValid,
@@ -6474,6 +6404,7 @@ var Form = function (_Component) {
                                         selectedNode: oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission),
                                         defaultSelectedNode: oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission),
                                         nodes: funcPer && JSON.parse(funcPer),
+                                        selectAllNode: true,
                                         isDisableAll: isSuccess })
                                 )
                             )
@@ -6492,6 +6423,18 @@ var Form = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel-body auto-scroll' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group' },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { className: 'checkbox-inline node' },
+                                            _react2.default.createElement('input', { type: 'checkbox', checked: currencySelectedAll, disabled: isSuccess, onChange: function onChange() {
+                                                    return _this6._onCheckAll(!currencySelectedAll);
+                                                } }),
+                                            'Select All'
+                                        )
+                                    ),
                                     currency.map(function (cur, i) {
                                         return _react2.default.createElement(
                                             'div',
@@ -6517,6 +6460,105 @@ var Form = function (_Component) {
 
     return Form;
 }(_react.Component);
+
+var _initialiseProps = function _initialiseProps() {
+    var _this7 = this;
+
+    this._onGenerate = function () {
+        _this7.props.toggleLoader(true);
+        var param = _this7._getParams();
+        var extendTime = _this7.state.extendTime;
+
+
+        _this7.props.createToken(param).then(function (response) {
+            if (response.data.IsSuccess === true) {
+                _this7.setState({
+                    isSuccess: true,
+                    token: response.data.Data,
+                    expriedIn: _this7._convertHourToSecond(extendTime)
+                });
+                if (response.data.Error) {
+                    _utility2.default.showWarningMessage(response.data.result.Error);
+                }
+            } else {
+                _utility2.default.showErrorMessage(response.data.Error);
+            }
+
+            _this7.props.toggleLoader(false);
+        }).catch(function (err) {
+            _this7.props.toggleLoader(false);
+        });
+
+        _this7._setTimeControl();
+    };
+
+    this._onCopy = function () {
+        _this7.txtToken.select();
+        document.execCommand('copy');
+
+        _this7.setState({
+            isCopy: true
+        });
+        setTimeout(function () {
+            _this7.setState({ isCopy: false });
+        }, 500);
+    };
+
+    this._handleChange = function (event, stateName) {
+        var _event$target = event.target,
+            value = _event$target.value,
+            min = _event$target.min,
+            max = _event$target.max;
+
+
+        if (!event.target.validity.valid) {
+            return;
+        }
+
+        if (value != '' && min && value < Number(min) || max && value > Number(max)) {
+            return;
+        }
+
+        _this7.setState(_defineProperty({}, stateName, value));
+    };
+
+    this._onCheck = function (value) {
+        var currencySelected = _this7.state.currencySelected;
+
+
+        var index = currencySelected.indexOf(value.Id);
+        value.isCheck = !value.isCheck;
+
+        if (value.isCheck == true && index < 0) {
+            currencySelected.push(value.Id);
+        } else {
+            currencySelected.splice(index, 1);
+        }
+
+        _this7.setState({ currencySelected: currencySelected });
+    };
+
+    this._onCheckAll = function (isCheckAll) {
+        var _state4 = _this7.state,
+            currency = _state4.currency,
+            currencySelected = _state4.currencySelected;
+
+
+        currency.forEach(function (cur) {
+            return cur.isCheck = isCheckAll;
+        });
+
+        if (isCheckAll) {
+            _this7.setState({ currency: currency, currencySelected: currency.map(function (cur) {
+                    return cur.Id;
+                }), currencySelectedAll: isCheckAll });
+            return;
+        }
+
+        currencySelected.length = 0;
+        _this7.setState({ currency: currency, currencySelected: currencySelected, currencySelectedAll: isCheckAll });
+    };
+};
 
 function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ setSelectedFuncs: _action.setSelectedFuncs, setIsCheckGroup: _action.setIsCheckGroup, createToken: _action.createToken, toggleLoader: _action.toggleLoader }, dispatch);
@@ -6591,17 +6633,25 @@ var Tree = function (_Component) {
 
 
             _this._checkedChildNode(node, !node.isCheck, isSubChild);
-            _this._checkedParentNode(parent, node.isCheck);
+            if (parent) {
+                _this._checkedParentNode(parent);
+            }
 
             _this.setState({ nodes: nodes });
         };
 
         _this._onRadioCheck = function (parent, node) {
+            if (parent.isDisable) {
+                return;
+            }
+
             var nodes = _this.state.nodes;
 
 
             _this._checkedRadioNode(parent, node);
-            _this._checkedParentNode(parent, true);
+            if (parent) {
+                _this._checkedParentNode(parent);
+            }
 
             _this.setState({ nodes: nodes });
         };
@@ -6609,12 +6659,70 @@ var Tree = function (_Component) {
         _this.state = {
             nodes: props.nodes,
             selectedNode: props.selectedNode ? props.selectedNode : [],
+            isSelectedAllNode: false,
+            isSelectedAllMode: props.selectAllNode,
             defaultSelectedNode: props.defaultSelectedNode ? props.defaultSelectedNode : []
         };
         return _this;
     }
 
     _createClass(Tree, [{
+        key: '_onNodeSelectAll',
+        value: function _onNodeSelectAll(isCheckedAll) {
+            var _this2 = this;
+
+            var nodes = this.state.nodes;
+
+
+            nodes.forEach(function (node) {
+                _this2._checkAllChildNode(node, isCheckedAll, false);
+            });
+
+            this.setState({ isSelectedAllNode: isCheckedAll });
+        }
+    }, {
+        key: '_checkAllChildNode',
+        value: function _checkAllChildNode(node, checked, isSubChild) {
+            var _this3 = this;
+
+            var children = this._getChildNodes(node);
+            if (node.isDisable) {
+                if (children.length && node.InputBoxType === 'radio') {
+                    return;
+                }
+
+                children.forEach(function (child) {
+                    var hasSubChild = node.SubFunctionKeys != null;
+                    _this3._checkAllChildNode(child, checked, hasSubChild);
+                });
+
+                return;
+            }
+
+            node.isCheck = checked;
+
+            this._addNodeIntoSelectedFunc(node, isSubChild);
+
+            if (!children.length) {
+                return;
+            }
+
+            if (node.InputBoxType === 'radio') {
+                children.forEach(function (radioNode) {
+                    return _this3._checkAllChildNode(radioNode, false, false);
+                });
+
+                children[0].isCheck = checked;
+                this._addNodeIntoSelectedFunc(node, isSubChild);
+                return;
+            }
+
+            children.forEach(function (child) {
+                var hasSubChild = node.SubFunctionKeys != null;
+                _this3._checkAllChildNode(child, node.isCheck, hasSubChild);
+            });
+        }
+    }, {
         key: '_getChildNodes',
         value: function _getChildNodes(node) {
             if (!node.Settings) {
@@ -6712,30 +6820,28 @@ var Tree = function (_Component) {
     }, {
         key: '_checkedParentNode',
         value: function _checkedParentNode(parent) {
-            if (parent) {
-                var flag = false;
-                this._getChildNodes(parent).forEach(function (child) {
-                    if (child.isCheck == true) {
-                        flag = true;
-                    }
-                });
-
-                parent.isCheck = flag;
-                if (flag == true) {
-                    this._addNodeIntoSelectedFunc(parent, false);
+            var isChildrenChecked = false;
+            this._getChildNodes(parent).forEach(function (child) {
+                if (child.isCheck) {
+                    isChildrenChecked = true;
                 }
+            });
 
-                var parentLevel = [].concat(_toConsumableArray(parent.level));
-                var parentNode = this._getParentNode(parentLevel);
-                if (parentNode.length != 0) {
-                    this._checkedParentNode(parentNode);
-                }
+            parent.isCheck = isChildrenChecked;
+            if (isChildrenChecked) {
+                this._addNodeIntoSelectedFunc(parent, false);
+            }
+
+            var parentLevel = [].concat(_toConsumableArray(parent.level));
+            var parentNode = this._getParentNode(parentLevel);
+            if (parentNode.length) {
+                this._checkedParentNode(parentNode);
             }
         }
     }, {
         key: '_checkedChildNode',
         value: function _checkedChildNode(node, checked, isSubChild) {
-            var _this2 = this;
+            var _this4 = this;
 
             node.isCheck = checked;
 
@@ -6748,22 +6854,22 @@ var Tree = function (_Component) {
                 } else {
                     children.forEach(function (child) {
                         var hasSubChild = node.SubFunctionKeys != null;
-                        _this2._checkedChildNode(child, node.isCheck, hasSubChild);
+                        _this4._checkedChildNode(child, node.isCheck, hasSubChild);
                     });
                 }
             }
         }
     }, {
-        key: '_prepairListNodes',
-        value: function _prepairListNodes() {
-            var _this3 = this;
+        key: '_prepareListNodes',
+        value: function _prepareListNodes() {
+            var _this5 = this;
 
             var nodes = this.state.nodes;
 
 
             nodes.map(function (node) {
-                _this3._checkedNodeInStateIfExistInSelectedNode(node, null);
-                _this3._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, _this3.props.isCheckGroup);
+                _this5._checkedNodeInStateIfExistInSelectedNode(node, null);
+                _this5._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, _this5.props.isCheckGroup);
             });
 
             return nodes;
@@ -6771,14 +6877,14 @@ var Tree = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            var _this4 = this;
+            var _this6 = this;
 
             if (nextProps.isCheckGroup != this.props.isCheckGroup) {
                 var nodes = this.state.nodes;
 
 
                 nodes.map(function (node) {
-                    _this4._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, nextProps.isCheckGroup);
+                    _this6._checkedNodeInStateIfExistInDefaultSelectedNode(node, null, nextProps.isCheckGroup);
                 });
 
                 return nodes;
@@ -6787,41 +6893,44 @@ var Tree = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this._prepairListNodes();
+            this._prepareListNodes();
         }
     }, {
         key: '_checkedNodeInStateIfExistInSelectedNode',
         value: function _checkedNodeInStateIfExistInSelectedNode(node, parent) {
-            var _this5 = this;
+            var _this7 = this;
 
             var selectedNode = this.state.selectedNode;
 
             var children = this._getChildNodes(node);
 
             selectedNode.map(function (selNode) {
-                if (selNode.FunctionKey === node.FunctionKey) {
-                    node.isCheck = true;
 
-                    if (parent) {
-                        parent.isCheck = true;
-                    }
-                    _this5._addNodeIntoSelectedFunc(node, false);
+                if (selNode.FunctionKey !== node.FunctionKey) {
+                    return;
+                }
 
-                    if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
-                        selNode.SubFunctionKeys.map(function (selSubNode) {
-                            node.SubFunctionKeys.map(function (nodeSub) {
-                                if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
-                                    nodeSub.isCheck = true;
-                                }
-                            });
+                node.isCheck = true;
+                if (parent) {
+                    parent.isCheck = true;
+                }
+
+                _this7._addNodeIntoSelectedFunc(node, false);
+
+                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                    selNode.SubFunctionKeys.map(function (selSubNode) {
+                        node.SubFunctionKeys.map(function (nodeSub) {
+                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                nodeSub.isCheck = true;
+                            }
                         });
-                    }
+                    });
                 }
             });
 
-            if (children) {
+            if (children && node.InputBoxType !== 'radio') {
                 children.map(function (child) {
-                    return _this5._checkedNodeInStateIfExistInSelectedNode(child, node);
+                    return _this7._checkedNodeInStateIfExistInSelectedNode(child, node);
                 });
             }
 
@@ -6830,67 +6939,114 @@ var Tree = function (_Component) {
     }, {
         key: '_checkedNodeInStateIfExistInDefaultSelectedNode',
         value: function _checkedNodeInStateIfExistInDefaultSelectedNode(node, parent, isCheck) {
-            var _this6 = this;
+            var _this8 = this;
 
             var defaultSelectedNode = this.state.defaultSelectedNode;
 
             var children = this._getChildNodes(node);
 
             defaultSelectedNode.map(function (selNode) {
-                if (selNode.FunctionKey === node.FunctionKey) {
-                    node.isCheck = true;
-                    node.isDisable = isCheck;
+                if (selNode.FunctionKey !== node.FunctionKey) {
+                    return;
+                }
 
-                    if (parent) {
-                        parent.isCheck = true;
-                        parent.isDisable = isCheck;
-                    }
-                    _this6._addNodeIntoSelectedFunc(node, false);
+                node.isCheck = true;
+                node.isDisable = isCheck;
 
-                    if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
-                        selNode.SubFunctionKeys.map(function (selSubNode) {
-                            node.SubFunctionKeys.map(function (nodeSub) {
-                                if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
-                                    nodeSub.isCheck = true;
-                                    nodeSub.isDisable = isCheck;
-                                }
-                            });
+                if (parent) {
+                    parent.isCheck = true;
+                    parent.isDisable = isCheck;
+                }
+
+                _this8._addNodeIntoSelectedFunc(node, false);
+
+                if (selNode.SubFunctionKeys && node.SubFunctionKeys) {
+                    if (node.InputBoxType === 'radio') {
+                        node.SubFunctionKeys.map(function (nodeSub) {
+                            nodeSub.isCheck = false;
                         });
                     }
+
+                    selNode.SubFunctionKeys.map(function (selSubNode) {
+                        node.SubFunctionKeys.map(function (nodeSub) {
+                            if (selSubNode.FunctionKey === nodeSub.FunctionKey) {
+                                nodeSub.isCheck = true;
+                                nodeSub.isDisable = isCheck;
+                            }
+                        });
+                    });
                 }
             });
 
-            if (children) {
+            if (children && node.InputBoxType !== 'radio') {
                 children.map(function (child) {
-                    return _this6._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck);
+                    return _this8._checkedNodeInStateIfExistInDefaultSelectedNode(child, node, isCheck);
                 });
             }
 
             this.setState({ defaultSelectedNode: defaultSelectedNode });
         }
     }, {
+        key: '_renderSelectAllNode',
+        value: function _renderSelectAllNode(selectedAllMode) {
+            var _this9 = this;
+
+            var isSelectedAllNode = this.state.isSelectedAllNode;
+
+            return selectedAllMode && _react2.default.createElement(
+                'div',
+                { className: 'node' },
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement('i', { className: 'glyphicon', style: { opacity: 0 } })
+                ),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    _react2.default.createElement('input', {
+                        type: 'checkbox',
+                        checked: isSelectedAllNode,
+                        disabled: this.props.isDisableAll,
+                        onChange: function onChange() {
+                            return _this9._onNodeSelectAll(!isSelectedAllNode);
+                        } })
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { role: 'button', onClick: function onClick() {
+                            return _this9._onNodeSelectAll(!isSelectedAllNode);
+                        } },
+                    'Select All'
+                )
+            );
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this7 = this;
+            var _this10 = this;
 
-            var nodes = this.state.nodes;
+            var _state = this.state,
+                nodes = _state.nodes,
+                isSelectedAllMode = _state.isSelectedAllMode;
 
 
             return _react2.default.createElement(
                 'div',
                 null,
+                this._renderSelectAllNode(isSelectedAllMode),
                 nodes.map(function (node, i) {
                     return _react2.default.createElement(_TreeNode2.default, {
                         key: i,
                         level: JSON.parse("[" + i + "]"),
                         node: node,
                         parent: null,
-                        isDisableAll: _this7.props.isDisableAll,
+                        isDisableAll: _this10.props.isDisableAll,
                         isSubChild: false,
-                        getChildNodes: _this7._getChildNodes,
-                        onNodeSelect: _this7._onNodeSelect,
-                        onNodeCheck: _this7._onNodeCheck,
-                        onRadioCheck: _this7._onRadioCheck
+                        getChildNodes: _this10._getChildNodes,
+                        onNodeSelect: _this10._onNodeSelect,
+                        onNodeCheck: _this10._onNodeCheck,
+                        onRadioCheck: _this10._onRadioCheck
                     });
                 })
             );

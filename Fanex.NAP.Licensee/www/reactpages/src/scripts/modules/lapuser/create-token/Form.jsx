@@ -21,7 +21,8 @@ class Form extends Component {
             redmineID: '',
             expriedIn: timeRemaining,
             currency: currency,
-            currencySelected: oldCurrency ? oldCurrency : []
+            currencySelected: oldCurrency ? oldCurrency : [],
+            currencySelectedAll: false
         }
     }
 
@@ -275,6 +276,21 @@ class Form extends Component {
         this.setState({ currencySelected });
     }
 
+    _onCheckAll = (isCheckAll) => {
+        const { currency, currencySelected } = this.state;
+
+        currency.forEach(cur => cur.isCheck = isCheckAll);
+
+        if (isCheckAll) {
+            this.setState({ currency, currencySelected: currency.map(cur => cur.Id), currencySelectedAll: isCheckAll});
+            return;
+        }
+
+        currencySelected.length = 0;
+        this.setState({ currency, currencySelected, currencySelectedAll: isCheckAll });
+    }
+
+
     _checkedOldCurency() {
         const { currency, currencySelected } = this.state;
 
@@ -297,7 +313,7 @@ class Form extends Component {
     }
 
     render() {
-        const { isCopy, requestBy, redmineID, extendTime, token, currency, isSuccess } = this.state;
+        const { isCopy, requestBy, redmineID, extendTime, token, currency, isSuccess, currencySelectedAll } = this.state;
         const { user, isValid, isLoading, funcPer, oldFuncPer } = this.props;
 
         if (!isValid) {
@@ -386,6 +402,7 @@ class Form extends Component {
                                         selectedNode={oldFuncPer.FuncPermission && this._convertListSubFuncsToNode(oldFuncPer.FuncPermission)}
                                         defaultSelectedNode={oldFuncPer.UserGroup && this._convertListSubFuncsToNode(oldFuncPer.UserGroup.FuncPermission)}
                                         nodes={funcPer && JSON.parse(funcPer)}
+                                        selectAllNode={true}
                                         isDisableAll={isSuccess} />
                                 </div>
                             </div>
@@ -394,6 +411,12 @@ class Form extends Component {
                             <div className="panel panel-default panel-large">
                                 <div className="panel-heading">Currency permission</div>
                                 <div className="panel-body auto-scroll">
+                                    <div className="form-group">
+                                        <label className="checkbox-inline node">
+                                            <input type="checkbox" checked={currencySelectedAll} disabled={isSuccess} onChange={() => this._onCheckAll(!currencySelectedAll)} />
+                                            Select All
+                                        </label>
+                                    </div>
                                     {currency.map((cur, i) => (
                                         <div className="form-group" key={i}>
                                             <label className="checkbox-inline node">

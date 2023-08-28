@@ -582,7 +582,7 @@
             "SubFunctionKeys": [
               {
                 "DisplayKey": "ReadOnly",
-                "FunctionKey": "PlayerSegmentation_MonitoredPlayer",
+                "FunctionKey": "PlayerSegmentation_MonitoredPlayer_Read",
                 "Mode": 1
               },
               {
