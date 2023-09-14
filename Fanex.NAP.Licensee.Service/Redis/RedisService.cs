@@ -9,8 +9,9 @@
 
         public RedisService()
         {
+            const int DEFAULT_REDIS_DATABASE = 4;
             RedisConnection redisConnection = new RedisConnection();
-            _databse = redisConnection.Connection.GetDatabase();
+            _databse = redisConnection.Connection.GetDatabase(DEFAULT_REDIS_DATABASE);
         }
 
         public bool AddValue(string key, string value, double hours)

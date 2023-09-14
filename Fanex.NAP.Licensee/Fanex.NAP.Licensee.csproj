@@ -421,6 +421,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSample.tt</DependentUpon>
     </Content>
+    <None Include="SiteConfig\Web.AppSettings.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </None>
     <Content Include="SiteConfig\Web.config1.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -668,11 +673,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\source\log\log.less" />
     <Content Include="Scripts\build\logSetting.min.js.map" />
-    <None Include="SiteConfig\Web.AppSettings.config.txt">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </None>
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\BetTicketVolumeControl\Index.cshtml" />
     <Content Include="Views\BetTicketVolumeControl\Add.cshtml" />

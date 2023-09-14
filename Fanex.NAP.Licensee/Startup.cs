@@ -35,7 +35,8 @@ namespace Fanex.NAP.Licensee
             var redisConnection = new RedisConnection().Connection;
             var options = new RedisStorageOptions
             {
-                Prefix = ConfigurationManager.AppSettings["RedisPrefix"]
+                Prefix = ConfigurationManager.AppSettings["RedisPrefix"],
+                Db = 4
             };
 
             GlobalConfiguration.Configuration.UseLogProvider(new HangFireLoggingProvider());
