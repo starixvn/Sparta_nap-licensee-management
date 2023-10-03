@@ -543,6 +543,22 @@
     ]
   },
   {
+    "DisplayKey": "lblControlDataOfReport_TurnoverReportOnly",
+    "FunctionKey": "ControlDataOfReport_TurnoverReportOnly",
+    "Enable": false,
+    "Type": 1,
+    "Mode": 1,
+    "Settings": [
+      {
+        "DisplayKey": "lblHidePlayerWL_WL_Comm_Total",
+        "FunctionKey": "HidePlayerWL_WL_Comm_Total",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
+      }
+    ]
+  },
+  {
     "DisplayKey": "lblCustomerManagement",
     "Settings": [
       {

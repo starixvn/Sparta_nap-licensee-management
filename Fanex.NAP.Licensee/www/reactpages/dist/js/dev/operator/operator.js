@@ -979,12 +979,12 @@ exports.typeOf = typeOf;
 
 
 var ReactIs = __webpack_require__(5);
-var assign = __webpack_require__(93);
+var assign = __webpack_require__(94);
 
-var ReactPropTypesSecret = __webpack_require__(95);
-var checkPropTypes = __webpack_require__(94);
+var ReactPropTypesSecret = __webpack_require__(96);
+var has = __webpack_require__(97);
+var checkPropTypes = __webpack_require__(95);
 
-var has = Function.call.bind(Object.prototype.hasOwnProperty);
 var printWarning = function() {};
 
 if (true) {
@@ -1085,6 +1085,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
   var ReactPropTypes = {
     array: createPrimitiveTypeChecker('array'),
+    bigint: createPrimitiveTypeChecker('bigint'),
     bool: createPrimitiveTypeChecker('boolean'),
     func: createPrimitiveTypeChecker('function'),
     number: createPrimitiveTypeChecker('number'),
@@ -1130,8 +1131,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
    * is prohibitively expensive if they are created too often, such as what
    * happens in oneOfType() for any type before the one that matched.
    */
-  function PropTypeError(message) {
+  function PropTypeError(message, data) {
     this.message = message;
+    this.data = data && typeof data === 'object' ? data: {};
     this.stack = '';
   }
   // Make `instanceof Error` still work for returned errors.
@@ -1166,7 +1168,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
           ) {
             printWarning(
               'You are manually calling a React.PropTypes validation ' +
-              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
+              'function for the `' + propFullName + '` prop on `' + componentName + '`. This is deprecated ' +
               'and will throw in the standalone `prop-types` package. ' +
               'You may be seeing this warning due to a third-party PropTypes ' +
               'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
@@ -1205,7 +1207,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
         // 'of type `object`'.
         var preciseType = getPreciseType(propValue);
 
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+        return new PropTypeError(
+          'Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'),
+          {expectedType: expectedType}
+        );
       }
       return null;
     }
@@ -1349,14 +1354,19 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     }
 
     function validate(props, propName, componentName, location, propFullName) {
+      var expectedTypes = [];
       for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
         var checker = arrayOfTypeCheckers[i];
-        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+        var checkerResult = checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
+        if (checkerResult == null) {
           return null;
         }
+        if (checkerResult.data && has(checkerResult.data, 'expectedType')) {
+          expectedTypes.push(checkerResult.data.expectedType);
+        }
       }
-
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+      var expectedTypesMessage = (expectedTypes.length > 0) ? ', expected one of type [' + expectedTypes.join(', ') + ']': '';
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`' + expectedTypesMessage + '.'));
     }
     return createChainableTypeChecker(validate);
   }
@@ -1371,6 +1381,13 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     return createChainableTypeChecker(validate);
   }
 
+  function invalidValidatorError(componentName, location, propFullName, key, type) {
+    return new PropTypeError(
+      (componentName || 'React class') + ': ' + location + ' type `' + propFullName + '.' + key + '` is invalid; ' +
+      'it must be a function, usually from the `prop-types` package, but received `' + type + '`.'
+    );
+  }
+
   function createShapeTypeChecker(shapeTypes) {
     function validate(props, propName, componentName, location, propFullName) {
       var propValue = props[propName];
@@ -1380,8 +1397,8 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
       for (var key in shapeTypes) {
         var checker = shapeTypes[key];
-        if (!checker) {
-          continue;
+        if (typeof checker !== 'function') {
+          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
         }
         var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
         if (error) {
@@ -1400,16 +1417,18 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       if (propType !== 'object') {
         return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
       }
-      // We need to check all keys in case some are required but missing from
-      // props.
+      // We need to check all keys in case some are required but missing from props.
       var allKeys = assign({}, props[propName], shapeTypes);
       for (var key in allKeys) {
         var checker = shapeTypes[key];
+        if (has(shapeTypes, key) && typeof checker !== 'function') {
+          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+        }
         if (!checker) {
           return new PropTypeError(
             'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
             '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+            '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  ')
           );
         }
         var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
@@ -1564,7 +1583,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ 347:
+/***/ 349:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1584,7 +1603,7 @@ var _reactDom = __webpack_require__(4);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Form = __webpack_require__(348);
+var _Form = __webpack_require__(350);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -1631,7 +1650,14 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 
 /***/ }),
 
-/***/ 348:
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(36);
+
+/***/ }),
+
+/***/ 350:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1953,13 +1979,6 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Form;
-
-/***/ }),
-
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(36);
 
 /***/ }),
 
@@ -3142,7 +3161,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultArrowRenderer", function() { return arrowRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultClearRenderer", function() { return clearRenderer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultFilterOptions", function() { return filterOptions; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_input_autosize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_classnames__);
@@ -5831,9 +5850,9 @@ Select$1.Option = Option;
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
 */
 /* global define */
 
@@ -5841,8 +5860,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	'use strict';
 
 	var hasOwn = {}.hasOwnProperty;
+	var nativeCodeString = '[native code]';
 
-	function classNames () {
+	function classNames() {
 		var classes = [];
 
 		for (var i = 0; i < arguments.length; i++) {
@@ -5853,12 +5873,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 			if (argType === 'string' || argType === 'number') {
 				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
 				}
 			} else if (argType === 'object') {
+				if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+					classes.push(arg.toString());
+					continue;
+				}
+
 				for (var key in arg) {
 					if (hasOwn.call(arg, key) && arg[key]) {
 						classes.push(key);
@@ -6014,7 +6041,7 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 87:
+/***/ 88:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6289,5 +6316,5 @@ exports.default = AutosizeInput;
 
 /***/ })
 
-},[347]);
+},[349]);
 //# sourceMappingURL=operator.js.map
