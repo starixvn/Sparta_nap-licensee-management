@@ -169,5 +169,7 @@ export const language = {
     "lblGrossGamingRevenue": "Gross Gaming Revenue",
     "lblSabaIntelligence": "Saba Intelligence",
     "lblWinlossAnalysis": "Win Loss Analysis",
-    "lblAudLicenseeWinLoss" : "Aud Licensee Win Loss"
+    "lblAudLicenseeWinLoss": "Aud Licensee Win Loss",
+    "lblControlDataOfReport_TurnoverReportOnly": "Report's Data Control( Impact Turnover report only)",
+    "lblHidePlayerWL_WL_Comm_Total": "Hide Player W/L (WL/ Comm/ Total)"
 }
