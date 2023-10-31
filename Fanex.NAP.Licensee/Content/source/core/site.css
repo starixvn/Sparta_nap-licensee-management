@@ -961,9 +961,9 @@ input[type="submit"].btn-ok,
 }
 .icon-copy-setting {
   background: url(images/sprites.png) no-repeat scroll -96px -26px;
+  cursor: pointer;
   display: inline-block;
   background-position: -160px -1px;
-  cursor: pointer;
   border: medium none;
   float: right;
   height: 20px;
@@ -973,9 +973,9 @@ input[type="submit"].btn-ok,
 }
 .icon-copy-setting-checked {
   background: url(images/sprites.png) no-repeat scroll -96px -26px;
+  cursor: pointer;
   display: inline-block;
   background-position: -180px -1px;
-  cursor: pointer;
   border: medium none;
   float: right;
   height: 20px;

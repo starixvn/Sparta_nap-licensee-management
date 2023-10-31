@@ -32,8 +32,8 @@
         }
 
         public LicenseeBetSettingController(
-            ICommonService commonService, 
-            ILicenseeBetSettingService licenseeBetSettingService, 
+            ICommonService commonService,
+            ILicenseeBetSettingService licenseeBetSettingService,
             IDefaultBetSettingService betSettingService)
         {
             _commonService = commonService;
@@ -51,7 +51,9 @@
         public PartialViewResult EditDefaultBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditDBSSportsbook") : PartialView("../Error/UnsupportedFunction");
+            return productTypeId == ProductTypeId.SportsBook
+                ? PartialView(rootPath + "EditDBSSportsbook")
+                : PartialView("../Error/UnsupportedFunction");
         }
 
         public JsonResult GetDefaultBetSetting(GetDefaultBetSettingViewModel model)
@@ -75,7 +77,10 @@
         public PartialViewResult EditBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "EditBSSportsbook") : PartialView("../Error/UnsupportedFunction");
+
+            return productTypeId == ProductTypeId.SportsBook
+                ? PartialView(rootPath + "EditBSSportsbook")
+                : PartialView("../Error/UnsupportedFunction");
         }
 
         public JsonResult GetEditBetSettingData(LicenseeBetSettingFilterViewModel model)
@@ -94,7 +99,10 @@
         public PartialViewResult ReviewBetSetting(int productTypeId)
         {
             const string rootPath = "BetSetting/";
-            return productTypeId == ProductTypeId.SportsBook ? PartialView(rootPath + "ReviewBSSportsbook") : PartialView("../Error/UnsupportedFunction");
+
+            return productTypeId == ProductTypeId.SportsBook
+                ? PartialView(rootPath + "ReviewBSSportsbook")
+                : PartialView("../Error/UnsupportedFunction");
         }
 
         [HttpPost]
@@ -104,7 +112,7 @@
             model.IP = Request.UserHostAddress;
             var result = _licenseeBetSettingService.UpdateBetSettingSportsbook(model);
 
-            return new JsonResult { Data = new BSResultViewModel(string.Empty, result.Code, result.IsOk, result.Message) };
+            return Json(result);
         }
 
         [HttpPost]
@@ -113,8 +121,8 @@
             var violatedResultItems = _licenseeBetSettingService.CheckBetSettingSportsbook(model);
 
             return violatedResultItems.Count == 0
-                ? new JsonResult { Data = new BSResultViewModel() }
-                : new JsonResult { Data = violatedResultItems[0] };
+                ? Json(new BSResultViewModel())
+                : Json(violatedResultItems[0]);
         }
 
         #endregion Bet setting
@@ -123,28 +131,28 @@
 
         [HttpGet]
         [AjaxRequest]
-        public ActionResult GetLicenseeList()
+        public JsonResult GetLicenseeList()
         {
             return Json(_commonService.GetLicenseeList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [AjaxRequest]
-        public ActionResult GetSuperLicenseeList(string siteName)
+        public JsonResult GetSuperLicenseeList(string siteName)
         {
             return Json(_commonService.GetSuperLicenseeList(siteName), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [AjaxRequest]
-        public ActionResult GetProductTypeList()
+        public JsonResult GetProductTypeList()
         {
             return Json(_commonService.GetProductTypeList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [AjaxRequest]
-        public ActionResult GetSettings()
+        public JsonResult GetSettings()
         {
             return Json(
             new
@@ -157,7 +165,7 @@
 
         [HttpGet]
         [AjaxRequest]
-        public ActionResult GetLicenseeAgentList(int sRecommend)
+        public JsonResult GetLicenseeAgentList(int sRecommend)
         {
             return Json(_commonService.GetLicenseeAgentList(sRecommend), JsonRequestBehavior.AllowGet);
         }
@@ -179,7 +187,7 @@
         }
 
         [HttpGet]
-        public ActionResult GetLogSettings()
+        public JsonResult GetLogSettings()
         {
             var currentDate = DateTime.Now.ToString("yyyy-MM-dd 00:00:00");
 

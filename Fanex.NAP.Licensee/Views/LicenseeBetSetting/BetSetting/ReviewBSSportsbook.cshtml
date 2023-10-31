@@ -1,88 +1,21 @@
 ﻿<div ng-controller="reviewBSSportsbookCtrl" class="filter-form">
-    <h4>Review Bet Setting Sportsbook <span class="text-highlight">({{header}})</span></h4>
+    <h5>Review Bet Setting Sportsbook <span class="text-highlight">({{header}})</span></h5>
     <label ng-if="!option" class="checkbox-inline">
         <input ng-model="reviewBS.IsApplyForMembersChecked" disabled type="checkbox">
         Apply for players
     </label>
     <div ng-style="!option && {'margin-left': '20px'}">
-        <input ng-model="reviewBS.applyForMember" disabled type="radio" id="allPlayers" name="players" value="1" />
+        <input ng-model="reviewBS.applyForMember" disabled type="radio" id="allPlayers" name="players" ng-value="1" />
         <label style="font-weight: normal;" for="allPlayers">All players (Existing and New players)</label><br>
-        <input ng-if="!option" ng-model="reviewBS.applyForMember" disabled type="radio" id="newPlayers" name="players" value="2" />
+        <input ng-if="!option" ng-model="reviewBS.applyForMember" disabled type="radio" id="newPlayers" name="players" ng-value="2" />
         <label ng-if="!option" style="font-weight: normal;" for="newPlayers">New players only</label>
-        <input ng-if="option" ng-model="reviewBS.applyForMember" disabled type="radio" id="existingPlayers" name="players" value="3" />
+        <input ng-if="option" ng-model="reviewBS.applyForMember" disabled type="radio" id="existingPlayers" name="players" ng-value="3" />
         <label ng-if="option" style="font-weight: normal;" for="existingPlayers">Existing players only</label>
     </div>
     <table class="table table-bordered table-setting">
         <thead>
-        <tr>
-            <th>
-                All sports
-            </th>
-            <th class="width-150">
-                Min Bet
-            </th>
-            <th class="width-150">
-                Max Bet
-            </th>
-            <th class="width-150">
-                Max Per Match
-            </th>
-            <th class="width-150">
-                Max Payout Per Match
-            </th>
-            <th>
-                Updated
-            </th>
-            <th ng-if="buttonStatus.isUpdated">
-                Status
-            </th>
-            <th ng-if="buttonStatus.isUpdated">
-                Message
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in reviewBS.BSRows">
-            <td>
-                {{item.BetTypeName}}
-            </td>
-            <td>
-                {{item.MinBet | number}}
-            </td>
-            <td>
-                {{item.MaxBet | number}}
-            </td>
-            <td>
-                {{item.MaxPerMatch | number}}
-            </td>
-            <td>
-                {{item.MaxPayoutPerMatch | number}}
-            </td>
-            <td>
-                {{item.IsRowSelected && item.IsRowUpdated? 'X': ''}}
-            </td>
-            <td ng-if="buttonStatus.isUpdated">
-                <span class="glyphicon {{item.Status}}"></span>
-            </td>
-            <td ng-if="buttonStatus.isUpdated">
-                {{item.Message}}
-            </td>
-        </tr>
-        <tr ng-if="!isShowDBS()">
-            <td colspan="7">
-                <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
-                <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div ng-if="isShowDBS()">
-        <h4>Review Default Bet Setting Sportsbook For New Player</h4>
-
-        <table class="table table-bordered table-setting">
-            <thead>
             <tr>
-                <th>
+                <th class="width-150">
                     All sports
                 </th>
                 <th class="width-150">
@@ -97,50 +30,117 @@
                 <th class="width-150">
                     Max Payout Per Match
                 </th>
-                <th>
+                <th class="width-100">
                     Updated
                 </th>
-                <th ng-if="buttonStatus.isUpdated">
+                <th class="width-100">
                     Status
                 </th>
-                <th ng-if="buttonStatus.isUpdated">
+                <th>
                     Message
                 </th>
             </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in reviewBS.DBSRows">
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in reviewBS.BSRows">
                 <td>
-                    {{item.SportTypeName}}
+                    {{item.BetTypeName}}
                 </td>
                 <td>
-                    {{item.MinBet === '' ? '' : (item.MinBet | number)}}
+                    {{item.MinBet | number}}
                 </td>
                 <td>
-                    {{item.MaxBet === '' ? '' : (item.MaxBet | number)}}
+                    {{item.MaxBet | number}}
                 </td>
                 <td>
-                    {{item.MaxPerMatch === '' ? '' : (item.MaxPerMatch | number)}}
+                    {{item.MaxPerMatch | number}}
                 </td>
                 <td>
-                    {{item.MaxPayoutPerMatch === '' ? '' : (item.MaxPayoutPerMatch | number)}}
+                    {{item.MaxPayoutPerMatch | number}}
                 </td>
-                <td>
-                    {{item.IsRowSelected && item.IsRowUpdated? 'X': ''}}
+                <td class="content-center">
+                    {{item.IsRowSelected ? 'X' : ''}}
                 </td>
-                <td ng-if="buttonStatus.isUpdated">
+                <td class="content-center">
                     <span class="glyphicon {{item.Status}}"></span>
                 </td>
-                <td ng-if="buttonStatus.isUpdated">
+                <td>
                     {{item.Message}}
                 </td>
             </tr>
-            <tr ng-if="isShowDBS()">
+            <tr ng-if="!isShowDBS()">
                 <td colspan="7">
                     <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
                     <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
                 </td>
             </tr>
+        </tbody>
+    </table>
+    <div ng-if="isShowDBS()">
+        <h4>Review Default Bet Setting Sportsbook For New Player</h4>
+
+        <table class="table table-bordered table-setting">
+            <thead>
+                <tr>
+                    <th class="width-150">
+                        All sports
+                    </th>
+                    <th class="width-150">
+                        Min Bet
+                    </th>
+                    <th class="width-150">
+                        Max Bet
+                    </th>
+                    <th class="width-150">
+                        Max Per Match
+                    </th>
+                    <th class="width-150">
+                        Max Payout Per Match
+                    </th>
+                    <th class="width-100">
+                        Updated
+                    </th>
+                    <th class="width-100">
+                        Status
+                    </th>
+                    <th class="content">
+                        Message
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in reviewBS.DBSRows">
+                    <td>
+                        {{item.SportTypeName}}
+                    </td>
+                    <td>
+                        {{item.MinBet === '' ? '' : (item.MinBet | number)}}
+                    </td>
+                    <td>
+                        {{item.MaxBet === '' ? '' : (item.MaxBet | number)}}
+                    </td>
+                    <td>
+                        {{item.MaxPerMatch === '' ? '' : (item.MaxPerMatch | number)}}
+                    </td>
+                    <td>
+                        {{item.MaxPayoutPerMatch === '' ? '' : (item.MaxPayoutPerMatch | number)}}
+                    </td>
+                    <td class="content-center">
+                        {{item.IsRowSelected ? 'X' : ''}}
+                    </td>
+                    <td class="content-center">
+                        <span class="glyphicon {{item.Status}}"></span>
+                    </td>
+                    <td>
+                        {{item.Message}}
+                    </td>
+                </tr>
+                <tr ng-if="isShowDBS()">
+                    <td colspan="7">
+                        <input type="button" value="Update" class="btn btn-primary" ng-click="updateBS()" ng-disabled="buttonStatus.isUpdated" />
+                        <input type="button" value="Back" class="btn btn-primary" ng-click="backEditBS()" ng-disabled="!buttonStatus.isButtonEnable" />
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

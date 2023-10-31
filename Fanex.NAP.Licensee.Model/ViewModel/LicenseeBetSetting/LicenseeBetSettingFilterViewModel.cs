@@ -8,6 +8,6 @@
 
         public int AgentId { get; set; }
 
-        public bool Option { get; set; }
+        public byte Option { get; set; }
     }
 }
