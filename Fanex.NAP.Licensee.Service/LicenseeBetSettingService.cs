@@ -96,6 +96,7 @@
 
         public List<BSResultViewModel> CheckBetSettingSportsbook(BSSportsbookViewModel model)
         {
+            var dbsErrCodes = LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').ToList();
             var updateItem = new CheckBetSettingSportsbookItem();
             FormatBetSettingSportsbookItem(updateItem, model);
 
@@ -126,7 +127,7 @@
             }
 
             return violatedResultItems
-                .OrderBy(_ => LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').Any(code => code == _.Code.ToString()))
+                .OrderBy(item => dbsErrCodes.Exists(code => code == item.Code.ToString()))
                 .ToList();
         }
 

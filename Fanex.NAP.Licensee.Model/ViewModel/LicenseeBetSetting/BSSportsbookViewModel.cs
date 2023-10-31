@@ -19,8 +19,8 @@
             foreach (var key in dctGameType.Keys)
             {
 
-                BSSportsbookItem uplineItem = items.SuperItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
-                BSSportsbookItem item = items.AgentItems.FirstOrDefault(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSSportsbookItem uplineItem = items.SuperItems.Find(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
+                BSSportsbookItem item = items.AgentItems.Find(i => i.SportTypeId == key.SportTypeId && i.BetTypeId == key.BetTypeId);
                 BSRowBaseViewModel sportsbookRowVM = new BSRowBaseViewModel
                 {
                     SportTypeId = key.SportTypeId,
