@@ -10,6 +10,11 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         $scope.invertedSymbol = false; // to set DBS UI
         $scope.agentIdByErrorCode = -1; // to get DBS
 
+        $scope.orgData = {
+            BSs: [],
+            DBSs: []
+        };
+
         // Load data for ddls
         $scope.filterData = {
             // licensees
@@ -167,8 +172,10 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
         }
 
         var getEditedRows = function () {
-            var bsRows = shareSettingsService.getCurSettings().BSRows;
-            var dbsRows = shareSettingsService.getCurSettings().DBSRows;
+            var currentData = angular.copy(shareSettingsService.getCurSettings());
+
+            var bsRows = currentData.BSRows;
+            var dbsRows = currentData.DBSRows;
             var result = {
                 BSRows: [],
                 DBSRows: []

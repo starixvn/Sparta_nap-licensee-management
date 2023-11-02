@@ -58,7 +58,7 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             headers: getAjaxHeader()
         })
         .success(function (data) {
-            $scope.oldBSs = angular.copy(data.BSRows);
+            $scope.orgData.BSs = angular.copy(data.BSRows);
             shareSettingsService.saveOrgSettings(angular.copy(data));
             if ($scope.buttonStatus.IsBack) {
                 $scope.editBS = shareSettingsService.getCurSettings();
@@ -106,31 +106,36 @@ var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
             }
 
             var currentDbs = angular.copy(data);
-            $scope.oldBSs = angular.copy(data.BSRows);
+            $scope.orgData.DBSs = angular.copy(data.BSRows);
 
             var currentBSs = shareSettingsService.getCurSettings().BSRows;
             var oldBSs = shareSettingsService.getOrgSettings().BSRows;
             var applyForPlayers = shareSettingsService.getCurSettings().IsApplyForMembersChecked;
             $.each(currentDbs.BSRows, function (index, element) {
-                if (!applyForPlayers && currentBSs[index].IsRowSelected) {
+                var isRowSelected = currentBSs[index].IsRowSelected;
+
+                if (!applyForPlayers && isRowSelected) {
                     if (element.MinBet === '') {
-                        element.MinBet = oldBSs[index].MinBet;
-                        element.MaxBet = oldBSs[index].MaxBet;
-                        element.MaxPayoutPerMatch = oldBSs[index].MaxPayoutPerMatch;
-                        element.MaxPerMatch = oldBSs[index].MaxPerMatch;
+                        var oldBS = oldBSs[index];
+                        element.MinBet = oldBS.MinBet;
+                        element.MaxBet = oldBS.MaxBet;
+                        element.MaxPayoutPerMatch = oldBS.MaxPayoutPerMatch;
+                        element.MaxPerMatch = oldBS.MaxPerMatch;
                         element.IsRowSelected = true;
                     }
                     element.IsRowReview = true;
                 }
 
-                element.UplineMinBet = currentBSs[index].MinBet;
-                element.UplineMaxBet = currentBSs[index].MaxBet;
-                element.UplineMaxPayoutPerMatch = currentBSs[index].MaxPayoutPerMatch;
-                element.UplineMaxPerMatch = currentBSs[index].MaxPerMatch;
+                var bsToUpdate = isRowSelected ? currentBSs[index] : oldBSs[index];
+                element.UplineMinBet = bsToUpdate.MinBet;
+                element.UplineMaxBet = bsToUpdate.MaxBet;
+                element.UplineMaxPayoutPerMatch = bsToUpdate.MaxPayoutPerMatch;
+                element.UplineMaxPerMatch = bsToUpdate.MaxPerMatch;
             });
+
             shareSettingsService.saveOrgSettings(angular.copy(data));
             $scope.editBS.BSRows = angular.copy(currentDbs.BSRows);
-            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, $scope.editBS.BSRows, $scope.oldBSs);
+            $scope.buttonStatus.isNextEnabled = getNextEnable($scope, $scope.editBS.BSRows, $scope.orgData.DBSs);
             site.invokeLoadingMsg(false);
         })
         .error(function () {
@@ -151,6 +156,11 @@ var editBSNavigatorFunc = function ($scope, $location, shareSettingsService, Con
 
     $scope.backEditBS = function () {
         $scope.buttonStatus.IsBack = true;
+
+        $scope.orgData.BSs = [];
+        $scope.orgData.DBSs = [];
+        shareSettingsService.getCurSettings().DBSRows = [];
+
         shareSettingsService.getWorkingContext().FuncName = ContextFunc.BetSetting;
         $location.path('/EditBetSetting/' + shareSettingsService.getWorkingContext().ProdId);
     };

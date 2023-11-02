@@ -1,22 +1,24 @@
 ﻿/* exported reviewBSModelFunc, reviewBSNavigatorFunc */
 
-"use strict";
+'use strict';
 
 // Model function
 var reviewBSModelFunc = function ($scope, shareSettingsService) {
     $scope.reviewBS = shareSettingsService.getCurSettings();
+    $scope.orgBSs = $scope.orgData.BSs;
+    $scope.orgDBSs = $scope.orgData.DBSs;
 
     $scope.isShowDBS = function () {
         var DBSRows = $scope.reviewBS.DBSRows;
-        if (DBSRows === undefined || DBSRows === null || angular.equals({}, DBSRows)) {
+        if (DBSRows === undefined || DBSRows === null || DBSRows.length === 0) {
             return false;
         }
 
         var isValidDBSData = DBSRows.every(function (_) {
-            return (_.MinBet === ""
-                && _.MaxBet === ""
-                && _.MaxPerMatch === ""
-                && (_.MaxPayoutPerMatch === ""));
+            return (_.MinBet === ''
+                && _.MaxBet === ''
+                && _.MaxPerMatch === ''
+                && (_.MaxPayoutPerMatch === ''));
         });
 
         if (isValidDBSData) {
@@ -27,7 +29,7 @@ var reviewBSModelFunc = function ($scope, shareSettingsService) {
     }
 
     function getAgentsHeader() {
-        var res = "";
+        var res = '';
         var agentId = shareSettingsService.getWorkingContext().AgentId;
         var agentName = shareSettingsService.getWorkingContext().AgentName;
         var agentList = shareSettingsService.getWorkingContext().AgentList;
@@ -35,9 +37,9 @@ var reviewBSModelFunc = function ($scope, shareSettingsService) {
         if (agentId === 0) {
             if (agentList.length >= 8) {
                 for (var i = 1; i < 7; i++) {
-                    res += agentList[i].Name + ", ";
+                    res += agentList[i].Name + ', ';
                 }
-                res += "...";
+                res += '...';
             }
             else {
                 for (var j = 1; j < agentList.length; j++) {
@@ -45,7 +47,7 @@ var reviewBSModelFunc = function ($scope, shareSettingsService) {
                         res += agentList[j].Name;
                     }
                     else {
-                        res += agentList[j].Name + ", ";
+                        res += agentList[j].Name + ', ';
                     }
                 }
             }
@@ -72,6 +74,10 @@ var reviewBSNavigatorFunc = function ($scope, $location, shareSettingsService, C
         if (!$scope.buttonStatus.isButtonEnable) {
             return;
         }
+
+        $scope.orgData.BSs = [];
+        $scope.orgData.DBSs = [];
+        shareSettingsService.getCurSettings().DBSRows = [];
 
         if ($scope.buttonStatus.isUpdated) {
             $scope.buttonStatus.isUpdated = false;
