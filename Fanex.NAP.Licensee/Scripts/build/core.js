@@ -14013,6 +14013,22 @@ var site = (function () {
 
         return false;
     };
+
+    me.invokeLoadingMsg = function (visible) {
+        $.blockUI.defaults.overlayCSS.opacity = '0.2';
+        $.blockUI.defaults.css = {};
+        $.blockUI.defaults.fadeIn = 10;
+        $.blockUI.defaults.fadeOut = 10;
+        if (visible) {
+            $.blockUI({
+                message: '<div class="icon-loading"></div>',
+            });
+        }
+        else {
+            $.unblockUI();
+        }
+    };
+
     return me;
 })();
 /*override alert function*/

@@ -349,7 +349,9 @@ var logSettings = (function () {
 
         vm.criteria = {};
         vm.formData = {};
-
+        vm.buttonStatus = {
+            disableButton: false
+        };
         vm.gridOptions = logService.configGridOptions();
 
         function setSportNames(arr) {
@@ -386,15 +388,15 @@ var logSettings = (function () {
         }
 
         function getReport() {
-            logService.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
             $http.get('GetReport', { params: vm.formData })
                 .success(function (data) {
                     logService.handleLogData(data, setSportNames);
                     vm.report = data;
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                 })
                 .error(function (data) {
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                     alert(data);
                 });
         }
@@ -407,7 +409,11 @@ var logSettings = (function () {
             logService.getSelectedSuperWithCurrencyChange(vm);
         }
 
-        vm.getReport = function () {;
+        vm.getReport = function () {
+            if (vm.buttonStatus.disableButton) {
+                return;
+            }
+
             vm.formData = getNormalizedFilter();
 
             getReport();
@@ -422,7 +428,9 @@ var logSettings = (function () {
     }
 })();
 
-﻿(function () {
+﻿/* global site */
+
+(function () {
     'use strict';
 
     angular.module('logSettingsApp').controller('licenseeBetSettingLogCtrl', licenseeBetSettingLogCtrl);
@@ -434,7 +442,9 @@ var logSettings = (function () {
 
         vm.criteria = {};
         vm.formData = {};
-
+        vm.buttonStatus = {
+            disableButton: false
+        };
         vm.gridOptions = logService.configGridOptions();
         vm.gridOptions.pagerOption = {
             pagerSelectCallBack: function (pageIndex, itemsPerPage) {
@@ -480,17 +490,18 @@ var logSettings = (function () {
         }
 
         function getReport() {
-            logService.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
             $http.get('GetReport', { params: vm.formData })
                 .success(function (data) {
                     logService.handleLogData(data, setSportNames);
                     vm.report = data;
                     vm.formData.TotalItem = data.TotalItem;
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                 })
                 .error(function (data) {
-                    logService.invokeLoadingMsg(false);
-                    alert(data);
+                    site.invokeLoadingMsg(false);
+                    vm.buttonStatus.disableButton = true;
+                    alert(site.invokeErrMsg);
                 });
         }
 
@@ -503,6 +514,10 @@ var logSettings = (function () {
         }
 
         vm.getReport = function () {
+            if (vm.buttonStatus.disableButton) {
+                return;
+            }
+
             vm.formData.pageIndex = undefined;
             vm.formData.pageSize = undefined;
             vm.formData = getNormalizedFilter();
@@ -577,8 +592,10 @@ var logSettings = (function () {
 
             $('.free-bottom-right').css({ top: $('.grid-container').height() });
             $('.x-scrollbar').css({ top: $('.grid-container').height() });
+
             $('.grid-pager').css({ top: ($('.grid-container').height() + $('.x-scrollbar').height()) })
-            $('.y-scrollbar').height($('#gridId').height() - $('.grid-pager').height() - $('.row-headers-background').height());
+
+            $('.y-scrollbar').height($('.grid-container').height() - $('.free-bottom-right').height());
             $('.scrollbar-y-content').height($('.content-container').height() - $('.free-bottom-right').height());
 
             if ($('.y-scrollbar').height() < $('.scrollbar-y-content').height()) {
@@ -602,7 +619,7 @@ var logSettings = (function () {
 
     angular.module('logSettingsApp').directive('logsFanexgrid', fanexgrid);
 }());
-﻿/* global logSettings*/
+﻿/* global site, logSettings*/
 
 (function () {
     'use strict';
@@ -615,7 +632,6 @@ var logSettings = (function () {
 
     function logService($http) {
 
-        /* private functions */
         function licenseeSetting(vm) {
             vm.criteria.Licensee = vm.Licensees[0];
             vm.LicenseeSetting = {
@@ -655,16 +671,7 @@ var logSettings = (function () {
             };
         }
 
-        function setGenerateButtonStatus (disable) {
-            if (disable) {
-                $("#generate").attr("disabled", "disabled");
-            } else {
-                $("#generate").removeAttr("disabled");
-            }
-        };
-
-        /* public functions */
-        this.formatDateString = function (date) {
+        var formatDateString = function (date) {
             return date.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
@@ -672,7 +679,7 @@ var logSettings = (function () {
             });
         }
 
-        this.configGridOptions = function () {
+        var configGridOptions = function () {
             return {
                 columns: [
                     {
@@ -701,12 +708,15 @@ var logSettings = (function () {
             }
         }
 
-        this.getSelectedLicenseeChange = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSelectedLicenseeChange = function (vm) {
+            site.invokeLoadingMsg(true);
+            var licensee = vm.criteria.Licensee;
+            var licenseeName = licensee ? licensee.Name : '';
+
             $http.get(
                 'GetSuperLicenseeList',
                 {
-                    params: { siteName: vm.criteria.Licensee.Name }
+                    params: { siteName: licenseeName }
                 }
             )
                 .success(function (superWithCurrencies) {
@@ -714,29 +724,40 @@ var logSettings = (function () {
                     superWithCurrencySetting(vm);
 
                     if (superWithCurrencies.length === 0) {
-                        vm.Agents = [];
-                        agentSetting(vm);
+                        getSelectedSuperWithCurrencyChange(vm);
                     }
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.getSelectedSuperWithCurrencyChange = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSelectedSuperWithCurrencyChange = function (vm) {
+            site.invokeLoadingMsg(true);
+            var superLicensee = vm.criteria.SuperWithCurrency;
+            var SRecommend = superLicensee !== undefined ? superLicensee.Id : -1;
+
             $http.get(
                 'GetLicenseeAgentList',
                 {
-                    params: { SRecommend: vm.criteria.SuperWithCurrency.Id }
+                    params: { SRecommend: SRecommend }
                 }
             )
                 .success(function (agents) {
+                    agents = superLicensee !== undefined ? agents : [];
                     vm.Agents = agents;
                     agentSetting(vm);
-                    setGenerateButtonStatus(false);
+                    site.invokeLoadingMsg(false);
+
+                    vm.buttonStatus.disableButton = agents.length <= 0;
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.getSettings = function (vm) {
-            setGenerateButtonStatus(true);
+        var getSettings = function (vm) {
+            site.invokeLoadingMsg(true);
             $http.get('GetLogSettings')
                 .success(function (data) {
                     vm.Licensees = data.Licensees;
@@ -749,18 +770,20 @@ var logSettings = (function () {
 
                     licenseeSetting(vm);
 
-                    if (data.Licensees.length === 0) {
-                        vm.SuperWithCurrencies = [];
-                        superWithCurrencySetting(vm);
-                    }
-
                     vm.TextSettings = {
                         Filter: 'Search'
                     };
+
+                    if (vm.Licensees.length === 0) {
+                        getSelectedSuperWithCurrencyChange(vm);
+                    }
+                }).error(function () {
+                    site.invokeLoadingMsg(false);
+                    alert(site.requestErrMsg);
                 });
         }
 
-        this.handleLogData = function (data, Func) {
+        var handleLogData = function (data, Func) {
             angular.forEach(data.Data, function (item) {
                 var oldData = logSettings.formatData(item.OldData, item.ActionId, Func);
                 var newData = logSettings.formatData(item.Data, item.ActionId, Func);
@@ -769,18 +792,13 @@ var logSettings = (function () {
             })
         }
 
-        this.invokeLoadingMsg = function (visible) {
-            $.blockUI.defaults.overlayCSS.opacity = 0;
-            $.blockUI.defaults.css = {};
-
-            if (visible) {
-                $.blockUI({ message: '<div class="icon-loading"></div>' });
-                setGenerateButtonStatus(true);
-            }
-            else {
-                $.unblockUI();
-                setGenerateButtonStatus(false);
-            }
-        };
+        return {
+            formatDateString: formatDateString,
+            configGridOptions: configGridOptions,
+            getSelectedLicenseeChange: getSelectedLicenseeChange,
+            getSelectedSuperWithCurrencyChange: getSelectedSuperWithCurrencyChange,
+            getSettings: getSettings,
+            handleLogData: handleLogData
+        }
     }
 })();
