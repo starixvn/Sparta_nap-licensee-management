@@ -26,24 +26,18 @@
             <li>
                 <div class="tree">
                     <ul>
-                        <li data-ng-repeat="item in items | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
+                        <li data-ng-repeat="item in items | filter:filterSearchText">
+                            <span title="{{_textSettings.CollapseBranch}}" data-ng-click="item.showChildren = !item.showChildren">
+                                <i class="nodehanbler glyphicon" data-ng-class="getCollapseExpandClass(item)"></i>
+                            </span>
+                            <a data-ng-class="getItemClass(item);"
+                               data-ng-click="selectItem(item);" data-ng-attr-id="item-{{item.id}}" style="text-decoration: none;">
+                                <span>{{item.label | itemFormatFilter:item:0:_settings.itemFormatter}}</span><span data-ng-class="getExtendItemClass(item)">{{item.subInfoText}}</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </li>
         </ul>
     </div>
-</script>
-<script type="text/ng-template" id="dropdowntreesingle.template.html">
-    <span title="{{_textSettings.CollapseBranch}}" data-ng-click="item.showChildren = !item.showChildren">
-        <i class="nodehanbler glyphicon" data-ng-class="getCollapseExpandClass(item)"></i>
-    </span>
-    <a data-ng-class="getItemClass(item);"
-       data-ng-click="selectItem(item);" data-ng-attr-id="item-{{item.id}}" style="text-decoration: none;">
-        <span>{{item.label | itemFormatFilter:item:0:_settings.itemFormatter}}</span><span data-ng-class="getExtendItemClass(item)">{{item.subInfoText}}</span>
-    </a>
-    <ul class="list-unstyled" data-ng-if="item.showChildren && item.children.length > 0" style="padding-left: 40px">
-        <li data-ng-repeat="item in item.children | filter:filterSearchText" ng-include="'dropdowntreesingle.template.html'">
-        </li>
-    </ul>
 </script>

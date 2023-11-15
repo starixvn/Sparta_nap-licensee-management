@@ -1,5 +1,6 @@
-h4 {
+h5 {
   text-transform: capitalize;
+  font-weight: bold !important;
 }
 .glyphicon-refresh {
   color: #ed9c28;
@@ -13,6 +14,43 @@ h4 {
   transform-origin: 50% 58%;
   -ms-transform-origin: 50% 58%;
   /* IE 9 */
+}
+#table__bet-setting input[type=text],
+#table__default-bet-setting input[type=text] {
+  width: 105px;
+}
+#table__bet-setting input[type=text].minbet,
+#table__default-bet-setting input[type=text].minbet {
+  width: 50px;
+}
+#table__bet-setting input[type=text].value,
+#table__default-bet-setting input[type=text].value {
+  border: none !important;
+  text-align: left !important;
+  background: none;
+}
+#table__bet-setting td,
+#table__default-bet-setting td {
+  width: 250px;
+  min-width: 250px;
+}
+#table__bet-setting td.action,
+#table__default-bet-setting td.action {
+  width: 150px !important;
+  min-width: 150px !important;
+}
+#table__bet-setting td.not-compare,
+#table__default-bet-setting td.not-compare {
+  width: 230px !important;
+  min-width: 230px !important;
+}
+#table__bet-setting td.minbet,
+#table__default-bet-setting td.minbet {
+  width: 140px !important;
+  min-width: 140px !important;
+}
+.disable-elem {
+  cursor: not-allowed !important;
 }
 .glyphicon-refresh:before {
   content: "\e031";
@@ -31,15 +69,6 @@ input.ng-valid-bs-validation {
 }
 input.ng-invalid-bs-validation {
   border: 1px solid #d94747;
-}
-input.value {
-  border: none !important;
-  text-align: left !important;
-  background: none;
-}
-input.symbol {
-  border: none !important;
-  background: none;
 }
 .alert {
   padding-left: 0;

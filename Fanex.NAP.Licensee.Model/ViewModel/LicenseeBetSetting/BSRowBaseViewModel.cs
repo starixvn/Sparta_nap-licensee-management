@@ -22,8 +22,6 @@
 
         public bool IsRowDisabled { get; set; }
 
-        public bool IsRowUpdated { get; set; }
-
         public string UplineMinBet { get; set; }
 
         public string UplineMaxBet { get; set; }

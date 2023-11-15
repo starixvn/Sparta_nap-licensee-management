@@ -18,11 +18,11 @@
 <div ng-app="licenseeBetSetting" ng-controller="licenseeBetSettingCtrl">
     <div class="col-md-12 filter-form">
         <div class="row">
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3">
-                <label class="col-sm-12 col-xs-12 col-md-2 col-lg-3">
+            <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-3">
+                <label class="col-sm-12 col-xs-12 col-md-4 col-lg-3">
                     Licensee
                 </label>
-                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-3 col-lg-6"
+                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-7 col-lg-6"
                                     data-ng-model="filterData.selectedLicensee"
                                     data-settings="licenseeSettings"
                                     text-settings="TextSettings"
@@ -30,23 +30,23 @@
                                     data-ng-style="{ 'padding': 0}">
                 </dropdowntreesingle>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-5 col-lg-4">
-                <label class="col-sm-12 col-xs-12 col-md-5 col-lg-4">
+            <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-4">
+                <label class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
                     Currency (Super)
                 </label>
-                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-6 col-lg-6"
+                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-7 col-lg-6"
                                     data-ng-model="filterData.selectedSuperLicensee"
                                     data-settings="superLicenseeSettings"
                                     text-settings="TextSettings"
-                                    data-ng-change="selectedSuperLicenseeChanged(filterData.selectedSuperLicensee.Id)"
+                                    data-ng-change="selectedSuperLicenseeChanged()"
                                     data-ng-style="{ 'padding': 0}">
                 </dropdowntreesingle>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3">
-                <label class="col-sm-12 col-xs-12 col-md-3 col-lg-4">
+            <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-3">
+                <label class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
                     Subsidiary
                 </label>
-                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-4 col-lg-6"
+                <dropdowntreesingle class="col-sm-12 col-xs-12 col-md-7 col-lg-6"
                                     data-ng-model="filterData.selectedAgent"
                                     data-settings="agentSettings"
                                     text-settings="TextSettings"
@@ -56,8 +56,8 @@
             <div class="form-group col-md-1 col-lg-2"></div>
         </div>
         <div class="row">
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3">
-                <label class="col-sm-12 col-xs-12 col-md-2 col-lg-3">
+            <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-3">
+                <label class="col-sm-12 col-xs-12 col-md-4 col-lg-3">
                     Product
                 </label>
                 <select ng-if="filterData.productTypes.length > 0"
@@ -68,15 +68,15 @@
                         id="product-type" class="col-sm-12 col-xs-12 col-md-7 col-lg-6">
                 </select>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-5 col-lg-4">
-                <label class="col-sm-12 col-xs-12 col-md-5 col-lg-4">
+            <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-4">
+                <label class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
                     Option
                 </label>
                 <select ng-if="filterData.selectedProductType.Functions.length > 0"
                         ng-init="filterData.selectedFunction = filterData.selectedProductType.Functions[0]"
                         ng-options="item for item in filterData.selectedProductType.Functions track by item"
                         ng-model="filterData.selectedFunction"
-                        id="product-function" class="col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                        id="product-function" class="col-sm-12 col-xs-12 col-md-7 col-lg-6">
                 </select>
             </div>
         </div>

@@ -1,16 +1,18 @@
-﻿"use strict";
+﻿'use strict';
 
 angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['$filter', function ($filter) {
     return {
         require: 'ngModel',
         restrict: 'A',
         scope: {
-            agentId: "=",
-            isDbsPage: "="
+            oldValue: '='
         },
         link: function (scope, elem, attrs, ngModel) {
 
             function formatNumber(value) {
+                if (value === undefined) {
+                    return '';
+                }
                 var transformedText = value.replace(/\D/g, '');
                 var number = transformedText.replace(/[\,\.]/g, '');
 
@@ -18,7 +20,7 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
             }
 
             var validFn = function (value) {
-                if (value === "") {
+                if (value === '') {
                     return false;
                 }
                 var min = parseInt(formatNumber(attrs['min']));
@@ -28,20 +30,27 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
 
                 var numValue = parseInt(formatNumber(value));
                 return numValue >= min
-                    && (numValue <= max || attrs['max'] === "*")
-                    && (numValue >= uplinemin || attrs['uplinemin'] === "*")
-                    && (numValue <= uplinemax || attrs['uplinemax'] === "*");
+                    && (numValue <= max || attrs['max'] === '*')
+                    && (numValue >= uplinemin || attrs['uplinemin'] === '*')
+                    && (numValue <= uplinemax || attrs['uplinemax'] === '*');
             };
 
-            var setValidation = function (newValue) {
-                var valid = validFn($(elem).val());
-
+            function validateField(oldData, newData) {
+                var valid = validFn(newData);
                 ngModel.$setValidity('bsValidation', valid);
 
-                if (!valid) {
-                    ngModel.$setDirty(true);
-                }
+                var oldValue = parseInt(formatNumber(oldData));
+                var newValue = parseInt(formatNumber(newData));
 
+                if (oldValue !== newValue || !valid) {
+                    ngModel.$setDirty(true);
+                } else {
+                    ngModel.$setPristine(true);
+                }
+            }
+
+            var setValidation = function (newValue) {
+                validateField(scope.oldValue, $(elem).val());
                 return newValue;
             }
 
@@ -54,20 +63,20 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
             attrs.$observe('uplinemax', setValidation);
 
             ngModel.$parsers.unshift(function (inputValue) {
-                if (inputValue === "") {
-                    return "";
+                if (inputValue === '') {
+                    return '';
                 }
 
                 var number = formatNumber(inputValue);
                 var el = elem[0];
 
-                var formartNumber = $filter('number')(number);
+                var format = $filter('number')(number);
 
-                if (formartNumber !== inputValue) {
+                if (format !== inputValue) {
                     var start = el.selectionStart + 1;
-                    var end = el.selectionEnd + formartNumber.length - inputValue.length;
+                    var end = el.selectionEnd + format.length - inputValue.length;
 
-                    ngModel.$setViewValue(formartNumber);
+                    ngModel.$setViewValue(format);
                     ngModel.$render();
                     el.setSelectionRange(start, end);
                 }
@@ -77,22 +86,18 @@ angular.module('licenseeBetSetting.directives', []).directive('bsValidation', ['
 
             //For DOM -> model validation
             ngModel.$parsers.unshift(function (value) {
-                var valid = validFn(value);
-                ngModel.$setValidity('bsValidation', valid);
+                validateField(scope.oldValue, value);
 
                 return value;
             });
 
             //For model -> DOM validation
             ngModel.$formatters.unshift(function (value) {
-                if (scope.agentId === 0 && !scope.isDbsPage) {
-                    return "";
-                }
-                var valid = validFn(value);
-                ngModel.$setValidity('bsValidation', valid);
 
-                if (value === "") {
-                    return "";
+                validateField(scope.oldValue, value);
+
+                if (value === '') {
+                    return '';
                 }
 
                 var number = formatNumber(value);

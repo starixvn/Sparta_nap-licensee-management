@@ -24,16 +24,11 @@
 
             using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingSel"))
             {
-                using (var multi = db.QueryMultiple(new { CustID = model.CustId, Product = model.ProductTypeId, AgentID = model.AgentId }))
+                using (var multi = db.QueryMultiple(new { CustID = model.CustId, Product = model.ProductTypeId, AgentID = model.AgentId, model.Option }))
                 {
                     bSSupers = multi.Read<BSSportsbookItem>();
                     bSAgents = multi.Read<BSSportsbookItem>();
                 }
-            }
-
-            if (model.Option && model.AgentId != 0)
-            {
-                bSSupers = bSAgents;
             }
 
             var result = new BSSportsbookItemWithSuperInfo
@@ -81,7 +76,7 @@
             }
         }
 
-        public ResultInfo UpdateBetSettingSportsbook(BSSportsbookViewModel model)
+        public BSResultViewModel UpdateBetSettingSportsbook(BSSportsbookViewModel model)
         {
             var updateItem = new UpdateBetSettingSportsbookItem();
             FormatBetSettingSportsbookItem(updateItem, model);
@@ -95,16 +90,13 @@
             {
                 db.ExecuteNonQuery(updateItem);
 
-                return new ResultInfo
-                {
-                    IsOk = Converter.ToInt(updateItem.ErrCode) == 0,
-                    Message = updateItem.ErrMsg
-                };
+                return new BSResultViewModel(string.Empty, Converter.ToInt(updateItem.ErrCode), updateItem.ErrMsg);
             }
         }
 
         public List<BSResultViewModel> CheckBetSettingSportsbook(BSSportsbookViewModel model)
         {
+            var dbsErrCodes = LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').ToList();
             var updateItem = new CheckBetSettingSportsbookItem();
             FormatBetSettingSportsbookItem(updateItem, model);
 
@@ -122,16 +114,11 @@
                 {
                     db.ExecuteNonQuery(updateItem);
 
-                    var result = new ResultInfo
-                    {
-                        Code = Converter.ToInt(updateItem.ErrCode),
-                        IsOk = Converter.ToInt(updateItem.ErrCode) == 0,
-                        Message = updateItem.ErrMsg
-                    };
+                    var result = new BSResultViewModel(bsRows[i].BetTypeName, Converter.ToInt(updateItem.ErrCode), updateItem.ErrMsg);
 
                     if (!result.IsOk)
                     {
-                        violatedResultItems.Add(new BSResultViewModel(bsRows[i].BetTypeName, result.Code, result.IsOk, result.Message));
+                        violatedResultItems.Add(result);
                     }
 
                     updateItem.ErrCode = 0;
@@ -140,7 +127,7 @@
             }
 
             return violatedResultItems
-                .OrderBy(_ => LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').Any(code => code == _.Code.ToString()))
+                .OrderBy(item => dbsErrCodes.Exists(code => code == item.Code.ToString()))
                 .ToList();
         }
 

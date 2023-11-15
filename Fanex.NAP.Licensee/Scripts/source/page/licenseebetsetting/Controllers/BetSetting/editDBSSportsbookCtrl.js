@@ -21,6 +21,4 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
-
-    $injector.invoke(editBSCheckboxState, this, { $scope: $scope });
 }]);

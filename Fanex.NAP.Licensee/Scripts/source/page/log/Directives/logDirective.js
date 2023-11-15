@@ -57,8 +57,10 @@
 
             $('.free-bottom-right').css({ top: $('.grid-container').height() });
             $('.x-scrollbar').css({ top: $('.grid-container').height() });
+
             $('.grid-pager').css({ top: ($('.grid-container').height() + $('.x-scrollbar').height()) })
-            $('.y-scrollbar').height($('#gridId').height() - $('.grid-pager').height() - $('.row-headers-background').height());
+
+            $('.y-scrollbar').height($('.grid-container').height() - $('.free-bottom-right').height());
             $('.scrollbar-y-content').height($('.content-container').height() - $('.free-bottom-right').height());
 
             if ($('.y-scrollbar').height() < $('.scrollbar-y-content').height()) {

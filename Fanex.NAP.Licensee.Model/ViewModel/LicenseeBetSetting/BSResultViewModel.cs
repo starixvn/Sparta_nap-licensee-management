@@ -1,12 +1,14 @@
 ﻿namespace Fanex.NAP.Licensee.Model.ViewModel.LicenseeBetSetting
 {
-    public class BSResultViewModel
+    using DTO;
+
+    public class BSResultViewModel : ResultInfo
     {
-        public BSResultViewModel(string sportOrBetTypeName, int code, bool isOk, string message)
+        public BSResultViewModel(string sportOrBetTypeName, int code, string message)
         {
             SportOrBetTypeName = sportOrBetTypeName;
             Code = code;
-            IsOk = isOk;
+            IsOk = code == 0;
             Message = message;
         }
 
@@ -18,11 +20,5 @@
         }
 
         public string SportOrBetTypeName { get; set; }
-
-        public int Code { get; set; }
-
-        public bool IsOk { get; set; }
-
-        public string Message { get; set; }
     }
 }

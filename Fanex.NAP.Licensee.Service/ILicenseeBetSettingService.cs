@@ -8,7 +8,7 @@
 
     public interface ILicenseeBetSettingService
     {
-        ResultInfo UpdateBetSettingSportsbook(BSSportsbookViewModel model);
+        BSResultViewModel UpdateBetSettingSportsbook(BSSportsbookViewModel model);
 
         List<BSResultViewModel> CheckBetSettingSportsbook(BSSportsbookViewModel model);
 

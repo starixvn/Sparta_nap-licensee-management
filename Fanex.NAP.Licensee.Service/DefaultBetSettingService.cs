@@ -64,12 +64,12 @@
                 result.Agent = new AgentItem
                 {
                     Id = criteria.AgentID,
-                    Name = criteria.AgentID.HasValue ? objectDb.GetParameterValue("@AgentName").ToString() : NoneAgent
+                    Name = criteria.AgentID.HasValue ? objectDb.GetParameterValue("@AgentName")?.ToString() : NoneAgent
                 };
                 result.Currency = new CurrencyItem
                 {
                     Id = criteria.CurrencyID,
-                    Name = objectDb.GetParameterValue("@CurrencyName").ToString()
+                    Name = objectDb.GetParameterValue("@CurrencyName")?.ToString()
                 };
 
                 result.HasSetting = Convert.ToBoolean(objectDb.GetParameterValue("@HasSetting"));

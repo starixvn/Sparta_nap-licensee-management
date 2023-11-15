@@ -1,4 +1,6 @@
-﻿(function () {
+﻿/* global site */
+
+(function () {
     'use strict';
 
     angular.module('logSettingsApp').controller('licenseeBetSettingLogCtrl', licenseeBetSettingLogCtrl);
@@ -10,7 +12,9 @@
 
         vm.criteria = {};
         vm.formData = {};
-
+        vm.buttonStatus = {
+            disableButton: false
+        };
         vm.gridOptions = logService.configGridOptions();
         vm.gridOptions.pagerOption = {
             pagerSelectCallBack: function (pageIndex, itemsPerPage) {
@@ -56,17 +60,18 @@
         }
 
         function getReport() {
-            logService.invokeLoadingMsg(true);
+            site.invokeLoadingMsg(true);
             $http.get('GetReport', { params: vm.formData })
                 .success(function (data) {
                     logService.handleLogData(data, setSportNames);
                     vm.report = data;
                     vm.formData.TotalItem = data.TotalItem;
-                    logService.invokeLoadingMsg(false);
+                    site.invokeLoadingMsg(false);
                 })
                 .error(function (data) {
-                    logService.invokeLoadingMsg(false);
-                    alert(data);
+                    site.invokeLoadingMsg(false);
+                    vm.buttonStatus.disableButton = true;
+                    alert(site.invokeErrMsg);
                 });
         }
 
@@ -79,6 +84,10 @@
         }
 
         vm.getReport = function () {
+            if (vm.buttonStatus.disableButton) {
+                return;
+            }
+
             vm.formData.pageIndex = undefined;
             vm.formData.pageSize = undefined;
             vm.formData = getNormalizedFilter();
