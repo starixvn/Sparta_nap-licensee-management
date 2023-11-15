@@ -293,7 +293,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
 
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
-                            alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
+                            var sportName = data.SportOrBetTypeName === '' ? '' : data.SportOrBetTypeName.bold() + ': ';
+                            alert(sportName + data.Message);
                         }
                     }
                 })

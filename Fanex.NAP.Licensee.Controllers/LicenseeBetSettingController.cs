@@ -12,6 +12,7 @@
     using Fanex.NAP.Licensee.Model.ViewModel.LicenseeBetSetting;
     using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Service;
+    using Model.DTO;
     using ONEbook.UM.Filters;
 
     [NapSuperAuth]
@@ -93,7 +94,18 @@
             var sportsBookItems = _licenseeBetSettingService.GetBSSportsbookItemWithSuperInfo(model);
             var sportsBookVm = new BSSportsbookViewModel(sportsBookItems, _commonService.GetSportsbookGameTypeList);
 
-            return Json(sportsBookVm, JsonRequestBehavior.AllowGet);
+            var exceedMemberThresholdResult = model.Option == 1
+                ? _licenseeBetSettingService.CheckExceedMemberThreshold(model.CustId, model.AgentId)
+                : new ResultInfo { IsOk = true };
+
+            var result = new ResultData<BSSportsbookViewModel>
+            {
+                Data = sportsBookVm,
+                IsSuccess = exceedMemberThresholdResult.IsOk,
+                Error = exceedMemberThresholdResult.Message
+            };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult ReviewBetSetting(int productTypeId)

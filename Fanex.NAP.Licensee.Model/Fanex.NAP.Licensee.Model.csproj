@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparer\SportComparer.cs" />
+    <Compile Include="Criteria\LicenseeBetSetting\CheckExceedMemberThresholdCriteria.cs" />
     <Compile Include="Request\CreateSubsidiariesReq.cs" />
     <Compile Include="Request\CreateSubsidiariesRes.cs" />
     <Compile Include="Criteria\BetTicketVolumeControlSetting\InsUpdVolumeControlSettingCriteria.cs" />

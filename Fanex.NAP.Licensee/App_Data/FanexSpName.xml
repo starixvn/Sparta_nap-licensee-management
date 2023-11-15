@@ -28,6 +28,7 @@
 		</Setting>
 		<!--Bet setting-->
 		<Setting Key="NAP_LM_LicenseeBetSettingSel" SpName="NAP_LM_LicenseeBetSettingSel" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
+		<Setting Key="NAP_LM_CustomerSelCheckAllowedDownlines" SpName="NAP_LM_CustomerSelCheckAllowedDownlines" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
 		<Setting Key="NAP_LM_LicenseeBetLimitUpd" SpName="NAP_LM_LicenseeBetLimitUpd" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
 		<Setting Key="NAP_LM_LicenseeBetSettingCheck" SpName="NAP_LM_LicenseeBetSettingCheck" DbName="DBCUST.CustDB.bodbLicenseeNet"></Setting>
 		<Setting Key="NAP_LM_LicenseeSelAgentList" SpName="NAP_LM_LicenseeSelAgentList" DbName="DBCUST.CustDB.bodbLicenseeNet">
