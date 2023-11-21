@@ -14,6 +14,8 @@
 
         BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(LicenseeBetSettingFilterViewModel model);
 
+        ResultInfo CheckExceedMemberThreshold(int custId, int agentId);
+
         PagedList<LogField> GetLogs(GetSettingLogViewModel model);
     }
 }

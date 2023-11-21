@@ -58,6 +58,11 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = { DBSRows: [] };
     $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
+    $scope.isExceedingThreshold = false;
+
+    if (angular.equals(shareSettingsService.getWorkingContext(), shareSettingsService.orgWorkingContext)) {
+        return;
+    }
 
     function getAgentsHeader() {
         var res = '';
@@ -109,14 +114,20 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             },
             headers: getAjaxHeader()
         })
-        .success(function (data) {
-            $scope.orgData.BSs = angular.copy(data.BSRows);
-            shareSettingsService.saveOrgSettings(angular.copy(data));
+        .success(function (response) {
+            $scope.orgData.BSs = angular.copy(response.Data.BSRows);
+            shareSettingsService.saveOrgSettings(angular.copy(response.Data));
             if ($scope.buttonStatus.IsBack) {
                 $scope.editBS = shareSettingsService.getCurSettings();
             }
             else {
-                $scope.editBS.BSRows = angular.copy(data.BSRows);
+                $scope.editBS.BSRows = angular.copy(response.Data.BSRows);
+            }
+
+            if ($scope.option === 1 && !response.IsSuccess) {
+                $scope.isExceedingThreshold = true;
+                $scope.editBS.applyForMember = -1;
+                alert(response.Error);
             }
 
             site.invokeLoadingMsg(false);
@@ -124,13 +135,17 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
         .error(function () {
             site.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
-        });;
+        });
 };
 editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 
 var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.editBS = {};
     $scope.isDbsPage = true;
+
+    if (angular.equals(shareSettingsService.getWorkingContext(), shareSettingsService.orgWorkingContext)) {
+        return;
+    }
 
     function getAjaxHeader() {
         return {
@@ -459,7 +474,7 @@ licenseeBetSettingApp.controller("editBSSportsbookCtrl", ['$scope', '$injector',
     $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
 }]);
 
-﻿/* global licenseeBetSettingApp, editDBSModelFunc, editBSApplyForPlayerFunc, editBSNavigatorFunc,
+﻿/* global licenseeBetSettingApp, editDBSModelFunc, editBSNavigatorFunc,
 editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
@@ -471,8 +486,6 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
 
     $injector.invoke(editDBSModelFunc, this, { $scope: $scope });
 
-    $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
-
     $injector.invoke(editBSAllSportFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
@@ -480,8 +493,6 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
     $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
-
-    $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
 }]);
 
 ﻿/* exported reviewBSModelFunc, reviewBSNavigatorFunc */
@@ -889,7 +900,8 @@ licenseeBetSettingApp.controller("licenseeBetSettingCtrl", [
 
                             goToEditDBPage(shareSettingsService.getWorkingContext());
                         } else {
-                            alert(data.SportOrBetTypeName.bold() + ': ' + data.Message);
+                            var sportName = data.SportOrBetTypeName === '' ? '' : data.SportOrBetTypeName.bold() + ': ';
+                            alert(sportName + data.Message);
                         }
                     }
                 })
@@ -1130,16 +1142,20 @@ servicesModule.factory("shareSettingsService", function () {
     };
 
     return {
+        orgWorkingContext: workingContext,
+
         saveOrgSettings: function (orgSettings) {
             settings.OrgSettings = orgSettings;
         },
+
         saveCurSettings: function (curSettings) {
             settings.CurSettings = curSettings;
         },
+
         getOrgSettings: function () {
             return settings.OrgSettings;
-
         },
+
         getCurSettings: function () {
             return settings.CurSettings;
         },
@@ -1147,9 +1163,11 @@ servicesModule.factory("shareSettingsService", function () {
         saveWorkingContext: function (curContext) {
             workingContext = curContext;
         },
+
         getWorkingContext: function () {
             return workingContext;
         },
+
         getStatus: function () {
             return status;
         }

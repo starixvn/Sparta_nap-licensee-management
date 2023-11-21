@@ -114,16 +114,16 @@
                         {{item.SportTypeName}}
                     </td>
                     <td>
-                        {{item.MinBet === '' ? '' : ((item.IsRowSelected ? item.MinBet : orgDBSs[$index].MinBet) | number)}}
+                        {{item.IsRowSelected ? (item.MinBet ? (item.MinBet | number) : '') : (orgDBSs[$index].MinBet ? (orgDBSs[$index].MinBet | number) : '' )}}
                     </td>
                     <td>
-                        {{item.MaxBet === '' ? '' : ((item.IsRowSelected ? item.MaxBet : orgDBSs[$index].MaxBet) | number)}}
+                        {{item.IsRowSelected ? (item.MaxBet ? (item.MaxBet | number) : '') : (orgDBSs[$index].MaxBet ? (orgDBSs[$index].MaxBet | number) : '' )}}
                     </td>
                     <td>
-                        {{item.MaxPerMatch === '' ? '' : ((item.IsRowSelected ? item.MaxPerMatch : orgDBSs[$index].MaxPerMatch) | number)}}
+                        {{item.IsRowSelected ? (item.MaxPerMatch ? (item.MaxPerMatch | number) : '') : (orgDBSs[$index].MaxPerMatch ? (orgDBSs[$index].MaxPerMatch | number) : '' )}}
                     </td>
                     <td>
-                        {{item.MaxPayoutPerMatch === '' ? '' : ((item.IsRowSelected ? item.MaxPayoutPerMatch : orgDBSs[$index].MaxPayoutPerMatch) | number)}}
+                        {{item.IsRowSelected ? (item.MaxPayoutPerMatch ? (item.MaxPayoutPerMatch | number) : '') : (orgDBSs[$index].MaxPayoutPerMatch ? (orgDBSs[$index].MaxPayoutPerMatch | number) : '' )}}
                     </td>
                     <td class="content-center">
                         {{item.IsRowSelected ? 'X' : ''}}

@@ -49,6 +49,10 @@ h5 {
   width: 140px !important;
   min-width: 140px !important;
 }
+.disable-all-elem {
+  pointer-events: none;
+  opacity: 0.75;
+}
 .disable-elem {
   cursor: not-allowed !important;
 }

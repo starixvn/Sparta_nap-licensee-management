@@ -1,4 +1,4 @@
-﻿/* global licenseeBetSettingApp, editDBSModelFunc, editBSApplyForPlayerFunc, editBSNavigatorFunc,
+﻿/* global licenseeBetSettingApp, editDBSModelFunc, editBSNavigatorFunc,
 editBSAllSportFunc, editBSRowCheckableFunc, editBSNextEnabilityFunc, editBSNextConstraintsFunc */
 
 "use strict";
@@ -10,8 +10,6 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
 
     $injector.invoke(editDBSModelFunc, this, { $scope: $scope });
 
-    $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
-
     $injector.invoke(editBSAllSportFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSRowCheckableFunc, this, { $scope: $scope });
@@ -19,6 +17,4 @@ licenseeBetSettingApp.controller("editDBSSportsbookCtrl", ['$scope', '$injector'
     $injector.invoke(editBSNextEnabilityFunc, this, { $scope: $scope });
 
     $injector.invoke(editBSNextConstraintsFunc, this, { $scope: $scope });
-
-    $injector.invoke(editBSApplyForPlayerFunc, this, { $scope: $scope });
 }]);

@@ -30,16 +30,20 @@ servicesModule.factory("shareSettingsService", function () {
     };
 
     return {
+        orgWorkingContext: workingContext,
+
         saveOrgSettings: function (orgSettings) {
             settings.OrgSettings = orgSettings;
         },
+
         saveCurSettings: function (curSettings) {
             settings.CurSettings = curSettings;
         },
+
         getOrgSettings: function () {
             return settings.OrgSettings;
-
         },
+
         getCurSettings: function () {
             return settings.CurSettings;
         },
@@ -47,9 +51,11 @@ servicesModule.factory("shareSettingsService", function () {
         saveWorkingContext: function (curContext) {
             workingContext = curContext;
         },
+
         getWorkingContext: function () {
             return workingContext;
         },
+
         getStatus: function () {
             return status;
         }

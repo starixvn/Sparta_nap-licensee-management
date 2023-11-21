@@ -16,7 +16,7 @@
     public class LicenseeBetSettingService : ILicenseeBetSettingService
     {
         private const string BSPattern = "<BL SportType=\"{0}\" Bettype=\"{1}\" MinBet=\"{2}\" MaxBet=\"{3}\" MaxPerMatch=\"{4}\" MaxPerNumber=\"{5}\" MaxPayoutPerMatch=\"{6}\"/>";
-        
+
         public BSSportsbookItemWithSuperInfo GetBSSportsbookItemWithSuperInfo(LicenseeBetSettingFilterViewModel model)
         {
             IEnumerable<BSSportsbookItem> bSSupers;
@@ -38,6 +38,24 @@
             };
 
             return result;
+        }
+
+        public ResultInfo CheckExceedMemberThreshold(int custId, int agentId)
+        {
+            var criteria = new CheckExceedMemberThresholdCriteria(custId, agentId);
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                var outputParams = db.GetOutputParams();
+
+                return new ResultInfo
+                {
+                    IsOk = Converter.ToInt(outputParams["ErrCode"]) == 0,
+                    Message = Converter.ToString2(outputParams["ErrMsg"])
+                };
+            }
         }
 
         public PagedList<LogField> GetLogs(GetSettingLogViewModel model)
@@ -97,6 +115,7 @@
         public List<BSResultViewModel> CheckBetSettingSportsbook(BSSportsbookViewModel model)
         {
             var dbsErrCodes = LicenseeBetSettingConstants.SportsbookDBSErrCodes.Split(',').ToList();
+            const int exceedThresholdErrCode = LicenseeBetSettingConstants.ExceedThresholdErrCode;
             var updateItem = new CheckBetSettingSportsbookItem();
             FormatBetSettingSportsbookItem(updateItem, model);
 
@@ -113,6 +132,16 @@
                 using (var db = ObjectDbFactory.CreateInstance("NAP_LM_LicenseeBetSettingCheck"))
                 {
                     db.ExecuteNonQuery(updateItem);
+
+                    var errCode = Converter.ToInt(updateItem.ErrCode);
+
+                    if (errCode == exceedThresholdErrCode)
+                    {
+                        return new List<BSResultViewModel>
+                        {
+                            new BSResultViewModel(string.Empty, errCode, updateItem.ErrMsg)
+                        };
+                    }
 
                     var result = new BSResultViewModel(bsRows[i].BetTypeName, Converter.ToInt(updateItem.ErrCode), updateItem.ErrMsg);
 
@@ -153,6 +182,5 @@
 
             return xml.ToString();
         }
-
     }
 }

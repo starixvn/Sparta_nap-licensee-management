@@ -6,6 +6,11 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
     // Get common bet setting data
     $scope.editBS = { DBSRows: [] };
     $scope.agentId = shareSettingsService.getWorkingContext().AgentId;
+    $scope.isExceedingThreshold = false;
+
+    if (angular.equals(shareSettingsService.getWorkingContext(), shareSettingsService.orgWorkingContext)) {
+        return;
+    }
 
     function getAgentsHeader() {
         var res = '';
@@ -57,14 +62,20 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
             },
             headers: getAjaxHeader()
         })
-        .success(function (data) {
-            $scope.orgData.BSs = angular.copy(data.BSRows);
-            shareSettingsService.saveOrgSettings(angular.copy(data));
+        .success(function (response) {
+            $scope.orgData.BSs = angular.copy(response.Data.BSRows);
+            shareSettingsService.saveOrgSettings(angular.copy(response.Data));
             if ($scope.buttonStatus.IsBack) {
                 $scope.editBS = shareSettingsService.getCurSettings();
             }
             else {
-                $scope.editBS.BSRows = angular.copy(data.BSRows);
+                $scope.editBS.BSRows = angular.copy(response.Data.BSRows);
+            }
+
+            if ($scope.option === 1 && !response.IsSuccess) {
+                $scope.isExceedingThreshold = true;
+                $scope.editBS.applyForMember = -1;
+                alert(response.Error);
             }
 
             site.invokeLoadingMsg(false);
@@ -72,13 +83,17 @@ var editBSModelFunc = function ($scope, $http, shareSettingsService) {
         .error(function () {
             site.invokeLoadingMsg(false);
             alert(site.requestErrMsg);
-        });;
+        });
 };
 editBSModelFunc.$inject = ['$scope', '$http', 'shareSettingsService'];
 
 var editDBSModelFunc = function ($scope, $http, shareSettingsService) {
     $scope.editBS = {};
     $scope.isDbsPage = true;
+
+    if (angular.equals(shareSettingsService.getWorkingContext(), shareSettingsService.orgWorkingContext)) {
+        return;
+    }
 
     function getAjaxHeader() {
         return {
