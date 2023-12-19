@@ -421,15 +421,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSample.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.config1.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.config.tt</DependentUpon>
-    </Content>
-    <Content Include="SiteConfig\Web.ConnectionString.config1.txt">
+    <None Include="SiteConfig\Web.AppSettings.KLDR.config">
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SiteConfig\Web.ConnectionString.config.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+    </None>
+    <Content Include="SiteConfig\Web.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
     <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
@@ -687,6 +691,14 @@
     <Content Include="Views\LicenseeSubsidiary\Add.cshtml" />
     <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.css.map" />
     <Content Include="www\reactpages\dist\css\dev\subsidiary\subsidiary.js.map" />
+    <None Include="SiteConfig\Web.ConnectionString.KLDR.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SiteConfig\Web.KLDR.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="www\reactpages\src\scripts\modules\product\index.jsx" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\action.js" />
     <Content Include="www\reactpages\src\scripts\modules\volumecontrol\list\AppContainer.jsx" />
@@ -978,11 +990,11 @@
     </Content>
     <None Include="SiteConfig\Web.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Web.config1.txt</LastGenOutput>
+      <LastGenOutput>Web.config.txt</LastGenOutput>
     </None>
     <None Include="SiteConfig\Web.ConnectionString.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Web.ConnectionString.config1.txt</LastGenOutput>
+      <LastGenOutput>Web.ConnectionString.config.txt</LastGenOutput>
     </None>
     <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
