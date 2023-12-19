@@ -35,7 +35,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="1"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.18.200.131:6379/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://remotingref-api-core.nexdev.net/" />
 	<add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-LOCAL" />
@@ -59,7 +59,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.99.98.117:7207/main/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-UAT" />
@@ -84,7 +84,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.99.99.51:7258/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM" />
