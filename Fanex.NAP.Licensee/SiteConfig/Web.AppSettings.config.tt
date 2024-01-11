@@ -16,7 +16,7 @@
 <#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#
     var manager = TemplateFileManager.Create(this);
-	List<string> sites = new List<string>() {"LOCAL","UAT","PRO","SIT"};
+	List<string> sites = new List<string>() {"LOCAL","UAT","PRO","SIT","KLDR"};
     foreach(var site in sites)
     {
         var x = site.ToString();
@@ -35,7 +35,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="1"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.18.200.131:6379/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://remotingref-api-core.nexdev.net/" />
 	<add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-LOCAL" />
@@ -59,7 +59,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.99.98.117:7207/main/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM-UAT" />
@@ -84,7 +84,7 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="IsLocalTest" value="0"/>
-	<add key="Fanex.RemotingRef.Service.Url" value="http://10.99.99.51:7258/" />
+	<add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
     <add key="Glimpse:DisableAsyncSupport" value="true" />
     <add key="BundlesVersion" value="0" />
 	<add key="LogCategory" value="NAP-LM" />
@@ -122,7 +122,32 @@
 	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 </appSettings>
 <#
-break;
+				break;
+				case "KLDR":
+				#>
+				<appSettings>
+    <clear />
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="IsLocalTest" value="0"/>
+	<add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref.gamora.prod" />
+    <add key="Glimpse:DisableAsyncSupport" value="true" />
+    <add key="BundlesVersion" value="0" />
+	<add key="LogCategory" value="NAP-LM" />
+	<add key="UserPasswordKey" value="abc123456" />
+	<add key="HangfireUserName" value="starix41" />
+	<add key="RedisPrefix" value="LM-Hangfire:" />
+	<add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@10.143.8.200:9005/95" />
+	<add key="RedisConnectionString" value="10.143.8.200:16379, password=foo1@bared, name=LMApp" />
+	<add key="StoredProcedurePath" value="App_Data" />
+	<add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
+</appSettings>
+
+				<#
+				break;
 			default:
 				break;
 		}

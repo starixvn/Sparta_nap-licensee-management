@@ -14,9 +14,13 @@
         {
             SiteEnvironment = SiteEnvironment.PRO
         },
-		 new SiteInfo
+		new SiteInfo
         {
             SiteEnvironment = SiteEnvironment.SIT
+        },
+        new SiteInfo
+        {
+            SiteEnvironment = SiteEnvironment.KLDR
         },
     };
 #>
@@ -26,7 +30,8 @@
         LOCAL,
         UAT,
         PRO,
-		SIT
+		SIT,
+        KLDR
     }
 
 	class SiteInfo
@@ -48,6 +53,8 @@
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=172.16.4.107:42424\" />";
 				    case SiteEnvironment.PRO:
                         return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.2.27.8:42424\" />";
+                    case SiteEnvironment.KLDR:
+                        return "<sessionState mode=\"StateServer\" cookieless=\"false\" timeout=\"20\"  stateConnectionString=\"tcpip=10.143.8.200:42424\" />";
                     default:
                         return string.Empty;
                 }
