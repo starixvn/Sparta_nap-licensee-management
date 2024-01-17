@@ -543,7 +543,7 @@
     ]
   },
   {
-    "DisplayKey": "lblControlDataOfReport_TurnoverReportOnly",
+    "DisplayKey": "lblControlDataOfReport",
     "FunctionKey": "ControlDataOfReport_TurnoverReportOnly",
     "Enable": false,
     "Type": 1,
@@ -552,6 +552,13 @@
       {
         "DisplayKey": "lblHidePlayerWL_WL_Comm_Total",
         "FunctionKey": "HidePlayerWL_WL_Comm_Total",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
+      },
+      {
+        "DisplayKey": "lblDisplayPlayerTips_ExtraPayoutReportOnly",
+        "FunctionKey": "DisplayPlayerTips_ExtraPayoutReportOnly",
         "Enable": false,
         "Type": 1,
         "Mode": 1

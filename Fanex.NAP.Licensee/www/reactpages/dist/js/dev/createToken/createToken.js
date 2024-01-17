@@ -5656,9 +5656,10 @@ var language = exports.language = {
     "lblSabaIntelligence": "Saba Intelligence",
     "lblWinlossAnalysis": "Win Loss Analysis",
     "lblAudLicenseeWinLoss": "Aud Licensee Win Loss",
-    "lblControlDataOfReport_TurnoverReportOnly": "Report's Data Control( Impact Turnover report only)",
-    "lblHidePlayerWL_WL_Comm_Total": "Hide Player W/L (WL/ Comm/ Total)",
-    "lblPlayerReport": "Player Report"
+    "lblControlDataOfReport": "Report's Data Control",
+    "lblHidePlayerWL_WL_Comm_Total": "Hide Player W/L (WL/ Comm/ Total) impact Turnover report only",
+    "lblPlayerReport": "Player Report",
+    "lblDisplayPlayerTips_ExtraPayoutReportOnly": "Display Player Tips impact Extra Payout report only"
 };
 
 /***/ }),
