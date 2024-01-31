@@ -386,6 +386,14 @@
         "Level": [ 0, 1, 101 ]
       },
       {
+        "DisplayKey": "lblDailyBetDetails",
+        "FunctionKey": "DailyBetDetails",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      },
+      {
         "DisplayKey": "lblWinLossByTimeZone",
         "FunctionKey": "LicenseeWinLossByTimeZone76",
         "Enable": false,
