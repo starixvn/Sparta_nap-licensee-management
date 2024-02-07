@@ -14,8 +14,6 @@
 
         public bool ShowNumberGame { get; set; }
 
-        public bool ShowVirtualSport { get; set; }
-
         public bool ShowKeno { get; set; }
 
         public override string GetSettingKey()
@@ -26,7 +24,7 @@
         public override bool IsValid()
         {
             return !string.IsNullOrEmpty(Licensee) && !string.IsNullOrEmpty(Currency)
-                && (ShowSportsBook || ShowNumberGame || ShowVirtualSport || ShowKeno);
+                && (ShowSportsBook || ShowNumberGame || ShowKeno);
         }
     }
 }
