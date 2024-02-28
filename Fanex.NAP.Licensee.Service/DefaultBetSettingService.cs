@@ -143,10 +143,6 @@
                     result.Sportsbook.Add(ReadBetSettingBySport(reader));
                     break;
 
-                case VS:
-                    result.VirtualSport.Add(ReadBetSettingBySport(reader));
-                    break;
-
                 case NG:
                     result.NumberGame.Add(ReadBetSettingBySport(reader));
                     break;

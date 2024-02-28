@@ -73,7 +73,7 @@ var defaultSetting = (function () { // jshint ignore:line
     };
     var isValidInput = function () {
         return (showSB || showKN || showNG || showVS) && currentSelectedCurrency !== undefined && currentSelectedCurrency.length > 0
-        && currentSelectedLicensee !== undefined && currentSelectedLicensee.length > 0;
+            && currentSelectedLicensee !== undefined && currentSelectedLicensee.length > 0;
     };
     var setGenerateButtonStatus = function (disable) {
         if (disable) {
@@ -105,7 +105,6 @@ var defaultSetting = (function () { // jshint ignore:line
             Currency: currentSelectedCurrency.join(),
             ShowSportsBook: showSB,
             ShowNumberGame: showNG,
-            ShowVirtualSport: showVS,
             ShowKeno: showKN
         };
 
@@ -133,8 +132,8 @@ var defaultSetting = (function () { // jshint ignore:line
     var countItemInArray = function (countValue, startIndex, arrayData) {
         var counter = 0;
         if (countValue === undefined || countValue === null
-        || countValue.length === 0 || arrayData === undefined
-        || arrayData === null || arrayData.length === 0) {
+            || countValue.length === 0 || arrayData === undefined
+            || arrayData === null || arrayData.length === 0) {
             return counter;
         }
         var numOfComparator = countValue.length;
@@ -167,53 +166,55 @@ var defaultSetting = (function () { // jshint ignore:line
         for (var index = 0; index < numberRows; index++) {
             var currentColumms = [];
             if (licenseeMerRowNumber === 0) {
-                licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"]}], index, data);
+                licenseeMerRowNumber = countItemInArray([{ "Key": "Licensee", "Value": data[index]["Licensee"] }], index, data);
 
                 currentColumms.push({ Name: "Licensee", Value: data[index]["Licensee"], MergeRowNumber: licenseeMerRowNumber });
             }
 
             if (currencyMerRowNumber === 0) {
                 currencyMerRowNumber = countItemInArray(
-                [{ "Key": "Licensee", "Value": data[index]["Licensee"] }, { "Key": "CurrencyID", "Value": data[index]["CurrencyID"]}], index, data);
+                    [{ "Key": "Licensee", "Value": data[index]["Licensee"] }, { "Key": "CurrencyID", "Value": data[index]["CurrencyID"] }], index, data);
 
                 currentColumms.push({ Name: "Currency", Value: data[index]["Currency"], MergeRowNumber: currencyMerRowNumber });
             }
 
             if (agentMerRowNumber === 0) {
                 agentMerRowNumber = countItemInArray(
-                [{ "Key": "Licensee", "Value": data[index]["Licensee"] },
-                { "Key": "CurrencyID", "Value": data[index]["CurrencyID"] },
-                { "Key": "AgentID", "Value": data[index]["AgentID"] }
-                ],
-                index,
-                data);
+                    [{ "Key": "Licensee", "Value": data[index]["Licensee"] },
+                    { "Key": "CurrencyID", "Value": data[index]["CurrencyID"] },
+                    { "Key": "AgentID", "Value": data[index]["AgentID"] }
+                    ],
+                    index,
+                    data);
                 var agentName = data[index]["AgentName"];
-                currentColumms.push({ Name: "Agent",
+                currentColumms.push({
+                    Name: "Agent",
                     Value: agentName === undefined || agentName === null ? "All" : agentName,
                     MergeRowNumber: agentMerRowNumber
                 });
             }
             currentColumms = currentColumms.concat([
-                    { Name: "SportGameType", Value: data[index]["SportGameType"] === null ? data[index]["SportGameType"] : data[index]["SportGameType"].toLocaleString('en') },
-                    { Name: "MinBet", Value: data[index]["MinBet"] === null ? data[index]["MinBet"] : data[index]["MinBet"].toLocaleString('en') },
-                    { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"] : data[index]["MaxBet"].toLocaleString('en') },
-                    { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] === null ? data[index]["MaxPerMatch"] : data[index]["MaxPerMatch"].toLocaleString('en') },
-                    { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') },
-                    { Name: "MaxPayoutPerMatch", Value: data[index]["MaxPayoutPerMatch"] === null ? data[index]["MaxPayoutPerMatch"] : data[index]["MaxPayoutPerMatch"].toLocaleString('en') }
-                ]);
+                { Name: "SportGameType", Value: data[index]["SportGameType"] === null ? data[index]["SportGameType"] : data[index]["SportGameType"].toLocaleString('en') },
+                { Name: "MinBet", Value: data[index]["MinBet"] === null ? data[index]["MinBet"] : data[index]["MinBet"].toLocaleString('en') },
+                { Name: "MaxBet", Value: data[index]["MaxBet"] === null ? data[index]["MaxBet"] : data[index]["MaxBet"].toLocaleString('en') },
+                { Name: "MaxPerMatch", Value: data[index]["MaxPerMatch"] === null ? data[index]["MaxPerMatch"] : data[index]["MaxPerMatch"].toLocaleString('en') },
+                { Name: "MaxPerBall", Value: data[index]["MaxPerBall"] === null ? data[index]["MaxPerBall"] : data[index]["MaxPerBall"].toLocaleString('en') },
+                { Name: "MaxPayoutPerMatch", Value: data[index]["MaxPayoutPerMatch"] === null ? data[index]["MaxPayoutPerMatch"] : data[index]["MaxPayoutPerMatch"].toLocaleString('en') }
+            ]);
 
             if (actionMerRowNumber === 0) {
                 actionMerRowNumber = agentMerRowNumber;
-                currentColumms.push({ Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]),
+                currentColumms.push({
+                    Name: "Action", Value: generateActionLink(data[index]["Licensee"], data[index]["CurrencyID"], data[index]["AgentID"]),
                     MergeRowNumber: actionMerRowNumber
                 });
             }
             rows.push(
-            {
-                Columns: currentColumms,
-                CssClass: evenClass
-            }
-             );
+                {
+                    Columns: currentColumms,
+                    CssClass: evenClass
+                }
+            );
 
             if (licenseeMerRowNumber > 0) {
                 licenseeMerRowNumber--;

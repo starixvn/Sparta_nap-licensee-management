@@ -108,53 +108,6 @@
         </div>
     </div>
 }
-@if (Model.VirtualSport.Count > 0)
-{
-    var vsCount = 0;
-    <div class="row group">
-        <div class="col-sm-12 title-group" id="vs-area">
-            <i class="icon-collapse" data-key="area-icon"></i>Virtual Sports
-        </div>
-        <div class="col-sm-12 content" data-key="area-content">
-            <label class="checkbox-inline">
-                <input type="checkbox" id="copy-vs" data-key="#vs-table">
-                Copy all Bet Setting from 1st row
-            </label>
-            <table class="table table-bordered table-setting" id="vs-table">
-                <thead>
-                    <tr>
-                        <th class="col20">
-                            Sport Type
-                        </th>
-                        <th class="col40">
-                            Max Bet
-                        </th>
-                        <th class="col40">
-                            Max Per Match
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var vs in Model.VirtualSport)
-                    {
-                        <tr class="@(vsCount == 0 ? "first" : string.Empty)" data-code="@(vsCount == 0 ? "vs" : string.Empty)" data-sport="@vs.SportOrGame.Id" data-bettype="@vs.BetType">
-                            <td>
-                                @vs.SportOrGame.Name
-                            </td>
-                            <td>
-                                <input data-key="MaxBet" maxlength="12" type="text" value="@(vs.MaxBet.HasValue ? vs.MaxBet.Value.ToString() : string.Empty)" class="width-240 txt-max" />
-                            </td>
-                            <td>
-                                <input data-key="MaxPerMatch" maxlength="12" type="text" value="@(vs.MaxPerMatch.HasValue ? vs.MaxPerMatch.Value.ToString() : string.Empty)" class="width-240 txt-max" />
-                            </td>
-                        </tr>
-                        vsCount++;
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-}
 @if (Model.Keno.Count > 0)
 {
     var knCount = 0;

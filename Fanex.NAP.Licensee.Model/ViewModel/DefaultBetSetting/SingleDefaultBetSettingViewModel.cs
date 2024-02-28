@@ -21,7 +21,6 @@
         {
             this.Sportsbook = new List<BetSettingBySport>();
             this.NumberGame = new List<BetSettingBySport>();
-            this.VirtualSport = new List<BetSettingBySport>();
             this.Keno = new List<BetSettingBySport>();
         }
 
@@ -41,8 +40,6 @@
 
         public IList<BetSettingBySport> NumberGame { get; set; }
 
-        public IList<BetSettingBySport> VirtualSport { get; set; }
-
         public IList<BetSettingBySport> Keno { get; set; }
 
         public bool IsValid
@@ -51,7 +48,6 @@
             {
                 var validSports = Sportsbook.All(i => i.IsValid)
                                   && NumberGame.All(i => i.IsValid)
-                                  && VirtualSport.All(i => i.IsValid)
                                   && Keno.All(i => i.IsValid);
 
                 return !string.IsNullOrEmpty(Licensee)
@@ -86,12 +82,6 @@
                 {
                     var settingAttributes = sb.MinBet != null ? string.Format(_xmlSBSettingPattern, sb.MinBet, sb.MaxBet, sb.MaxPerMatch, sb.MaxPayoutPerMatch) : string.Empty;
                     result.Append(string.Format(_xmlParameterPattern, sb.SportOrGame.Id, sb.BetType, settingAttributes));
-                }
-
-                foreach (var vs in VirtualSport)
-                {
-                    var settingAttributes = vs.MaxBet != null ? string.Format(_xmlSettingPattern, vs.MaxBet, vs.MaxPerMatch) : string.Empty;
-                    result.Append(string.Format(_xmlParameterPattern, vs.SportOrGame.Id, vs.BetType, settingAttributes));
                 }
 
                 foreach (var ng in NumberGame)
