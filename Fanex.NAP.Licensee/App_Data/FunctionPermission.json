@@ -103,6 +103,11 @@
             "DisplayKey": "lblRunning",
             "FunctionKey": "BTC_Running",
             "Mode": 1
+          },
+          {
+            "DisplayKey": "lblBookedBet",
+            "FunctionKey": "BTC_BookedBet",
+            "Mode": 1
           }
         ]
       }

@@ -122,6 +122,7 @@ export const language = {
     "lblResults": "Results",
     "lblRiskControl": "Risk Control",
     "lblRunning": "Running",
+    "lblBookedBet": "Booked Bet",
     "lblSettledMatchCount": "Settled Match Count",
     "lblSingleCustomer": "Single Customer",
     "lblSportsbookMenuSetting": "Sportsbook Menu Setting",
