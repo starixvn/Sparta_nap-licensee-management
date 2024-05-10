@@ -579,6 +579,19 @@
     ]
   },
   {
+    "DisplayKey": "lblSabaCoins",
+    "Settings": [
+      {
+        "DisplayKey": "lblSabaCoins",
+        "FunctionKey": "SabaCoins",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1,
+        "Level": [ 0, 1, 101 ]
+      }
+    ]
+  },
+  {
     "DisplayKey": "lblPlayerReport",
     "Settings": [
       {
