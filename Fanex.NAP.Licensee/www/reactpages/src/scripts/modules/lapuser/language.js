@@ -175,5 +175,6 @@ export const language = {
     "lblHidePlayerWL_WL_Comm_Total": "Hide Player W/L (WL/ Comm/ Total) impact Turnover report only",
     "lblPlayerReport": "Player Report",
     "lblDisplayPlayerTips_ExtraPayoutReportOnly": "Display Player Tips impact Extra Payout report only",
-    "lblDailyBetDetails": "Daily Bet Details"
+    "lblDailyBetDetails": "Daily Bet Details",
+    "lblSabaCoins": "Saba Coins"
 }
