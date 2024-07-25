@@ -111,7 +111,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.3.1.6\lib\net461\ONEbook.UM.dll</HintPath>
+      <HintPath>..\packages\ONEbook.UM.3.1.4\lib\net461\ONEbook.UM.dll</HintPath>
     </Reference>
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
       <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.0.22\lib\net461\Pipelines.Sockets.Unofficial.dll</HintPath>
