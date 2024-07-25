@@ -7,8 +7,8 @@
     /// <summary>
     /// Home controller.
     /// </summary>
-    [NapSuperAuth]
     [CheckUMFilter]
+    [NapSuperAuth]
     public class HomeController : BaseController
     {
         public ActionResult Index()
