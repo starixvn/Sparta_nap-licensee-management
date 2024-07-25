@@ -16,7 +16,7 @@
     using Fanex.NAP.Licensee.Model.ViewModel.Log;
     using Fanex.NAP.Licensee.Service;
     using Fanex.NAP.Licensee.Service.Constants;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM.AspNetMVC.Filters;
 
     [NapSuperAuth]
     [CustomHandleError]

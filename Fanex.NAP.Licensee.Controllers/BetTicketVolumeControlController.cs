@@ -6,7 +6,7 @@ using Fanex.NAP.Licensee.Model.DataDomain;
 using Fanex.NAP.Licensee.Model.DTO;
 using Fanex.NAP.Licensee.Model.ViewModel.BetTicketVolumeControl;
 using Fanex.NAP.Licensee.Service;
-using ONEbook.UM.Filters;
+using ONEbook.UM.AspNetMVC.Filters;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;

@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Fanex.NAP.Core.Web.Attribute;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM.AspNetMVC.Filters;
 
     /// <summary>
     /// Home controller.

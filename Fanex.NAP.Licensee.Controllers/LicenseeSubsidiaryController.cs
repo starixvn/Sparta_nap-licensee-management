@@ -15,7 +15,7 @@ using Fanex.NAP.Licensee.Model.DTO.Subsidiary;
 using Fanex.NAP.Licensee.Model.Request;
 using Fanex.NAP.Licensee.Service;
 using Fanex.NAP.Licensee.Service.ShardDb;
-using ONEbook.UM.Filters;
+using ONEbook.UM.AspNetMVC.Filters;
 using static System.String;
 
 namespace Fanex.NAP.Licensee.Controllers

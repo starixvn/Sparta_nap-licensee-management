@@ -7,8 +7,8 @@
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
     using NAP.Core.Web.Session;
+    using ONEbook.UM;
     using ONEbook.UM.Services;
-    using ONEbook.UM.Services.Impl;
 
     public class CommonAuthenticationService : ICommonAuthenticationService
     {
@@ -28,7 +28,11 @@
         {
             _siteService = siteService ?? new SiteService();
             _securityService = securityService ?? new SecurityService();
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
+            _maintenanceService = maintenanceService ?? new MaintenanceService(
+                      UMClientManager.RestClient,
+                      UMClientManager.CacheService,
+                      UMClientManager.UMClientConfigs,
+                      UMClientManager.HttpContext);
         }
 
         public RecheckInStatus RecheckIn(ICurrentSession currentSession)

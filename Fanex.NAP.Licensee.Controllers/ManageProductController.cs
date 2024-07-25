@@ -10,7 +10,7 @@
     using Model.DataDomain;
     using Model.ViewModel.ManageProduct;
     using Newtonsoft.Json;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM.AspNetMVC.Filters;
     using Service;
 
     [NapSuperAuth]
