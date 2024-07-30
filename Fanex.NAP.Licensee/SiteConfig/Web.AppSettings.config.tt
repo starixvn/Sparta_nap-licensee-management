@@ -31,6 +31,7 @@
     <clear />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />
+    <add key="ApplicationName" value="NAP-LM"/>
     <add key="PreserveLoginUrl" value="true" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
@@ -66,6 +67,7 @@
     <clear />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />
+    <add key="ApplicationName" value="NAP-LM-UAT"/>
     <add key="PreserveLoginUrl" value="true" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
@@ -102,6 +104,7 @@
     <clear />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />
+    <add key="ApplicationName" value="NAP-LM-PRO"/>
     <add key="PreserveLoginUrl" value="true" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
