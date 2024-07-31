@@ -13,7 +13,7 @@
     using Fanex.NAP.Licensee.Service;
     using Model.DTO;
     using Model.DataDomain;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM.AspNetMVC.Filters;
 
     [GeneratedCode("T4", "1.0.0.0")]
     [CheckUMFilter]

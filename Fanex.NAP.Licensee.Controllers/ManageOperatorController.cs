@@ -12,7 +12,7 @@
     using Model.DataDomain;
     using Model.DTO;
     using Model.ViewModel.ManageOperator;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM.AspNetMVC.Filters;
     using Service;
 
     [NapSuperAuth]

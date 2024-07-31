@@ -13,7 +13,7 @@
     {
         private const string KENOGAMETYPECACHEKEY = "NAP_LICENSEE_MANAGEMENTKENOGAMETYPECACHEKEY";
 
-        private ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private ICacheService _cache = new CacheService();
 
         public IList<LicenseeItem> GetLicenseeList
         {
@@ -42,7 +42,7 @@
             get
             {
                 IDictionary<int, string> result = null;
-                if (_cache.Contains(KENOGAMETYPECACHEKEY))
+                if (_cache.Contain(KENOGAMETYPECACHEKEY))
                 {
                     result = _cache.Get<IDictionary<int, string>>(KENOGAMETYPECACHEKEY);
                 }

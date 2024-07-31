@@ -5,10 +5,15 @@ namespace Fanex.NAP.Licensee
     using Data;
     using Data.SqlServer;
     using Extension;
+    using Fanex.Caching;
     using Fanex.Logging.Sentry;
     using Fanex.NAP.Licensee.AppStart;
     using Fanex.RemotingRef;
     using Logging;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Helpers;
+    using ONEbook.UM.Transport;
+    using ONEbook.UM;
     using Sentry;
     using System;
     using System.Configuration;
@@ -16,6 +21,7 @@ namespace Fanex.NAP.Licensee
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using ONEbook.UM.NETFramework;
 
     /// <summary>
     /// MVC application.
@@ -45,6 +51,15 @@ namespace Fanex.NAP.Licensee
 
             RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
                                 .FromApplication("Fanex.NAP.LicenseeManagement");
+
+            var umConfig = new UMClientConfiguration().Initialize();
+
+            UMClientManager
+               .UseConfig(umConfig)
+               .UseCacheService(new UMCacheService(new CacheService()))
+               .UseRestClient(new UMRestClient(umConfig))
+               .UseHttpContext(new HttpContextHelper());
+
         }
 
         protected void Session_End(object sender, EventArgs e)

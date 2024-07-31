@@ -13,8 +13,9 @@
     using NAP.Core.Service.Impl;
     using NAP.Core.Service.Interface;
     using NAP.Core.Web.Session;
-    using ONEbook.UM.Filters;
     using ONEbook.UM.Services;
+    using ONEbook.UM.AspNetMVC.Filters;
+    using ONEbook.UM;
 
     public class LoginController : BaseController
     {
@@ -47,7 +48,11 @@
             _userService = userService ?? new UserService();
             _siteService = siteService ?? new SiteService();
             _currentSession = currentSession ?? new CurrentSession();
-            _maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
+            _maintenanceService = maintenanceService ?? new MaintenanceService(
+                      UMClientManager.RestClient,
+                      UMClientManager.CacheService,
+                      UMClientManager.UMClientConfigs,
+                      UMClientManager.HttpContext);
 
             _localService = localService ?? new LocalAuthenticationService();
             _authenticationService = authenticationService ?? new CommonAuthenticationService();

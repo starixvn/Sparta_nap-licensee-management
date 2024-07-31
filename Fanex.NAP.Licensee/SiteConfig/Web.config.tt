@@ -45,10 +45,6 @@
 			<add Name="localhost:54840/" Path="/" />
 		</Domain>
 	</NapSettings>
-	 <ONEbook.UM ServiceUris="http://onebookum.nexdev.net/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="13:00" UMTo="15:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	  </ONEbook.UM>
       <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -85,10 +81,6 @@
 			<add Name="nap-lm.starific.net" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.99.98.117:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="1:00" UMTo="23:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	</ONEbook.UM>
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -125,10 +117,6 @@
 			<add Name="http://123.51.196.23/NAPLM" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.99.99.51:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	</ONEbook.UM>
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -165,10 +153,6 @@
 			<add Name="http://nap-lm.playthefun.com" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://172.16.4.106:8889/api" EnableCheckUM="false" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	</ONEbook.UM>
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -205,10 +189,6 @@
 			<add Name="http://123.51.196.23/NAPLM" Path="/" />
 		</Domain>
 	</NapSettings>
-	<ONEbook.UM ServiceUris="http://10.143.8.200:8889/api" EnableCheckUM="true" EnableUnscheduledUM="false" UMFrom="2:00" UMTo="3:00" SiteId="2000000" UMPageUrl="~/UserLogin/Common/Offline"> 
-		<AllowedIPs AllowAll="true">
-		</AllowedIPs>
-	</ONEbook.UM>
     <system.web>
 		<trust level="Full" />
         <compilation debug="false" targetFramework="4.6.1" />
@@ -303,7 +283,7 @@
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.0.6.0" newVersion="4.0.6.0" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Threading.Tasks.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
@@ -313,7 +293,7 @@
         <assemblyIdentity name="System.ValueTuple" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-4.0.3.0" newVersion="4.0.3.0" />
       </dependentAssembly>
-	  <dependentAssembly>
+      <dependentAssembly>
         <assemblyIdentity name="System.Runtime.InteropServices.RuntimeInformation" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-4.0.2.0" newVersion="4.0.2.0" />
       </dependentAssembly>
@@ -321,13 +301,13 @@
         <assemblyIdentity name="System.Runtime" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-4.1.2.0" newVersion="4.1.2.0" />
       </dependentAssembly>
-	  <dependentAssembly>
+      <dependentAssembly>
         <assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-5.2.6.0" newVersion="5.2.6.0" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.0.1.1" newVersion="4.0.1.1" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.1.2" newVersion="4.0.1.2" />
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="System.Buffers" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
