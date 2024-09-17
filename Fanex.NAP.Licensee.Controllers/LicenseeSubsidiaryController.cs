@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Fanex.Logging;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
-using Fanex.NAP.Licensee.Controllers.Attributes;
-using Fanex.NAP.Licensee.Extension;
-using Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting;
-using Fanex.NAP.Licensee.Model.Criteria.Subsidiary;
-using Fanex.NAP.Licensee.Model.DataDomain;
-using Fanex.NAP.Licensee.Model.DTO;
-using Fanex.NAP.Licensee.Model.DTO.Subsidiary;
-using Fanex.NAP.Licensee.Model.Request;
-using Fanex.NAP.Licensee.Service;
-using Fanex.NAP.Licensee.Service.ShardDb;
-using ONEbook.UM.AspNetMVC.Filters;
-using static System.String;
+﻿using static System.String;
 
 namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using Attributes;
+    using Core.Business;
+    using Core.Web.Attribute;
+    using Extension;
+    using Logging;
+    using Model.Criteria.LicenseeSetting;
+    using Model.Criteria.Subsidiary;
+    using Model.DataDomain;
+    using Model.DTO;
+    using Model.DTO.Subsidiary;
+    using Model.Request;
+    using ONEbook.UM.AspNetMVC.Filters;
+    using Service;
+    using Service.ShardDb;
+
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
@@ -95,11 +96,13 @@ namespace Fanex.NAP.Licensee.Controllers
         [AjaxRequest]
         public ActionResult CreateSubsidiaries(CreateSubsidiariesReq request)
         {
-            ConfigSiteIp(request.CustomerId);
+            var shardDbConfig = _licenseeSubsidiaryService.GetShardDbConfig(new GetShardDbConfigCriteria { Username = request.SourceAgency });
+
+            SetupDbServerConfig(shardDbConfig);
 
             var result = new CreateSubsidiariesRes();
 
-            var createdAccounts = CreateAccounts(request.Usernames, request.SourceAgency);
+            var createdAccounts = CreateAccounts(request, shardDbConfig);
             result.Subsidiaries = createdAccounts;
 
             if (!createdAccounts.Exists(createdAccount => createdAccount.IsSuccess))
@@ -113,37 +116,100 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(result);
         }
 
-        private void ConfigSiteIp(int customerId)
+        private void SetupDbServerConfig(ShardDbConfig shardDbConfig)
         {
-            var siteDbCriteria = new GetSiteDbConfigCriteria
-            {
-                CustId = customerId
-            };
-            var siteDb = _licenseeSubsidiaryService.GetSiteDb(siteDbCriteria);
-            Request.Headers.Add(ShardInfoAccessor.SiteDbServer, siteDb.AgIp);
+            Request.Headers.Add(ShardInfoAccessor.SiteDbServer, shardDbConfig.SiteDbServer);
+            Request.Headers.Add(ShardInfoAccessor.CustDbServer, shardDbConfig.CustDbServer);
         }
 
-        private List<ResultData<SubsidiaryAccount>> CreateAccounts(string[] usernames, string sourceAgency)
+        private List<ResultData<SubsidiaryAccount>> CreateAccounts(CreateSubsidiariesReq request, ShardDbConfig shardDbConfig)
         {
-            return usernames.Select(username => new CreateLicenseeSubsidiaryCriteria
+            return request.Usernames.Select(username =>
             {
-                Username = username,
-                ExistedUsername = sourceAgency,
-                UserId = CurrentSession.UserId,
-                UserIp = CurrentContext.IP
-            }).Select(CreateAccount).ToList();
+                var criteriaStep1 = new RegisterCustomerCriteria
+                {
+                    Username = username,
+                    UpLineId = shardDbConfig.CustId,
+                    Site = shardDbConfig.Site,
+                    SiteDbGroupId = shardDbConfig.CustDbGroupId
+                };
+
+                var resultStep1 = RegisterCustomer(criteriaStep1);
+
+                if (!resultStep1.IsSuccess)
+                {
+                    var account = new SubsidiaryAccount
+                    {
+                        Username = username
+                    };
+
+                    return new ResultData<SubsidiaryAccount>
+                    {
+                        Data = account,
+                        Error = resultStep1.Error,
+                        IsSuccess = false
+                    };
+                }
+
+                var criteriaStep2 = new CreateLicenseeSubsidiaryCriteria
+                {
+                    Username = username,
+                    CustId = resultStep1.Data,
+                    ExistedUsername = request.SourceAgency,
+                    MRecommend = shardDbConfig.CustId,
+                    UserId = CurrentSession.UserId,
+                    UserIp = CurrentContext.IP
+                };
+
+                var resultStep2 = CreateSubsidiaryAccount(criteriaStep2);
+
+                if (!resultStep2.IsSuccess)
+                {
+                    RollbackCreateAccount(new RollbackCreateSubsidiaryCommand { CustId = resultStep1.Data });
+                }
+
+                return resultStep2;
+            }).ToList();
         }
 
-        private ResultData<SubsidiaryAccount> CreateAccount(CreateLicenseeSubsidiaryCriteria criteria)
+        private ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria)
+        {
+            try
+            {
+                var registerCustomer = _licenseeSubsidiaryService.RegisterCustomer(criteria);
+
+                return registerCustomer;
+            }
+            catch (Exception exception)
+            {
+                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+
+                return new ResultData<int>
+                {
+                    Data = 0,
+                    Error = exception.ToString(),
+                    IsSuccess = false
+                };
+            }
+        }
+
+        private void RollbackCreateAccount(RollbackCreateSubsidiaryCommand command)
+        {
+            try
+            {
+                _licenseeSubsidiaryService.RollbackCreateSubsidiary(command);
+            }
+            catch (Exception exception)
+            {
+                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+            }
+        }
+
+        private ResultData<SubsidiaryAccount> CreateSubsidiaryAccount(CreateLicenseeSubsidiaryCriteria criteria)
         {
             try
             {
                 var subsidiary = _licenseeSubsidiaryService.CreateLicenseeSubsidiary(criteria);
-
-                if (subsidiary.Data.BalanceCustomerList != null)
-                {
-                    _licenseeSubsidiaryService.CheckCustList(subsidiary.Data.BalanceCustomerList);
-                }
 
                 return subsidiary;
             }

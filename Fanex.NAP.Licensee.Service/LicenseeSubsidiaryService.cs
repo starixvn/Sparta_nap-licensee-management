@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using Fanex.Common;
-using Fanex.Common.Extensions;
-using Fanex.NAP.Licensee.Model.Criteria.Subsidiary;
-using Fanex.NAP.Licensee.Model.DTO;
-using Fanex.NAP.Licensee.Model.DTO.Subsidiary;
-using Fanex.NAP.Licensee.Service.Constants;
-using Fanex.NAP.Licensee.Service.Core;
-using Fanex.NAP.Licensee.Service.ShardDb;
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System.Collections.Generic;
+    using Common;
+    using Constants;
+    using Core;
+    using Model.Criteria.Subsidiary;
+    using Model.DTO;
+    using Model.DTO.Subsidiary;
+    using ShardDb;
+
     public class LicenseeSubsidiaryService : ILicenseeSubsidiaryService
     {
         private readonly IObjectDbGenerator _objectDbGenerator;
@@ -47,18 +46,11 @@ namespace Fanex.NAP.Licensee.Service
 
         public ResultData<SubsidiaryAccount> CreateLicenseeSubsidiary(CreateLicenseeSubsidiaryCriteria criteria)
         {
-            using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
+            using (var db = _objectDbGenerator.Create(ShardInfoAccessor.ToShardCustDbSp(criteria.GetSettingKey())))
             {
                 db.ExecuteNonQuery(criteria);
                 var outputParams = db.GetOutputParams();
                 var isSuccess = Converter.ToInt(outputParams[ServiceConstant.ErrCode]) == 0;
-
-                BalanceCustomerList balanceCustList = null;
-                var rawUsers = Converter.ToString2(outputParams[ServiceConstant.InsertBalanceExceptCustList]);
-                if (isSuccess && !rawUsers.IsNullOrTrimEmpty())
-                {
-                    balanceCustList = new BalanceCustomerList(rawUsers);
-                }
 
                 return new ResultData<SubsidiaryAccount>
                 {
@@ -68,25 +60,35 @@ namespace Fanex.NAP.Licensee.Service
                     {
                         Username = criteria.Username,
                         CustomerId = Converter.ToInt(outputParams[ServiceConstant.CustomerId]),
-                        ExistedCustomerId = Converter.ToInt(outputParams[ServiceConstant.ExistedCustId]),
-                        BalanceCustomerList = balanceCustList
+                        ExistedCustomerId = Converter.ToInt(outputParams[ServiceConstant.ExistedCustId])
                     }
                 };
             }
         }
 
-        public SiteDbConfig GetSiteDb(GetSiteDbConfigCriteria criteria)
+        public ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                var result = db.QueryEntity<SiteDbConfig>(criteria);
-                return result;
+                db.ExecuteNonQuery(criteria);
+                var outputParams = db.GetOutputParams();
+                var isSuccess = Converter.ToInt(outputParams[ServiceConstant.ErrCode]) == 0;
+
+                return new ResultData<int>
+                {
+                    Error = Converter.ToString2(outputParams[ServiceConstant.ErrMsg]),
+                    IsSuccess = isSuccess,
+                    Data = Converter.ToInt(outputParams[ServiceConstant.CustomerId])
+                };
             }
         }
 
-        public void CheckCustList(BalanceCustomerList balanceCustomerList)
+        public void RollbackCreateSubsidiary(RollbackCreateSubsidiaryCommand command)
         {
-            CheckBalanceExceptions(balanceCustomerList.ExceptCustomers);
+            using (var db = _objectDbGenerator.Create(command.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(command);
+            }
         }
 
         public ResultInfo ExclusionsPermission(ExclusionsPermissionCommand command)
@@ -103,18 +105,13 @@ namespace Fanex.NAP.Licensee.Service
             }
         }
 
-        private void CheckBalanceExceptions(List<BalanceExceptCustomer> users)
+        public ShardDbConfig GetShardDbConfig(GetShardDbConfigCriteria criteria)
         {
-            users.ForEach(user => CheckBalanceException(user.Id, user.Name));
-        }
-
-        private void CheckBalanceException(int custId, string username)
-        {
-            var param = new { custID = custId, username };
-            var shardSettingKey = ShardInfoAccessor.ToShardSp("Task_Cust_CheckBalance_Exception_Ins");
-            using (var db = _objectDbGenerator.Create(shardSettingKey))
+            using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(param);
+                var result = db.QueryEntity<ShardDbConfig>(criteria);
+
+                return result;
             }
         }
     }

@@ -132,12 +132,14 @@
 			<Mapping DataField="LicenseeName" ObjectProperty="Name" />
 		</Setting>
 		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBCUST.CustDB.wsv_lap"></Setting>
-		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCUST.CustDB.wsv_nap"></Setting>
-		<Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCUST.CustDB.wsv_nap"></Setting>
-		<Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
+		<Setting Key="API_CustomerIns_Register" SpName="API_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="ShardDBCUST.CustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_ServerDBConfigSelByCust" SpName="Acc_Dep_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_nap">
+			<Mapping DataField="AGIP" ObjectProperty="SiteDbServer" />
+			<Mapping DataField="AGIP_DBCUST" ObjectProperty="CustDbServer" />
+		</Setting>
+		<Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
 		<Setting Key="Nap_LM_LicVendorExclusionsPermission" SpName="Nap_LM_LicVendorExclusionsPermission" DbName="DBCUST.SiteConfig.wsv_lap"></Setting>
-	</Function>
-	<Function Name="Site.Nap.Licensee.CheckCustList">
-		<Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.wsv_nap"></Setting>
 	</Function>
 </Functions>

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using Fanex.NAP.Licensee.Model.Criteria.Subsidiary;
-using Fanex.NAP.Licensee.Model.DTO;
-using Fanex.NAP.Licensee.Model.DTO.Subsidiary;
-
-namespace Fanex.NAP.Licensee.Service
+﻿namespace Fanex.NAP.Licensee.Service
 {
+    using System.Collections.Generic;
+    using Model.Criteria.Subsidiary;
+    using Model.DTO;
+    using Model.DTO.Subsidiary;
+
     public interface ILicenseeSubsidiaryService
     {
         IEnumerable<LicenseeSubsidiaries> GetLicenseeList(LicenseeListCriteria criteria);
@@ -15,10 +15,12 @@ namespace Fanex.NAP.Licensee.Service
 
         ResultData<SubsidiaryAccount> CreateLicenseeSubsidiary(CreateLicenseeSubsidiaryCriteria criteria);
 
+        ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria);
+
+        void RollbackCreateSubsidiary(RollbackCreateSubsidiaryCommand command);
+
         ResultInfo ExclusionsPermission(ExclusionsPermissionCommand command);
 
-        SiteDbConfig GetSiteDb(GetSiteDbConfigCriteria criteria);
-
-        void CheckCustList(BalanceCustomerList balanceCustomerList);
+        ShardDbConfig GetShardDbConfig(GetShardDbConfigCriteria criteria);
     }
 }

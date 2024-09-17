@@ -361,29 +361,8 @@
     <Compile Include="Infrastructure\HangFireLoggingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppress.cs" />
-    <None Include="SiteConfig\Web.AppSettings.config.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </None>
-    <Compile Include="SiteConfig\Web.config.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Web.config.tt</DependentUpon>
-    </Compile>
+    <Content Include="SiteConfig\T4.FileManager.VisualStudio.ttinclude" />
     <Compile Include="Startup.cs" />
-    <Compile Include="TestFolder\SimpleClass1.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass2.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass3.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass4.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -437,24 +416,6 @@
     <Content Include="Scripts\source\page\log\Service\logService.js" />
     <Content Include="Scripts\source\page\licenseebetsetting\Controllers\BetSetting\editDBSSportsbookCtrl.js" />
     <Content Include="Scripts\source\page\log\Controllers\LicenseeBetSetting\licenseeBetSettingLogCtrl.js" />
-    <Content Include="SimpleParameterTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
-    </Content>
-    <Content Include="SimpleParameterTemplate.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleParameterTemplate.tt</DependentUpon>
-    </Content>
-    <Content Include="SimpleSample.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SimpleSample.txt</LastGenOutput>
-    </Content>
-    <Content Include="SimpleSample.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleSample.tt</DependentUpon>
-    </Content>
     <None Include="SiteConfig\Web.AppSettings.KLDR.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -464,8 +425,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
     </None>
-    <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
+    <None Include="SiteConfig\Web.AppSettings.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+    </None>
+    <Content Include="SiteConfig\Web.config.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.config.tt</DependentUpon>
+    </Content>
     <Content Include="Views\ManageOperator\Get.cshtml" />
     <Content Include="www\.webpack\build\utils.js" />
     <Content Include="www\.webpack\build\webpack.base.conf.js" />
@@ -998,7 +968,7 @@
     <None Include="SiteConfig\SiteConfiguration.ttinclude" />
     <None Include="SiteConfig\Web.AppSettings.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Web.AppSettings.config.cs</LastGenOutput>
+      <LastGenOutput>Web.AppSettings.config.txt</LastGenOutput>
     </None>
     <Content Include="SiteConfig\Web.AppSettings.LOCAL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
@@ -1014,7 +984,7 @@
     </Content>
     <None Include="SiteConfig\Web.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Web.config.cs</LastGenOutput>
+      <LastGenOutput>Web.config.txt</LastGenOutput>
     </None>
     <None Include="SiteConfig\Web.ConnectionString.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1187,7 +1157,6 @@
     <Content Include="Views\LicenseeVendor\Edit.cshtml" />
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
     <Content Include="Views\Shared\_ReactPageLayout.cshtml" />
-    <Content Include="TestFolder\SimpleSample.txt4" />
     <Content Include="Views\ManageOperator\Index.cshtml" />
     <Content Include="Views\ManageOperator\Import.cshtml" />
     <Content Include="Views\LicenseeSetting\Index.cshtml" />
