@@ -8,6 +8,8 @@
 
         public static readonly string CustomerId = "CUSTID";
 
+        public static readonly string MRecommend = "MRecommend";
+
         public static readonly string ErrCode = "ERRCODE";
 
         public static readonly string ErrMsg = "ERRMSG";

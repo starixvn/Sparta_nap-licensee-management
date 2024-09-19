@@ -83,6 +83,21 @@
             }
         }
 
+        public AccountInfo CheckExistedAccount(CheckExistedAccountCriteria criteria)
+        {
+            using (var db = _objectDbGenerator.Create(ShardInfoAccessor.ToShardCustDbSp(criteria.GetSettingKey())))
+            {
+                db.ExecuteNonQuery(criteria);
+                var outputParams = db.GetOutputParams();
+
+                return new AccountInfo
+                {
+                    CustId = Converter.ToInt(outputParams[ServiceConstant.CustomerId]),
+                    MRecommend = Converter.ToInt(outputParams[ServiceConstant.MRecommend])
+                };
+            }
+        }
+
         public void RollbackCreateSubsidiary(RollbackCreateSubsidiaryCommand command)
         {
             using (var db = _objectDbGenerator.Create(command.GetSettingKey()))

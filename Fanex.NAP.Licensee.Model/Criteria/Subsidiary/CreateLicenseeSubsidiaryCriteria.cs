@@ -19,6 +19,8 @@ namespace Fanex.NAP.Licensee.Model.Criteria.Subsidiary
 
         public string ExistedUsername { get; set; }
 
+        public int ExistedCustId { get; set; }
+
         public int MRecommend { get; set; }
 
         public override string GetSettingKey()
@@ -29,6 +31,7 @@ namespace Fanex.NAP.Licensee.Model.Criteria.Subsidiary
         public override bool IsValid()
         {
             return UserId > 0
+                   && ExistedCustId > 0
                    && !IsNullOrWhiteSpace(UserIp)
                    && !IsNullOrWhiteSpace(Username)
                    && !IsNullOrWhiteSpace(ExistedUsername);

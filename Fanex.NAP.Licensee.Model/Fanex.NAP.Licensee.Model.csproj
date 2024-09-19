@@ -164,8 +164,10 @@
   <ItemGroup>
     <Compile Include="Comparer\SportComparer.cs" />
     <Compile Include="Criteria\LicenseeBetSetting\CheckExceedMemberThresholdCriteria.cs" />
+    <Compile Include="Criteria\Subsidiary\CheckExistedAccountCriteria.cs" />
     <Compile Include="Criteria\Subsidiary\RegisterCustomerCriteria.cs" />
     <Compile Include="Criteria\Subsidiary\RollbackCreateSubsidiaryCommand.cs" />
+    <Compile Include="DTO\Subsidiary\AccountInfo.cs" />
     <Compile Include="Request\CreateSubsidiariesReq.cs" />
     <Compile Include="Request\CreateSubsidiariesRes.cs" />
     <Compile Include="Criteria\BetTicketVolumeControlSetting\InsUpdVolumeControlSettingCriteria.cs" />

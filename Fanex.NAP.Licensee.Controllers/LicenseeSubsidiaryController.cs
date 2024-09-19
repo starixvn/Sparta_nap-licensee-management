@@ -124,52 +124,96 @@ namespace Fanex.NAP.Licensee.Controllers
 
         private List<ResultData<SubsidiaryAccount>> CreateAccounts(CreateSubsidiariesReq request, ShardDbConfig shardDbConfig)
         {
+            var criteriaStep1 = new CheckExistedAccountCriteria
+            {
+                Username = request.SourceAgency
+            };
+
+            var resultStep1 = CheckExistedAccount(criteriaStep1);
+
+            if (!resultStep1.IsSuccess)
+            {
+                return request.Usernames.Select(username => CreateFailedResult(username, resultStep1.Error)).ToList();
+            }
+
             return request.Usernames.Select(username =>
             {
-                var criteriaStep1 = new RegisterCustomerCriteria
+                var criteriaStep2 = new RegisterCustomerCriteria
                 {
                     Username = username,
-                    UpLineId = shardDbConfig.CustId,
+                    UpLineId = resultStep1.Data.MRecommend,
                     Site = shardDbConfig.Site,
                     SiteDbGroupId = shardDbConfig.CustDbGroupId
                 };
 
-                var resultStep1 = RegisterCustomer(criteriaStep1);
+                var resultStep2 = RegisterCustomer(criteriaStep2);
 
-                if (!resultStep1.IsSuccess)
+                if (!resultStep2.IsSuccess)
                 {
-                    var account = new SubsidiaryAccount
-                    {
-                        Username = username
-                    };
-
-                    return new ResultData<SubsidiaryAccount>
-                    {
-                        Data = account,
-                        Error = resultStep1.Error,
-                        IsSuccess = false
-                    };
+                    return CreateFailedResult(username, resultStep2.Error);
                 }
 
-                var criteriaStep2 = new CreateLicenseeSubsidiaryCriteria
+                var criteriaStep3 = new CreateLicenseeSubsidiaryCriteria
                 {
                     Username = username,
-                    CustId = resultStep1.Data,
+                    CustId = resultStep2.Data,
                     ExistedUsername = request.SourceAgency,
-                    MRecommend = shardDbConfig.CustId,
+                    MRecommend = resultStep1.Data.MRecommend,
+                    ExistedCustId = resultStep1.Data.CustId,
                     UserId = CurrentSession.UserId,
                     UserIp = CurrentContext.IP
                 };
 
-                var resultStep2 = CreateSubsidiaryAccount(criteriaStep2);
+                var resultStep3 = CreateSubsidiaryAccount(criteriaStep3);
 
-                if (!resultStep2.IsSuccess)
+                if (!resultStep3.IsSuccess)
                 {
-                    RollbackCreateAccount(new RollbackCreateSubsidiaryCommand { CustId = resultStep1.Data });
+                    RollbackCreateAccount(new RollbackCreateSubsidiaryCommand { CustId = resultStep2.Data });
                 }
 
-                return resultStep2;
+                return resultStep3;
             }).ToList();
+        }
+
+        private static ResultData<SubsidiaryAccount> CreateFailedResult(string username, string error)
+        {
+            var account = new SubsidiaryAccount
+            {
+                Username = username
+            };
+
+            return new ResultData<SubsidiaryAccount>
+            {
+                Data = account,
+                Error = error,
+                IsSuccess = false
+            };
+        }
+
+        private ResultData<AccountInfo> CheckExistedAccount(CheckExistedAccountCriteria criteria)
+        {
+            try
+            {
+                var accountInfo = _licenseeSubsidiaryService.CheckExistedAccount(criteria);
+
+                return new ResultData<AccountInfo>
+                {
+                    Error = Empty,
+                    IsSuccess = true,
+                    Data = accountInfo
+                };
+            }
+            catch (Exception exception)
+            {
+                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+
+                return new ResultData<AccountInfo>
+                {
+                    Data = null,
+                    Error = exception.ToString(),
+                    IsSuccess = false
+                };
+            }
         }
 
         private ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria)

@@ -17,6 +17,8 @@
 
         ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria);
 
+        AccountInfo CheckExistedAccount(CheckExistedAccountCriteria criteria);
+
         void RollbackCreateSubsidiary(RollbackCreateSubsidiaryCommand command);
 
         ResultInfo ExclusionsPermission(ExclusionsPermissionCommand command);
