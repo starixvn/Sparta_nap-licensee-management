@@ -21,7 +21,7 @@
 		<Setting Key="WriteLog_UserLog_UserControl" SpName="WriteLog_UserLog_UserControl" DbName="DBLOG.bodb_CustomerLog.wsv_lap"></Setting>
 	</Function>
 	<Function Name="Site.Nap.Licensee.LicenseeBetSetting">
-		<Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCUST.CustDB.wsv_lap">
+		<Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBACC.bodb02.wsv_lap">
 			<Mapping DataField="custid" ObjectProperty="Id" />
 			<Mapping DataField="username" ObjectProperty="Name" />
 			<Mapping DataField="ExchangeId" ObjectProperty="CurrencyId" />
@@ -131,7 +131,7 @@
 			<Mapping DataField="LicenseeID" ObjectProperty="Id" />
 			<Mapping DataField="LicenseeName" ObjectProperty="Name" />
 		</Setting>
-		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBCUST.CustDB.wsv_lap"></Setting>
+		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBACC.bodb02.wsv_lap"></Setting>
 		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
 		<Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="ShardDBCUST.CustDB.wsv_nap"></Setting>
 		<Setting Key="API_CustomerIns_Register" SpName="API_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
