@@ -176,5 +176,6 @@ export const language = {
     "lblPlayerReport": "Player Report",
     "lblDisplayPlayerTips_ExtraPayoutReportOnly": "Display Player Tips impact Extra Payout report only",
     "lblDailyBetDetails": "Daily Bet Details",
-    "lblSabaCoins": "Saba Coins"
+    "lblSabaCoins": "Saba Coins",
+    "lblSearchWithMatchPrecisePlayerAdminOnly": "Search Username with Match Precise permission Impact Player Admin only"
 }
