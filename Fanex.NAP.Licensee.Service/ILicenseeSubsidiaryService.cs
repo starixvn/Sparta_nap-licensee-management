@@ -23,6 +23,8 @@
 
         ResultInfo ExclusionsPermission(ExclusionsPermissionCommand command);
 
+        ResultInfo InsertCompanyWinLimit(InsertCompanyWinLimitCommand command);
+
         ShardDbConfig GetShardDbConfig(GetShardDbConfigCriteria criteria);
     }
 }

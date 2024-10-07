@@ -120,6 +120,20 @@
             }
         }
 
+        public ResultInfo InsertCompanyWinLimit(InsertCompanyWinLimitCommand command)
+        {
+            using (var db = _objectDbGenerator.Create(command.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(command);
+                var outputParams = db.GetOutputParams();
+                return new ResultInfo
+                {
+                    IsOk = Converter.ToInt(outputParams[ServiceConstant.ErrCode]) == 0,
+                    Message = Converter.ToString2(outputParams[ServiceConstant.ErrMsg])
+                };
+            }
+        }
+
         public ShardDbConfig GetShardDbConfig(GetShardDbConfigCriteria criteria)
         {
             using (var db = _objectDbGenerator.Create(criteria.GetSettingKey()))

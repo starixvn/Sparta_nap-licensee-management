@@ -165,6 +165,7 @@
     <Compile Include="Comparer\SportComparer.cs" />
     <Compile Include="Criteria\LicenseeBetSetting\CheckExceedMemberThresholdCriteria.cs" />
     <Compile Include="Criteria\Subsidiary\CheckExistedAccountCriteria.cs" />
+    <Compile Include="Criteria\Subsidiary\InsertCompanyWinLimitCommand.cs" />
     <Compile Include="Criteria\Subsidiary\RegisterCustomerCriteria.cs" />
     <Compile Include="Criteria\Subsidiary\RollbackCreateSubsidiaryCommand.cs" />
     <Compile Include="DTO\Subsidiary\AccountInfo.cs" />

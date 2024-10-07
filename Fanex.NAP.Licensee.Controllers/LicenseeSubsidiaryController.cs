@@ -205,7 +205,7 @@ namespace Fanex.NAP.Licensee.Controllers
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
 
                 return new ResultData<AccountInfo>
                 {
@@ -226,7 +226,7 @@ namespace Fanex.NAP.Licensee.Controllers
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
 
                 return new ResultData<int>
                 {
@@ -245,7 +245,7 @@ namespace Fanex.NAP.Licensee.Controllers
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
             }
         }
 
@@ -259,7 +259,7 @@ namespace Fanex.NAP.Licensee.Controllers
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
 
                 var account = new SubsidiaryAccount
                 {
@@ -294,17 +294,30 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             try
             {
-                var result = AddAgency(siteName, exchangeId);
-                return result.IsOk;
+                var (result, licenseeIdAffected) = AddAgency(siteName, exchangeId);
+
+                if (licenseeIdAffected == 0)
+                {
+                    return result.IsOk;
+                }
+
+                var insertLimit = InsertCompanyWinLimit(licenseeIdAffected);
+
+                if (!insertLimit.IsOk)
+                {
+                    LogService.Critical($"Insert Company Win Limit has errors: {insertLimit.Message}");
+                }
+
+                return insertLimit.IsOk;
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
                 return false;
             }
         }
 
-        private ResultInfo AddAgency(string siteName, int exchangeId)
+        private (ResultInfo result, int licenseeIdAffected) AddAgency(string siteName, int exchangeId)
         {
             var licenseeAgentCriteria = new LicenseeAgentCriteria
             {
@@ -313,12 +326,19 @@ namespace Fanex.NAP.Licensee.Controllers
                 Currency = exchangeId
             };
             var addAgentResult = _licenseeSettingService.AddAgent(licenseeAgentCriteria);
-
-            return new ResultInfo
+            var result = new ResultInfo
             {
                 IsOk = IsNullOrWhiteSpace(addAgentResult.Error),
                 Message = addAgentResult.Error
             };
+
+            return (result, addAgentResult.Data.LicenseeIdAffected);
+        }
+
+        private ResultInfo InsertCompanyWinLimit(int licenseeId)
+        {
+            var command = new InsertCompanyWinLimitCommand(licenseeId);
+            return _licenseeSubsidiaryService.InsertCompanyWinLimit(command);
         }
 
         private bool ExcludePermissionSuccess(string siteName)
@@ -326,11 +346,17 @@ namespace Fanex.NAP.Licensee.Controllers
             try
             {
                 var result = ExcludePermission(siteName);
+
+                if (!result.IsOk)
+                {
+                    LogService.Critical($"Exclude Permission Success has errors: {result.Message}");
+                }
+
                 return result.IsOk;
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
                 return false;
             }
         }

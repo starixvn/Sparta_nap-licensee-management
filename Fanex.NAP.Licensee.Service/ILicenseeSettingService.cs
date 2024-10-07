@@ -26,7 +26,7 @@
 
         IEnumerable<string> GetLrfFucntionKey(int licenseeId);
 
-        ResultData<int> AddAgent(LicenseeAgentCriteria criteria);
+        ResultData<(int AffectedRows, int LicenseeIdAffected)> AddAgent(LicenseeAgentCriteria criteria);
 
         ResultData<Licensee> TerminateLicensee(TerminateLicenseeCriteria criteria);
 

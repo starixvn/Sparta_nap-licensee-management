@@ -72,7 +72,7 @@
 		<Setting Key="Nap_LM_Licensee_OfferProduct" SpName="Nap_LM_Licensee_OfferProduct" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_RemoveProduct" SpName="Nap_LM_Licensee_RemoveProduct" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
-		<Setting Key="Nap_LM_Licensee_AddAgent" SpName="Nap_LM_Licensee_AddAgent" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
+		<Setting Key="Nap_LM_Licensee_AddAgent_New" SpName="Nap_LM_Licensee_AddAgent_New" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_Terminate" SpName="Nap_LM_Licensee_Terminate" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_GetIntegrationSetting" SpName="Nap_LM_Licensee_GetIntegrationSetting" DbName="DBPTCS.bodb_PlaytechCS.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.wsv_lap"></Setting>
@@ -142,5 +142,6 @@
 		</Setting>
 		<Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
 		<Setting Key="Nap_LM_LicVendorExclusionsPermission" SpName="Nap_LM_LicVendorExclusionsPermission" DbName="DBCUST.SiteConfig.wsv_lap"></Setting>
+		<Setting Key="Dot_Dep_CWL_InsertSetting" SpName="Dot_Dep_CWL_InsertSetting" DbName="DBCUST.CustDB.wsv_lap"></Setting>
 	</Function>
 </Functions>

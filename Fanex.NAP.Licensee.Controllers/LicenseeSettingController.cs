@@ -21,12 +21,13 @@
     public class LicenseeSettingController : BaseController
     {
         private readonly ILicenseeSettingService _licenseeService;
-        private readonly ILicenseeVendorService _vendorService;
 
         private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
         {
             { ProductCode.AGCasino, "AGCasino_VersionKey" }
         };
+
+        private readonly ILicenseeVendorService _vendorService;
 
         public LicenseeSettingController()
         {
@@ -60,7 +61,8 @@
                 SystemList = _licenseeService.GetSystemList(),
                 ResellerList = new List<string> { "ONEworks", "Boping", "Zelianta" }
             };
-            viewModel.SelectedSystem = viewModel.SystemList.Where(x => x.SystemName == "LRF" || x.SystemName == "OA" || x.SystemName == "Accounting").ToList();
+            viewModel.SelectedSystem = viewModel.SystemList.Where(x => x.SystemName == "LRF" || x.SystemName == "OA" || x.SystemName == "Accounting")
+                .ToList();
 
             return View(viewModel);
         }
@@ -190,7 +192,12 @@
 
             var result = _licenseeService.AddAgent(criteria);
 
-            return Json(new { IsSuccess = result.IsSuccess, Data = $"{result.Data} {(result.Data > 1 ? "agents have" : "agent has")} been added", Error = result.Error });
+            return Json(new
+            {
+                result.IsSuccess,
+                Data = $"{result.Data} {(result.Data.AffectedRows > 1 ? "agents have" : "agent has")} been added",
+                result.Error
+            });
         }
 
         [HttpPost]
