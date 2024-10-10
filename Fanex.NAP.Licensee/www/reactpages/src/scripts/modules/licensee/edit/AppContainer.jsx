@@ -1,11 +1,10 @@
 ﻿import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Panel, Title, Content } from  '../../../components/collapsible-panel'
+import { Panel, Title, Content } from '../../../components/collapsible-panel'
 import Loader from '../../../components/Loader'
 import LicenseeInfo from './LicenseeInfo'
 import ProductGrid from './ProductGrid'
-import AddAgent from './AddAgent';
 import LAPExclusions from './LAPExclusions';
 import TerminateLicensee from './TerminateLicensee';
 import OfferProductForm from './OfferProductForm';
@@ -31,13 +30,12 @@ export class AppContainer extends Component {
                             </Title>
                             <Content>
                                 <LicenseeInfo />
-                                { 
+                                {
                                     licensee.IsActive &&
                                     <div className='row'>
                                         <div className='col-xs-12'>
                                             <div className='form-group button-group'>
                                                 <TerminateLicensee />
-                                                <AddAgent />
                                                 <LAPExclusions />
                                             </div>
                                         </div>
@@ -50,7 +48,7 @@ export class AppContainer extends Component {
                                 Offered Products
                             </Title>
                             <Content>
-                                { 
+                                {
                                     licensee.IsActive &&
                                     <div className='row'>
                                         <div className='col-xs-12'>
@@ -68,7 +66,7 @@ export class AppContainer extends Component {
                                 Active Systems
                             </Title>
                             <Content>
-                                { 
+                                {
                                     licensee.IsActive &&
                                     <div className='row'>
                                         <div className='col-xs-12'>

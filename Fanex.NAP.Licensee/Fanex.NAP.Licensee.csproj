@@ -1160,7 +1160,6 @@
     <Content Include="Views\ManageOperator\Index.cshtml" />
     <Content Include="Views\ManageOperator\Import.cshtml" />
     <Content Include="Views\LicenseeSetting\Index.cshtml" />
-    <Content Include="Views\LicenseeSetting\Add.cshtml" />
     <Content Include="Views\LicenseeSetting\Edit.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Index.cshtml" />
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
