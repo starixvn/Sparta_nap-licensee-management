@@ -6,7 +6,7 @@
     var manager = TemplateFileManager.Create(this);	
     foreach(var site in sites)
     {        
-		var siteName = site.SiteEnvironment.ToString();
+		var siteEnv = site.SiteEnvironment.ToString();
         var fileName = string.Format("Web.{0}.config", site.SiteEnvironment);
         manager.StartNewFile(fileName, "Fanex.NAP.Licensee", "SiteConfig");
 		#>
@@ -23,7 +23,7 @@
   <appSettings configSource="Web.AppSettings.config" />
   <connectionStrings configSource="Web.ConnectionString.config" />
 
-<# switch(siteName)
+<# switch(siteEnv)
 	{
 	    case "LOCAL":
 #>
@@ -45,7 +45,7 @@
     <authorization>
       <allow users="*" />
     </authorization>
-    <sessionState mode="StateServer" cookieless="false" stateConnectionString="tcpip=ha.nexdev.net:42424" />
+    <#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
     <pages controlRenderingCompatibilityVersion="4.0">
       <namespaces>
@@ -81,7 +81,7 @@
     <authorization>
       <allow users="*" />
     </authorization>
-    <sessionState mode="StateServer" cookieless="false" timeout="20"  stateConnectionString="tcpip=10.99.98.117:42424" />
+    <#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
     <pages controlRenderingCompatibilityVersion="4.0">
       <namespaces>
@@ -117,7 +117,7 @@
     <authorization>
       <allow users="*" />
     </authorization>
-    <sessionState mode="StateServer" cookieless="false" timeout="20"  stateConnectionString="tcpip=10.2.27.8:42424" />
+    <#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
     <pages controlRenderingCompatibilityVersion="4.0">
       <namespaces>
@@ -135,9 +135,9 @@
 	break;
 	case "SIT":
 #>
-  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playthefun.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.2.44:8788/">
+  <NapSettings Environment="LIVE" EnableDirectLogin="1" SiteId="22" UnauthorizeUrl="~/UserLogin/Common/AccessDenied/" EnableReCheckin="true" HubUrl="http://nap-home.playonesit.com/Main/Sites/UserSites/Sites" ServiceUrls="http://172.16.4.76:8788/">
     <Domain>
-      <add Name="http://nap-lm.playthefun.com" Path="/" />
+      <add Name="http://nap-lm.playonesit.com" Path="/" />
     </Domain>
   </NapSettings>
   <system.web>
@@ -153,7 +153,7 @@
     <authorization>
       <allow users="*" />
     </authorization>
-    <sessionState mode="StateServer" cookieless="false" timeout="20"  stateConnectionString="tcpip=172.16.4.107:42424" />
+    <#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
     <pages controlRenderingCompatibilityVersion="4.0">
       <namespaces>
@@ -189,7 +189,7 @@
     <authorization>
       <allow users="*" />
     </authorization>
-    <sessionState mode="StateServer" cookieless="false" timeout="20"  stateConnectionString="tcpip=10.143.8.200:42424" />
+    <#=site.SessionState#>
     <machineKey validationKey="DA13C9789D77B2FB7D6C182D4093182D0F9F52D8B498AF9C1E59826A48A60CFCC1E02652EE0A3A996EF4E4439A00CC8EAE42388F0DB5A7795933BD830A31ADB9" decryptionKey="DEFD2134E4817E65377651AC8D14C65BC01AA1AD6CAFED57720D0C0AB670456A" validation="SHA1" decryption="AES" />
     <pages controlRenderingCompatibilityVersion="4.0">
       <namespaces>

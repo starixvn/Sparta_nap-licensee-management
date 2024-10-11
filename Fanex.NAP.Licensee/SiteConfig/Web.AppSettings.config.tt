@@ -25,7 +25,7 @@
   <add key="IsLocalTest" value="1"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://remotingref-api-core.nexdev.net/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="1563bb06d60d81661641" />
+  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
   <add key="LogCategory" value="NAP-LM-LOCAL" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="sa" />
@@ -61,7 +61,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="1563bb06d60d81661641" />
+  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
   <add key="LogCategory" value="NAP-LM-UAT" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
@@ -97,7 +97,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="1563bb06d60d81661641" />
+  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
@@ -133,13 +133,13 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://172.16.4.105:6207/Main/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="1563bb06d60d81661641" />
+  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starixDev69" />
   <add key="RedisPrefix" value="LM-Hangfire:" />
-  <add key="SentryDSN" value="http://6880691f2ec146faba2e64f72463c653@172.16.4.109:800/42" />
-  <add key="RedisConnectionString" value="172.16.4.106:6379, password=, name=LMApp" />
+  <add key="SentryDSN" value="http://434920377c9e479e9d2931e7bfef7306@172.16.4.76:882/95" />
+  <add key="RedisConnectionString" value="172.16.4.76:16379, password=foo1@bared, name=LMApp" />
   <add key="StoredProcedurePath" value="App_Data" />
   <add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
 
@@ -169,7 +169,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref.gamora.prod" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="1563bb06d60d81661641" />
+  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
