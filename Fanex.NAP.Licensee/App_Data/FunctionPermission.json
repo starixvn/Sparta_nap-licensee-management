@@ -575,6 +575,13 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1
+      },
+      {
+        "DisplayKey": "lblSearchWithMatchPrecisePlayerAdminOnly",
+        "FunctionKey": "SearchWithMatchPrecise_PlayerAdminOnly",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
       }
     ]
   },
