@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Fanex.Logging;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
-using Fanex.NAP.Licensee.Controllers.Attributes;
-using Fanex.NAP.Licensee.Extension;
-using Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting;
-using Fanex.NAP.Licensee.Model.Criteria.Subsidiary;
-using Fanex.NAP.Licensee.Model.DataDomain;
-using Fanex.NAP.Licensee.Model.DTO;
-using Fanex.NAP.Licensee.Model.DTO.Subsidiary;
-using Fanex.NAP.Licensee.Model.Request;
-using Fanex.NAP.Licensee.Service;
-using Fanex.NAP.Licensee.Service.ShardDb;
-using ONEbook.UM.AspNetMVC.Filters;
-using static System.String;
+﻿using static System.String;
 
 namespace Fanex.NAP.Licensee.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using Attributes;
+    using Core.Business;
+    using Core.Web.Attribute;
+    using Extension;
+    using Logging;
+    using Model.Criteria.LicenseeSetting;
+    using Model.Criteria.Subsidiary;
+    using Model.DataDomain;
+    using Model.DTO;
+    using Model.DTO.Subsidiary;
+    using Model.Request;
+    using ONEbook.UM.AspNetMVC.Filters;
+    using Service;
+    using Service.ShardDb;
+
     [NapSuperAuth]
     [CheckUMFilter]
     [CustomHandleError]
@@ -95,11 +96,13 @@ namespace Fanex.NAP.Licensee.Controllers
         [AjaxRequest]
         public ActionResult CreateSubsidiaries(CreateSubsidiariesReq request)
         {
-            ConfigSiteIp(request.CustomerId);
+            var shardDbConfig = _licenseeSubsidiaryService.GetShardDbConfig(new GetShardDbConfigCriteria { Username = request.SourceAgency });
+
+            SetupDbServerConfig(shardDbConfig);
 
             var result = new CreateSubsidiariesRes();
 
-            var createdAccounts = CreateAccounts(request.Usernames, request.SourceAgency);
+            var createdAccounts = CreateAccounts(request, shardDbConfig);
             result.Subsidiaries = createdAccounts;
 
             if (!createdAccounts.Exists(createdAccount => createdAccount.IsSuccess))
@@ -113,43 +116,150 @@ namespace Fanex.NAP.Licensee.Controllers
             return Json(result);
         }
 
-        private void ConfigSiteIp(int customerId)
+        private void SetupDbServerConfig(ShardDbConfig shardDbConfig)
         {
-            var siteDbCriteria = new GetSiteDbConfigCriteria
+            Request.Headers.Add(ShardInfoAccessor.SiteDbServer, shardDbConfig.SiteDbServer);
+            Request.Headers.Add(ShardInfoAccessor.CustDbServer, shardDbConfig.CustDbServer);
+        }
+
+        private List<ResultData<SubsidiaryAccount>> CreateAccounts(CreateSubsidiariesReq request, ShardDbConfig shardDbConfig)
+        {
+            var criteriaStep1 = new CheckExistedAccountCriteria
             {
-                CustId = customerId
+                Username = request.SourceAgency
             };
-            var siteDb = _licenseeSubsidiaryService.GetSiteDb(siteDbCriteria);
-            Request.Headers.Add(ShardInfoAccessor.SiteDbServer, siteDb.AgIp);
-        }
 
-        private List<ResultData<SubsidiaryAccount>> CreateAccounts(string[] usernames, string sourceAgency)
-        {
-            return usernames.Select(username => new CreateLicenseeSubsidiaryCriteria
+            var resultStep1 = CheckExistedAccount(criteriaStep1);
+
+            if (!resultStep1.IsSuccess)
             {
-                Username = username,
-                ExistedUsername = sourceAgency,
-                UserId = CurrentSession.UserId,
-                UserIp = CurrentContext.IP
-            }).Select(CreateAccount).ToList();
+                return request.Usernames.Select(username => CreateFailedResult(username, resultStep1.Error)).ToList();
+            }
+
+            return request.Usernames.Select(username =>
+            {
+                var criteriaStep2 = new RegisterCustomerCriteria
+                {
+                    Username = username,
+                    UpLineId = resultStep1.Data.MRecommend,
+                    Site = shardDbConfig.Site,
+                    SiteDbGroupId = shardDbConfig.CustDbGroupId
+                };
+
+                var resultStep2 = RegisterCustomer(criteriaStep2);
+
+                if (!resultStep2.IsSuccess)
+                {
+                    return CreateFailedResult(username, resultStep2.Error);
+                }
+
+                var criteriaStep3 = new CreateLicenseeSubsidiaryCriteria
+                {
+                    Username = username,
+                    CustId = resultStep2.Data,
+                    ExistedUsername = request.SourceAgency,
+                    MRecommend = resultStep1.Data.MRecommend,
+                    ExistedCustId = resultStep1.Data.CustId,
+                    UserId = CurrentSession.UserId,
+                    UserIp = CurrentContext.IP
+                };
+
+                var resultStep3 = CreateSubsidiaryAccount(criteriaStep3);
+
+                if (!resultStep3.IsSuccess)
+                {
+                    RollbackCreateAccount(new RollbackCreateSubsidiaryCommand { CustId = resultStep2.Data });
+                }
+
+                return resultStep3;
+            }).ToList();
         }
 
-        private ResultData<SubsidiaryAccount> CreateAccount(CreateLicenseeSubsidiaryCriteria criteria)
+        private static ResultData<SubsidiaryAccount> CreateFailedResult(string username, string error)
+        {
+            var account = new SubsidiaryAccount
+            {
+                Username = username
+            };
+
+            return new ResultData<SubsidiaryAccount>
+            {
+                Data = account,
+                Error = error,
+                IsSuccess = false
+            };
+        }
+
+        private ResultData<AccountInfo> CheckExistedAccount(CheckExistedAccountCriteria criteria)
+        {
+            try
+            {
+                var accountInfo = _licenseeSubsidiaryService.CheckExistedAccount(criteria);
+
+                return new ResultData<AccountInfo>
+                {
+                    Error = Empty,
+                    IsSuccess = true,
+                    Data = accountInfo
+                };
+            }
+            catch (Exception exception)
+            {
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
+
+                return new ResultData<AccountInfo>
+                {
+                    Data = null,
+                    Error = exception.ToString(),
+                    IsSuccess = false
+                };
+            }
+        }
+
+        private ResultData<int> RegisterCustomer(RegisterCustomerCriteria criteria)
+        {
+            try
+            {
+                var registerCustomer = _licenseeSubsidiaryService.RegisterCustomer(criteria);
+
+                return registerCustomer;
+            }
+            catch (Exception exception)
+            {
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
+
+                return new ResultData<int>
+                {
+                    Data = 0,
+                    Error = exception.ToString(),
+                    IsSuccess = false
+                };
+            }
+        }
+
+        private void RollbackCreateAccount(RollbackCreateSubsidiaryCommand command)
+        {
+            try
+            {
+                _licenseeSubsidiaryService.RollbackCreateSubsidiary(command);
+            }
+            catch (Exception exception)
+            {
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
+            }
+        }
+
+        private ResultData<SubsidiaryAccount> CreateSubsidiaryAccount(CreateLicenseeSubsidiaryCriteria criteria)
         {
             try
             {
                 var subsidiary = _licenseeSubsidiaryService.CreateLicenseeSubsidiary(criteria);
 
-                if (subsidiary.Data.BalanceCustomerList != null)
-                {
-                    _licenseeSubsidiaryService.CheckCustList(subsidiary.Data.BalanceCustomerList);
-                }
-
                 return subsidiary;
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
 
                 var account = new SubsidiaryAccount
                 {
@@ -184,17 +294,30 @@ namespace Fanex.NAP.Licensee.Controllers
         {
             try
             {
-                var result = AddAgency(siteName, exchangeId);
-                return result.IsOk;
+                var (result, licenseeIdAffected) = AddAgency(siteName, exchangeId);
+
+                if (licenseeIdAffected == 0)
+                {
+                    return result.IsOk;
+                }
+
+                var insertLimit = InsertCompanyWinLimit(licenseeIdAffected);
+
+                if (!insertLimit.IsOk)
+                {
+                    LogService.Critical($"Insert Company Win Limit has errors: {insertLimit.Message}");
+                }
+
+                return insertLimit.IsOk;
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
                 return false;
             }
         }
 
-        private ResultInfo AddAgency(string siteName, int exchangeId)
+        private (ResultInfo result, int licenseeIdAffected) AddAgency(string siteName, int exchangeId)
         {
             var licenseeAgentCriteria = new LicenseeAgentCriteria
             {
@@ -203,12 +326,19 @@ namespace Fanex.NAP.Licensee.Controllers
                 Currency = exchangeId
             };
             var addAgentResult = _licenseeSettingService.AddAgent(licenseeAgentCriteria);
-
-            return new ResultInfo
+            var result = new ResultInfo
             {
                 IsOk = IsNullOrWhiteSpace(addAgentResult.Error),
                 Message = addAgentResult.Error
             };
+
+            return (result, addAgentResult.Data.LicenseeIdAffected);
+        }
+
+        private ResultInfo InsertCompanyWinLimit(int licenseeId)
+        {
+            var command = new InsertCompanyWinLimitCommand(licenseeId);
+            return _licenseeSubsidiaryService.InsertCompanyWinLimit(command);
         }
 
         private bool ExcludePermissionSuccess(string siteName)
@@ -216,11 +346,17 @@ namespace Fanex.NAP.Licensee.Controllers
             try
             {
                 var result = ExcludePermission(siteName);
+
+                if (!result.IsOk)
+                {
+                    LogService.Critical($"Exclude Permission Success has errors: {result.Message}");
+                }
+
                 return result.IsOk;
             }
             catch (Exception exception)
             {
-                LogService.Error(LogMessageHelper.GenerateMessage(exception), exception);
+                LogService.Critical(LogMessageHelper.GenerateMessage(exception), exception);
                 return false;
             }
         }

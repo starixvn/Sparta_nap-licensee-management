@@ -21,12 +21,13 @@
     public class LicenseeSettingController : BaseController
     {
         private readonly ILicenseeSettingService _licenseeService;
-        private readonly ILicenseeVendorService _vendorService;
 
         private readonly IDictionary<string, string> _pullServiceSetting = new Dictionary<string, string>
         {
             { ProductCode.AGCasino, "AGCasino_VersionKey" }
         };
+
+        private readonly ILicenseeVendorService _vendorService;
 
         public LicenseeSettingController()
         {
@@ -48,21 +49,6 @@
         {
             var result = _licenseeService.Search(criteria);
             return Json(result);
-        }
-
-        [HttpGet]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Add()
-        {
-            var viewModel = new NewLicenseeViewModel
-            {
-                ProductList = _licenseeService.GetProductList(),
-                SystemList = _licenseeService.GetSystemList(),
-                ResellerList = new List<string> { "ONEworks", "Boping", "Zelianta" }
-            };
-            viewModel.SelectedSystem = viewModel.SystemList.Where(x => x.SystemName == "LRF" || x.SystemName == "OA" || x.SystemName == "Accounting").ToList();
-
-            return View(viewModel);
         }
 
         [HttpGet]
@@ -165,32 +151,6 @@
             var result = lapFunctions.Except(lrfFunctions);
 
             return Json(result);
-        }
-
-        [HttpPost]
-        [AjaxRequest]
-        [NapAuth(FunctionKey = NapLicenseeFunctionKeys.LicenseeSetting, Policy = Constant.Policy.Host)]
-        public JsonResult AddAgent(LicenseeAgentCriteria criteria)
-        {
-            var error = CheckActiveLicensee(criteria.LicenseeName);
-            if (error != null)
-            {
-                return Json(new { IsSuccess = false, Error = error });
-            }
-
-            var errorBuilder = new StringBuilder();
-
-            errorBuilder.Append(CheckEmptyParameter("Supper Wild Card", criteria.SuperWildCard, "<br>"));
-            errorBuilder.Append(CheckInvalidRedmineId(criteria.RedmineId));
-
-            if (errorBuilder.Length > 0)
-            {
-                return Json(new { IsSuccess = false, Error = errorBuilder.ToString() });
-            }
-
-            var result = _licenseeService.AddAgent(criteria);
-
-            return Json(new { IsSuccess = result.IsSuccess, Data = $"{result.Data} {(result.Data > 1 ? "agents have" : "agent has")} been added", Error = result.Error });
         }
 
         [HttpPost]

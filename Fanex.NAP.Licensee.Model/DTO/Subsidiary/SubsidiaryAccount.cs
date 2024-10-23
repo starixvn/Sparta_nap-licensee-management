@@ -7,7 +7,5 @@
         public int ExistedCustomerId { get; set; }
 
         public int CustomerId { get; set; }
-
-        public BalanceCustomerList BalanceCustomerList { get; set; }
     }
 }

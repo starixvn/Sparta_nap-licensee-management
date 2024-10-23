@@ -21,7 +21,7 @@
 		<Setting Key="WriteLog_UserLog_UserControl" SpName="WriteLog_UserLog_UserControl" DbName="DBLOG.bodb_CustomerLog.wsv_lap"></Setting>
 	</Function>
 	<Function Name="Site.Nap.Licensee.LicenseeBetSetting">
-		<Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCUST.CustDB.wsv_lap">
+		<Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBACC.bodb02.wsv_lap">
 			<Mapping DataField="custid" ObjectProperty="Id" />
 			<Mapping DataField="username" ObjectProperty="Name" />
 			<Mapping DataField="ExchangeId" ObjectProperty="CurrencyId" />
@@ -72,7 +72,7 @@
 		<Setting Key="Nap_LM_Licensee_OfferProduct" SpName="Nap_LM_Licensee_OfferProduct" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_RemoveProduct" SpName="Nap_LM_Licensee_RemoveProduct" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_LrfFunctionKey" SpName="Nap_LM_Licensee_LrfFunctionKey" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
-		<Setting Key="Nap_LM_Licensee_AddAgent" SpName="Nap_LM_Licensee_AddAgent" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
+		<Setting Key="Nap_LM_Licensee_AddAgent_New" SpName="Nap_LM_Licensee_AddAgent_New" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_Terminate" SpName="Nap_LM_Licensee_Terminate" DbName="DBCUST.bodb_licensee.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_GetIntegrationSetting" SpName="Nap_LM_Licensee_GetIntegrationSetting" DbName="DBPTCS.bodb_PlaytechCS.wsv_lap"></Setting>
 		<Setting Key="Nap_LM_Licensee_EnablePullService" SpName="Nap_LM_Licensee_EnablePullService" DbName="DBPTCS.bodb_PlaytechCS.wsv_lap"></Setting>
@@ -131,13 +131,17 @@
 			<Mapping DataField="LicenseeID" ObjectProperty="Id" />
 			<Mapping DataField="LicenseeName" ObjectProperty="Name" />
 		</Setting>
-		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBCUST.CustDB.wsv_lap"></Setting>
-		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCUST.CustDB.wsv_nap"></Setting>
-		<Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCUST.CustDB.wsv_nap"></Setting>
-		<Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_nap"></Setting>
+		<Setting Key="NAP_LM_LicenseeSelSourceAgent" SpName="NAP_LM_LicenseeSelSourceAgent" DbName="DBACC.bodb02.wsv_lap"></Setting>
+		<Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="ShardDBCUST.CustDB.wsv_nap"></Setting>
+		<Setting Key="API_CustomerIns_Register" SpName="API_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="ShardDBCUST.CustDB.wsv_nap"></Setting>
+		<Setting Key="Acc_Dep_ServerDBConfigSelByCust" SpName="Acc_Dep_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_nap">
+			<Mapping DataField="AGIP" ObjectProperty="SiteDbServer" />
+			<Mapping DataField="AGIP_DBCUST" ObjectProperty="CustDbServer" />
+		</Setting>
+		<Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap"></Setting>
 		<Setting Key="Nap_LM_LicVendorExclusionsPermission" SpName="Nap_LM_LicVendorExclusionsPermission" DbName="DBCUST.SiteConfig.wsv_lap"></Setting>
-	</Function>
-	<Function Name="Site.Nap.Licensee.CheckCustList">
-		<Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+		<Setting Key="Dot_Dep_CWL_InsertSetting" SpName="Dot_Dep_CWL_InsertSetting" DbName="DBCUST.CustDB.wsv_lap"></Setting>
 	</Function>
 </Functions>

@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import Loader from '../../../components/Loader'
 import FormFilter from './FormFilter'
@@ -16,13 +15,10 @@ export class AppContainer extends Component {
             <div>
                 <Loader isLoading={this.props.isLoading} />
                 <FormFilter />
-                <div style={{ display: 'inline-block' }}>
-                    <a className="btn btn-green" href={window.rootUrl + 'LicenseeSetting/Add'}>+ Add New Licensee</a>
-                </div>
                 <DataGrid />
             </div>
         )
-}
+    }
 }
 
 function mapStateToProps(state) {

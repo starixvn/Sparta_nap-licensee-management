@@ -6,13 +6,13 @@
     using Core;
     using Model.Criteria.LicenseeSetting;
     using Model.Criteria.Vendor;
-    using Model.DTO;
     using Model.DataDomain;
+    using Model.DTO;
 
     public class LicenseeSettingService : ILicenseeSettingService
     {
-        private readonly IObjectDbGenerator _objectDbGenerator;
         private readonly ILogWriterService _logWriter;
+        private readonly IObjectDbGenerator _objectDbGenerator;
 
         public LicenseeSettingService()
         {
@@ -62,7 +62,7 @@
         {
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetActiveSystem"))
             {
-                return db.Query<SystemItem>(new { licenseeId = licenseeId });
+                return db.Query<SystemItem>(new { licenseeId });
             }
         }
 
@@ -71,15 +71,15 @@
             var result = new ResultData<Licensee>();
             var param = new
             {
-                LicenseeName = criteria.LicenseeName,
-                SuperWildCard = criteria.SuperWildCard,
-                LicenseeType = criteria.LicenseeType,
-                IsSpecial = criteria.IsSpecial,
-                ProductCode = criteria.ProductCode,
-                SystemIsActive = criteria.SystemIsActive,
-                IsAllowMemberComm = criteria.IsAllowMemberComm,
-                EffectiveDate = criteria.EffectiveDate,
-                Description = criteria.Description,
+                criteria.LicenseeName,
+                criteria.SuperWildCard,
+                criteria.LicenseeType,
+                criteria.IsSpecial,
+                criteria.ProductCode,
+                criteria.SystemIsActive,
+                criteria.IsAllowMemberComm,
+                criteria.EffectiveDate,
+                criteria.Description,
                 BrandName = criteria.BrandName ?? string.Empty,
                 CompanyName = criteria.CompanyName ?? string.Empty,
                 ErrMsg = string.Empty
@@ -87,7 +87,6 @@
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Insert"))
             {
                 db.ExecuteNonQuery(param);
-                
             }
 
             result.Error = param.ErrMsg;
@@ -113,7 +112,7 @@
 
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_GetOfferedProduct"))
             {
-                products = db.Query<LicenseeProduct>(new { licenseeId = licenseeId });
+                products = db.Query<LicenseeProduct>(new { licenseeId });
             }
 
             return products;
@@ -123,9 +122,9 @@
         {
             var parameter = new
             {
-                LicenseeName = criteria.LicenseeName,
-                ProductCode = criteria.ProductCode,
-                EffectiveDate = criteria.EffectiveDate,
+                criteria.LicenseeName,
+                criteria.ProductCode,
+                criteria.EffectiveDate,
                 ErrMsg = string.Empty
             };
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_OfferProduct"))
@@ -151,28 +150,29 @@
             return result;
         }
 
-        public ResultData<int> AddAgent(LicenseeAgentCriteria criteria)
+        public ResultData<(int, int)> AddAgent(LicenseeAgentCriteria criteria)
         {
             var parameter = new
             {
-                LicenseeName = criteria.LicenseeName,
-                SuperWildCard = criteria.SuperWildCard,
-                IsSpecial = criteria.IsSpecial,
-                Currency = criteria.Currency,
+                criteria.LicenseeName,
+                criteria.SuperWildCard,
+                criteria.IsSpecial,
+                criteria.Currency,
                 AffectedRows = 0,
+                LicenseeIdAffected = 0,
                 ErrMsg = string.Empty
             };
-            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent"))
+            using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_AddAgent_New"))
             {
                 db.ExecuteNonQuery(parameter);
             }
 
             WriteAddAgentActionLog(criteria, parameter.ErrMsg);
 
-            var result = new ResultData<int>
+            var result = new ResultData<(int, int)>
             {
                 IsSuccess = true,
-                Data = parameter.AffectedRows,
+                Data = (parameter.AffectedRows, parameter.LicenseeIdAffected),
                 Error = parameter.ErrMsg
             };
 
@@ -184,7 +184,7 @@
             var result = new ResultData<Licensee>();
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_Terminate"))
             {
-                result.Error = db.QueryEntity<string>(new { LicenseeName = criteria.LicenseeName });
+                result.Error = db.QueryEntity<string>(new { criteria.LicenseeName });
                 result.IsSuccess = string.IsNullOrEmpty(result.Error);
             }
 
@@ -215,7 +215,7 @@
 
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_EnablePullService"))
             {
-                result = db.QueryEntity<string>(new { LicenseeName = criteria.LicenseeName, SettingName = settingName });
+                result = db.QueryEntity<string>(new { criteria.LicenseeName, SettingName = settingName });
             }
 
             WriteEnablePullServiceActionLog(criteria, settingName);
@@ -243,8 +243,8 @@
         {
             var parameter = new
             {
-                LicenseeName = criteria.LicenseeName,
-                SystemName = criteria.SystemName,
+                criteria.LicenseeName,
+                criteria.SystemName,
                 ErrMsg = string.Empty
             };
             using (var db = _objectDbGenerator.Create("Nap_LM_Licensee_ActivateSystem"))
@@ -354,11 +354,11 @@
         {
             var user = AppSession.CurrentUser;
             var doing = $"<Action value=\"{action.ToString()}\">"
-                + $"<RedmineId>{redmineId}</RedmineId>"
-                + $"<SpName>{sp}</SpName>"
-                + $"<UpdatedBy UserId=\"{user.Id}\" UserName=\"{user.Username}\" />"
-                + licensee
-                + "</Action>";
+                        + $"<RedmineId>{redmineId}</RedmineId>"
+                        + $"<SpName>{sp}</SpName>"
+                        + $"<UpdatedBy UserId=\"{user.Id}\" UserName=\"{user.Username}\" />"
+                        + licensee
+                        + "</Action>";
 
             var actionLogCriteria = new ActionLogCriteria
             {

@@ -1,7 +1,7 @@
-﻿using Fanex.Data.Repository;
-
-namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
+﻿namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 {
+    using Data.Repository;
+
     public class LicenseeAgentCriteria : CriteriaBase
     {
         public string LicenseeName { get; set; }
@@ -16,12 +16,12 @@ namespace Fanex.NAP.Licensee.Model.Criteria.LicenseeSetting
 
         public override string GetSettingKey()
         {
-            return "Nap_LM_Licensee_AddAgent";
+            return "Nap_LM_Licensee_AddAgent_New";
         }
 
         public override bool IsValid()
         {
-            return true;
+            return !string.IsNullOrWhiteSpace(LicenseeName) && Currency > 0;
         }
 
         public static string ToWildCard(string licenseeName)
