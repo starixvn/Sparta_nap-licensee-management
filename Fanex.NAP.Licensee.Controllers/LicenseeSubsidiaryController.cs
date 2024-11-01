@@ -161,7 +161,7 @@ namespace Fanex.NAP.Licensee.Controllers
                     MRecommend = resultStep1.Data.MRecommend,
                     ExistedCustId = resultStep1.Data.CustId,
                     UserId = CurrentSession.UserId,
-                    UserIp = CurrentContext.IP
+                    UserIp = ClientIp
                 };
 
                 var resultStep3 = CreateSubsidiaryAccount(criteriaStep3);

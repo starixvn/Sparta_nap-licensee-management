@@ -121,7 +121,7 @@
         public JsonResult UpdateBetSettingSportsbook(BSSportsbookViewModel model)
         {
             model.UserId = CurrentSession.UserId;
-            model.IP = Request.UserHostAddress;
+            model.IP = ClientIp;
             var result = _licenseeBetSettingService.UpdateBetSettingSportsbook(model);
 
             return Json(result);

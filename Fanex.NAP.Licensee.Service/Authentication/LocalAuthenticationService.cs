@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Web;
+    using Helpers;
     using Model.DTO;
     using Model.DataDomain;
     using NAP.Core.Context;
@@ -163,7 +164,7 @@
                     LoginDate = DateTime.Now,
                     NetSessionId = loginUser.SessionId,
                     SiteId = loginUser.SiteId,
-                    Ip = _currentContext.IP,
+                    Ip = HttpRequestHelper.GetClientIp(HttpContext.Current.Request),
                     BrowserName = _currentContext.BrowserName,
                     CountryCode = _currentContext.CountryCode,
                     Domain = _currentContext.DomainName,

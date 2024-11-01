@@ -6,6 +6,7 @@
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Fanex.NAP.Licensee.Service.Helpers;
     using Model.DataDomain;
 
     public class BaseController : Controller
@@ -22,6 +23,14 @@
             {
                 CurrentSession = new CurrentSession();
                 ViewBag.Session = CurrentSession;
+            }
+        }
+
+        public virtual string ClientIp
+        {
+            get
+            {
+                return HttpRequestHelper.GetClientIp(Request);
             }
         }
 

@@ -218,7 +218,7 @@
             if (viewModel.IsValid)
             {
                 viewModel.UserId = CurrentSession.UserId;
-                viewModel.IP = Request.UserHostAddress;
+                viewModel.IP = ClientIp;
                 result = _defaultBetSettingService.InsertOrUpdate(viewModel.ToCriteria);
             }
 

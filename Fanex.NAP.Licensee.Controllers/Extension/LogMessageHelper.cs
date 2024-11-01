@@ -8,6 +8,7 @@
     using System.Text;
     using System.Web;
     using Fanex.Data;
+    using Service.Helpers;
 
     public static class LogMessageHelper
     {
@@ -121,20 +122,9 @@
                         [nameof(request.Form)] = request.Form,
                         [nameof(request.UserHostAddress)] = request.UserHostAddress,
                         [nameof(request.UserAgent)] = GetUserAgent(request.ServerVariables),
-                        ["Client IP"] = GetClientIP(request?.ServerVariables),
+                        ["Client IP"] = HttpRequestHelper.GetClientIp(request),
                         ["Identity"] = HttpContext.Current.User?.Identity?.Name
                     };
-        }
-
-        private static string GetClientIP(NameValueCollection serverVariables)
-        {
-            var clientIP = serverVariables["HTTP_X_FORWARDED_FOR"]
-                ?? serverVariables["REMOTE_ADDR"]
-                ?? string.Empty;
-
-            return string.IsNullOrEmpty(clientIP) || clientIP.Equals("::1")
-                ? "127.0.0.1"
-                : clientIP;
         }
 
         private static string GetUserAgent(NameValueCollection serverVariables)

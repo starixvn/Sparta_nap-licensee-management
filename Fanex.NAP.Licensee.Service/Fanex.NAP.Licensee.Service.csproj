@@ -185,6 +185,7 @@
     <Compile Include="Core\ObjectDbGenerator.cs" />
     <Compile Include="Extenstion\DictionaryExtension.cs" />
     <Compile Include="Helpers\AuthencationHelper.cs" />
+    <Compile Include="Helpers\HttpRequestHelper.cs" />
     <Compile Include="Helpers\LAPUserHelper.cs" />
     <Compile Include="Helpers\SecurityHelper.cs" />
     <Compile Include="IDefaultBetSettingService.cs" />

@@ -2,9 +2,11 @@
 {
     using System;
     using System.Linq;
+    using System.Web;
     using Fanex.Common;
-    using Model.DTO;
+    using Helpers;
     using Model.DataDomain;
+    using Model.DTO;
     using NAP.Core.Context;
     using NAP.Core.Models.ParameterObject;
     using NAP.Core.Service.Impl;
@@ -77,7 +79,7 @@
                 LoginDate = DateTime.Now,
                 NetSessionId = ssoLogin.SessionId,
                 SiteId = ssoLogin.SiteId,
-                IP = _currentContext.IP,
+                IP = HttpRequestHelper.GetClientIp(HttpContext.Current.Request),
                 BrowserName = _currentContext.BrowserName,
                 CountryCode = _currentContext.CountryCode,
                 Domain = _currentContext.DomainName,
