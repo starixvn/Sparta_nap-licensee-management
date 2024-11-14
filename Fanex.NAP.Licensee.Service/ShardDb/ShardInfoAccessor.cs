@@ -5,8 +5,8 @@
 
     public class ShardInfoAccessor : IShardInfoAccessor
     {
-        private const string PrefixShardingCustDb = "shardCustDbSp_";
-        private const string PrefixShardingSiteDb = "shardSiteDbSp_";
+        private const string PrefixShardingCustDb = "ShardCustDb_";
+        private const string PrefixShardingSiteDb = "ShardSiteDb_";
         public static readonly string SiteDbServer = "X-SiteDbServer";
         public static readonly string CustDbServer = "X-CustDbServer";
 
@@ -26,13 +26,6 @@
 
             dbServer = null;
             return false;
-        }
-
-        public string GetShardSpKey(string key)
-        {
-            return key
-                .Replace(PrefixShardingSiteDb, "")
-                .Replace(PrefixShardingCustDb, "");
         }
 
         public static string ToShardSiteDbSp(string key)
