@@ -1087,6 +1087,13 @@
         "Enable": false,
         "Type": 1,
         "Mode": 1
+      },
+      {
+        "DisplayKey": "lblOddsGroupLicenseeSetting",
+        "FunctionKey": "OddsGroupLicenseeSetting",
+        "Enable": false,
+        "Type": 1,
+        "Mode": 1
       }
     ]
   },
