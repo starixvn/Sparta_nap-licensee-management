@@ -1,40 +1,30 @@
-﻿using System;
-using System.Data.SqlClient;
-using Fanex.Data;
-using Fanex.NAP.Licensee.Service.ShardDb;
-
-namespace Fanex.NAP.Licensee.DbSettingConfig
+﻿namespace Fanex.NAP.Licensee.DbSettingConfig
 {
+    using System;
+    using Data;
+    using Data.SqlServer;
+    using Service.ShardDb;
+
     [CLSCompliant(false)]
-    public class ShardDbSettingProvider : XmlDbSettingProvider
+    public class ShardDbSettingProvider
     {
         private readonly IShardInfoAccessor _shardInfoAccessor;
 
-        public ShardDbSettingProvider(IShardInfoAccessor shardInfoAccessor, string resourcePath) : base(resourcePath)
+        public ShardDbSettingProvider(IShardInfoAccessor shardInfoAccessor)
         {
             _shardInfoAccessor = shardInfoAccessor;
         }
 
-        public override IDbSetting GetSetting(string key)
+        public static string ProviderName => nameof(ShardDbSettingProvider);
+
+        public IObjectDb CreateObjectDbFunc(string settingKey, int? commandTimeout, string serverIp)
         {
-            if (_shardInfoAccessor.TryUseShardDb(key, out var dbServer))
+            if (_shardInfoAccessor.TryUseShardDb(settingKey, out var dbServer))
             {
-                var shardSpKey = _shardInfoAccessor.GetShardSpKey(key);
-                var originalShardSetting = base.GetSetting(shardSpKey);
-
-                var connectionStr = new SqlConnectionStringBuilder(originalShardSetting.ConnectionString)
-                {
-                    DataSource = dbServer
-                };
-
-                var dbSetting = new DbSetting(shardSpKey, originalShardSetting.DbName, connectionStr.ToString(),
-                                              originalShardSetting.SpName,
-                                              originalShardSetting.CommandTimeout, originalShardSetting.ColumnMaps,
-                                              originalShardSetting.FirmParameters);
-                return dbSetting;
+                serverIp = dbServer;
             }
 
-            return base.GetSetting(key);
+            return new SqlObjectDb(settingKey, commandTimeout, serverIp);
         }
     }
 }
