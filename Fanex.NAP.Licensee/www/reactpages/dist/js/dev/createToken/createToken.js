@@ -5663,7 +5663,8 @@ var language = exports.language = {
     "lblDisplayPlayerTips_ExtraPayoutReportOnly": "Display Player Tips impact Extra Payout report only",
     "lblDailyBetDetails": "Daily Bet Details",
     "lblSabaCoins": "Saba Coins",
-    "lblSearchWithMatchPrecisePlayerAdminOnly": "Search Username with Match Precise permission Impact Player Admin only"
+    "lblSearchWithMatchPrecisePlayerAdminOnly": "Search Username with Match Precise permission Impact Player Admin only",
+    "lblOddsGroupLicenseeSetting": "Odds Group Licensee Setting"
 };
 
 /***/ }),
