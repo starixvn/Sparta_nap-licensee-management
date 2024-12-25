@@ -25,7 +25,7 @@
   <add key="IsLocalTest" value="1"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://remotingref-api-core.nexdev.net/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
+  <add key="BundlesVersion" value="47ad3794c63c2c3babf0" />
   <add key="LogCategory" value="NAP-LM-LOCAL" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="sa" />
@@ -70,7 +70,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
+  <add key="BundlesVersion" value="47ad3794c63c2c3babf0" />
   <add key="LogCategory" value="NAP-LM-UAT" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
@@ -115,7 +115,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref-prod.nebula.prod/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
+  <add key="BundlesVersion" value="47ad3794c63c2c3babf0" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
@@ -160,7 +160,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://172.16.4.105:6207/Main/" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
+  <add key="BundlesVersion" value="47ad3794c63c2c3babf0" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starixDev69" />
@@ -171,11 +171,11 @@
 
   	<!--Fanxe.Data-->
   <add key="StoredProcedurePath" value="App_Data" />
-  <add key="VaultOptions:Address" value="" />
-  <add key="VaultOptions:Role" value="" />
-  <add key="VaultOptions:SecretId" value="" />
+  <add key="VaultOptions:Address" value="http://vault.nebula.sit" />
+  <add key="VaultOptions:Role" value="c448e6b6-7c60-eb14-6368-69fd1753edb4" />
+  <add key="VaultOptions:SecretId" value="5d6fc566-ab8a-a546-b1ac-544ee2a39f13" />
   <add key="VaultOptions:MountPath" value="pontus" />
-  <add key="VaultOptions:Enable" value="0" />
+  <add key="VaultOptions:Enable" value="1" />
   <add key="VaultOptions:MinutesPolling" value="1" />
 
 	<!--Onebook.UM-->
@@ -205,7 +205,7 @@
   <add key="IsLocalTest" value="0"/>
   <add key="Fanex.RemotingRef.Service.Url" value="http://vn-remotingref.gamora.prod" />
   <add key="Glimpse:DisableAsyncSupport" value="true" />
-  <add key="BundlesVersion" value="872f9010b0e5bec74105" />
+  <add key="BundlesVersion" value="47ad3794c63c2c3babf0" />
   <add key="LogCategory" value="NAP-LM" />
   <add key="UserPasswordKey" value="abc123456" />
   <add key="HangfireUserName" value="starix41" />
