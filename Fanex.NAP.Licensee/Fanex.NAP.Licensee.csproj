@@ -392,6 +392,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
+	  <None Include="SiteConfig\Web.AppSettings.KLPROD.config" >
+		  <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
     <None Include="SiteConfig\Web.ConnectionString.config.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -483,6 +487,10 @@
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	  <None Include="SiteConfig\Web.ConnectionString.KLPROD.config" >
+		  <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
     <None Include="SiteConfig\Web.KLDR.config">
       <DependentUpon>Web.config.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -818,6 +826,10 @@
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
     <Content Include="Views\ManageProduct\Index.cshtml" />
     <Content Include="Views\ManageLrfFunction\Index.cshtml" />
+	  <None Include="SiteConfig\Web.KLPROD.config" >
+		  <DependentUpon>Web.config.tt</DependentUpon>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
