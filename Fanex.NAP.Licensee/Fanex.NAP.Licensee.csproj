@@ -392,10 +392,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.config.tt</DependentUpon>
     </Content>
-	  <None Include="SiteConfig\Web.AppSettings.KLPROD.config" >
-		  <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
     <None Include="SiteConfig\Web.ConnectionString.config.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -455,10 +451,6 @@
     <Content Include="Scripts\source\page\log\Service\logService.js" />
     <Content Include="Scripts\source\page\licenseebetsetting\Controllers\BetSetting\editDBSSportsbookCtrl.js" />
     <Content Include="Scripts\source\page\log\Controllers\LicenseeBetSetting\licenseeBetSettingLogCtrl.js" />
-    <None Include="SiteConfig\Web.AppSettings.KLDR.config">
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="App_Data\Template\OperatorImportTemplate.csv" />
     <Content Include="www\**" />
     <Content Include="Views\ManageOperator\Get.cshtml" />
@@ -483,18 +475,6 @@
     <Content Include="Views\LicenseeBetSetting\Logs.cshtml" />
     <Content Include="Views\Shared\_LogTemplate.cshtml" />
     <Content Include="Views\LicenseeSubsidiary\Add.cshtml" />
-    <None Include="SiteConfig\Web.ConnectionString.KLDR.config">
-      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-	  <None Include="SiteConfig\Web.ConnectionString.KLPROD.config" >
-		  <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-    <None Include="SiteConfig\Web.KLDR.config">
-      <DependentUpon>Web.config.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="App_Data\FanexSpName.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -740,14 +720,17 @@
     <Content Include="SiteConfig\Web.AppSettings.LOCAL.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
     </Content>
-    <Content Include="SiteConfig\Web.AppSettings.PRO.config">
-      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
-    </Content>
     <Content Include="SiteConfig\Web.AppSettings.UAT.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteConfig\Web.AppSettings.PROD.config">
+      <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SiteConfig\Web.AppSettings.SIT.config">
       <DependentUpon>Web.AppSettings.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="SiteConfig\Web.config.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -760,25 +743,30 @@
     <Content Include="SiteConfig\Web.ConnectionString.LOCAL.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SiteConfig\Web.ConnectionString.PRO.config">
-      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
-      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SiteConfig\Web.ConnectionString.UAT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteConfig\Web.ConnectionString.PROD.config">
+      <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SiteConfig\Web.LOCAL.config">
       <DependentUpon>Web.config.tt</DependentUpon>
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SiteConfig\Web.PRO.config">
-      <DependentUpon>Web.config.tt</DependentUpon>
-      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SiteConfig\Web.UAT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SiteConfig\Web.PROD.config">
+      <DependentUpon>Web.config.tt</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\LicenseeBetSetting\Index.cshtml" />
     <Content Include="Views\LicenseeBetSetting\BetSetting\ReviewBSSportsbook.cshtml" />
@@ -811,9 +799,11 @@
     <Content Include="Web.ConnectionString.config" />
     <Content Include="SiteConfig\Web.ConnectionString.SIT.config">
       <DependentUpon>Web.ConnectionString.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SiteConfig\Web.SIT.config">
       <DependentUpon>Web.config.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\LicenseeVendor\Edit.cshtml" />
     <Content Include="Views\LicenseeVendor\Index.cshtml" />
@@ -826,10 +816,6 @@
     <Content Include="Views\SourceLicenseeSetting\Add.cshtml" />
     <Content Include="Views\ManageProduct\Index.cshtml" />
     <Content Include="Views\ManageLrfFunction\Index.cshtml" />
-	  <None Include="SiteConfig\Web.KLPROD.config" >
-		  <DependentUpon>Web.config.tt</DependentUpon>
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
     <None Include="Web.ConnectionString.config.bk">
       <SubType>Designer</SubType>
     </None>
